@@ -23,6 +23,7 @@ https://nixcentury.github.io/learning-hub/
 
 ทดสอบในเครื่อง
 ---------------
+ใช้ Node.js 24 ให้ตรงกับ GitHub Actions (ชุดทดสอบใช้ --test-isolation)
 pnpm install --frozen-lockfile
 pnpm dev
 pnpm test:unit

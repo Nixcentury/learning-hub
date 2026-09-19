@@ -14,6 +14,7 @@
 - Keep the active HTML-based `vite.config.js`, relative `base: './'`, and both Hub/admin entry points.
 - Remove the unused competing `vite.config.ts` in this new copy only. It is recoverable in the import commit and the untouched source repository.
 - Commands explicitly select the canonical JS config.
+- Local and CI runtime is Node.js 24; the existing test-isolation flag is not supported by Node.js 22.
 - Publish only `dist`, rebuilt from scratch; never merge the legacy repository.
 - Validate that every public file matches its published copy, and local HTML resources resolve under `/learning-hub/`.
 - `deployment.json` identifies the published commit. A failed build must not be confused with browser caching.

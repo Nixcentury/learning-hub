@@ -6,9 +6,11 @@ import { defineConfig } from "vite";
   เพิ่มหน้าใหม่ภายหลังได้โดยใส่ชื่อและไฟล์ใน input นี้
 */
 export default defineConfig({
-  // ใช้ path แบบ relative เพื่อให้เปิดได้ทั้ง localhost และ GitHub Pages ที่อยู่ใต้ /Physic-subject/
+  // ใช้เส้นทาง relative เพื่อเปิดได้ทั้ง localhost และ GitHub Pages /learning-hub/
   base: "./",
   build: {
+    // Always rebuild the complete artifact so removed content cannot linger.
+    emptyOutDir: true,
     rolldownOptions: {
       input: {
         hub: resolve(import.meta.dirname, "index.html"),

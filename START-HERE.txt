@@ -1,0 +1,47 @@
+Learning Hub — โครงการแยก
+=========================
+
+แฟ้มทำงานใหม่:
+C:/Users/Sattawat.b/Documents/GitHub/learning-hub/
+
+ที่อยู่เว็บเมื่อเปิด GitHub Pages สำเร็จ:
+https://nixcentury.github.io/learning-hub/
+อย่าส่งลิงก์นี้จนกว่าจะตรวจว่าเผยแพร่สำเร็จแล้ว
+
+แก้ไฟล์ตรงไหน
+--------------
+ชื่อบท: public/pages/<วิชา>.html
+เรื่องย่อย/รายการเครื่องมือ/โจทย์: public/content/<วิชา>/
+แม่แบบข้อกา+เติมคำตอบ: public/content/templates/quiz-template.html
+แม่แบบลากวาง: public/content/templates/quiz-drag-template.html
+พรอมป์สำหรับ AI: public/content/templates/quiz-ai-prompt.txt และ quiz-drag-ai-prompt.txt
+คู่มือ 4 ชั้น: public/content/chemistry/START-HERE.txt
+
+การใส่ไฟล์ใหม่อย่างเดียวไม่สร้างรายการในเมนูให้เอง ต้องเพิ่มลิงก์ในเมนูที่เกี่ยวข้อง
+หัวข้อที่ยังไม่มีงาน ให้เว้น href ตามรูปแบบเมนู topics เดิม ระบบจะแสดงกำลังเตรียมเนื้อหา
+อย่าเปลี่ยน contentId/questionId ของงานเดิม เพราะใช้ผูกคำตอบและสมุด
+
+ทดสอบในเครื่อง
+---------------
+pnpm install --frozen-lockfile
+pnpm dev
+pnpm test:unit
+pnpm build
+pnpm preview
+
+เผยแพร่
+--------
+Commit และ Push ไป main ของ Nixcentury/learning-hub เท่านั้น
+ครั้งแรกตั้ง Settings > Pages > Source เป็น GitHub Actions
+เปิด Actions แล้วตรวจงาน Learning Hub Pages ให้ผ่านทั้ง build และ deploy
+ตรวจ deployment.json บนเว็บว่าค่า commit ตรงกับเวอร์ชันที่ส่งขึ้น
+หาก build ไม่ผ่าน เว็บจะยังเป็นรุ่นก่อนหน้า ให้ดูข้อความผิดพลาดใน Actions
+หาก build/deploy ผ่านแต่เห็นเนื้อหาเก่า ให้ตรวจลิงก์ปลายทางและลองหน้าต่างส่วนตัวก่อน
+อย่าล้างข้อมูลเว็บไซต์ทันที เพราะอาจลบสมุดที่เก็บในเครื่อง
+
+ไม่ต้องแก้ dist เอง — สร้างใหม่ทุกครั้งและไม่เก็บโฟลเดอร์นี้ลง Git
+ห้ามใส่รหัสลับ บัญชีนักเรียน หรือข้อมูลคะแนนจริงไว้ใน public หรือ Git
+Firebase และ AI Worker ยังเป็นระบบเดิม การย้ายนี้ไม่เผยแพร่ Rules หรือย้ายข้อมูลในฐานข้อมูล
+
+สำเนา Hub ใน Physic-subject มีไว้ย้อนกลับ อย่าแก้เนื้อหา Hub สองที่พร้อมกัน
+ตรวจสถานะขั้นตอนที่เหลือใน MIGRATION.md ก่อนใช้เว็บใหม่เป็นตัวหลัก

@@ -8,10 +8,10 @@
 โครงไฟล์ที่ใช้จริง
 =================
 หน้าเลือกวิชา/บท:
-C:/Users/Sattawat.b/Documents/GitHub/Physic-subject/LEARNING HUB/public/pages/chemistry.html
+C:/Users/Sattawat.b/Documents/GitHub/learning-hub/public/pages/chemistry.html
 
 แฟ้มวิชา:
-C:/Users/Sattawat.b/Documents/GitHub/Physic-subject/LEARNING HUB/public/content/chemistry/
+C:/Users/Sattawat.b/Documents/GitHub/learning-hub/public/content/chemistry/
   equilibrium.html                 ชั้น 2: รายชื่อเรื่องย่อย
   equilibrium/
     le-chatelier.html              ชั้น 3: รายชื่อ Quiz/เครื่องมือ

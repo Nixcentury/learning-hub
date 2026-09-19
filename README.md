@@ -1,12 +1,15 @@
 # Learning Hub — เวอร์ชัน HTML พื้นฐาน
 
+โครงการแยกชื่อ `learning-hub` — อ่าน [START-HERE.txt](START-HERE.txt) ก่อนเพิ่มเนื้อหาหรือเผยแพร่
+ประวัติและขอบเขตการย้ายอยู่ใน [MIGRATION.md](MIGRATION.md)
+
 หน้าเว็บที่ใช้งานจริงเขียนด้วย HTML, CSS และ JavaScript พื้นฐาน เพื่อให้เปิดดูและช่วยแก้ไขได้ง่าย โดยไม่ต้องแก้ไฟล์ React ส่วน GitHub จะ Build และเผยแพร่ให้อัตโนมัติ
 
 ## ไฟล์ที่ต้องรู้จัก
 
 1. `index.html` — โครงหน้า ข้อความภาษาไทย/อังกฤษ และรายชื่อแท็บ
 2. `public/pages/*.html` — หน้า Overview, Classroom และแต่ละรายวิชา แก้เนื้อหาที่นี่
-3. `public/pages/shared/subject-page.js` — Navigation 3 ชั้นของทุกวิชา ปกติไม่ต้องแก้
+3. `public/pages/shared/subject-page.js` — Navigation กลาง รองรับบท → เรื่องย่อย → เครื่องมือ → หน้าทำงาน ปกติไม่ต้องแก้
 4. `public/pages/tools/*.html` — ชิ้นงานที่เปิดในหน้าต่างลอย แยก HTML คนละไฟล์
 5. `public/pages/tools/notebook-core.css` — หน้าตาของสมุดเขียนกลาง
 6. `public/pages/tools/notebook-core.js` — กลไกเขียน ลบ เลื่อน ซูม และข้อมูลลายเส้น ปกติไม่ต้องแก้
@@ -54,7 +57,7 @@
 คัดลอกหน้าเดิมใน `public/pages` แล้วเปลี่ยนชื่อ เช่น:
 
 ```text
-LEARNING HUB/
+learning-hub/
 ├── index.html
 ├── public/
 │   └── pages/
@@ -91,7 +94,7 @@ LEARNING HUB/
 เพิ่มบรรทัดนี้ก่อน `</body>` ใน Quiz หรือ Simulation ที่ต้องการเชื่อมกับ Hub:
 
 ```html
-<script src="https://nixcentury.github.io/Physic-subject/shared/learning-hub-tools.js" defer></script>
+<script src="https://nixcentury.github.io/learning-hub/shared/learning-hub-tools.js" defer></script>
 ```
 
 บรรทัดเดียวจะปิดหน้าต่างแตะค้าง/คัดลอกให้อัตโนมัติ ช่อง `input`, `textarea`, `select`, `contenteditable` และส่วนที่ใส่ `data-allow-selection` ยังเลือกและคัดลอกข้อความได้ตามปกติ

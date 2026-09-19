@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="tool.css" />
+    <link rel="stylesheet" href="notebook-core.css" />
+    <title>Notebook Core · Learning Hub</title>
+  </head>
+  <body class="tool-notebook">
+    <main class="tool-shell notebook-tool-shell">
+      <header class="tool-heading notebook-heading">
+        <span class="tool-icon" aria-hidden="true">▱</span>
+        <div>
+          <small
+            data-th="Notebook Core · รอบ 5A"
+            data-en="Notebook Core · Round 5A"
+          >
+            Notebook Core · รอบ 5A
+          </small>
+          <h1 data-th="สมุดเขียนกลาง" data-en="Shared writing notebook">
+            สมุดเขียนกลาง
+          </h1>
+        </div>
+        <div class="notebook-heading-status" aria-label="Notebook status">
+          <span data-th="หน้าเดียว" data-en="Single page">หน้าเดียว</span>
+          <span data-th="เฉพาะรอบนี้" data-en="This session only"
+            >เฉพาะรอบนี้</span
+          >
+        </div>
+      </header>
+
+      <section class="notebook-core" data-notebook-core>
+        <div
+          class="notebook-toolbar"
+          role="toolbar"
+          data-aria-th="เครื่องมือสมุด"
+          data-aria-en="Notebook tools"
+          aria-label="เครื่องมือสมุด"
+        >
+          <div class="notebook-tool-group">
+            <button
+              class="notebook-tool-button is-active"
+              type="button"
+              data-notebook-tool="pen"
+              aria-pressed="true"
+              data-label-th="ปากกา"
+              data-label-en="Pen"
+            >
+              <span aria-hidden="true">✎</span
+              ><b data-th="ปากกา" data-en="Pen">ปากกา</b>
+            </button>
+            <button
+              class="notebook-tool-button"
+              type="button"
+              data-notebook-tool="eraser"
+              aria-pressed="false"
+              data-label-th="ยางลบ"
+              data-label-en="Eraser"
+            >
+              <span aria-hidden="true">◇</span
+              ><b data-th="ยางลบ" data-en="Eraser">ยางลบ</b>
+            </button>
+            <button
+              class="notebook-tool-button"
+              type="button"
+              data-notebook-tool="hand"
+              aria-pressed="false"
+              data-label-th="เลื่อนกระดาษ"
+              data-label-en="Pan page"
+            >
+              <span aria-hidden="true">✋</span
+              ><b data-th="เลื่อน" data-en="Pan">เลื่อน</b>
+            </button>
+          </div>
+
+          <span class="notebook-toolbar-divider" aria-hidden="true"></span>
+
+          <div
+            class="notebook-color-group"
+            role="group"
+            data-aria-th="สีปากกา"
+            data-aria-en="Pen color"
+            aria-label="สีปากกา"
+          >
+            <small data-th="สี" data-en="Color">สี</small>
+            <button
+              class="notebook-color-button is-active"
+              type="button"
+              data-notebook-color="#111827"
+              data-color-th="สีดำ"
+              data-color-en="Black"
+              aria-label="สีดำ"
+              aria-pressed="true"
+            >
+              <span class="color-black" aria-hidden="true"></span>
+            </button>
+            <button
+              class="notebook-color-button"
+              type="button"
+              data-notebook-color="#2563eb"
+              data-color-th="สีน้ำเงิน"
+              data-color-en="Blue"
+              aria-label="สีน้ำเงิน"
+              aria-pressed="false"
+            >
+              <span class="color-blue" aria-hidden="true"></span>
+            </button>
+            <button
+              class="notebook-color-button"
+              type="button"
+              data-notebook-color="#dc3545"
+              data-color-th="สีแดง"
+              data-color-en="Red"
+              aria-label="สีแดง"
+              aria-pressed="false"
+            >
+              <span class="color-red" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <span class="notebook-toolbar-divider" aria-hidden="true"></span>
+
+          <button
+            class="notebook-tool-button notebook-finger-button"
+            type="button"
+            data-notebook-finger
+            aria-pressed="false"
+            data-label-th="สลับโหมดนิ้ว"
+            data-label-en="Toggle finger mode"
+          >
+            <span aria-hidden="true">☝</span
+            ><b
+              data-notebook-finger-label
+              data-th="นิ้ว: เลื่อน"
+              data-en="Finger: pan"
+              >นิ้ว: เลื่อน</b
+            >
+          </button>
+
+          <span class="notebook-toolbar-divider" aria-hidden="true"></span>
+
+          <div
+            class="notebook-history-group"
+            role="group"
+            data-aria-th="ประวัติการเขียน"
+            data-aria-en="Writing history"
+            aria-label="ประวัติการเขียน"
+          >
+            <button
+              class="notebook-tool-button"
+              type="button"
+              data-notebook-undo
+              data-label-th="ย้อนการแก้ไขล่าสุด"
+              data-label-en="Undo last change"
+              aria-label="ย้อนการแก้ไขล่าสุด"
+              disabled
+            >
+              <span aria-hidden="true">↶</span
+              ><b data-th="ย้อนกลับ" data-en="Undo">ย้อนกลับ</b>
+            </button>
+            <button
+              class="notebook-tool-button"
+              type="button"
+              data-notebook-redo
+              data-label-th="ทำการแก้ไขซ้ำ"
+              data-label-en="Redo last change"
+              aria-label="ทำการแก้ไขซ้ำ"
+              disabled
+            >
+              <span aria-hidden="true">↷</span
+              ><b data-th="ทำซ้ำ" data-en="Redo">ทำซ้ำ</b>
+            </button>
+          </div>
+
+          <div class="notebook-toolbar-spacer"></div>
+
+          <div class="notebook-zoom-group" aria-label="Zoom controls">
+            <button
+              type="button"
+              data-notebook-zoom-out
+              data-label-th="ย่อกระดาษ"
+              data-label-en="Zoom out"
+              aria-label="ย่อกระดาษ"
+            >
+              −
+            </button>
+            <output data-notebook-zoom aria-live="polite">100%</output>
+            <button
+              type="button"
+              data-notebook-zoom-in
+              data-label-th="ขยายกระดาษ"
+              data-label-en="Zoom in"
+              aria-label="ขยายกระดาษ"
+            >
+              +
+            </button>
+            <button
+              class="notebook-fit-button"
+              type="button"
+              data-notebook-fit
+              data-label-th="พอดีหน้าต่าง"
+              data-label-en="Fit to window"
+              aria-label="พอดีหน้าต่าง"
+            >
+              <span aria-hidden="true">⌗</span
+              ><b data-th="พอดี" data-en="Fit">พอดี</b>
+            </button>
+          </div>
+
+          <button
+            class="notebook-clear-button"
+            type="button"
+            data-notebook-clear
+            data-label-th="ล้างหน้าปัจจุบัน"
+            data-label-en="Clear current page"
+          >
+            <span aria-hidden="true">×</span
+            ><b data-th="ล้างหน้า" data-en="Clear">ล้างหน้า</b>
+          </button>
+        </div>
+
+        <div class="notebook-viewport" data-notebook-viewport>
+          <div class="notebook-page" data-notebook-page>
+            <canvas
+              width="1400"
+              height="900"
+              tabindex="0"
+              data-notebook-canvas
+              data-aria-th="หน้ากระดาษสำหรับเขียน"
+              data-aria-en="Writing canvas"
+              aria-label="หน้ากระดาษสำหรับเขียน"
+            ></canvas>
+            <div class="notebook-empty-hint" data-notebook-empty>
+              <span aria-hidden="true">✎</span>
+              <strong data-th="เริ่มเขียนได้เลย" data-en="Start writing here"
+                >เริ่มเขียนได้เลย</strong
+              >
+              <small
+                data-th="ปากกาใช้ได้ทั้งเมาส์และปากกา Stylus · นิ้วใช้เลื่อนกระดาษเป็นค่าเริ่มต้น"
+                data-en="Use a mouse or stylus to write · Finger input pans the page by default"
+              >
+                ปากกาใช้ได้ทั้งเมาส์และปากกา Stylus ·
+                นิ้วใช้เลื่อนกระดาษเป็นค่าเริ่มต้น
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <footer class="notebook-statusbar">
+          <span
+            class="notebook-live-status"
+            data-notebook-status
+            aria-live="polite"
+          >
+            <i aria-hidden="true"></i
+            ><span data-th="สมุดพร้อมเขียน" data-en="Notebook ready"
+              >สมุดพร้อมเขียน</span
+            >
+          </span>
+          <code data-notebook-page-key>main / page-001</code>
+        </footer>
+      </section>
+
+      <p class="tool-note">
+        <span aria-hidden="true">◇</span>
+        <span
+          data-th="รอบ 5A เป็นสมุดหน้าเดียวที่ใช้ Undo/Redo ได้แล้ว ข้อมูลจะหายเมื่อรีเฟรชหรือปิดหน้าต่าง ส่วนหลายหน้าและการบันทึกจะตามมาในรอบถัดไป"
+          data-en="Round 5A is a single-page notebook with Undo/Redo. Refreshing or closing the window clears it; multiple pages and saving arrive in the next round."
+        >
+          รอบ 5A เป็นสมุดหน้าเดียวที่ใช้ Undo/Redo ได้แล้ว
+          ข้อมูลจะหายเมื่อรีเฟรชหรือปิดหน้าต่าง
+          ส่วนหลายหน้าและการบันทึกจะตามมาในรอบถัดไป
+        </span>
+      </p>
+    </main>
+
+    <script src="../../shared/learning-hub-tools.js"></script>
+    <script src="tool.js"></script>
+    <script type="module" src="notebook-core.js"></script>
+  </body>
+</html>

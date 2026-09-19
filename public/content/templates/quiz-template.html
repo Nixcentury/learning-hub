@@ -1,0 +1,123 @@
+<article
+  data-learning-activity-content
+  data-activity-version="1"
+  data-activity-id="quiz-template-test-v1"
+  data-activity-kind="quiz"
+  data-quiz-content-version="1"
+>
+  <header data-activity-intro data-quiz-intro>
+    <small data-activity-kicker data-th="แม่แบบ Quiz" data-en="Quiz template">แม่แบบ Quiz</small>
+    <h1 data-activity-title data-quiz-title data-th="Quiz Template · ชุดทดสอบ" data-en="Quiz Template · Test Set">Quiz Template · ชุดทดสอบ</h1>
+    <p
+      data-activity-description
+      data-th="ไฟล์นี้เก็บเฉพาะสรุป โจทย์ ตัวเลือก คำใบ้ และเฉลย ส่วนเครื่องมือทั้งหมดมาจาก Quiz Engine กลาง"
+      data-en="This file contains only the summary, questions, choices, hints, and solutions. The shared Quiz Engine supplies every tool."
+    >ไฟล์นี้เก็บเฉพาะสรุป โจทย์ ตัวเลือก คำใบ้ และเฉลย ส่วนเครื่องมือทั้งหมดมาจาก Quiz Engine กลาง</p>
+  </header>
+
+  <section data-activity-summary data-quiz-summary>
+    <small data-activity-section-kicker data-th="สรุปเนื้อหา" data-en="Review summary">สรุปเนื้อหา</small>
+    <h2 data-activity-summary-title data-th="วิธีใช้แม่แบบ" data-en="How to use this template">วิธีใช้แม่แบบ</h2>
+    <div data-quiz-summary-content>
+      <section data-quiz-language="th">
+        <h3>โครงไฟล์ Quiz แบบเนื้อหาอย่างเดียว</h3>
+        <p>คัดลอกไฟล์นี้ ตั้งรหัสชุดใหม่ แล้วเปลี่ยนสรุป โจทย์ ตัวเลือก คำใบ้ และเฉลย โดยไม่ต้องสร้างปุ่ม สมุดทด ระบบ AI หรือ PDF ซ้ำ</p>
+      </section>
+      <section data-quiz-language="en">
+        <h3>Content-only quiz structure</h3>
+        <p>Copy this file, assign a new quiz ID, and replace the summary, questions, choices, hints, and solutions. Do not recreate buttons, the notebook, AI review, or PDF export.</p>
+      </section>
+    </div>
+  </section>
+
+  <section data-activity-questions data-quiz-questions>
+    <header data-question-section-heading>
+      <small data-activity-section-kicker data-th="แบบทดสอบ" data-en="Quiz">แบบทดสอบ</small>
+      <h2 data-th="ตัวอย่างสองข้อสำหรับตรวจระบบ" data-en="Two sample questions for checking the system">ตัวอย่างสองข้อสำหรับตรวจระบบ</h2>
+    </header>
+
+    <article
+      data-question
+      data-quiz-question
+      data-question-id="q1"
+      data-question-type="choice"
+      data-answer="b"
+    >
+      <header
+        data-question-prompt
+        data-th="ส่วนใดควบคุมปุ่ม สมุดทด การตรวจด้วย AI และการส่งออก PDF ให้ Quiz ทุกชุดเหมือนกัน?"
+        data-en="Which part keeps the buttons, notebook, AI review, and PDF export consistent across every quiz?"
+      >
+        <div data-quiz-language="th">ส่วนใดควบคุมปุ่ม สมุดทด การตรวจด้วย AI และการส่งออก PDF ให้ Quiz ทุกชุดเหมือนกัน?</div>
+        <div data-quiz-language="en">Which part keeps the buttons, notebook, AI review, and PDF export consistent across every quiz?</div>
+      </header>
+      <ol data-question-options>
+        <li data-choice-id="a" data-th="ไฟล์เนื้อหาแต่ละชุด" data-en="Each content file">A. ไฟล์เนื้อหาแต่ละชุด / Each content file</li>
+        <li data-choice-id="b" data-th="Quiz Engine กลาง" data-en="The shared Quiz Engine">B. Quiz Engine กลาง / The shared Quiz Engine</li>
+        <li data-choice-id="c" data-th="GitHub Pages workflow" data-en="GitHub Pages workflow">C. GitHub Pages workflow</li>
+        <li data-choice-id="d" data-th="ชื่อแท็บวิชา" data-en="The subject-tab name">D. ชื่อแท็บวิชา / The subject-tab name</li>
+      </ol>
+      <ol data-question-hints hidden>
+        <li data-question-hint data-hint-level="1">
+          <div data-quiz-language="th">มองหาส่วนที่ทุก Quiz เรียกใช้ร่วมกัน</div>
+          <div data-quiz-language="en">Look for the component shared by every quiz.</div>
+        </li>
+        <li data-question-hint data-hint-level="2">
+          <div data-quiz-language="th">ไฟล์เนื้อหาไม่ควรสร้างเครื่องมือซ้ำเอง</div>
+          <div data-quiz-language="en">A content file should not recreate the tools.</div>
+        </li>
+      </ol>
+      <section
+        data-question-solution
+        data-th="ตอบ B — Quiz Engine กลางเป็นผู้สร้างหน้าตา ปุ่ม สมุดทด AI และ PDF ให้ทุกชุด"
+        data-en="Answer B — the shared Quiz Engine supplies the interface, controls, notebook, AI review, and PDF export."
+        hidden
+      >
+        <div data-quiz-language="th">ตอบ B — Quiz Engine กลางเป็นผู้สร้างหน้าตา ปุ่ม สมุดทด AI และ PDF ให้ทุกชุด</div>
+        <div data-quiz-language="en">Answer B — the shared Quiz Engine supplies the interface, controls, notebook, AI review, and PDF export.</div>
+      </section>
+    </article>
+
+    <article
+      data-question
+      data-quiz-question
+      data-question-id="q2"
+      data-question-type="choice"
+      data-answer="a"
+    >
+      <header
+        data-question-prompt
+        data-th="เมื่อต้องการสร้าง Quiz ชุดใหม่ AI ควรแก้ส่วนใดเป็นหลัก?"
+        data-en="When creating a new quiz, what should the AI primarily edit?"
+      >
+        <div data-quiz-language="th">เมื่อต้องการสร้าง Quiz ชุดใหม่ AI ควรแก้ส่วนใดเป็นหลัก?</div>
+        <div data-quiz-language="en">When creating a new quiz, what should the AI primarily edit?</div>
+      </header>
+      <ol data-question-options>
+        <li data-choice-id="a" data-th="สรุป โจทย์ ตัวเลือก คำใบ้ และเฉลย" data-en="Summary, questions, choices, hints, and solutions">A. สรุป โจทย์ ตัวเลือก คำใบ้ และเฉลย / Summary, questions, choices, hints, and solutions</li>
+        <li data-choice-id="b" data-th="ระบบล็อกอิน" data-en="Login system">B. ระบบล็อกอิน / Login system</li>
+        <li data-choice-id="c" data-th="GitHub Pages workflow" data-en="GitHub Pages workflow">C. GitHub Pages workflow</li>
+        <li data-choice-id="d" data-th="Quiz Engine กลาง" data-en="Shared Quiz Engine">D. Quiz Engine กลาง / Shared Quiz Engine</li>
+      </ol>
+      <ol data-question-hints hidden>
+        <li data-question-hint data-hint-level="1">
+          <div data-quiz-language="th">เครื่องมือกลางพร้อมใช้แล้ว จึงควรแก้เฉพาะเนื้อหา</div>
+          <div data-quiz-language="en">The shared tools already exist, so only content should change.</div>
+        </li>
+        <li data-question-hint data-hint-level="2">
+          <div data-quiz-language="th">ห้ามสร้าง Engine หรือ workflow ใหม่ในไฟล์ Quiz</div>
+          <div data-quiz-language="en">Do not create a new engine or workflow inside a quiz file.</div>
+        </li>
+      </ol>
+      <section
+        data-question-solution
+        data-th="ตอบ A — ไฟล์ Quiz ใหม่ควรมีเฉพาะเนื้อหาและเฉลยที่ Quiz Engine ต้องใช้"
+        data-en="Answer A — a new quiz file should contain only the content and solutions required by the Quiz Engine."
+        hidden
+      >
+        <div data-quiz-language="th">ตอบ A — ไฟล์ Quiz ใหม่ควรมีเฉพาะเนื้อหาและเฉลยที่ Quiz Engine ต้องใช้</div>
+        <div data-quiz-language="en">Answer A — a new quiz file should contain only the content and solutions required by the Quiz Engine.</div>
+      </section>
+    </article>
+  </section>
+</article>

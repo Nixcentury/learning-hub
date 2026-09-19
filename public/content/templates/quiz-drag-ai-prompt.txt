@@ -1,0 +1,23 @@
+สร้างไฟล์เนื้อหาควิซลากวางสำหรับ Learning Hub โดยใช้ Quiz Engine กลางเดิม
+
+คัดลอก content/templates/quiz-drag-template.html
+ดูตัวอย่างข้อความ รูป และย่อหน้าที่ content/samples/drag-drop-demo.html
+
+ข้อกำหนด:
+1. HTML fragment เท่านั้น ไม่ต้องมี head/body, CSS, JavaScript หรือปุ่ม
+2. root ใช้ data-quiz-mode="drag-drop" และ data-activity-kind="quiz" ทุกข้อใช้ data-question-type="drag-drop" ห้ามผสม choice/number ในชุดนี้
+3. เปลี่ยน data-activity-id และ data-question-id ให้ไม่ซ้ำ คงรหัสเดิมเมื่อเพียงแก้ข้อความหรือย้ายข้อ
+4. โจทย์ประกอบด้วย data-question-prompt และ data-question-body ใส่บทความ รูป figure หรือสูตร MathJax ได้
+5. ช่องวางอยู่ใน body ใช้ span data-drop-slot="รหัสช่อง" data-answer="รหัสชิ้นที่ถูก" data-label-th/data-label-en
+6. ชิ้นคำตอบอยู่ใน ul data-drag-items แต่ละ li ใช้ data-item-id="รหัสชิ้น" เนื้อหาเป็นคำ ย่อหน้า รูป หรือสูตรได้
+7. รหัสช่องและชิ้นใช้ a-z ขึ้นต้น ตามด้วย a-z 0-9 หรือขีดกลาง ยาวไม่เกิน 64 ตัว ไม่ใช้ constructor/prototype แต่ละชนิดต้องไม่ซ้ำในข้อนั้น
+8. data-drag-reuse="once" หมายถึงใช้แต่ละชิ้นได้ครั้งเดียว เลือกชิ้นที่วางแล้วเพื่อย้ายได้ ใช้ "repeat" เมื่อต้องการให้ชิ้นเดียวใช้หลายช่อง
+9. หนึ่งข้อมีได้ 1–40 ช่อง และ 1–80 ชิ้น ต้องมีชิ้นที่ถูกสำหรับทุกช่อง ถูกครบทุกช่องจึงได้ 1 คะแนน ไม่เฉลยตอนลาก ตรวจเมื่อกดตรวจคำตอบทั้งหมด
+10. ใส่สรุป คำใบ้ เฉลย และข้อความไทย–อังกฤษตามแม่แบบ ใน body ใช้ data-th/data-en กับข้อความรอบช่อง อย่าสร้างช่อง ID เดียวซ้ำในส่วนภาษาไทยและอังกฤษ
+11. รูปใช้พาธสัมพันธ์กับไฟล์เนื้อหา เช่น assets/meter.svg และมี alt ที่บอกข้อมูลในภาพโดยไม่เฉลย ควรเก็บรูปไว้ใน repository เดียวกันเพื่อพิมพ์ PDF ได้
+12. จัดภาพข้างกันได้ด้วย div data-drag-grid ห้ามสร้าง style/class เอง
+13. ห้ามสร้างสมุด AI Worker การตรวจ การพิมพ์ การบันทึก Login หรือ deployment workflow ใหม่ และรักษาลิงก์ Quiz/Simulation เดิม
+
+เนื้อหาที่ต้องการ: [วิชา หัวข้อ จำนวนข้อ ระดับความยาก]
+
+ก่อนส่ง: ตรวจ ID และเฉลยทุกช่อง รัน validate:content เปิดผ่าน pages/tools/quiz-player.html?content=พาธไฟล์ใหม่ และทดสอบแตะ/ลาก ตรวจทั้งข้อ ย้อนข้อ และโหลดกลับมา

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="shared/page.css" />
+    <title>Test · Learning Hub</title>
+  </head>
+  <body class="theme-test">
+    <main
+      class="page-shell"
+      data-subject-page
+      data-subject-id="test"
+      data-subject-icon="T"
+      data-subject-title-th="ทดสอบ"
+      data-subject-title-en="Test"
+    ></main>
+
+    <!-- แก้ชื่อบทของแท็บทดสอบได้ที่รายการสั้น ๆ ด้านล่าง โดยไม่ต้องแก้ JavaScript -->
+    <template id="subject-chapters">
+      <article data-chapter="1">
+        <h2 data-chapter-title data-th="พื้นที่ทดสอบ 1" data-en="Test area 1">พื้นที่ทดสอบ 1</h2>
+        <p data-chapter-description data-th="ใช้ทดลองเนื้อหาและเครื่องมือชุดแรก" data-en="Try the first content and tool set">ใช้ทดลองเนื้อหาและเครื่องมือชุดแรก</p>
+      </article>
+      <article data-chapter="2">
+        <h2 data-chapter-title data-th="เติมคำตอบและแป้นคณิต" data-en="Numeric answers and math keyboard">เติมคำตอบและแป้นคณิต</h2>
+        <p data-chapter-description data-th="ลองเขียนสมุด กดสำรองเป็นไฟล์ แล้วนำกลับมาเขียนต่อได้ ไม่ต้องใช้ Firebase" data-en="Write in the notebook, back it up to a file, then import and continue. No Firebase needed.">ลองเขียนสมุด กดสำรองเป็นไฟล์ แล้วนำกลับมาเขียนต่อได้ ไม่ต้องใช้ Firebase</p>
+      </article>
+      <article data-chapter="3">
+        <h2 data-chapter-title data-th="ลากเติมและจับคู่" data-en="Drag-fill and matching">ลากเติมและจับคู่</h2>
+        <p data-chapter-description data-th="ลองเติมบทความ จับคู่รูป และลากย่อหน้า ตรวจทุกช่องพร้อมกันเป็นข้อเดียว" data-en="Try passages, image matching and paragraphs. All slots are graded together as one question.">ลองเติมบทความ จับคู่รูป และลากย่อหน้า ตรวจทุกช่องพร้อมกันเป็นข้อเดียว</p>
+      </article>
+      <article data-chapter="4">
+        <h2 data-chapter-title data-th="พื้นที่ทดสอบ 4" data-en="Test area 4">พื้นที่ทดสอบ 4</h2>
+        <p data-chapter-description data-th="พื้นที่ทดลองก่อนย้ายไปใช้ในวิชาจริง" data-en="A staging area before moving work into a real subject">พื้นที่ทดลองก่อนย้ายไปใช้ในวิชาจริง</p>
+      </article>
+    </template>
+
+    <script src="../shared/learning-hub-tools.js"></script>
+    <script src="shared/subject-page.js"></script>
+    <script src="shared/page.js"></script>
+  </body>
+</html>

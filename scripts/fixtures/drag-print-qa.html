@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="/shared/quiz-core.css"><link rel="stylesheet" href="/shared/quiz-evidence.css"><link rel="stylesheet" href="/shared/quiz-drag.css"><link rel="stylesheet" href="/shared/print-core.css">
+<script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<title>Drag print QA (local fixture)</title></head><body>
+<h1>Drag print QA · no account / no AI calls</h1>
+<button id="worksheet" disabled>Preview worksheet</button><button id="key" disabled>Preview answer key</button><button id="pdf" disabled>Export test evidence PDF</button>
+<p id="status" role="status">Loading fixture</p><div id="downloads"></div><main id="preview"></main><div data-evidence-export-host></div>
+<script src="/shared/print-core.js"></script>
+<script type="module">
+// The production modules are static public assets, not Vite-bundled modules.
+const adapterUrl = new URL('/shared/quiz-content-adapter.js', location.origin).href;
+const evidenceUrl = new URL('/shared/quiz-evidence.js', location.origin).href;
+const { readQuizContent } = await import(/* @vite-ignore */ adapterUrl);
+const { QuizEvidenceManager } = await import(/* @vite-ignore */ evidenceUrl);
+const response = await fetch('/content/samples/drag-drop-demo.html');
+const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
+const root = doc.querySelector('[data-learning-activity-content]');
+root.querySelectorAll('img').forEach(img => img.src = new URL(img.getAttribute('src'), response.url).href);
+// Deliberately exercise a long passage with several PDF continuation pages.
+const longBody = root.querySelectorAll('[data-question-body]')[2];
+for (let i = 1; i <= 12; i++) {
+  const p = doc.createElement('p'); p.textContent = `บรรทัดทดสอบ ${i}: การวัดกระแสและความต่างศักย์ต้องเลือกเครื่องมือและการต่อให้เหมาะสม รายการนี้ใช้ทดสอบการแบ่งหน้าโดยไม่ตัดเนื้อหาทิ้ง`; longBody.append(p);
+}
+const {questions, errors} = readQuizContent(root);
+if (errors.length) throw new Error(errors.join('; '));
+const manager = new QuizEvidenceManager({ contentId: 'drag-print-qa', questions, identityKey: 'qa-only', language: () => 'th' });
+manager.getAnswer = id => Object.fromEntries(questions.find(q => q.id === id).slots.map(s => [s.id, s.answer]));
+for (const q of questions) manager.entry(q.id).reasoning = 'เหตุผลตัวอย่างสำหรับตรวจรูปแบบ PDF เท่านั้น ยังไม่ได้ส่งให้ AI ตรวจ';
+const results = questions.map(question => ({ question, answer: manager.getAnswer(question.id), status: 'correct', correct: true }));
+window.LearningHubPrint.configure({ getContent: () => root, getTitle: () => 'Drag QA' });
+for (const [id, mode] of [['worksheet','worksheet'],['key','answer']]) document.getElementById(id).onclick = () => {
+  window.LearningHubPrint.prepare(mode);
+  document.getElementById('preview').replaceChildren(document.querySelector('[data-print-host]').firstElementChild.cloneNode(true));
+  window.LearningHubPrint.restore();
+  document.getElementById('status').textContent = mode + ' prepared';
+};
+document.getElementById('pdf').onclick = async () => {
+  // Keep generated PDF bytes visible in the QA page, even in browsers which
+  // do not expose automatic blob downloads to their automation interface.
+  const OriginalPdf = window.jspdf.jsPDF;
+  window.jspdf.jsPDF = function(options) {
+    const pdf = new OriginalPdf(options);
+    pdf.save = name => {
+      const link = document.createElement('a');
+      link.href = pdf.output('datauristring'); link.download = name; link.textContent = name;
+      document.getElementById('downloads').replaceChildren(link);
+      return pdf;
+    };
+    return pdf;
+  };
+  try { const files = await manager.exportPdf({ title:'ทดสอบควิซลากวางและแบ่งหน้า', results }); document.getElementById('status').textContent = JSON.stringify(files); }
+  catch(error) { document.getElementById('status').textContent = 'FAILED: '+error.message; }
+  finally { window.jspdf.jsPDF = OriginalPdf; }
+};
+document.querySelectorAll('button').forEach(button => button.disabled = false);
+document.getElementById('status').textContent = 'Ready';
+</script></body></html>

@@ -1,0 +1,235 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "lmsSessions": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": false
+      }
+    },
+    "lmsPresence": {
+      ".read": "auth != null && root.child('lmsSessions').child(auth.uid).child('active').val() === true",
+      ".indexOn": [
+        "status",
+        "quizId",
+        "lastActiveAt"
+      ],
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid && root.child('lmsSessions').child(auth.uid).child('active').val() === true",
+        ".validate": "!newData.exists() || (newData.hasChildren(['studentID','name','role','status','page','pageLabel','quizId','quizTitle','mode','lastActiveAt','connectedAt']) && newData.child('studentID').val() === root.child('lmsSessions').child(auth.uid).child('studentID').val() && newData.child('name').val() === root.child('lmsSessions').child(auth.uid).child('name').val() && newData.child('role').val() === root.child('lmsSessions').child(auth.uid).child('role').val() && (newData.child('status').val() === 'ONLINE' || newData.child('status').val() === 'IDLE' || newData.child('status').val() === 'OFFLINE') && newData.child('page').isString() && newData.child('page').val().length <= 32 && newData.child('pageLabel').isString() && newData.child('pageLabel').val().length <= 80 && newData.child('quizId').isString() && newData.child('quizId').val().length <= 500 && newData.child('quizTitle').isString() && newData.child('quizTitle').val().length <= 220 && newData.child('mode').isString() && newData.child('mode').val().length <= 24 && newData.child('lastActiveAt').isNumber() && newData.child('connectedAt').isNumber())"
+      }
+    },
+    "lmsDirectMessages": {
+      "$senderUid": {
+        "$receiverUid": {
+          ".read": "auth != null && (auth.uid === $senderUid || auth.uid === $receiverUid) && root.child('lmsSessions').child(auth.uid).child('active').val() === true",
+          "$messageId": {
+            ".write": "auth != null && ((!data.exists() && auth.uid === $senderUid && root.child('lmsSessions').child($senderUid).child('active').val() === true && root.child('lmsSessions').child($receiverUid).child('active').val() === true) || (data.exists() && !newData.exists() && (auth.uid === $senderUid || auth.uid === $receiverUid)))",
+            ".validate": "!newData.exists() || (newData.hasChildren(['senderUid','senderName','text','createdAt','expiresAt']) && newData.child('senderUid').val() === $senderUid && newData.child('senderName').val() === root.child('lmsSessions').child($senderUid).child('name').val() && newData.child('text').isString() && newData.child('text').val().length > 0 && newData.child('text').val().length <= 800 && newData.child('createdAt').isNumber() && newData.child('expiresAt').isNumber() && newData.child('expiresAt').val() > now && newData.child('expiresAt').val() <= now + 86400000)"
+          }
+        }
+      }
+    },
+    "lmsChatNotices": {
+      "$receiverUid": {
+        ".read": "auth != null && auth.uid === $receiverUid && root.child('lmsSessions').child(auth.uid).child('active').val() === true",
+        "$noticeId": {
+          ".write": "auth != null && ((!data.exists() && auth.uid !== $receiverUid && newData.child('senderUid').val() === auth.uid && root.child('lmsSessions').child(auth.uid).child('active').val() === true && root.child('lmsSessions').child($receiverUid).child('active').val() === true) || (data.exists() && !newData.exists() && auth.uid === $receiverUid))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['senderUid','senderName','textPreview','createdAt','expiresAt']) && newData.child('senderUid').isString() && newData.child('senderUid').val() === auth.uid && newData.child('senderName').val() === root.child('lmsSessions').child(auth.uid).child('name').val() && newData.child('textPreview').isString() && newData.child('textPreview').val().length > 0 && newData.child('textPreview').val().length <= 120 && newData.child('createdAt').isNumber() && newData.child('expiresAt').isNumber() && newData.child('expiresAt').val() > now && newData.child('expiresAt').val() <= now + 86400000)"
+        }
+      }
+    },
+    "quizPresence": {
+      "$quizId": {
+        ".read": "auth != null",
+        ".indexOn": [
+          "status",
+          "lastActiveAt"
+        ],
+        "$uid": {
+          ".write": "auth != null && auth.uid === $uid"
+        }
+      }
+    },
+    "quizProgress": {
+      "$quizId": {
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && auth.uid === $uid"
+        }
+      }
+    },
+    "learningHub": {
+      ".read": false,
+      ".write": false,
+      "admins": {
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": false,
+          ".validate": "newData.val() === true"
+        }
+      },
+      "profiles": {
+        ".read": "auth != null && root.child('learningHub/admins').child(auth.uid).val() === true",
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "!newData.exists() || newData.hasChildren(['displayName', 'email', 'createdAt', 'updatedAt'])",
+          "displayName": {
+            ".validate": "newData.isString() && newData.val().length <= 120"
+          },
+          "email": {
+            ".validate": "newData.isString() && newData.val() === auth.token.email && newData.val().length <= 254"
+          },
+          "createdAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "updatedAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      },
+      "teacherRequests": {
+        ".read": "auth != null && root.child('learningHub/admins').child(auth.uid).val() === true",
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || (auth.uid === $uid && !root.child('learningHub/teacherApprovals').child($uid).exists() && ((!newData.exists() && data.child('status').val() === 'pending') || (newData.exists() && newData.child('status').val() === 'pending'))))",
+          ".validate": "!newData.exists() || newData.hasChildren(['status', 'displayName', 'email', 'school', 'subjects', 'note', 'requestedAt', 'updatedAt'])",
+          "status": {
+            ".validate": "newData.isString() && (newData.val() === 'pending' || newData.val() === 'approved' || newData.val() === 'rejected' || newData.val() === 'revoked')"
+          },
+          "displayName": {
+            ".validate": "newData.isString() && newData.val().length <= 120"
+          },
+          "email": {
+            ".validate": "newData.isString() && newData.val().length <= 254 && (root.child('learningHub/admins').child(auth.uid).val() === true || newData.val() === auth.token.email)"
+          },
+          "school": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 120"
+          },
+          "subjects": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 160"
+          },
+          "note": {
+            ".validate": "newData.isString() && newData.val().length <= 300"
+          },
+          "requestedAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "updatedAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "reviewedAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "reviewedBy": {
+            ".validate": "newData.isString()"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      },
+      "teacherApprovals": {
+        ".read": "auth != null && root.child('learningHub/admins').child(auth.uid).val() === true",
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && root.child('learningHub/admins').child(auth.uid).val() === true",
+          ".validate": "!newData.exists() || newData.val() === true || (newData.hasChildren(['enabled', 'approvedAt', 'approvedBy']) && newData.child('enabled').val() === true)",
+          "enabled": {
+            ".validate": "newData.isBoolean()"
+          },
+          "approvedAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "approvedBy": {
+            ".validate": "newData.isString()"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      }
+    },
+    "classroomV1": {
+      ".read": false,
+      ".write": false,
+      "rooms": {
+        "$roomId": {
+          ".read": "(auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && root.child('classroomV1/rooms').child($roomId).child('ownerUid').val() === auth.uid) || (auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists())",
+          ".write": "auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && !data.exists() && newData.exists() && newData.child('ownerUid').val() === auth.uid",
+          ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && newData.hasChildren(['name','ownerUid','joinCode','createdAt']) && newData.parent().parent().child('joinCodes').child(newData.child('joinCode').val()).child('roomId').val() === $roomId && newData.parent().parent().child('joinCodes').child(newData.child('joinCode').val()).child('ownerUid').val() === auth.uid && newData.parent().parent().child('userRooms').child(auth.uid).child($roomId).val() === 'owner'",
+          "name": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100"
+          },
+          "ownerUid": {
+            ".validate": "newData.val() === auth.uid"
+          },
+          "joinCode": {
+            ".validate": "newData.isString() && newData.val().matches(/^[A-HJ-NP-Z2-9]{8}$/)"
+          },
+          "createdAt": {
+            ".validate": "newData.isNumber() && (newData.val() === now || (data.exists() && newData.val() === data.val()))"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      },
+      "joinCodes": {
+        "$code": {
+          ".read": "auth != null",
+          ".write": "auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && !data.exists() && newData.exists() && newData.child('ownerUid').val() === auth.uid",
+          ".validate": "$code.matches(/^[A-HJ-NP-Z2-9]{8}$/) && newData.hasChildren(['roomId','ownerUid']) && newData.parent().parent().child('rooms').child(newData.child('roomId').val()).child('joinCode').val() === $code && newData.parent().parent().child('rooms').child(newData.child('roomId').val()).child('ownerUid').val() === auth.uid",
+          "roomId": {
+            ".validate": "newData.isString() && newData.val().matches(/^r_[a-f0-9]{32}$/)"
+          },
+          "ownerUid": {
+            ".validate": "newData.val() === auth.uid"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      },
+      "members": {
+        "$roomId": {
+          ".read": "auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && root.child('classroomV1/rooms').child($roomId).child('ownerUid').val() === auth.uid",
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".write": "auth != null && auth.uid === $uid && newData.exists() && root.child('classroomV1/rooms').child($roomId).exists() && root.child('classroomV1/rooms').child($roomId).child('ownerUid').val() !== auth.uid && newData.child('joinCode').val() === root.child('classroomV1/rooms').child($roomId).child('joinCode').val() && root.child('classroomV1/joinCodes').child(newData.child('joinCode').val()).child('roomId').val() === $roomId",
+            ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && newData.hasChildren(['displayName','joinedAt','joinCode']) && newData.parent().parent().parent().child('userRooms').child($uid).child($roomId).val() === 'student' && (!data.exists() || (newData.child('displayName').val() === data.child('displayName').val() && newData.child('joinedAt').val() === data.child('joinedAt').val() && newData.child('joinCode').val() === data.child('joinCode').val()))",
+            "displayName": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 120"
+            },
+            "joinedAt": {
+              ".validate": "newData.isNumber() && (newData.val() === now || (data.exists() && newData.val() === data.val()))"
+            },
+            "joinCode": {
+              ".validate": "newData.isString() && newData.val().matches(/^[A-HJ-NP-Z2-9]{8}$/)"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      },
+      "userRooms": {
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          "$roomId": {
+            ".write": "auth != null && auth.uid === $uid && newData.exists()",
+            ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && ((newData.val() === 'owner' && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && newData.parent().parent().parent().child('rooms').child($roomId).child('ownerUid').val() === auth.uid) || (newData.val() === 'student' && newData.parent().parent().parent().child('members').child($roomId).child(auth.uid).exists() && newData.parent().parent().parent().child('rooms').child($roomId).child('ownerUid').val() !== auth.uid))"
+          }
+        }
+      },
+      "$other": {
+        ".validate": false
+      }
+    }
+  }
+}

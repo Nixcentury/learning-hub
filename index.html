@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="พื้นที่รวมบทเรียน ห้องเรียน แบบทดสอบ และห้องทดลองจำลองในที่เดียว"
+    />
+    <meta name="theme-color" content="#f4f8ff" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Learning Hub</title>
+  </head>
+
+  <body>
+    <!-- =========================================================
+      หน้า Login
+      หากต้องการแก้ข้อความ ให้แก้ data-th และ data-en ใน element นั้น
+      หากต้องการแก้สี ให้ไปที่ css/styles.css ส่วน :root ด้านบนสุด
+    ========================================================== -->
+    <section class="view login-view" id="login-view">
+      <div class="ambient ambient-blue" aria-hidden="true"></div>
+      <div class="ambient ambient-mint" aria-hidden="true"></div>
+
+      <div class="login-shell">
+        <header class="topbar glass-surface">
+          <a class="brand" href="#" aria-label="Learning Hub">
+            <span class="brand-icon" aria-hidden="true">▤</span>
+            <span class="brand-name">Learning Hub</span>
+          </a>
+
+          <div class="language-switch" aria-label="เลือกภาษา">
+            <button class="language-button" type="button" data-language="th" lang="th">
+              ไทย
+            </button>
+            <button class="language-button" type="button" data-language="en" lang="en">
+              EN
+            </button>
+          </div>
+        </header>
+
+        <main class="login-main">
+          <div class="login-content">
+            <div class="login-intro">
+              <p
+                class="eyebrow glass-chip"
+                data-th="ยินดีต้อนรับสู่พื้นที่เรียนรู้ของคุณ"
+                data-en="Welcome to your learning space"
+              >
+                ยินดีต้อนรับสู่พื้นที่เรียนรู้ของคุณ
+              </p>
+
+              <h1 id="login-heading" tabindex="-1">
+                <span data-th="ทุกอย่างที่เรียน" data-en="Everything you learn">
+                  ทุกอย่างที่เรียน
+                </span>
+                <span
+                  class="heading-accent"
+                  data-th="อยู่ในที่เดียว"
+                  data-en="all in one place"
+                >
+                  อยู่ในที่เดียว
+                </span>
+              </h1>
+
+              <p
+                class="tagline"
+                data-th="หนังสือ · แบบทดสอบ · ห้องทดลองจำลอง · ห้องเรียน"
+                data-en="Books · Quizzes · Simulations · Classrooms"
+              >
+                หนังสือ · แบบทดสอบ · ห้องทดลองจำลอง · ห้องเรียน
+              </p>
+            </div>
+
+            <div class="login-card glass-surface">
+              <div class="cloud-note">
+                <span class="cloud-icon" aria-hidden="true">☁</span>
+                <div>
+                  <h2
+                    data-th="กลับมาทำต่อได้จากทุกเครื่อง"
+                    data-en="Continue learning on any device"
+                  >
+                    กลับมาทำต่อได้จากทุกเครื่อง
+                  </h2>
+                  <p
+                    data-th="เมื่อเชื่อมบัญชีแล้ว ระบบจะจำห้องเรียนและความคืบหน้าของคุณ"
+                    data-en="Once connected, your classrooms and progress will stay with you."
+                  >
+                    เมื่อเชื่อมบัญชีแล้ว ระบบจะจำห้องเรียนและความคืบหน้าของคุณ
+                  </p>
+                </div>
+              </div>
+
+              <button class="button button-google" id="google-button" type="button">
+                <span class="google-mark" aria-hidden="true">G</span>
+                <span
+                  data-th="ดำเนินการต่อด้วย Google"
+                  data-en="Continue with Google"
+                >
+                  ดำเนินการต่อด้วย Google
+                </span>
+              </button>
+
+              <div class="divider" aria-hidden="true">
+                <span></span>
+                <small data-th="หรือ" data-en="or">หรือ</small>
+                <span></span>
+              </div>
+
+              <button class="button button-primary" id="guest-button" type="button">
+                <span
+                  data-th="ทดลองเข้า Hub แบบผู้เยี่ยมชม"
+                  data-en="Explore the Hub as a guest"
+                >
+                  ทดลองเข้า Hub แบบผู้เยี่ยมชม
+                </span>
+                <span aria-hidden="true">→</span>
+              </button>
+
+              <p class="notice" id="auth-notice" role="status" aria-live="polite" hidden>
+                <span id="auth-notice-icon" aria-hidden="true">●</span>
+                <span
+                  id="auth-notice-text"
+                  data-th="กำลังตรวจสอบบัญชีที่เคยเข้าสู่ระบบ"
+                  data-en="Checking your saved account"
+                >
+                  กำลังตรวจสอบบัญชีที่เคยเข้าสู่ระบบ
+                </span>
+              </p>
+
+              <p class="privacy-note">
+                <span aria-hidden="true">✓</span>
+                <span
+                  data-th="โหมดผู้เยี่ยมชมยังไม่บันทึกความคืบหน้าบน Cloud"
+                  data-en="Guest mode does not save progress to the cloud yet."
+                >
+                  โหมดผู้เยี่ยมชมยังไม่บันทึกความคืบหน้าบน Cloud
+                </span>
+              </p>
+            </div>
+          </div>
+        </main>
+
+        <footer
+          class="site-footer"
+          data-th="Learning Hub · เริ่มจากโครงที่เรียบง่าย แล้วค่อยเติบโตไปพร้อมบทเรียนใหม่"
+          data-en="Learning Hub · Start simple, then grow with every new lesson."
+        >
+          Learning Hub · เริ่มจากโครงที่เรียบง่าย แล้วค่อยเติบโตไปพร้อมบทเรียนใหม่
+        </footer>
+      </div>
+    </section>
+
+    <!-- =========================================================
+      หน้า Hub
+      แต่ละปุ่มมี data-page-src ชี้ไปยัง HTML แยกใน public/pages
+      Login, Role และ Presence อยู่หน้านี้ ส่วนเนื้อหาถูกเปิดใน iframe กลาง
+    ========================================================== -->
+    <section class="view hub-view" id="hub-view" hidden>
+      <header class="hub-topbar glass-surface">
+        <a class="brand" href="#" aria-label="Learning Hub">
+          <span class="brand-icon" aria-hidden="true">▤</span>
+          <span class="brand-name">Learning Hub</span>
+        </a>
+
+        <div class="hub-actions">
+          <div class="language-switch" aria-label="เลือกภาษา">
+            <button class="language-button" type="button" data-language="th" lang="th">
+              ไทย
+            </button>
+            <button class="language-button" type="button" data-language="en" lang="en">
+              EN
+            </button>
+          </div>
+          <button
+            class="role-button"
+            id="role-button"
+            type="button"
+            data-aria-th="เปิดข้อมูลสิทธิ์บัญชี"
+            data-aria-en="Open account access"
+            aria-label="เปิดข้อมูลสิทธิ์บัญชี"
+            aria-expanded="false"
+            aria-controls="role-panel"
+            hidden
+          >
+            <span class="role-button-icon" aria-hidden="true">♙</span>
+            <span id="role-label" data-th="นักเรียน" data-en="Student">นักเรียน</span>
+          </button>
+          <button
+            class="presence-button"
+            id="presence-button"
+            type="button"
+            data-aria-th="เปิดรายชื่อคนออนไลน์"
+            data-aria-en="Open online people"
+            aria-label="เปิดรายชื่อคนออนไลน์"
+            aria-expanded="false"
+            aria-controls="presence-panel"
+            hidden
+          >
+            <span class="presence-dot offline" id="presence-dot" aria-hidden="true"></span>
+            <strong id="presence-count">0</strong>
+            <span class="presence-label" data-th="ออนไลน์" data-en="online">ออนไลน์</span>
+          </button>
+          <div class="account-chip" id="account-chip">
+            <img
+              class="account-avatar"
+              id="account-avatar"
+              src="%BASE_URL%favicon.svg"
+              alt=""
+              referrerpolicy="no-referrer"
+            />
+            <span class="account-copy">
+              <strong id="account-name">ผู้เยี่ยมชม</strong>
+              <small id="account-detail">ไม่บันทึกบน Cloud</small>
+            </span>
+          </div>
+          <button
+            class="icon-button"
+            id="sign-out-button"
+            type="button"
+            data-aria-th="ออกจาก Hub"
+            data-aria-en="Leave the Hub"
+            aria-label="ออกจาก Hub"
+            title="ออกจาก Hub"
+          >
+            ↗
+          </button>
+        </div>
+      </header>
+
+      <div class="hub-layout">
+        <nav
+          class="hub-nav glass-surface"
+          data-aria-th="ส่วนต่าง ๆ ของ Learning Hub"
+          data-aria-en="Learning Hub sections"
+          aria-label="ส่วนต่าง ๆ ของ Learning Hub"
+        >
+          <div class="nav-scroll">
+            <button class="nav-button is-active" type="button" data-section="overview" data-page-src="pages/overview.html">
+              <span class="nav-icon">⌂</span>
+              <span data-th="ภาพรวม" data-en="Overview">ภาพรวม</span>
+            </button>
+            <button class="nav-button" type="button" data-section="classroom" data-page-src="pages/classroom.html">
+              <span class="nav-icon">◎</span>
+              <span data-th="ห้องเรียน" data-en="Classroom">ห้องเรียน</span>
+            </button>
+
+            <p class="nav-label" data-th="รายวิชา" data-en="Subjects">รายวิชา</p>
+
+            <button class="nav-button" type="button" data-section="physics" data-page-src="pages/physics.html">
+              <span class="nav-icon subject-physics">⚛</span>
+              <span data-th="ฟิสิกส์" data-en="Physics">ฟิสิกส์</span>
+            </button>
+            <button class="nav-button" type="button" data-section="chemistry" data-page-src="pages/chemistry.html">
+              <span class="nav-icon subject-chemistry">⚗</span>
+              <span data-th="เคมี" data-en="Chemistry">เคมี</span>
+            </button>
+            <button class="nav-button" type="button" data-section="biology" data-page-src="pages/biology.html">
+              <span class="nav-icon subject-biology">◌</span>
+              <span data-th="ชีววิทยา" data-en="Biology">ชีววิทยา</span>
+            </button>
+            <button class="nav-button" type="button" data-section="lower-science" data-page-src="pages/lower-science.html">
+              <span class="nav-icon subject-science">✦</span>
+              <span data-th="วิทยาศาสตร์ ม.ต้น" data-en="Lower Secondary Science">
+                วิทยาศาสตร์ ม.ต้น
+              </span>
+            </button>
+            <button class="nav-button" type="button" data-section="science-ep" data-page-src="pages/science-ep.html">
+              <span class="nav-icon subject-science">✦</span>
+              <span data-th="วิทยาศาสตร์ EP" data-en="Science EP">วิทยาศาสตร์ EP</span>
+            </button>
+            <button class="nav-button" type="button" data-section="math-ep" data-page-src="pages/math-ep.html">
+              <span class="nav-icon subject-math">∑</span>
+              <span data-th="คณิตศาสตร์ EP" data-en="Mathematics EP">คณิตศาสตร์ EP</span>
+            </button>
+            <button class="nav-button" type="button" data-section="upper-math" data-page-src="pages/upper-math.html">
+              <span class="nav-icon subject-math">∑</span>
+              <span data-th="คณิตศาสตร์ ม.ปลาย" data-en="Upper Secondary Mathematics">
+                คณิตศาสตร์ ม.ปลาย
+              </span>
+            </button>
+            <button class="nav-button" type="button" data-section="test" data-page-src="pages/test.html">
+              <span class="nav-icon subject-test">T</span>
+              <span data-th="ทดสอบ" data-en="Test">ทดสอบ</span>
+            </button>
+          </div>
+        </nav>
+
+        <main class="hub-content hub-frame-host">
+          <div class="hub-frame-loading" id="hub-frame-loading" role="status" aria-live="polite">
+            <span aria-hidden="true">◌</span>
+            <span data-th="กำลังเปิดหน้า" data-en="Opening page">กำลังเปิดหน้า</span>
+          </div>
+          <iframe
+            class="hub-page-frame"
+            id="hub-page-frame"
+            src="pages/overview.html?lang=th"
+            title="ภาพรวม"
+          ></iframe>
+        </main>
+      </div>
+
+      <!-- =======================================================
+        พื้นที่หน้าต่างงานกลาง
+        หน้ารายวิชาจะขอเปิดงานผ่าน js/workspace.js
+        จึงเปลี่ยนแท็บวิชาได้โดยหน้าต่างงานไม่หาย
+      ======================================================== -->
+      <div class="workspace-window-layer" id="workspace-window-layer"></div>
+
+      <section
+        class="hub-taskbar glass-surface"
+        id="hub-taskbar"
+        data-aria-th="แถบงานที่เปิดอยู่"
+        data-aria-en="Open tools taskbar"
+        aria-label="แถบงานที่เปิดอยู่"
+        hidden
+      >
+        <div class="taskbar-summary" aria-live="polite">
+          <span class="taskbar-brand" aria-hidden="true">▤</span>
+          <span>
+            <small data-th="งานที่เปิดอยู่" data-en="Open tools">งานที่เปิดอยู่</small>
+            <strong id="workspace-count">0</strong>
+          </span>
+        </div>
+        <div class="taskbar-items" id="taskbar-items"></div>
+        <p
+          class="taskbar-hint"
+          data-th="แตะชื่องานเพื่อย่อหรือเรียกกลับ"
+          data-en="Select a tool to minimize or restore it"
+        >
+          แตะชื่องานเพื่อย่อหรือเรียกกลับ
+        </p>
+      </section>
+    </section>
+
+    <!-- ระบบคนออนไลน์: แยกจากเนื้อหาและ Navigation -->
+    <div class="presence-backdrop" id="presence-backdrop" hidden></div>
+    <aside
+      class="presence-panel glass-surface"
+      id="presence-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+      aria-labelledby="presence-heading"
+      hidden
+    >
+      <header class="presence-panel-header">
+        <div>
+          <small data-th="LIVE PRESENCE · LEARNING HUB" data-en="LIVE PRESENCE · LEARNING HUB">
+            LIVE PRESENCE · LEARNING HUB
+          </small>
+          <h2 id="presence-heading" data-th="คนที่กำลังใช้งาน" data-en="People using the Hub">
+            คนที่กำลังใช้งาน
+          </h2>
+        </div>
+        <button
+          class="presence-close"
+          id="presence-close"
+          type="button"
+          data-aria-th="ปิดรายชื่อคนออนไลน์"
+          data-aria-en="Close online people"
+          aria-label="ปิดรายชื่อคนออนไลน์"
+        >
+          ×
+        </button>
+      </header>
+
+      <div class="presence-summary" aria-label="สรุปสถานะผู้ใช้">
+        <div><strong id="presence-online-total">0</strong><span>● Online</span></div>
+        <div><strong id="presence-idle-total">0</strong><span>● Idle</span></div>
+        <div><strong id="presence-visible-total">0</strong><span>● Visible</span></div>
+      </div>
+
+      <p class="presence-message" id="presence-message" role="status" aria-live="polite">
+        กำลังเชื่อมต่อระบบคนออนไลน์
+      </p>
+
+      <div class="presence-list" id="presence-list"></div>
+
+      <footer
+        class="presence-privacy"
+        data-th="นักเรียนเห็นเฉพาะจำนวน รายชื่อจะเปิดให้บัญชีครูและแอดมินที่ได้รับอนุมัติ"
+        data-en="Students see counts only. Names are reserved for approved teacher and admin accounts."
+      >
+        นักเรียนเห็นเฉพาะจำนวน รายชื่อจะเปิดให้บัญชีครูและแอดมินที่ได้รับอนุมัติ
+      </footer>
+    </aside>
+
+    <!-- สิทธิ์บัญชี: ผู้ใช้ส่งคำขอได้ แต่ Firebase เท่านั้นที่อนุมัติครูได้ -->
+    <div class="role-backdrop" id="role-backdrop" hidden></div>
+    <aside
+      class="role-panel glass-surface"
+      id="role-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+      aria-labelledby="role-heading"
+      hidden
+    >
+      <header class="role-panel-header">
+        <div>
+          <small data-th="ACCOUNT ACCESS · LEARNING HUB" data-en="ACCOUNT ACCESS · LEARNING HUB">
+            ACCOUNT ACCESS · LEARNING HUB
+          </small>
+          <h2 id="role-heading" data-th="สิทธิ์บัญชีของฉัน" data-en="My account access">
+            สิทธิ์บัญชีของฉัน
+          </h2>
+        </div>
+        <button
+          class="role-close"
+          id="role-close"
+          type="button"
+          data-aria-th="ปิดข้อมูลสิทธิ์บัญชี"
+          data-aria-en="Close account access"
+          aria-label="ปิดข้อมูลสิทธิ์บัญชี"
+        >
+          ×
+        </button>
+      </header>
+
+      <div class="role-panel-body">
+        <section class="role-summary-card" aria-live="polite">
+          <span class="role-summary-icon" id="role-summary-icon" aria-hidden="true">♙</span>
+          <div>
+            <small data-th="สิทธิ์ปัจจุบัน" data-en="Current access">สิทธิ์ปัจจุบัน</small>
+            <h3 id="role-status-title">นักเรียน</h3>
+            <p id="role-status-detail">ใช้บทเรียนและเข้าร่วมห้องเรียนได้</p>
+          </div>
+        </section>
+
+        <p class="role-message" id="role-message" role="status" aria-live="polite" hidden></p>
+
+        <div class="role-loading" id="role-loading">
+          <span aria-hidden="true">◌</span>
+          <p data-th="กำลังตรวจสิทธิ์จากระบบ" data-en="Checking account access">
+            กำลังตรวจสิทธิ์จากระบบ
+          </p>
+        </div>
+
+        <section class="role-approved" id="role-approved" hidden>
+          <p
+            data-th="บัญชีนี้ได้รับอนุมัติแล้ว เครื่องมือที่ตรงกับสิทธิ์จะปรากฏเมื่อเริ่มพัฒนา Classroom"
+            data-en="This account is approved. Matching tools will appear when Classroom development begins."
+          >
+            บัญชีนี้ได้รับอนุมัติแล้ว เครื่องมือที่ตรงกับสิทธิ์จะปรากฏเมื่อเริ่มพัฒนา Classroom
+          </p>
+          <a class="admin-page-link" id="admin-page-link" href="admin.html" hidden>
+            <span data-th="เปิดหน้าจัดการสิทธิ์ครู" data-en="Open teacher access manager">
+              เปิดหน้าจัดการสิทธิ์ครู
+            </span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </section>
+
+        <section class="role-request-status" id="role-request-status" hidden>
+          <span class="role-request-icon" aria-hidden="true">✓</span>
+          <div>
+            <h3 data-th="ส่งคำขอแล้ว" data-en="Request submitted">ส่งคำขอแล้ว</h3>
+            <p
+              data-th="ระหว่างรออนุมัติ บัญชีจะยังใช้งานในฐานะนักเรียนตามปกติ"
+              data-en="While approval is pending, this account continues to work as a student."
+            >
+              ระหว่างรออนุมัติ บัญชีจะยังใช้งานในฐานะนักเรียนตามปกติ
+            </p>
+          </div>
+          <button class="secondary-button" id="cancel-role-request" type="button">
+            <span data-th="ยกเลิกคำขอ" data-en="Cancel request">ยกเลิกคำขอ</span>
+          </button>
+        </section>
+
+        <form class="teacher-request-form" id="teacher-request-form" hidden>
+          <div class="role-form-heading">
+            <small data-th="สำหรับคุณครู" data-en="For teachers">สำหรับคุณครู</small>
+            <h3 data-th="ขอเปิดใช้เครื่องมือครู" data-en="Request teacher tools">
+              ขอเปิดใช้เครื่องมือครู
+            </h3>
+            <p
+              data-th="แอดมินจะตรวจข้อมูลก่อนอนุมัติ ผู้ใช้ไม่สามารถเปิดสิทธิ์ครูให้ตัวเองได้"
+              data-en="An admin reviews every request. Users cannot grant teacher access to themselves."
+            >
+              แอดมินจะตรวจข้อมูลก่อนอนุมัติ ผู้ใช้ไม่สามารถเปิดสิทธิ์ครูให้ตัวเองได้
+            </p>
+          </div>
+
+          <label class="role-field">
+            <span data-th="โรงเรียนหรือหน่วยงาน" data-en="School or organization">
+              โรงเรียนหรือหน่วยงาน
+            </span>
+            <input
+              id="teacher-school"
+              name="school"
+              type="text"
+              maxlength="120"
+              autocomplete="organization"
+              required
+            />
+          </label>
+
+          <label class="role-field">
+            <span data-th="วิชาหรือระดับชั้นที่สอน" data-en="Subjects or levels taught">
+              วิชาหรือระดับชั้นที่สอน
+            </span>
+            <input id="teacher-subjects" name="subjects" type="text" maxlength="160" required />
+          </label>
+
+          <label class="role-field">
+            <span data-th="หมายเหตุเพิ่มเติม (ไม่บังคับ)" data-en="Additional note (optional)">
+              หมายเหตุเพิ่มเติม (ไม่บังคับ)
+            </span>
+            <textarea id="teacher-note" name="note" maxlength="300" rows="3"></textarea>
+          </label>
+
+          <button class="primary-button role-submit" id="submit-role-request" type="submit">
+            <span data-th="ส่งคำขอสิทธิ์ครู" data-en="Submit teacher request">
+              ส่งคำขอสิทธิ์ครู
+            </span>
+          </button>
+        </form>
+      </div>
+
+      <footer
+        class="role-privacy"
+        data-th="บัญชีใหม่เป็นนักเรียนเสมอ สิทธิ์ครูและแอดมินอ่านจาก Firebase"
+        data-en="New accounts are always students. Teacher and admin access comes from Firebase."
+      >
+        บัญชีใหม่เป็นนักเรียนเสมอ สิทธิ์ครูและแอดมินอ่านจาก Firebase
+      </footer>
+    </aside>
+
+    <script type="module" src="/shared/learning-hub-tools.js"></script>
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

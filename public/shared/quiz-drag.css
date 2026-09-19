@@ -1,0 +1,42 @@
+/* Shared drag-fill presentation. Content HTML supplies no styles or handlers. */
+.quiz-drag-answer { min-width: 0; }
+.quiz-drag-instructions, .quiz-drag-status { color: var(--quiz-muted); font-size: 14px; line-height: 1.7; }
+.quiz-drag-body { font-size: 18px; line-height: 2; overflow-wrap: anywhere; }
+.quiz-drag-body p { margin: 0 0 20px; }
+.quiz-drag-body img, .quiz-drag-body svg { max-width: 100%; height: auto; }
+.quiz-drag-body figure { margin: 0 0 24px; }
+.quiz-drag-body figure img { display: block; width: min(100%, 300px); margin: 0 auto 14px; }
+.quiz-drag-body figcaption { text-align: center; }
+.quiz-drag-body [data-drag-grid] { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.quiz-drag-slot-group { display: inline-flex; align-items: stretch; vertical-align: middle; gap: 4px; max-width: 100%; margin: 5px 4px; }
+.quiz-drag-slot { display: inline-flex; flex-direction: column; text-align: left; min-width: 130px; max-width: 100%; min-height: 58px; padding: 8px 14px; border: 2px dashed #9db9e9; border-radius: 12px; background: #f3f7ff; color: var(--quiz-navy); cursor: pointer; overflow-wrap: anywhere; }
+.quiz-drag-slot-label { display: block; font-size: 12px; font-weight: 700; color: #4b6187; }
+.quiz-drag-slot-copy { font-size: 16px; line-height: 1.6; }
+.quiz-drag-slot[data-filled="true"] { border-style: solid; border-color: #6794e4; background: #eaf2ff; }
+.quiz-drag-slot[data-drag-over="true"] { border-color: #2563eb; box-shadow: 0 0 0 4px #2563eb26; }
+.quiz-drag-remove { align-self: center; min-width: 44px; min-height: 44px; background: white; border: 1px solid var(--quiz-line); border-radius: 10px; color: var(--quiz-muted); font-size: 22px; cursor: pointer; }
+.quiz-drag-bank { border-top: 1px solid var(--quiz-line); margin-top: 24px; padding-top: 18px; }
+.quiz-drag-bank h3 { font-size: 16px; margin: 0 0 12px; }
+.quiz-drag-pieces { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; }
+.quiz-drag-piece { display: flex; flex-direction: column; gap: 6px; text-align: left; max-width: 100%; min-height: 48px; padding: 12px 16px; background: white; color: var(--quiz-ink); border: 1px solid #b9cbe7; border-radius: 12px; box-shadow: 0 3px 9px #183a7010; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.quiz-drag-piece-copy { font-size: 16px; line-height: 1.6; overflow-wrap: anywhere; }
+.quiz-drag-piece-copy > p, .quiz-drag-slot-copy > p { margin: 0; }
+.quiz-drag-piece img, .quiz-drag-slot-copy img { max-width: 100%; width: 130px; height: auto; pointer-events: none; }
+.quiz-drag-piece-state { font-size: 12px; color: #4b6187; }
+.quiz-drag-piece-state:empty { display: none; }
+.quiz-drag-piece[data-used="true"] { background: #f1f5fb; border-style: dashed; }
+.quiz-drag-piece[aria-pressed="true"] { border-color: #2563eb; box-shadow: 0 0 0 3px #2563eb26; background: #eaf2ff; }
+.quiz-drag-ghost { position: fixed; z-index: 10000; pointer-events: none; max-width: 220px; padding: 10px 14px; background: #183a70; color: white; border-radius: 12px; font: 14px/1.5 system-ui; box-shadow: 0 6px 20px #183a7040; }
+.quiz-drag-paper-slot { display: inline-block; min-width: 100px; border-bottom: 1px solid #879bbb; padding: 0 6px; margin: 2px 3px; }
+.quiz-drag-review { margin: 12px 0; padding: 12px 16px; border: 1px solid var(--quiz-line); border-radius: 12px; background: var(--quiz-blue-soft); font-size: 15px; }
+.quiz-evidence-export-page.is-drag-evidence { height: auto; min-height: 1584px; overflow: visible; }
+.is-drag-evidence .quiz-evidence-export-prompt { max-height: none; overflow: visible; }
+.is-drag-evidence .quiz-evidence-export-reason p { max-height: none; overflow: visible; }
+.is-drag-evidence .quiz-drag-body { font-size: 19px; line-height: 1.7; }
+[data-question-navigation] [data-status="partial"] { border: 2px dashed #6387bb; }
+@media (max-width: 580px) {
+  .quiz-drag-body [data-drag-grid] { grid-template-columns: 1fr; }
+  .quiz-drag-slot-group { margin-left: 0; margin-right: 0; }
+  .quiz-drag-slot { min-width: 100px; }
+  .quiz-drag-piece { flex: 1 1 150px; }
+}

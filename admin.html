@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="หน้าหลังบ้านสำหรับอนุมัติสิทธิ์ครูใน Learning Hub"
+    />
+    <meta name="theme-color" content="#f4f8ff" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+    <title>Teacher Access · Learning Hub</title>
+  </head>
+
+  <body class="admin-page">
+    <div class="admin-ambient admin-ambient-blue" aria-hidden="true"></div>
+    <div class="admin-ambient admin-ambient-mint" aria-hidden="true"></div>
+
+    <header class="admin-topbar glass-surface">
+      <a class="brand" href="index.html" aria-label="Learning Hub">
+        <span class="brand-icon" aria-hidden="true">▤</span>
+        <span>
+          <strong class="brand-name">Learning Hub</strong>
+          <small data-th="จัดการสิทธิ์ครู" data-en="Teacher access manager">
+            จัดการสิทธิ์ครู
+          </small>
+        </span>
+      </a>
+
+      <div class="admin-topbar-actions">
+        <div class="language-switch" aria-label="เลือกภาษา">
+          <button class="language-button" type="button" data-language="th" lang="th">ไทย</button>
+          <button class="language-button" type="button" data-language="en" lang="en">EN</button>
+        </div>
+        <div class="admin-account" id="admin-account" hidden>
+          <img id="admin-avatar" src="%BASE_URL%favicon.svg" alt="" referrerpolicy="no-referrer" />
+          <span id="admin-account-name">Admin</span>
+        </div>
+        <button class="admin-sign-out" id="admin-sign-out" type="button" hidden>
+          <span data-th="ออกจากระบบ" data-en="Sign out">ออกจากระบบ</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="admin-shell">
+      <section class="admin-state glass-surface" id="admin-loading">
+        <span class="admin-state-icon" aria-hidden="true">◌</span>
+        <h1 data-th="กำลังตรวจสิทธิ์บัญชี" data-en="Checking account access">
+          กำลังตรวจสิทธิ์บัญชี
+        </h1>
+        <p data-th="กรุณารอสักครู่" data-en="Please wait a moment">กรุณารอสักครู่</p>
+      </section>
+
+      <section class="admin-state glass-surface" id="admin-signed-out" hidden>
+        <span class="admin-state-icon" aria-hidden="true">♛</span>
+        <p class="admin-eyebrow">ADMIN ONLY</p>
+        <h1 data-th="เข้าสู่ระบบด้วยบัญชีแอดมิน" data-en="Sign in with an admin account">
+          เข้าสู่ระบบด้วยบัญชีแอดมิน
+        </h1>
+        <p
+          data-th="ใช้ Google Login เดียวกับ Learning Hub ระบบจะตรวจสิทธิ์แอดมินจาก Firebase"
+          data-en="Use the same Google Login as the Learning Hub. Admin access is verified through Firebase."
+        >
+          ใช้ Google Login เดียวกับ Learning Hub ระบบจะตรวจสิทธิ์แอดมินจาก Firebase
+        </p>
+        <button class="button-primary admin-google-button" id="admin-google-button" type="button">
+          <span aria-hidden="true">G</span>
+          <span data-th="ดำเนินการต่อด้วย Google" data-en="Continue with Google">
+            ดำเนินการต่อด้วย Google
+          </span>
+        </button>
+        <p class="admin-feedback" id="admin-login-feedback" role="status" hidden></p>
+        <a class="admin-back-link" href="index.html">
+          <span aria-hidden="true">←</span>
+          <span data-th="กลับ Learning Hub" data-en="Back to Learning Hub">กลับ Learning Hub</span>
+        </a>
+      </section>
+
+      <section class="admin-state glass-surface" id="admin-denied" hidden>
+        <span class="admin-state-icon is-locked" aria-hidden="true">⌁</span>
+        <p class="admin-eyebrow">ACCESS CHECKED</p>
+        <h1 data-th="บัญชีนี้ยังไม่ใช่แอดมิน" data-en="This account is not an admin">
+          บัญชีนี้ยังไม่ใช่แอดมิน
+        </h1>
+        <p
+          data-th="หน้านี้ไม่อนุญาตให้บัญชีเลือกสิทธิ์เอง ต้องเพิ่มแอดมินคนแรกจาก Firebase Console"
+          data-en="Accounts cannot grant their own access. The first admin must be added through Firebase Console."
+        >
+          หน้านี้ไม่อนุญาตให้บัญชีเลือกสิทธิ์เอง ต้องเพิ่มแอดมินคนแรกจาก Firebase Console
+        </p>
+        <div class="admin-uid-box">
+          <small>Firebase UID</small>
+          <code id="admin-current-uid">—</code>
+          <button id="copy-admin-uid" type="button">
+            <span data-th="คัดลอก UID" data-en="Copy UID">คัดลอก UID</span>
+          </button>
+        </div>
+        <p class="admin-feedback" id="admin-denied-feedback" role="status" hidden></p>
+        <a class="admin-back-link" href="index.html">
+          <span aria-hidden="true">←</span>
+          <span data-th="กลับ Learning Hub" data-en="Back to Learning Hub">กลับ Learning Hub</span>
+        </a>
+      </section>
+
+      <section class="admin-dashboard" id="admin-dashboard" hidden>
+        <header class="admin-heading">
+          <div>
+            <p class="admin-eyebrow">TEACHER ACCESS</p>
+            <h1 data-th="จัดการสิทธิ์ครู" data-en="Manage teacher access">จัดการสิทธิ์ครู</h1>
+            <p
+              data-th="ตรวจคำขอ อนุมัติ หรือถอนสิทธิ์ โดยบัญชีผู้ใช้ไม่สามารถแก้สิทธิ์ตัวเองได้"
+              data-en="Review, approve, or revoke access. Users cannot change their own role."
+            >
+              ตรวจคำขอ อนุมัติ หรือถอนสิทธิ์ โดยบัญชีผู้ใช้ไม่สามารถแก้สิทธิ์ตัวเองได้
+            </p>
+          </div>
+          <a class="admin-back-button" href="index.html">
+            <span aria-hidden="true">←</span>
+            <span data-th="กลับ Hub" data-en="Back to Hub">กลับ Hub</span>
+          </a>
+        </header>
+
+        <div class="admin-stats">
+          <article class="admin-stat glass-surface">
+            <span aria-hidden="true">◷</span>
+            <div>
+              <strong id="pending-count">0</strong>
+              <small data-th="คำขอรอตรวจ" data-en="Pending requests">คำขอรอตรวจ</small>
+            </div>
+          </article>
+          <article class="admin-stat glass-surface">
+            <span aria-hidden="true">♜</span>
+            <div>
+              <strong id="teacher-count">0</strong>
+              <small data-th="ครูที่อนุมัติแล้ว" data-en="Approved teachers">ครูที่อนุมัติแล้ว</small>
+            </div>
+          </article>
+        </div>
+
+        <p class="admin-alert" id="admin-alert" role="status" aria-live="polite" hidden></p>
+
+        <section class="admin-section glass-surface">
+          <header>
+            <div>
+              <small data-th="รอตรวจสอบ" data-en="Awaiting review">รอตรวจสอบ</small>
+              <h2 data-th="คำขอสิทธิ์ครู" data-en="Teacher access requests">คำขอสิทธิ์ครู</h2>
+            </div>
+          </header>
+          <div class="admin-list" id="pending-list"></div>
+        </section>
+
+        <section class="admin-section glass-surface">
+          <header>
+            <div>
+              <small data-th="ใช้งานอยู่" data-en="Active access">ใช้งานอยู่</small>
+              <h2 data-th="บัญชีครูที่อนุมัติแล้ว" data-en="Approved teacher accounts">
+                บัญชีครูที่อนุมัติแล้ว
+              </h2>
+            </div>
+          </header>
+          <div class="admin-list" id="teacher-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="/shared/learning-hub-tools.js"></script>
+    <script type="module" src="js/admin.js"></script>
+  </body>
+</html>

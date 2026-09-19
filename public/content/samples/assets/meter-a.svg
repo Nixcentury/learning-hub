@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="150" viewBox="0 0 300 150" role="img" aria-label="Ammeter circuit symbol">
+  <rect width="300" height="150" rx="16" fill="#f3f7ff"/>
+  <path d="M25 75H100M200 75H275" fill="none" stroke="#173467" stroke-width="4"/>
+  <circle cx="150" cy="75" r="50" fill="white" stroke="#173467" stroke-width="4"/>
+  <text x="150" y="92" text-anchor="middle" font-family="Arial,sans-serif" font-size="48" fill="#173467">A</text>
+</svg>

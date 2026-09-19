@@ -1,0 +1,21 @@
+.notebook-backup-dialog { width: min(680px, calc(100% - 24px)); max-height: 90dvh; padding: 0; border: 1px solid #d5e2f2; border-radius: 22px; color: #172c51; background: #f9fcff; box-shadow: 0 24px 90px #12254840; }
+.notebook-backup-dialog::backdrop { background: #14294b66; }
+.notebook-backup-dialog header { display:flex; justify-content:space-between; align-items:start; gap:16px; padding:22px 24px 12px; }
+.notebook-backup-dialog h2 { margin:0 0 6px; font-size:1.35rem; }
+.notebook-backup-dialog p { margin: 8px 0; line-height:1.65; font-size:1rem; }
+.notebook-backup-body { padding:0 24px 24px; }
+.notebook-backup-dialog button, .notebook-backup-dialog a[data-backup-download] { display:inline-flex; align-items:center; justify-content:center; text-decoration:none; min-height:44px; border:1px solid #c7d8ef; border-radius:12px; padding:10px 16px; color:#163660; background:white; font:inherit; cursor:pointer; }
+.notebook-backup-dialog button:disabled, .notebook-backup-dialog a[aria-disabled="true"] { opacity:.5; cursor:default; }
+.notebook-backup-dialog button:focus-visible, .notebook-backup-dialog a:focus-visible, .notebook-backup-dialog input:focus-visible { outline:3px solid #367cf4; outline-offset:3px; }
+.notebook-backup-actions { display:flex; gap:10px; flex-wrap:wrap; margin:16px 0; }
+.notebook-backup-dialog .notebook-backup-actions .is-primary { background:#2459b8; color:white; border-color:#2459b8; }
+.notebook-backup-list { margin:12px 0; padding:0; list-style:none; max-height:240px; overflow:auto; border:1px solid #dbe5f3; border-radius:14px; background:white; }
+.notebook-backup-list li { display:flex; justify-content:space-between; gap:12px; padding:12px 14px; font-size:1rem; }
+.notebook-backup-list li + li { border-top:1px solid #edf2fa; }
+.notebook-backup-notice { padding:12px 14px; border:1px solid #c8ddfa; border-radius:12px; background:#edf5ff; }
+.notebook-backup-notice[data-error="true"] { border-color:#eea4b2; background:#fff3f5; color:#9f1239; }
+.notebook-backup-import { border-top:1px solid #d5e2f2; margin-top:20px; padding-top:16px; }
+.notebook-backup-import label { display:flex; align-items:start; gap:10px; line-height:1.6; font-size:1rem; margin:14px 0; }
+.notebook-backup-import input { width:20px; height:20px; flex-shrink:0; margin-top:3px; }
+@media (max-width:480px) { .notebook-backup-dialog header { padding:18px 16px 10px; } .notebook-backup-body { padding:0 16px 18px; } .notebook-backup-actions button, .notebook-backup-actions a { flex:1 1 160px; } }
+@media print { .notebook-backup-dialog, [data-notebook-backup-open] { display:none!important; } }

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <link rel="stylesheet" href="../../shared/print-core.css?v=6a1" />
+    <link rel="stylesheet" href="../../shared/quiz-core.css?v=6b-numeric-1" />
+    <link rel="stylesheet" href="../../shared/quiz-drag.css?v=drag-1" />
+    <link rel="stylesheet" href="notebook-core.css?v=6b1" />
+    <link rel="stylesheet" href="../../shared/quiz-evidence.css?v=6c3" />
+    <link rel="stylesheet" href="../../shared/notebook-backup.css?v=6c-backup-2" />
+    <title>Quiz Engine · Learning Hub</title>
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] },
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+  <body
+    data-quiz-shell
+    data-content-src="../../content/chemistry/chemistry-y12-parallel-mock-27q.html"
+  >
+    <main class="quiz-shell">
+      <header class="quiz-topbar">
+        <a class="quiz-brand" href="../../index.html#chemistry" aria-label="Learning Hub">
+          <span class="quiz-brand-mark" aria-hidden="true">▤</span>
+          <span>
+            <small data-th="เครื่องมือกลาง" data-en="Shared tool">เครื่องมือกลาง</small>
+            <strong>Quiz Engine</strong>
+          </span>
+        </a>
+
+        <div class="quiz-top-actions">
+          <button class="quiz-quiet-button" type="button" data-notebook-backup-open>
+            <span data-th="สำรอง / นำเข้าสมุด" data-en="Notebook backup / import">สำรอง / นำเข้าสมุด</span>
+          </button>
+          <div class="quiz-language" aria-label="Language">
+            <button type="button" data-language-button="th" aria-pressed="true">ไทย</button>
+            <button type="button" data-language-button="en" aria-pressed="false">EN</button>
+          </div>
+          <button class="quiz-quiet-button" type="button" data-summary-open>
+            <span aria-hidden="true">▤</span>
+            <span data-th="สรุป" data-en="Review">สรุป</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="quiz-loading" data-quiz-loading role="status" aria-live="polite">
+        <span aria-hidden="true"></span>
+        <p data-th="กำลังประกอบ Quiz จากไฟล์เนื้อหา…" data-en="Building the quiz from its content file…">
+          กำลังประกอบ Quiz จากไฟล์เนื้อหา…
+        </p>
+      </section>
+
+      <section class="quiz-error" data-quiz-error hidden role="alert"></section>
+      <div data-quiz-app hidden></div>
+      <div data-quiz-print-source hidden></div>
+    </main>
+
+    <dialog class="quiz-dialog quiz-summary-dialog" data-summary-dialog>
+      <form method="dialog" class="quiz-dialog-header">
+        <div>
+          <small data-th="กระดานสรุป" data-en="Review board">กระดานสรุป</small>
+          <strong data-summary-title>สรุปก่อนทำ Quiz</strong>
+        </div>
+        <button type="submit" aria-label="Close">×</button>
+      </form>
+      <div class="quiz-summary-content" data-summary-content data-allow-selection></div>
+      <footer class="quiz-dialog-footer">
+        <button type="button" class="quiz-print-action is-summary" data-print-mode="summary" disabled>
+          <span aria-hidden="true">▤</span>
+          <span data-th="พิมพ์สรุป" data-en="Print summary">พิมพ์สรุป</span>
+        </button>
+        <form method="dialog">
+          <button class="quiz-primary-button" type="submit" data-th="กลับไปทำ Quiz" data-en="Back to quiz">
+            กลับไปทำ Quiz
+          </button>
+        </form>
+      </footer>
+    </dialog>
+
+    <section
+      class="quiz-dialog quiz-print-dialog"
+      data-print-selection-panel
+      id="quiz-print-selection"
+      role="dialog"
+      aria-modal="true"
+      hidden
+    >
+      <header class="quiz-dialog-header">
+        <div>
+          <small data-th="ชุดข้อที่จะพิมพ์" data-en="Questions to print">ชุดข้อที่จะพิมพ์</small>
+          <strong data-th="เลือกเฉพาะข้อที่ต้องการ" data-en="Choose the questions you need">
+            เลือกเฉพาะข้อที่ต้องการ
+          </strong>
+        </div>
+        <button type="button" data-print-dialog-close aria-label="Close">×</button>
+      </header>
+      <div class="quiz-print-dialog-body">
+        <div class="quiz-print-selection-actions">
+          <button type="button" data-print-select-all disabled data-th="เลือกทั้งหมด" data-en="Select all">
+            เลือกทั้งหมด
+          </button>
+          <button type="button" data-print-select-none disabled data-th="ล้างทั้งหมด" data-en="Clear all">
+            ล้างทั้งหมด
+          </button>
+        </div>
+        <div class="activity-print-question-list" data-print-question-list></div>
+      </div>
+      <footer class="quiz-dialog-footer is-print">
+        <button class="quiz-print-action is-worksheet" type="button" data-print-mode="worksheet" disabled>
+          <span aria-hidden="true">▣</span>
+          <span data-th="ปริ้นไปทำ" data-en="Print worksheet">ปริ้นไปทำ</span>
+        </button>
+        <button class="quiz-print-action is-answer" type="button" data-print-mode="answer" disabled>
+          <span aria-hidden="true">✓</span>
+          <span data-th="ปริ้นเฉลย" data-en="Print answer key">ปริ้นเฉลย</span>
+        </button>
+      </footer>
+    </section>
+
+    <button data-print-selection-toggle hidden aria-controls="quiz-print-selection" aria-expanded="false">
+      <span data-print-selection-label data-th="เลือกข้อ" data-en="Select questions">เลือกข้อ</span>
+    </button>
+
+    <dialog class="quiz-evidence-warning-dialog" data-evidence-warning-dialog>
+      <section class="quiz-evidence-warning-body">
+        <small data-evidence-warning-kicker>REASONING CHECK</small>
+        <h2 data-evidence-warning-title>บางข้อยังไม่มีเหตุผลหรือกระดาษทด</h2>
+        <p data-evidence-warning-copy></p>
+        <div class="quiz-evidence-warning-list" data-evidence-warning-list></div>
+      </section>
+      <footer class="quiz-evidence-warning-actions">
+        <button type="button" data-evidence-warning-back>กลับไปเพิ่มวิธีทำ</button>
+        <button type="button" data-evidence-warning-continue>ตรวจต่อโดยไม่มีวิธีทำ</button>
+      </footer>
+    </dialog>
+
+    <div data-evidence-export-host aria-hidden="true"></div>
+
+    <script src="../../shared/learning-hub-tools.js"></script>
+    <script src="../../shared/print-core.js?v=drag-1"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script type="module" src="../../shared/quiz-core.js?v=drag-1"></script>
+  </body>
+</html>

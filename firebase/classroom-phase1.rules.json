@@ -1,0 +1,80 @@
+{
+  "rules": {
+    "classroomV1": {
+      ".read": false,
+      ".write": false,
+      "rooms": {
+        "$roomId": {
+          ".read": "(auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && root.child('classroomV1/rooms').child($roomId).child('ownerUid').val() === auth.uid) || (auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists())",
+          ".write": "auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && !data.exists() && newData.exists() && newData.child('ownerUid').val() === auth.uid",
+          ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && newData.hasChildren(['name','ownerUid','joinCode','createdAt']) && newData.parent().parent().child('joinCodes').child(newData.child('joinCode').val()).child('roomId').val() === $roomId && newData.parent().parent().child('joinCodes').child(newData.child('joinCode').val()).child('ownerUid').val() === auth.uid && newData.parent().parent().child('userRooms').child(auth.uid).child($roomId).val() === 'owner'",
+          "name": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100"
+          },
+          "ownerUid": {
+            ".validate": "newData.val() === auth.uid"
+          },
+          "joinCode": {
+            ".validate": "newData.isString() && newData.val().matches(/^[A-HJ-NP-Z2-9]{8}$/)"
+          },
+          "createdAt": {
+            ".validate": "newData.isNumber() && (newData.val() === now || (data.exists() && newData.val() === data.val()))"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      },
+      "joinCodes": {
+        "$code": {
+          ".read": "auth != null",
+          ".write": "auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && !data.exists() && newData.exists() && newData.child('ownerUid').val() === auth.uid",
+          ".validate": "$code.matches(/^[A-HJ-NP-Z2-9]{8}$/) && newData.hasChildren(['roomId','ownerUid']) && newData.parent().parent().child('rooms').child(newData.child('roomId').val()).child('joinCode').val() === $code && newData.parent().parent().child('rooms').child(newData.child('roomId').val()).child('ownerUid').val() === auth.uid",
+          "roomId": {
+            ".validate": "newData.isString() && newData.val().matches(/^r_[a-f0-9]{32}$/)"
+          },
+          "ownerUid": {
+            ".validate": "newData.val() === auth.uid"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      },
+      "members": {
+        "$roomId": {
+          ".read": "auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && root.child('classroomV1/rooms').child($roomId).child('ownerUid').val() === auth.uid",
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".write": "auth != null && auth.uid === $uid && newData.exists() && root.child('classroomV1/rooms').child($roomId).exists() && root.child('classroomV1/rooms').child($roomId).child('ownerUid').val() !== auth.uid && newData.child('joinCode').val() === root.child('classroomV1/rooms').child($roomId).child('joinCode').val() && root.child('classroomV1/joinCodes').child(newData.child('joinCode').val()).child('roomId').val() === $roomId",
+            ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && newData.hasChildren(['displayName','joinedAt','joinCode']) && newData.parent().parent().parent().child('userRooms').child($uid).child($roomId).val() === 'student' && (!data.exists() || (newData.child('displayName').val() === data.child('displayName').val() && newData.child('joinedAt').val() === data.child('joinedAt').val() && newData.child('joinCode').val() === data.child('joinCode').val()))",
+            "displayName": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 120"
+            },
+            "joinedAt": {
+              ".validate": "newData.isNumber() && (newData.val() === now || (data.exists() && newData.val() === data.val()))"
+            },
+            "joinCode": {
+              ".validate": "newData.isString() && newData.val().matches(/^[A-HJ-NP-Z2-9]{8}$/)"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      },
+      "userRooms": {
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          "$roomId": {
+            ".write": "auth != null && auth.uid === $uid && newData.exists()",
+            ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && ((newData.val() === 'owner' && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && newData.parent().parent().parent().child('rooms').child($roomId).child('ownerUid').val() === auth.uid) || (newData.val() === 'student' && newData.parent().parent().parent().child('members').child($roomId).child(auth.uid).exists() && newData.parent().parent().parent().child('rooms').child($roomId).child('ownerUid').val() !== auth.uid))"
+          }
+        }
+      },
+      "$other": {
+        ".validate": false
+      }
+    }
+  }
+}

@@ -1,0 +1,431 @@
+/* ==============================================================
+   Activity Core กลางของ Learning Hub
+   ไฟล์ HTML เนื้อหาไม่ต้องมี class หรือ CSS ของตัวเอง
+================================================================ */
+
+body.tool-activity {
+  --accent: #5075bd;
+  --soft: #e9f1ff;
+}
+
+.activity-shell {
+  width: min(980px, 100%);
+}
+
+.activity-system-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border: 1px solid rgba(179, 198, 228, 0.55);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 16px 42px rgba(48, 76, 128, 0.08);
+  backdrop-filter: blur(16px) saturate(135%);
+}
+
+.activity-system-identity,
+.activity-system-actions,
+.activity-contract-status,
+.activity-print-button {
+  display: flex;
+  align-items: center;
+}
+
+.activity-system-identity {
+  min-width: 0;
+  gap: 11px;
+}
+
+.activity-system-identity .tool-icon {
+  width: 40px;
+  height: 40px;
+  flex-basis: 40px;
+  border-radius: 13px;
+  font-size: 17px;
+}
+
+.activity-system-identity div {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.activity-system-identity small {
+  color: var(--accent);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.activity-system-identity strong {
+  overflow: hidden;
+  color: var(--navy);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activity-system-actions {
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.activity-contract-status {
+  gap: 6px;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid #c9daee;
+  border-radius: 11px;
+  background: #f2f7fd;
+  color: #5f7190;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.activity-contract-status > span:first-child {
+  display: grid;
+  width: 16px;
+  height: 16px;
+  place-items: center;
+  border-radius: 50%;
+  background: #dbe8f7;
+}
+
+.activity-contract-status.is-valid {
+  border-color: #a7ddd1;
+  background: #effaf7;
+  color: #267565;
+}
+
+.activity-contract-status.is-valid > span:first-child {
+  background: #ccefe6;
+}
+
+.activity-contract-status.is-error {
+  border-color: #f0b7c0;
+  background: #fff4f5;
+  color: #a44051;
+}
+
+.activity-contract-status.is-error > span:first-child {
+  background: #f9dbe0;
+}
+
+.activity-print-button {
+  justify-content: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 8px 13px;
+  border: 1px solid #385d9e;
+  border-radius: 11px;
+  background: #456ab0;
+  color: white;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, opacity 160ms ease;
+}
+
+.activity-print-button:hover:not(:disabled) {
+  background: #355894;
+  transform: translateY(-1px);
+}
+
+.activity-print-button:focus-visible,
+.activity-print-selection-actions button:focus-visible,
+.activity-print-question-option:focus-within,
+.activity-choice:focus-within,
+.activity-number-response input:focus-visible,
+.activity-print-field input:focus-visible {
+  outline: 3px solid rgba(83, 124, 199, 0.25);
+  outline-offset: 2px;
+}
+
+.activity-print-button:disabled {
+  cursor: wait;
+  opacity: 0.52;
+}
+
+.activity-loading {
+  display: grid;
+  min-height: 290px;
+  place-items: center;
+  align-content: center;
+  gap: 12px;
+  border: 1px dashed #c6d7ec;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.68);
+  color: var(--muted);
+  text-align: center;
+}
+
+.activity-loading > span {
+  width: 34px;
+  height: 34px;
+  border: 3px solid #d8e5f5;
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: activity-spin 850ms linear infinite;
+}
+
+.activity-loading p {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.activity-loading.is-error > span {
+  display: grid;
+  border: 0;
+  background: #fae3e7;
+  color: #a44051;
+  animation: none;
+}
+
+.activity-loading.is-error > span::before {
+  content: "!";
+}
+
+.activity-loading.is-error p {
+  max-width: 560px;
+  color: #9a3f4e;
+  line-height: 1.7;
+}
+
+.activity-content {
+  display: grid;
+  gap: 14px;
+}
+
+.activity-intro,
+.activity-summary,
+.activity-questions {
+  border: 1px solid rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.83);
+  box-shadow: 0 22px 64px rgba(43, 73, 126, 0.1);
+  backdrop-filter: blur(18px) saturate(138%);
+}
+
+.activity-intro {
+  padding: 26px;
+  border-radius: 24px;
+}
+
+.activity-kicker,
+.activity-section-kicker {
+  color: var(--accent);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.activity-intro h1 {
+  max-width: 760px;
+  margin: 7px 0 0;
+  color: var(--navy);
+  font-size: clamp(1.55rem, 4vw, 2.15rem);
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+.activity-intro p {
+  max-width: 760px;
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.75;
+}
+
+.activity-summary,
+.activity-questions {
+  padding: 22px;
+  border-radius: 21px;
+}
+
+.activity-summary h2,
+.activity-questions > header h2 {
+  margin: 5px 0 0;
+  color: var(--navy);
+  font-size: clamp(1.15rem, 3vw, 1.45rem);
+  line-height: 1.35;
+}
+
+.activity-summary p,
+.activity-summary li,
+.activity-questions > header p {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.75;
+}
+
+.activity-summary p,
+.activity-questions > header p {
+  margin: 7px 0 0;
+}
+
+.activity-key-points {
+  display: grid;
+  gap: 7px;
+  margin: 13px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.activity-key-points li {
+  position: relative;
+  padding: 9px 11px 9px 34px;
+  border: 1px solid #d7e3f2;
+  border-radius: 12px;
+  background: #f7faff;
+}
+
+.activity-key-points li::before {
+  position: absolute;
+  top: 9px;
+  left: 11px;
+  color: var(--accent);
+  content: "✓";
+  font-weight: 900;
+}
+
+.activity-question {
+  margin-top: 12px;
+  padding: 17px;
+  border: 1px solid #d4e1f0;
+  border-radius: 16px;
+  background: rgba(248, 251, 255, 0.92);
+}
+
+.activity-question-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.activity-question-number {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--soft);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.activity-question h3 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.activity-options {
+  display: grid;
+  gap: 7px;
+  margin: 13px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.activity-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  min-height: 39px;
+  padding: 9px 11px;
+  border: 1px solid #d7e3f1;
+  border-radius: 11px;
+  background: white;
+  color: var(--text);
+  font-size: 10px;
+  line-height: 1.55;
+  cursor: pointer;
+}
+
+.activity-choice:hover {
+  border-color: #aac0de;
+  background: #f5f9ff;
+}
+
+.activity-choice input {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  margin: 1px 0 0;
+  accent-color: var(--accent);
+}
+
+.activity-number-response {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 13px;
+}
+
+.activity-number-response input {
+  width: min(220px, 100%);
+  min-height: 39px;
+  padding: 8px 11px;
+  border: 1px solid #c9d8ea;
+  border-radius: 11px;
+  background: white;
+  color: var(--navy);
+  font: inherit;
+  font-size: 11px;
+}
+
+.activity-number-response span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+@keyframes activity-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 720px) {
+  .activity-system-bar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .activity-system-actions {
+    justify-content: flex-start;
+  }
+
+  .activity-intro,
+  .activity-summary,
+  .activity-questions {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .activity-system-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .activity-contract-status,
+  .activity-print-button {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .activity-loading > span {
+    animation-duration: 1.8s;
+  }
+}

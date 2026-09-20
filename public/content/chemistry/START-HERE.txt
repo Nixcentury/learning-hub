@@ -1,24 +1,49 @@
 คู่มือเพิ่มเนื้อหาแบบ 4 ชั้น — ตัวอย่างบทสมดุลเคมี
-13 กันยายน 2026
+ปรับคู่มือหลังย้ายโครงการ 20 กันยายน 2026
 
-รอบนี้เชื่อมหนึ่งบท หนึ่งเรื่องย่อย และแม่แบบ Quiz หนึ่งชุดแล้ว
-ใช้ข้อ Q21 เรื่องเลอชาเตอลิเยจาก Chemistry Y12 เดิม พร้อมสรุป คำใบ้ และเฉลย
-ไฟล์ต้นฉบับ 27 ข้อไม่ถูกแก้ไข ชุดนำร่องมีรหัสของตัวเอง
+เว็บที่ใช้งาน: https://nixcentury.github.io/learning-hub/
+แก้และเผยแพร่จาก Nixcentury/learning-hub เท่านั้น ไม่ใช่แฟ้ม LEARNING HUB ใน repo เก่า
 
-โครงไฟล์ที่ใช้จริง
-=================
+สถานะจริง: มี HTML เรื่องเลอชาเตอลิเยและแม่แบบ Quiz อยู่แล้ว
+แม่แบบใช้ Q21 จาก Chemistry Y12 เดิม พร้อมสรุป คำใบ้ และเฉลย
+แต่ตอนนี้ยังไม่มีไฟล์เมนูบท equilibrium.html และบท 9 ยังไม่ได้ใส่ data-chapter-src
+จึงยังเข้าไม่ครบ 4 ชั้นจากแท็บเคมี การย้ายเว็บไม่ได้สร้างไฟล์ที่ลบไปกลับมา
+ด้านล่างเป็นวิธีเตรียมและเชื่อมด้วยตัวเอง ไม่ใช่คำยืนยันว่าเชื่อมไว้ครบแล้ว
+
+โครงไฟล์สำหรับเชื่อม 4 ชั้น
+==========================
 หน้าเลือกวิชา/บท:
 C:/Users/Sattawat.b/Documents/GitHub/learning-hub/public/pages/chemistry.html
 
 แฟ้มวิชา:
 C:/Users/Sattawat.b/Documents/GitHub/learning-hub/public/content/chemistry/
-  equilibrium.html                 ชั้น 2: รายชื่อเรื่องย่อย
+  equilibrium.html                 ชั้น 2: รายชื่อเรื่องย่อย (ต้องสร้างเมื่อพร้อม)
   equilibrium/
     le-chatelier.html              ชั้น 3: รายชื่อ Quiz/เครื่องมือ
     quiz-template.html             เนื้อหาชั้น 4: แม่แบบคัดลอกได้
 
-ใน Hub ให้เลือก เคมี > บทที่ 9 สมดุลเคมี > หลักของเลอชาเตอลิเย
+หลังเชื่อมครบ ใน Hub ให้เลือก เคมี > บทที่ 9 สมดุลเคมี > หลักของเลอชาเตอลิเย
 > เลอชาเตอลิเย · แบบฝึกเริ่มต้น
+
+เริ่มเชื่อมบทตัวอย่างเมื่อพร้อม
+==============================
+1. สร้าง public/content/chemistry/equilibrium.html โดยใส่เนื้อหานี้:
+
+<nav data-learning-menu data-menu-kind="topics"
+  data-subject-id="chemistry" data-chapter-id="9"
+  data-title-th="บทที่ 9 สมดุลเคมี" data-title-en="Chapter 9 Chemical Equilibrium"
+  data-description-th="เลือกเรื่องย่อย" data-description-en="Choose a topic">
+  <a data-topic-id="le-chatelier" href="equilibrium/le-chatelier.html"
+    data-th="หลักของเลอชาเตอลิเย" data-en="Le Chatelier's principle">หลักของเลอชาเตอลิเย</a>
+</nav>
+
+2. ใน public/pages/chemistry.html หาแท็กเปิด <article data-chapter="9">
+   เพิ่มเฉพาะ data-chapter-src โดยคงชื่อบทและคำอธิบายเดิมด้านในไว้:
+
+   <article data-chapter="9" data-chapter-src="../content/chemistry/equilibrium.html">
+
+3. ตรวจเนื้อหาและ Build ตามท้ายคู่มือ แล้ว Commit/Push ก่อนลองบนเว็บจริง
+   ถ้าแค่วางไฟล์ไว้โดยไม่เชื่อมเมนู ไฟล์จะมี URL แต่ไม่มีรายการนำทางไปหาเอง
 
 หน้าตาการ์ด ปุ่ม ภาษา และการเปิดงานมาจากระบบกลาง
 ไฟล์ HTML เมนูไม่ต้องใส่ CSS, JavaScript หรือสร้างปุ่มเอง
@@ -107,7 +132,7 @@ Simulation (ตัวเลือก ไม่ได้สร้างตัว�
 ทดสอบผ่าน Hub บน localhost หรือ GitHub Pages ไม่ใช่เปิดด้วย file://
 เปิด HTML เนื้อหาโดยตรงจะเห็นเพียงเนื้อหา ไม่ได้ประกอบ Quiz Engine และบัญชีให้
 
-ในโฟลเดอร์ LEARNING HUB:
+ในโฟลเดอร์ C:/Users/Sattawat.b/Documents/GitHub/learning-hub/:
   pnpm validate:content
   pnpm build
 
@@ -120,7 +145,11 @@ Simulation (ตัวเลือก ไม่ได้สร้างตัว�
 
 เมื่อพร้อม: ตรวจการเปลี่ยนแปลง > Commit > Push main > รอ GitHub Actions สำเร็จ
 Save ในเครื่องอย่างเดียวไม่อัปเดต GitHub Pages
-การเปลี่ยนแปลงรอบนี้ยังไม่ได้ Commit/Push ให้อัตโนมัติ
+ใน GitHub Desktop ให้เลือก repository learning-hub แล้ว Commit/Push ไป main
+เช็ก Actions ของ Nixcentury/learning-hub ให้ผ่านทั้ง build และ deploy
+ถ้า Actions ไม่ผ่าน เว็บจะยังเป็นรุ่นเดิม ไม่ได้แปลว่าเบราว์เซอร์ค้างเสมอไป
+ตรวจ https://nixcentury.github.io/learning-hub/deployment.json ว่า commit ตรงกับที่ส่ง
+อย่าล้างข้อมูลเว็บไซต์เพื่อแก้ปัญหาโดยไม่สำรองสมุดก่อน
 
 จำสั้น ๆ
 ========

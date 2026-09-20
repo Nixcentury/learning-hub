@@ -9,6 +9,8 @@ import { createRequire } from 'node:module';
 // no Google sign-in, live database writes, or AI requests are made by this test.
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = resolve(root, 'dist');
+// Optionally verify the actual independent legacy artifact, not just an alias.
+const legacyDist = process.env.LEGACY_PAGES_ARTIFACT ? resolve(process.env.LEGACY_PAGES_ARTIFACT) : dist;
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'C:/Users/Sattawat.b/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 const prefixes = ['/learning-hub/', '/Physic-subject/'];
@@ -18,8 +20,9 @@ const server = createServer(async (request, response) => {
     const prefix = prefixes.find(value => pathname.startsWith(value));
     assert.ok(prefix);
     const name = pathname.slice(prefix.length) || 'index.html';
-    const path = resolve(dist, name);
-    assert.ok(path.startsWith(dist + sep));
+    const artifact = prefix === '/Physic-subject/' ? legacyDist : dist;
+    const path = resolve(artifact, name);
+    assert.ok(path.startsWith(artifact + sep));
     response.setHeader('Content-Type', ({ '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.woff2': 'font/woff2' })[extname(path)] || 'application/octet-stream');
     response.end(await readFile(path));
   } catch { response.writeHead(404); response.end('Not found'); }
@@ -78,6 +81,13 @@ try {
   await page.mouse.move(box.x + 70, box.y + 70); await page.mouse.down();
   await page.mouse.move(box.x + 140, box.y + 110, { steps: 10 }); await page.mouse.up();
   await page.evaluate(() => LearningHubQuiz.prepareClose());
+  const writtenPage = await canvas.evaluate(node => node.toDataURL());
+  async function assertNotebookRestored(target) {
+    await target.locator('[data-notebook-panel] summary').click();
+    await target.waitForFunction(() => document.querySelector('[data-notebook-core]')?.inert === false);
+    assert.equal(await target.locator('[data-notebook-canvas]').evaluate(node => node.toDataURL()), writtenPage,
+      'Saved handwriting must be rendered again, not only remain in IndexedDB');
+  }
   const answer = await page.evaluate(() => LearningHubQuiz.getState().answers);
   await page.reload();
   await page.locator('[data-current-options] .quiz-option').first().waitFor();
@@ -89,12 +99,24 @@ try {
     db.close(); return count;
   });
   assert.ok(strokes > 0, 'Handwriting must be committed in IndexedDB');
+  await assertNotebookRestored(page);
   console.log('PASS choice answers, reasoning and handwriting persist after reload');
   await page.goto(quizUrl('/Physic-subject/', 'templates/quiz-template.html'));
   await page.locator('[data-current-options] .quiz-option').first().waitFor();
   assert.deepEqual(await page.evaluate(() => LearningHubQuiz.getState().answers), answer);
   assert.equal(await page.locator('[data-reasoning-input]').inputValue(), 'Migration QA reason');
+  await assertNotebookRestored(page);
   console.log('PASS stable quiz IDs recover the same draft across path aliases on one origin');
+  const reopened = await context.newPage();
+  reopened.on('pageerror', error => errors.push(error.message));
+  reopened.on('response', response => { if (response.url().startsWith(origin) && response.status() >= 400) missing.push(response.url()); });
+  await reopened.goto(quizUrl('/learning-hub/', 'templates/quiz-template.html'));
+  await reopened.locator('[data-current-options] .quiz-option').first().waitFor();
+  assert.deepEqual(await reopened.evaluate(() => LearningHubQuiz.getState().answers), answer);
+  assert.equal(await reopened.locator('[data-reasoning-input]').inputValue(), 'Migration QA reason');
+  await assertNotebookRestored(reopened);
+  await reopened.close();
+  console.log('PASS a new browser tab restores the answer, reasoning and identical rendered handwriting');
 
   await page.goto(quizUrl('/learning-hub/', 'samples/numeric-input-demo.html'));
   await page.locator('math-field[data-numeric-answer]').waitFor();

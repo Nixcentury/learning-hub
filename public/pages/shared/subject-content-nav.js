@@ -10,14 +10,23 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
       <p data-menu-description></p></div>
     </header>
     <p class="content-menu-notice" role="status" aria-live="polite" hidden></p>
-    <div class="activity-grid" data-menu-cards></div>`;
+    <div class="activity-grid" data-menu-cards></div>
+    <footer class="chapter-overview-footer" data-chapter-overview-footer hidden>
+      <button type="button" class="activity-card chapter-overview-button" data-chapter-overview-button>
+        <span class="activity-icon" aria-hidden="true">▤</span>
+        <span class="activity-copy"><small></small><strong></strong><span></span></span>
+        <b aria-hidden="true">↗</b>
+      </button>
+    </footer>`;
   root.append(panel);
   const cards = panel.querySelector("[data-menu-cards]");
   const notice = panel.querySelector(".content-menu-notice");
+  const overviewFooter = panel.querySelector("[data-chapter-overview-footer]");
+  const overviewButton = panel.querySelector("[data-chapter-overview-button]");
   const base = new URL("../content/", location.href);
   const idPattern = /^[a-z0-9][a-z0-9-]{0,127}$/;
   let chapter = null, chapterMenu = null, topicMenu = null, mode = "topics";
-  let loadVersion = 0, controller = null, pending = null, lastToolId = null;
+  let loadVersion = 0, controller = null, pending = null, lastLaunch = null;
 
   function localized(node, th, en) {
     node.dataset.th = th || ""; node.dataset.en = en || th || "";
@@ -52,18 +61,31 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
     const seen = new Set();
     const entries = [...menu.querySelectorAll("a")].map(link => {
       const d = link.dataset;
-      const key = kind === "topics" ? d.topicId : d.contentId;
+      const isHtml = d.toolKind === "html";
+      const key = kind === "topics" && !isHtml ? d.topicId : d.contentId;
       const href = (link.getAttribute("href") || "").trim();
       if (!idPattern.test(key || "") || seen.has(key) || !d.th || !d.en ||
-          (kind === "tools" && (!href || !["quiz", "simulation"].includes(d.toolKind)))) {
+          ((kind === "tools" || isHtml) && (!href || !["quiz", "simulation", "html"].includes(d.toolKind))) ||
+          (isHtml && !/^[a-z]/.test(key))) {
         throw new Error("Invalid menu entry");
       }
       seen.add(key);
       return { id: key, th: d.th, en: d.en, descriptionTh: d.descriptionTh || "",
         descriptionEn: d.descriptionEn || "", toolKind: d.toolKind,
+        topicId: isHtml ? (topicId || "chapter-reference") : undefined,
         source: href ? urlFor(href, url) : null };
     });
-    return { url, entries, kind, topicId, th: menu.dataset.titleTh || chapter.th,
+    let overview = null;
+    if (kind === "topics" && menu.hasAttribute("data-chapter-overview-src")) {
+      const source = menu.dataset.chapterOverviewSrc.trim();
+      const id = `${subject.id}-chapter-${chapter.id}-overview`;
+      if (!idPattern.test(id)) throw new Error("Invalid chapter overview ID");
+      overview = { id, toolKind: "html", topicId: "chapter-overview",
+        source: source ? urlFor(source, url) : null,
+        th: `ผลการเรียนรู้และสรุป · ${menu.dataset.titleTh || chapter.th}`,
+        en: `Learning outcomes and summary · ${menu.dataset.titleEn || chapter.en}` };
+    }
+    return { url, entries, kind, topicId, overview, th: menu.dataset.titleTh || chapter.th,
       en: menu.dataset.titleEn || chapter.en, descriptionTh: menu.dataset.descriptionTh || "",
       descriptionEn: menu.dataset.descriptionEn || "" };
   }
@@ -89,6 +111,16 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
   }
   function render(menu) {
     mode = menu.kind; notice.hidden = true; cards.replaceChildren(); cancelPending();
+    overviewFooter.hidden = mode !== "topics" || !menu.overview;
+    overviewButton.onclick = null;
+    if (!overviewFooter.hidden) {
+      overviewButton.disabled = !menu.overview.source;
+      localized(overviewButton.querySelector("small"), menu.overview.source ? "ภาพรวมบทเรียน" : "กำลังเตรียมเนื้อหา", menu.overview.source ? "Chapter overview" : "Content in preparation");
+      localized(overviewButton.querySelector("strong"), "ผลการเรียนรู้ที่คาดหวังและสรุปทั้งบท", "Learning outcomes and chapter summary");
+      localized(overviewButton.querySelector(".activity-copy > span"), "เปิดอ่านผลการเรียนรู้และสาระสำคัญในหน้าต่างกลาง", "Read the learning outcomes and key concepts in the workspace");
+      overviewButton.querySelector("b").textContent = menu.overview.source ? "↗" : "…";
+      if (menu.overview.source) overviewButton.onclick = () => openTool(menu.overview, overviewButton);
+    }
     setStage(mode === "topics" ? 2 : 3);
     localized(panel.querySelector("[data-menu-layer]"), mode === "topics" ? "ชั้นที่ 2 · เรื่องย่อย" : "ชั้นที่ 3 · เลือกงาน", mode === "topics" ? "Layer 2 · Topics" : "Layer 3 · Activities");
     localized(panel.querySelector("[data-menu-title]"), menu.th, menu.en);
@@ -100,8 +132,8 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
       const button = document.createElement("button"); button.type = "button"; button.className = "activity-card";
       button.dataset.menuEntry = entry.id;
       button.innerHTML = `<span class="activity-icon" aria-hidden="true"></span><span class="activity-copy"><small></small><strong></strong><span></span></span><b aria-hidden="true">↗</b>`;
-      button.querySelector(".activity-icon").textContent = mode === "topics" ? "▤" : entry.toolKind === "quiz" ? "✓" : "◉";
-      localized(button.querySelector("small"), mode === "topics" ? "เรื่องย่อย" : entry.toolKind === "quiz" ? "แบบฝึกหัด · Quiz" : "Simulation", mode === "topics" ? "Topic" : entry.toolKind === "quiz" ? "Quiz" : "Simulation");
+      button.querySelector(".activity-icon").textContent = mode === "topics" || entry.toolKind === "html" ? "▤" : entry.toolKind === "quiz" ? "✓" : "◉";
+      localized(button.querySelector("small"), entry.toolKind === "html" ? "เนื้อหา · HTML" : mode === "topics" ? "เรื่องย่อย" : entry.toolKind === "quiz" ? "แบบฝึกหัด · Quiz" : "Simulation", entry.toolKind === "html" ? "Reading · HTML" : mode === "topics" ? "Topic" : entry.toolKind === "quiz" ? "Quiz" : "Simulation");
       localized(button.querySelector("strong"), entry.th, entry.en);
       localized(button.querySelector(".activity-copy > span"), entry.descriptionTh, entry.descriptionEn);
       if (!entry.source) {
@@ -109,7 +141,7 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
         button.dataset.contentStatus = "preparing";
         localized(button.querySelector("small"), "กำลังเตรียมเนื้อหา", "Content in preparation");
         button.querySelector("b").textContent = "…";
-      } else button.addEventListener("click", () => menu.kind === "topics" ? showTools(entry) : openTool(entry, button));
+      } else button.addEventListener("click", () => menu.kind === "topics" && entry.toolKind !== "html" ? showTools(entry) : openTool(entry, button));
       cards.append(button);
     });
     panel.querySelector("[data-menu-title]").focus({ preventScroll: true });
@@ -137,17 +169,21 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
     pending = { requestId, button, timer: setTimeout(() => {
       cancelPending(); message("ยังเปิดงานไม่ได้ กรุณาลองอีกครั้ง", "The workspace did not respond. Please try again.", true);
     }, 8000) };
-    lastToolId = `content-${entry.toolKind}-${entry.id}`;
+    lastLaunch = { toolId: `content-${entry.toolKind}-${entry.id}`, chapterUrl: chapterMenu.url,
+      topicId: topicMenu?.topicId, mode, button };
     parent.postMessage({ type: "learning-hub-open-content", requestId, content: {
-      subjectId: subject.id, chapterId: chapter.id, topicId: topicMenu.topicId,
+      subjectId: subject.id, chapterId: chapter.id, topicId: entry.topicId || topicMenu?.topicId,
       contentId: entry.id, toolKind: entry.toolKind, source: entry.source,
       titleTh: entry.th, titleEn: entry.en,
     } }, location.origin);
   }
   window.addEventListener("message", event => {
     if (event.source !== parent || event.origin !== location.origin) return;
-    if (event.data?.type === "learning-hub-tool-closed" && event.data.toolId === lastToolId && !panel.hidden && mode === "tools") {
-      setStage(3); notice.hidden = true;
+    if (event.data?.type === "learning-hub-tool-closed" && event.data.toolId === lastLaunch?.toolId &&
+        !panel.hidden && chapterMenu?.url === lastLaunch.chapterUrl && mode === lastLaunch.mode &&
+        (mode === "topics" || topicMenu?.topicId === lastLaunch.topicId)) {
+      setStage(mode === "topics" ? 2 : 3); notice.hidden = true;
+      lastLaunch.button.focus({ preventScroll: true });
     }
     if (event.data?.type !== "learning-hub-content-opened" || !pending || event.data.requestId !== pending.requestId) return;
     cancelPending();
@@ -158,7 +194,7 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
   return {
     hide,
     async open(definition) {
-      hide(); panel.hidden = false; cards.replaceChildren(); mode = "topics"; chapterMenu = null; topicMenu = null; lastToolId = null;
+      hide(); panel.hidden = false; cards.replaceChildren(); mode = "topics"; chapterMenu = null; topicMenu = null; lastLaunch = null;
       const title = definition.querySelector("[data-chapter-title]");
       chapter = { id: definition.dataset.chapter, th: title.dataset.th, en: title.dataset.en };
       render({ kind: "topics", th: chapter.th, en: chapter.en, entries: [] });

@@ -651,6 +651,27 @@ button.chapter-card:focus-visible,
   min-height: 145px;
 }
 
+.chapter-overview-footer {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid #d9e4f5;
+}
+
+.chapter-overview-footer[hidden] { display: none; }
+
+.chapter-overview-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 110px;
+  border-color: #c9c6ee;
+  background: linear-gradient(120deg, #f4f2ff, #f5faff);
+}
+
+.chapter-overview-button .activity-copy { min-width: 0; overflow-wrap: anywhere; }
+.chapter-overview-button .activity-icon { background: #e8e3fc; color: #514099; }
+.chapter-overview-button:focus-visible { outline: 3px solid #5269bc; outline-offset: 4px; }
+.chapter-overview-button:disabled { cursor: default; opacity: .7; transform: none; }
+
 .role-note {
   display: inline-flex;
   margin-top: 16px;

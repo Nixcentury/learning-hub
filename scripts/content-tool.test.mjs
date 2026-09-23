@@ -37,3 +37,17 @@ test("simulation opens its own HTML without being given the quiz storage bridge"
   assert.equal(tool.page, tool.source);
   assert.equal(tool.context.toolKind, "simulation");
 });
+
+test("read-only HTML opens directly in the shared workspace under the new Pages base", () => {
+  const summary = { ...entry, toolKind: "html", topicId: "chapter-overview",
+    contentId: "chemistry-chapter-10-overview", source: "content/chemistry/acid-base/chapter-overview.html" };
+  const tool = createContentTool(summary, "https://example.test/learning-hub/#chemistry");
+  assert.equal(tool.page, "https://example.test/learning-hub/content/chemistry/acid-base/chapter-overview.html");
+  assert.equal(tool.source, tool.page);
+  assert.equal(tool.context.toolKind, "html");
+  assert.equal(tool.icon, "▤");
+  assert.equal(tool.id, "content-html-chemistry-chapter-10-overview");
+  for (const source of ["https://evil.test/x.html", "../admin.html", "content/%2e%2e/admin.html", "content/x.html?token=x", "javascript:alert(1)"]) {
+    assert.equal(createContentTool({ ...summary, source }, hub), null);
+  }
+});

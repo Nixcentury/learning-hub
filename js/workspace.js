@@ -10,6 +10,7 @@ import {
   createHubContextMessage,
 } from "./content-context.js";
 import { createContentTool } from "./content-tool.js";
+import { htmlLinkEntry } from "./html-link.js";
 
 // Only live Quiz windows created by this workspace may use its storage bridge.
 const quizStorageFrames = new Set();
@@ -378,6 +379,8 @@ export function createWorkspace({
   }
 
   function postContext(record) {
+    // Read-only HTML does not need the learner's identity or privileged bridges.
+    if (record.tool.context.toolKind === "html") return;
     const targetOrigin = location.origin === "null" ? "*" : location.origin;
     record.frame.contentWindow?.postMessage(
       createHubContextMessage({
@@ -498,14 +501,23 @@ export function createWorkspace({
     } else {
       taskButton.blur();
     }
+    const opener = record.htmlOpener;
+    if (opener?.node.isConnected) {
+      if (opener.record && records.has(opener.record.tool.id)) {
+        if (!opener.record.minimized) focus(opener.record);
+      }
+      opener.node.focus({ preventScroll: true });
+    }
   }
 
   function getQuiz(record) {
+    if (record.tool.context.toolKind !== "quiz") return null;
     try { return record.frame.contentWindow?.LearningHubQuiz; }
     catch { return null; }
   }
 
   function flushLocalBeforeRemoval(record) {
+    if (record.tool.context.toolKind === "html") return;
     try {
       // Synchronous: removing an iframe cancels its pending debounce timers.
       return record.frame.contentWindow?.LearningHubQuiz?.flushLocal?.();
@@ -618,6 +630,9 @@ export function createWorkspace({
       <span class="taskbar-state" aria-hidden="true">●</span>
     `;
 
+    // Static chapter overviews cannot run scripts or access the parent/account.
+    if (tool.context.toolKind === "html") element.querySelector("iframe").setAttribute("sandbox", "allow-same-origin");
+
     const record = {
       tool,
       element,
@@ -677,7 +692,11 @@ export function createWorkspace({
     );
     record.timerReset.addEventListener("click", () => resetTimer(record));
     record.element.addEventListener("pointerdown", () => focus(record));
-    record.frame.addEventListener("load", () => postContext(record));
+    record.frame.addEventListener("load", () => {
+      postContext(record);
+      // Scripts remain disabled in read-only HTML; only the parent installs this handler.
+      try { bindHtmlLinks(record.frame.contentDocument, record); } catch { /* Cross-origin content stays isolated. */ }
+    });
     record.taskButton.addEventListener("click", () => {
       const isFrontmost = record.element.classList.contains("is-active");
       if (record.minimized) restore(record);
@@ -721,6 +740,34 @@ export function createWorkspace({
     if (previous && previous.source !== tool.source) return false;
     toolCatalog[tool.id] = tool;
     return open(tool.id);
+  }
+
+  const htmlLinkDocuments = new WeakSet();
+  function bindHtmlLinks(doc, ownerRecord = null) {
+    if (!doc || htmlLinkDocuments.has(doc)) return;
+    htmlLinkDocuments.add(doc);
+    doc.addEventListener("click", event => {
+      const node = event.target?.closest?.("a[data-hub-html], button[data-hub-html]");
+      if (!node || node.disabled || event.defaultPrevented || event.button > 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      const subject = doc.querySelector("[data-subject-id]")?.dataset.subjectId;
+      const entry = htmlLinkEntry(node, doc.URL, ownerRecord?.tool.context || { subjectId: subject });
+      const tool = createContentTool(entry, location.href);
+      if (!tool || !openContent(entry)) {
+        let notice = doc.querySelector("[data-html-link-error]");
+        if (!notice) {
+          notice = doc.createElement("p"); notice.dataset.htmlLinkError = "";
+          notice.setAttribute("role", "alert"); node.after(notice);
+        }
+        notice.textContent = language() === "en"
+          ? "Cannot open HTML. Check the content ID and local HTML file path."
+          : "เปิด HTML ไม่ได้ กรุณาตรวจรหัสเนื้อหาและลิงก์ไฟล์ HTML ภายในเว็บ";
+        return;
+      }
+      doc.querySelector("[data-html-link-error]")?.remove();
+      const opened = records.get(tool.id);
+      if (opened && opened !== ownerRecord) opened.htmlOpener = { node, record: ownerRecord };
+    });
   }
 
   function setLanguage() {
@@ -790,5 +837,5 @@ export function createWorkspace({
     });
   });
 
-  return { open, openContent, setLanguage, setContext, clear, prepareAllForClose };
+  return { open, openContent, bindHtmlLinks, setLanguage, setContext, clear, prepareAllForClose };
 }

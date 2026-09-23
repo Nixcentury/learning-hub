@@ -34,22 +34,40 @@ async function validateMenu(file, source) {
     if (!stableMenuId.test(root.get(attr) || "")) addError(file, `Menu needs stable ${attr}.`);
   }
   if (!root.get("data-title-th")?.trim() || !root.get("data-title-en")?.trim()) addError(file, "Menu needs Thai and English titles.");
+  if (root.has("data-chapter-overview-src")) {
+    if (kind !== "topics") addError(file, "Chapter overview belongs only on a topics menu (layer 2).");
+    const overviewSource = root.get("data-chapter-overview-src").trim();
+    const overviewId = `${root.get("data-subject-id")}-chapter-${root.get("data-chapter-id")}-overview`;
+    if (!stableMenuId.test(overviewId)) addError(file, "Chapter overview ID is too long or invalid.");
+    if (overviewSource) {
+      const target = await readMenuTarget(file, overviewSource);
+      if (target && !/<html\b[^>]*\bdata-learning-html(?:\s|=|>)/i.test(target.source)) {
+        addError(file, "Chapter overview must link to an HTML document with <html data-learning-html>.");
+      }
+    }
+  }
   if (/<\s*(script|style|link|iframe|object|embed|form|button|input|textarea|select)\b/i.test(source) || /\s(?:class|style|on[a-z]+)\s*=/i.test(source)) {
     addError(file, "Menu HTML is data only: no scripts, styles, handlers or custom controls.");
   }
   const seen = new Set();
   for (const match of source.matchAll(/<a\b[^>]*>/gi)) {
     const entry = readAttributes(match[0]);
-    const id = entry.get(kind === "topics" ? "data-topic-id" : "data-content-id");
+    const isHtml = entry.get("data-tool-kind") === "html";
+    const id = entry.get(kind === "topics" && !isHtml ? "data-topic-id" : "data-content-id");
     if (!stableMenuId.test(id || "") || seen.has(id)) addError(file, `Missing, invalid or duplicate menu entry ID: ${id}`);
     seen.add(id);
     if (!hasBilingualText(match[0])) addError(file, `${id} needs data-th and data-en.`);
     // Topic headings may be published before their activity-menu file exists.
     // Explicit non-empty links must still be valid; never hide broken links.
-    if (kind === "topics" && !entry.get("href")?.trim()) continue;
+    if (kind === "topics" && !isHtml && !entry.get("href")?.trim()) continue;
     const target = await readMenuTarget(file, entry.get("href"));
     if (!target) continue;
-    if (kind === "topics") {
+    if (isHtml) {
+      if (!/^[a-z][a-z0-9-]{0,127}$/.test(id || "")) addError(file, "HTML content ID must start with a letter.");
+      if (!/<html\b[^>]*\bdata-learning-html(?:\s|=|>)/i.test(target.source)) {
+        addError(file, `${id} must link to a document with <html data-learning-html>.`);
+      }
+    } else if (kind === "topics") {
       const destination = readAttributes(findOpeningTag(target.source, "data-learning-menu"));
       if (destination.get("data-menu-kind") !== "tools" || destination.get("data-topic-id") !== id ||
           destination.get("data-subject-id") !== root.get("data-subject-id") || destination.get("data-chapter-id") !== root.get("data-chapter-id")) {
@@ -103,6 +121,15 @@ function hasBilingualText(openingTag) {
 
 function addError(file, message) {
   errors.push(`${relative(contentDirectory, file)}: ${message}`);
+}
+
+async function validateHtmlLinks(file, source) {
+  for (const match of source.matchAll(/<(?:a|button)\b[^>]*\bdata-hub-html(?:\s|=|>)[^>]*>/gi)) {
+    const attributes = readAttributes(match[0]);
+    if (!/^[a-z][a-z0-9-]{0,127}$/.test(attributes.get("data-content-id") || "")) addError(file, "HTML link needs a stable data-content-id starting with a letter.");
+    const target = await readMenuTarget(file, attributes.get("data-html-src") || attributes.get("href"));
+    if (target && !/<html\b[^>]*\bdata-learning-html(?:\s|=|>)/i.test(target.source)) addError(file, "HTML link must point to <html data-learning-html>.");
+  }
 }
 
 function validateQuestion(file, openingTag, body, index, seenIds) {
@@ -195,6 +222,18 @@ function validateQuestion(file, openingTag, body, index, seenIds) {
 
 async function validateFile(file) {
   const source = (await readFile(file, "utf8")).replace(/<!--[\s\S]*?-->/g, "");
+  await validateHtmlLinks(file, source);
+  if (findOpeningTag(source, "data-learning-html")) {
+    const roots = [...source.matchAll(/<html\b[^>]*\bdata-learning-html(?:\s|=|>)[^>]*>/gi)];
+    if (roots.length !== 1) addError(file, "Read-only HTML needs exactly one <html data-learning-html> root.");
+    if (["data-learning-menu", "data-learning-activity-content", "data-learning-simulation"].some(attr => findOpeningTag(source, attr))) {
+      addError(file, "Read-only HTML must not also be a menu, quiz or simulation.");
+    }
+    if (/<\s*(script|iframe|object|embed|form)\b/i.test(source) || /\son[a-z]+\s*=/i.test(source) || /\b(?:href|src)\s*=\s*["']\s*javascript:/i.test(source)) {
+      addError(file, "Read-only HTML cannot contain scripts, event handlers, embedded frames or forms.");
+    }
+    return;
+  }
   if (findOpeningTag(source, "data-learning-menu")) {
     if (findOpeningTag(source, "data-learning-activity-content") || findOpeningTag(source, "data-learning-simulation")) addError(file, "A menu must not also be a quiz or simulation.");
     await validateMenu(file, source);
@@ -281,6 +320,7 @@ for (const name of await readdir(pagesDirectory)) {
   if (!name.endsWith(".html")) continue;
   const file = join(pagesDirectory, name);
   const source = (await readFile(file, "utf8")).replace(/<!--[\s\S]*?-->/g, "");
+  await validateHtmlLinks(file, source);
   const subject = readAttributes(findOpeningTag(source, "data-subject-id")).get("data-subject-id");
   for (const match of source.matchAll(/<article\b[^>]*\bdata-chapter-src\s*=[^>]*>/gi)) {
     const entry = readAttributes(match[0]);

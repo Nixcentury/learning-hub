@@ -619,9 +619,11 @@ navButtons.forEach((button) => {
   button.addEventListener("click", () => showSection(button.dataset.section));
 });
 
+workspace.bindHtmlLinks(document);
 pageFrame.addEventListener("load", () => {
   pageFrameLoading.hidden = true;
   postContextToPage();
+  try { workspace.bindHtmlLinks(pageFrame.contentDocument); } catch { /* Do not access foreign pages. */ }
 });
 
 window.addEventListener("message", (event) => {

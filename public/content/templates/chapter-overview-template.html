@@ -9,7 +9,7 @@
     * { box-sizing: border-box; }
     body { margin: 0; background: #f6f7fb; color: #233451; font: 17px/1.8 Tahoma, sans-serif; }
     main { max-width: 900px; margin: auto; padding: 32px 24px 56px; }
-    header { padding-bottom: 24px; border-bottom: 1px solid #d8dfeb; position: relative; }
+    header { padding-bottom: 24px; border-bottom: 1px solid #d8dfeb; }
     small { color: #68509a; font-weight: 700; letter-spacing: .04em; }
     h1 { font-size: clamp(26px, 5vw, 38px); line-height: 1.35; margin: 12px 0; }
     h2 { font-size: 23px; line-height: 1.5; margin-top: 0; }
@@ -18,66 +18,15 @@
     img, svg { max-width: 100%; height: auto; }
     p, li { overflow-wrap: anywhere; }
     .note { color: #64728b; margin: 0; }
-    
-    /* สไตล์ปุ่มพิมพ์และกล่องควบคุม */
-    .header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
-    .btn-print {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: white;
-      color: #3b4b68;
-      border: 1px solid #c9d4e4;
-      border-radius: 10px;
-      padding: 8px 14px;
-      font: inherit;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      transition: all .15s ease;
-      white-space: nowrap;
-    }
-    .btn-print:hover {
-      background: #f1f5f9;
-      border-color: #94a3b8;
-      color: #0f172a;
-    }
-    .btn-print svg { width: 16px; height: 16px; }
-
-    @media (max-width: 520px) { 
-      main { padding: 24px 16px; } 
-      section { padding: 20px 16px; }
-      .header-top { flex-direction: column-reverse; align-items: stretch; }
-      .btn-print { justify-content: center; }
-    }
-    
-    /* กฎตอนสั่งพิมพ์: ซ่อนปุ่มพิมพ์ และคำแนะนำออก */
-    @media print { 
-      body { background: white; } 
-      main { max-width: none; padding: 0; } 
-      section { break-inside: avoid; border: 1px solid #eee; } 
-      .btn-print, .no-print { display: none !important; }
-    }
+    @media (max-width: 520px) { main { padding: 24px 16px; } section { padding: 20px 16px; } }
+    @media print { body { background: white; } main { max-width: none; padding: 0; } section { break-inside: avoid; border: 1px solid #eee; } }
   </style>
 </head>
 <body>
   <main>
     <header>
-      <div class="header-top">
-        <div>
-          <small>ภาพรวมบทเรียน · CHAPTER OVERVIEW</small>
-          <h1>ชื่อบทเรียน</h1>
-        </div>
-        <button type="button" class="btn-print" onclick="window.print()" title="พิมพ์หรือบันทึกเป็น PDF (Ctrl+P / Cmd+P)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 6 2 18 2 18 9"></polyline>
-            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-            <rect x="6" y="14" width="12" height="8"></rect>
-          </svg>
-          พิมพ์เอกสาร (Print / PDF)
-        </button>
-      </div>
+      <small>ภาพรวมบทเรียน · CHAPTER OVERVIEW</small>
+      <h1>ชื่อบทเรียน</h1>
       <p class="note">แม่แบบสำหรับครู — เปลี่ยนข้อความตัวอย่างเป็นเนื้อหาจริงก่อนเผยแพร่</p>
     </header>
 

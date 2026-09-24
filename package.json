@@ -10,7 +10,7 @@
     "dev": "vite --config vite.config.js --port 3000",
     "build": "pnpm validate:content && tsc --noEmit && vite build --config vite.config.js && node scripts/verify-pages-build.mjs",
     "preview": "vite preview --config vite.config.js",
-    "test:unit": "node --test --test-isolation=none scripts/classroom-access.test.mjs scripts/classroom-service.test.mjs scripts/content-tool.test.mjs scripts/chapter-overview.test.mjs scripts/notebook-backup.test.mjs scripts/quiz-drag.test.mjs scripts/quiz-evidence-resume.test.mjs scripts/quiz-number.test.mjs scripts/quiz-resume.test.mjs scripts/test-quiz-storage-bridge.mjs",
+    "test:unit": "node --test --test-isolation=none scripts/classroom-access.test.mjs scripts/classroom-service.test.mjs scripts/content-tool.test.mjs scripts/chapter-overview.test.mjs scripts/html-math.test.mjs scripts/notebook-backup.test.mjs scripts/quiz-drag.test.mjs scripts/quiz-evidence-resume.test.mjs scripts/quiz-number.test.mjs scripts/quiz-resume.test.mjs scripts/test-quiz-storage-bridge.mjs",
     "test:overview:browser": "node scripts/test-chapter-overview-browser.mjs",
     "test:pages": "node scripts/test-pages-migration-browser.mjs",
     "lint": "oxlint",

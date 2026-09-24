@@ -18,39 +18,45 @@
     p, li { overflow-wrap: anywhere; }
     .note { color: #64728b; margin: 0; }
     .en-sub { display: block; color: #64748b; font-size: 0.9em; font-style: italic; margin-top: 2px; }
-    
-    /* กล่องสูตรและวิธีคำนวณ */
+
+    /* บล็อกสมการและการคำนวณ รองรับจอแคบ/iPad */
     .calc-block {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       border-left: 4px solid #68509a;
-      border-radius: 6px;
-      padding: 14px 18px;
-      margin: 12px 0 16px;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0 18px;
       font-size: 15px;
+      overflow-x: auto;
+    }
+    .table-container {
+      overflow-x: auto;
+      margin: 12px 0;
     }
     .ice-table {
       width: 100%;
+      min-width: 480px;
       border-collapse: collapse;
-      margin: 10px 0;
       font-size: 14.5px;
       background: #ffffff;
     }
     .ice-table th, .ice-table td {
       border: 1px solid #cbd5e1;
-      padding: 6px 12px;
+      padding: 8px 12px;
       text-align: center;
     }
     .ice-table th { background: #f1f5f9; color: #1e293b; }
 
-    @media (max-width: 520px) { 
-      main { padding: 20px 14px; } 
+    @media (max-width: 520px) {
+      main { padding: 20px 14px; }
       section { padding: 18px 14px; }
+      .calc-block { padding: 12px 14px; }
     }
-    @media print { 
-      body { background: white; } 
-      main { max-width: none; padding: 0; } 
-      section { break-inside: avoid; border: 1px solid #cbd5e1; margin-top: 14px; } 
+    @media print {
+      body { background: white; }
+      main { max-width: none; padding: 0; }
+      section { break-inside: avoid; border: 1px solid #cbd5e1; margin-top: 14px; }
     }
   </style>
 </head>
@@ -110,113 +116,160 @@
       </ol>
     </section>
 
-    <!-- 2. สาระสำคัญและหลักการคำนวณ (2 ภาษา) -->
+    <!-- 2. สาระสำคัญและหลักการคำนวณ (ใช้ LaTeX + mhchem ตามข้อกำหนด) -->
     <section aria-labelledby="summary-title">
-      <h2 id="summary-title">สาระสำคัญและหลักการคำนวณ / Key Concepts & Principles</h2>
+      <h2 id="summary-title">สาระสำคัญและหลักการคำนวณ / Key Concepts &amp; Principles</h2>
 
-      <h3>1. ทฤษฎีกรด-เบส และคู่กรด-เบส (Acid-Base Theories & Conjugate Pairs)</h3>
+      <h3>1. ทฤษฎีกรด-เบส และคู่กรด-เบส (Acid-Base Theories &amp; Conjugate Pairs)</h3>
       <ul>
         <li>
-          <strong>อาร์เรเนียส (Arrhenius):</strong> กรดแตกตัวให้ H<sup>+</sup> (H<sub>3</sub>O<sup>+</sup>) ในน้ำ ส่วนเบสแตกตัวให้ OH<sup>-</sup> ในน้ำ
-          <span class="en-sub">Acids produce H<sup>+</sup> (H<sub>3</sub>O<sup>+</sup>) in water; bases produce OH<sup>-</sup> in water.</span>
+          <strong>อาร์เรเนียส (Arrhenius):</strong> กรดแตกตัวให้ \(\ce{H+}\) (\(\ce{H3O+}\)) ในน้ำ ส่วนเบสแตกตัวให้ \(\ce{OH-}\) ในน้ำ
+          <span class="en-sub">Acids produce \(\ce{H+}\) (\(\ce{H3O+}\)) in water; bases produce \(\ce{OH-}\) in water.</span>
         </li>
         <li>
-          <strong>เบรินสเตด-ลาวรี (Brønsted-Lowry):</strong> กรดคือตัวให้โปรตอน (H<sup>+</sup> donor) ส่วนเบสคือตัวรับโปรตอน (H<sup>+</sup> acceptor)
-          <span class="en-sub">Acids donate protons (H<sup>+</sup>); bases accept protons (H<sup>+</sup>).</span>
+          <strong>เบรินสเตด-ลาวรี (Brønsted-Lowry):</strong> กรดคือตัวให้โปรตอน (\(\ce{H+}\) donor) ส่วนเบสคือตัวรับโปรตอน (\(\ce{H+}\) acceptor)
+          <span class="en-sub">Acids donate protons (\(\ce{H+}\)); bases accept protons (\(\ce{H+}\)).</span>
         </li>
         <li>
           <strong>ลิวอิส (Lewis):</strong> กรดคือตัวรับคู่อิเล็กตรอน (Electron pair acceptor) ส่วนเบสคือตัวให้คู่อิเล็กตรอน (Electron pair donor)
           <span class="en-sub">Acids accept electron pairs; bases donate electron pairs.</span>
         </li>
         <li>
-          <strong>คู่กรด-เบส (Conjugate Acid-Base Pairs):</strong> สารที่เป็นคู่กันจะมีสูตรต่างกันเพียง H<sup>+</sup> 1 ตัว โดยคู่กรดจะมีโปรตอนมากกว่าคู่เบส 1 ตัวเสมอ เช่น NH<sub>4</sub><sup>+</sup> / NH<sub>3</sub> หรือ H<sub>3</sub>O<sup>+</sup> / H<sub>2</sub>O
-          <span class="en-sub">Species that differ by only one proton (H<sup>+</sup>); conjugate acid has one more H<sup>+</sup> than conjugate base.</span>
+          <strong>คู่กรด-เบส (Conjugate Acid-Base Pairs):</strong> สารที่เป็นคู่กันจะมีสูตรต่างกันเพียง \(\ce{H+}\) 1 ตัว โดยคู่กรดจะมีโปรตอนมากกว่าคู่เบส 1 ตัวเสมอ เช่น \(\ce{NH4+}/\ce{NH3}\) หรือ \(\ce{H3O+}/\ce{H2O}\)
+          <span class="en-sub">Species that differ by only one proton (\(\ce{H+}\)); conjugate acid has one more \(\ce{H+}\) than conjugate base.</span>
         </li>
       </ul>
 
-      <h3>2. การแตกตัวและสมดุลเคมี (Ionization & ICE Table)</h3>
+      <h3>2. การแตกตัวและสมดุลเคมี (Ionization &amp; ICE Table)</h3>
       <ul>
-        <li><strong>กรดแก่และเบสแก่ (Strong Acids & Bases):</strong> แตกตัวได้ 100% คิดตามปริมาณสารสัมพันธ์ของสมการเคมีได้ทันที (Complete ionization)</li>
-        <li><strong>กรดอ่อนและเบสอ่อน (Weak Acids & Bases):</strong> แตกตัวบางส่วนเกิดสมดุลเคมี คำนวณด้วยตาราง ICE (Partial ionization at equilibrium):</li>
+        <li><strong>กรดแก่และเบสแก่ (Strong Acids &amp; Bases):</strong> แตกตัวได้ 100% คิดตามปริมาณสารสัมพันธ์ของสมการเคมีได้ทันที (Complete ionization)</li>
+        <li><strong>กรดอ่อนและเบสอ่อน (Weak Acids &amp; Bases):</strong> แตกตัวบางส่วนเกิดสมดุลเคมี คำนวณด้วยตาราง ICE (Partial ionization at equilibrium):</li>
       </ul>
 
       <div class="calc-block">
-        <strong>การคำนวณกรดอ่อน HA ความเข้มข้น C mol/L ด้วยตาราง ICE (Calculation via ICE Table):</strong><br>
-        HA(aq) + H<sub>2</sub>O(l) ⇌ H<sub>3</sub>O<sup>+</sup>(aq) + A<sup>-</sup>(aq)
-        <table class="ice-table">
-          <thead>
-            <tr>
-              <th>สภาวะ / State</th>
-              <th>[HA] (mol/L)</th>
-              <th>[H<sub>3</sub>O<sup>+</sup>] (mol/L)</th>
-              <th>[A<sup>-</sup>] (mol/L)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>I (Initial)</strong></td>
-              <td>C</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td><strong>C (Change)</strong></td>
-              <td>-x</td>
-              <td>+x</td>
-              <td>+x</td>
-            </tr>
-            <tr>
-              <td><strong>E (Equilibrium)</strong></td>
-              <td>C - x</td>
-              <td>x</td>
-              <td>x</td>
-            </tr>
-          </tbody>
-        </table>
-        นิพจน์ค่าคงที่สมดุล (Equilibrium expression):<br>
-        K<sub>a</sub> = [H<sub>3</sub>O<sup>+</sup>][A<sup>-</sup>] / [HA] = x<sup>2</sup> / (C - x)<br>
-        จัดรูปสมการกำลังสองจริง (Quadratic equation): <strong>x<sup>2</sup> + K<sub>a</sub>x - K<sub>a</sub>C = 0</strong><br>
-        แก้สมการหา x: <strong>x = [-K<sub>a</sub> + √(K<sub>a</sub><sup>2</sup> + 4K<sub>a</sub>C)] / 2</strong><br>
-        ร้อยละการแตกตัว (% Ionization): <strong>(x / C) × 100</strong>
+        <p><strong>การคำนวณกรดอ่อน \(\ce{HA}\) ความเข้มข้นเริ่มต้น \(C\text{ mol/L}\) ด้วยตาราง ICE:</strong></p>
+        \[
+        \ce{HA(aq) + H2O(l) &lt;=&gt; H3O+(aq) + A-(aq)}
+        \]
+        <div class="table-container">
+          <table class="ice-table">
+            <thead>
+              <tr>
+                <th>สภาวะ / State</th>
+                <th>\([\ce{HA}]\) (mol/L)</th>
+                <th>\([\ce{H3O+}]\) (mol/L)</th>
+                <th>\([\ce{A-}]\) (mol/L)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>I (Initial)</strong></td>
+                <td>\(C\)</td>
+                <td>\(0\)</td>
+                <td>\(0\)</td>
+              </tr>
+              <tr>
+                <td><strong>C (Change)</strong></td>
+                <td>\(-x\)</td>
+                <td>\(+x\)</td>
+                <td>\(+x\)</td>
+              </tr>
+              <tr>
+                <td><strong>E (Equilibrium)</strong></td>
+                <td>\(C - x\)</td>
+                <td>\(x\)</td>
+                <td>\(x\)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>นิพจน์ค่าคงที่สมดุล (Equilibrium expression):</p>
+        \[
+        K_a = \frac{[\ce{H3O+}][\ce{A-}]}{[\ce{HA}]} = \frac{(x)(x)}{C - x} = \frac{x^2}{C - x}
+        \]
+        <p>จัดรูปสมการกำลังสองจริง (Quadratic equation):</p>
+        \[
+        x^2 + K_a x - K_a C = 0
+        \]
+        <p>แก้สมการหาค่า \(x = [\ce{H3O+}]\):</p>
+        \[
+        x = \frac{-K_a + \sqrt{K_a^2 + 4K_a C}}{2}
+        \]
+        <p>ร้อยละการแตกตัว (% Ionization):</p>
+        \[
+        \text{\% การแตกตัว} = \frac{x}{C} \times 100
+        \]
       </div>
 
-      <h3>3. สมดุลน้ำ, pH และ pOH (Autoionization of Water, pH & pOH)</h3>
+      <h3>3. สมดุลน้ำ, pH และ pOH (Autoionization of Water, pH &amp; pOH)</h3>
       <ul>
-        <li>การแตกตัวของน้ำ (Autoionization): 2H<sub>2</sub>O(l) ⇌ H<sub>3</sub>O<sup>+</sup>(aq) + OH<sup>-</sup>(aq)</li>
-        <li>ค่าคงที่สมดุลของน้ำ: <strong>K<sub>w</sub> = [H<sub>3</sub>O<sup>+</sup>][OH<sup>-</sup>] = 1.0 × 10<sup>-14</sup> (at 25 °C)</strong></li>
-        <li>ความสัมพันธ์คู่กรด-เบส: <strong>K<sub>a</sub> × K<sub>b</sub> = K<sub>w</sub></strong></li>
-        <li>ความสัมพันธ์ลอการิทึม: <strong>pH = -log[H<sub>3</sub>O<sup>+</sup>]</strong> &nbsp;|&nbsp; <strong>pOH = -log[OH<sup>-</sup>]</strong> &nbsp;|&nbsp; <strong>pH + pOH = 14.00 (at 25 °C)</strong></li>
+        <li>
+          การแตกตัวของน้ำ (Autoionization):
+          \[
+          \ce{2H2O(l) &lt;=&gt; H3O+(aq) + OH-(aq)}
+          \]
+        </li>
+        <li>ค่าคงที่สมดุลของน้ำ: \[ K_w = [\ce{H3O+}][\ce{OH-}] = 1.0 \times 10^{-14} \quad (\text{at } 25^\circ\text{C}) \]</li>
+        <li>ความสัมพันธ์คู่กรด-เบส: \[ K_a \times K_b = K_w \]</li>
+        <li>
+          ความสัมพันธ์ลอการิทึม:
+          \[
+          \text{pH} = -\log[\ce{H3O+}] \quad,\quad \text{pOH} = -\log[\ce{OH-}] \quad,\quad \text{pH} + \text{pOH} = 14.00 \quad (\text{at } 25^\circ\text{C})
+          \]
+        </li>
       </ul>
 
-      <h3>4. ปฏิกิริยาสะเทินและการไทเทรต (Neutralization & Titration)</h3>
+      <h3>4. ปฏิกิริยาสะเทินและการไทเทรต (Neutralization &amp; Titration)</h3>
       <ul>
-        <li><strong>ปฏิกิริยาสะเทิน:</strong> กรด + เบส → เกลือ + น้ำ (Acid + Base → Salt + Water)</li>
+        <li><strong>ปฏิกิริยาสะเทิน:</strong> กรด + เบส \(\rightarrow\) เกลือ + น้ำ (Acid + Base \(\rightarrow\) Salt + Water)</li>
         <li><strong>จุดสมมูล (Equivalence Point):</strong> โมลของกรดและเบสทำปฏิกิริยาพอดีกันตามสมการเคมี</li>
-        <li><strong>จุดยุติ (End Point):</strong> จุดที่อินดิเคเตอร์เปลี่ยนสีอย่างถาวร (ควรเลือกช่วง pH สีตรงกับจุดสมมูล)</li>
+        <li><strong>จุดยุติ (End Point):</strong> จุดที่อินดิเคเตอร์เปลี่ยนสีอย่างถาวร (ควรเลือกช่วง pH สีครอบคลุมจุดสมมูล)</li>
       </ul>
 
       <div class="calc-block">
-        <strong>การคำนวณการไทเทรตตามปริมาณสารสัมพันธ์ (Stoichiometric Calculation):</strong><br>
-        สมการเคมี: a Acid + b Base → Salt + Water<br>
-        เทียบโมลตามสมการ: <strong>(mol Acid) / a = (mol Base) / b</strong><br>
-        กระจายความเข้มข้นและปริมาตร: <strong>(C<sub>a</sub> × V<sub>a</sub>) / a = (C<sub>b</sub> × V<sub>b</sub>) / b</strong>
+        <p><strong>การคำนวณการไทเทรตตามปริมาณสารสัมพันธ์ (Stoichiometric Calculation):</strong></p>
+        \[
+        a\,\text{Acid} + b\,\text{Base} \rightarrow \text{Salt} + \text{Water}
+        \]
+        <p>เทียบโมลที่ทำปฏิกิริยาพอดีกันตามสัมประสิทธิ์สมการเคมี:</p>
+        \[
+        \frac{\text{mol Acid}}{a} = \frac{\text{mol Base}}{b}
+        \]
+        \[
+        \frac{C_a \cdot V_a}{a} = \frac{C_b \cdot V_b}{b}
+        \]
       </div>
 
       <h3>5. ปฏิกิริยาไฮโดรไลซิสของเกลือ (Salt Hydrolysis)</h3>
       <p>ไอออนที่มาจากสารอ่อนเท่านั้นจะทำปฏิกิริยากับน้ำ (Only ions from weak species undergo hydrolysis):</p>
       <ul>
-        <li><strong>กรดแก่ + เบสแก่ (Strong + Strong):</strong> ไม่เกิดไฮโดรไลซิส → สารละลายเป็นกลาง (Neutral, pH = 7) เช่น NaCl</li>
-        <li><strong>กรดแก่ + เบสอ่อน (Strong Acid + Weak Base):</strong> NH<sub>4</sub><sup>+</sup> ไฮโดรไลซิสได้ H<sub>3</sub>O<sup>+</sup> → สารละลายเป็นกรด (Acidic, pH &lt; 7) เช่น NH<sub>4</sub>Cl</li>
-        <li><strong>กรดอ่อน + เบสแก่ (Weak Acid + Strong Base):</strong> CH<sub>3</sub>COO<sup>-</sup> ไฮโดรไลซิสได้ OH<sup>-</sup> → สารละลายเป็นเบส (Basic, pH &gt; 7) เช่น CH<sub>3</sub>COONa</li>
-        <li><strong>กรดอ่อน + เบสอ่อน (Weak + Weak):</strong> เกิดไฮโดรไลซิสทั้งสองไอออน ตัดสินโดยเปรียบเทียบค่า K<sub>a</sub> และ K<sub>b</sub> (Compare K<sub>a</sub> vs K<sub>b</sub>)</li>
+        <li><strong>กรดแก่ + เบสแก่ (Strong + Strong):</strong> ไม่เกิดไฮโดรไลซิส \(\rightarrow\) สารละลายเป็นกลาง (Neutral, \(\text{pH} = 7\)) เช่น \(\ce{NaCl}\)</li>
+        <li>
+          <strong>กรดแก่ + เบสอ่อน (Strong Acid + Weak Base):</strong> ไอออน \(\ce{NH4+}\) เกิดไฮโดรไลซิสได้ \(\ce{H3O+}\) \(\rightarrow\) สารละลายเป็นกรด (Acidic, \(\text{pH} &lt; 7\)) เช่น \(\ce{NH4Cl}\)
+          \[
+          \ce{NH4+(aq) + H2O(l) &lt;=&gt; NH3(aq) + H3O+(aq)}
+          \]
+        </li>
+        <li>
+          <strong>กรดอ่อน + เบสแก่ (Weak Acid + Strong Base):</strong> ไอออน \(\ce{CH3COO-}\) เกิดไฮโดรไลซิสได้ \(\ce{OH-}\) \(\rightarrow\) สารละลายเป็นเบส (Basic, \(\text{pH} &gt; 7\)) เช่น \(\ce{CH3COONa}\)
+          \[
+          \ce{CH3COO-(aq) + H2O(l) &lt;=&gt; CH3COOH(aq) + OH-(aq)}
+          \]
+        </li>
+        <li><strong>กรดอ่อน + เบสอ่อน (Weak + Weak):</strong> เกิดไฮโดรไลซิสทั้งสองไอออน ตัดสินโดยเปรียบเทียบค่า \(K_a\) และ \(K_b\) (Compare \(K_a\) vs \(K_b\))</li>
       </ul>
 
       <h3>6. สารละลายบัฟเฟอร์ (Buffer Solutions)</h3>
       <ul>
         <li>สารละลายที่รักษาระดับ pH ให้คงที่เมื่อเติมกรดแก่หรือเบสแก่เล็กน้อย (Resists pH changes)</li>
         <li><strong>องค์ประกอบ (Components):</strong> กรดอ่อน + เกลือคู่เบส (Weak acid + conjugate base) หรือ เบสอ่อน + เกลือคู่กรด (Weak base + conjugate acid)</li>
-        <li><strong>การคำนวณสมดุลบัฟเฟอร์:</strong> K<sub>a</sub> = [H<sub>3</sub>O<sup>+</sup>][A<sup>-</sup>] / [HA] → <strong>[H<sub>3</sub>O<sup>+</sup>] = K<sub>a</sub> · ([Acid] / [Conjugate Base])</strong></li>
-        <li><strong>ประโยชน์ในสิ่งมีชีวิต:</strong> ระบบบัฟเฟอร์กรดคาร์บอนิก/ไฮโดรเจนคาร์บอเนต (H<sub>2</sub>CO<sub>3</sub> / HCO<sub>3</sub><sup>-</sup>) ควบคุม pH ของเลือดมนุษย์ให้อยู่ที่ 7.35–7.45</li>
+        <li>
+          <strong>การคำนวณสมดุลบัฟเฟอร์:</strong>
+          \[
+          K_a = \frac{[\ce{H3O+}][\ce{A-}]}{[\ce{HA}]} \implies [\ce{H3O+}] = K_a \cdot \frac{[\text{Acid}]}{[\text{Conjugate Base}]}
+          \]
+        </li>
+        <li><strong>ประโยชน์ในสิ่งมีชีวิต:</strong> ระบบบัฟเฟอร์กรดคาร์บอนิก/ไฮโดรเจนคาร์บอเนต (\(\ce{H2CO3}/\ce{HCO3-}\)) ควบคุม pH ของเลือดมนุษย์ให้อยู่ที่ \(7.35 - 7.45\)</li>
       </ul>
     </section>
   </main>

@@ -11,6 +11,7 @@ import {
 } from "./content-context.js";
 import { createContentTool } from "./content-tool.js";
 import { htmlLinkEntry } from "./html-link.js";
+import { renderHtmlMath } from "./html-math.js";
 
 // Only live Quiz windows created by this workspace may use its storage bridge.
 const quizStorageFrames = new Set();
@@ -696,6 +697,12 @@ export function createWorkspace({
       postContext(record);
       // Scripts remain disabled in read-only HTML; only the parent installs this handler.
       try { bindHtmlLinks(record.frame.contentDocument, record); } catch { /* Cross-origin content stays isolated. */ }
+      if (record.tool.context.toolKind === "html") {
+        const doc = record.frame.contentDocument;
+        void renderHtmlMath(doc, {
+          isCurrent: () => record.frame.isConnected && record.frame.contentDocument === doc,
+        }).catch(error => console.warn("HTML equation rendering failed", error));
+      }
     });
     record.taskButton.addEventListener("click", () => {
       const isFrontmost = record.element.classList.contains("is-active");

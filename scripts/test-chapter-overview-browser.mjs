@@ -8,6 +8,8 @@ import { fileURLToPath } from "node:url";
 // Virtual menus exercise real Hub code without changing teachers' chapter files.
 // Every non-local request is intercepted; Firebase, login and AI are never used.
 const root = fileURLToPath(new URL("../", import.meta.url));
+const built = process.env.QA_BUILT === '1';
+const servedRoot = built ? resolve(root, 'dist') : root;
 const prefix = "/learning-hub/";
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "C:/Users/Sattawat.b/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright");
@@ -44,17 +46,25 @@ const server = createServer(async (request, response) => {
     const pathname = decodeURIComponent(new URL(request.url, "http://localhost").pathname);
     if (!pathname.startsWith(prefix)) throw Error("Outside fixture");
     const name = pathname.slice(prefix.length) || "index.html";
-    const path = resolve(root, name);
-    if (!path.startsWith(resolve(root) + sep)) throw Error("Outside root");
+    const path = resolve(servedRoot, name);
+    if (!path.startsWith(servedRoot.replace(/[\\/]$/, '') + sep)) throw Error("Outside root");
     let data;
     if (name === "content/qa-overview/topics.html") data = topics();
     else if (name === "content/qa-overview/tools.html") data = toolsMenu;
     // Intentionally invalid script tests runtime isolation in addition to build-time validation.
     else if (name === "content/qa-overview/summary.html") data = summary.replace("</body>", '<a data-hub-html data-content-id="qa-related-reading" href="related.html">อ่านเพิ่มเติม</a><script>parent.__overviewScriptRan=true;</script></body>');
-    else if (name === "content/qa-overview/related.html") data = '<!doctype html><html data-learning-html><body><h1>เอกสารอ่านเพิ่มเติม</h1></body></html>';
+    else if (name === "content/qa-overview/related.html") data = String.raw`<!doctype html><html data-learning-html><body><h1>เอกสารอ่านเพิ่มเติม</h1><p>\(\frac{1}{2}+\frac{1}{3}=\frac{5}{6}\)</p></body></html>`;
+    else if (name === "content/qa-overview/adversarial.html") data = String.raw`<!doctype html><html data-learning-html><body>
+      <h1>Formula checks</h1><p>ข้อความเดิมและราคา $5</p>
+      <table><tr><td>\(K_a\)</td><td>\(\ce{SO4^2-}\)</td></tr></table>
+      <p>\(\frac{1}{2}\)</p><p>\(\boguscommand{x}\)</p>
+      <p>\(\href{javascript:alert(1)}{bad}\)</p><p>\(\require{html}\)</p>
+      <pre>\(leaveCodeAlone\)</pre><span data-no-math>\(leaveTextAlone\)</span>
+      \[\begin{aligned} y&amp;=\sin\theta+\cos\theta+\ln x+e^x \\ z&amp;=\frac{\mathrm{d}y}{\mathrm{d}x}\end{aligned}\]
+      <script>parent.__overviewScriptRan=true;</script></body></html>`;
     else {
       try { data = await readFile(path); }
-      catch { data = await readFile(resolve(root, "public", name)); }
+      catch { if (built) throw Error('Missing build file'); data = await readFile(resolve(root, "public", name)); }
     }
     if (name === "pages/chemistry.html") data = data.toString().replace(/<article\s+data-chapter="10"[^>]*>/,
       '<article data-chapter="10" data-chapter-src="../content/qa-overview/topics.html">')
@@ -79,7 +89,8 @@ try {
   });
   const page = await context.newPage();
   page.setDefaultTimeout(12000);
-  const errors = [], missing = [];
+  const errors = [], missing = [], mathRequests = [];
+  page.on('request', request => { if (request.url().includes('/vendor/mathjax-')) mathRequests.push(request.url()); });
   page.on("pageerror", error => errors.push(error.message));
   page.on("response", response => { if (response.url().startsWith(origin) && response.status() >= 400) missing.push(response.url()); });
   const subject = page.frameLocator("#hub-page-frame");
@@ -111,13 +122,25 @@ try {
   await button.click();
   const frame = page.frameLocator(".workspace-tool-frame");
   await frame.getByRole("heading", { name: "ผลการเรียนรู้ที่คาดหวัง", exact: true }).waitFor();
+  await frame.locator('html[data-hub-math-state="ready"]').waitFor();
+  assert.equal(await frame.locator('script').count(), 1, 'Only the deliberately blocked fixture script is in content');
+  assert.ok(await frame.locator('mjx-container[jax="SVG"] svg').count() >= 8);
+  assert.ok(await frame.locator('[data-mml-node="mfrac"]').count() >= 3);
+  assert.ok(await frame.locator('[data-mml-node="msqrt"]').count() >= 1);
+  assert.equal(await frame.locator('[data-mml-node="merror"]').count(), 0);
+  assert.equal(await frame.locator('[data-hub-math-notice]').count(), 0);
+  assert.ok(mathRequests.every(url => url.startsWith(origin + prefix + 'vendor/mathjax-3.2.2/')));
   assert.equal(await page.locator(".workspace-tool-frame").getAttribute("sandbox"), "allow-same-origin");
   assert.equal(await page.evaluate(() => Boolean(window.__overviewScriptRan)), false);
-  assert.equal(await page.evaluate(async () => (await import("./js/workspace.js")).isWorkspaceQuizSource(document.querySelector(".workspace-tool-frame").contentWindow)), false);
+  if (!built) assert.equal(await page.evaluate(async () => (await import("./js/workspace.js")).isWorkspaceQuizSource(document.querySelector(".workspace-tool-frame").contentWindow)), false);
   assert.equal(await subject.locator(".stage.is-active").getAttribute("data-stage"), "4");
   await page.screenshot({ path: resolve(output, "chapter-overview-open.png"), fullPage: true });
+  await frame.locator('[data-hub-math="display"]').first().scrollIntoViewIfNeeded();
+  await page.screenshot({ path: resolve(output, 'html-math-desktop.png'), animations: 'disabled' });
   await frame.locator("a[data-hub-html]").click();
   await page.frameLocator('.workspace-window[data-tool-id="content-html-qa-related-reading"] iframe').getByRole("heading", { name: "เอกสารอ่านเพิ่มเติม" }).waitFor();
+  await page.frameLocator('.workspace-window[data-tool-id="content-html-qa-related-reading"] iframe').locator('html[data-hub-math-state="ready"]').waitFor();
+  assert.equal(mathRequests.filter(url => url.endsWith('/tex-svg.js')).length, 1, 'One shared lazy runtime, no duplicate downloads per window');
   assert.equal(await page.locator(".workspace-tool-frame").count(), 2);
   await page.locator('.workspace-window[data-tool-id="content-html-qa-related-reading"] .is-close').click();
   await page.locator('.workspace-window[data-tool-id="content-html-qa-related-reading"]').waitFor({ state: "detached" });
@@ -144,7 +167,7 @@ try {
   await subject.locator('.stage.is-active[data-stage="3"]').waitFor();
   await subject.locator(`[data-menu-entry="${quizId}"]`).click();
   await page.frameLocator(".workspace-tool-frame").locator(".quiz-option").first().waitFor();
-  assert.equal(await page.evaluate(async () => (await import("./js/workspace.js")).isWorkspaceQuizSource(document.querySelector(".workspace-tool-frame").contentWindow)), true);
+  if (!built) assert.equal(await page.evaluate(async () => (await import("./js/workspace.js")).isWorkspaceQuizSource(document.querySelector(".workspace-tool-frame").contentWindow)), true);
   await page.locator(".window-control.is-close").click();
   await page.locator(".workspace-tool-frame").waitFor({ state: "detached" });
   await subject.locator('.stage.is-active[data-stage="3"]').waitFor();
@@ -169,11 +192,33 @@ try {
     assert.equal(await subject.locator("body").evaluate(node => node.scrollWidth <= innerWidth + 2), true);
     await button.click();
     await frame.getByRole("heading", { name: "สาระสำคัญทั้งบท", exact: true }).waitFor();
+    await frame.locator('html[data-hub-math-state="ready"]').waitFor();
     assert.equal(await frame.locator("body").evaluate(node => node.scrollWidth <= innerWidth + 2), true);
     await page.screenshot({ path: resolve(output, `chapter-overview-${viewport.width}.png`), fullPage: true });
+    await frame.locator('[data-hub-math="display"]').first().scrollIntoViewIfNeeded();
+    await page.screenshot({ path: resolve(output, `html-math-${viewport.width}.png`), animations: 'disabled' });
     await closeSummary();
   }
   console.log("PASS tablet and phone-size layouts without horizontal overflow (not a real iPad hardware test)");
+
+  async function openReading(id, source) {
+    await page.evaluate(({ id, source }) => {
+      const link = document.createElement('a'); link.dataset.hubHtml = ''; link.dataset.contentId = id;
+      link.href = source; link.textContent = 'QA reading'; document.body.append(link); link.click(); link.remove();
+    }, { id, source });
+  }
+  await openReading('qa-adversarial', origin + prefix + 'content/qa-overview/adversarial.html');
+  await frame.locator('html[data-hub-math-state="partial"]').waitFor();
+  assert.equal(await frame.locator('[data-hub-math-error]').count(), 3);
+  assert.ok(await frame.locator('table mjx-container').count() === 2);
+  assert.equal(await frame.locator('pre').textContent(), String.raw`\(leaveCodeAlone\)`);
+  assert.equal(await frame.locator('[data-no-math]').textContent(), String.raw`\(leaveTextAlone\)`);
+  assert.equal(await frame.locator('a[href^="javascript:"]').count(), 0);
+  assert.equal(await page.evaluate(() => Boolean(window.__overviewScriptRan)), false);
+  assert.equal(mathRequests.filter(url => !/\/(?:tex-svg|mhchem|safe)\.js$/.test(url)).length, 0, 'TeX cannot autoload other packages');
+  await page.locator('.window-control.is-close').click();
+  await page.locator('.workspace-tool-frame').waitFor({ state: 'detached' });
+  console.log('PASS real MathJax fractions, roots, chemistry, vectors, calculus and table cells; malformed/unsafe TeX preserves text; sandbox unchanged');
 
   mode = "empty"; await enterChapter();
   assert.equal(await button.isDisabled(), true);
@@ -185,6 +230,18 @@ try {
   assert.deepEqual(errors, []);
   assert.deepEqual(missing, []);
   console.log("PASS empty/absent configuration and unsafe link rejection; no uncaught errors/404s; no live Firebase or AI traffic");
+
+  // A fresh Hub with a failed local renderer must retain all authored content.
+  mode = 'ready';
+  await page.route('**/vendor/mathjax-3.2.2/es5/tex-svg.js', route => route.abort());
+  await page.goto('about:blank'); // Same-URL hash navigation would reuse the loaded runtime.
+  await enterChapter(); await button.click();
+  await frame.locator('html[data-hub-math-state="error"]').waitFor();
+  assert.ok((await frame.locator('body').textContent()).includes(String.raw`\frac{-K_a+\sqrt{K_a^2+4K_a C}}{2}`));
+  assert.equal(await frame.locator('[data-hub-math-notice]').count(), 1);
+  await closeSummary();
+  assert.deepEqual(errors, []);
+  console.log('PASS failed renderer has readable original TeX and a reload instruction, without breaking navigation');
 } finally {
   await browser?.close();
   await new Promise(done => server.close(done));

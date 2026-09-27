@@ -1518,7 +1518,7 @@ body.has-maximized-workspace .hub-taskbar {
 .workspace-window-bar {
   display: grid;
   min-height: 52px;
-  grid-template-columns: minmax(390px, auto) minmax(0, 1fr) 42px;
+  grid-template-columns: minmax(390px, auto) minmax(0, 1fr) auto;
   align-items: center;
   border-bottom: 1px solid #d8e4f4;
   background: rgba(247, 251, 255, 0.95);
@@ -1738,6 +1738,32 @@ body.has-maximized-workspace .hub-taskbar {
   font-size: 12px;
   letter-spacing: 0.13em;
   text-align: center;
+}
+
+.window-trailing-tools { display:flex; align-items:center; gap:6px; padding:0 10px; }
+.window-html-print { display:flex; align-items:center; gap:6px; min-height:36px; padding:6px 10px; border:1px solid #c9c5e8; border-radius:9px; background:#f0edff; color:#4f4086; cursor:pointer; font-size:12px; font-weight:700; touch-action:manipulation; }
+.window-html-print svg { width:19px; height:19px; }
+.window-html-print:disabled { opacity:.5; cursor:wait; }
+.window-html-print:focus-visible, .html-print-dialog button:focus-visible { outline:3px solid #738edd; outline-offset:2px; }
+.html-print-dialog { width:min(1100px, calc(100vw - 24px)); height:calc(100dvh - 32px); max-height:none; padding:0; border:1px solid #c5cee4; border-radius:16px; background:#f4f6fc; color:#233451; box-shadow:0 24px 90px #14284e44; }
+.html-print-dialog[open] { display:flex; flex-direction:column; }
+.html-print-dialog::backdrop { background:#15213b88; }
+.html-print-toolbar { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:16px 20px; background:white; border-bottom:1px solid #d9e1f0; }
+.html-print-toolbar h2 { margin:0; font-size:19px; }
+.html-print-toolbar p { margin:4px 0 0; font-size:13px; }
+.html-print-actions { display:flex; gap:8px; flex-shrink:0; }
+.html-print-actions button { min-height:44px; padding:8px 14px; border:1px solid #c7cee3; border-radius:9px; cursor:pointer; background:white; color:#293f70; font:inherit; }
+.html-print-actions [data-print-confirm] { background:#51449a; color:white; border-color:#51449a; }
+.html-print-actions button:disabled { opacity:.45; cursor:wait; }
+.html-print-help { margin:0; padding:10px 20px; font-size:12px; line-height:1.5; }
+.html-print-dialog iframe { width:100%; flex:1; min-height:0; border:0; background:white; }
+@media (max-width:600px) {
+  .window-print-label, .window-trailing-tools .window-drag-hint { display:none; }
+  .window-trailing-tools { padding:0 6px; }
+  .window-html-print { min-height:40px; min-width:40px; justify-content:center; padding:6px; }
+  .html-print-toolbar { align-items:stretch; flex-direction:column; padding:12px; }
+  .html-print-actions { flex-wrap:wrap; }
+  .html-print-help { padding:8px 12px; }
 }
 
 .workspace-tool-frame {
@@ -2044,7 +2070,7 @@ body.has-maximized-workspace .hub-taskbar {
   }
 
   .workspace-window-bar {
-    grid-template-columns: minmax(250px, auto) minmax(0, 1fr) 26px;
+    grid-template-columns: minmax(250px, auto) minmax(0, 1fr) auto;
   }
 
   .window-controls {

@@ -12,6 +12,7 @@ import {
 import { createContentTool } from "./content-tool.js";
 import { htmlLinkEntry } from "./html-link.js";
 import { renderHtmlMath } from "./html-math.js";
+import { openHtmlPrint } from "./html-print.js";
 
 // Only live Quiz windows created by this workspace may use its storage bridge.
 const quizStorageFrames = new Set();
@@ -310,6 +311,11 @@ export function createWorkspace({
 
     record.title.textContent = title;
     record.frame.title = title;
+    if (record.printButton) {
+      record.printButton.title = label("พิมพ์ / บันทึก PDF", "Print / Save PDF");
+      record.printButton.setAttribute("aria-label", record.printButton.title);
+      record.printButton.querySelector('.window-print-label').textContent = label("พิมพ์ / PDF", "Print / PDF");
+    }
     record.taskTitle.textContent = title;
     record.closeButton.setAttribute("aria-label", label("ปิดงาน", "Close tool"));
     record.closeButton.title = label("ปิด", "Close");
@@ -617,7 +623,10 @@ export function createWorkspace({
           <span class="window-icon" aria-hidden="true">${tool.icon}</span>
           <strong class="window-title"></strong>
         </div>
-        <span class="window-drag-hint" aria-hidden="true">•••</span>
+        <div class="window-trailing-tools">
+          ${tool.context.toolKind === "html" ? '<button class="window-html-print" type="button" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V3h12v6M6 18H3V9h18v9h-3M6 14h12v7H6z"/></svg><span class="window-print-label"></span></button>' : ''}
+          <span class="window-drag-hint" aria-hidden="true">•••</span>
+        </div>
       </header>
       <iframe class="workspace-tool-frame" src="${tool.page}" loading="eager"></iframe>
     `;
@@ -643,6 +652,7 @@ export function createWorkspace({
       closeButton: element.querySelector(".is-close"),
       minimizeButton: element.querySelector(".is-minimize"),
       maximizeButton: element.querySelector(".is-maximize"),
+      printButton: tool.context.toolKind === "html" ? element.querySelector(".window-html-print") : null,
       clock: element.querySelector(".window-clock"),
       clockDate: element.querySelector(".window-clock-date"),
       clockTime: element.querySelector(".window-clock-time"),
@@ -678,6 +688,11 @@ export function createWorkspace({
     record.closeButton.addEventListener("click", () => close(record));
     record.minimizeButton.addEventListener("click", () => minimize(record));
     record.maximizeButton.addEventListener("click", () => toggleMaximize(record));
+    record.printButton?.addEventListener("click", () => openHtmlPrint({
+      frame: record.frame,
+      title: language() === 'en' ? record.tool.titleEn : record.tool.titleTh,
+      language: language(), opener: record.printButton,
+    }));
     record.stopwatchButton.addEventListener("click", () =>
       toggleStopwatch(record),
     );
@@ -699,6 +714,7 @@ export function createWorkspace({
       try { bindHtmlLinks(record.frame.contentDocument, record); } catch { /* Cross-origin content stays isolated. */ }
       if (record.tool.context.toolKind === "html") {
         const doc = record.frame.contentDocument;
+        record.printButton.disabled = !doc?.documentElement.hasAttribute('data-learning-html');
         void renderHtmlMath(doc, {
           isCurrent: () => record.frame.isConnected && record.frame.contentDocument === doc,
         }).catch(error => console.warn("HTML equation rendering failed", error));

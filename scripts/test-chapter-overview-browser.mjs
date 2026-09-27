@@ -54,6 +54,8 @@ const server = createServer(async (request, response) => {
     // Intentionally invalid script tests runtime isolation in addition to build-time validation.
     else if (name === "content/qa-overview/summary.html") data = summary.replace("</body>", '<a data-hub-html data-content-id="qa-related-reading" href="related.html">อ่านเพิ่มเติม</a><script>parent.__overviewScriptRan=true;</script></body>');
     else if (name === "content/qa-overview/related.html") data = String.raw`<!doctype html><html data-learning-html><body><h1>เอกสารอ่านเพิ่มเติม</h1><p>\(\frac{1}{2}+\frac{1}{3}=\frac{5}{6}\)</p></body></html>`;
+    else if (name === 'content/qa-overview/image-reading.html') data = '<!doctype html><html data-learning-html><body><h1>Image print</h1><img src="sample.svg" loading="lazy" alt="test diagram"><button onclick="parent.__printScriptRan=true">Must not print</button></body></html>';
+    else if (name === 'content/qa-overview/sample.svg') data = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="60"><rect width="200" height="60" fill="#ddd9f4"/><text x="20" y="38">Diagram</text></svg>';
     else if (name === "content/qa-overview/adversarial.html") data = String.raw`<!doctype html><html data-learning-html><body>
       <h1>Formula checks</h1><p>ข้อความเดิมและราคา $5</p>
       <table><tr><td>\(K_a\)</td><td>\(\ce{SO4^2-}\)</td></tr></table>
@@ -88,6 +90,7 @@ try {
     return route.fulfill({ contentType: "text/javascript", body: url.hostname === "www.gstatic.com" ? (stubs[url.pathname.split("/").at(-1)] || "") : "" });
   });
   const page = await context.newPage();
+  if (process.env.QA_PRINT_DEBUG === '1') page.on('console', message => console.log('BROWSER', message.type(), message.text()));
   page.setDefaultTimeout(12000);
   const errors = [], missing = [], mathRequests = [];
   page.on('request', request => { if (request.url().includes('/vendor/mathjax-')) mathRequests.push(request.url()); });
@@ -137,6 +140,29 @@ try {
   await page.screenshot({ path: resolve(output, "chapter-overview-open.png"), fullPage: true });
   await frame.locator('[data-hub-math="display"]').first().scrollIntoViewIfNeeded();
   await page.screenshot({ path: resolve(output, 'html-math-desktop.png'), animations: 'disabled' });
+  const sourceBeforePrint = await frame.locator('body').innerHTML();
+  const printDialog = page.locator('[data-html-print-dialog]');
+  const printFrame = page.frameLocator('[data-html-print-frame]');
+  await page.locator('.window-html-print').click();
+  await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
+  assert.equal(await printFrame.locator('script, button, iframe, [data-hub-html]').count(), 0);
+  assert.ok(await printFrame.locator('mjx-container svg').count() >= 8);
+  assert.equal(await page.locator('[data-html-print-frame]').getAttribute('sandbox'), 'allow-same-origin allow-modals');
+  assert.equal(await printFrame.locator('.workspace-window-bar, .hub-taskbar').count(), 0);
+  assert.equal(await page.evaluate(() => Boolean(window.__overviewScriptRan)), false);
+  // In headless mode print() emits real lifecycle events without sending a printer job.
+  await page.evaluate(() => {
+    const frame = document.querySelector('[data-html-print-frame]');
+    // Install the probe from the trusted parent, like the actual central controls.
+    frame.contentWindow.addEventListener('beforeprint', () => { frame.contentDocument.body.dataset.printCalled = 'yes'; });
+  });
+  await page.locator('[data-print-confirm]').click();
+  await printFrame.locator('body[data-print-called="yes"]').waitFor({ timeout:3000 });
+  await page.locator('[data-print-close]').click();
+  await printDialog.waitFor({ state:'detached' });
+  assert.equal(await frame.locator('body').innerHTML(), sourceBeforePrint, 'Print preview never edits the reading content');
+  assert.equal(await page.locator('.window-html-print').evaluate(node => node === document.activeElement), true);
+  console.log('PASS central print preview is script-free, preserves SVG equations, calls native printing, closes back to unchanged reading content');
   await frame.locator("a[data-hub-html]").click();
   await page.frameLocator('.workspace-window[data-tool-id="content-html-qa-related-reading"] iframe').getByRole("heading", { name: "เอกสารอ่านเพิ่มเติม" }).waitFor();
   await page.frameLocator('.workspace-window[data-tool-id="content-html-qa-related-reading"] iframe').locator('html[data-hub-math-state="ready"]').waitFor();
@@ -167,6 +193,7 @@ try {
   await subject.locator('.stage.is-active[data-stage="3"]').waitFor();
   await subject.locator(`[data-menu-entry="${quizId}"]`).click();
   await page.frameLocator(".workspace-tool-frame").locator(".quiz-option").first().waitFor();
+  assert.equal(await page.locator('.window-html-print').count(), 0, 'Existing Quiz print workflow is unchanged');
   if (!built) assert.equal(await page.evaluate(async () => (await import("./js/workspace.js")).isWorkspaceQuizSource(document.querySelector(".workspace-tool-frame").contentWindow)), true);
   await page.locator(".window-control.is-close").click();
   await page.locator(".workspace-tool-frame").waitFor({ state: "detached" });
@@ -197,6 +224,12 @@ try {
     await page.screenshot({ path: resolve(output, `chapter-overview-${viewport.width}.png`), fullPage: true });
     await frame.locator('[data-hub-math="display"]').first().scrollIntoViewIfNeeded();
     await page.screenshot({ path: resolve(output, `html-math-${viewport.width}.png`), animations: 'disabled' });
+    await page.locator('.window-html-print').click();
+    await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
+    assert.equal(await printDialog.evaluate(node => node.getBoundingClientRect().right <= innerWidth + 1), true);
+    assert.equal(await printFrame.locator('body').evaluate(node => node.scrollWidth <= innerWidth + 2), true);
+    await page.screenshot({ path:resolve(output, `html-print-preview-${viewport.width}.png`), animations:'disabled' });
+    await page.locator('[data-print-close]').click();
     await closeSummary();
   }
   console.log("PASS tablet and phone-size layouts without horizontal overflow (not a real iPad hardware test)");
@@ -214,11 +247,57 @@ try {
   assert.equal(await frame.locator('pre').textContent(), String.raw`\(leaveCodeAlone\)`);
   assert.equal(await frame.locator('[data-no-math]').textContent(), String.raw`\(leaveTextAlone\)`);
   assert.equal(await frame.locator('a[href^="javascript:"]').count(), 0);
+  await page.locator('.window-html-print').click();
+  await page.locator('[data-html-print-dialog][data-print-state="error"]').waitFor();
+  assert.equal(await page.locator('[data-print-confirm]').isDisabled(), true, 'Do not print unfinished equations silently');
+  await page.locator('[data-print-close]').click();
   assert.equal(await page.evaluate(() => Boolean(window.__overviewScriptRan)), false);
   assert.equal(mathRequests.filter(url => !/\/(?:tex-svg|mhchem|safe)\.js$/.test(url)).length, 0, 'TeX cannot autoload other packages');
   await page.locator('.window-control.is-close').click();
   await page.locator('.workspace-tool-frame').waitFor({ state: 'detached' });
   console.log('PASS real MathJax fractions, roots, chemistry, vectors, calculus and table cells; malformed/unsafe TeX preserves text; sandbox unchanged');
+
+  await openReading('qa-image-print', origin + prefix + 'content/qa-overview/image-reading.html');
+  await frame.getByRole('heading', { name:'Image print' }).waitFor();
+  await page.locator('.window-html-print').click();
+  await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
+  assert.equal(await printFrame.locator('img').getAttribute('src'), origin + prefix + 'content/qa-overview/sample.svg');
+  assert.equal(await printFrame.locator('img').evaluate(node => node.complete && node.naturalWidth > 0), true);
+  assert.equal(await printFrame.locator('button, [onclick]').count(), 0);
+  await page.locator('[data-print-close]').click();
+  // Failure must stay actionable and never enable an incomplete print.
+  await page.route('**/content/qa-overview/sample.svg', route => route.abort());
+  await page.locator('.window-html-print').click();
+  await page.locator('[data-html-print-dialog][data-print-state="error"]').waitFor();
+  assert.equal(await page.locator('[data-print-confirm]').isDisabled(), true);
+  await page.keyboard.press('Escape');
+  await printDialog.waitFor({ state:'detached' });
+  await page.unroute('**/content/qa-overview/sample.svg');
+  await page.locator('.window-html-print').click();
+  await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
+  await page.locator('[data-print-close]').click();
+  await page.locator('.window-control.is-close').click();
+  await page.locator('.workspace-tool-frame').waitFor({ state:'detached' });
+
+  // Real teacher-authored chapter: read-only QA, no edits to the content file.
+  await openReading('qa-acid-print', origin + prefix + 'content/chemistry/acid-base/chapter-overview.html');
+  await frame.locator('html[data-hub-math-state="ready"]').waitFor();
+  await page.locator('.window-html-print').click();
+  await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
+  await page.setViewportSize({ width:1440, height:1000 });
+  await page.screenshot({ path:resolve(output, 'html-print-preview.png'), animations:'disabled' });
+  if (process.env.QA_PRINT_PDF === '1') {
+    const snapshot = await printFrame.locator('html').evaluate(node => '<!doctype html>' + node.outerHTML);
+    const pdfPage = await context.newPage();
+    await pdfPage.setContent(snapshot, { waitUntil:'load' });
+    await pdfPage.evaluate(() => document.fonts.ready);
+    await pdfPage.pdf({ path:resolve(output, 'chapter-overview-print.pdf'), preferCSSPageSize:true, printBackground:true, displayHeaderFooter:false });
+    await pdfPage.close();
+  }
+  await page.locator('[data-print-close]').click();
+  await page.locator('.window-control.is-close').click();
+  await page.locator('.workspace-tool-frame').waitFor({ state:'detached' });
+  console.log('PASS relative images and real acid-base chapter prepare for printing without changing authored HTML');
 
   mode = "empty"; await enterChapter();
   assert.equal(await button.isDisabled(), true);

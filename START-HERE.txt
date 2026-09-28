@@ -18,6 +18,8 @@ Repository: https://github.com/Nixcentury/learning-hub
 แม่แบบลากวาง: public/content/templates/quiz-drag-template.html
 พรอมป์สำหรับ AI: public/content/templates/quiz-ai-prompt.txt และ quiz-drag-ai-prompt.txt
 คู่มือ 4 ชั้น: public/content/chemistry/START-HERE.txt
+แผนลิงก์แชร์ เฟส 1 (ยังไม่เปิดปุ่มแชร์): SHARING-PHASE1-START-HERE.txt
+ลิงก์วิชา/บท/เรื่องย่อย เฟส 2 และวิธีลอง: SHARING-PHASE2-START-HERE.txt
 คู่มือออนไลน์: https://nixcentury.github.io/learning-hub/content/chemistry/START-HERE.txt
 
 โครงเมนู: วิชา/บท > เรื่องย่อย > รายการ Quiz/เครื่องมือ > เปิดทำงาน

@@ -195,6 +195,12 @@
     localize(root.querySelector(".activity-heading p"), "เลือกเครื่องมือ แล้วเริ่มสำรวจบทเรียนไปด้วยกัน", "Choose a tool and make space for your next idea.");
     localize(root.querySelector(".prototype-note span:last-child"), "กำลังเตรียมเนื้อหาและแบบฝึกหัดสำหรับบทนี้", "Content and exercises for this chapter are in preparation.");
     choose(0, false, false);
+    return {
+      selectChapter(id) {
+        const index = chapters.findIndex(chapter => chapter.id === id);
+        if (index >= 0) choose(index, false, false);
+      },
+    };
   }
 
   window.LearningHubSubjectOrbit = { mount };

@@ -1,5 +1,5 @@
 // Menu HTML is data only: copy text/links into shared cards, never execute its markup.
-export function createSubjectContentNavigation({ root, subject, setStage, backToChapters }) {
+export function createSubjectContentNavigation({ root, subject, setStage, backToChapters, requestNavigation = () => false }) {
   const panel = document.createElement("section");
   panel.className = "activity-view content-menu-view";
   panel.hidden = true;
@@ -49,9 +49,14 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
     controller?.abort(); controller = new AbortController();
     message("กำลังโหลดรายการ…", "Loading activities…");
     const url = urlFor(source, parentUrl);
-    const response = await fetch(url, { signal: controller.signal, cache: "no-cache" });
-    if (!response.ok || response.redirected) throw new Error("Menu unavailable");
-    const parsed = new DOMParser().parseFromString(await response.text(), "text/html");
+    const requestController = controller;
+    const timeout = setTimeout(() => requestController.abort(), 12000);
+    let parsed;
+    try {
+      const response = await fetch(url, { signal: requestController.signal, cache: "no-cache" });
+      if (!response.ok || response.redirected) throw new Error("Menu unavailable");
+      parsed = new DOMParser().parseFromString(await response.text(), "text/html");
+    } finally { clearTimeout(timeout); }
     if (version !== loadVersion) return null;
     const menus = parsed.querySelectorAll("[data-learning-menu]");
     const menu = menus[0];
@@ -103,7 +108,7 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
       localized(button, th, en); button.addEventListener("click", callback); host.append(button);
     };
     add(subject.titleTh, subject.titleEn, backToChapters);
-    add(chapter.th, chapter.en, showTopics);
+    add(chapter.th, chapter.en, () => showTopics());
     if (mode === "tools" && topicMenu) {
       const current = document.createElement("span");
       localized(current, topicMenu.th, topicMenu.en); current.setAttribute("aria-current", "page"); host.append(current);
@@ -151,14 +156,24 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
     message("เปิดรายการไม่ได้ กรุณาตรวจชื่อไฟล์และลิงก์ใน HTML แล้วลองเข้าบทอีกครั้ง", "Cannot load this menu. Check the HTML file path, then reopen the chapter.", true);
   }
   function showTopics() {
+    if (requestNavigation({ chapterId: chapter.id })) return;
     ++loadVersion; controller?.abort();
+    topicMenu = null;
     if (chapterMenu) render(chapterMenu); else backToChapters();
   }
-  async function showTools(entry) {
+  async function showTools(entry, fromRoute = false) {
+    if (!fromRoute && requestNavigation({ chapterId: chapter.id, topicId: entry.id })) return true;
+    if (!entry.source) {
+      topicMenu = { kind: 'tools', topicId: entry.id, th: entry.th, en: entry.en,
+        descriptionTh: entry.descriptionTh, descriptionEn: entry.descriptionEn, entries: [] };
+      render(topicMenu);
+      return true;
+    }
     try {
       const menu = await readMenu(entry.source, chapterMenu.url, "tools", entry.id);
-      if (menu) { topicMenu = menu; render(menu); }
+      if (menu) { topicMenu = menu; render(menu); return true; }
     } catch (error) { failure(error); }
+    return false;
   }
   function openTool(entry, button) {
     if (parent === window) {
@@ -193,15 +208,22 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
   panel.querySelector("[data-menu-back]").addEventListener("click", () => mode === "topics" ? backToChapters() : showTopics());
   return {
     hide,
-    async open(definition) {
+    async open(definition, topicId = null) {
       hide(); panel.hidden = false; cards.replaceChildren(); mode = "topics"; chapterMenu = null; topicMenu = null; lastLaunch = null;
       const title = definition.querySelector("[data-chapter-title]");
       chapter = { id: definition.dataset.chapter, th: title.dataset.th, en: title.dataset.en };
       render({ kind: "topics", th: chapter.th, en: chapter.en, entries: [] });
       try {
         const menu = await readMenu(definition.dataset.chapterSrc, location.href, "topics");
-        if (menu) { chapterMenu = menu; render(menu); }
+        if (menu) {
+          chapterMenu = menu; render(menu);
+          if (!topicId) return true;
+          const entry = menu.entries.find(item => item.id === topicId && item.toolKind !== 'html');
+          if (!entry) throw Error('Topic unavailable');
+          return await showTools(entry, true);
+        }
       } catch (error) { failure(error); }
+      return false;
     },
   };
 }

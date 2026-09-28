@@ -4,6 +4,7 @@ import { readFile, mkdir } from "node:fs/promises";
 import { resolve, sep, extname } from "node:path";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
+import { catalogFromRepository } from './build-route-catalog.mjs';
 
 // Virtual menus exercise real Hub code without changing teachers' chapter files.
 // Every non-local request is intercepted; Firebase, login and AI are never used.
@@ -17,6 +18,14 @@ const summary = await readFile(resolve(root, "public/content/templates/chapter-o
 const quiz = await readFile(resolve(root, "public/content/templates/quiz-template.html"), "utf8");
 const quizId = quiz.match(/data-activity-id="([^"]+)"/)[1];
 let mode = "ready";
+const navigationCatalog = await catalogFromRepository();
+// This suite substitutes a chapter menu at runtime; mirror its two topic IDs in
+// the navigation fixture, without changing any teacher-authored menu on disk.
+navigationCatalog.routes = navigationCatalog.routes.filter(route => !(route.kind === 'topic' && route.subjectId === 'chemistry' && route.chapterId === '10'));
+for (const topicId of ['theories', 'future']) navigationCatalog.routes.push({
+  hash: `#chemistry/10/${topicId}`, aliases: [], kind: 'topic', subjectId: 'chemistry', chapterId: '10', topicId,
+  parentHash: '#chemistry/10', status: topicId === 'future' ? 'preparing' : 'ready',
+});
 function topics() {
   const attribute = mode === "absent" ? "" : `data-chapter-overview-src="${mode === "empty" ? "" : mode === "unsafe" ? "https://evil.test/x.html" : "summary.html"}"`;
   return `<nav data-learning-menu data-menu-kind="topics" data-subject-id="chemistry" data-chapter-id="10"
@@ -49,7 +58,8 @@ const server = createServer(async (request, response) => {
     const path = resolve(servedRoot, name);
     if (!path.startsWith(servedRoot.replace(/[\\/]$/, '') + sep)) throw Error("Outside root");
     let data;
-    if (name === "content/qa-overview/topics.html") data = topics();
+    if (name === 'route-catalog.v1.json') data = JSON.stringify(navigationCatalog);
+    else if (name === "content/qa-overview/topics.html") data = topics();
     else if (name === "content/qa-overview/tools.html") data = toolsMenu;
     // Intentionally invalid script tests runtime isolation in addition to build-time validation.
     else if (name === "content/qa-overview/summary.html") data = summary.replace("</body>", '<a data-hub-html data-content-id="qa-related-reading" href="related.html">อ่านเพิ่มเติม</a><script>parent.__overviewScriptRan=true;</script></body>');

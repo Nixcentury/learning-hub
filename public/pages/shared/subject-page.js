@@ -189,6 +189,15 @@ function buildSubjectPage() {
   let contentNavigation = null;
   let contentNavigationPromise = null;
   let navigationVersion = 0;
+  let orbitControl = null;
+  const pageId = crypto.randomUUID();
+  let routeCommand = null;
+  function requestSelection(selection) {
+    if (!routeCommand || parent === window) return false;
+    parent.postMessage({ type: 'learning-hub-navigation-request', pageId, commandId: routeCommand,
+      selection: { subjectId: subject.id, ...selection } }, location.origin);
+    return true;
+  }
   subjectRoot.classList.toggle("has-content-menus", hasContentMenus);
 
   function setNavigationMode(fourLayers) {
@@ -278,9 +287,12 @@ function buildSubjectPage() {
     );
   }
 
-  function showActivities(chapter) {
+  async function showActivities(chapter, route = null) {
+    if (!route && requestSelection({ chapterId: String(chapter) })) return true;
     selectedChapter = String(chapter);
     const definition = chapterDefinitions.find((entry) => entry.dataset.chapter === selectedChapter);
+    if (!definition) return false;
+    orbitControl?.selectChapter(selectedChapter);
     const version = ++navigationVersion;
     contentNavigation?.hide();
     if (definition?.dataset.chapterSrc) {
@@ -289,29 +301,37 @@ function buildSubjectPage() {
       activityView.hidden = true;
       if (!contentNavigationPromise) {
         contentNavigationPromise = import(contentNavigationUrl).then(({ createSubjectContentNavigation }) => {
-          contentNavigation = createSubjectContentNavigation({ root: subjectRoot, subject, setStage, backToChapters: showChapters });
+          contentNavigation = createSubjectContentNavigation({ root: subjectRoot, subject, setStage,
+            backToChapters: () => showChapters(), requestNavigation: requestSelection });
           return contentNavigation;
         }).catch((error) => { contentNavigationPromise = null; throw error; });
       }
-      contentNavigationPromise.then((navigation) => {
-        if (version === navigationVersion) return navigation.open(definition);
-      }).catch(() => {
-        if (version !== navigationVersion) return;
-        showChapters();
-        window.alert(document.documentElement.lang === "en" ? "Cannot load the topic menu. Please refresh and try again." : "โหลดเมนูเรื่องย่อยไม่สำเร็จ กรุณารีเฟรชแล้วลองอีกครั้ง");
-      });
-      return;
+      try {
+        const navigation = await contentNavigationPromise;
+        if (version !== navigationVersion) return false;
+        return await navigation.open(definition, route?.topicId);
+      } catch {
+        if (version !== navigationVersion) return false;
+        showChapters(true);
+        if (!route) window.alert(document.documentElement.lang === 'en'
+          ? 'Cannot load the topic menu. Please refresh and try again.'
+          : 'โหลดเมนูเรื่องย่อยไม่สำเร็จ กรุณารีเฟรชแล้วลองอีกครั้ง');
+        return false;
+      }
     }
     setNavigationMode(false);
     updateActivityTitle();
     chapterView.hidden = true;
     activityView.hidden = false;
+    activityView.querySelector('.activity-grid').hidden = route?.status === 'preparing';
     setStage(2);
     activityTitle.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    return true;
   }
 
-  function showChapters() {
+  function showChapters(fromRoute = false) {
+    if (!fromRoute && requestSelection({})) return true;
     ++navigationVersion;
     contentNavigation?.hide();
     setNavigationMode(hasContentMenus);
@@ -320,10 +340,11 @@ function buildSubjectPage() {
     setStage(1);
     subjectRoot.querySelector(`[data-chapter="${selectedChapter}"]`)?.focus();
     window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    return true;
   }
 
   if (window.LearningHubSubjectOrbit) {
-    window.LearningHubSubjectOrbit.mount({ root: subjectRoot, grid: chapterGrid, subject, onOpen: showActivities });
+    orbitControl = window.LearningHubSubjectOrbit.mount({ root: subjectRoot, grid: chapterGrid, subject, onOpen: showActivities });
   } else {
     chapterGrid.querySelectorAll("[data-chapter]").forEach((button) => {
       button.addEventListener("click", () => showActivities(button.dataset.chapter));
@@ -339,8 +360,32 @@ function buildSubjectPage() {
     });
   });
 
-  backButton.addEventListener("click", showChapters);
+  backButton.addEventListener("click", () => showChapters());
   updateActivityTitle();
+
+  window.addEventListener('message', async event => {
+    const data = event.data;
+    if (parent === window || event.source !== parent || event.origin !== location.origin ||
+        data?.type !== 'learning-hub-navigate' || data.pageId !== pageId ||
+        typeof data.commandId !== 'string' || data.commandId.length > 160 ||
+        data.commandId === routeCommand || data.route?.subjectId !== subject.id) return;
+    routeCommand = data.commandId;
+    subjectRoot.inert = true;
+    let ok = false;
+    try { ok = data.route.chapterId ? await showActivities(data.route.chapterId, data.route) : showChapters(true); }
+    finally {
+      if (routeCommand === data.commandId) {
+        subjectRoot.inert = false;
+        subjectRoot.dataset.navigationReady = ok ? 'ready' : 'error';
+        const focusTarget = data.route.chapterId
+          ? subjectRoot.querySelector('.content-menu-view:not([hidden]) [data-menu-title], #activity-view:not([hidden]) h2')
+          : chapterGrid.querySelector('.is-selected') || chapterGrid.querySelector('button');
+        focusTarget?.focus({ preventScroll: true });
+        parent.postMessage({ type: 'learning-hub-navigation-result', pageId, commandId: data.commandId, ok }, location.origin);
+      }
+    }
+  });
+  if (parent !== window && location.origin !== 'null') parent.postMessage({ type: 'learning-hub-navigation-ready', pageId, subjectId: subject.id }, location.origin);
 }
 
 buildSubjectPage();

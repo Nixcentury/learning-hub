@@ -2,9 +2,12 @@ import assert from 'node:assert/strict';
 import { readdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join, relative } from 'node:path';
+import { catalogFromRepository } from './build-route-catalog.mjs';
+import { routeCatalogFile } from '../js/hub-routes.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = join(root, 'dist');
+assert.deepEqual(JSON.parse(await readFile(join(dist, routeCatalogFile), 'utf8')), await catalogFromRepository(), 'Published route catalog must match the current HTML and legacy IDs');
 async function list(folder) {
   const entries = await readdir(folder, { withFileTypes: true });
   return (await Promise.all(entries.map(entry => entry.isDirectory()

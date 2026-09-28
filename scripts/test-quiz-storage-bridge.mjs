@@ -191,6 +191,7 @@ function workspaceHarness() {
   });
   vm.runInContext(readModule("../js/content-context.js"), context);
   vm.runInContext(readModule("../js/content-tool.js"), context);
+  vm.runInContext(readModule("../js/legacy-tool-catalog.js"), context);
   vm.runInContext(readModule("../js/workspace.js"), context);
   const windowLayer = new FakeElement();
   const workspace = context.createWorkspace({

@@ -28,6 +28,7 @@ import {
   createIdentityContext,
 } from "./content-context.js";
 import { createWorkspace } from "./workspace.js";
+import { createHubNavigation } from "./hub-navigation.js";
 import "./quiz-progress.js";
 
 const languageStorageKey = "learning-hub-language";
@@ -527,11 +528,14 @@ function renderSession(session) {
   showLogin();
 }
 
-function showSection(sectionId, updateHistory = true) {
+let displayedSectionId = null;
+function showSection(sectionId, force = false) {
   const activeButton = [...navButtons].find(
     (button) => button.dataset.section === sectionId,
   );
   if (!activeButton) return;
+  if (displayedSectionId === sectionId && !force) return;
+  displayedSectionId = sectionId;
 
   activeSectionId = sectionId;
   ++classroomPageRevision;
@@ -549,12 +553,9 @@ function showSection(sectionId, updateHistory = true) {
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
   pageFrameLoading.hidden = false;
-  pageFrame.src = pageUrl.href;
+  // Child-frame navigations must not add extra entries to the Hub's Back history.
+  pageFrame.contentWindow.location.replace(pageUrl.href);
   pageFrame.title = activeButton.textContent.trim();
-
-  if (updateHistory) {
-    history.pushState({ sectionId }, "", `#${sectionId}`);
-  }
 
   setPresenceContext({ sectionId });
 }
@@ -615,8 +616,9 @@ signOutButton.addEventListener("click", async () => {
   }
 });
 
-navButtons.forEach((button) => {
-  button.addEventListener("click", () => showSection(button.dataset.section));
+const navigation = createHubNavigation({
+  pageFrame, navButtons, showSection,
+  noticeElement: document.querySelector('#hub-route-notice'),
 });
 
 workspace.bindHtmlLinks(document);
@@ -629,6 +631,7 @@ pageFrame.addEventListener("load", () => {
 window.addEventListener("message", (event) => {
   const trustedOrigin = location.origin === "null" || event.origin === location.origin;
   if (!trustedOrigin || event.source !== pageFrame.contentWindow) return;
+  if (navigation.handleMessage(event)) return;
   if (event.data?.type === "learning-hub-page-ready") {
     postContextToPage();
     return;
@@ -663,11 +666,6 @@ window.addEventListener("message", (event) => {
   if (event.data?.type !== "learning-hub-open-tool") return;
 
   workspace.open(event.data.toolId);
-});
-
-window.addEventListener("popstate", () => {
-  const sectionId = location.hash.slice(1) || "overview";
-  showSection(sectionId, false);
 });
 
 presenceButton.addEventListener("click", () => {
@@ -759,8 +757,7 @@ subscribeAuth(renderSession);
 subscribePresence(renderPresence);
 subscribeRoles(renderRole);
 
-const initialSectionId = location.hash.slice(1) || activeSectionId;
-showSection(initialSectionId, false);
+navigation.start();
 
 setInterval(() => {
   if (!presencePanel.hidden) renderPresence(activePresence);

@@ -50,6 +50,15 @@ const stubs = {
     export const onDisconnect=()=>({remove:async()=>{},cancel:async()=>{}});
     export const set=async()=>{throw Error('Database writes forbidden in QA')};export const update=set;export const remove=set;`,
 };
+const printRows = Array.from({length:75}, (_,i) => `<tr data-row="${i}"><td>${i+1}</td><td>Table row ${i+1}: กรดและเบส</td><td>0.10 mol/L</td></tr>`).join('');
+const printRichFixture = `<!doctype html><html data-learning-html data-print-subject="เคมี" data-print-chapter="บทที่ 10 กรด–เบส" data-print-work="ทดสอบตารางและรูป"><head><style>
+  body{font:16px/1.6 Tahoma,sans-serif} table{border-collapse:collapse} td,th{padding:10px;border:1px solid #aaa} main{padding:20px} p{margin:12px 0} @media print{p{font-size:40px;margin:80px}}
+  </style></head><body><style>.print-inline-style { color:rgb(10, 70, 130); }</style><main><h1>ตาราง รูป และ SVG</h1><p class="print-inline-style">START-FIXTURE</p>
+  <img src="sample.svg" alt="Linked SVG"><svg width="200" height="60" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="diagram-gradient"><stop stop-color="#768fe5"/><stop offset="1" stop-color="#a1e0d2"/></linearGradient><g id="diagram-mark"><rect width="200" height="60" fill="url(#diagram-gradient)"/></g></defs><use href="#diagram-mark"/></svg>
+  <table><thead><tr><th>ลำดับ</th><th>รายการ</th><th>ความเข้มข้น</th></tr></thead><tbody>${printRows}</tbody></table>
+  <ol start="6">${Array.from({length:18},(_,i)=>`<li data-list="${i}">ผลการเรียนรู้ ${i+6} ${'อธิบายการเปลี่ยนแปลงของสารละลาย '.repeat(9)}</li>`).join('')}</ol>
+  <p data-long-text>${'คำอธิบายภาษาไทยและ English with inline emphasis. '.repeat(200)}</p>
+  <p>END-FIXTURE</p></main></body></html>`;
 const server = createServer(async (request, response) => {
   try {
     const pathname = decodeURIComponent(new URL(request.url, "http://localhost").pathname);
@@ -65,6 +74,8 @@ const server = createServer(async (request, response) => {
     else if (name === "content/qa-overview/summary.html") data = summary.replace("</body>", '<a data-hub-html data-content-id="qa-related-reading" href="related.html">อ่านเพิ่มเติม</a><script>parent.__overviewScriptRan=true;</script></body>');
     else if (name === "content/qa-overview/related.html") data = String.raw`<!doctype html><html data-learning-html><body><h1>เอกสารอ่านเพิ่มเติม</h1><p>\(\frac{1}{2}+\frac{1}{3}=\frac{5}{6}\)</p></body></html>`;
     else if (name === 'content/qa-overview/image-reading.html') data = '<!doctype html><html data-learning-html><body><h1>Image print</h1><img src="sample.svg" loading="lazy" alt="test diagram"><button onclick="parent.__printScriptRan=true">Must not print</button></body></html>';
+    else if (name === 'content/qa-overview/print-rich.html') data = printRichFixture;
+    else if (name === 'content/qa-overview/print-oversized.html') data = '<html data-learning-html><body><figure style="height:400mm">Oversized image caption</figure></body></html>';
     else if (name === 'content/qa-overview/sample.svg') data = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="60"><rect width="200" height="60" fill="#ddd9f4"/><text x="20" y="38">Diagram</text></svg>';
     else if (name === "content/qa-overview/adversarial.html") data = String.raw`<!doctype html><html data-learning-html><body>
       <h1>Formula checks</h1><p>ข้อความเดิมและราคา $5</p>
@@ -155,6 +166,8 @@ try {
   const printFrame = page.frameLocator('[data-html-print-frame]');
   await page.locator('.window-html-print').click();
   await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
+  assert.equal(await printFrame.locator('.hub-print-page-header').first().locator('span').first().textContent(), 'เคมี');
+  assert.match(await printFrame.locator('.hub-print-page-header').first().locator('span').nth(1).textContent(), /10/);
   assert.equal(await printFrame.locator('script, button, iframe, [data-hub-html]').count(), 0);
   assert.ok(await printFrame.locator('mjx-container svg').count() >= 8);
   assert.equal(await page.locator('[data-html-print-frame]').getAttribute('sandbox'), 'allow-same-origin allow-modals');
@@ -237,19 +250,62 @@ try {
     await page.locator('.window-html-print').click();
     await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
     assert.equal(await printDialog.evaluate(node => node.getBoundingClientRect().right <= innerWidth + 1), true);
-    assert.equal(await printFrame.locator('body').evaluate(node => node.scrollWidth <= innerWidth + 2), true);
+    assert.equal(await printFrame.locator('.hub-print-page').first().evaluate(node => node.getBoundingClientRect().right <= innerWidth + 2), true, 'A4 preview scales to narrow screens without changing pagination');
     await page.screenshot({ path:resolve(output, `html-print-preview-${viewport.width}.png`), animations:'disabled' });
     await page.locator('[data-print-close]').click();
     await closeSummary();
   }
   console.log("PASS tablet and phone-size layouts without horizontal overflow (not a real iPad hardware test)");
 
-  async function openReading(id, source) {
-    await page.evaluate(({ id, source }) => {
+  async function openReading(id, source, title = 'QA reading') {
+    await page.evaluate(({ id, source, title }) => {
       const link = document.createElement('a'); link.dataset.hubHtml = ''; link.dataset.contentId = id;
-      link.href = source; link.textContent = 'QA reading'; document.body.append(link); link.click(); link.remove();
-    }, { id, source });
+      link.dataset.subjectId = 'chemistry'; link.dataset.chapterId = '10';
+      link.href = source; link.textContent = title; document.body.append(link); link.click(); link.remove();
+    }, { id, source, title });
   }
+  await page.setViewportSize({width:1440,height:1000});
+  await openReading('qa-rich-print', origin + prefix + 'content/qa-overview/print-rich.html');
+  await frame.getByRole('heading', {name:'ตาราง รูป และ SVG'}).waitFor();
+  const originalRich = await frame.locator('body').innerHTML();
+  await page.locator('.window-html-print').click();
+  await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
+  const count = await printFrame.locator('.hub-print-page').count();
+  assert.ok(count > 3);
+  assert.equal(await printFrame.locator('tr[data-row]').count(),75);
+  assert.deepEqual(await printFrame.locator('tr[data-row]').evaluateAll(nodes=>nodes.map(node=>Number(node.dataset.row))),Array.from({length:75},(_,i)=>i));
+  assert.equal(await printFrame.locator('table').evaluateAll(tables=>tables.every(table=>table.querySelector('thead'))),true);
+  assert.deepEqual(await printFrame.locator('li[data-list]').evaluateAll(nodes=>nodes.map(node=>Number(node.value))),Array.from({length:18},(_,i)=>i+6));
+  assert.equal(await printFrame.locator('[data-long-text]').evaluateAll(nodes=>nodes.map(node=>node.textContent).join('')), 'คำอธิบายภาษาไทยและ English with inline emphasis. '.repeat(200));
+  assert.equal(await printFrame.locator('svg use').getAttribute('href'),'#diagram-mark');
+  assert.equal(await printFrame.locator('.print-inline-style').evaluate(node=>getComputedStyle(node).color),'rgb(10, 70, 130)');
+  assert.equal(await printFrame.locator('.hub-print-page-header').evaluateAll(rows=>rows.every(row=>row.children[0].textContent==='เคมี' && row.children[1].textContent==='บทที่ 10 กรด–เบส' && row.children[2].textContent==='')),true);
+  assert.deepEqual(await printFrame.locator('.hub-print-page-number').allTextContents(),Array.from({length:count},(_,i)=>`หน้า ${i+1} / ${count}`));
+  async function assertNoOverflow() {
+    assert.equal(await printFrame.locator('.hub-print-page-body').evaluateAll(nodes=>nodes.every(node=>node.scrollHeight<=node.clientHeight+1 && node.scrollWidth<=node.clientWidth+1)),true,'All pages retain their content within the reserved area');
+  }
+  await assertNoOverflow();
+  await page.emulateMedia({media:'print'}); await assertNoOverflow(); await page.emulateMedia({media:'screen'});
+  await printDialog.locator('summary').click();
+  await page.locator('[data-print-field="topic"]').fill('ชื่อเฉพาะการพิมพ์ครั้งนี้');
+  assert.equal(await page.locator('[data-print-confirm]').isDisabled(),true);
+  await page.locator('[data-print-rebuild]').click();
+  await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
+  assert.equal(await printFrame.locator('.hub-print-page-header').first().locator('span').last().textContent(),'ชื่อเฉพาะการพิมพ์ครั้งนี้');
+  await page.locator('[data-print-close]').click();
+  assert.equal(await frame.locator('body').innerHTML(),originalRich);
+  await page.locator('.window-control.is-close').click();
+  await page.locator('.workspace-tool-frame').waitFor({state:'detached'});
+  await openReading('qa-oversized-print',origin+prefix+'content/qa-overview/print-oversized.html');
+  await frame.locator('figure').waitFor();
+  await page.locator('.window-html-print').click();
+  await page.locator('[data-html-print-dialog][data-print-state="error"]').waitFor();
+  assert.equal(await page.locator('[data-print-confirm]').isDisabled(),true);
+  assert.match(await page.locator('[data-print-status]').textContent(),/ใหญ่เกินพื้นที่/);
+  await page.locator('[data-print-close]').click();
+  await page.locator('.window-control.is-close').click();
+  await page.locator('.workspace-tool-frame').waitFor({state:'detached'});
+  console.log('PASS explicit A4 pages, repeat headers/footers, continuous table rows and list numbers, long Thai text, linked/inline SVG, per-print labels and oversized-content protection');
   await openReading('qa-adversarial', origin + prefix + 'content/qa-overview/adversarial.html');
   await frame.locator('html[data-hub-math-state="partial"]').waitFor();
   assert.equal(await frame.locator('[data-hub-math-error]').count(), 3);
@@ -290,11 +346,15 @@ try {
   await page.locator('.workspace-tool-frame').waitFor({ state:'detached' });
 
   // Real teacher-authored chapter: read-only QA, no edits to the content file.
-  await openReading('qa-acid-print', origin + prefix + 'content/chemistry/acid-base/chapter-overview.html');
+  await openReading('qa-acid-print', origin + prefix + 'content/chemistry/acid-base/chapter-overview.html', 'ผลการเรียนรู้และสรุปบท');
   await frame.locator('html[data-hub-math-state="ready"]').waitFor();
   await page.locator('.window-html-print').click();
   await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
   await page.setViewportSize({ width:1440, height:1000 });
+  const actualPageCount = await printFrame.locator('.hub-print-page').count();
+  console.log(`Actual acid-base summary: ${actualPageCount} pages`);
+  await assertNoOverflow();
+  await page.emulateMedia({media:'print'}); await assertNoOverflow(); await page.emulateMedia({media:'screen'});
   await page.screenshot({ path:resolve(output, 'html-print-preview.png'), animations:'disabled' });
   if (process.env.QA_PRINT_PDF === '1') {
     const snapshot = await printFrame.locator('html').evaluate(node => '<!doctype html>' + node.outerHTML);

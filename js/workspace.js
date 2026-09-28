@@ -608,6 +608,7 @@ export function createWorkspace({
       frame: record.frame,
       title: language() === 'en' ? record.tool.titleEn : record.tool.titleTh,
       language: language(), opener: record.printButton,
+      context: record.tool.context,
     }));
     record.stopwatchButton.addEventListener("click", () =>
       toggleStopwatch(record),

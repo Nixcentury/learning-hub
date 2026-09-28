@@ -1,4 +1,6 @@
 import { renderHtmlMath } from './html-math.js';
+import { paginatePrintDocument, PrintLayoutError } from './print-layout.js';
+import { loadPrintCatalog, readPrintMetadata, resolvePrintMetadata } from './print-metadata.js';
 
 let activePreview = null;
 const RESOURCE_TIMEOUT = 15000;
@@ -34,6 +36,7 @@ export const htmlPrintCSS = `
   .hub-print-document tr, .hub-print-document figure { break-inside:avoid; page-break-inside:avoid; }
   .hub-print-document th, .hub-print-document td { overflow-wrap:anywhere; }
   .hub-print-document img { max-width:100% !important; height:auto; break-inside:avoid; }
+  .hub-print-document svg { max-width:100%; }
   .hub-print-document [data-hub-print-scroll], .hub-print-document [data-hub-math] { overflow:visible !important; max-height:none !important; }
   .hub-print-document [data-hub-math="display"] { break-inside:avoid; page-break-inside:avoid; }
   .hub-print-document [data-hub-math] mjx-container { max-width:100% !important; }
@@ -71,6 +74,8 @@ export function buildHtmlPrintSnapshot(source, title) {
     if (node.hasAttribute('style')) node.setAttribute('style', resolveCssUrls(node.getAttribute('style'), source.URL));
   }
   clone.querySelectorAll('style').forEach(node => { node.textContent = resolveCssUrls(node.textContent, source.URL); });
+  // Keep content-local styles alive when pagination replaces the body children.
+  clone.querySelectorAll('body style, body link[rel="stylesheet"]').forEach(node => clone.querySelector('head').append(node));
   clone.querySelectorAll('img').forEach(node => { node.loading = 'eager'; });
   const docTitle = clone.querySelector('title') || source.createElement('title');
   docTitle.textContent = title || source.title || 'Learning Hub';
@@ -90,8 +95,25 @@ function withTimeout(promise, milliseconds = RESOURCE_TIMEOUT) {
 }
 
 export async function waitForPrintResources(doc) {
+  const extraImages = new Set();
+  for (const node of doc.querySelectorAll('svg image')) {
+    const value = node.getAttribute('href') || node.getAttributeNS('http://www.w3.org/1999/xlink', 'href');
+    if (value && !value.startsWith('#')) extraImages.add(value);
+  }
+  for (const node of doc.querySelectorAll('svg use')) {
+    const value = node.getAttribute('href') || node.getAttributeNS('http://www.w3.org/1999/xlink', 'href');
+    if (value && !value.startsWith('#')) throw new PrintLayoutError('external-svg-use', node);
+  }
+  for (const node of doc.querySelectorAll('*')) {
+    const background = doc.defaultView.getComputedStyle(node).backgroundImage;
+    for (const match of background.matchAll(/url\(["']?(.*?)["']?\)/g)) if (!match[1].startsWith('#')) extraImages.add(match[1]);
+  }
   await withTimeout(Promise.all([
     doc.fonts?.ready,
+    ...[...extraImages].map(src => new Promise((resolve, reject) => {
+      const image = new doc.defaultView.Image();
+      image.onload = resolve; image.onerror = () => reject(Error('Referenced image failed to load')); image.src = src;
+    })),
     ...[...doc.images].map(image => {
       const loaded = image.complete ? Promise.resolve() : new Promise(resolve => {
         image.addEventListener('load', resolve, { once:true }); image.addEventListener('error', resolve, { once:true });
@@ -102,28 +124,47 @@ export async function waitForPrintResources(doc) {
       });
     }),
   ]));
+  if ([...(doc.fonts || [])].some(font => font.status === 'error') || [...doc.querySelectorAll('link[rel="stylesheet"]')].some(link => !link.sheet)) throw Error('Styles or fonts failed to load');
 }
 
-export function openHtmlPrint({ frame, title, language = 'th', opener }) {
+export function openHtmlPrint({ frame, title, language = 'th', opener, context = {} }) {
   const en = language === 'en';
   const label = (th, english) => en ? english : th;
   if (activePreview?.isConnected) { activePreview.focus(); return; }
   const dialog = document.createElement('dialog');
   dialog.className = 'html-print-dialog'; dialog.dataset.htmlPrintDialog = ''; dialog.dataset.printState = 'loading';
   dialog.setAttribute('aria-labelledby', 'html-print-title');
-  dialog.innerHTML = `<header class="html-print-toolbar"><div><h2 id="html-print-title"></h2><p data-print-status role="status"></p></div><div class="html-print-actions"><button type="button" data-print-confirm disabled></button><button type="button" data-print-close></button></div></header><p class="html-print-help"></p><iframe data-html-print-frame sandbox="allow-same-origin allow-modals"></iframe>`;
+  dialog.innerHTML = `<header class="html-print-toolbar"><div><h2 id="html-print-title"></h2><p data-print-status role="status"></p></div><div class="html-print-actions"><button type="button" data-print-confirm disabled></button><button type="button" data-print-close></button></div></header><details class="html-print-metadata"><summary></summary><div data-print-fields></div><button type="button" data-print-rebuild disabled></button></details><p class="html-print-help"></p><iframe data-html-print-frame sandbox="allow-same-origin allow-modals"></iframe>`;
   const status = dialog.querySelector('[data-print-status]');
   const printButton = dialog.querySelector('[data-print-confirm]');
   const preview = dialog.querySelector('iframe');
+  const rebuildButton = dialog.querySelector('[data-print-rebuild]');
+  const inputs = {};
+  let snapshot = '', revision = 0;
+  dialog.querySelector('summary').textContent = label('ชื่อบนหัว–ท้ายกระดาษ (แก้เฉพาะครั้งนี้)', 'Header/footer labels (this print only)');
+  rebuildButton.textContent = label('จัดหน้าใหม่', 'Update pages');
+  for (const [key, th, english] of [['subject','วิชา','Subject'], ['chapter','ชื่อบท','Chapter'], ['topic','ชื่อเรื่อง (เว้นว่างได้)','Topic (optional)'], ['work','ชื่องานย่อย','Work title']]) {
+    const field = document.createElement('label'); field.textContent = label(th, english);
+    const input = document.createElement('input'); input.type = 'text'; input.maxLength = 240; input.dataset.printField = key; input.disabled = true;
+    field.append(input); dialog.querySelector('[data-print-fields]').append(field); inputs[key] = input;
+    input.addEventListener('input', () => { printButton.disabled = true; dialog.dataset.printState = 'stale'; status.textContent = label('ชื่อเปลี่ยนแล้ว กดจัดหน้าใหม่ก่อนพิมพ์', 'Labels changed. Update pages before printing.'); });
+  }
   dialog.querySelector('h2').textContent = label('ตัวอย่างก่อนพิมพ์', 'Print preview');
   status.textContent = label('กำลังเตรียมสมการ รูปภาพ และหน้ากระดาษ…', 'Preparing equations, images and pages…');
   printButton.textContent = label('พิมพ์ / บันทึก PDF', 'Print / Save PDF');
   dialog.querySelector('[data-print-close]').textContent = label('กลับไปอ่าน', 'Back to reading');
-  dialog.querySelector('.html-print-help').textContent = label('เลือก A4 และบันทึกเป็น PDF ในหน้าต่างพิมพ์ของอุปกรณ์ หากไม่ต้องการ URL/วันที่ ให้ปิดหัวกระดาษและท้ายกระดาษ หน้าตัวอย่างนี้ยังไม่แบ่งหน้า; ตรวจจำนวนหน้าในหน้าต่างพิมพ์อีกครั้ง', 'Choose A4 and Save as PDF in your device’s print dialog. Turn off headers/footers to omit the URL/date. This is a continuous preview; check page breaks in the print dialog.');
+  dialog.querySelector('.html-print-help').textContent = label('เลือก A4 แนวตั้ง ขนาด 100% / ขนาดจริง และระยะขอบไม่มี ปิดหัว–ท้ายอัตโนมัติของเบราว์เซอร์ (URL/วันที่) ระบบใส่หัว–ท้ายและเลขหน้าให้แล้ว ตรวจจำนวนหน้าในหน้าต่างพิมพ์อีกครั้ง', 'Choose A4 portrait, 100% / actual size and no margins. Turn off browser headers/footers (URL/date); this document already includes its own. Check the final page count before printing.');
   preview.title = title;
   document.body.append(dialog); activePreview = dialog; dialog.showModal();
   const alive = () => dialog.isConnected && dialog.open;
+  const fitPreview = () => {
+    const doc = preview.contentDocument;
+    if (!doc?.body) return;
+    doc.documentElement.style.setProperty('--hub-print-scale', String(Math.min(1, Math.max(0.2, (preview.clientWidth - 16) / (210 * 96 / 25.4)))));
+  };
+  const observer = new ResizeObserver(fitPreview); observer.observe(preview);
   dialog.addEventListener('close', () => {
+    observer.disconnect(); revision++;
     dialog.remove(); if (activePreview === dialog) activePreview = null;
     if (opener?.isConnected) opener.focus({ preventScroll:true });
   }, { once:true });
@@ -137,6 +178,46 @@ export function openHtmlPrint({ frame, title, language = 'th', opener }) {
       status.textContent = label('เปิดหน้าต่างพิมพ์ไม่ได้ กรุณาลองในเบราว์เซอร์หลักของอุปกรณ์', 'Unable to open printing. Try your device’s main browser.');
     }
   });
+  function printError(error) {
+    dialog.dataset.printState = 'error'; printButton.disabled = true;
+    if (error instanceof PrintLayoutError) {
+      const prefix = error.code === 'external-svg-use'
+        ? label('SVG อ้างชิ้นส่วนจากไฟล์อื่น: กรุณาใช้ SVG ภายในหน้า หรือรูป SVG ผ่าน img ก่อนพิมพ์', 'External SVG sprites cannot be verified. Use inline SVG or an SVG image before printing.')
+        : label('จัดหน้าไม่ได้: มีตาราง รูป ข้อความ หรือชื่อบนหัว–ท้ายใหญ่เกินพื้นที่ กรุณาย่อหรือแบ่งส่วนนี้ก่อนพิมพ์', 'Cannot fit this content on A4. Shorten labels or split the oversized table, image or text block.');
+      status.textContent = prefix + (error.detail ? ` — ${error.detail}` : '');
+    } else status.textContent = label('เตรียมหน้าพิมพ์ไม่สำเร็จ รูปภาพหรือเอกสารอาจโหลดไม่ครบ กรุณากลับไปอ่าน แล้วลองใหม่', 'Print preparation failed. An image or document may be incomplete. Return to reading and try again.');
+  }
+  async function buildPages() {
+    const token = ++revision;
+    dialog.dataset.printState = 'loading'; printButton.disabled = true; rebuildButton.disabled = true;
+    Object.values(inputs).forEach(input => { input.disabled = true; });
+    status.textContent = label('กำลังตรวจรูป สมการ และจัดหน้า A4…', 'Checking resources and arranging A4 pages…');
+    try {
+      const loaded = new Promise(resolve => {
+        const onLoad = () => {
+          if (!preview.contentDocument?.documentElement.hasAttribute('data-hub-print-snapshot')) return;
+          preview.removeEventListener('load', onLoad); resolve();
+        };
+        preview.addEventListener('load', onLoad);
+      });
+      preview.srcdoc = snapshot;
+      await withTimeout(loaded);
+      if (!alive() || token !== revision) return;
+      await waitForPrintResources(preview.contentDocument);
+      if (!alive() || token !== revision) return;
+      const result = paginatePrintDocument(preview.contentDocument, Object.fromEntries(Object.entries(inputs).map(([key, input]) => [key, input.value])), language);
+      await waitForPrintResources(preview.contentDocument);
+      if (!alive() || token !== revision) return;
+      preview.contentDocument.addEventListener('click', event => { if (event.target.closest?.('a')) event.preventDefault(); });
+      fitPreview();
+      dialog.dataset.printState = 'ready'; printButton.disabled = false;
+      status.textContent = label(`พร้อมพิมพ์ ${result.pages} หน้า`, `${result.pages} pages ready to print`);
+    } catch (error) { if (alive() && token === revision) printError(error); }
+    finally {
+      if (alive() && token === revision) { rebuildButton.disabled = false; Object.values(inputs).forEach(input => { input.disabled = false; }); }
+    }
+  }
+  rebuildButton.addEventListener('click', () => { if (snapshot) void buildPages(); });
   void (async () => {
     try {
       const source = frame.contentDocument;
@@ -148,28 +229,15 @@ export function openHtmlPrint({ frame, title, language = 'th', opener }) {
         status.textContent = label('ยังพิมพ์ไม่ได้: สมการบางจุดยังไม่พร้อม กรุณากลับไปตรวจข้อความแจ้งเตือนในหน้าอ่าน', 'Cannot print yet: some equations are not ready. Check the message in the reading window.');
         dialog.dataset.printState = 'error'; return;
       }
-      const loaded = new Promise(resolve => {
-        const onLoad = () => {
-          if (!preview.contentDocument?.documentElement.hasAttribute('data-hub-print-snapshot')) return;
-          preview.removeEventListener('load', onLoad); resolve();
-        };
-        preview.addEventListener('load', onLoad);
-      });
-      preview.srcdoc = buildHtmlPrintSnapshot(source, title);
-      await withTimeout(loaded);
+      const catalog = await loadPrintCatalog(document.baseURI);
       if (!alive()) return;
-      await waitForPrintResources(preview.contentDocument);
+      const metadata = resolvePrintMetadata({ catalog, context, title, language, authored:readPrintMetadata(source, language) });
+      Object.entries(metadata).forEach(([key, value]) => { inputs[key].value = value; });
+      snapshot = buildHtmlPrintSnapshot(source, title);
+      await buildPages();
+    } catch (error) {
       if (!alive()) return;
-      // Prevent reference links from replacing the print snapshot.
-      preview.contentDocument.addEventListener('click', event => {
-        if (event.target.closest?.('a')) event.preventDefault();
-      });
-      dialog.dataset.printState = 'ready'; printButton.disabled = false;
-      status.textContent = label('พร้อมพิมพ์เฉพาะเนื้อหาแล้ว', 'Content is ready to print');
-    } catch {
-      if (!alive()) return;
-      dialog.dataset.printState = 'error';
-      status.textContent = label('เตรียมหน้าพิมพ์ไม่สำเร็จ รูปภาพหรือเอกสารอาจโหลดไม่ครบ กรุณากลับไปอ่าน แล้วลองใหม่', 'Print preparation failed. An image or document may be incomplete. Return to reading and try again.');
+      printError(error);
     }
   })();
 }

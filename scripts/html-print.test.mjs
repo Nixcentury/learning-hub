@@ -2,7 +2,17 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { safePrintUrl, htmlPrintCSS } from '../js/html-print.js';
 import { normalizePrintMetadata, resolvePrintMetadata } from '../js/print-metadata.js';
-import { printPageCSS, tableRowGroups } from '../js/print-layout.js';
+import { defaultPrintProfile, printPageCSS, tableRowGroups } from '../js/print-layout.js';
+
+test('device margins are automatic on iOS including desktop-mode iPad, not Android or Mac', () => {
+  assert.equal(defaultPrintProfile({userAgent:'Mozilla/5.0 (iPad; CPU OS 26_6 like Mac OS X) AppleWebKit/605.1.15 Version/26.6 Mobile Safari/604.1'}), 'device-margins');
+  assert.equal(defaultPrintProfile({userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 26_6 like Mac OS X)'}), 'device-margins');
+  assert.equal(defaultPrintProfile({userAgent:'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15)', platform:'MacIntel', maxTouchPoints:5}), 'device-margins');
+  assert.equal(defaultPrintProfile({platform:'MacIntel', maxTouchPoints:0}), 'standard');
+  assert.equal(defaultPrintProfile({userAgent:'Mozilla/5.0 (Linux; Android 15) Chrome/130.0', maxTouchPoints:5}), 'standard');
+  assert.equal(defaultPrintProfile({platform:'Win32', maxTouchPoints:10}), 'standard');
+  assert.equal(defaultPrintProfile(), 'standard');
+});
 
 test('print image/style references resolve from the source chapter, not the Hub', () => {
   const base = 'https://example.test/learning-hub/content/chemistry/acid-base/overview.html';

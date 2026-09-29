@@ -1,5 +1,25 @@
 import { normalizePrintMetadata } from './print-metadata.js';
 
+// iPadOS can report a desktop Mac user agent. Do not apply this workaround to
+// Android tablets or non-touch Macs: their existing full-A4 layout is unchanged.
+export function defaultPrintProfile({ userAgent = '', platform = '', maxTouchPoints = 0 } = {}) {
+  return /iPad|iPhone|iPod/.test(userAgent) || (/Mac/.test(platform) && maxTouchPoints > 1)
+    ? 'device-margins' : 'standard';
+}
+
+// A conservative *content area*, not a smaller paper size. Native iPad printing
+// may reserve its own margins/footer even when a frame asks for @page margin:0.
+// Keep the source width (180 mm) and font sizes; repaginate, never clip or scale.
+const deviceMarginsCSS = `
+  @page { size:A4 portrait; margin:15mm; }
+  html, body.hub-print-document { height:auto !important; min-height:0 !important; }
+  body.hub-print-document { width:180mm !important; }
+  .hub-print-document .hub-print-page { width:180mm !important; height:260mm !important; padding:0 !important; display:block !important; break-inside:avoid !important; page-break-inside:avoid !important; break-after:auto !important; page-break-after:auto !important; }
+  .hub-print-document .hub-print-page + .hub-print-page { break-before:page !important; page-break-before:always !important; }
+  .hub-print-document .hub-print-page-header { margin-bottom:5mm !important; }
+  .hub-print-document .hub-print-page-footer { margin-top:5mm !important; }
+`;
+
 // Shared page shell. Content adapters provide a safe, fully rendered snapshot.
 // Phase 1 connects reading HTML only; Quiz and simulation adapters remain separate.
 // Explicit pages avoid relying on browser support for @page margin-box counters.
@@ -58,13 +78,15 @@ export function tableRowGroups(rows) {
   return groups;
 }
 
-export function paginatePrintDocument(doc, metadata = {}, language = 'th') {
+export function paginatePrintDocument(doc, metadata = {}, language = 'th', { profile = 'standard' } = {}) {
+  const deviceMargins = profile === 'device-margins';
   const labels = normalizePrintMetadata(metadata);
   if (doc.body.querySelector('.hub-print-page')) throw new PrintLayoutError('already-paginated');
   const style = doc.createElement('style');
   style.dataset.hubPageStyle = '';
-  style.textContent = printPageCSS;
+  style.textContent = printPageCSS + (deviceMargins ? deviceMarginsCSS : '');
   doc.head.append(style);
+  doc.documentElement.dataset.hubPrintProfile = deviceMargins ? 'device-margins' : 'standard';
   const source = doc.createElement('div');
   source.className = 'hub-print-source';
   source.append(...doc.body.childNodes);
@@ -87,6 +109,13 @@ export function paginatePrintDocument(doc, metadata = {}, language = 'th') {
     const footer = running('hub-print-page-footer', [labels.work, '999 / 999', 'Nix-century']);
     footer.children[1].className = 'hub-print-page-number';
     page.append(header, body, footer); doc.body.append(page); pages.push(page);
+    if (deviceMargins) {
+      // A block shell avoids native fragmentation of a full-height CSS grid.
+      // Measure both labels (including wraps) before assigning the body budget.
+      const gap = parseFloat(doc.defaultView.getComputedStyle(header).marginBottom) + parseFloat(doc.defaultView.getComputedStyle(footer).marginTop);
+      const height = page.clientHeight - header.offsetHeight - footer.offsetHeight - gap;
+      body.style.setProperty('height', `${Math.floor(height)}px`, 'important');
+    }
     wrappers = new Map(); items = 0;
     if (body.clientHeight < 150) throw new PrintLayoutError('metadata-too-long');
   }
@@ -241,6 +270,7 @@ export function paginatePrintDocument(doc, metadata = {}, language = 'th') {
   for (const sheet of pages) {
     const content = sheet.querySelector('.hub-print-page-body');
     if (content.scrollHeight > content.clientHeight + 1 || content.scrollWidth > content.clientWidth + 1) throw new PrintLayoutError('page-overflow', content);
+    if (sheet.scrollHeight > sheet.clientHeight + 1 || sheet.scrollWidth > sheet.clientWidth + 1) throw new PrintLayoutError('page-overflow', sheet);
   }
   doc.documentElement.dataset.hubPrintPages = String(pages.length);
   return { pages:pages.length };

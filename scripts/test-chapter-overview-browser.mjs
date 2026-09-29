@@ -287,6 +287,16 @@ try {
   await assertNoOverflow();
   await page.emulateMedia({media:'print'}); await assertNoOverflow(); await page.emulateMedia({media:'screen'});
   await printDialog.locator('summary').click();
+  await page.locator('[data-print-profile]').selectOption('device-margins');
+  assert.equal(await page.locator('[data-print-confirm]').isDisabled(), true);
+  await page.locator('[data-print-rebuild]').click();
+  await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
+  await assertNoOverflow();
+  await page.emulateMedia({media:'print'}); await assertNoOverflow(); await page.emulateMedia({media:'screen'});
+  assert.deepEqual(await printFrame.locator('tr[data-row]').evaluateAll(nodes=>nodes.map(node=>Number(node.dataset.row))),Array.from({length:75},(_,i)=>i));
+  assert.equal(await printFrame.locator('table').evaluateAll(tables=>tables.every(table=>table.querySelector('thead'))),true);
+  assert.deepEqual(await printFrame.locator('li[data-list]').evaluateAll(nodes=>nodes.map(node=>Number(node.value))),Array.from({length:18},(_,i)=>i+6));
+  assert.equal(await printFrame.locator('[data-long-text]').evaluateAll(nodes=>nodes.map(node=>node.textContent).join('')), 'คำอธิบายภาษาไทยและ English with inline emphasis. '.repeat(200));
   await page.locator('[data-print-field="topic"]').fill('ชื่อเฉพาะการพิมพ์ครั้งนี้');
   assert.equal(await page.locator('[data-print-confirm]').isDisabled(),true);
   await page.locator('[data-print-rebuild]').click();
@@ -352,19 +362,73 @@ try {
   await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
   await page.setViewportSize({ width:1440, height:1000 });
   const actualPageCount = await printFrame.locator('.hub-print-page').count();
+  const standardContent = await printFrame.locator('.hub-print-page-body').evaluateAll(nodes=>nodes.map(node=>node.textContent).join(''));
+  const standardMathCount = await printFrame.locator('mjx-container svg').count();
+  const standardFont = await printFrame.locator('h1').evaluate(node=>getComputedStyle(node).fontSize);
   console.log(`Actual acid-base summary: ${actualPageCount} pages`);
   await assertNoOverflow();
   await page.emulateMedia({media:'print'}); await assertNoOverflow(); await page.emulateMedia({media:'screen'});
   await page.screenshot({ path:resolve(output, 'html-print-preview.png'), animations:'disabled' });
-  if (process.env.QA_PRINT_PDF === '1') {
+  async function exportPrintPDF(name, nativeMargins = false) {
     const snapshot = await printFrame.locator('html').evaluate(node => '<!doctype html>' + node.outerHTML);
     const pdfPage = await context.newPage();
     await pdfPage.setContent(snapshot, { waitUntil:'load' });
     await pdfPage.evaluate(() => document.fonts.ready);
-    await pdfPage.pdf({ path:resolve(output, 'chapter-overview-print.pdf'), preferCSSPageSize:true, printBackground:true, displayHeaderFooter:false });
+    // Explicit stress fixture, not an emulation of iPad's native print engine:
+    // reserve device margins even when the full-A4 frame requested margin:0.
+    if (nativeMargins) await pdfPage.addStyleTag({content:'@page { size:A4 portrait; margin:15mm; }'});
+    const pdf = await pdfPage.pdf({ path:resolve(output, name), preferCSSPageSize:true, printBackground:true, displayHeaderFooter:nativeMargins,
+      headerTemplate:'<span></span>', footerTemplate:'<div style="font-size:8px;width:100%;text-align:center">Device footer · <span class="pageNumber"></span></div>' });
     await pdfPage.close();
+    // Chromium's generated PDFs have one uncompressed /Type /Page object per
+    // physical sheet; this check is only for our test output, not arbitrary PDFs.
+    return (pdf.toString('latin1').match(/\/Type\s*\/Page\b/g) || []).length;
   }
+  if (process.env.QA_PRINT_PDF === '1') {
+    assert.equal(await exportPrintPDF('chapter-overview-print.pdf'), actualPageCount);
+    const overflowCount = await exportPrintPDF('chapter-overview-device-margins-before.pdf', true);
+    assert.ok(overflowCount >= actualPageCount);
+    // Chromium can shrink the old full-width shell to fit; unlike the supplied
+    // Safari PDF it need not add pages. Do not claim this reproduces native iOS.
+    console.log(`Standard layout with margins (Chromium): ${actualPageCount} logical / ${overflowCount} physical pages`);
+  }
+  await printDialog.locator('summary').click();
+  await page.locator('[data-print-profile]').selectOption('device-margins');
+  assert.equal(await page.locator('[data-print-confirm]').isDisabled(),true);
+  await page.locator('[data-print-rebuild]').click();
+  await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
+  assert.equal(await printFrame.locator('html').getAttribute('data-hub-print-profile'),'device-margins');
+  assert.equal(await printFrame.locator('.hub-print-page-body').evaluateAll(nodes=>nodes.map(node=>node.textContent).join('')),standardContent);
+  assert.equal(await printFrame.locator('mjx-container svg').count(),standardMathCount);
+  assert.equal(await printFrame.locator('h1').evaluate(node=>getComputedStyle(node).fontSize),standardFont,'Compatibility mode does not shrink text');
+  await assertNoOverflow();
+  await page.emulateMedia({media:'print'}); await assertNoOverflow(); await page.emulateMedia({media:'screen'});
+  const devicePageCount = await printFrame.locator('.hub-print-page').count();
+  assert.deepEqual(await printFrame.locator('.hub-print-page-number').allTextContents(),Array.from({length:devicePageCount},(_,i)=>`หน้า ${i+1} / ${devicePageCount}`));
+  if (process.env.QA_PRINT_PDF === '1') {
+    const physicalCount = await exportPrintPDF('chapter-overview-device-margins-after.pdf',true);
+    assert.equal(physicalCount,devicePageCount,'Every reserved-area page must fit one physical A4 sheet, including the last page');
+    console.log(`Margin stress after fix: ${devicePageCount} logical / ${physicalCount} physical pages`);
+  }
+  await page.setViewportSize({width:820,height:1180});
+  await page.screenshot({path:resolve(output,'html-print-ipad-margins.png'),animations:'disabled'});
+  await page.locator('[data-print-profile]').selectOption('standard');
+  await page.locator('[data-print-rebuild]').click();
+  await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
+  assert.equal(await printFrame.locator('.hub-print-page').count(),actualPageCount,'Switching back rebuilds the original standard pages');
   await page.locator('[data-print-close]').click();
+  // Desktop-mode iPad identification only; the native Safari print dialog still
+  // needs a real device acceptance test. No browser/device claim is inferred here.
+  await page.evaluate(() => {
+    Object.defineProperty(navigator,'platform',{value:'MacIntel',configurable:true});
+    Object.defineProperty(navigator,'maxTouchPoints',{value:5,configurable:true});
+  });
+  await page.locator('.window-html-print').click();
+  await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor();
+  assert.equal(await page.locator('[data-print-profile]').inputValue(),'device-margins');
+  assert.equal(await printFrame.locator('html').getAttribute('data-hub-print-profile'),'device-margins');
+  await page.locator('[data-print-close]').click();
+  await page.evaluate(() => { delete navigator.platform; delete navigator.maxTouchPoints; });
   await page.locator('.window-control.is-close').click();
   await page.locator('.workspace-tool-frame').waitFor({ state:'detached' });
   console.log('PASS relative images and real acid-base chapter prepare for printing without changing authored HTML');

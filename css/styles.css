@@ -1783,7 +1783,7 @@ body.has-maximized-workspace .hub-taskbar {
 .html-print-metadata summary { cursor:pointer; font-size:13px; }
 .html-print-metadata [data-print-fields] { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 16px; margin:12px 0; }
 .html-print-metadata label { display:flex; flex-direction:column; gap:4px; font-size:12px; }
-.html-print-metadata input { width:100%; min-width:0; border:1px solid #c7cee3; border-radius:6px; padding:8px; font:inherit; font-size:16px; }
+.html-print-metadata input, .html-print-metadata select { width:100%; min-width:0; border:1px solid #c7cee3; border-radius:6px; padding:8px; font:inherit; font-size:16px; }
 .html-print-metadata button { min-height:44px; padding:8px 14px; border:1px solid #c7cee3; border-radius:8px; background:white; color:#293f70; cursor:pointer; font:inherit; }
 .html-print-dialog iframe { width:100%; flex:1; min-height:0; border:0; background:white; }
 @media (max-width:600px) {

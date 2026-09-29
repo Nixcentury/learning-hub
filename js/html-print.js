@@ -1,5 +1,5 @@
 import { renderHtmlMath } from './html-math.js';
-import { paginatePrintDocument, PrintLayoutError } from './print-layout.js';
+import { defaultPrintProfile, paginatePrintDocument, PrintLayoutError } from './print-layout.js';
 import { loadPrintCatalog, readPrintMetadata, resolvePrintMetadata } from './print-metadata.js';
 
 let activePreview = null;
@@ -141,8 +141,26 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
   const rebuildButton = dialog.querySelector('[data-print-rebuild]');
   const inputs = {};
   let snapshot = '', revision = 0;
-  dialog.querySelector('summary').textContent = label('ชื่อบนหัว–ท้ายกระดาษ (แก้เฉพาะครั้งนี้)', 'Header/footer labels (this print only)');
+  dialog.querySelector('summary').textContent = label('ตั้งค่าหน้าพิมพ์และชื่อบนหัว–ท้าย (เฉพาะครั้งนี้)', 'Page layout and labels (this print only)');
   rebuildButton.textContent = label('จัดหน้าใหม่', 'Update pages');
+  const profileLabel = document.createElement('label');
+  profileLabel.textContent = label('พื้นที่พิมพ์', 'Printable area');
+  const profileSelect = document.createElement('select');
+  profileSelect.dataset.printProfile = ''; profileSelect.disabled = true;
+  for (const [value, th, english] of [['standard', 'A4 มาตรฐาน (คอม / Android)', 'Standard A4 (desktop / Android)'], ['device-margins', 'เผื่อขอบอุปกรณ์ (iPad / iPhone)', 'Reserve device margins (iPad / iPhone)']]) {
+    const option = document.createElement('option'); option.value = value; option.textContent = label(th, english); profileSelect.append(option);
+  }
+  profileSelect.value = defaultPrintProfile(navigator);
+  profileLabel.append(profileSelect); dialog.querySelector('[data-print-fields]').append(profileLabel);
+  const updateHelp = () => {
+    dialog.querySelector('.html-print-help').textContent = profileSelect.value === 'device-margins'
+      ? label('ใช้รูปแบบเผื่อขอบอุปกรณ์: เลือก A4 แนวตั้ง ระบบจัดหน้าใหม่โดยไม่ย่อข้อความ Safari อาจยังเติม URL/วันที่ และอาจไม่มีปุ่มปิด ตรวจจำนวนหน้าในหน้าต่างพิมพ์ให้ตรงกับตัวอย่างก่อนยืนยัน', 'Device margins reserved: choose A4 portrait. Text is repaginated, not shrunk. Safari may still add URL/date with no switch to disable them. Compare the native page count with this preview before printing.')
+      : label('เลือก A4 แนวตั้ง ขนาด 100% / ขนาดจริง และระยะขอบไม่มี หากมีตัวเลือก ให้ปิดหัว–ท้ายอัตโนมัติ (URL/วันที่) ถ้ามีหน้าว่างแทรก ให้เลือกพื้นที่พิมพ์แบบเผื่อขอบอุปกรณ์แล้วจัดหน้าใหม่', 'Choose A4 portrait, 100% / actual size and no margins. Turn off browser headers/footers if available. If blank pages appear, select Reserve device margins and update pages.');
+  };
+  profileSelect.addEventListener('change', () => {
+    printButton.disabled = true; dialog.dataset.printState = 'stale'; updateHelp();
+    status.textContent = label('พื้นที่พิมพ์เปลี่ยนแล้ว กดจัดหน้าใหม่ก่อนพิมพ์', 'Printable area changed. Update pages before printing.');
+  });
   for (const [key, th, english] of [['subject','วิชา','Subject'], ['chapter','ชื่อบท','Chapter'], ['topic','ชื่อเรื่อง (เว้นว่างได้)','Topic (optional)'], ['work','ชื่องานย่อย','Work title']]) {
     const field = document.createElement('label'); field.textContent = label(th, english);
     const input = document.createElement('input'); input.type = 'text'; input.maxLength = 240; input.dataset.printField = key; input.disabled = true;
@@ -153,14 +171,15 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
   status.textContent = label('กำลังเตรียมสมการ รูปภาพ และหน้ากระดาษ…', 'Preparing equations, images and pages…');
   printButton.textContent = label('พิมพ์ / บันทึก PDF', 'Print / Save PDF');
   dialog.querySelector('[data-print-close]').textContent = label('กลับไปอ่าน', 'Back to reading');
-  dialog.querySelector('.html-print-help').textContent = label('เลือก A4 แนวตั้ง ขนาด 100% / ขนาดจริง และระยะขอบไม่มี ปิดหัว–ท้ายอัตโนมัติของเบราว์เซอร์ (URL/วันที่) ระบบใส่หัว–ท้ายและเลขหน้าให้แล้ว ตรวจจำนวนหน้าในหน้าต่างพิมพ์อีกครั้ง', 'Choose A4 portrait, 100% / actual size and no margins. Turn off browser headers/footers (URL/date); this document already includes its own. Check the final page count before printing.');
+  updateHelp();
   preview.title = title;
   document.body.append(dialog); activePreview = dialog; dialog.showModal();
   const alive = () => dialog.isConnected && dialog.open;
   const fitPreview = () => {
     const doc = preview.contentDocument;
     if (!doc?.body) return;
-    doc.documentElement.style.setProperty('--hub-print-scale', String(Math.min(1, Math.max(0.2, (preview.clientWidth - 16) / (210 * 96 / 25.4)))));
+    const width = doc.documentElement.dataset.hubPrintProfile === 'device-margins' ? 180 : 210;
+    doc.documentElement.style.setProperty('--hub-print-scale', String(Math.min(1, Math.max(0.2, (preview.clientWidth - 16) / (width * 96 / 25.4)))));
   };
   const observer = new ResizeObserver(fitPreview); observer.observe(preview);
   dialog.addEventListener('close', () => {
@@ -190,6 +209,7 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
   async function buildPages() {
     const token = ++revision;
     dialog.dataset.printState = 'loading'; printButton.disabled = true; rebuildButton.disabled = true;
+    profileSelect.disabled = true;
     Object.values(inputs).forEach(input => { input.disabled = true; });
     status.textContent = label('กำลังตรวจรูป สมการ และจัดหน้า A4…', 'Checking resources and arranging A4 pages…');
     try {
@@ -205,7 +225,7 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
       if (!alive() || token !== revision) return;
       await waitForPrintResources(preview.contentDocument);
       if (!alive() || token !== revision) return;
-      const result = paginatePrintDocument(preview.contentDocument, Object.fromEntries(Object.entries(inputs).map(([key, input]) => [key, input.value])), language);
+      const result = paginatePrintDocument(preview.contentDocument, Object.fromEntries(Object.entries(inputs).map(([key, input]) => [key, input.value])), language, { profile:profileSelect.value });
       await waitForPrintResources(preview.contentDocument);
       if (!alive() || token !== revision) return;
       preview.contentDocument.addEventListener('click', event => { if (event.target.closest?.('a')) event.preventDefault(); });
@@ -214,7 +234,7 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
       status.textContent = label(`พร้อมพิมพ์ ${result.pages} หน้า`, `${result.pages} pages ready to print`);
     } catch (error) { if (alive() && token === revision) printError(error); }
     finally {
-      if (alive() && token === revision) { rebuildButton.disabled = false; Object.values(inputs).forEach(input => { input.disabled = false; }); }
+      if (alive() && token === revision) { rebuildButton.disabled = false; profileSelect.disabled = false; Object.values(inputs).forEach(input => { input.disabled = false; }); }
     }
   }
   rebuildButton.addEventListener('click', () => { if (snapshot) void buildPages(); });

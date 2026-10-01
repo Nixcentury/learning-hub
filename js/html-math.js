@@ -98,10 +98,13 @@ function copyOutput(doc, output) {
   return copy;
 }
 
-export function renderHtmlMath(doc, { hostDocument = document, baseUrl = location.href, isCurrent = () => true } = {}) {
+export function renderHtmlMath(doc, { hostDocument = document, baseUrl = location.href, isCurrent = () => true, refresh = false } = {}) {
   if (!doc?.body || !doc.documentElement.hasAttribute('data-learning-html')) return Promise.resolve();
-  if (documents.has(doc)) return documents.get(doc);
-  const task = renderDocument(doc, hostDocument, baseUrl, isCurrent);
+  const previous = documents.get(doc);
+  if (previous && !refresh) return previous;
+  const task = previous
+    ? previous.catch(() => {}).then(() => renderDocument(doc, hostDocument, baseUrl, isCurrent))
+    : renderDocument(doc, hostDocument, baseUrl, isCurrent);
   documents.set(doc, task);
   return task;
 }
@@ -115,7 +118,10 @@ async function renderDocument(doc, host, baseUrl, isCurrent) {
     const parts = splitMathText(textNode.data);
     if (parts.some(part => part.tex !== undefined)) jobs.push({ node: textNode, parts });
   }
-  if (!jobs.length) { doc.documentElement.dataset.hubMathState = 'none'; return; }
+  if (!jobs.length) {
+    if (!doc.querySelector('[data-hub-math]')) doc.documentElement.dataset.hubMathState = 'none';
+    return;
+  }
   installStyles(doc);
   doc.documentElement.dataset.hubMathState = 'loading';
   notice(doc, 'กำลังจัดรูปสมการ… / Formatting equations…');
@@ -133,6 +139,7 @@ async function renderDocument(doc, host, baseUrl, isCurrent) {
   let count = 0, errors = 0;
   for (const job of jobs) {
     if (!isCurrent()) return;
+    if (!job.node.isConnected) continue;
     const fragment = doc.createDocumentFragment();
     for (const part of job.parts) {
       if (part.tex === undefined) { fragment.append(doc.createTextNode(part.text)); continue; }

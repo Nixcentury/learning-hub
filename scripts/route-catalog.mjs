@@ -81,7 +81,8 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
     const where = { parentHash: parent.hash, ...contextOf(parent) };
     if (!content.placements.some(item => JSON.stringify(item) === JSON.stringify(where))) content.placements.push(where);
     if (placement) addRoute({ ...placement, kind: 'content', status: 'ready', contentId, ...where, ...title }, file);
-    if (toolKind === 'html') pendingReadings.push({ doc, source, parent: { ...where, hash: content.canonicalHash, aliases: [] } });
+    // Shared HTML buttons may also appear inside an authored Quiz or simulation.
+    pendingReadings.push({ doc, source, parent: { ...where, hash: content.canonicalHash, aliases: [] } });
   }
   async function htmlLinks(doc, file, parent) {
     for (const node of nodesWith(doc, 'data-hub-html')) {
@@ -114,7 +115,10 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
           subjectId: parent.subjectId, chapterId: parent.chapterId, topicId: key, parentHash: parent.hash, source, ...title }, file);
         if (source) await menu(source, topic, 'tools');
       } else {
-        await registerContent({ contentId: key, toolKind: entry['data-tool-kind'],
+        const toolKind = entry['data-tool-kind'];
+        if (!['quiz', 'simulation', 'html'].includes(toolKind)) fail(file, `Content ${key}: data-tool-kind must be quiz, simulation, or html (received ${toolKind || '(empty)'})`);
+        if (!href) fail(file, `Content ${key}: missing href to the destination HTML file`);
+        await registerContent({ contentId: key, toolKind,
           source: localCatalogPath(href, file), parent: kind === 'topics' ? { ...parent, topicId: 'chapter-reference' } : parent, placement, title, file });
       }
     }

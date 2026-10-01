@@ -29,6 +29,7 @@ import {
 } from "./content-context.js";
 import { createWorkspace } from "./workspace.js";
 import { createHubNavigation } from "./hub-navigation.js";
+import { openHubShare } from "./hub-sharing.js";
 import "./quiz-progress.js";
 
 const languageStorageKey = "learning-hub-language";
@@ -84,6 +85,7 @@ const workspaceCount = document.querySelector("#workspace-count");
 const fallbackAvatar = accountAvatar.src;
 let currentLanguage = readSavedLanguage();
 let activeSession = { status: "loading", isGuest: false, user: null };
+let navigation = null;
 let activePresence = {
   connectionStatus: "OFFLINE",
   rows: [],
@@ -130,6 +132,12 @@ const workspace = createWorkspace({
   getLanguage: () => currentLanguage,
   getIdentity: getWorkspaceIdentity,
   getRole: getWorkspaceRole,
+  onToolActivated: tool => navigation?.toolActivated(tool),
+  onWorkspaceIdle: () => navigation?.workspaceIdle(),
+  onLanguageChange: language => setLanguage(language),
+  onShare: (tool, opener) => void openHubShare({
+    getTarget: () => navigation.shareTarget(tool), getLanguage: () => currentLanguage, opener,
+  }),
   onToolClosed: (toolId) => pageFrame.contentWindow?.postMessage(
     { type: "learning-hub-tool-closed", toolId }, location.origin,
   ),
@@ -509,6 +517,7 @@ function renderSession(session) {
 
   if (session.status === "loading") {
     showLogin(true);
+    navigation?.sessionChanged();
     setAuthBusy(true);
     setAuthNotice(
       "กำลังตรวจสอบบัญชีที่เคยเข้าสู่ระบบ",
@@ -522,10 +531,12 @@ function renderSession(session) {
   if (session.status === "signed-in" || session.status === "guest") {
     authNotice.hidden = true;
     showHub();
+    navigation?.sessionChanged();
     return;
   }
 
   showLogin();
+  navigation?.sessionChanged();
 }
 
 let displayedSectionId = null;
@@ -616,10 +627,17 @@ signOutButton.addEventListener("click", async () => {
   }
 });
 
-const navigation = createHubNavigation({
+navigation = createHubNavigation({
   pageFrame, navButtons, showSection,
   noticeElement: document.querySelector('#hub-route-notice'),
+  canOpenWorkspace: () => ['signed-in', 'guest'].includes(activeSession.status),
+  openActivity: activity => activity.entry ? workspace.openContent(activity.entry) : workspace.open(activity.toolId),
+  showMenu: () => workspace.showMenu(),
 });
+
+document.querySelector('#hub-share-button').addEventListener('click', event => void openHubShare({
+  getTarget: () => navigation.shareTarget(), getLanguage: () => currentLanguage, opener: event.currentTarget,
+}));
 
 workspace.bindHtmlLinks(document);
 pageFrame.addEventListener("load", () => {
@@ -657,7 +675,7 @@ window.addEventListener("message", (event) => {
     return;
   }
   if (event.data?.type === "learning-hub-open-content") {
-    const ok = workspace.openContent(event.data.content);
+    const ok = ['signed-in', 'guest'].includes(activeSession.status) && workspace.openContent(event.data.content);
     event.source.postMessage({
       type: "learning-hub-content-opened", requestId: event.data.requestId, ok,
     }, event.origin === "null" ? "*" : event.origin);
@@ -665,7 +683,7 @@ window.addEventListener("message", (event) => {
   }
   if (event.data?.type !== "learning-hub-open-tool") return;
 
-  workspace.open(event.data.toolId);
+  if (['signed-in', 'guest'].includes(activeSession.status)) workspace.open(event.data.toolId);
 });
 
 presenceButton.addEventListener("click", () => {

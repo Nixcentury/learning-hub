@@ -18,6 +18,27 @@
     p, li { overflow-wrap: anywhere; }
     .note { color: #64728b; margin: 0; }
 
+    .question-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 16px 0 0;
+    }
+    .question-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #0284c7;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+    }
+    .question-tag {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0369a1;
+      margin-bottom: 4px;
+    }
+
     .calc-block {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
@@ -70,6 +91,7 @@
         <p class="note">เคมี ม.5 เล่ม 4 ตามหลักสูตรแกนกลางการศึกษาขั้นพื้นฐาน (สสวท. ฉบับปรับปรุง พ.ศ. 2560)</p>
       </header>
 
+      <!-- 1. ผลการเรียนรู้ตามหลักสูตร สสวท. ครบ 10 ข้อ -->
       <section aria-labelledby="th-outcomes-title">
         <h2 id="th-outcomes-title">ผลการเรียนรู้ที่คาดหวัง</h2>
         <ol>
@@ -86,21 +108,50 @@
         </ol>
       </section>
 
+      <!-- 2. คำถามนำสู่การเรียนรู้ (Guiding Questions) -->
+      <section aria-labelledby="th-questions-title">
+        <h2 id="th-questions-title">คำถามนำสู่การเรียนรู้ (Guiding Questions)</h2>
+        <p class="note">คำถามสำคัญเพื่อกระตุ้นกระบวนการคิดวิเคราะห์และสะท้อนผลการเรียนรู้ในระดับมโนทัศน์:</p>
+        <ul class="question-list">
+          <li class="question-item">
+            <span class="question-tag">คำถามนำที่ 1 (สะท้อนผลการเรียนรู้ข้อ 1 &amp; 2)</span>
+            <div>เราใช้นิยามหรือเกณฑ์ใดในการตัดสินว่าสารชนิดหนึ่งเป็นกรดหรือเบส? หากสารนั้นไม่มี \(\ce{H+}\) หรือ \(\ce{OH-}\) ในสูตร จะอธิบายความเป็นกรด-เบสได้อย่างไร และการระบุคู่กรด-เบสมีหลักการจำแนกอย่างไร?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">คำถามนำที่ 2 (สะท้อนผลการเรียนรู้ข้อ 3 &amp; 4)</span>
+            <div>ในระดับอนุภาค กรดแก่และเบสแก่แตกต่างจากกรดอ่อนและเบสอ่อนอย่างไร? เราจะคำนวณและเปรียบเทียบความสามารถในการแตกตัว (\(K_a\), \(K_b\), ร้อยละการแตกตัว) โดยไม่ใช้สูตรลัดได้อย่างไร และค่า pH ของสารละลายบอกอะไรเกี่ยวกับความเข้มข้นของไอออนในน้ำ?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">คำถามนำที่ 3 (สะท้อนผลการเรียนรู้ข้อ 5 &amp; 6)</span>
+            <div>เมื่อกรดทำปฏิกิริยากับเบสจนสะเทินพอดีกัน สารละลายที่ได้จำเป็นต้องมีสภาพเป็นกลาง (\(\text{pH} = 7\)) เสมอไปหรือไม่? ปฏิกิริยาไฮโดรไลซิสของเกลือเกิดขึ้นได้อย่างไร และเราจะทำนายความเป็นกรด-เบสของสารละลายเกลือจากชนิดของไอออนได้อย่างไร?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">คำถามนำที่ 4 (สะท้อนผลการเรียนรู้ข้อ 7 &amp; 8)</span>
+            <div>การไทเทรตกรด-เบสมีหลักการทางเคมีอย่างไร? เหตุใด "จุดสมมูล" จึงอาจไม่ตรงกับ "จุดยุติ" และเรามีเกณฑ์ทางวิทยาศาสตร์อย่างไรในการเลือกอินดิเคเตอร์ให้เปลี่ยนสีตรงจุดพอดีเพื่อนำไปคำนวณความเข้มข้นที่ถูกต้องตามปริมาณสารสัมพันธ์?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">คำถามนำที่ 5 (สะท้อนผลการเรียนรู้ข้อ 9 &amp; 10)</span>
+            <div>สารละลายบัฟเฟอร์ประกอบด้วยสารใด และมีกลไกทางเคมีอย่างไรที่ทำให้สามารถต้านทานการเปลี่ยนแปลงค่า pH ได้อย่างมีประสิทธิภาพ? มนุษย์นำสมบัติของกรด-เบสและระบบบัฟเฟอร์ไปประยุกต์ใช้ควบคุมสภาวะในร่างกายและแก้ปัญหาสิ่งแวดล้อมอย่างไร?</div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 3. สาระสำคัญและหลักการคำนวณ (คำตอบละเอียดของคำถามนำ) -->
       <section aria-labelledby="th-summary-title">
         <h2 id="th-summary-title">สาระสำคัญและหลักการคำนวณ</h2>
 
-        <h3>1. ทฤษฎีกรด-เบส และคู่กรด-เบส</h3>
+        <h3>1. ทฤษฎีกรด-เบส และคู่กรด-เบส (ตอบคำถามนำที่ 1)</h3>
         <ul>
-          <li><strong>อาร์เรเนียส:</strong> กรดแตกตัวให้ \(\ce{H+}\) (\(\ce{H3O+}\)) ในน้ำ ส่วนเบสแตกตัวให้ \(\ce{OH-}\) ในน้ำ (จำกัดเฉพาะสารละลายที่มีน้ำเป็นตัวทำละลาย)</li>
-          <li><strong>เบรินสเตด-ลาวรี:</strong> กรดคือตัวให้โปรตอน (\(\ce{H+}\) donor) ส่วนเบสคือตัวรับโปรตอน (\(\ce{H+}\) acceptor)</li>
-          <li><strong>ลิวอิส:</strong> กรดคือตัวรับคู่อิเล็กตรอน ส่วนเบสคือตัวให้คู่อิเล็กตรอน</li>
-          <li><strong>คู่กรด-เบส:</strong> สารสองชนิดที่มีสูตรต่างกันเพียง \(\ce{H+}\) 1 ตัว โดยคู่กรดจะมีจำนวนโปรตอนมากกว่าคู่เบส 1 ตัวเสมอ เช่น \(\ce{NH4+}/\ce{NH3}\) หรือ \(\ce{H3O+}/\ce{H2O}\)</li>
+          <li><strong>ทฤษฎีอาร์เรเนียส:</strong> กรดแตกตัวให้ \(\ce{H+}\) (\(\ce{H3O+}\)) ในน้ำ ส่วนเบสแตกตัวให้ \(\ce{OH-}\) ในน้ำ (จำกัดเฉพาะสารละลายที่มีน้ำเป็นตัวทำละลาย)</li>
+          <li><strong>ทฤษฎีเบรินสเตด-ลาวรี:</strong> กรดคือสารที่ทำหน้าที่ให้โปรตอน (\(\ce{H+}\) donor) ส่วนเบสคือสารที่ทำหน้าที่รับโปรตอน (\(\ce{H+}\) acceptor) ครอบคลุมปฏิกิริยาในสถานะแก๊ส เช่น \(\ce{NH3(g) + HCl(g) -&gt; NH4Cl(s)}\)</li>
+          <li><strong>ทฤษฎีลิวอิส:</strong> กรดคือตัวรับคู่อิเล็กตรอน (electron-pair acceptor) เช่น \(\ce{BF3}\), \(\ce{AlCl3}\) ส่วนเบสคือตัวให้คู่อิเล็กตรอน (electron-pair donor) เช่น \(\ce{:NH3}\) เกิดพันธะโคออร์ดิเนตโคเวเลนต์</li>
+          <li><strong>คู่กรด-เบส:</strong> สารสองชนิดที่มีสูตรต่างกันเพียง \(\ce{H+}\) 1 ตัว โดยคู่กรดจะมีจำนวนโปรตอนมากกว่าคู่เบส 1 ตัวเสมอ เช่น \(\ce{NH4+}/\ce{NH3}\) หรือ \(\ce{H3O+}/\ce{H2O}\) (ดักจุดผิด: \(\ce{H3O+}\) กับ \(\ce{OH-}\) ไม่ใช่คู่กรด-เบสกัน)</li>
         </ul>
 
-        <h3>2. การแตกตัวและสมดุลเคมี</h3>
+        <h3>2. การแตกตัว ความแรงของกรด-เบส และตาราง ICE (ตอบคำถามนำที่ 2)</h3>
         <ul>
           <li><strong>กรดแก่และเบสแก่:</strong> แตกตัวสมบูรณ์ 100% คิดความเข้มข้นของไอออนตามปริมาณสารสัมพันธ์ของสมการเคมีได้ทันที</li>
-          <li><strong>กรดอ่อนและเบสอ่อน:</strong> แตกตัวบางส่วนเกิดภาวะสมดุลเคมี ต้องคำนวณผ่านตาราง ICE (Initial, Change, Equilibrium)</li>
+          <li><strong>กรดอ่อนและเบสอ่อน:</strong> แตกตัวบางส่วนเกิดภาวะสมดุลเคมี คำนวณความเข้มข้นที่สมดุลผ่านตาราง ICE (Initial, Change, Equilibrium) ร่วมกับการแก้สมการกำลังสองจริง</li>
         </ul>
 
         <div class="calc-block">
@@ -154,14 +205,14 @@
           \]
           <p>การคำนวณร้อยละการแตกตัว:</p>
           \[
-          \text{% การแตกตัว} = \frac{[\ce{H3O+}]_{\text{eq}}}{[\ce{HA}]_{\text{initial}}} \times 100 = \frac{x}{C} \times 100
+          \text{\% การแตกตัว} = \frac{[\ce{H3O+}]_{\text{eq}}}{[\ce{HA}]_{\text{initial}}} \times 100 = \frac{x}{C} \times 100
           \]
         </div>
 
-        <h3>3. สมดุลน้ำ, pH และ pOH</h3>
+        <h3>3. สมดุลน้ำ, pH และ pOH (ตอบคำถามนำที่ 2)</h3>
         <ul>
           <li>
-            การแตกตัวได้เองของน้ำ:
+            การแตกตัวได้เองของน้ำ (Autoionization):
             \[
             \ce{2H2O(l) &lt;=&gt; H3O+(aq) + OH-(aq)}
             \]
@@ -176,11 +227,11 @@
           </li>
         </ul>
 
-        <h3>4. ปฏิกิริยาสะเทินและการไทเทรต</h3>
+        <h3>4. ปฏิกิริยาสะเทินและการไทเทรต (ตอบคำถามนำที่ 4)</h3>
         <ul>
-          <li><strong>ปฏิกิริยาสะเทิน:</strong> ปฏิกิริยาระหว่างกรดกับเบสได้เกลือและน้ำ: \(\ce{กรด + เบส -&gt; เกลือ + น้ำ}\)</li>
+          <li><strong>ปฏิกิริยาสะเทิน:</strong> ปฏิกิริยาระหว่างกรดกับเบสได้เกลือและน้ำ สมการไอออนิกสุทธิของกรดแก่กับเบสแก่คือ \(\ce{H3O+(aq) + OH-(aq) -&gt; 2H2O(l)}\)</li>
           <li><strong>จุดสมมูล:</strong> จุดที่โมลของกรดและเบสทำปฏิกิริยากันพอดีตามปริมาณสารสัมพันธ์</li>
-          <li><strong>จุดยุติ:</strong> จุดที่อินดิเคเตอร์เปลี่ยนสีอย่างถาวร (ต้องเลือกอินดิเคเตอร์ที่ช่วงเปลี่ยนสีครอบคลุมค่า pH ณ จุดสมมูล)</li>
+          <li><strong>จุดยุติ:</strong> จุดที่อินดิเคเตอร์เปลี่ยนสีอย่างถาวรในการทดลอง (ต้องเลือกอินดิเคเตอร์ที่ช่วงเปลี่ยนสีครอบคลุมค่า pH ณ จุดสมมูล)</li>
         </ul>
 
         <div class="calc-block">
@@ -188,13 +239,13 @@
           \[
           a\,\text{Acid} + b\,\text{Base} \rightarrow \text{Salt} + \text{Water}
           \]
-          <p>เทียบอัตราส่วนโมลที่ทำปฏิกิริยาพอดีกัน:</p>
+          <p>เทียบอัตราส่วนโมลที่ทำปฏิกิริยาพอดีกันตามสัมประสิทธิ์สมการเคมี:</p>
           \[
           \frac{n_{\text{Acid}}}{a} = \frac{n_{\text{Base}}}{b} \implies \frac{C_a \cdot V_a}{a} = \frac{C_b \cdot V_b}{b}
           \]
         </div>
 
-        <h3>5. ปฏิกิริยาไฮโดรไลซิสของเกลือ</h3>
+        <h3>5. ปฏิกิริยาไฮโดรไลซิสของเกลือ (ตอบคำถามนำที่ 3)</h3>
         <p>ปฏิกิริยาระหว่างไอออนของเกลือกับน้ำ โดยเฉพาะไอออนที่มาจากกรดอ่อนหรือเบสอ่อน ส่งผลต่อความเป็นกรด-เบสของสารละลาย:</p>
         <ul>
           <li><strong>เกลือจากกรดแก่ + เบสแก่:</strong> ไอออนไม่ทำปฏิกิริยากับน้ำ สารละลายเป็นกลาง (\(\text{pH} = 7\)) เช่น \(\ce{NaCl}, \ce{KNO3}\)</li>
@@ -210,13 +261,12 @@
             \ce{CH3COO-(aq) + H2O(l) &lt;=&gt; CH3COOH(aq) + OH-(aq)}
             \]
           </li>
-          <li><strong>เกลือจากกรดอ่อน + เบสอ่อน:</strong> ทั้งแคตไอออนและแอนไอออนเกิดไฮโดรไลซิส ตัดสิน pH จากการเปรียบเทียบค่า \(K_a\) และ \(K_b\)</li>
+          <li><strong>เกลือจากกรดอ่อน + เบสอ่อน:</strong> ทั้งแคตไอออนและแอนไอออนเกิดไฮโดรไลซิส ตัดสิน pH จากการเปรียบเทียบค่า \(K_a\) และ \(K_b\) (ถ้า \(K_a &gt; K_b\) เป็นกรด, \(K_b &gt; K_a\) เป็นเบส)</li>
         </ul>
 
-        <h3>6. สารละลายบัฟเฟอร์</h3>
+        <h3>6. สารละลายบัฟเฟอร์ และการประยุกต์ใช้ในชีวิตจริง (ตอบคำถามนำที่ 5)</h3>
         <ul>
-          <li><strong>นิยาม:</strong> สารละลายที่สามารถต้านทานการเปลี่ยนแปลงค่า pH เมื่อเติมกรดแก่หรือเบสแก่ลงไปในปริมาณเล็กน้อย</li>
-          <li><strong>องค์ประกอบ:</strong> คู่กรด-เบสในความเข้มข้นที่ใกล้เคียงกัน เช่น บัฟเฟอร์กรด (\(\ce{CH3COOH}/\ce{CH3COONa}\)) หรือ บัฟเฟอร์เบส (\(\ce{NH3}/\ce{NH4Cl}\))</li>
+          <li><strong>นิยามและองค์ประกอบ:</strong> สารละลายที่สามารถต้านทานการเปลี่ยนแปลงค่า pH เมื่อเติมกรดแก่หรือเบสแก่ลงไปเล็กน้อย เกิดจากคู่กรด-เบสในความเข้มข้นใกล้เคียงกัน เช่น บัฟเฟอร์กรด (\(\ce{CH3COOH}/\ce{CH3COONa}\)) หรือบัฟเฟอร์เบส (\(\ce{NH3}/\ce{NH4Cl}\))</li>
           <li>
             <strong>การคำนวณสมดุลบัฟเฟอร์:</strong>
             \[
@@ -224,6 +274,7 @@
             \]
           </li>
           <li><strong>การประยุกต์ใช้ในสิ่งมีชีวิต:</strong> ระบบบัฟเฟอร์กรดคาร์บอนิก/ไฮโดรเจนคาร์บอเนต (\(\ce{H2CO3}/\ce{HCO3-}\)) ทำหน้าที่ควบคุมค่า pH ในกระแสเลือดมนุษย์ให้อยู่ในช่วง \(7.35 - 7.45\)</li>
+          <li><strong>การแก้ปัญหาสิ่งแวดล้อม:</strong> การแก้ปัญหาดินเปรี้ยวโดยการเติมปูนขาว (\(\ce{Ca(OH)2}\)) หรือหินปูนป่น (\(\ce{CaCO3}\)) และการบำบัดน้ำเสียจากอุตสาหกรรมด้วยปฏิกิริยาสะเทิน</li>
         </ul>
       </section>
     </div>
@@ -238,6 +289,7 @@
         <p class="note">Grade 11 Chemistry Book 4, Basic Education Core Curriculum (IPST Revised Edition 2017)</p>
       </header>
 
+      <!-- 1. Expected Learning Outcomes -->
       <section aria-labelledby="en-outcomes-title">
         <h2 id="en-outcomes-title">Expected Learning Outcomes</h2>
         <ol>
@@ -254,21 +306,50 @@
         </ol>
       </section>
 
+      <!-- 2. Guiding Questions -->
+      <section aria-labelledby="en-questions-title">
+        <h2 id="en-questions-title">Guiding Questions</h2>
+        <p class="note">Essential inquiry questions designed to drive metacognition and conceptual understanding:</p>
+        <ul class="question-list">
+          <li class="question-item">
+            <span class="question-tag">Guiding Question 1 (Reflecting Outcomes 1 &amp; 2)</span>
+            <div>What criteria and theoretical definitions determine whether a substance acts as an acid or a base? How do we explain acidity or basicity in substances lacking \(\ce{H+}\) or \(\ce{OH-}\) in their chemical formulas, and what fundamental rule identifies conjugate acid-base pairs?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">Guiding Question 2 (Reflecting Outcomes 3 &amp; 4)</span>
+            <div>At the particulate level, how do strong acids and bases differ fundamentally from weak acids and bases? How do we determine equilibrium ionization (\(K_a\), \(K_b\), and percent ionization) through exact equilibrium methods, and how is the logarithmic pH scale related to aqueous ion concentrations?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">Guiding Question 3 (Reflecting Outcomes 5 &amp; 6)</span>
+            <div>When an acid completely neutralizes a base stoichiometrically, must the resulting solution always be strictly neutral (\(\text{pH} = 7\))? What is the chemical mechanism of salt hydrolysis, and how can we predict whether a salt solution is acidic, basic, or neutral based on its constituent ions?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">Guiding Question 4 (Reflecting Outcomes 7 &amp; 8)</span>
+            <div>What are the fundamental chemical principles of acid-base titration? Why might the theoretical equivalence point differ from the experimental end point, and what scientific criteria govern the selection of an indicator to ensure stoichiometric accuracy?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">Guiding Question 5 (Reflecting Outcomes 9 &amp; 10)</span>
+            <div>What are the essential chemical components of a buffer solution, and through what mechanism does it resist changes in pH upon the addition of strong acids or bases? How are acid-base equilibria and buffer systems applied in human physiology and environmental problem-solving?</div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 3. Key Concepts & Principles (Answering Guiding Questions) -->
       <section aria-labelledby="en-summary-title">
         <h2 id="en-summary-title">Key Concepts &amp; Principles</h2>
 
-        <h3>1. Acid-Base Theories &amp; Conjugate Pairs</h3>
+        <h3>1. Acid-Base Theories &amp; Conjugate Pairs (Addressing Guiding Question 1)</h3>
         <ul>
-          <li><strong>Arrhenius Theory:</strong> Acids ionize to yield \(\ce{H+}\) (\(\ce{H3O+}\)) in water; bases dissociate to yield \(\ce{OH-}\) in water (limited to aqueous media).</li>
-          <li><strong>Brønsted-Lowry Theory:</strong> Acids act as proton (\(\ce{H+}\)) donors; bases act as proton (\(\ce{H+}\)) acceptors.</li>
-          <li><strong>Lewis Theory:</strong> Acids accept electron pairs (electrophiles); bases donate electron pairs (nucleophiles).</li>
+          <li><strong>Arrhenius Theory:</strong> Acids ionize to yield \(\ce{H+}\) (\(\ce{H3O+}\)) in water; bases dissociate to yield \(\ce{OH-}\) in water (limited strictly to aqueous media).</li>
+          <li><strong>Brønsted-Lowry Theory:</strong> Acids act as proton (\(\ce{H+}\)) donors; bases act as proton (\(\ce{H+}\)) acceptors. Extends to gas-phase reactions such as \(\ce{NH3(g) + HCl(g) -&gt; NH4Cl(s)}\).</li>
+          <li><strong>Lewis Theory:</strong> Acids accept electron pairs (electrophiles, e.g., \(\ce{BF3}\), \(\ce{AlCl3}\)); bases donate electron pairs (nucleophiles, e.g., \(\ce{:NH3}\)), forming coordinate covalent bonds.</li>
           <li><strong>Conjugate Acid-Base Pairs:</strong> Two chemical species related by the loss or gain of a single proton (\(\ce{H+}\)); the conjugate acid always possesses one more \(\ce{H+}\) than its conjugate base, e.g., \(\ce{NH4+}/\ce{NH3}\) or \(\ce{H3O+}/\ce{H2O}\).</li>
         </ul>
 
-        <h3>2. Ionization &amp; Chemical Equilibrium (ICE Table)</h3>
+        <h3>2. Ionization &amp; Chemical Equilibrium (Addressing Guiding Question 2)</h3>
         <ul>
           <li><strong>Strong Acids &amp; Strong Bases:</strong> Undergo complete ionization (100%); ion concentrations are directly determined from stoichiometry.</li>
-          <li><strong>Weak Acids &amp; Weak Bases:</strong> Undergo partial ionization establishing a dynamic chemical equilibrium, solved using an ICE table.</li>
+          <li><strong>Weak Acids &amp; Weak Bases:</strong> Undergo partial ionization establishing a dynamic chemical equilibrium, solved rigorously using an ICE table and exact quadratic formulation.</li>
         </ul>
 
         <div class="calc-block">
@@ -312,7 +393,7 @@
           \[
           K_a = \frac{[\ce{H3O+}][\ce{A-}]}{[\ce{HA}]} = \frac{(x)(x)}{C - x} = \frac{x^2}{C - x}
           \]
-          <p>Exact quadratic equation form (without approximations):</p>
+          <p>Exact quadratic equation form (without crude approximations):</p>
           \[
           x^2 + K_a x - K_a C = 0
           \]
@@ -322,11 +403,11 @@
           \]
           <p>Percent ionization formula:</p>
           \[
-          \text{% Ionization} = \frac{[\ce{H3O+}]_{\text{eq}}}{[\ce{HA}]_{\text{initial}}} \times 100 = \frac{x}{C} \times 100
+          \text{\% Ionization} = \frac{[\ce{H3O+}]_{\text{eq}}}{[\ce{HA}]_{\text{initial}}} \times 100 = \frac{x}{C} \times 100
           \]
         </div>
 
-        <h3>3. Autoionization of Water, pH &amp; pOH</h3>
+        <h3>3. Autoionization of Water, pH &amp; pOH (Addressing Guiding Question 2)</h3>
         <ul>
           <li>
             Autoionization of water:
@@ -344,10 +425,10 @@
           </li>
         </ul>
 
-        <h3>4. Neutralization Reactions &amp; Titrations</h3>
+        <h3>4. Neutralization Reactions &amp; Titrations (Addressing Guiding Question 4)</h3>
         <ul>
-          <li><strong>Neutralization Reaction:</strong> Chemical reaction between an acid and a base producing a salt and water: \(\ce{Acid + Base -&gt; Salt + Water}\)</li>
-          <li><strong>Equivalence Point:</strong> The theoretical stoichiometric point where moles of acid and base have reacted in exact equivalence.</li>
+          <li><strong>Neutralization Reaction:</strong> Chemical reaction between an acid and a base producing a salt and water: \(\ce{Acid + Base -&gt; Salt + Water}\). Net ionic equation: \(\ce{H3O+(aq) + OH-(aq) -&gt; 2H2O(l)}\).</li>
+          <li><strong>Equivalence Point:</strong> The theoretical stoichiometric point where moles of acid and base have reacted in exact stoichiometric ratio.</li>
           <li><strong>End Point:</strong> The experimental point where an indicator permanently changes color (selected so that its transition interval spans the equivalence pH).</li>
         </ul>
 
@@ -356,13 +437,13 @@
           \[
           a\,\text{Acid} + b\,\text{Base} \rightarrow \text{Salt} + \text{Water}
           \]
-          <p>Mole ratio relation:</p>
+          <p>Mole ratio relation from balanced coefficients:</p>
           \[
           \frac{n_{\text{Acid}}}{a} = \frac{n_{\text{Base}}}{b} \implies \frac{C_a \cdot V_a}{a} = \frac{C_b \cdot V_b}{b}
           \]
         </div>
 
-        <h3>5. Salt Hydrolysis</h3>
+        <h3>5. Salt Hydrolysis (Addressing Guiding Question 3)</h3>
         <p>Aqueous reaction of salt ions with water; only conjugate ions derived from weak acids or weak bases undergo hydrolysis, altering solution pH:</p>
         <ul>
           <li><strong>Salt of Strong Acid &amp; Strong Base:</strong> Neither ion hydrolyzes; neutral solution (\(\text{pH} = 7\)), e.g., \(\ce{NaCl}, \ce{KNO3}\).</li>
@@ -378,20 +459,20 @@
             \ce{CH3COO-(aq) + H2O(l) &lt;=&gt; CH3COOH(aq) + OH-(aq)}
             \]
           </li>
-          <li><strong>Salt of Weak Acid &amp; Weak Base:</strong> Both ions hydrolyze; solution pH depends on the quantitative comparison between \(K_a\) and \(K_b\).</li>
+          <li><strong>Salt of Weak Acid &amp; Weak Base:</strong> Both ions hydrolyze; solution pH depends on the quantitative comparison between \(K_a\) and \(K_b\) (acidic if \(K_a &gt; K_b\), basic if \(K_b &gt; K_a\)).</li>
         </ul>
 
-        <h3>6. Buffer Solutions</h3>
+        <h3>6. Buffer Solutions &amp; Real-World Applications (Addressing Guiding Question 5)</h3>
         <ul>
-          <li><strong>Definition:</strong> A solution capable of resisting substantial changes in pH upon the addition of small amounts of strong acid or base.</li>
-          <li><strong>Components:</strong> Conjugate acid-base pair in comparable concentrations: weak acid and its conjugate base (acidic buffer, e.g., \(\ce{CH3COOH}/\ce{CH3COONa}\)) or weak base and its conjugate acid (basic buffer, e.g., \(\ce{NH3}/\ce{NH4Cl}\)).</li>
+          <li><strong>Definition &amp; Components:</strong> A solution capable of resisting substantial changes in pH upon the addition of small amounts of strong acid or base, composed of a conjugate acid-base pair in comparable concentrations (e.g., \(\ce{CH3COOH}/\ce{CH3COONa}\) or \(\ce{NH3}/\ce{NH4Cl}\)).</li>
           <li>
             <strong>Equilibrium Calculation:</strong>
             \[
             [\ce{H3O+}] = K_a \cdot \frac{[\text{Acid}]}{[\text{Conjugate Base}]} \iff \text{pH} = \text{p}K_a + \log\left(\frac{[\text{Conjugate Base}]}{[\text{Acid}]}\right)
             \]
           </li>
-          <li><strong>Biological Application:</strong> The carbonic acid/bicarbonate buffer system (\(\ce{H2CO3}/\ce{HCO3-}\)) maintains human blood plasma pH within \(7.35 - 7.45\).</li>
+          <li><strong>Biological Application:</strong> The carbonic acid/bicarbonate buffer system (\(\ce{H2CO3}/\ce{HCO3-}\)) maintains human blood plasma pH within the vital physiological window of \(7.35 - 7.45\).</li>
+          <li><strong>Environmental Problem-Solving:</strong> Amelioration of acidic soils through liming with \(\ce{Ca(OH)2}\) or \(\ce{CaCO3}\), and neutralization of industrial wastewater before discharge.</li>
         </ul>
       </section>
     </div>

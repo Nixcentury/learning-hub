@@ -62,6 +62,8 @@ export function buildHtmlPrintSnapshot(source, title) {
     if (css && /auto|scroll|hidden|clip/.test(`${css.overflowX} ${css.overflowY}`)) copies[i].setAttribute('data-hub-print-scroll', '');
   }
   clone.querySelectorAll('script, iframe, object, embed, form, button, input, textarea, select, base, template, [data-no-print], .no-print, [data-hub-html], [data-hub-math-notice], meta[http-equiv]').forEach(node => node.remove());
+  // Print only the chosen language; do not paginate the hidden translation.
+  clone.querySelectorAll('[data-content-lang][hidden]').forEach(node => node.remove());
   clone.querySelectorAll('link:not([rel="stylesheet"])').forEach(node => node.remove());
   for (const node of [clone, ...clone.querySelectorAll('*')]) {
     for (const attr of [...node.attributes]) {

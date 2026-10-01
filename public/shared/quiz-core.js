@@ -1232,7 +1232,12 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
   });
 
   document.querySelectorAll("[data-language-button]").forEach((button) => {
-    button.addEventListener("click", () => setLanguage(button.dataset.languageButton));
+    button.addEventListener("click", () => {
+      setLanguage(button.dataset.languageButton);
+      if (parent !== window && location.origin !== 'null') parent.postMessage({
+        type: 'learning-hub-language-request', language: language(),
+      }, location.origin);
+    });
   });
   document.querySelector("[data-summary-open]")?.addEventListener("click", openSummary);
   document.querySelector("[data-notebook-backup-open]")?.addEventListener("click", () => {

@@ -183,6 +183,7 @@ class FakeElement {
 
 function workspaceHarness() {
   const listeners = {};
+  const languages = [];
   const context = vm.createContext({
     console, URL, location: { origin, href: origin + "/index.html" },
     document: { body: new FakeElement(), createElement: () => new FakeElement() },
@@ -198,9 +199,28 @@ function workspaceHarness() {
     windowLayer, taskbar: new FakeElement(), taskbarItems: new FakeElement(), countElement: new FakeElement(),
     getLanguage: () => "th", getRole: () => "student",
     getIdentity: () => ({ status: "signed-in", uid: "user-a", isGuest: false }),
+    onLanguageChange: language => languages.push(language),
   });
-  return { context, workspace, windowLayer, listeners };
+  return { context, workspace, windowLayer, listeners, languages };
 }
+
+test("workspace language requests require a live registered frame, same origin and supported language", () => {
+  const h = workspaceHarness();
+  h.workspace.open("physics-c1-quiz");
+  const element = h.windowLayer.children[0];
+  const frame = element.querySelector(".workspace-tool-frame");
+  const request = {origin,source:frame.contentWindow,data:{type:'learning-hub-language-request',language:'en'}};
+  h.listeners.message({...request,origin:'https://foreign.test'});
+  h.listeners.message({...request,source:{}});
+  h.listeners.message({...request,data:{...request.data,language:'xx'}});
+  assert.deepEqual(h.languages, []);
+  h.listeners.message(request);
+  element.querySelector('[data-window-language="th"]').listeners.click();
+  assert.deepEqual(h.languages, ['en','th']);
+  h.workspace.clear();
+  h.listeners.message(request);
+  assert.deepEqual(h.languages, ['en','th']);
+});
 
 test("workspace registers only live Quiz frames and resends context when the player is ready", () => {
   const h = workspaceHarness();

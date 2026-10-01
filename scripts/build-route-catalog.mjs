@@ -20,6 +20,6 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
     const catalog = await catalogFromRepository();
     const count = kind => catalog.routes.filter(route => route.kind === kind).length;
     console.log(`Route catalog V1 passed: ${count('section')} sections, ${count('chapter')} chapters, ${count('topic')} topics, ${catalog.contents.length} HTML-menu contents, ${count('legacy-tool') / 2} legacy tool placements.`);
-    console.log('Phase 1 only: no browser navigation or sharing controls have been enabled.');
+    console.log('Catalog checked without changing browser navigation, accounts, or saved work.');
   } catch (error) { console.error(`Route catalog validation failed:\n${error.message}`); process.exitCode = 1; }
 }

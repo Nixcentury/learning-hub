@@ -13,6 +13,7 @@ import { htmlLinkEntry } from "./html-link.js";
 import { renderHtmlMath } from "./html-math.js";
 import { openHtmlPrint } from "./html-print.js";
 import { toolCatalog } from "./legacy-tool-catalog.js";
+import { applyContentLanguage } from "./content-language.js";
 
 // Only live Quiz windows created by this workspace may use its storage bridge.
 const quizStorageFrames = new Set();
@@ -82,6 +83,10 @@ export function createWorkspace({
   getIdentity,
   getRole,
   onToolClosed = () => {},
+  onToolActivated = () => {},
+  onWorkspaceIdle = () => {},
+  onShare = () => {},
+  onLanguageChange = () => {},
 }) {
   const records = new Map();
   let highestZIndex = 30;
@@ -227,6 +232,13 @@ export function createWorkspace({
 
     record.title.textContent = title;
     record.frame.title = title;
+    for (const [code, button] of [["th", record.languageTh], ["en", record.languageEn]]) {
+      button.setAttribute("aria-pressed", String(language() === code));
+      button.title = code === "th" ? "ภาษาไทย" : "English";
+    }
+    record.shareButton.title = label("แชร์ลิงก์งานนี้", "Share this activity");
+    record.shareButton.setAttribute("aria-label", record.shareButton.title);
+    record.shareButton.querySelector("span").textContent = label("แชร์", "Share");
     if (record.printButton) {
       record.printButton.title = label("พิมพ์ / บันทึก PDF", "Print / Save PDF");
       record.printButton.setAttribute("aria-label", record.printButton.title);
@@ -318,6 +330,7 @@ export function createWorkspace({
 
   function focus(record) {
     if (!record || record.minimized) return;
+    const wasActive = record.element.classList.contains("is-active");
     highestZIndex += 1;
     record.element.style.zIndex = String(highestZIndex);
     records.forEach((candidate) => {
@@ -326,6 +339,7 @@ export function createWorkspace({
       candidate.taskButton.classList.toggle("is-active", isActive);
       candidate.taskButton.setAttribute("aria-pressed", String(isActive));
     });
+    if (!wasActive) onToolActivated(record.tool);
   }
 
   function positionNewWindow(record) {
@@ -372,7 +386,35 @@ export function createWorkspace({
       .filter((candidate) => !candidate.minimized)
       .sort((first, second) => Number(second.element.style.zIndex) - Number(first.element.style.zIndex))[0];
     if (nextRecord) focus(nextRecord);
+    else onWorkspaceIdle();
     record.taskButton.focus();
+  }
+
+  function applyFrameLanguage(record) {
+    // Quiz owns its translated questions and answer DOM through its context bridge.
+    if (record.tool.context.toolKind === "quiz") return;
+    try {
+      const doc = record.frame.contentDocument;
+      const result = applyContentLanguage(doc, language());
+      if (record.tool.context.toolKind === "html") void renderHtmlMath(doc, {
+        refresh: result.changedText,
+        isCurrent: () => record.frame.isConnected && record.frame.contentDocument === doc,
+      }).catch(error => console.warn("HTML equation rendering failed", error));
+    } catch { /* Foreign-origin frames cannot use the Hub's DOM language helper. */ }
+  }
+
+  // Back to a menu must not destroy frames, answers, or notebook strokes.
+  function showMenu() {
+    records.forEach(record => {
+      record.minimized = true;
+      record.element.hidden = true;
+      record.element.classList.remove("is-active");
+      record.taskButton.classList.remove("is-active");
+      record.taskButton.classList.add("is-minimized");
+      record.taskButton.setAttribute("aria-pressed", "false");
+      updateRecordText(record);
+    });
+    syncMaximizedState();
   }
 
   function toggleMaximize(record) {
@@ -424,6 +466,7 @@ export function createWorkspace({
     } else {
       taskButton.blur();
     }
+    if (!nextRecord) onWorkspaceIdle();
     const opener = record.htmlOpener;
     if (opener?.node.isConnected) {
       if (opener.record && records.has(opener.record.tool.id)) {
@@ -540,6 +583,8 @@ export function createWorkspace({
           <strong class="window-title"></strong>
         </div>
         <div class="window-trailing-tools">
+          <div class="window-language" role="group" aria-label="ภาษา / Language"><button type="button" data-window-language="th" lang="th">TH</button><button type="button" data-window-language="en" lang="en">EN</button></div>
+          <button class="window-share" type="button"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m10 13 4-4M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m2 1 1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/></svg><span></span></button>
           ${tool.context.toolKind === "html" ? '<button class="window-html-print" type="button" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V3h12v6M6 18H3V9h18v9h-3M6 14h12v7H6z"/></svg><span class="window-print-label"></span></button>' : ''}
           <span class="window-drag-hint" aria-hidden="true">•••</span>
         </div>
@@ -568,6 +613,9 @@ export function createWorkspace({
       closeButton: element.querySelector(".is-close"),
       minimizeButton: element.querySelector(".is-minimize"),
       maximizeButton: element.querySelector(".is-maximize"),
+      shareButton: element.querySelector(".window-share"),
+      languageTh: element.querySelector('[data-window-language="th"]'),
+      languageEn: element.querySelector('[data-window-language="en"]'),
       printButton: tool.context.toolKind === "html" ? element.querySelector(".window-html-print") : null,
       clock: element.querySelector(".window-clock"),
       clockDate: element.querySelector(".window-clock-date"),
@@ -604,6 +652,9 @@ export function createWorkspace({
     record.closeButton.addEventListener("click", () => close(record));
     record.minimizeButton.addEventListener("click", () => minimize(record));
     record.maximizeButton.addEventListener("click", () => toggleMaximize(record));
+    record.shareButton.addEventListener("click", () => onShare(record.tool, record.shareButton));
+    record.languageTh.addEventListener("click", () => onLanguageChange("th"));
+    record.languageEn.addEventListener("click", () => onLanguageChange("en"));
     record.printButton?.addEventListener("click", () => openHtmlPrint({
       frame: record.frame,
       title: language() === 'en' ? record.tool.titleEn : record.tool.titleTh,
@@ -626,15 +677,16 @@ export function createWorkspace({
     record.timerReset.addEventListener("click", () => resetTimer(record));
     record.element.addEventListener("pointerdown", () => focus(record));
     record.frame.addEventListener("load", () => {
+      applyFrameLanguage(record);
       postContext(record);
       // Scripts remain disabled in read-only HTML; only the parent installs this handler.
-      try { bindHtmlLinks(record.frame.contentDocument, record); } catch { /* Cross-origin content stays isolated. */ }
+      try {
+        bindHtmlLinks(record.frame.contentDocument, record);
+        record.frame.contentDocument?.addEventListener("pointerdown", () => focus(record), true);
+      } catch { /* Cross-origin content stays isolated. */ }
       if (record.tool.context.toolKind === "html") {
         const doc = record.frame.contentDocument;
         record.printButton.disabled = !doc?.documentElement.hasAttribute('data-learning-html');
-        void renderHtmlMath(doc, {
-          isCurrent: () => record.frame.isConnected && record.frame.contentDocument === doc,
-        }).catch(error => console.warn("HTML equation rendering failed", error));
       }
     });
     record.taskButton.addEventListener("click", () => {
@@ -714,6 +766,7 @@ export function createWorkspace({
     records.forEach((record) => {
       updateRecordText(record);
       renderWindowTime(record);
+      applyFrameLanguage(record);
       postContext(record);
     });
   }
@@ -745,6 +798,12 @@ export function createWorkspace({
   }
 
   window.addEventListener("message", (event) => {
+    if (event.origin === location.origin && event.data?.type === "learning-hub-language-request" &&
+        ["th", "en"].includes(event.data.language)) {
+      const record = [...records.values()].find(candidate => candidate.frame.isConnected && candidate.frame.contentWindow === event.source);
+      if (record) onLanguageChange(event.data.language);
+      return;
+    }
     if (event.data?.type !== "learning-hub-quiz-ready") return;
     const trustedOrigin = location.origin === "null" || event.origin === location.origin;
     if (!trustedOrigin || !isWorkspaceQuizSource(event.source)) return;
@@ -777,5 +836,5 @@ export function createWorkspace({
     });
   });
 
-  return { open, openContent, bindHtmlLinks, setLanguage, setContext, clear, prepareAllForClose };
+  return { open, openContent, bindHtmlLinks, showMenu, setLanguage, setContext, clear, prepareAllForClose };
 }

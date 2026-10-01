@@ -119,6 +119,25 @@ test('empty overview is a preparing route, not a made-up content file', async ()
   assert.equal(catalog.contents.some(item => item.toolKind === 'html'), false);
 });
 
+test('HTML reference buttons inside quizzes and simulations also receive share routes', async () => {
+  const records = fixture();
+  records.set('content/p/extra.html', '<html data-learning-html><body>Extra reading</body></html>');
+  for (const file of ['content/p/quiz.html', 'content/p/sim.html']) {
+    records.set(file, records.get(file) + '<a data-hub-html data-content-id="extra-reading" href="extra.html">More</a>');
+  }
+  const catalog = await make(records);
+  assert.equal(resolveHubRoute(catalog, '#content/extra-reading').content.source, 'content/p/extra.html');
+  assert.equal(catalog.contents.find(item => item.id === 'extra-reading').placements.length, 2);
+});
+
+test('unfinished activity menu diagnostics name the file, content ID, and missing field', async () => {
+  const records = fixture();
+  change(records, 'content/p/topic.html', 'href="quiz.html"', '');
+  await assert.rejects(make(records), /content\/p\/topic.html: Content quiz-one: missing href/);
+  change(records, 'content/p/topic.html', 'data-tool-kind="quiz"', 'data-tool-kind="practice"');
+  await assert.rejects(make(records), /Content quiz-one: data-tool-kind must be quiz, simulation, or html/);
+});
+
 test('a new chapter without a menu or registered legacy tools remains a preparing heading', async () => {
   const records = fixture();
   change(records, 'pages/physics.html', '</template>', '<article data-chapter="99"><h2 data-chapter-title data-th="บทใหม่" data-en="New chapter"></h2></article></template>');

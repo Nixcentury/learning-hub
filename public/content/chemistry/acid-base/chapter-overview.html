@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ผลการเรียนรู้และสาระสำคัญ: บทที่ 10 กรด-เบส | Learning Outcomes & Key Concepts: Acids and Bases</title>
+  <title>ผลการเรียนรู้และสาระสำคัญ: บทที่ 10 กรด-เบส | Learning Outcomes &amp; Key Concepts: Acids and Bases</title>
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; background: #f6f7fb; color: #233451; font: 16px/1.8 Tahoma, sans-serif; }
@@ -17,9 +17,7 @@
     li + li { margin-top: 10px; }
     p, li { overflow-wrap: anywhere; }
     .note { color: #64728b; margin: 0; }
-    .en-sub { display: block; color: #64748b; font-size: 0.92em; font-style: italic; margin-top: 3px; line-height: 1.6; }
 
-    /* บล็อกสมการและการคำนวณ รองรับจอแคบ/iPad */
     .calc-block {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
@@ -62,287 +60,341 @@
 </head>
 <body>
   <main>
-    <header>
-      <small>ภาพรวมบทเรียน · CHAPTER OVERVIEW</small>
-      <h1>บทที่ 10 กรด-เบส (Acids and Bases)</h1>
-      <p class="note">
-        เคมี ม.5 เล่ม 4 ตามหลักสูตรแกนกลางการศึกษาขั้นพื้นฐาน (สสวท. ฉบับปรับปรุง พ.ศ. 2560)<br>
-        <span class="en-sub">Grade 11 Chemistry Book 4, Basic Education Core Curriculum (IPST Revised Edition 2017)</span>
-      </p>
-    </header>
+    <!-- ========================================== -->
+    <!-- บล็อกภาษาไทย (Thai Content Block)          -->
+    <!-- ========================================== -->
+    <div data-content-lang="th" lang="th">
+      <header>
+        <small>ภาพรวมบทเรียน</small>
+        <h1>บทที่ 10 กรด-เบส</h1>
+        <p class="note">เคมี ม.5 เล่ม 4 ตามหลักสูตรแกนกลางการศึกษาขั้นพื้นฐาน (สสวท. ฉบับปรับปรุง พ.ศ. 2560)</p>
+      </header>
 
-    <!-- 1. ผลการเรียนรู้ตามหลักสูตร สสวท. ครบ 10 ข้อ (2 ภาษาเต็มรูปแบบ) -->
-    <section aria-labelledby="outcomes-title">
-      <h2 id="outcomes-title">ผลการเรียนรู้ที่คาดหวัง / Expected Learning Outcomes</h2>
-      <ol>
-        <li>
-          ระบุและอธิบายว่าสารเป็นกรดหรือเบส โดยใช้ทฤษฎีกรด-เบสของอาร์เรเนียส เบรินสเตด-ลาวรี และลิวอิส
-          <span class="en-sub">Identify and explain whether a substance behaves as an acid or base using the Arrhenius, Brønsted-Lowry, and Lewis acid-base theories.</span>
-        </li>
-        <li>
-          ระบุคู่กรด-เบสของสาร ตามทฤษฎีกรด-เบสของเบรินสเตด-ลาวรี
-          <span class="en-sub">Identify conjugate acid-base pairs according to the Brønsted-Lowry acid-base theory.</span>
-        </li>
-        <li>
-          คำนวณและเปรียบเทียบความสามารถในการแตกตัวหรือความแรงของกรดและเบส
-          <span class="en-sub">Calculate and compare the extent of ionization (degree of dissociation) and relative strengths of acids and bases.</span>
-        </li>
-        <li>
-          คำนวณค่า pH ความเข้มข้นของไฮโดรเนียมไอออนหรือไฮดรอกไซด์ไอออนของสารละลายกรดและเบส
-          <span class="en-sub">Calculate pH, hydronium ion concentration, and hydroxide ion concentration in acidic and basic aqueous solutions.</span>
-        </li>
-        <li>
-          เขียนสมการเคมีแสดงปฏิกิริยาสะเทิน และระบุความเป็นกรด-เบสของสารละลายหลังการสะเทิน
-          <span class="en-sub">Write chemical equations for neutralization reactions and determine the acidic, basic, or neutral nature of the resulting solution.</span>
-        </li>
-        <li>
-          เขียนปฏิกิริยาไฮโดรไลซิสของเกลือ และระบุความเป็นกรด-เบสของสารละลายเกลือ
-          <span class="en-sub">Write chemical equations for salt hydrolysis reactions and predict the acidic or basic behavior of aqueous salt solutions.</span>
-        </li>
-        <li>
-          ทดลองและอธิบายหลักการการไทเทรต และเลือกใช้อินดิเคเตอร์ที่เหมาะสมสำหรับการไทเทรตกรด-เบส
-          <span class="en-sub">Conduct experiments to explain acid-base titration principles and select suitable indicators based on transition ranges.</span>
-        </li>
-        <li>
-          คำนวณปริมาณสารหรือความเข้มข้นของสารละลายกรดหรือเบสจากการไทเทรต
-          <span class="en-sub">Calculate the quantity or concentration of unknown acid or base solutions using stoichiometric titration data.</span>
-        </li>
-        <li>
-          อธิบายสมบัติ องค์ประกอบ และประโยชน์ของสารละลายบัฟเฟอร์
-          <span class="en-sub">Explain the properties, chemical compositions, action mechanisms, and practical applications of buffer solutions.</span>
-        </li>
-        <li>
-          สืบค้นข้อมูลและนำเสนอตัวอย่างการใช้ประโยชน์และการแก้ปัญหาโดยใช้ความรู้เกี่ยวกับกรด-เบส
-          <span class="en-sub">Research and present real-world applications and environmental/industrial problem-solving using acid-base chemistry.</span>
-        </li>
-      </ol>
-    </section>
+      <section aria-labelledby="th-outcomes-title">
+        <h2 id="th-outcomes-title">ผลการเรียนรู้ที่คาดหวัง</h2>
+        <ol>
+          <li>ระบุและอธิบายว่าสารเป็นกรดหรือเบส โดยใช้ทฤษฎีกรด-เบสของอาร์เรเนียส เบรินสเตด-ลาวรี และลิวอิส</li>
+          <li>ระบุคู่กรด-เบสของสาร ตามทฤษฎีกรด-เบสของเบรินสเตด-ลาวรี</li>
+          <li>คำนวณและเปรียบเทียบความสามารถในการแตกตัวหรือความแรงของกรดและเบส</li>
+          <li>คำนวณค่า pH ความเข้มข้นของไฮโดรเนียมไอออนหรือไฮดรอกไซด์ไอออนของสารละลายกรดและเบส</li>
+          <li>เขียนสมการเคมีแสดงปฏิกิริยาสะเทิน และระบุความเป็นกรด-เบสของสารละลายหลังการสะเทิน</li>
+          <li>เขียนปฏิกิริยาไฮโดรไลซิสของเกลือ และระบุความเป็นกรด-เบสของสารละลายเกลือ</li>
+          <li>ทดลองและอธิบายหลักการการไทเทรต และเลือกใช้อินดิเคเตอร์ที่เหมาะสมสำหรับการไทเทรตกรด-เบส</li>
+          <li>คำนวณปริมาณสารหรือความเข้มข้นของสารละลายกรดหรือเบสจากการไทเทรต</li>
+          <li>อธิบายสมบัติ องค์ประกอบ และประโยชน์ของสารละลายบัฟเฟอร์</li>
+          <li>สืบค้นข้อมูลและนำเสนอตัวอย่างการใช้ประโยชน์และการแก้ปัญหาโดยใช้ความรู้เกี่ยวกับกรด-เบส</li>
+        </ol>
+      </section>
 
-    <!-- 2. สาระสำคัญและหลักการคำนวณ (2 ภาษาเต็มรูปแบบ + LaTeX & mhchem) -->
-    <section aria-labelledby="summary-title">
-      <h2 id="summary-title">สาระสำคัญและหลักการคำนวณ / Key Concepts &amp; Principles</h2>
+      <section aria-labelledby="th-summary-title">
+        <h2 id="th-summary-title">สาระสำคัญและหลักการคำนวณ</h2>
 
-      <h3>1. ทฤษฎีกรด-เบส และคู่กรด-เบส (Acid-Base Theories &amp; Conjugate Pairs)</h3>
-      <ul>
-        <li>
-          <strong>อาร์เรเนียส (Arrhenius Theory):</strong> กรดแตกตัวให้ \(\ce{H+}\) (\(\ce{H3O+}\)) ในน้ำ ส่วนเบสแตกตัวให้ \(\ce{OH-}\) ในน้ำ (จำกัดเฉพาะสารละลายที่มีน้ำเป็นตัวทำละลาย)
-          <span class="en-sub">Acids ionize to yield \(\ce{H+}\) (\(\ce{H3O+}\)) in aqueous solution; bases dissociate to yield \(\ce{OH-}\) (limited to aqueous media).</span>
-        </li>
-        <li>
-          <strong>เบรินสเตด-ลาวรี (Brønsted-Lowry Theory):</strong> กรดคือตัวให้โปรตอน (\(\ce{H+}\) donor) ส่วนเบสคือตัวรับโปรตอน (\(\ce{H+}\) acceptor)
-          <span class="en-sub">Acids act as proton (\(\ce{H+}\)) donors; bases act as proton (\(\ce{H+}\)) acceptors.</span>
-        </li>
-        <li>
-          <strong>ลิวอิส (Lewis Theory):</strong> กรดคือตัวรับคู่อิเล็กตรอน (Electron pair acceptor) ส่วนเบสคือตัวให้คู่อิเล็กตรอน (Electron pair donor)
-          <span class="en-sub">Acids accept electron pairs (electrophiles); bases donate electron pairs (nucleophiles).</span>
-        </li>
-        <li>
-          <strong>คู่กรด-เบส (Conjugate Acid-Base Pairs):</strong> สารสองชนิดที่มีสูตรต่างกันเพียง \(\ce{H+}\) 1 ตัว โดยคู่กรดจะมีจำนวนโปรตอนมากกว่าคู่เบส 1 ตัวเสมอ เช่น \(\ce{NH4+}/\ce{NH3}\) หรือ \(\ce{H3O+}/\ce{H2O}\)
-          <span class="en-sub">Two chemical species related by the loss or gain of a single proton (\(\ce{H+}\)); the conjugate acid always possesses one more \(\ce{H+}\) than its conjugate base.</span>
-        </li>
-      </ul>
+        <h3>1. ทฤษฎีกรด-เบส และคู่กรด-เบส</h3>
+        <ul>
+          <li><strong>อาร์เรเนียส:</strong> กรดแตกตัวให้ \(\ce{H+}\) (\(\ce{H3O+}\)) ในน้ำ ส่วนเบสแตกตัวให้ \(\ce{OH-}\) ในน้ำ (จำกัดเฉพาะสารละลายที่มีน้ำเป็นตัวทำละลาย)</li>
+          <li><strong>เบรินสเตด-ลาวรี:</strong> กรดคือตัวให้โปรตอน (\(\ce{H+}\) donor) ส่วนเบสคือตัวรับโปรตอน (\(\ce{H+}\) acceptor)</li>
+          <li><strong>ลิวอิส:</strong> กรดคือตัวรับคู่อิเล็กตรอน ส่วนเบสคือตัวให้คู่อิเล็กตรอน</li>
+          <li><strong>คู่กรด-เบส:</strong> สารสองชนิดที่มีสูตรต่างกันเพียง \(\ce{H+}\) 1 ตัว โดยคู่กรดจะมีจำนวนโปรตอนมากกว่าคู่เบส 1 ตัวเสมอ เช่น \(\ce{NH4+}/\ce{NH3}\) หรือ \(\ce{H3O+}/\ce{H2O}\)</li>
+        </ul>
 
-      <h3>2. การแตกตัวและสมดุลเคมี (Ionization &amp; ICE Table)</h3>
-      <ul>
-        <li>
-          <strong>กรดแก่และเบสแก่ (Strong Acids &amp; Strong Bases):</strong> แตกตัวสมบูรณ์ 100% คิดความเข้มข้นของไอออนตามปริมาณสารสัมพันธ์ของสมการเคมีได้ทันที
-          <span class="en-sub">Undergo complete ionization (100%); ion concentrations are directly determined from stoichiometry.</span>
-        </li>
-        <li>
-          <strong>กรดอ่อนและเบสอ่อน (Weak Acids &amp; Weak Bases):</strong> แตกตัวบางส่วนเกิดภาวะสมดุลเคมี ต้องคำนวณผ่านตาราง ICE (Initial, Change, Equilibrium)
-          <span class="en-sub">Undergo partial ionization establishing a dynamic chemical equilibrium, solved using an ICE table.</span>
-        </li>
-      </ul>
+        <h3>2. การแตกตัวและสมดุลเคมี</h3>
+        <ul>
+          <li><strong>กรดแก่และเบสแก่:</strong> แตกตัวสมบูรณ์ 100% คิดความเข้มข้นของไอออนตามปริมาณสารสัมพันธ์ของสมการเคมีได้ทันที</li>
+          <li><strong>กรดอ่อนและเบสอ่อน:</strong> แตกตัวบางส่วนเกิดภาวะสมดุลเคมี ต้องคำนวณผ่านตาราง ICE (Initial, Change, Equilibrium)</li>
+        </ul>
 
-      <div class="calc-block">
-        <p>
-          <strong>การคำนวณกรดอ่อนมอนอโปรติก \(\ce{HA}\) ความเข้มข้นเริ่มต้น \(C\text{ mol/L}\) ด้วยตาราง ICE:</strong><br>
-          <span class="en-sub">ICE Table calculation for weak monoprotic acid \(\ce{HA}\) with initial concentration \(C\text{ mol/L}\):</span>
-        </p>
-        \[
-        \ce{HA(aq) + H2O(l) &lt;=&gt; H3O+(aq) + A-(aq)}
-        \]
-        <div class="table-container">
-          <table class="ice-table">
-            <thead>
-              <tr>
-                <th>สภาวะ / State</th>
-                <th>\([\ce{HA}]\) (mol/L)</th>
-                <th>\([\ce{H3O+}]\) (mol/L)</th>
-                <th>\([\ce{A-}]\) (mol/L)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>I (เริ่มต้น / Initial)</strong></td>
-                <td>\(C\)</td>
-                <td>\(0\)</td>
-                <td>\(0\)</td>
-              </tr>
-              <tr>
-                <td><strong>C (เปลี่ยนไป / Change)</strong></td>
-                <td>\(-x\)</td>
-                <td>\(+x\)</td>
-                <td>\(+x\)</td>
-              </tr>
-              <tr>
-                <td><strong>E (สมดุล / Equilibrium)</strong></td>
-                <td>\(C - x\)</td>
-                <td>\(x\)</td>
-                <td>\(x\)</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="calc-block">
+          <p><strong>การคำนวณกรดอ่อนมอนอโปรติก \(\ce{HA}\) ความเข้มข้นเริ่มต้น \(C\text{ mol/L}\) ด้วยตาราง ICE:</strong></p>
+          \[
+          \ce{HA(aq) + H2O(l) &lt;=&gt; H3O+(aq) + A-(aq)}
+          \]
+          <div class="table-container">
+            <table class="ice-table">
+              <thead>
+                <tr>
+                  <th>สภาวะ</th>
+                  <th>\([\ce{HA}]\) (mol/L)</th>
+                  <th>\([\ce{H3O+}]\) (mol/L)</th>
+                  <th>\([\ce{A-}]\) (mol/L)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>I (เริ่มต้น)</strong></td>
+                  <td>\(C\)</td>
+                  <td>\(0\)</td>
+                  <td>\(0\)</td>
+                </tr>
+                <tr>
+                  <td><strong>C (เปลี่ยนไป)</strong></td>
+                  <td>\(-x\)</td>
+                  <td>\(+x\)</td>
+                  <td>\(+x\)</td>
+                </tr>
+                <tr>
+                  <td><strong>E (สมดุล)</strong></td>
+                  <td>\(C - x\)</td>
+                  <td>\(x\)</td>
+                  <td>\(x\)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>นิพจน์ค่าคงที่สมดุลการแตกตัวของกรด:</p>
+          \[
+          K_a = \frac{[\ce{H3O+}][\ce{A-}]}{[\ce{HA}]} = \frac{(x)(x)}{C - x} = \frac{x^2}{C - x}
+          \]
+          <p>จัดรูปเป็นสมการกำลังสองจริง (ไม่ใช้การประมาณค่า):</p>
+          \[
+          x^2 + K_a x - K_a C = 0
+          \]
+          <p>แก้สมการหาความเข้มข้นสมดุล \(x = [\ce{H3O+}]\):</p>
+          \[
+          x = \frac{-K_a + \sqrt{K_a^2 + 4K_a C}}{2}
+          \]
+          <p>การคำนวณร้อยละการแตกตัว:</p>
+          \[
+          \text{% การแตกตัว} = \frac{[\ce{H3O+}]_{\text{eq}}}{[\ce{HA}]_{\text{initial}}} \times 100 = \frac{x}{C} \times 100
+          \]
         </div>
-        <p>
-          นิพจน์ค่าคงที่สมดุลการแตกตัวของกรด / Acid ionization constant expression:
-        </p>
-        \[
-        K_a = \frac{[\ce{H3O+}][\ce{A-}]}{[\ce{HA}]} = \frac{(x)(x)}{C - x} = \frac{x^2}{C - x}
-        \]
-        <p>
-          จัดรูปเป็นสมการกำลังสองจริง (ไม่ใช้การประมาณค่า) / Exact quadratic equation form:
-        </p>
-        \[
-        x^2 + K_a x - K_a C = 0
-        \]
-        <p>
-          แก้สมการหาความเข้มข้นสมดุล \(x = [\ce{H3O+}]\) / Solve for equilibrium concentration:
-        </p>
-        \[
-        x = \frac{-K_a + \sqrt{K_a^2 + 4K_a C}}{2}
-        \]
-        <p>
-          การคำนวณร้อยละการแตกตัว / Percent ionization formula:
-        </p>
-        \[
-        \text{% Ionization} = \frac{[\ce{H3O+}]_{\text{eq}}}{[\ce{HA}]_{\text{initial}}} \times 100 = \frac{x}{C} \times 100
-        \]
-      </div>
 
-      <h3>3. สมดุลน้ำ, pH และ pOH (Autoionization of Water, pH &amp; pOH)</h3>
-      <ul>
-        <li>
-          การแตกตัวได้เองของน้ำ / Autoionization of water:
-          \[
-          \ce{2H2O(l) &lt;=&gt; H3O+(aq) + OH-(aq)}
-          \]
-        </li>
-        <li>
-          ค่าคงที่ผลคูณไอออนของน้ำ / Ion-product constant of water:
-          \[
-          K_w = [\ce{H3O+}][\ce{OH-}] = 1.0 \times 10^{-14} \quad (\text{at } 25^\circ\text{C})
-          \]
-        </li>
-        <li>
-          ความสัมพันธ์สำหรับคู่กรด-เบส / Relationship between conjugate pairs:
-          \[
-          K_a \times K_b = K_w
-          \]
-        </li>
-        <li>
-          ความสัมพันธ์ลอการิทึมของมาตราส่วน pH / Logarithmic pH scale relationships:
-          \[
-          \text{pH} = -\log[\ce{H3O+}] \quad,\quad \text{pOH} = -\log[\ce{OH-}] \quad,\quad \text{pH} + \text{pOH} = 14.00 \quad (\text{at } 25^\circ\text{C})
-          \]
-        </li>
-      </ul>
+        <h3>3. สมดุลน้ำ, pH และ pOH</h3>
+        <ul>
+          <li>
+            การแตกตัวได้เองของน้ำ:
+            \[
+            \ce{2H2O(l) &lt;=&gt; H3O+(aq) + OH-(aq)}
+            \]
+          </li>
+          <li>ค่าคงที่ผลคูณไอออนของน้ำ: \[ K_w = [\ce{H3O+}][\ce{OH-}] = 1.0 \times 10^{-14} \quad (\text{ที่ } 25^\circ\text{C}) \]</li>
+          <li>ความสัมพันธ์สำหรับคู่กรด-เบส: \[ K_a \times K_b = K_w \]</li>
+          <li>
+            ความสัมพันธ์ลอการิทึมของมาตราส่วน pH:
+            \[
+            \text{pH} = -\log[\ce{H3O+}] \quad,\quad \text{pOH} = -\log[\ce{OH-}] \quad,\quad \text{pH} + \text{pOH} = 14.00 \quad (\text{ที่ } 25^\circ\text{C})
+            \]
+          </li>
+        </ul>
 
-      <h3>4. ปฏิกิริยาสะเทินและการไทเทรต (Neutralization &amp; Titration)</h3>
-      <ul>
-        <li>
-          <strong>ปฏิกิริยาสะเทิน (Neutralization Reaction):</strong> ปฏิกิริยาระหว่างกรดกับเบสได้เกลือและน้ำ
-          <span class="en-sub">Chemical reaction between an acid and a base producing a salt and water: \(\ce{Acid + Base -&gt; Salt + Water}\)</span>
-        </li>
-        <li>
-          <strong>จุดสมมูล (Equivalence Point):</strong> จุดที่โมลของกรดและเบสทำปฏิกิริยากันพอดีตามปริมาณสารสัมพันธ์
-          <span class="en-sub">The theoretical point where stoichiometrically equivalent amounts of acid and base have reacted.</span>
-        </li>
-        <li>
-          <strong>จุดยุติ (End Point):</strong> จุดที่อินดิเคเตอร์เปลี่ยนสีอย่างถาวร (ต้องเลือกอินดิเคเตอร์ที่ช่วงเปลี่ยนสีครอบคลุมค่า pH ณ จุดสมมูล)
-          <span class="en-sub">The experimental point where the indicator permanently changes color (chosen such that its transition range matches the equivalence pH).</span>
-        </li>
-      </ul>
+        <h3>4. ปฏิกิริยาสะเทินและการไทเทรต</h3>
+        <ul>
+          <li><strong>ปฏิกิริยาสะเทิน:</strong> ปฏิกิริยาระหว่างกรดกับเบสได้เกลือและน้ำ: \(\ce{กรด + เบส -&gt; เกลือ + น้ำ}\)</li>
+          <li><strong>จุดสมมูล:</strong> จุดที่โมลของกรดและเบสทำปฏิกิริยากันพอดีตามปริมาณสารสัมพันธ์</li>
+          <li><strong>จุดยุติ:</strong> จุดที่อินดิเคเตอร์เปลี่ยนสีอย่างถาวร (ต้องเลือกอินดิเคเตอร์ที่ช่วงเปลี่ยนสีครอบคลุมค่า pH ณ จุดสมมูล)</li>
+        </ul>
 
-      <div class="calc-block">
-        <p>
-          <strong>การคำนวณการไทเทรตตามปริมาณสารสัมพันธ์ (Stoichiometric Titration Calculation):</strong><br>
-          <span class="en-sub">General stoichiometric relationship based on the balanced chemical equation:</span>
-        </p>
-        \[
-        a\,\text{Acid} + b\,\text{Base} \rightarrow \text{Salt} + \text{Water}
-        \]
-        <p>
-          เทียบอัตราส่วนโมลที่ทำปฏิกิริยาพอดีกัน / Mole ratio relationship:
-        </p>
-        \[
-        \frac{n_{\text{Acid}}}{a} = \frac{n_{\text{Base}}}{b}
-        \]
-        <p>
-          แทนค่าความเข้มข้นโมลาริตีและปริมาตร (\(C_a, C_b\) in mol/L และ \(V_a, V_b\) in mL หรือ L) / Molarity-volume relation:
-        </p>
-        \[
-        \frac{C_a \cdot V_a}{a} = \frac{C_b \cdot V_b}{b}
-        \]
-      </div>
+        <div class="calc-block">
+          <p><strong>การคำนวณการไทเทรตตามปริมาณสารสัมพันธ์:</strong></p>
+          \[
+          a\,\text{Acid} + b\,\text{Base} \rightarrow \text{Salt} + \text{Water}
+          \]
+          <p>เทียบอัตราส่วนโมลที่ทำปฏิกิริยาพอดีกัน:</p>
+          \[
+          \frac{n_{\text{Acid}}}{a} = \frac{n_{\text{Base}}}{b} \implies \frac{C_a \cdot V_a}{a} = \frac{C_b \cdot V_b}{b}
+          \]
+        </div>
 
-      <h3>5. ปฏิกิริยาไฮโดรไลซิสของเกลือ (Salt Hydrolysis)</h3>
-      <p>
-        ปฏิกิริยาระหว่างไอออนของเกลือกับน้ำ โดยเฉพาะไอออนที่มาจากกรดอ่อนหรือเบสอ่อน ส่งผลต่อความเป็นกรด-เบสของสารละลาย:<br>
-        <span class="en-sub">Reaction of salt ions with water; only conjugate ions derived from weak acids or weak bases undergo hydrolysis, altering solution pH:</span>
-      </p>
-      <ul>
-        <li>
-          <strong>เกลือจากกรดแก่ + เบสแก่ (Salt of Strong Acid &amp; Strong Base):</strong> ไอออนไม่ทำปฏิกิริยากับน้ำ สารละลายเป็นกลาง (\(\text{pH} = 7\)) เช่น \(\ce{NaCl}, \ce{KNO3}\)
-          <span class="en-sub">Neither cation nor anion hydrolyzes; resulting solution is neutral (\(\text{pH} = 7\)), e.g., \(\ce{NaCl}\).</span>
-        </li>
-        <li>
-          <strong>เกลือจากกรดแก่ + เบสอ่อน (Salt of Strong Acid &amp; Weak Base):</strong> ไอออนแคตไอออนเกิดไฮโดรไลซิสให้ \(\ce{H3O+}\) สารละลายเป็นกรด (\(\text{pH} &lt; 7\)) เช่น \(\ce{NH4Cl}\)
-          <span class="en-sub">Cation hydrolyzes generating \(\ce{H3O+}\); resulting solution is acidic (\(\text{pH} &lt; 7\)):</span>
-          \[
-          \ce{NH4+(aq) + H2O(l) &lt;=&gt; NH3(aq) + H3O+(aq)}
-          \]
-        </li>
-        <li>
-          <strong>เกลือจากกรดอ่อน + เบสแก่ (Salt of Weak Acid &amp; Strong Base):</strong> ไอออนแอนไอออนเกิดไฮโดรไลซิสให้ \(\ce{OH-}\) สารละลายเป็นเบส (\(\text{pH} &gt; 7\)) เช่น \(\ce{CH3COONa}\)
-          <span class="en-sub">Anion hydrolyzes generating \(\ce{OH-}\); resulting solution is basic (\(\text{pH} &gt; 7\)):</span>
-          \[
-          \ce{CH3COO-(aq) + H2O(l) &lt;=&gt; CH3COOH(aq) + OH-(aq)}
-          \]
-        </li>
-        <li>
-          <strong>เกลือจากกรดอ่อน + เบสอ่อน (Salt of Weak Acid &amp; Weak Base):</strong> ทั้งแคตไอออนและแอนไอออนเกิดไฮโดรไลซิส ตัดสิน pH จากการเปรียบเทียบค่า \(K_a\) และ \(K_b\)
-          <span class="en-sub">Both ions hydrolyze; solution pH depends on the comparison: \(K_a &gt; K_b\) (acidic), \(K_b &gt; K_a\) (basic), \(K_a \approx K_b\) (neutral).</span>
-        </li>
-      </ul>
+        <h3>5. ปฏิกิริยาไฮโดรไลซิสของเกลือ</h3>
+        <p>ปฏิกิริยาระหว่างไอออนของเกลือกับน้ำ โดยเฉพาะไอออนที่มาจากกรดอ่อนหรือเบสอ่อน ส่งผลต่อความเป็นกรด-เบสของสารละลาย:</p>
+        <ul>
+          <li><strong>เกลือจากกรดแก่ + เบสแก่:</strong> ไอออนไม่ทำปฏิกิริยากับน้ำ สารละลายเป็นกลาง (\(\text{pH} = 7\)) เช่น \(\ce{NaCl}, \ce{KNO3}\)</li>
+          <li>
+            <strong>เกลือจากกรดแก่ + เบสอ่อน:</strong> แคตไอออนเกิดไฮโดรไลซิสให้ \(\ce{H3O+}\) สารละลายเป็นกรด (\(\text{pH} &lt; 7\)) เช่น \(\ce{NH4Cl}\)
+            \[
+            \ce{NH4+(aq) + H2O(l) &lt;=&gt; NH3(aq) + H3O+(aq)}
+            \]
+          </li>
+          <li>
+            <strong>เกลือจากกรดอ่อน + เบสแก่:</strong> แอนไอออนเกิดไฮโดรไลซิสให้ \(\ce{OH-}\) สารละลายเป็นเบส (\(\text{pH} &gt; 7\)) เช่น \(\ce{CH3COONa}\)
+            \[
+            \ce{CH3COO-(aq) + H2O(l) &lt;=&gt; CH3COOH(aq) + OH-(aq)}
+            \]
+          </li>
+          <li><strong>เกลือจากกรดอ่อน + เบสอ่อน:</strong> ทั้งแคตไอออนและแอนไอออนเกิดไฮโดรไลซิส ตัดสิน pH จากการเปรียบเทียบค่า \(K_a\) และ \(K_b\)</li>
+        </ul>
 
-      <h3>6. สารละลายบัฟเฟอร์ (Buffer Solutions)</h3>
-      <ul>
-        <li>
-          <strong>นิยาม (Definition):</strong> สารละลายที่สามารถต้านทานการเปลี่ยนแปลงค่า pH เมื่อเติมกรดแก่หรือเบสแก่ลงไปในปริมาณเล็กน้อย
-          <span class="en-sub">A solution capable of resisting drastic changes in pH upon the addition of small amounts of strong acid or strong base.</span>
-        </li>
-        <li>
-          <strong>องค์ประกอบ (Components):</strong> คู่กรด-เบสในความเข้มข้นที่ใกล้เคียงกัน เช่น กรดอ่อน + เกลือคู่เบส (Acidic buffer: \(\ce{CH3COOH}/\ce{CH3COONa}\)) หรือ เบสอ่อน + เกลือคู่กรด (Basic buffer: \(\ce{NH3}/\ce{NH4Cl}\))
-          <span class="en-sub">Consists of a conjugate acid-base pair in comparable concentrations: weak acid and its conjugate base, or weak base and its conjugate acid.</span>
-        </li>
-        <li>
-          <strong>การคำนวณสมดุลบัฟเฟอร์ (Equilibrium Calculation):</strong>
-          <span class="en-sub">Derived from the acid dissociation constant without crude approximations:</span>
+        <h3>6. สารละลายบัฟเฟอร์</h3>
+        <ul>
+          <li><strong>นิยาม:</strong> สารละลายที่สามารถต้านทานการเปลี่ยนแปลงค่า pH เมื่อเติมกรดแก่หรือเบสแก่ลงไปในปริมาณเล็กน้อย</li>
+          <li><strong>องค์ประกอบ:</strong> คู่กรด-เบสในความเข้มข้นที่ใกล้เคียงกัน เช่น บัฟเฟอร์กรด (\(\ce{CH3COOH}/\ce{CH3COONa}\)) หรือ บัฟเฟอร์เบส (\(\ce{NH3}/\ce{NH4Cl}\))</li>
+          <li>
+            <strong>การคำนวณสมดุลบัฟเฟอร์:</strong>
+            \[
+            [\ce{H3O+}] = K_a \cdot \frac{[\text{กรด}]}{[\text{คู่เบส}]} \iff \text{pH} = \text{p}K_a + \log\left(\frac{[\text{คู่เบส}]}{[\text{กรด}]}\right)
+            \]
+          </li>
+          <li><strong>การประยุกต์ใช้ในสิ่งมีชีวิต:</strong> ระบบบัฟเฟอร์กรดคาร์บอนิก/ไฮโดรเจนคาร์บอเนต (\(\ce{H2CO3}/\ce{HCO3-}\)) ทำหน้าที่ควบคุมค่า pH ในกระแสเลือดมนุษย์ให้อยู่ในช่วง \(7.35 - 7.45\)</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- บล็อกภาษาอังกฤษ (English Content Block)     -->
+    <!-- ========================================== -->
+    <div data-content-lang="en" lang="en" hidden>
+      <header>
+        <small>CHAPTER OVERVIEW</small>
+        <h1>Chapter 10 · Acids and Bases</h1>
+        <p class="note">Grade 11 Chemistry Book 4, Basic Education Core Curriculum (IPST Revised Edition 2017)</p>
+      </header>
+
+      <section aria-labelledby="en-outcomes-title">
+        <h2 id="en-outcomes-title">Expected Learning Outcomes</h2>
+        <ol>
+          <li>Identify and explain whether a substance behaves as an acid or base using the Arrhenius, Brønsted-Lowry, and Lewis acid-base theories.</li>
+          <li>Identify conjugate acid-base pairs according to the Brønsted-Lowry acid-base theory.</li>
+          <li>Calculate and compare the extent of ionization (degree of dissociation) and relative strengths of acids and bases.</li>
+          <li>Calculate pH, hydronium ion concentration, and hydroxide ion concentration in acidic and basic aqueous solutions.</li>
+          <li>Write chemical equations for neutralization reactions and determine the acidic, basic, or neutral nature of the resulting solution.</li>
+          <li>Write chemical equations for salt hydrolysis reactions and predict the acidic or basic behavior of aqueous salt solutions.</li>
+          <li>Conduct experiments to explain acid-base titration principles and select suitable indicators based on transition ranges.</li>
+          <li>Calculate the quantity or concentration of unknown acid or base solutions using stoichiometric titration data.</li>
+          <li>Explain the properties, chemical compositions, action mechanisms, and practical applications of buffer solutions.</li>
+          <li>Research and present real-world applications and environmental/industrial problem-solving using acid-base chemistry.</li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="en-summary-title">
+        <h2 id="en-summary-title">Key Concepts &amp; Principles</h2>
+
+        <h3>1. Acid-Base Theories &amp; Conjugate Pairs</h3>
+        <ul>
+          <li><strong>Arrhenius Theory:</strong> Acids ionize to yield \(\ce{H+}\) (\(\ce{H3O+}\)) in water; bases dissociate to yield \(\ce{OH-}\) in water (limited to aqueous media).</li>
+          <li><strong>Brønsted-Lowry Theory:</strong> Acids act as proton (\(\ce{H+}\)) donors; bases act as proton (\(\ce{H+}\)) acceptors.</li>
+          <li><strong>Lewis Theory:</strong> Acids accept electron pairs (electrophiles); bases donate electron pairs (nucleophiles).</li>
+          <li><strong>Conjugate Acid-Base Pairs:</strong> Two chemical species related by the loss or gain of a single proton (\(\ce{H+}\)); the conjugate acid always possesses one more \(\ce{H+}\) than its conjugate base, e.g., \(\ce{NH4+}/\ce{NH3}\) or \(\ce{H3O+}/\ce{H2O}\).</li>
+        </ul>
+
+        <h3>2. Ionization &amp; Chemical Equilibrium (ICE Table)</h3>
+        <ul>
+          <li><strong>Strong Acids &amp; Strong Bases:</strong> Undergo complete ionization (100%); ion concentrations are directly determined from stoichiometry.</li>
+          <li><strong>Weak Acids &amp; Weak Bases:</strong> Undergo partial ionization establishing a dynamic chemical equilibrium, solved using an ICE table.</li>
+        </ul>
+
+        <div class="calc-block">
+          <p><strong>ICE Table calculation for weak monoprotic acid \(\ce{HA}\) with initial concentration \(C\text{ mol/L}\):</strong></p>
           \[
-          K_a = \frac{[\ce{H3O+}][\ce{A-}]}{[\ce{HA}]} \implies [\ce{H3O+}] = K_a \cdot \frac{[\ce{HA}]_{\text{buffer}}}{[\ce{A-}]_{\text{buffer}}}
+          \ce{HA(aq) + H2O(l) &lt;=&gt; H3O+(aq) + A-(aq)}
           \]
-          <span class="en-sub">Equivalent Henderson-Hasselbalch equation representation:</span>
+          <div class="table-container">
+            <table class="ice-table">
+              <thead>
+                <tr>
+                  <th>State</th>
+                  <th>\([\ce{HA}]\) (mol/L)</th>
+                  <th>\([\ce{H3O+}]\) (mol/L)</th>
+                  <th>\([\ce{A-}]\) (mol/L)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>I (Initial)</strong></td>
+                  <td>\(C\)</td>
+                  <td>\(0\)</td>
+                  <td>\(0\)</td>
+                </tr>
+                <tr>
+                  <td><strong>C (Change)</strong></td>
+                  <td>\(-x\)</td>
+                  <td>\(+x\)</td>
+                  <td>\(+x\)</td>
+                </tr>
+                <tr>
+                  <td><strong>E (Equilibrium)</strong></td>
+                  <td>\(C - x\)</td>
+                  <td>\(x\)</td>
+                  <td>\(x\)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Acid ionization constant expression:</p>
           \[
-          \text{pH} = \text{p}K_a + \log\left(\frac{[\ce{A-}]}{[\ce{HA}]}\right) = \text{p}K_a + \log\left(\frac{[\text{Conjugate Base}]}{[\text{Acid}]}\right)
+          K_a = \frac{[\ce{H3O+}][\ce{A-}]}{[\ce{HA}]} = \frac{(x)(x)}{C - x} = \frac{x^2}{C - x}
           \]
-        </li>
-        <li>
-          <strong>การประยุกต์ใช้ในสิ่งมีชีวิต (Biological Application):</strong> ระบบบัฟเฟอร์กรดคาร์บอนิก/ไฮโดรเจนคาร์บอเนต (\(\ce{H2CO3}/\ce{HCO3-}\)) ทำหน้าที่ควบคุมค่า pH ในกระแสเลือดของมนุษย์ให้คงที่อยู่ในช่วง \(7.35 - 7.45\)
-          <span class="en-sub">The carbonic acid/bicarbonate buffer system (\(\ce{H2CO3}/\ce{HCO3-}\)) maintains human blood plasma pH within the critical physiological range of \(7.35 - 7.45\).</span>
-        </li>
-      </ul>
-    </section>
+          <p>Exact quadratic equation form (without approximations):</p>
+          \[
+          x^2 + K_a x - K_a C = 0
+          \]
+          <p>Solve for equilibrium hydronium concentration \(x = [\ce{H3O+}]\):</p>
+          \[
+          x = \frac{-K_a + \sqrt{K_a^2 + 4K_a C}}{2}
+          \]
+          <p>Percent ionization formula:</p>
+          \[
+          \text{% Ionization} = \frac{[\ce{H3O+}]_{\text{eq}}}{[\ce{HA}]_{\text{initial}}} \times 100 = \frac{x}{C} \times 100
+          \]
+        </div>
+
+        <h3>3. Autoionization of Water, pH &amp; pOH</h3>
+        <ul>
+          <li>
+            Autoionization of water:
+            \[
+            \ce{2H2O(l) &lt;=&gt; H3O+(aq) + OH-(aq)}
+            \]
+          </li>
+          <li>Ion-product constant of water: \[ K_w = [\ce{H3O+}][\ce{OH-}] = 1.0 \times 10^{-14} \quad (\text{at } 25^\circ\text{C}) \]</li>
+          <li>Relationship between conjugate pairs: \[ K_a \times K_b = K_w \]</li>
+          <li>
+            Logarithmic pH scale relationships:
+            \[
+            \text{pH} = -\log[\ce{H3O+}] \quad,\quad \text{pOH} = -\log[\ce{OH-}] \quad,\quad \text{pH} + \text{pOH} = 14.00 \quad (\text{at } 25^\circ\text{C})
+            \]
+          </li>
+        </ul>
+
+        <h3>4. Neutralization Reactions &amp; Titrations</h3>
+        <ul>
+          <li><strong>Neutralization Reaction:</strong> Chemical reaction between an acid and a base producing a salt and water: \(\ce{Acid + Base -&gt; Salt + Water}\)</li>
+          <li><strong>Equivalence Point:</strong> The theoretical stoichiometric point where moles of acid and base have reacted in exact equivalence.</li>
+          <li><strong>End Point:</strong> The experimental point where an indicator permanently changes color (selected so that its transition interval spans the equivalence pH).</li>
+        </ul>
+
+        <div class="calc-block">
+          <p><strong>Stoichiometric Titration Calculation:</strong></p>
+          \[
+          a\,\text{Acid} + b\,\text{Base} \rightarrow \text{Salt} + \text{Water}
+          \]
+          <p>Mole ratio relation:</p>
+          \[
+          \frac{n_{\text{Acid}}}{a} = \frac{n_{\text{Base}}}{b} \implies \frac{C_a \cdot V_a}{a} = \frac{C_b \cdot V_b}{b}
+          \]
+        </div>
+
+        <h3>5. Salt Hydrolysis</h3>
+        <p>Aqueous reaction of salt ions with water; only conjugate ions derived from weak acids or weak bases undergo hydrolysis, altering solution pH:</p>
+        <ul>
+          <li><strong>Salt of Strong Acid &amp; Strong Base:</strong> Neither ion hydrolyzes; neutral solution (\(\text{pH} = 7\)), e.g., \(\ce{NaCl}, \ce{KNO3}\).</li>
+          <li>
+            <strong>Salt of Strong Acid &amp; Weak Base:</strong> Cation hydrolyzes producing \(\ce{H3O+}\); acidic solution (\(\text{pH} &lt; 7\)), e.g., \(\ce{NH4Cl}\):
+            \[
+            \ce{NH4+(aq) + H2O(l) &lt;=&gt; NH3(aq) + H3O+(aq)}
+            \]
+          </li>
+          <li>
+            <strong>Salt of Weak Acid &amp; Strong Base:</strong> Anion hydrolyzes producing \(\ce{OH-}\); basic solution (\(\text{pH} &gt; 7\)), e.g., \(\ce{CH3COONa}\):
+            \[
+            \ce{CH3COO-(aq) + H2O(l) &lt;=&gt; CH3COOH(aq) + OH-(aq)}
+            \]
+          </li>
+          <li><strong>Salt of Weak Acid &amp; Weak Base:</strong> Both ions hydrolyze; solution pH depends on the quantitative comparison between \(K_a\) and \(K_b\).</li>
+        </ul>
+
+        <h3>6. Buffer Solutions</h3>
+        <ul>
+          <li><strong>Definition:</strong> A solution capable of resisting substantial changes in pH upon the addition of small amounts of strong acid or base.</li>
+          <li><strong>Components:</strong> Conjugate acid-base pair in comparable concentrations: weak acid and its conjugate base (acidic buffer, e.g., \(\ce{CH3COOH}/\ce{CH3COONa}\)) or weak base and its conjugate acid (basic buffer, e.g., \(\ce{NH3}/\ce{NH4Cl}\)).</li>
+          <li>
+            <strong>Equilibrium Calculation:</strong>
+            \[
+            [\ce{H3O+}] = K_a \cdot \frac{[\text{Acid}]}{[\text{Conjugate Base}]} \iff \text{pH} = \text{p}K_a + \log\left(\frac{[\text{Conjugate Base}]}{[\text{Acid}]}\right)
+            \]
+          </li>
+          <li><strong>Biological Application:</strong> The carbonic acid/bicarbonate buffer system (\(\ce{H2CO3}/\ce{HCO3-}\)) maintains human blood plasma pH within \(7.35 - 7.45\).</li>
+        </ul>
+      </section>
+    </div>
   </main>
 </body>
 </html>

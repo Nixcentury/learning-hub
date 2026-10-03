@@ -1807,6 +1807,8 @@ body.has-maximized-workspace .hub-taskbar {
 .html-print-metadata input, .html-print-metadata select { width:100%; min-width:0; border:1px solid #c7cee3; border-radius:6px; padding:8px; font:inherit; font-size:16px; }
 .html-print-metadata button { min-height:44px; padding:8px 14px; border:1px solid #c7cee3; border-radius:8px; background:white; color:#293f70; cursor:pointer; font:inherit; }
 .html-print-dialog iframe { width:100%; flex:1; min-height:0; border:0; background:white; }
+.html-print-edition { display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; padding:10px 20px; background:#f0edff; color:#413373; font-size:14px; }
+.html-print-edition select { min-height:40px; min-width:0; max-width:100%; padding:6px 10px; border:1px solid #bfb6dc; border-radius:8px; background:white; color:inherit; font:inherit; }
 @media (max-width:600px) {
   .window-print-label, .window-trailing-tools .window-drag-hint { display:none; }
   .window-trailing-tools { padding:0 6px; }
@@ -2214,6 +2216,12 @@ body.has-maximized-workspace .hub-taskbar {
     transform: translateY(0) scale(1);
   }
 }
+
+/* Learning sheets reuse HTML windows without activity timers. */
+.workspace-window.is-learning-sheet .window-stopwatch-controls,
+.workspace-window.is-learning-sheet .window-timer-controls { display: none; }
+.workspace-window.is-learning-sheet .workspace-window-bar { grid-template-columns: auto minmax(0, 1fr) auto; }
+.workspace-window.is-learning-sheet .window-leading-tools { min-width: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   *,

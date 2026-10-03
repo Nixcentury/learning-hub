@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="th" data-learning-html data-learning-sheet="1"
+  data-print-subject-th="วิชา" data-print-subject-en="Subject"
+  data-print-chapter-th="ชื่อบท" data-print-chapter-en="Chapter"
+  data-print-topic-th="ชื่อเรื่อง" data-print-topic-en="Topic"
+  data-print-work-th="ใบเรียนรู้" data-print-work-en="Learning sheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>แม่แบบใบเรียนรู้ · Learning sheet template</title>
+  <link rel="stylesheet" href="../../shared/learning-sheet.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #faf9fc; color: #29334c; font: 16px/1.8 Tahoma, sans-serif; }
+    .sheet-page { max-width: 900px; margin: auto; padding: 28px 24px 48px; }
+    .sheet-section { margin: 24px 0; padding: 20px; border: 1px solid #e0d9eb; border-radius: 14px; background: white; }
+    .sheet-page h1 { font-size: 28px; line-height: 1.5; }
+    .sheet-page h2 { font-size: 21px; margin-top: 0; }
+    .sheet-page p { overflow-wrap: anywhere; }
+    [data-sheet-standalone-note] { padding: 12px 20px; background: #fff5db; margin: 0; }
+    @media (max-width: 520px) { .sheet-page { padding: 20px 12px; } .sheet-section { padding: 16px 12px; } }
+  </style>
+</head>
+<body>
+  <p data-sheet-standalone-note>เปิดผ่าน Learning Hub เพื่อใช้ปุ่มและสมการ / Open in Learning Hub for controls and equations.</p>
+  <main class="sheet-page">
+    <div data-content-lang="th" lang="th">
+      <h1>ชื่อใบเรียนรู้</h1>
+      <p>คำแนะนำสำหรับการเรียนและจดบนกระดาษ</p>
+      <section class="sheet-section" data-print-keep>
+        <h2>1. ประเด็นหลัก</h2>
+        <p>ข้อความก่อนช่อง
+          <span data-sheet-slot="key-idea" data-sheet-size="small" data-sheet-label-th="แนวคิดสำคัญ" data-sheet-label-en="Key idea">
+            <span data-sheet-answer>คำตอบตัวอย่าง</span>
+          </span>
+          ข้อความหลังช่อง
+        </p>
+      </section>
+      <section class="sheet-section" data-print-keep>
+        <h2>2. อธิบายเหตุผล</h2>
+        <div data-sheet-slot="explanation" data-sheet-size="large" data-sheet-layout="block"
+          data-sheet-label-th="คำอธิบายเหตุผล" data-sheet-label-en="Explanation" style="--sheet-print-height: 30mm">
+          <div data-sheet-answer><p>แทนข้อความนี้ด้วยคำอธิบายที่ถูกต้อง สามารถมีหลายย่อหน้า รายการ รูป หรือสมการได้</p></div>
+        </div>
+      </section>
+    </div>
+    <div data-content-lang="en" lang="en">
+      <h1>Learning sheet title</h1>
+      <p>Instructions for learning and taking notes on paper.</p>
+      <section class="sheet-section" data-print-keep>
+        <h2>1. Key idea</h2>
+        <p>Text before the slot
+          <span data-sheet-slot="key-idea" data-sheet-size="small" data-sheet-label-th="แนวคิดสำคัญ" data-sheet-label-en="Key idea">
+            <span data-sheet-answer>sample answer</span>
+          </span>
+          and text after the slot.
+        </p>
+      </section>
+      <section class="sheet-section" data-print-keep>
+        <h2>2. Explain your reasoning</h2>
+        <div data-sheet-slot="explanation" data-sheet-size="large" data-sheet-layout="block"
+          data-sheet-label-th="คำอธิบายเหตุผล" data-sheet-label-en="Explanation" style="--sheet-print-height: 30mm">
+          <div data-sheet-answer><p>Replace this with a correct explanation. Answers may contain paragraphs, lists, images or equations.</p></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

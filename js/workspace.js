@@ -14,6 +14,7 @@ import { renderHtmlMath } from "./html-math.js";
 import { openHtmlPrint } from "./html-print.js";
 import { toolCatalog } from "./legacy-tool-catalog.js";
 import { applyContentLanguage } from "./content-language.js";
+import { attachLearningSheet } from "./learning-sheet.js";
 
 // Only live Quiz windows created by this workspace may use its storage bridge.
 const quizStorageFrames = new Set();
@@ -240,7 +241,9 @@ export function createWorkspace({
     record.shareButton.setAttribute("aria-label", record.shareButton.title);
     record.shareButton.querySelector("span").textContent = label("แชร์", "Share");
     if (record.printButton) {
-      record.printButton.title = label("พิมพ์ / บันทึก PDF", "Print / Save PDF");
+      record.printButton.title = record.isLearningSheet
+        ? label("พิมพ์ฉบับว่าง / ฉบับเฉลย", "Print blank / answer edition")
+        : label("พิมพ์ / บันทึก PDF", "Print / Save PDF");
       record.printButton.setAttribute("aria-label", record.printButton.title);
       record.printButton.querySelector('.window-print-label').textContent = label("พิมพ์ / PDF", "Print / PDF");
     }
@@ -396,6 +399,7 @@ export function createWorkspace({
     try {
       const doc = record.frame.contentDocument;
       const result = applyContentLanguage(doc, language());
+      record.sheet?.setLanguage(language());
       if (record.tool.context.toolKind === "html") void renderHtmlMath(doc, {
         refresh: result.changedText,
         isCurrent: () => record.frame.isConnected && record.frame.contentDocument === doc,
@@ -446,6 +450,7 @@ export function createWorkspace({
   }
 
   function removeRecord(record) {
+    record.sheet?.dispose();
     quizStorageFrames.delete(record.frame);
     const taskButton = record.taskButton;
     record.element.remove();
@@ -677,6 +682,8 @@ export function createWorkspace({
     record.timerReset.addEventListener("click", () => resetTimer(record));
     record.element.addEventListener("pointerdown", () => focus(record));
     record.frame.addEventListener("load", () => {
+      record.sheet?.dispose();
+      record.sheet = null;
       applyFrameLanguage(record);
       postContext(record);
       // Scripts remain disabled in read-only HTML; only the parent installs this handler.
@@ -686,7 +693,25 @@ export function createWorkspace({
       } catch { /* Cross-origin content stays isolated. */ }
       if (record.tool.context.toolKind === "html") {
         const doc = record.frame.contentDocument;
+        record.isLearningSheet = Boolean(doc?.documentElement.hasAttribute('data-learning-sheet'));
+        record.element.classList.toggle('is-learning-sheet', record.isLearningSheet);
         record.printButton.disabled = !doc?.documentElement.hasAttribute('data-learning-html');
+        updateRecordText(record);
+        void attachLearningSheet(doc, {
+          stylesheetUrl: new URL('shared/learning-sheet.css', location.href).href,
+          language: language(),
+          isCurrent: () => record.frame.isConnected && record.frame.contentDocument === doc,
+        }).then(controller => {
+          if (!record.frame.isConnected || record.frame.contentDocument !== doc) { controller?.dispose(); return; }
+          record.sheet = controller;
+          controller?.setLanguage(language());
+        }).catch(error => {
+          if (!record.frame.isConnected || record.frame.contentDocument !== doc) return;
+          const notice = doc.createElement('p');
+          notice.dataset.sheetError = ''; notice.setAttribute('role', 'alert');
+          notice.textContent = `เปิดเครื่องมือใบเรียนรู้ไม่สำเร็จ เนื้อหายังอ่านได้ / Learning sheet controls unavailable; content remains readable. ${error.message}`;
+          doc.body.prepend(notice);
+        });
       }
     });
     record.taskButton.addEventListener("click", () => {
@@ -778,6 +803,7 @@ export function createWorkspace({
   function clear() {
     records.forEach((record) => {
       flushLocalBeforeRemoval(record);
+      record.sheet?.dispose();
       quizStorageFrames.delete(record.frame);
       record.element.remove();
       record.taskButton.remove();

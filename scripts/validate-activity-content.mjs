@@ -2,6 +2,8 @@ import { readdir, readFile } from "node:fs/promises";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { extname, join, relative, sep } from "node:path";
 import { parseNumericAnswer } from "../public/shared/quiz-question-model.js";
+import { readMetadata } from "./route-html-metadata.mjs";
+import { validateLearningSheet } from "../js/learning-sheet-model.js";
 
 const contentDirectory = fileURLToPath(new URL("../public/content", import.meta.url));
 const allowedQuestionTypes = new Set(["choice", "number", "drag-drop"]);
@@ -231,6 +233,13 @@ async function validateFile(file) {
     }
     if (/<\s*(script|iframe|object|embed|form)\b/i.test(source) || /\son[a-z]+\s*=/i.test(source) || /\b(?:href|src)\s*=\s*["']\s*javascript:/i.test(source)) {
       addError(file, "Read-only HTML cannot contain scripts, event handlers, embedded frames or forms.");
+    }
+    if (findOpeningTag(source, "data-learning-sheet") || /\bdata-sheet-(?:slot|answer|placeholder)\b/i.test(source)) {
+      try {
+        const tree = readMetadata(source).children.find(node => node.tag === 'html');
+        if (!tree) addError(file, 'Learning sheet needs an html root.');
+        else validateLearningSheet(tree).forEach(error => addError(file, error));
+      } catch (error) { addError(file, error.message); }
     }
     return;
   }

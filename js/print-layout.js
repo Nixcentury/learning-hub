@@ -255,7 +255,7 @@ export function paginatePrintDocument(doc, metadata = {}, language = 'th', { pro
     }
     if (tryAppend(node, path)) return;
     if (items) { nextPage(); if (tryAppend(node, path)) return; }
-    if (node.matches('p,li,blockquote,pre') && node.textContent && !node.querySelector('svg,img,table,mjx-container,[data-hub-math],br')) placeLongText(node, path);
+    if (node.matches('p,li,blockquote,pre') && node.textContent && !node.querySelector('svg,img,table,mjx-container,[data-hub-math],[data-sheet-slot],br')) placeLongText(node, path);
     else throw new PrintLayoutError('block-too-large', node);
   }
   newPage();

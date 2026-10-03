@@ -1,0 +1,52 @@
+/* Opt-in only. Answers stay readable without the Hub/controller. */
+html[data-learning-sheet="1"] [data-sheet-slot] {
+  --sheet-width: 6ch;
+  --sheet-height: 1.8em;
+  --sheet-print-height: 8mm;
+  box-sizing: border-box;
+  display: inline-grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "answer";
+  align-items: center;
+  vertical-align: middle;
+  min-inline-size: min(100%, var(--sheet-width));
+  min-block-size: var(--sheet-height);
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+html[data-learning-sheet="1"] [data-sheet-size="medium"] { --sheet-width: 16ch; --sheet-height: 3em; --sheet-print-height: 16mm; }
+html[data-learning-sheet="1"] [data-sheet-size="large"] { --sheet-width: 26ch; --sheet-height: 6em; --sheet-print-height: 28mm; }
+html[data-learning-sheet="1"] [data-sheet-layout="block"] { display: grid; inline-size: 100%; margin-block: .5em; }
+html[data-learning-sheet="1"] [data-sheet-answer], html[data-learning-sheet="1"] [data-sheet-placeholder] {
+  grid-area: answer; min-inline-size: 0; max-inline-size: 100%;
+}
+html[data-learning-sheet="1"] [data-sheet-answer] > :first-child { margin-block-start: 0; }
+html[data-learning-sheet="1"] [data-sheet-answer] > :last-child { margin-block-end: 0; }
+html[data-learning-sheet="1"] [data-sheet-placeholder] { visibility: hidden; }
+html[data-learning-sheet="1"][data-hub-sheet-ready] [data-sheet-slot] {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "answer toggle";
+  column-gap: .35em;
+}
+html[data-hub-sheet-ready] [data-hub-sheet-open="false"] > [data-sheet-answer],
+html[data-hub-sheet-ready] [data-hub-sheet-open="false"] > [data-sheet-answer] * { visibility: hidden !important; }
+html[data-hub-sheet-ready] [data-hub-sheet-open="false"] > [data-sheet-placeholder] { visibility: visible; }
+html[data-learning-sheet="1"] [data-hub-sheet-toggle] {
+  grid-area: toggle; align-self: start; min-width: 36px; min-height: 36px;
+  padding: 2px 6px; border: 1px solid #c8c0e5; border-radius: 8px;
+  background: #f7f4ff; color: #54358d; font: 700 18px/1.3 Tahoma, sans-serif;
+  cursor: pointer; touch-action: manipulation;
+}
+html[data-learning-sheet="1"] [data-hub-sheet-toolbar] {
+  padding: 16px 20px; background: #f5f1ff; color: #392859;
+  border-bottom: 1px solid #ded4f2; font: 15px/1.6 Tahoma, sans-serif;
+}
+html[data-learning-sheet="1"] [data-hub-sheet-toolbar] p { margin: 4px 0 10px; }
+html[data-learning-sheet="1"] [data-hub-sheet-toolbar] div { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+html[data-learning-sheet="1"] [data-hub-sheet-toolbar] button {
+  min-height: 40px; padding: 8px 14px; border: 1px solid #c8c0e5; border-radius: 9px;
+  background: white; color: #54358d; font: inherit; cursor: pointer; touch-action: manipulation;
+}
+html[data-learning-sheet="1"] [data-hub-sheet-toolbar] button:focus-visible,
+html[data-learning-sheet="1"] [data-hub-sheet-toggle]:focus-visible { outline: 3px solid #2872bd; outline-offset: 2px; }
+html[data-hub-sheet-ready] [data-sheet-standalone-note] { display: none; }

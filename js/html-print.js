@@ -1,6 +1,7 @@
 import { renderHtmlMath } from './html-math.js';
 import { defaultPrintProfile, paginatePrintDocument, PrintLayoutError } from './print-layout.js';
 import { loadPrintCatalog, readPrintMetadata, resolvePrintMetadata } from './print-metadata.js';
+import { learningSheetPrintCSS, resetLearningSheetSnapshot, prepareLearningSheetPrint } from './learning-sheet-print.js';
 
 let activePreview = null;
 const RESOURCE_TIMEOUT = 15000;
@@ -64,6 +65,7 @@ export function buildHtmlPrintSnapshot(source, title) {
   clone.querySelectorAll('script, iframe, object, embed, form, button, input, textarea, select, base, template, [data-no-print], .no-print, [data-hub-html], [data-hub-math-notice], meta[http-equiv]').forEach(node => node.remove());
   // Print only the chosen language; do not paginate the hidden translation.
   clone.querySelectorAll('[data-content-lang][hidden]').forEach(node => node.remove());
+  resetLearningSheetSnapshot(clone);
   clone.querySelectorAll('link:not([rel="stylesheet"])').forEach(node => node.remove());
   for (const node of [clone, ...clone.querySelectorAll('*')]) {
     for (const attr of [...node.attributes]) {
@@ -82,7 +84,8 @@ export function buildHtmlPrintSnapshot(source, title) {
   const docTitle = clone.querySelector('title') || source.createElement('title');
   docTitle.textContent = title || source.title || 'Learning Hub';
   clone.querySelector('head').append(docTitle);
-  const style = source.createElement('style'); style.dataset.hubPrintStyle = ''; style.textContent = htmlPrintCSS;
+  const style = source.createElement('style'); style.dataset.hubPrintStyle = '';
+  style.textContent = htmlPrintCSS + (clone.hasAttribute('data-learning-sheet') ? learningSheetPrintCSS : '');
   clone.querySelector('head').append(style);
   clone.querySelector('body').classList.add('hub-print-document');
   clone.dataset.hubPrintSnapshot = '';
@@ -143,6 +146,18 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
   const rebuildButton = dialog.querySelector('[data-print-rebuild]');
   const inputs = {};
   let snapshot = '', revision = 0;
+  const isSheet = frame.contentDocument?.documentElement.hasAttribute('data-learning-sheet');
+  let editionSelect = null;
+  if (isSheet) {
+    const field = document.createElement('label'); field.className = 'html-print-edition';
+    field.textContent = label('ฉบับที่ต้องการพิมพ์', 'Print edition');
+    editionSelect = document.createElement('select'); editionSelect.dataset.sheetPrintEdition = ''; editionSelect.disabled = true;
+    for (const [value, th, english] of [['blank', 'ฉบับว่าง — สำหรับจด', 'Blank — for notes'], ['answers', 'ฉบับเฉลย — เนื้อหาครบ', 'Answers — complete content']]) {
+      const option = document.createElement('option'); option.value = value; option.textContent = label(th, english); editionSelect.append(option);
+    }
+    field.append(editionSelect); dialog.querySelector('.html-print-metadata').before(field);
+    editionSelect.addEventListener('change', () => { if (snapshot) void buildPages(); });
+  }
   dialog.querySelector('summary').textContent = label('ตั้งค่าหน้าพิมพ์และชื่อบนหัว–ท้าย (เฉพาะครั้งนี้)', 'Page layout and labels (this print only)');
   rebuildButton.textContent = label('จัดหน้าใหม่', 'Update pages');
   const profileLabel = document.createElement('label');
@@ -211,6 +226,8 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
   async function buildPages() {
     const token = ++revision;
     dialog.dataset.printState = 'loading'; printButton.disabled = true; rebuildButton.disabled = true;
+    preview.style.visibility = 'hidden';
+    if (editionSelect) editionSelect.disabled = true;
     profileSelect.disabled = true;
     Object.values(inputs).forEach(input => { input.disabled = true; });
     status.textContent = label('กำลังตรวจรูป สมการ และจัดหน้า A4…', 'Checking resources and arranging A4 pages…');
@@ -227,16 +244,23 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
       if (!alive() || token !== revision) return;
       await waitForPrintResources(preview.contentDocument);
       if (!alive() || token !== revision) return;
+      if (isSheet) prepareLearningSheetPrint(preview.contentDocument, editionSelect.value);
       const result = paginatePrintDocument(preview.contentDocument, Object.fromEntries(Object.entries(inputs).map(([key, input]) => [key, input.value])), language, { profile:profileSelect.value });
       await waitForPrintResources(preview.contentDocument);
       if (!alive() || token !== revision) return;
       preview.contentDocument.addEventListener('click', event => { if (event.target.closest?.('a')) event.preventDefault(); });
       fitPreview();
+      preview.style.visibility = 'visible';
       dialog.dataset.printState = 'ready'; printButton.disabled = false;
-      status.textContent = label(`พร้อมพิมพ์ ${result.pages} หน้า`, `${result.pages} pages ready to print`);
+      const editionName = isSheet ? (editionSelect.value === 'blank' ? label('ฉบับว่าง · ', 'Blank · ') : label('ฉบับเฉลย · ', 'Answers · ')) : '';
+      status.textContent = editionName + label(`พร้อมพิมพ์ ${result.pages} หน้า`, `${result.pages} pages ready to print`);
     } catch (error) { if (alive() && token === revision) printError(error); }
     finally {
-      if (alive() && token === revision) { rebuildButton.disabled = false; profileSelect.disabled = false; Object.values(inputs).forEach(input => { input.disabled = false; }); }
+      if (alive() && token === revision) {
+        rebuildButton.disabled = false; profileSelect.disabled = false;
+        if (editionSelect) editionSelect.disabled = false;
+        Object.values(inputs).forEach(input => { input.disabled = false; });
+      }
     }
   }
   rebuildButton.addEventListener('click', () => { if (snapshot) void buildPages(); });

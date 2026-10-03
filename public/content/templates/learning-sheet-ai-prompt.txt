@@ -1,0 +1,100 @@
+คุณกำลังสร้างใบเรียนรู้สำหรับ Learning Hub ระบบที่มีอยู่แล้ว
+สร้างเฉพาะไฟล์เนื้อหา HTML ห้ามสร้างเว็บใหม่หรือแก้ระบบกลาง
+
+ข้อมูลที่ผู้ใช้จะให้:
+- วิชา / บท / เรื่อง / ระดับชั้น
+- เนื้อหาหรือเอกสารอ้างอิง
+- จุดที่ต้องเว้นสำหรับจด และขนาดพื้นที่ที่ต้องการ
+- รูป/แผนภาพ/ตารางที่ต้องคงไว้
+- ภาษา: TH/EN หรือภาษาเดียวตามที่ระบุ
+
+เป้าหมาย
+HTML ไฟล์เดียวใช้สอน เปิดคำตอบทบทวน และพิมพ์ได้ 2 ฉบับ:
+1) ฉบับว่างสำหรับจดบนกระดาษ 2) ฉบับเฉลยที่มีเนื้อหาครบ
+ผู้เรียนเปิดคำตอบได้โดยไม่ต้องตอบก่อน ไม่มีคะแนน ปากกา ช่องตอบออนไลน์ หรือ Cloud
+ใช้รูปแบบและเนื้อหาต้นฉบับของผู้ใช้ ไม่เปลี่ยนเป็นการ์ด/กล่องใหม่ทุกส่วนโดยอัตโนมัติ
+
+เริ่มจาก learning-sheet-template.html ที่แนบ หรือใช้สัญญาต่อไปนี้:
+<html lang="th" data-learning-html data-learning-sheet="1"
+  data-print-subject-th="ชื่อวิชา" data-print-subject-en="Subject"
+  data-print-chapter-th="ชื่อบท" data-print-chapter-en="Chapter"
+  data-print-topic-th="ชื่อเรื่อง" data-print-topic-en="Topic"
+  data-print-work-th="ชื่องานย่อย" data-print-work-en="Work title">
+
+ใน head มี charset, viewport, title และ
+<link rel="stylesheet" href="../../shared/learning-sheet.css">
+path นี้ใช้เมื่อไฟล์อยู่ public/content/<หนึ่งโฟลเดอร์>/ชื่อไฟล์.html
+ถ้าเปลี่ยนระดับโฟลเดอร์ต้องแก้ relative path ให้ตรงจริง
+เพิ่ม CSS ของเนื้อหาใน style ได้ โดยใช้ class เฉพาะเนื้อหา ไม่ทับ class ของ Hub
+
+ช่องสั้นในย่อหน้า:
+<span data-sheet-slot="acid-role" data-sheet-size="small"
+  data-sheet-label-th="บทบาทของกรด" data-sheet-label-en="Role of an acid">
+  <span data-sheet-answer>ให้โปรตอน</span>
+</span>
+
+ช่องเหตุผลหลายบรรทัด:
+<div data-sheet-slot="explanation" data-sheet-size="large" data-sheet-layout="block"
+  data-sheet-label-th="คำอธิบายเหตุผล" data-sheet-label-en="Explanation"
+  style="--sheet-print-height: 30mm">
+  <div data-sheet-answer><p>เนื้อหาเฉลยที่ถูกต้อง...</p></div>
+</div>
+
+กติกาของช่อง
+- slot เป็น span หรือ div, ID เริ่ม a-z ใช้ a-z/0-9/- ไม่เกิน 64 ตัว ไม่ใช้ข้อความเฉลยเป็น ID
+- มี data-sheet-answer เป็นลูกโดยตรงหนึ่งตัวเท่านั้น เก็บคำตอบไว้ใน markup นี้
+- คำตอบเป็นข้อความ รายการ ตาราง รูป และสมการได้ ไม่ใส่เฉลยใน attribute, CSS content, title, aria-label, placeholder หรือข้อความซ้ำที่อื่น
+- data-sheet-label-th/en อธิบายว่าช่องถามเรื่องใด ไม่เผยคำตอบ และต้องมีทั้งสองค่าแม้เนื้อหาภาษาเดียว
+- ไม่ซ้อน slot; ไม่ใส่ a/button/input/textarea/select/contenteditable ภายใน slot
+- data-sheet-placeholder เป็นลูกโดยตรงได้หนึ่งตัวเมื่อผู้เขียนต้องการคงกรอบ/พื้นหลังโดยเฉพาะ แต่ไม่จำเป็นต้องมี
+- data-sheet-size: small/medium/large; data-sheet-layout: inline (ปริยาย) หรือ block
+- รักษาข้อความก่อน/หลังช่อง ย่อหน้ามีหลาย slot ได้ ตารางให้วาง slot ภายใน td
+- ไม่ซ่อน answer เองด้วย hidden/inert/aria-hidden/style เพราะเปิดนอก Hub ต้องอ่านได้ครบ
+- ไม่เพิ่มปุ่มเปิดคำตอบ ปุ่มพิมพ์ toolbar หรือ script เอง ระบบกลางสร้างให้
+
+พื้นที่จดและการพิมพ์
+- ใบนี้ให้เขียนบนกระดาษ ไม่สร้าง input/textarea
+- กำหนด --sheet-width / --sheet-height สำหรับจอ และ --sheet-print-width / --sheet-print-height สำหรับกระดาษ
+- preset สูงขั้นต่ำสำหรับพิมพ์: small 8mm, medium 16mm, large 28mm; เพิ่มตามงานที่ให้จด
+- ใช้ mm กับพื้นที่เขียนบนกระดาษ ไม่คำนวณจากจำนวนอักษรหรือช่องว่างซ้ำ ๆ
+- ไม่เติมเส้นประ เส้นบรรทัด หรือแถบดำอัตโนมัติ กรอบบางมีได้เมื่อผู้ใช้ต้องการ
+- ต้องยอมให้คำตอบยาวเพิ่มความสูง ห้าม fixed height + overflow:hidden หรือบีบตัวอักษรให้เล็กจนอ่านยาก
+- ห้ามกำหนด @page หรือเปลี่ยน .hub-print-*; ระบบกลางดูแล A4 หัวท้าย ตารางข้ามหน้า
+- หัวกระดาษ: วิชา/บท/เรื่อง; ท้าย: ชื่องาน/เลขหน้า/Nix-century ไม่เพิ่มชื่อ ชั้น เลขที่เอง
+- หลีกเลี่ยง layout หลายคอลัมน์ซับซ้อนหรือ absolute ทั้งหน้า ใช้ block flow และตารางที่แบ่งแถวได้
+- data-print-keep ใช้ได้กับรูป/กลุ่มเล็กที่ต้องอยู่ด้วยกัน ห้ามครอบ section ยาวเกินหน้ากระดาษ
+- ระบบสร้างสำเนาพิมพ์ไม่ขึ้นกับช่องที่เปิดบนจอ ฉบับว่างลบ answer ออกจากสำเนา จึงไม่ควรเขียนคำตอบซ้ำไว้นอก answer
+
+ภาษาและสมการ
+- TH/EN ใช้ <div data-content-lang="th" lang="th"> และ <div data-content-lang="en" lang="en"> แยกกัน
+- slot ที่มีความหมายเดียวกันใช้ data-sheet-slot เดิมทั้งสองภาษา และต้องมีคู่ครบ
+- HTML id รวมถึง SVG id ต้องไม่ซ้ำข้ามภาษา เช่น diagram-th/diagram-en
+- ห้ามเอา data-th/data-en ครอบ slot หรือ rich HTML ที่ต้องรักษาลูก DOM
+- สมการใช้ \(...\) หรือ \[...\] และสูตรเคมีใช้ \(\ce{H2SO4}\)
+- delimiter ของแต่ละสูตรต้องอยู่ใน text node เดียว ไม่ใส่ span คั่นกลางสูตร
+- ไม่ใส่ MathJax/CDN/script เอง และไม่ใช้ $ เดี่ยวแทน delimiter
+
+รูปและ SVG
+- ใช้ไฟล์ภาพ local relative path พร้อม alt ที่อธิบายภาพโดยไม่เปิดเฉลยที่ตั้งใจซ่อน
+- รูปที่เป็นคำตอบต้องอยู่ภายใน data-sheet-answer จึงถูกลบจากฉบับว่างด้วย
+- SVG คงที่ใช้ได้ ต้องมี viewBox และ IDs ไม่ซ้ำ; ไม่ใช้ foreignObject หรือ external <use>
+- รุ่นปัจจุบันยังไม่รองรับ slot ภายใน SVG และยังไม่มีปุ่มกลุ่ม data-sheet-group ห้ามสร้างกติกาเอง
+- ถ้าต้องการป้ายเปิดคำตอบรอบแผนภาพ ให้ใช้ HTML slot แยกกับ SVG คงที่ตามตำแหน่งที่ผู้ใช้กำหนด
+
+ข้อห้าม
+ไม่มี script, onclick/onload/handler อื่น, iframe, object, embed, form หรือคำสั่ง window.print
+ไม่เชื่อม Firebase/AI API ไม่เพิ่มการบันทึกบัญชี ไม่เพิ่มชนิดเครื่องมือ ไม่สร้างเมนูด้วย JavaScript
+ไม่เขียนชุดคำตอบใน JSON ซ่อนหรือ attribute แล้วแปลงเป็น innerHTML
+ไม่แก้โค้ดใน js/ หรือ CSS กลาง
+
+การส่งงาน
+ส่ง HTML สมบูรณ์หนึ่งไฟล์ พร้อมชื่อไฟล์ที่แนะนำ และรายชื่อ asset ที่ต้องใช้จริง
+หากไม่มีรูปอ้างอิง อย่าอ้างว่าได้แนบไฟล์รูปที่ยังไม่ได้สร้าง
+หากผู้ใช้ขอเมนู ให้ใช้ <a data-tool-kind="html" data-content-id="รหัสใหม่ไม่ซ้ำ"
+data-th="ชื่อไทย" data-en="English title" href="ชื่อไฟล์.html">ชื่อไทย</a>
+ภายใน topics/tools menu เดิม ไม่ต้องสร้าง registry ใหม่
+
+ก่อนส่ง ตรวจว่า IDs/ภาษาเป็นคู่ ช่องและรูปไม่หาย คำตอบถูกต้องตามเนื้อหาที่ให้
+แยกประเด็นวิชาการที่ไม่แน่ใจไว้ให้ผู้ใช้ตรวจ ไม่แต่งการอ้างอิงหรืออ้างว่าทดสอบระบบแล้ว
+ผู้พัฒนาจะตรวจ pnpm validate:content, pnpm validate:routes, pnpm build
+และเปิด Hub ตรวจ PDF ทั้งฉบับว่าง/เฉลยจริงอีกครั้ง

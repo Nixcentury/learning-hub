@@ -1,0 +1,84 @@
+Learning Sheet V1 — HTML/ตาราง + พิมพ์สองฉบับ + คู่มือ AI (3 ตุลาคม 2026)
+
+เริ่มลอง: แท็บทดสอบ → ใบเรียนรู้ (พื้นที่ 4) → ใบเรียนรู้กรด–เบส
+ลิงก์ใน Hub: #content/learning-sheet-demo
+ตัวอย่าง: public/content/samples/learning-sheet-demo.html
+
+ทำแล้ว: เปิด/ปิดรายช่อง เปิดทั้งหมด/ปิดทั้งหมด ย่อหน้า ตาราง เหตุผลหลายบรรทัด
+TH/EN ใช้ state ของ slot เดียวกัน ย่อ/เรียกกลับไม่ล้าง state ปิด/เปิดใหม่เริ่มซ่อน
+ไม่มีคะแนน ปากกา ช่องกรอก การจับเวลาของกิจกรรม หรือฐานข้อมูลใหม่
+เปิดไฟล์นอก Hub จะอ่านคำตอบครบ; ผ่าน Hub จึงมีปุ่มและสมการกลาง
+พิมพ์: กดพิมพ์ / PDF → เลือกฉบับว่างสำหรับจด หรือฉบับเฉลยเนื้อหาครบ
+พิมพ์เฉพาะภาษาที่เลือก โดยไม่เปลี่ยนช่องที่เปิดค้างบนหน้าจอสอน
+ฉบับว่างลบ answer รวมรูป/สมการ/ข้อความออกจากสำเนา ไม่ใช่ซ่อนด้วยสี
+
+ให้ AI สร้างใบใหม่:
+1. แนบ public/content/templates/learning-sheet-ai-prompt.txt เป็นคำสั่ง
+2. แนบ public/content/templates/learning-sheet-template.html เป็นแม่แบบ
+3. ส่งเนื้อหาจริง วิชา/บท/เรื่อง จุดที่อยากเว้น รูป และขนาดพื้นที่จดที่ต้องการ
+4. บันทึก HTML ใหม่ใต้ public/content/<โฟลเดอร์>/ และต่อเมนู html เดิมด้วย contentId ใหม่
+5. ตรวจ validator/build และลอง PDF ทั้งสองฉบับ ไม่ถือว่าคำว่า “ทดสอบแล้ว” จาก AI เป็นผลตรวจจริง
+
+สัญญาไฟล์ที่ใช้จริง:
+  <html data-learning-html data-learning-sheet="1">
+  <link rel="stylesheet" href="../../shared/learning-sheet.css">
+  <span data-sheet-slot="acid-role" data-sheet-size="small"
+        data-sheet-label-th="บทบาทของกรด" data-sheet-label-en="Role of an acid">
+    <span data-sheet-answer>ให้โปรตอน</span>
+  </span>
+
+slot: span/div, ID a-z ตามด้วย a-z/0-9/- ยาวไม่เกิน 64
+answer: ลูกโดยตรงหนึ่งตัว เป็น rich HTML ได้ (รูป รายการ สมการ ข้อความ)
+placeholder: ลูกโดยตรงไม่เกินหนึ่งตัว ไม่จำเป็นต้องมี; ผู้เขียนกำหนดกรอบเอง
+size: small/medium/large; layout: inline (ปริยาย) หรือ block
+labels: ต้องมี TH/EN ใช้อธิบายช่อง ห้ามใส่เฉลยในชื่อปุ่ม
+CSS จอ: --sheet-width และ --sheet-height
+CSS กระดาษ: --sheet-print-width และ --sheet-print-height; ใช้ mm สำหรับพื้นที่จด
+ความสูงพิมพ์ขั้นต่ำ small/medium/large: 8/16/28mm; เนื้อหาเฉลยยาวจะขยายพื้นที่ได้
+พื้นที่ซ่อนคง geometry ของเฉลยไว้ และมีขั้นต่ำตาม preset ไม่ยุบและไม่เพิ่มเส้นจด
+ใช้ CSS ของผู้เขียนปรับขนาด ไม่ใช้ความยาวข้อความเดาเนื้อหาหรือสร้างแผนภาพ
+
+TH/EN: ครอบคนละ data-content-lang block โดยใช้ data-sheet-slot เดิม
+HTML id/SVG id ต้องไม่ซ้ำทั้งเอกสาร; ห้ามเอา data-th/data-en ครอบ slot
+ไม่ซ้อน slot/answer ไม่ใส่ลิงก์ ปุ่ม input หรือ contenteditable ภายในช่อง
+เนื้อหาไม่มี script/event handler; sandbox HTML ยังคง allow-same-origin เท่านั้น
+Hub ติดตั้ง controller จาก parent หลัง stylesheet พร้อม ไม่มี script ในใบเรียนรู้
+สถานะคำตอบเป็นความสะดวกในการสอน ไม่ใช่การเก็บเฉลยเป็นความลับ
+
+จุดเชื่อม:
+  js/learning-sheet-model.js — contract ใช้ร่วมระหว่าง build และ runtime
+  js/learning-sheet.js — controller/state/ภาษา/cleanup ต่อ document
+  js/learning-sheet-print.js — วัดพื้นที่กระดาษ/ลบคำตอบหรือแสดงครบเฉพาะสำเนาพิมพ์
+  public/shared/learning-sheet.css — CSS จำกัดเฉพาะใบเรียนรู้
+  js/workspace.js — init หลังโหลด, ภาษา, dispose เมื่อปิด/clear
+  scripts/validate-activity-content.mjs — ตรวจไฟล์และระบุ ID ที่ผิด
+เมนูใช้ data-tool-kind="html" และ contentId เดิมตามระบบ ไม่เพิ่ม registry
+
+ผลพิมพ์: ใช้ A4 และ profile เผื่อขอบอุปกรณ์เดิม หัว–ท้ายตามวิชา/บท/เรื่อง/งาน
+กล่องที่มีหัวข้อและช่องจดเป็นชุดเล็กควรครอบ data-print-keep เพื่อไม่แยกกลางชุด
+ไม่ใช้ keep กับทั้งบทหรือก้อนที่ใหญ่เกินหน้า; ระบบจะแจ้งแทนการตัดทิ้งหรือย่อตัวอักษร
+
+ยังไม่ทำในช่วงนี้:
+  เฟส 2: เปิดกลุ่ม + SVG (data-sheet-group และ slot ภายใน SVG จะถูก validator ปฏิเสธ)
+  iPad/Safari จริงยังต้องให้ผู้ใช้ลอง; Chromium ที่จำลองขนาดจอไม่ยืนยัน native Safari
+พิมพ์เอกสารอ่านปกติยังใช้ทางเดิม
+
+ร่างส่วนขยายเฟส 2 (ยังใช้ไม่ได้): data-sheet-group บน slot อ้าง ID กลุ่มหนึ่งเดียว,
+นิยามชื่อกลุ่ม TH/EN แยกใน metadata ไม่ซ้อนกลุ่ม; SVG ใช้ text/tspan/g แยก
+เฉลยกับ placeholder และใช้พิกัดของผู้เขียน ต้องเพิ่ม validator/runtime ก่อนเปิดใช้
+
+ตรวจ: pnpm test:unit, pnpm validate:routes, pnpm build
+UI เฉพาะใบเรียนรู้: pnpm test:sheet:browser
+ใช้ QA_BUILT=1 เพื่อตรวจ artifact ใต้ /learning-hub/; ตั้ง PLAYWRIGHT_MODULE
+ให้ชี้ package playwright ที่ติดตั้งในเครื่องหากไม่พบ dependency
+ปัญหา baseline ที่ทราบ: overview browser test เรื่องคืน focus เดิม ยังไม่แก้ในงานนี้
+
+ผลตรวจล่าสุด 3 ตุลาคม 2026:
+- Unit tests 218/218 ผ่าน; route validation และ production build ผ่าน
+- Browser ใบเรียนรู้ผ่านทั้ง source และ built; รอบสุดท้าย built ตรวจหัวข้ออยู่กับกล่องด้วย
+- Browser sharing เดิมผ่าน 21 checks บน built
+- PDF จาก built ครบ TH/EN x ว่าง/เฉลย รวม 4 ไฟล์ ไฟล์ละ 2 หน้า A4
+  ตรวจข้อความและภาพทุกหน้าแล้ว ฉบับว่างไม่มี answer DOM/ข้อความเฉลย
+  ส่วนเปรียบเทียบกรดอยู่ด้วยกัน ไม่แยกหัวข้อออกจากกล่อง และไม่เปลี่ยน state บนหน้าสอน
+- หลักฐานอยู่ qa-output/ (ไฟล์ตรวจในเครื่อง ไม่ใช่เนื้อหาเผยแพร่)
+- ยังไม่ได้ commit/push/deploy งานใบเรียนรู้ครั้งนี้

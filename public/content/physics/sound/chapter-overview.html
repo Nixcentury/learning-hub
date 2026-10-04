@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="th" data-learning-html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ผลการเรียนรู้และสาระสำคัญ: บทที่ 12 เสียง | Learning Outcomes &amp; Key Concepts: Sound</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { 
+      margin: 0; 
+      background: #f6f7fb; 
+      color: #233454; 
+      font: 16px/1.8 Tahoma, "Noto Sans Thai", sans-serif; 
+    }
+    main { 
+      max-width: 940px; 
+      margin: auto; 
+      padding: 32px 24px 56px; 
+    }
+    header { 
+      padding-bottom: 24px; 
+      border-bottom: 1px solid #d8dfeb; 
+    }
+    small { 
+      color: #0369a1; 
+      font-weight: 700; 
+      letter-spacing: .04em; 
+    }
+    h1 { 
+      font-size: clamp(24px, 4.5vw, 34px); 
+      line-height: 1.35; 
+      margin: 12px 0 6px; 
+      color: #0f172a; 
+    }
+    h2 { 
+      font-size: 21px; 
+      line-height: 1.5; 
+      margin-top: 0; 
+      color: #0f172a; 
+      border-bottom: 2px solid #e2e8f0; 
+      padding-bottom: 8px; 
+    }
+    h3 { 
+      font-size: 18px; 
+      line-height: 1.4; 
+      margin: 24px 0 8px; 
+      color: #334155; 
+    }
+    section { 
+      background: #ffffff; 
+      border: 1px solid #dfe5ef; 
+      border-radius: 18px; 
+      margin-top: 24px; 
+      padding: 24px; 
+    }
+    li + li { margin-top: 10px; }
+    p, li { overflow-wrap: anywhere; }
+    .note { color: #64748b; margin: 0; }
+
+    /* โครงสร้างกล่องคำถามนำ (Guiding Questions) */
+    .question-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 16px 0 0;
+    }
+    .question-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #0284c7;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+    }
+    .question-tag {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0369a1;
+      margin-bottom: 4px;
+    }
+
+    /* กล่องสูตรและการคำนวณทางฟิสิกส์ */
+    .calc-block {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #4f46e5;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0 18px;
+      font-size: 15px;
+      overflow-x: auto;
+    }
+    .callout-box {
+      background: #fffdf5;
+      border: 1px solid #fef08a;
+      border-left: 4px solid #eab308;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 14.5px;
+    }
+    .callout-title {
+      font-weight: 700;
+      color: #854d0e;
+      margin-bottom: 6px;
+    }
+    .table-container {
+      overflow-x: auto;
+      margin: 14px 0;
+    }
+    .summary-table {
+      width: 100%;
+      min-width: 540px;
+      border-collapse: collapse;
+      font-size: 14.5px;
+      background: #ffffff;
+    }
+    .summary-table th, .summary-table td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .summary-table th { 
+      background: #f1f5f9; 
+      color: #1e293b; 
+      font-weight: 700;
+      text-align: center;
+    }
+    .center { text-align: center !important; }
+
+    @media (max-width: 520px) {
+      main { padding: 20px 14px; }
+      section { padding: 18px 14px; }
+      .calc-block { padding: 12px 14px; }
+    }
+    @media print {
+      body { background: #ffffff; }
+      main { max-width: none; padding: 0; }
+      section { break-inside: avoid; border: 1px solid #cbd5e1; margin-top: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- ========================================== -->
+    <!-- บล็อกภาษาไทย (Thai Content Block)          -->
+    <!-- ========================================== -->
+    <div data-content-lang="th" lang="th">
+      <header>
+        <small>ภาพรวมบทเรียน</small>
+        <h1>บทที่ 12 เสียง</h1>
+        <p class="note">ฟิสิกส์ ม.5 เล่ม 4 ตามหลักสูตรแกนกลางการศึกษาขั้นพื้นฐาน (สสวท. ฉบับปรับปรุง พ.ศ. 2560)</p>
+      </header>
+
+      <!-- 1. ผลการเรียนรู้ตามหลักสูตร สสวท. และ MAC 4.0 -->
+      <section aria-labelledby="th-outcomes-title">
+        <h2 id="th-outcomes-title">ผลการเรียนรู้ที่คาดหวัง</h2>
+        <ol>
+          <li>อธิบายการเกิดเสียง แหล่งกำเนิดเสียง การถ่ายโอนพลังงานในฐานะคลื่นกลตามยาว และวิเคราะห์ความสัมพันธ์ระหว่างคลื่นการกระจัดกับคลื่นความดันที่มีเฟสต่างกัน \(90^\circ\) (\(\frac{\pi}{2}\text{ rad}\))</li>
+          <li>อธิบายปัจจัยที่มีผลต่ออัตราเร็วของเสียงในตัวกลางต่างสถานะ และคำนวณอัตราเร็วเสียงในอากาศตามอุณหภูมิ (\(v = 331 + 0.6T_c\)) ตลอดจนความสัมพันธ์เชิงคลื่น (\(v = f\lambda\) และ \(s = vt\))</li>
+          <li>อธิบายและคำนวณสมบัติของคลื่นเสียง ได้แก่ การสะท้อน (เงื่อนไขเสียงก้อง Echo), การหักเหตามกฎของสเนลล์และการสะท้อนกลับหมด, การเลี้ยวเบน, และการแทรกสอดจากแหล่งกำเนิดอาพันธ์สองแหล่ง</li>
+          <li>คำนวณกำลังเสียง ความเข้มเสียงของหน้าคลื่นทรงกลม (\(I = \frac{P}{4\pi r^2}\)) และระดับเสียงในหน่วยเดซิเบล (\(\beta = 10\log\frac{I}{I_0}\)) พร้อมทั้งคำนวณผลต่างระดับเสียง (\(\Delta \beta\))</li>
+          <li>อธิบายขอบเขตความถี่ที่มนุษย์ได้ยิน (Audible range), คลื่นใต้เสียง, คลื่นเหนือเสียง, ระดับสูงต่ำของเสียง (Pitch), โน้ตคู่แปด (Octave), คุณภาพเสียง (Timbre) และประเมินเกณฑ์ความปลอดภัยจากมลพิษทางเสียง</li>
+          <li>ทดลองและอธิบายการเกิดคลื่นนิ่งของเสียง การสั่นพ้องในท่อปลายปิดหนึ่งด้านและปลายเปิดสองด้าน และวัดความยาวคลื่นเสียงจากหลอดเรโซแนนซ์ (\(\Delta L = \frac{\lambda}{2}\))</li>
+          <li>สังเกตและคำนวณความถี่บีต (\(f_b = |f_1 - f_2|\)) การเปลี่ยนแปลงความถี่จากปรากฏการณ์ดอปเพลอร์ และหน้าคลื่นกระแทก/มุมกรวยมัค (\(\sin\theta = \frac{1}{M}\))</li>
+          <li>สืบค้นและอธิบายการประยุกต์ใช้ความรู้เรื่องเสียงในทางการแพทย์ (อัลตราซาวด์/สลายนิ่ว), การเดินเรือและการประมง (โซนาร์), ธรณีวิทยา (Acoustic log) และอุตสาหกรรม (การตรวจสอบแบบไม่ทำลาย NDT/เครื่องล้างความถี่สูง)</li>
+        </ol>
+      </section>
+
+      <!-- 2. คำถามนำสู่การเรียนรู้ (Guiding Questions) -->
+      <section aria-labelledby="th-questions-title">
+        <h2 id="th-questions-title">คำถามนำสู่การเรียนรู้ (Guiding Questions)</h2>
+        <p class="note">คำถามสำคัญเพื่อกระตุ้นกระบวนการคิดวิเคราะห์และสะท้อนผลการเรียนรู้ในระดับมโนทัศน์:</p>
+        <ul class="question-list">
+          <li class="question-item">
+            <span class="question-tag">คำถามนำที่ 1 (สะท้อนผลการเรียนรู้ข้อ 1, 2 &amp; 3)</span>
+            <div>คลื่นเสียงถ่ายโอนพลังงานผ่านตัวกลางอย่างไรในระดับอนุภาค? เหตุใดตำแหน่งที่อนุภาคมีการกระจัดเป็นศูนย์จึงมีความดันเปลี่ยนแปลงมากที่สุด (เฟสต่างกัน \(90^\circ\)) และสมบัติพื้นฐานทั้ง 4 ของคลื่นนำมาใช้อธิบายปรากฏการณ์รอบตัว เช่น เสียงก้อง (Echo) หรือการเกิดฟ้าแลบที่ไม่ได้ยินเสียงฟ้าร้องได้อย่างไร?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">คำถามนำที่ 2 (สะท้อนผลการเรียนรู้ข้อ 4 &amp; 5)</span>
+            <div>ความเข้มเสียง (\(I\)) กับระดับเสียงในหน่วยเดซิเบล (\(\beta\)) สัมพันธ์กันอย่างไร? เหตุใดระดับเสียงที่เพิ่มขึ้น \(20\text{ dB}\) จึงไม่ได้แปลว่าเสียงดังขึ้น 2 เท่า แต่ความเข้มเสียงเพิ่มขึ้นถึง 100 เท่า และอะไรคือสาเหตุที่ทำให้เราแยกแยะเสียงขลุ่ยกับไวโอลินได้ แม้จะเล่นโน้ตตัวเดียวกันและระดับความดังเท่ากัน?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">คำถามนำที่ 3 (สะท้อนผลการเรียนรู้ข้อ 6 &amp; 7)</span>
+            <div>คลื่นนิ่งและการสั่นพ้องในลำอากาศเกิดขึ้นได้อย่างไร? เพราะเหตุใดท่อปลายปิดหนึ่งด้านจึงเกิดได้เฉพาะฮาร์มอนิกเลขคี่ และเราใช้ปรากฏการณ์บีต, การเปลี่ยนแปลงความถี่ของดอปเพลอร์ และคลื่นกระแทกของเครื่องบินเหนือเสียงมาอธิบายการเคลื่อนที่และเทียบเสียงดนตรีได้อย่างไร?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">คำถามนำที่ 4 (สะท้อนผลการเรียนรู้ข้อ 8)</span>
+            <div>มนุษย์นำความรู้เรื่องเสียง คลื่นเหนือเสียง (Ultrasound) และปรากฏการณ์สะท้อน/ดอปเพลอร์ไปพัฒนานวัตกรรมทางการแพทย์ ธรณีวิทยา การประมง และอุตสาหกรรมด้วยหลักการทางฟิสิกส์ใดบ้าง?</div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 3. สาระสำคัญและหลักการคำนวณ -->
+      <section aria-labelledby="th-summary-title">
+        <h2 id="th-summary-title">สาระสำคัญและหลักการคำนวณ</h2>
+
+        <h3>1. ธรรมชาติ การเคลื่อนที่ และสมบัติของเสียง (ตอบคำถามนำที่ 1)</h3>
+        <ul>
+          <li><strong>การเคลื่อนที่และอนุภาค:</strong> เสียงเป็นคลื่นกลและคลื่นตามยาว เกิดจากการสั่นของแหล่งกำเนิดเสียง อนุภาคตัวกลางกวัดแกว่งรอบสมดุลในแนวขนานกับทิศคลื่น โดยอนุภาคไม่ได้เคลื่อนที่ไปพร้อมกับคลื่น</li>
+          <li><strong>คลื่นการกระจัดและคลื่นความดัน:</strong>
+            <ul>
+              <li><strong>ส่วนอัด (Compression):</strong> อนุภาคชิดกัน ความดันสูงกว่าปกติ (\(\Delta P &gt; 0\)) การกระจัดมีค่าเป็นศูนย์</li>
+              <li><strong>ส่วนขยาย (Rarefaction):</strong> อนุภาคห่างกัน ความดันต่ำกว่าปกติ (\(\Delta P &lt; 0\)) การกระจัดมีค่าเป็นศูนย์</li>
+              <li>คลื่นการกระจัดและคลื่นความดันมี <strong>เฟสต่างกัน \(90^\circ\) (\(\frac{\pi}{2}\text{ rad}\))</strong></li>
+            </ul>
+          </li>
+          <li><strong>อัตราเร็วของเสียงในตัวกลาง:</strong> ขึ้นกับสถานะ ความหนาแน่น และสภาพยืดหยุ่น โดย \(v_{\text{ของแข็ง}} &gt; v_{\text{ของเหลว}} &gt; v_{\text{แก๊ส}}\)</li>
+        </ul>
+
+        <div class="calc-block">
+          <p><strong>การคำนวณอัตราเร็วเสียงในอากาศตามอุณหภูมิ:</strong></p>
+          \[
+          v = 331 + 0.6T_c
+          \]
+          <p>เมื่อ \(v\) คืออัตราเร็วเสียงในอากาศ (\(\text{m/s}\)) และ \(T_c\) คืออุณหภูมิของอากาศในหน่วยองศาเซลเซียส (\(^\circ\text{C}\)) โดยใช้ได้แม่นยำในช่วง \(-50^\circ\text{C}\) ถึง \(50^\circ\text{C}\)</p>
+          <p>ความสัมพันธ์เชิงคลื่นพื้นฐาน: \[ v = f\lambda \quad \text{และ} \quad s = vt \]</p>
+        </div>
+
+        <ul>
+          <li><strong>การสะท้อน (Reflection):</strong> มุมตกกระทบเท่ากับมุมสะท้อน สะท้อนได้ดีเมื่อขนาดผิวสะท้อน \(\ge \lambda\)
+            <ul>
+              <li><strong>เสียงก้อง (Echo):</strong> เกิดขึ้นเมื่อเสียงสะท้อนกลับมาถึงหูช้ากว่าเสียงตรงตั้งแต่ \(0.1\text{ s}\) ขึ้นไป ระยะห่างสิ่งกีดขวางขั้นต่ำที่ \(15^\circ\text{C}\) (\(v = 340\text{ m/s}\)) คือ \(s = \frac{vt}{2} = 17\text{ m}\)</li>
+            </ul>
+          </li>
+          <li><strong>การหักเห (Refraction):</strong> เดินทางผ่านตัวกลางต่างชนิดหรือชั้นอุณหภูมิต่างกัน โดย \(f\) คงที่:
+            \[
+            \frac{\sin\theta_1}{\sin\theta_2} = \frac{v_1}{v_2} = \frac{\lambda_1}{\lambda_2} = \sqrt{\frac{T_1}{T_2}}
+            \]
+            ในเวลากลางวันพื้นดินร้อนกว่าอากาศด้านบน คลื่นเบนขึ้นฟ้า เกิดการสะท้อนกลับหมด ทำให้ไม่ได้ยินเสียงฟ้าร้องเมื่อเกิดฟ้าแลบ</li>
+          <li><strong>การเลี้ยวเบน (Diffraction):</strong> คลื่นเลี้ยวเบนผ่านสิ่งกีดขวางหรือช่องแคบได้ดีเมื่อขนาดช่องแคบ \(\le \lambda\)</li>
+          <li><strong>การแทรกสอด (Interference):</strong> คลื่นจากแหล่งกำเนิดอาพันธ์สองแหล่ง (\(S_1, S_2\)):
+            <ul>
+              <li><strong>แนวปฏิบัพ (Antinode / เสียงดัง):</strong> \[ |S_1P - S_2P| = n\lambda \quad (n = 0, 1, 2, \dots) \]</li>
+              <li><strong>แนวบัพ (Node / เสียงค่อย):</strong> \[ |S_1P - S_2P| = \left(n - \frac{1}{2}\right)\lambda \quad (n = 1, 2, 3, \dots) \]</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>2. ความเข้มเสียง ระดับเสียงเดซิเบล และเสียงดนตรี (ตอบคำถามนำที่ 2)</h3>
+        <p>กำลังเสียงแผ่ออกรอบด้านเป็นหน้าคลื่นทรงกลมอย่างสม่ำเสมอ:</p>
+
+        <div class="calc-block">
+          <p><strong>ความเข้มเสียง (Sound Intensity):</strong></p>
+          \[
+          I = \frac{P}{A} = \frac{P}{4\pi r^2} \implies I \propto \frac{1}{r^2}
+          \]
+          <p>เมื่อ \(P\) คือกำลังเสียง (\(\text{W}\)) และ \(r\) คือระยะห่างจากแหล่งกำเนิด (\(\text{m}\))</p>
+          <p><strong>ระดับเสียงเดซิเบล (Sound Level, \(\beta\)):</strong></p>
+          \[
+          \beta = 10\log\left(\frac{I}{I_0}\right)
+          \]
+          <p>เมื่อ \(I_0 = 10^{-12}\text{ W/m}^2\) คือความเข้มเสียงต่ำสุดที่มนุษย์เริ่มได้ยิน</p>
+          <p><strong>การเปรียบเทียบผลต่างระดับเสียง:</strong></p>
+          \[
+          \Delta\beta = \beta_2 - \beta_1 = 10\log\left(\frac{I_2}{I_1}\right) = 10\log\left(\frac{P_2 r_1^2}{P_1 r_2^2}\right) = 20\log\left(\frac{r_1}{r_2}\right) \quad (\text{เมื่อ } P \text{ คงที่})
+          \]
+        </div>
+
+        <div class="callout-box">
+          <div class="callout-title">ข้อควรระวังเรื่องมโนทัศน์ (Certified Misconception)</div>
+          ความเข้มเสียง (\(I\)) เป็นกำลังเสียงต่อหนึ่งหน่วยพื้นที่ ไม่ใช่พลังงานเสียง และระดับเสียงที่เพิ่มขึ้น \(20\text{ dB}\) ไม่ได้แปลว่าเสียงดังขึ้น 2 เท่า แต่ความเข้มเสียงเพิ่มขึ้นถึง \(10^{\frac{20}{10}} = 100\) เท่า เนื่องจากเป็นมาตราส่วนลอการิทึม
+        </div>
+
+        <ul>
+          <li><strong>ขอบเขตการได้ยิน (Audible Frequency):</strong> มนุษย์ได้ยินเสียงช่วงความถี่ \(20 - 20,000\text{ Hz}\) (ต่ำกว่านี้คือคลื่นใต้เสียง Infrasound, สูงกว่านี้คือคลื่นเหนือเสียง Ultrasound)</li>
+          <li><strong>ระดับสูงต่ำ (Pitch) และคู่แปด (Octave):</strong> ระดับเสียงขึ้นกับความถี่ เสียงคู่แปดมีความถี่เป็น 2 เท่าเสมอ (\(f, 2f, 4f, \dots\))</li>
+          <li><strong>คุณภาพเสียง (Timbre):</strong> เอกลักษณ์ของเสียงเครื่องดนตรี เกิดจากจำนวนและสัดส่วนแอมพลิจูดของฮาร์มอนิก (\(f_n = nf_1\)) ที่ผสมกัน ทำให้ออสซิลโลสโคปแสดงรูปคลื่นลัพธ์แตกต่างกันแม้เล่นโน้ตตัวเดียวกัน</li>
+          <li><strong>มลพิษทางเสียง:</strong> เสียงที่ดังเกินไป มาตรฐานกำหนดให้ระดับเสียงเฉลี่ยตลอดระยะเวลาทำงาน 8 ชั่วโมงต้องไม่เกิน \(85\text{ dB}\)</li>
+        </ul>
+
+        <h3>3. คลื่นนิ่ง การสั่นพ้องในท่อ บีต ดอปเพลอร์ และคลื่นกระแทก (ตอบคำถามนำที่ 3)</h3>
+        <ul>
+          <li><strong>คลื่นนิ่งของเสียง (Standing Waves):</strong> เกิดจากการแทรกสอดของคลื่นสองขบวนที่เคลื่อนที่สวนทางกัน ระยะห่างระหว่างบัพถึงบัพหรือปฏิบัพถึงปฏิบัพที่ติดกันเท่ากับ \(\frac{\lambda}{2}\) และบัพถึงปฏิบัพเท่ากับ \(\frac{\lambda}{4}\)</li>
+          <li><strong>การสั่นพ้องของเสียง (Acoustic Resonance):</strong> การที่ลำอากาศถูกกระตุ้นด้วยความถี่ที่ตรงกับความถี่ธรรมชาติ</li>
+        </ul>
+
+        <div class="table-container">
+          <table class="summary-table">
+            <thead>
+              <tr>
+                <th>ชนิดของท่อ</th>
+                <th class="center">เงื่อนไขขอบ</th>
+                <th class="center">ความถี่ฮาร์มอนิก (\(f_n\))</th>
+                <th>ลำดับฮาร์มอนิกที่มี</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>ท่อปลายปิด 1 ด้าน</strong> (Closed tube)</td>
+                <td class="center">ปลายปิดเป็นบัพ (N)<br>ปากเปิดเป็นปฏิบัพ (A)</td>
+                <td class="center">\[f_n = n\frac{v}{4L} \quad (n = 1, 3, 5, \dots)\]</td>
+                <td>เฉพาะฮาร์มอนิกเลขคี่เท่านั้น (\(f_1, 3f_1, 5f_1, \dots\))</td>
+              </tr>
+              <tr>
+                <td><strong>ท่อปลายเปิด 2 ด้าน</strong> (Open tube)</td>
+                <td class="center">ปากเปิดทั้งสองด้าน<br>เป็นปฏิบัพ (A)</td>
+                <td class="center">\[f_n = n\frac{v}{2L} \quad (n = 1, 2, 3, \dots)\]</td>
+                <td>เกิดได้ครบทุกฮาร์มอนิก (\(f_1, 2f_1, 3f_1, \dots\))</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="calc-block">
+          <p><strong>การทดลองหลอดเรโซแนนซ์เลื่อนลูกสูบหรือปรับระดับน้ำ:</strong></p>
+          <p>ระยะห่างระหว่างตำแหน่งที่เกิดเสียงดังติดต่อกันสองครั้ง (\(\Delta L\)) เท่ากับครึ่งหนึ่งของความยาวคลื่นเสมอ:</p>
+          \[
+          \Delta L = L_{m+1} - L_m = \frac{\lambda}{2} \implies \lambda = 2\Delta L
+          \]
+          <p><strong>การเกิดบีต (Beats):</strong> การรวมกันของคลื่นเสียง 2 แหล่งกำเนิดที่มีความถี่ต่างกันเล็กน้อย:</p>
+          \[
+          f_b = |f_1 - f_2|
+          \]
+          <p>หูมนุษย์แยกแยะจังหวะบีตได้ชัดเจนเมื่อความถี่บีต \(f_b \le 7\text{ Hz}\) (ความถี่บีตคือจำนวนครั้งที่ได้ยิน <em>เฉพาะเสียงดัง</em> ใน 1 วินาที)</p>
+          <p><strong>คลื่นกระแทก (Shock Waves) และมุมกรวยมัค:</strong></p>
+          \[
+          \sin\theta = \frac{v}{v_s} = \frac{1}{M}
+          \]
+          <p>เมื่อ \(\theta\) คือมุมครึ่งกรวยมัค, \(v\) คืออัตราเร็วเสียง, \(v_s\) คืออัตราเร็วแหล่งกำเนิด และ \(M = \frac{v_s}{v}\) คือเลขอัตราเร็วมัค (Mach number)</p>
+        </div>
+
+        <h3>4. การประยุกต์ใช้ความรู้เรื่องเสียง (ตอบคำถามนำที่ 4)</h3>
+        <ul>
+          <li><strong>ทางการแพทย์:</strong> คลื่นอัลตราซาวด์ (\(1 - 10\text{ MHz}\)) ตรวจอวัยวะภายในและทารกในครรภ์, การสลายนิ่วในไต, และ Doppler Ultrasound ตรวจวัดอัตราเร็วการไหลของเม็ดเลือดในหลอดเลือด</li>
+          <li><strong>การเดินเรือและการประมง:</strong> เครื่องโซนาร์ (SONAR) ส่งคลื่นสะท้อนหาความลึกทะเลและฝูงปลา คำนวณจาก \(s = \frac{vt}{2}\) รวมถึง Echolocation ของค้างคาวและโลมา</li>
+          <li><strong>ธรณีวิทยา:</strong> หัววัดคลื่นเสียง (Acoustic Log) ความถี่ \(1 - 3\text{ kHz}\) สำรวจหาค่าความพรุนของชั้นหินปิโตรเลียม</li>
+          <li><strong>อุตสาหกรรม:</strong> การตรวจสอบรอยร้าวในเนื้อโลหะแบบไม่ทำลาย (NDT) และเครื่องทำความสะอาดความถี่สูง (\(&gt; 50\text{ kHz}\)) อาศัยการสั่นพ้องขจัดคราบไขมันโดยไม่ทำลายผิวภาชนะ</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- บล็อกภาษาอังกฤษ (English Content Block)     -->
+    <!-- ========================================== -->
+    <div data-content-lang="en" lang="en" hidden>
+      <header>
+        <small>CHAPTER OVERVIEW</small>
+        <h1>Chapter 12 · Sound</h1>
+        <p class="note">Grade 11 Physics Book 4, Basic Education Core Curriculum (IPST Revised Edition 2017)</p>
+      </header>
+
+      <!-- 1. Expected Learning Outcomes -->
+      <section aria-labelledby="en-outcomes-title">
+        <h2 id="en-outcomes-title">Expected Learning Outcomes</h2>
+        <ol>
+          <li>Explain sound generation, sources, and energy transfer as mechanical longitudinal waves, and analyze the \(90^\circ\) (\(\frac{\pi}{2}\text{ rad}\)) phase difference between particle displacement and pressure waves.</li>
+          <li>Explain factors affecting the speed of sound across different states of matter, and calculate temperature-dependent speed in air (\(v = 331 + 0.6T_c\)) alongside wave relations (\(v = f\lambda\) and \(s = vt\)).</li>
+          <li>Analyze and solve problems involving wave properties of sound: reflection (echo conditions), refraction via Snell's Law and total internal reflection, diffraction, and interference from two coherent sources.</li>
+          <li>Calculate acoustic power, spherical wave intensity (\(I = \frac{P}{4\pi r^2}\)), and decibel sound level (\(\beta = 10\log\frac{I}{I_0}\)), including sound level differences (\(\Delta \beta\)).</li>
+          <li>Explain the human audible spectrum, infrasound, ultrasound, pitch, octaves, timbre, and evaluate safety standards regarding noise pollution.</li>
+          <li>Investigate and explain standing waves, acoustic resonance in closed and open air columns, and measure acoustic wavelength using resonance tubes (\(\Delta L = \frac{\lambda}{2}\)).</li>
+          <li>Observe and calculate beat frequency (\(f_b = |f_1 - f_2|\)), Doppler frequency shifts, and acoustic shock wave geometry (\(\sin\theta = \frac{1}{M}\)).</li>
+          <li>Investigate and present technological applications of audible and ultrasound waves in medicine (ultrasound/lithotripsy), marine navigation (SONAR), geophysics (acoustic logging), and industry (NDT/ultrasonic cleaning).</li>
+        </ol>
+      </section>
+
+      <!-- 2. Guiding Questions -->
+      <section aria-labelledby="en-questions-title">
+        <h2 id="en-questions-title">Guiding Questions</h2>
+        <p class="note">Essential inquiry questions designed to drive metacognition and conceptual understanding:</p>
+        <ul class="question-list">
+          <li class="question-item">
+            <span class="question-tag">Guiding Question 1 (Reflecting Outcomes 1, 2 &amp; 3)</span>
+            <div>How does sound transfer energy through media at the particulate level? Why do positions with zero particle displacement exhibit maximum pressure variation (\(90^\circ\) phase difference), and how do the four fundamental wave properties explain natural phenomena such as echoes or silent lightning?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">Guiding Question 2 (Reflecting Outcomes 4 &amp; 5)</span>
+            <div>What is the quantitative relationship between sound intensity (\(I\)) and decibel sound level (\(\beta\))? Why does a \(20\text{ dB}\) increase correspond to a 100-fold increase in acoustic intensity rather than double loudness, and what enables us to distinguish different musical instruments playing the same pitch and volume?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">Guiding Question 3 (Reflecting Outcomes 6 &amp; 7)</span>
+            <div>How are standing waves and resonance established in enclosed air columns? Why do closed-end pipes produce only odd harmonics, and how do beats, Doppler shifts, and supersonic shock waves describe acoustic motion and tuning principles?</div>
+          </li>
+          <li class="question-item">
+            <span class="question-tag">Guiding Question 4 (Reflecting Outcome 8)</span>
+            <div>Through what physical principles do medical diagnostics, marine fisheries, geophysics, and manufacturing industries utilize audible sound, ultrasound, and acoustic wave behaviors?</div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 3. Key Concepts & Principles -->
+      <section aria-labelledby="en-summary-title">
+        <h2 id="en-summary-title">Key Concepts &amp; Calculations</h2>
+
+        <h3>1. Nature, Propagation, and Wave Properties of Sound (Addressing Guiding Question 1)</h3>
+        <ul>
+          <li><strong>Energy Transfer:</strong> Sound is a mechanical longitudinal wave produced by vibrating sources. Medium particles oscillate parallel to wave propagation without bulk translational displacement.</li>
+          <li><strong>Displacement and Pressure Waves:</strong>
+            <ul>
+              <li><strong>Compression:</strong> Particles gather close together; local pressure exceeds ambient pressure (\(\Delta P &gt; 0\)); displacement is zero.</li>
+              <li><strong>Rarefaction:</strong> Particles spread apart; local pressure falls below ambient pressure (\(\Delta P &lt; 0\)); displacement is zero.</li>
+              <li>Displacement waves and acoustic pressure waves maintain a strict <strong>\(90^\circ\) (\(\frac{\pi}{2}\text{ rad}\)) phase difference</strong>.</li>
+            </ul>
+          </li>
+          <li><strong>Speed Across Media:</strong> Governed by elasticity and density: \(v_{\text{solid}} &gt; v_{\text{liquid}} &gt; v_{\text{gas}}\).</li>
+        </ul>
+
+        <div class="calc-block">
+          <p><strong>Speed of Sound in Air as a Function of Temperature:</strong></p>
+          \[
+          v = 331 + 0.6T_c
+          \]
+          <p>Where \(v\) represents speed in meters per second (\(\text{m/s}\)) and \(T_c\) is ambient temperature in degrees Celsius (\(^\circ\text{C}\)), accurate over \(-50^\circ\text{C}\) to \(50^\circ\text{C}\).</p>
+          <p>Fundamental wave relations: \[ v = f\lambda \quad \text{and} \quad s = vt \]</p>
+        </div>
+
+        <ul>
+          <li><strong>Reflection:</strong> Angle of incidence equals angle of reflection; effective when reflector size \(\ge \lambda\).
+            <ul>
+              <li><strong>Echo:</strong> Perceived when reflected sound arrives at least \(0.1\text{ s}\) after direct sound. Minimum barrier distance in air at \(15^\circ\text{C}\) (\(v = 340\text{ m/s}\)) is \(s = \frac{vt}{2} = 17\text{ m}\).</li>
+            </ul>
+          </li>
+          <li><strong>Refraction:</strong> Occurs across medium boundaries or temperature gradients where frequency \(f\) remains constant:
+            \[
+            \frac{\sin\theta_1}{\sin\theta_2} = \frac{v_1}{v_2} = \frac{\lambda_1}{\lambda_2} = \sqrt{\frac{T_1}{T_2}}
+            \]
+            Upward daytime refraction due to warmer ground-level air causes total internal reflection, silencing thunder from distant lightning.</li>
+          <li><strong>Diffraction:</strong> Sound diffracts around obstacles effectively when aperture dimensions \(\le \lambda\).</li>
+          <li><strong>Interference:</strong> Superposition from two coherent sound sources (\(S_1, S_2\)):
+            <ul>
+              <li><strong>Antinodal Line (Constructive / Loud):</strong> \[ |S_1P - S_2P| = n\lambda \quad (n = 0, 1, 2, \dots) \]</li>
+              <li><strong>Nodal Line (Destructive / Quiet):</strong> \[ |S_1P - S_2P| = \left(n - \frac{1}{2}\right)\lambda \quad (n = 1, 2, 3, \dots) \]</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>2. Sound Intensity, Decibel Levels, and Music (Addressing Guiding Question 2)</h3>
+        <p>Acoustic power radiates uniformly over spherical wave fronts in three-dimensional space:</p>
+
+        <div class="calc-block">
+          <p><strong>Sound Intensity:</strong></p>
+          \[
+          I = \frac{P}{A} = \frac{P}{4\pi r^2} \implies I \propto \frac{1}{r^2}
+          \]
+          <p>Where \(P\) is acoustic source power (\(\text{W}\)) and \(r\) is distance from source (\(\text{m}\)).</p>
+          <p><strong>Decibel Sound Level (\(\beta\)):</strong></p>
+          \[
+          \beta = 10\log\left(\frac{I}{I_0}\right)
+          \]
+          <p>Where \(I_0 = 10^{-12}\text{ W/m}^2\) represents the reference threshold of human hearing.</p>
+          <p><strong>Sound Level Difference Formulation:</strong></p>
+          \[
+          \Delta\beta = \beta_2 - \beta_1 = 10\log\left(\frac{I_2}{I_1}\right) = 10\log\left(\frac{P_2 r_1^2}{P_1 r_2^2}\right) = 20\log\left(\frac{r_1}{r_2}\right) \quad (\text{for constant } P)
+          \]
+        </div>
+
+        <div class="callout-box">
+          <div class="callout-title">Certified Conceptual Distinction</div>
+          Sound intensity (\(I\)) measures power per unit area, not total wave energy. Because the decibel scale is logarithmic, a \(20\text{ dB}\) rise represents a \(10^{\frac{20}{10}} = 100\)-fold increase in physical intensity, not a doubling of loudness.
+        </div>
+
+        <ul>
+          <li><strong>Audible Frequency Spectrum:</strong> Normal human hearing spans \(20 - 20,000\text{ Hz}\) (lower frequencies are infrasound; higher frequencies are ultrasound).</li>
+          <li><strong>Pitch and Octaves:</strong> Pitch is determined by wave frequency. An octave represents exact doubling of fundamental frequency (\(f, 2f, 4f, \dots\)).</li>
+          <li><strong>Timbre (Sound Quality):</strong> Unique tonal identity governed by harmonic mixture and relative amplitudes (\(f_n = nf_1\)), resulting in distinct composite waveforms across musical instruments playing the same fundamental pitch.</li>
+          <li><strong>Noise Pollution:</strong> Unwanted acoustic exposure. Workplace safety standards set the hazardous threshold at continuous 8-hour exposure exceeding \(85\text{ dB}\).</li>
+        </ul>
+
+        <h3>3. Standing Waves, Pipe Resonance, Beats, and Shock Waves (Addressing Guiding Question 3)</h3>
+        <ul>
+          <li><strong>Standing Sound Waves:</strong> Formed by superposition of two identical waves traveling in opposite directions. Distance between successive nodes (or antinodes) is \(\frac{\lambda}{2}\); distance between adjacent node and antinode is \(\frac{\lambda}{4}\).</li>
+          <li><strong>Acoustic Resonance:</strong> Amplification occurring when driving frequency matches the natural frequency of an air column.</li>
+        </ul>
+
+        <div class="table-container">
+          <table class="summary-table">
+            <thead>
+              <tr>
+                <th>Air Column Geometry</th>
+                <th class="center">Boundary Conditions</th>
+                <th class="center">Harmonic Frequencies (\(f_n\))</th>
+                <th>Harmonic Series Present</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Closed-End Pipe</strong> (One end closed)</td>
+                <td class="center">Closed end: Displacement node (N)<br>Open end: Displacement antinode (A)</td>
+                <td class="center">\[f_n = n\frac{v}{4L} \quad (n = 1, 3, 5, \dots)\]</td>
+                <td>Odd harmonics only (\(f_1, 3f_1, 5f_1, \dots\))</td>
+              </tr>
+              <tr>
+                <td><strong>Open-End Pipe</strong> (Both ends open)</td>
+                <td class="center">Both open ends:<br>Displacement antinodes (A)</td>
+                <td class="center">\[f_n = n\frac{v}{2L} \quad (n = 1, 2, 3, \dots)\]</td>
+                <td>All integer harmonics (\(f_1, 2f_1, 3f_1, \dots\))</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="calc-block">
+          <p><strong>Resonance Tube Experiments (Movable Piston / Water Reservoir):</strong></p>
+          <p>Distance between successive resonant sound maxima positions (\(\Delta L\)) strictly equals one half of acoustic wavelength:</p>
+          \[
+          \Delta L = L_{m+1} - L_m = \frac{\lambda}{2} \implies \lambda = 2\Delta L
+          \]
+          <p><strong>Acoustic Beats:</strong> Waxing and waning of volume caused by superposition of two sound waves of slightly differing frequencies:</p>
+          \[
+          f_b = |f_1 - f_2|
+          \]
+          <p>Distinguishable by human ear when \(f_b \le 7\text{ Hz}\) (defined as the count of loudness peaks per second).</p>
+          <p><strong>Acoustic Shock Waves and Mach Angle:</strong></p>
+          \[
+          \sin\theta = \frac{v}{v_s} = \frac{1}{M}
+          \]
+          <p>Where \(\theta\) is the Mach half-angle, \(v\) is sound speed, \(v_s\) is source velocity, and \(M = \frac{v_s}{v}\) is the dimensionless Mach number.</p>
+        </div>
+
+        <h3>4. Practical Applications of Sound (Addressing Guiding Question 4)</h3>
+        <ul>
+          <li><strong>Medical Diagnostics &amp; Therapy:</strong> Diagnostic ultrasound imaging (\(1 - 10\text{ MHz}\)), ultrasonic shock wave lithotripsy for kidney stones, and Doppler ultrasound blood flow velocity monitoring.</li>
+          <li><strong>Marine Navigation &amp; Fisheries:</strong> SONAR systems transmitting ultrasonic pulses underwater to measure ocean depth and detect fish schools (\(s = \frac{vt}{2}\)), alongside natural echolocation in bats and dolphins.</li>
+          <li><strong>Geophysics:</strong> Petroleum exploration utilizing borehole acoustic logging probes (\(1 - 3\text{ kHz}\)) to evaluate rock porosity.</li>
+          <li><strong>Industrial Engineering:</strong> Non-destructive testing (NDT) detecting internal structural defects in metals, and ultrasonic cleaning baths (\(&gt; 50\text{ kHz}\)) that induce acoustic resonance in microscopic contaminant particles to remove grease without damaging delicate surfaces.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

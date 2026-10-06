@@ -1261,6 +1261,12 @@ import { readBankSelection, loadBankQuiz } from "./question-bank-player.js";
       loading.hidden = true;
       errorBox.hidden = false;
       errorBox.textContent = label(`เปิด Quiz ไม่สำเร็จ: ${error.message}`, `Could not open quiz: ${error.message}`);
+      if (bankSelection) {
+        const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'quiz-quiet-button';
+        retry.textContent = label('ลองโหลดอีกครั้ง', 'Retry loading');
+        retry.onclick = () => { retry.disabled = true; void loadContent({ fresh }); };
+        errorBox.append(document.createElement('br'), retry);
+      }
     }
   }
 

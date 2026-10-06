@@ -20,8 +20,13 @@ function service() {
   const folder = { getFilesByName(name) { return { hasNext: () => archive.has(name), next: () => ({ getBlob: () => ({ getDataAsString: () => archive.get(name) }) }) }; },
     createFile(name, value) { archive.set(name, value); } };
   const context = vm.createContext({ console, Map, Set, PropertiesService: { getScriptProperties: () => ({ getProperty: k => properties.get(k), setProperty: (k, v) => properties.set(k, v) }) },
-    SpreadsheetApp: { openById: () => ({ getSheetByName(name) { reads.push(name); return tables[name] && { getLastRow: () => tables[name].length + 1,
-      getRange: () => ({ getDisplayValues: () => tables[name] }) }; } }) },
+    Sheets: { Spreadsheets: { Values: { get(ss, range, options) {
+      assert.equal(ss, '1N3kU1DnP7B5OPkUglCU0KOJcSELWtPJokHxx_j7tDkU');
+      assert.equal(options.valueRenderOption, 'FORMATTED_VALUE');
+      const match = /^'(Sitemap|PHYSIC|CHEMISTRY)'!A2:([CM])$/.exec(range);
+      assert.ok(match); const name = match[1]; reads.push(name);
+      return { values: tables[name] };
+    } } } },
     DriveApp: { getFolderById: () => folder }, LockService: { getScriptLock: () => ({ waitLock() {}, releaseLock() {} }) }, MimeType: { PLAIN_TEXT: 'text/plain' },
     Utilities: { DigestAlgorithm: { SHA_256: '' }, Charset: { UTF_8: '' }, computeDigest: (_, text) => [...createHash('sha256').update(text).digest()], newBlob: text => ({ getBytes: () => Buffer.from(text) }) },
     ContentService: { MimeType: { JSON: 'application/json' }, createTextOutput: text => ({ setMimeType: () => JSON.parse(text) }) } });

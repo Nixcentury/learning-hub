@@ -3,7 +3,7 @@
 โครงการแยกชื่อ `learning-hub` — อ่าน [START-HERE.txt](START-HERE.txt) ก่อนเพิ่มเนื้อหาหรือเผยแพร่
 ประวัติและขอบเขตการย้ายอยู่ใน [MIGRATION.md](MIGRATION.md)
 
-งานคลังข้อสอบจาก Google Sheet เดิม: อ่าน [QUESTION-BANK-START-HERE.md](QUESTION-BANK-START-HERE.md) สำหรับเส้นทางหน้าคลัง การเซฟโจทย์แต่ละรุ่น และขั้นตอนเชื่อม Apps Script (ยังไม่ได้เปิดบริการจริง)
+งานคลังข้อสอบจาก Google Sheet เดิม: อ่าน [QUESTION-BANK-START-HERE.md](QUESTION-BANK-START-HERE.md) สำหรับเส้นทางหน้าคลัง การเซฟโจทย์แต่ละรุ่น และขั้นตอนเชื่อม Apps Script (เชื่อมฟิสิกส์และทดสอบในเครื่องแล้ว ยังไม่ Push การเชื่อมนี้ขึ้นเว็บ)
 
 หน้าเว็บที่ใช้งานจริงเขียนด้วย HTML, CSS และ JavaScript พื้นฐาน เพื่อให้เปิดดูและช่วยแก้ไขได้ง่าย โดยไม่ต้องแก้ไฟล์ React ส่วน GitHub จะ Build และเผยแพร่ให้อัตโนมัติ
 

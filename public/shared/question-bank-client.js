@@ -9,7 +9,8 @@ export function createBankClient({ config = questionBankConfig, fetcher = (...ar
     if (url.protocol !== 'https:' || url.username || url.password || url.hash || url.search) throw Error('Invalid configured bank endpoint');
     Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value));
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 20_000);
+    // Apps Script can start slowly; allow its first request time to warm up.
+    const timer = setTimeout(() => controller.abort(), 45_000);
     try {
       const response = await fetcher(url.href, { signal: controller.signal, credentials: 'omit', cache: 'no-store', redirect: 'follow' });
       if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) throw Error('บริการคลังยังไม่พร้อม / Bank service unavailable');
@@ -28,6 +29,9 @@ export function createBankClient({ config = questionBankConfig, fetcher = (...ar
         ? 'ไม่พบโจทย์รุ่นที่บันทึกไว้ จึงยังไม่โหลดคำตอบลงโจทย์รุ่นใหม่ / Saved question version is unavailable'
         : 'เปิดข้อมูลคลังไม่ได้ กรุณาตรวจการเผยแพร่ชุดนี้ / This set is unavailable');
       return value.data;
+    } catch (error) {
+      if (controller.signal.aborted) throw Error('บริการตอบช้า กรุณาลองโหลดอีกครั้ง / The service is taking longer than expected. Please retry.');
+      throw error;
     } finally { clearTimeout(timer); }
   }
   return {

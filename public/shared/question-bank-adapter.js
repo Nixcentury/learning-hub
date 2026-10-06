@@ -29,7 +29,7 @@ export function adaptLegacyBank(snapshot, { document: doc = document, Parser = D
   const root = doc.createElement('article');
   Object.assign(root.dataset, { learningActivityContent: '', activityKind: 'quiz',
     activityId: bankContentId(snapshot.subjectId, snapshot.bankKey), bankRevision: snapshot.revision });
-  const heading = doc.createElement('h1'); heading.dataset.activityTitle = '';
+  const heading = doc.createElement('h1'); heading.dataset.activityTitle = ''; heading.dataset.quizTitle = '';
   heading.dataset.th = snapshot.title; heading.dataset.en = snapshot.title; heading.textContent = snapshot.title;
   const questions = doc.createElement('section'); questions.dataset.activityQuestions = '';
   const intro = doc.createElement('header'); intro.dataset.activityIntro = ''; intro.append(heading);

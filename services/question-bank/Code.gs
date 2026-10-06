@@ -18,12 +18,13 @@ function bankDigest_(text) {
 }
 function bankKey_(subject, id) { return 'b-' + bankDigest_(subject + '\n' + id).slice(0, 24); }
 function bankRows_(ss, name, columns) {
-  const sheet = ss.getSheetByName(name);
-  if (!sheet) throw Error('missing-sheet');
-  const count = sheet.getLastRow();
-  if (count < 2) return [];
-  if (count > 20000) throw Error('source-too-large');
-  return sheet.getRange(2, 1, count - 1, columns).getDisplayValues();
+  // The advanced Sheets service accepts spreadsheets.readonly. SpreadsheetApp
+  // openById requires the broader read/write scope even for a read operation.
+  const range = "'" + name + "'!A2:" + String.fromCharCode(64 + columns);
+  const rows = Sheets.Spreadsheets.Values.get(ss, range, { valueRenderOption: 'FORMATTED_VALUE' }).values || [];
+  if (rows.length > 19999) throw Error('source-too-large');
+  // The API omits trailing empty cells; preserve the legacy column positions.
+  return rows.map(function(row) { return Array.from({ length: columns }, function(_, index) { return String(row[index] == null ? '' : row[index]); }); });
 }
 function bankPublic_(row) {
   const student = String(row[11] || '').trim().toUpperCase();
@@ -108,13 +109,14 @@ function doGet(event) {
     const enabled = (PropertiesService.getScriptProperties().getProperty('HUB_BANK_ENABLED_SUBJECTS') || '').split(',').map(function(value) { return value.trim(); });
     if (!enabled.includes(p.subject)) throw Error('set-unavailable');
     if (p.action === 'questions' && (!/^b-[a-f0-9]{24}$/.test(p.key || '') || (p.revision && !/^[a-f0-9]{64}$/.test(p.revision)))) throw Error('invalid-request');
-    const ss = SpreadsheetApp.openById(HUB_BANK.spreadsheetId);
+    const ss = HUB_BANK.spreadsheetId;
     const catalog = bankCatalog_(ss, p.subject);
     const data = p.action === 'catalog' ? { schemaVersion: 1, subjectId: p.subject, sets: catalog.sets }
       : bankQuestions_(p.subject, p.key, p.revision || '', catalog);
     result = { ok: true, data: data };
   } catch (error) {
     const known = ['invalid-request', 'set-unavailable', 'snapshot-not-found', 'archive-not-configured', 'source-too-large', 'set-too-large', 'invalid-set-size', 'empty-question-row'];
+    if (!known.includes(error.message)) console.error(error.message);
     result = { ok: false, code: known.includes(error.message) ? error.message : 'service-unavailable' };
   }
   return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);

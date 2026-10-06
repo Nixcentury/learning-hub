@@ -1,6 +1,8 @@
-// After deploying services/question-bank, paste its /exec URL here.
-// Keep this empty until the published catalog and Guest access have been checked.
-export const questionBankConfig = Object.freeze({ endpoint: '', cacheMs: 60_000 });
+// Physics service: public catalog checked without Google credentials, 2026-10-06.
+export const questionBankConfig = Object.freeze({
+  endpoint: 'https://script.google.com/macros/s/AKfycbyPhqDvvjAliUnRGpa7qgw2Bh_AilLrDYe0VsqnMZy_WBIFPBLajpLSd6VWrk_wR8HO3Q/exec',
+  cacheMs: 60_000,
+});
 
 // Map `${subjectId}/${bankKey}` to authored tools. One contentId may be reused
 // under several sets. Local files still pass createContentTool's existing checks.

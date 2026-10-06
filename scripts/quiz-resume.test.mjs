@@ -4,6 +4,7 @@ import test from "node:test";
 import vm from "node:vm";
 import { readQuizContent } from "../public/shared/quiz-content-adapter.js";
 import { dragAnswerSummary } from "../public/shared/quiz-drag-model.js";
+import { readBankSelection } from "../public/shared/question-bank-player.js";
 import { hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, MAX_ANSWER_LENGTH } from "../public/shared/quiz-question-model.js";
 
 // Execute the production closure, with only browser edges replaced. No test API
@@ -128,7 +129,7 @@ function makeHarness() {
     fetch: async () => ({ ok: true, text: async () => "<test-content>" }),
     QuizEvidenceManager: EvidenceStub,
     createNotebookBackupUi: () => ({ busy: false, open() {}, invalidate() {} }),
-    readQuizContent, hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, MAX_ANSWER_LENGTH, dragAnswerSummary,
+    readQuizContent, hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, MAX_ANSWER_LENGTH, dragAnswerSummary, readBankSelection,
     hideMathKeyboard() {}, mountNumericAnswer() {},
     localStorage: {
       getItem(storageKey) { if (storageFails) throw new Error("Storage disabled"); return storage.get(storageKey) ?? null; },

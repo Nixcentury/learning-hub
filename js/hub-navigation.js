@@ -22,6 +22,13 @@ export function resolveNavigation(catalog, hash) {
 
 export function routeForSelection(catalog, selection) {
   if (!selection || typeof selection.subjectId !== 'string') return null;
+  if (selection.bank === true) {
+    const parts = [selection.subjectId, 'bank'];
+    if (selection.bankKey) parts.push(selection.bankKey);
+    if (selection.toolKey) { if (!selection.bankKey) return null; parts.push(selection.toolKey); }
+    const route = resolveHubRoute(catalog, '#' + parts.join('/')).route;
+    return ['bank', 'bank-tool'].includes(route?.kind) ? route : null;
+  }
   const { subjectId, chapterId = null, topicId = null } = selection;
   if (topicId && !chapterId) return null;
   return catalog.routes.find(route => navigable(route) &&
@@ -80,7 +87,8 @@ export function createHubNavigation({ pageFrame, navButtons, showSection, notice
     lastCommand = commandId;
     pageFrame.contentWindow?.postMessage({ type: 'learning-hub-navigate', pageId: readyPage.pageId,
       commandId, route: { subjectId: currentMenu.subjectId, chapterId: currentMenu.chapterId || null,
-        topicId: currentMenu.topicId || null, status: currentMenu.status } }, location.origin);
+        topicId: currentMenu.topicId || null, status: currentMenu.status,
+        bank: currentMenu.kind === 'bank', bankKey: currentMenu.bankKey || null } }, location.origin);
   }
   async function navigate(hash, mode = 'push', force = false, alreadyOpen = null) {
     const request = ++revision;

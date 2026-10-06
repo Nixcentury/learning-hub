@@ -8,6 +8,7 @@
 const subjectRoot = document.querySelector("[data-subject-page]");
 const chapterTemplate = document.querySelector("#subject-chapters");
 const contentNavigationUrl = new URL("subject-content-nav.js", document.currentScript.src).href;
+const bankNavigationUrl = new URL("subject-bank-nav.js", document.currentScript.src).href;
 
 function setLocalizedText(element, thai, english) {
   element.dataset.th = thai;
@@ -188,6 +189,7 @@ function buildSubjectPage() {
   const hasContentMenus = chapterDefinitions.some((entry) => entry.dataset.chapterSrc);
   let contentNavigation = null;
   let contentNavigationPromise = null;
+  let bankNavigation = null;
   let navigationVersion = 0;
   let orbitControl = null;
   const pageId = crypto.randomUUID();
@@ -199,6 +201,12 @@ function buildSubjectPage() {
     return true;
   }
   subjectRoot.classList.toggle("has-content-menus", hasContentMenus);
+  const bankNavigationPromise = ['physics', 'chemistry'].includes(subject.id)
+    ? import(bankNavigationUrl).then(({ createSubjectBankNavigation }) => {
+      bankNavigation = createSubjectBankNavigation({ root: subjectRoot, subject, setStage,
+        requestNavigation: requestSelection, backToChapters: () => showChapters() });
+      return bankNavigation;
+    }) : Promise.resolve(null);
 
   function setNavigationMode(fourLayers) {
     subjectRoot.classList.toggle("is-four-layer", fourLayers);
@@ -295,6 +303,7 @@ function buildSubjectPage() {
     orbitControl?.selectChapter(selectedChapter);
     const version = ++navigationVersion;
     contentNavigation?.hide();
+    bankNavigation?.hide();
     if (definition?.dataset.chapterSrc) {
       setNavigationMode(true);
       chapterView.hidden = true;
@@ -334,6 +343,7 @@ function buildSubjectPage() {
     if (!fromRoute && requestSelection({})) return true;
     ++navigationVersion;
     contentNavigation?.hide();
+    bankNavigation?.hide();
     setNavigationMode(hasContentMenus);
     activityView.hidden = true;
     chapterView.hidden = false;
@@ -341,6 +351,17 @@ function buildSubjectPage() {
     subjectRoot.querySelector(`[data-chapter="${selectedChapter}"]`)?.focus();
     window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     return true;
+  }
+
+  async function showBank(route) {
+    const version = ++navigationVersion;
+    contentNavigation?.hide(); chapterView.hidden = true; activityView.hidden = true;
+    setNavigationMode(true);
+    const labels = [['เลือกวิชา', 'Choose subject'], ['เลือกชุดข้อสอบ', 'Choose set'], ['เลือกเครื่องมือ', 'Choose tool'], ['เปิดใช้งาน', 'Open workspace']];
+    stageItems.forEach((stage, i) => setLocalizedText(stage.querySelector('span'), ...labels[i]));
+    const navigation = await bankNavigationPromise;
+    if (version !== navigationVersion || !navigation) return false;
+    return navigation.open(route.bankKey);
   }
 
   if (window.LearningHubSubjectOrbit) {
@@ -372,7 +393,8 @@ function buildSubjectPage() {
     routeCommand = data.commandId;
     subjectRoot.inert = true;
     let ok = false;
-    try { ok = data.route.chapterId ? await showActivities(data.route.chapterId, data.route) : showChapters(true); }
+    try { ok = data.route.bank ? await showBank(data.route)
+      : data.route.chapterId ? await showActivities(data.route.chapterId, data.route) : showChapters(true); }
     finally {
       if (routeCommand === data.commandId) {
         subjectRoot.inert = false;

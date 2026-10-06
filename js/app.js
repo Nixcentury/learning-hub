@@ -631,7 +631,8 @@ navigation = createHubNavigation({
   pageFrame, navButtons, showSection,
   noticeElement: document.querySelector('#hub-route-notice'),
   canOpenWorkspace: () => ['signed-in', 'guest'].includes(activeSession.status),
-  openActivity: activity => activity.entry ? workspace.openContent(activity.entry) : workspace.open(activity.toolId),
+  openActivity: activity => activity.bank ? workspace.openBank(activity.bank)
+    : activity.entry ? workspace.openContent(activity.entry) : workspace.open(activity.toolId),
   showMenu: () => workspace.showMenu(),
 });
 

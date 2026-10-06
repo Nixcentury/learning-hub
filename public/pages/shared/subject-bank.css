@@ -1,0 +1,19 @@
+.bank-entry { width: 100%; display: flex; align-items: center; gap: 18px; padding: 22px 26px; margin: 20px 0 24px; text-align: start; cursor: pointer; color: inherit; font: inherit; border-color: var(--line); }
+.bank-entry > span:nth-child(2) { display: grid; gap: 6px; flex: 1; }
+.bank-entry strong { font-size: 1.18rem; }
+.bank-entry small { color: var(--muted); }
+.bank-entry-icon { font-size: 2rem; color: var(--subject-accent); }
+.bank-entry:hover { border-color: var(--subject-accent); }
+.bank-view { padding-bottom: 28px; }
+.bank-controls { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; margin: 20px 0; }
+.bank-controls label { display: grid; flex: 1; gap: 7px; min-width: 180px; }
+.bank-controls input { width: 100%; box-sizing: border-box; border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; background: var(--surface); color: inherit; font: inherit; }
+.bank-card { min-width: 0; text-align: start; }
+.bank-card .activity-copy { overflow-wrap: anywhere; min-width: 0; }
+.bank-card:disabled { opacity: .6; cursor: default; }
+.bank-view details { margin-top: 24px; overflow-wrap: anywhere; color: var(--muted); }
+.bank-view details p { padding: 12px; background: var(--subject-soft); border-radius: 10px; }
+.bank-view .content-breadcrumb { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+.bank-view .content-breadcrumb button { color: var(--subject-accent); border: 0; background: transparent; font: inherit; cursor: pointer; padding: 6px; }
+.bank-entry:focus-visible, .bank-view button:focus-visible, .bank-view input:focus-visible { outline: 3px solid var(--subject-accent); outline-offset: 3px; }
+@media (max-width: 620px) { .bank-entry { padding: 18px; gap: 12px; } .bank-view .activity-grid { grid-template-columns: 1fr; } }

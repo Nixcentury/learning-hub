@@ -1366,3 +1366,5 @@ body { --keyboard-zindex: 1900; --keycap-height: 46px; --keyboard-accent-color: 
 @media (max-width: 540px) {
   body { --keycap-font-size: 18px; --keycap-small-font-size: 14px; --keycap-gap: 2px; --keyboard-padding-horizontal: 3px; }
 }
+/* Bank versions share the same player and printing controls. */
+.quiz-bank-version { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin: 14px 0; padding: 12px 16px; border: 1px solid var(--quiz-line); border-radius: 14px; background: var(--quiz-blue-soft); color: var(--quiz-ink); font-size: .9rem; }

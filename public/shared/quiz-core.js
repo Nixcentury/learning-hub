@@ -5,6 +5,7 @@ import { hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer } from "
 import { mountNumericAnswer, hideMathKeyboard } from "./quiz-math-input.js";
 import { mountDragAnswer } from "./quiz-drag-view.js";
 import { dragAnswerSummary } from "./quiz-drag-model.js";
+import { readBankSelection, loadBankQuiz } from "./question-bank-player.js";
 
 /* ==============================================================
    Quiz Engine กลางของ Learning Hub
@@ -67,6 +68,10 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
   let navigationRevision = 0;
   let closing = false;
   let dragAnswerUi = null;
+  let bankSelection = null, bankReplacementBase;
+  let bankContextWaiter = null, contentLoadVersion = 0, bankReloadBusy = false;
+  try { bankSelection = readBankSelection(location.search); }
+  catch (error) { loading.hidden = true; errorBox.hidden = false; errorBox.textContent = error.message; return; }
 
   const notebookBackupUi = createNotebookBackupUi({
     getManager: () => evidenceManager,
@@ -149,6 +154,7 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
       version: 2,
       identityKey: state.identityKey,
       contentId: state.contentId,
+      ...(state.bankRevision ? { bankRevision: state.bankRevision } : {}),
       answers: { ...state.answers },
       giveUps: { ...state.giveUps },
       hintLevels: { ...state.hintLevels },
@@ -165,7 +171,8 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
           ? evidenceManager.serializeLocal()
           : evidenceManager.serializeCloud()
         : state.evidenceSnapshot,
-      ...(includeLocalEvidence ? { localSync: { base: syncBase, dirty: unsyncedChanges } } : {}),
+      ...(includeLocalEvidence ? { localSync: { base: syncBase, dirty: unsyncedChanges,
+        ...(bankReplacementBase !== undefined ? { bankReplacementBase } : {}) } } : {}),
     };
   }
 
@@ -175,6 +182,7 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
     // records without these optional identity fields remain readable.
     if (saved.identityKey && saved.identityKey !== state.identityKey) return false;
     if (saved.contentId && saved.contentId !== state.contentId) return false;
+    if (state.bankRevision && saved.bankRevision !== state.bankRevision) return false;
     const isMap = (value) => value == null || (typeof value === "object" && !Array.isArray(value));
     if (![saved.answers, saved.giveUps, saved.hintLevels].every(isMap)) return false;
     if (saved.masteredIds != null && !Array.isArray(saved.masteredIds)) return false;
@@ -245,6 +253,7 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
     const ordered = (map) => Object.entries(map || {}).sort(([a], [b]) => a.localeCompare(b))
       .map(([key, value]) => [key, value && typeof value === "object" && !Array.isArray(value) ? ordered(value) : value]);
     return JSON.stringify({
+      ...(value.bankRevision ? { bankRevision: value.bankRevision } : {}),
       answers: ordered(value.answers), giveUps: ordered(value.giveUps),
       hintLevels: ordered(value.hintLevels), masteredIds: [...(value.masteredIds || [])].sort(),
       attempt: value.attempt || 1, latestScore: value.latestScore ? ordered(value.latestScore) : null,
@@ -296,7 +305,8 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
           resolve(result);
         },
       });
-      parent.postMessage({ type, requestId, uid, contentId, value }, targetOrigin);
+      parent.postMessage({ type, requestId, uid, contentId, value,
+        ...(bankSelection && type === 'learning-hub-quiz-save' ? { bankExpectedRevision: bankReplacementBase ?? state.bankRevision } : {}) }, targetOrigin);
     });
   }
 
@@ -317,6 +327,12 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
       return;
     }
     const remote = result.value;
+    if (bankSelection && bankReplacementBase !== undefined) {
+      if ((remote?.bankRevision || '') !== bankReplacementBase) {
+        state.storageStatus = 'cloud-error'; renderStorageStatus(); return;
+      }
+      cloudReady = true; markEdited(); await saveCloudNow(); render(); return;
+    }
     if (remote && !validSnapshot(remote)) {
       state.storageStatus = "cloud-error";
       renderStorageStatus();
@@ -388,6 +404,7 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
     const result = await requestCloud("learning-hub-quiz-save", value);
     if (epoch !== identityEpoch || sequence !== writeSequence) return result;
     if (result?.ok) {
+      bankReplacementBase = undefined;
       syncBase = progressSignature(value);
       unsyncedChanges = revision !== changeRevision;
       saveLocalNow();
@@ -1049,6 +1066,11 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
   }
 
   function restart() {
+    if (bankSelection) {
+      if (bankReloadBusy || cloudLoadPending) return;
+      if (!window.confirm(label('เริ่มใหม่ด้วยโจทย์ล่าสุดและล้างคำตอบรอบนี้หรือไม่?', 'Start with the latest questions and clear this attempt?'))) return;
+      void startLatestBankQuiz(); return;
+    }
     state.questions.forEach(question => evidenceManager?.markContextChanged(question.id));
     state.answers = {};
     state.giveUps = {};
@@ -1102,7 +1124,7 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
     evidenceManager?.dispose();
     const epoch = identityEpoch;
     evidenceManager = new QuizEvidenceManager({
-      contentId: state.contentId,
+      contentId: state.bankRevision ? `${state.contentId}-r${state.bankRevision}` : state.contentId,
       identityKey: state.identityKey,
       questions: state.questions,
       language,
@@ -1128,20 +1150,72 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
     evidenceManager.restore(state.evidenceSnapshot);
   }
 
-  async function loadContent() {
+  async function startLatestBankQuiz() {
+    if (!contentReady || submissionBusy || closing || bankReloadBusy || cloudLoadPending) return;
+    bankReloadBusy = true;
+    const epoch = identityEpoch;
+    const banner = document.querySelector('[data-bank-version]');
+    if (banner) banner.inert = true;
+    app.inert = true;
     try {
-      const source = resolveContentSource();
-      if (!source) throw new Error("No content file was selected.");
-      const response = await fetch(new URL(source, location.href));
-      if (!response.ok) throw new Error(`Content request failed (${response.status}).`);
-      const documentCopy = new DOMParser().parseFromString(await response.text(), "text/html");
-      const root = documentCopy.querySelector("[data-learning-activity-content]");
-      // Relative diagrams belong to the content file, not the player route.
-      root?.querySelectorAll("img[src]").forEach(image => {
-        image.src = new URL(image.getAttribute("src"), response.url || new URL(source, location.href)).href;
-      });
+      flushLocal();
+      await saveCloudNow();
+      if (epoch !== identityEpoch || closing) return;
+      clearTimeout(localSaveHandle); clearTimeout(cloudSaveHandle);
+      await loadContent({ fresh: true });
+    } finally {
+      bankReloadBusy = false;
+      if (banner) banner.inert = false;
+      if (!closing) app.inert = false;
+    }
+  }
+
+  async function waitForBankContext() {
+    if (parent === window) throw Error('กรุณาเปิดคลังผ่าน Learning Hub / Open the bank through Learning Hub');
+    if (latestHubContext) return latestHubContext;
+    return new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => { bankContextWaiter = null; reject(Error('Hub context unavailable')); }, 8000);
+      bankContextWaiter = context => { clearTimeout(timeout); bankContextWaiter = null; resolve(context); };
+      parent.postMessage({ type: 'learning-hub-quiz-ready' }, location.origin);
+    });
+  }
+
+  async function loadContent({ fresh = false } = {}) {
+    const loadVersion = ++contentLoadVersion;
+    try {
+      let root, bankResult;
+      if (bankSelection) {
+        const context = await waitForBankContext();
+        if (!['signed-in', 'guest'].includes(context.identity?.status)) throw Error('Please sign in or choose Guest');
+        state.identityKey = context.identity.uid || 'guest';
+        state.contentId = bankSelection.contentId;
+        const identity = state.identityKey;
+        bankResult = await loadBankQuiz({ selection: bankSelection, identityKey: identity,
+          loadCloud: () => requestCloud('learning-hub-quiz-load'), fresh });
+        if ((latestHubContext?.identity?.uid || 'guest') !== identity) return loadContent();
+        root = bankResult.root;
+      } else {
+        const source = resolveContentSource();
+        if (!source) throw new Error("No content file was selected.");
+        const response = await fetch(new URL(source, location.href));
+        if (!response.ok) throw new Error(`Content request failed (${response.status}).`);
+        const documentCopy = new DOMParser().parseFromString(await response.text(), "text/html");
+        root = documentCopy.querySelector("[data-learning-activity-content]");
+        root?.querySelectorAll("img[src]").forEach(image => {
+          image.src = new URL(image.getAttribute("src"), response.url || new URL(source, location.href)).href;
+        });
+      }
+      if (loadVersion !== contentLoadVersion) return;
       const validation = validateContent(root);
       if (validation.errors.length) throw new Error(validation.errors.join(" "));
+
+      if (fresh) {
+        evidenceManager?.dispose(); evidenceManager = null;
+        Object.assign(state, { answers: {}, giveUps: {}, hintLevels: {}, masteredIds: [], currentIndex: 0,
+          attempt: 1, view: 'exam', startedAt: Date.now(), elapsedBeforeMs: 0, latestScore: null, savedAt: 0, evidenceSnapshot: null });
+        syncBase = null; unsyncedChanges = false; pendingRemote = null; cloudReady = false;
+      }
+      if (bankResult) { state.bankRevision = bankResult.revision; bankReplacementBase = bankResult.replacementBase; }
 
       contentRoot = root;
       state.contentId = root.dataset.activityId;
@@ -1149,9 +1223,23 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
       preparePrintSource(contentRoot);
       printSource.replaceChildren(contentRoot);
       contentReady = true;
-      loadLocal();
+      if (!fresh) loadLocal();
       initializeEvidenceManager();
       if (latestHubContext) applyHubContext(latestHubContext);
+      if (bankSelection) {
+        document.querySelector('[data-summary-open]').hidden = true;
+        document.querySelector('[data-print-mode="summary"]').hidden = true;
+        let banner = document.querySelector('[data-bank-version]');
+        if (!banner) { banner = document.createElement('aside'); banner.dataset.bankVersion = ''; banner.className = 'quiz-bank-version'; loading.before(banner); }
+        banner.replaceChildren();
+        const text = document.createElement('span'); text.dataset.th = 'ชุดข้อสอบนี้เก็บรุ่นที่เริ่มทำไว้แล้ว'; text.dataset.en = 'This attempt keeps its original questions.';
+        text.textContent = text.dataset[language()];
+        const button = document.createElement('button'); button.type = 'button'; button.className = 'quiz-quiet-button';
+        button.dataset.th = 'เริ่มชุดล่าสุด'; button.dataset.en = 'Start latest set'; button.textContent = button.dataset[language()]; button.onclick = restart;
+        banner.append(text, button);
+        if (fresh) { markEdited(); saveLocalNow(); }
+        if (state.identityKey !== 'guest') void loadCloud();
+      }
 
       window.LearningHubPrint?.configure({
         getTitle: () => contentRoot.querySelector("[data-activity-title]")?.dataset[language()],
@@ -1159,6 +1247,7 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
       });
 
       loading.hidden = true;
+      errorBox.hidden = true;
       app.hidden = false;
       render();
       document.dispatchEvent(
@@ -1168,6 +1257,7 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
         parent.postMessage({ type: "learning-hub-quiz-ready" }, location.origin === "null" ? "*" : location.origin);
       }
     } catch (error) {
+      if (loadVersion !== contentLoadVersion) return;
       loading.hidden = true;
       errorBox.hidden = false;
       errorBox.textContent = label(`เปิด Quiz ไม่สำเร็จ: ${error.message}`, `Could not open quiz: ${error.message}`);
@@ -1176,9 +1266,11 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
 
   function applyHubContext(context) {
     latestHubContext = context;
+    bankContextWaiter?.(context);
     const nextIdentity = context?.identity?.uid || "guest";
     if (context?.language && context.language !== language()) setLanguage(context.language);
     if (!contentReady || nextIdentity === state.identityKey) return;
+    if (bankSelection) { flushLocal(); location.reload(); return; }
     flushLocal();
     identityEpoch += 1;
     notebookBackupUi.invalidate();

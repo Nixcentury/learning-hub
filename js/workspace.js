@@ -9,6 +9,7 @@ import {
   createHubContextMessage,
 } from "./content-context.js";
 import { createContentTool } from "./content-tool.js";
+import { createBankTool } from "./question-bank-tools.js";
 import { htmlLinkEntry } from "./html-link.js";
 import { renderHtmlMath } from "./html-math.js";
 import { openHtmlPrint } from "./html-print.js";
@@ -759,6 +760,15 @@ export function createWorkspace({
     return open(tool.id);
   }
 
+  function openBank(entry) {
+    const tool = createBankTool(entry, location.href);
+    if (!tool) return false;
+    const previous = toolCatalog[tool.id];
+    if (previous && previous.source !== tool.source) return false;
+    toolCatalog[tool.id] = tool;
+    return open(tool.id);
+  }
+
   const htmlLinkDocuments = new WeakSet();
   function bindHtmlLinks(doc, ownerRecord = null) {
     if (!doc || htmlLinkDocuments.has(doc)) return;
@@ -862,5 +872,5 @@ export function createWorkspace({
     });
   });
 
-  return { open, openContent, bindHtmlLinks, showMenu, setLanguage, setContext, clear, prepareAllForClose };
+  return { open, openContent, openBank, bindHtmlLinks, showMenu, setLanguage, setContext, clear, prepareAllForClose };
 }

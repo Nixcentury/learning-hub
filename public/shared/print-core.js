@@ -27,6 +27,7 @@
   let configuredContent = null;
   let selectedQuestionIds = new Set();
   let activeMode = null;
+  let preparingPrint = false;
 
   function language() {
     return document.documentElement.lang === "en" ? "en" : "th";
@@ -324,12 +325,26 @@
     activeMode = null;
   }
 
-  function print(mode = "worksheet") {
+  async function typesetPrint() {
+    if (window.MathJax?.startup?.promise) await window.MathJax.startup.promise;
+    if (window.MathJax?.typesetPromise) await window.MathJax.typesetPromise([printHost]);
+    await document.fonts?.ready;
+  }
+
+  async function print(mode = "worksheet") {
+    if (preparingPrint) return;
     if (!prepare(mode)) {
       setSelectionPanel(true);
       return;
     }
-    window.print();
+    preparingPrint = true;
+    try {
+      await typesetPrint();
+      window.print();
+    } catch {
+      restore();
+      window.alert(localized('จัดสูตรสำหรับพิมพ์ไม่สำเร็จ กรุณาลองอีกครั้ง', 'Could not prepare equations for printing. Please retry.'));
+    } finally { preparingPrint = false; }
   }
 
   function configure({ getTitle, getContent } = {}) {
@@ -362,6 +377,7 @@
     configure,
     getSelectedQuestionIds: () => [...selectedQuestionIds],
     prepare,
+    typesetPrint,
     print,
     restore,
     selectAll: () => setAllQuestions(true),

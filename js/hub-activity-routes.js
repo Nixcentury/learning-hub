@@ -1,12 +1,18 @@
 import { resolveHubRoute } from './hub-routes.js';
 import { createContentTool } from './content-tool.js';
 import { toolCatalog } from './legacy-tool-catalog.js';
+import { createBankTool } from './question-bank-tools.js';
 
-export const isMenuRoute = route => ['section', 'chapter', 'topic'].includes(route?.kind);
-export const isActivityRoute = route => ['content', 'legacy-tool'].includes(route?.kind);
+export const isMenuRoute = route => ['section', 'chapter', 'topic', 'bank'].includes(route?.kind);
+export const isActivityRoute = route => ['content', 'legacy-tool', 'bank-tool'].includes(route?.kind);
 
 // Resolve only authored catalog entries, never a source URL supplied in the hash.
 export function activityForRoute(catalog, route, hubUrl) {
+  if (route?.kind === 'bank-tool') {
+    const bank = { subjectId: route.subjectId, bankKey: route.bankKey, toolKey: route.toolKey };
+    const tool = createBankTool(bank, hubUrl);
+    return tool ? { bank, tool } : null;
+  }
   if (route?.kind === 'legacy-tool') {
     const tool = toolCatalog[route.toolId];
     return tool?.context?.contentId === route.storageContentId && tool
@@ -42,6 +48,12 @@ export function menuForRoute(catalog, route) {
 
 export function routeForTool(catalog, tool, current, hubUrl) {
   if (!tool) return null;
+  if (tool.bankRoute) {
+    const route = resolveHubRoute(catalog, tool.bankRoute).route;
+    const expected = activityForRoute(catalog, route, hubUrl)?.tool;
+    if (expected?.id === tool.id && expected.source === tool.source) return route;
+    return null;
+  }
   const matches = catalog.routes.filter(route => {
     const activity = activityForRoute(catalog, route, hubUrl);
     return activity?.tool.id === tool.id && (!tool.source || activity.tool.source === tool.source);

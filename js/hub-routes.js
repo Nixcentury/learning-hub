@@ -1,4 +1,5 @@
 // Phase 1 contract only: no navigation, history, authentication or storage effects.
+import { resolveBankRoute } from './question-bank-tools.js';
 export const routeCatalogVersion = 1;
 export const routeCatalogFile = 'route-catalog.v1.json';
 export const routeSegmentPattern = /^[a-z0-9][a-z0-9-]{0,127}$/;
@@ -16,7 +17,7 @@ export function parseHubRoute(hash) {
 export function resolveHubRoute(catalog, hash) {
   const parsed = parseHubRoute(hash);
   if (!parsed || catalog?.schemaVersion !== routeCatalogVersion || !Array.isArray(catalog.routes) || !Array.isArray(catalog.contents)) return { status: 'invalid' };
-  const route = catalog.routes.find(entry => entry?.hash === parsed.hash || entry?.aliases?.includes(parsed.hash));
+  const route = catalog.routes.find(entry => entry?.hash === parsed.hash || entry?.aliases?.includes(parsed.hash)) || resolveBankRoute(parsed.segments);
   if (!route) return { status: 'not-found', hash: parsed.hash };
   const content = route.contentId ? catalog.contents.find(entry => entry.id === route.contentId) : null;
   return { status: route.status, canonicalHash: route.hash, route, content };

@@ -99,12 +99,25 @@ window.addEventListener("message", async (event) => {
     }
 
     const record = cleanRecord(message.value);
-    await set(progressRef, {
+    const next = {
       ...record,
       uid,
       contentId,
       updatedAt: serverTimestamp(),
-    });
+    };
+    if (contentId.startsWith('bank-')) {
+      if (!/^[a-f0-9]{64}$/.test(record.bankRevision || '') ||
+          (message.bankExpectedRevision !== '' && !/^[a-f0-9]{64}$/.test(message.bankExpectedRevision || ''))) throw Error('quiz-progress/invalid-bank-revision');
+      const { runTransaction } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js');
+      const transaction = await runTransaction(progressRef, current => {
+        if (!sessionIsCurrent()) return;
+        // Firebase may first invoke this with a cold local cache (null).
+        // A retry with the server value must satisfy the revision precondition.
+        if (current && (current.bankRevision || '') !== message.bankExpectedRevision) return;
+        return next;
+      }, { applyLocally: false });
+      if (!transaction.committed) throw Error('quiz-progress/version-changed');
+    } else await set(progressRef, next);
     respond(sessionIsCurrent()
       ? { ok: true, action: "save" }
       : { ok: false, code: "quiz-progress/session-changed" });

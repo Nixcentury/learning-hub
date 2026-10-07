@@ -24,7 +24,7 @@ function fixture() {
   ]);
 }
 const make = records => buildRouteCatalog({ read: async name => {
-  if (!records.has(name)) throw Error('Missing file');
+  if (!records.has(name)) throw Object.assign(Error('Missing file'), { code: 'ENOENT' });
   return records.get(name);
 } });
 function change(records, file, from, to) { records.set(file, records.get(file).replace(from, to)); }
@@ -87,14 +87,13 @@ test('moving a file and updating its menu keeps every route and Quiz identity', 
   assert.equal(resolveHubRoute(after, '#content/quiz-one').content.source, 'content/relocated/quiz.html');
 });
 
-test('identity conflicts, mismatching activity IDs, and missing targets fail the build', async () => {
-  for (const scenario of ['duplicate', 'mismatch', 'missing', 'context']) {
+test('identity conflicts and mismatching activity IDs or menu context fail the build', async () => {
+  for (const scenario of ['duplicate', 'mismatch', 'context']) {
     const records = fixture();
     if (scenario === 'duplicate') {
       records.set('content/p/other.html', records.get('content/p/quiz.html'));
       change(records, 'content/p/topic.html', '</nav>', '<a data-tool-kind="quiz" data-content-id="quiz-one" href="other.html"></a></nav>');
     } else if (scenario === 'mismatch') change(records, 'content/p/quiz.html', 'quiz-one', 'another-id');
-    else if (scenario === 'missing') records.delete('content/p/quiz.html');
     else change(records, 'content/p/topic.html', 'data-chapter-id="1"', 'data-chapter-id="2"');
     await assert.rejects(make(records), /conflict|does not match|Missing file|context mismatch/i);
   }
@@ -133,7 +132,7 @@ test('HTML reference buttons inside quizzes and simulations also receive share r
 test('unfinished activity menu diagnostics name the file, content ID, and missing field', async () => {
   const records = fixture();
   change(records, 'content/p/topic.html', 'href="quiz.html"', '');
-  await assert.rejects(make(records), /content\/p\/topic.html: Content quiz-one: missing href/);
+  assert.equal(resolveHubRoute(await make(records), '#content/quiz-one').status, 'preparing');
   change(records, 'content/p/topic.html', 'data-tool-kind="quiz"', 'data-tool-kind="practice"');
   await assert.rejects(make(records), /Content quiz-one: data-tool-kind must be quiz, simulation, or html/);
 });

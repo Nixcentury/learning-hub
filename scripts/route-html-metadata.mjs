@@ -10,11 +10,13 @@ export function decodeMetadata(value) {
   });
 }
 
-export function readMetadata(source) {
+export function readMetadata(source, { strict = false } = {}) {
   const root = { tag: 'root', attrs: {}, children: [], text: '' };
+  const optionalEnd = new Set('html head body p li dt dd rt rp option optgroup colgroup thead tbody tfoot tr td th'.split(' '));
+  const syntax = (message, offset) => { const error = Error(message); error.line = source.slice(0, offset).split('\n').length; throw error; };
   const stack = [root];
   const tokens = /<!--[\s\S]*?-->|<![^>]*>|<\/?[a-z][a-z0-9:-]*(?:[^"'<>]|"[^"]*"|'[^']*')*>|[^<]+|</gi;
-  let rawTag = null;
+  let rawTag = null, rawOffset = 0;
   for (const match of source.matchAll(tokens)) {
     const token = match[0];
     if (rawTag) { if (new RegExp(`^</${rawTag}\\s*>$`, 'i').test(token)) rawTag = null; continue; }
@@ -22,24 +24,35 @@ export function readMetadata(source) {
     const end = token.match(/^<\/([\w:-]+)/);
     if (end) {
       const position = stack.findLastIndex(node => node.tag === end[1].toLowerCase());
+      if (strict && position < 1 && !voidTags.has(end[1].toLowerCase())) syntax(`แท็กปิด </${end[1]}> ไม่มีแท็กเปิดที่ตรงกัน`, match.index);
+      if (strict && position > 0) {
+        const unclosed = stack.slice(position + 1).find(node => !optionalEnd.has(node.tag));
+        if (unclosed) syntax(`ลืมปิดแท็ก <${unclosed.tag}> ก่อน </${end[1]}>`, unclosed.offset);
+      }
       if (position > 0) stack.length = position;
       continue;
     }
     const start = token.match(/^<([\w:-]+)/);
-    if (!start) { stack.at(-1).text += decodeMetadata(token); continue; }
+    if (!start) {
+      if (strict && token === '<' && /^\/?[a-z!]/i.test(source.slice(match.index + 1))) syntax('แท็ก HTML เขียนไม่ครบ ตรวจเครื่องหมาย > และเครื่องหมายคำพูด', match.index);
+      stack.at(-1).text += decodeMetadata(token); continue;
+    }
     const tag = start[1].toLowerCase();
-    if (['script', 'style', 'textarea', 'title', 'xmp'].includes(tag)) { rawTag = tag; continue; }
+    if (['script', 'style', 'textarea', 'title', 'xmp'].includes(tag)) { rawTag = tag; rawOffset = match.index; continue; }
     const attrs = Object.create(null);
     const attrSource = token.slice(start[0].length).replace(/\/?\s*>$/, '');
     for (const attr of attrSource.matchAll(/([^\s="'<>/]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g)) {
       const key = attr[1].toLowerCase();
-      if (Object.hasOwn(attrs, key)) throw Error(`Duplicate HTML attribute: ${key}`);
+      if (Object.hasOwn(attrs, key)) syntax(`Duplicate HTML attribute: ${key}`, match.index);
       attrs[key] = decodeMetadata(attr[2] ?? attr[3] ?? attr[4] ?? '');
     }
-    const node = { tag, attrs, children: [], text: '' };
+    const node = { tag, attrs, children: [], text: '', offset: match.index, line: source.slice(0, match.index).split('\n').length };
     stack.at(-1).children.push(node);
     if (!voidTags.has(tag) && !token.endsWith('/>')) stack.push(node);
   }
+  if (strict && rawTag) syntax(`ลืมปิดแท็ก <${rawTag}>`, rawOffset);
+  const unclosed = stack.slice(1).find(node => !optionalEnd.has(node.tag));
+  if (strict && unclosed) syntax(`ลืมปิดแท็ก <${unclosed.tag}>`, unclosed.offset);
   return root;
 }
 

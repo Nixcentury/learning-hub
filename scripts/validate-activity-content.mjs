@@ -1,27 +1,42 @@
-import { readdir, readFile } from "node:fs/promises";
+import { readdir, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { extname, join, relative, sep } from "node:path";
+import { extname, join, relative, sep, resolve } from "node:path";
 import { parseNumericAnswer } from "../public/shared/quiz-question-model.js";
 import { readMetadata } from "./route-html-metadata.mjs";
 import { validateLearningSheet } from "../js/learning-sheet-model.js";
+import { lineAt, withoutComments, reportContentDiagnostics } from './content-diagnostics.mjs';
 
-const contentDirectory = fileURLToPath(new URL("../public/content", import.meta.url));
+export function createContentValidator({ root = fileURLToPath(new URL('../', import.meta.url)), read = readFile } = {}) {
+const contentDirectory = join(root, 'public', 'content');
 const allowedQuestionTypes = new Set(["choice", "number", "drag-drop"]);
 const allowedActivityKinds = new Set(["practice", "quiz"]);
 const errors = [];
+const diagnostics = [], sources = new Map(), offsets = new Map();
 const activityIds = new Map();
 const stableMenuId = /^[a-z0-9][a-z0-9-]{0,127}$/;
 
-async function readMenuTarget(file, href) {
+async function readMenuTarget(file, href, { draft = false, allowDraft = false } = {}) {
+  href = href?.trim() || '';
+  if (!href) {
+    (allowDraft ? addWarning : addError)(file, 'ยังไม่มี href/ไฟล์ปลายทาง: ใส่ลิงก์เมื่อพร้อม ขณะนี้แสดง “กำลังเตรียมเนื้อหา”');
+    return null;
+  }
+  let path;
   try {
     const base = pathToFileURL(contentDirectory + sep);
     const url = new URL(href, pathToFileURL(file));
-    if (!href || url.protocol !== "file:" || url.host || !url.pathname.startsWith(base.pathname) ||
-        !url.pathname.endsWith(".html") || url.search || url.hash || /%(?:2e|2f|5c|25)/i.test(url.pathname)) throw new Error("Unsafe path");
-    const path = fileURLToPath(url);
-    return { path, source: (await readFile(path, "utf8")).replace(/<!--[\s\S]*?-->/g, "") };
+    if (/[\\\u0000-\u0020]/.test(href) || /^(?:[a-z][\w+.-]*:|\/\/)/i.test(href) || url.protocol !== "file:" || url.host || !url.pathname.startsWith(base.pathname) ||
+        !url.pathname.endsWith(".html") || url.search || url.hash || /%(?:2e|2f|5c|25|00)/i.test(url.pathname)) throw new Error("Unsafe path");
+    path = fileURLToPath(url);
   } catch {
-    addError(file, `Missing or invalid local content link: ${href || "(empty)"}`);
+    addError(file, `Invalid local content link: ${href}. ใช้ลิงก์ไฟล์ .html ภายใน public/content ไม่มี query หรือ #`);
+    return null;
+  }
+  if (draft && allowDraft) { addWarning(file, `data-status="draft": ${href} ยังไม่เปิดให้ใช้งาน เอา data-status ออกเมื่อพร้อม`); return null; }
+  try { return { path, source: withoutComments(await read(path, 'utf8')) }; }
+  catch (error) {
+    if (allowDraft && ['ENOENT', 'ENOTDIR'].includes(error.code)) addWarning(file, `ยังไม่มีไฟล์ปลายทาง ${href}: สร้างไฟล์นี้หรือแก้ href ขณะนี้แสดง “กำลังเตรียมเนื้อหา”`);
+    else addError(file, `อ่านไฟล์ปลายทาง ${href} ไม่ได้: ${error.message}`);
     return null;
   }
 }
@@ -30,6 +45,7 @@ async function validateMenu(file, source) {
   const roots = [...source.matchAll(/<nav\b[^>]*\bdata-learning-menu(?:\s|=|>)[^>]*>/gi)];
   if (roots.length !== 1) { addError(file, "Menu needs exactly one nav data-learning-menu root."); return; }
   const root = readAttributes(roots[0][0]);
+  offsets.set(file, roots[0].index);
   const kind = root.get("data-menu-kind");
   if (!["topics", "tools"].includes(kind)) addError(file, "Menu kind must be topics or tools.");
   for (const attr of ["data-subject-id", "data-chapter-id", ...(kind === "tools" ? ["data-topic-id"] : [])]) {
@@ -41,28 +57,30 @@ async function validateMenu(file, source) {
     const overviewSource = root.get("data-chapter-overview-src").trim();
     const overviewId = `${root.get("data-subject-id")}-chapter-${root.get("data-chapter-id")}-overview`;
     if (!stableMenuId.test(overviewId)) addError(file, "Chapter overview ID is too long or invalid.");
-    if (overviewSource) {
-      const target = await readMenuTarget(file, overviewSource);
+    {
+      const target = await readMenuTarget(file, overviewSource, { allowDraft: true });
       if (target && !/<html\b[^>]*\bdata-learning-html(?:\s|=|>)/i.test(target.source)) {
         addError(file, "Chapter overview must link to an HTML document with <html data-learning-html>.");
       }
     }
   }
   if (/<\s*(script|style|link|iframe|object|embed|form|button|input|textarea|select)\b/i.test(source) || /\s(?:class|style|on[a-z]+)\s*=/i.test(source)) {
+    offsets.set(file, source.search(/<\s*(script|style|link|iframe|object|embed|form|button|input|textarea|select)\b|\s(?:class|style|on[a-z]+)\s*=/i));
     addError(file, "Menu HTML is data only: no scripts, styles, handlers or custom controls.");
   }
   const seen = new Set();
   for (const match of source.matchAll(/<a\b[^>]*>/gi)) {
+    offsets.set(file, match.index);
     const entry = readAttributes(match[0]);
     const isHtml = entry.get("data-tool-kind") === "html";
     const id = entry.get(kind === "topics" && !isHtml ? "data-topic-id" : "data-content-id");
     if (!stableMenuId.test(id || "") || seen.has(id)) addError(file, `Missing, invalid or duplicate menu entry ID: ${id}`);
     seen.add(id);
     if (!hasBilingualText(match[0])) addError(file, `${id} needs data-th and data-en.`);
-    // Topic headings may be published before their activity-menu file exists.
-    // Explicit non-empty links must still be valid; never hide broken links.
-    if (kind === "topics" && !isHtml && !entry.get("href")?.trim()) continue;
-    const target = await readMenuTarget(file, entry.get("href"));
+    if (entry.get('data-status') && !['draft', 'ready'].includes(entry.get('data-status'))) addError(file, `${id}: data-status ใช้ draft หรือ ready เท่านั้น`);
+    if (kind === 'tools' && !['quiz', 'simulation', 'html'].includes(entry.get('data-tool-kind'))) addError(file, `${id}: data-tool-kind ต้องเป็น quiz, simulation หรือ html`);
+    if ((kind === 'tools' || isHtml) && !/^[a-z]/.test(id || '')) addError(file, `${id}: data-content-id ต้องขึ้นต้นด้วยตัวอักษร`);
+    const target = await readMenuTarget(file, entry.get("href"), { allowDraft: true, draft: entry.get('data-status') === 'draft' });
     if (!target) continue;
     if (isHtml) {
       if (!/^[a-z][a-z0-9-]{0,127}$/.test(id || "")) addError(file, "HTML content ID must start with a letter.");
@@ -121,12 +139,17 @@ function hasBilingualText(openingTag) {
   return Boolean(attributes.get("data-th")?.trim() && attributes.get("data-en")?.trim());
 }
 
-function addError(file, message) {
-  errors.push(`${relative(contentDirectory, file)}: ${message}`);
+function addDiagnostic(level, file, message, line) {
+  const item = { level, file: relative(root, file).replaceAll('\\', '/'), line: line || lineAt(sources.get(file) || '', offsets.get(file) || 0), message };
+  diagnostics.push(item);
+  if (level === 'error') errors.push(`${item.file}:${item.line}: ${message}`);
 }
+function addError(file, message, line) { addDiagnostic('error', file, message, line); }
+function addWarning(file, message) { addDiagnostic('warning', file, message); }
 
 async function validateHtmlLinks(file, source) {
   for (const match of source.matchAll(/<(?:a|button)\b[^>]*\bdata-hub-html(?:\s|=|>)[^>]*>/gi)) {
+    offsets.set(file, match.index);
     const attributes = readAttributes(match[0]);
     if (!/^[a-z][a-z0-9-]{0,127}$/.test(attributes.get("data-content-id") || "")) addError(file, "HTML link needs a stable data-content-id starting with a letter.");
     const target = await readMenuTarget(file, attributes.get("data-html-src") || attributes.get("href"));
@@ -223,8 +246,12 @@ function validateQuestion(file, openingTag, body, index, seenIds) {
 }
 
 async function validateFile(file) {
-  const source = (await readFile(file, "utf8")).replace(/<!--[\s\S]*?-->/g, "");
+  const source = withoutComments(await read(file, 'utf8'));
+  sources.set(file, source); offsets.set(file, 0);
+  try { readMetadata(source, { strict: true }); }
+  catch (error) { addError(file, error.message, error.line); return; }
   await validateHtmlLinks(file, source);
+  offsets.set(file, 0);
   if (findOpeningTag(source, "data-learning-html")) {
     const roots = [...source.matchAll(/<html\b[^>]*\bdata-learning-html(?:\s|=|>)[^>]*>/gi)];
     if (roots.length !== 1) addError(file, "Read-only HTML needs exactly one <html data-learning-html> root.");
@@ -232,6 +259,7 @@ async function validateFile(file) {
       addError(file, "Read-only HTML must not also be a menu, quiz or simulation.");
     }
     if (/<\s*(script|iframe|object|embed|form)\b/i.test(source) || /\son[a-z]+\s*=/i.test(source) || /\b(?:href|src)\s*=\s*["']\s*javascript:/i.test(source)) {
+      offsets.set(file, source.search(/<\s*(script|iframe|object|embed|form)\b|\son[a-z]+\s*=|\b(?:href|src)\s*=\s*["']\s*javascript:/i));
       addError(file, "Read-only HTML cannot contain scripts, event handlers, embedded frames or forms.");
     }
     if (findOpeningTag(source, "data-learning-sheet") || /\bdata-sheet-(?:slot|answer|placeholder)\b/i.test(source)) {
@@ -265,6 +293,7 @@ async function validateFile(file) {
   }
 
   if (/<\s*(script|style|link|iframe|object|embed|form|button|input|textarea|select)\b/i.test(source)) {
+    offsets.set(file, source.search(/<\s*(script|style|link|iframe|object|embed|form|button|input|textarea|select)\b/i));
     addError(file, "Content files cannot contain scripts, styles, forms, buttons, or inputs.");
   }
   if (/\s(?:class|style|on[a-z]+)\s*=/i.test(source)) {
@@ -314,26 +343,32 @@ async function validateFile(file) {
   const mode = rootAttributes.get("data-quiz-mode") || "standard";
   if (!["standard", "drag-drop"].includes(mode)) addError(file, "Quiz mode must be standard or drag-drop.");
   questionBlocks.forEach((match, index) => {
+    offsets.set(file, match.index);
     const isDrag = readAttributes(`<article ${match[1]}>`).get("data-question-type") === "drag-drop";
     if (isDrag !== (mode === "drag-drop")) addError(file, "Drag-drop must be a separate data-quiz-mode=drag-drop set, without choice/number questions.");
     validateQuestion(file, `<article ${match[1]}>`, match[2], index, seenIds);
   });
 }
 
+async function run() {
 const files = await listHtmlFiles(contentDirectory);
 await Promise.all(files.map(validateFile));
 
-// Copying a chapter should need only HTML edits, but every chapter link must be real.
-const pagesDirectory = fileURLToPath(new URL("../public/pages", import.meta.url));
+// Declared chapter menus can be drafts; malformed destinations remain errors.
+const pagesDirectory = join(root, 'public', 'pages');
 for (const name of await readdir(pagesDirectory)) {
   if (!name.endsWith(".html")) continue;
   const file = join(pagesDirectory, name);
-  const source = (await readFile(file, "utf8")).replace(/<!--[\s\S]*?-->/g, "");
+  const source = withoutComments(await read(file, 'utf8'));
+  sources.set(file, source); offsets.set(file, 0);
   await validateHtmlLinks(file, source);
   const subject = readAttributes(findOpeningTag(source, "data-subject-id")).get("data-subject-id");
-  for (const match of source.matchAll(/<article\b[^>]*\bdata-chapter-src\s*=[^>]*>/gi)) {
+  for (const match of source.matchAll(/<article\b[^>]*\bdata-chapter\s*=[^>]*>/gi)) {
     const entry = readAttributes(match[0]);
-    const target = await readMenuTarget(file, entry.get("data-chapter-src"));
+    offsets.set(file, match.index);
+    if (entry.get('data-status') && !['draft', 'ready'].includes(entry.get('data-status'))) addError(file, 'data-status ใช้ draft หรือ ready เท่านั้น');
+    if (!entry.has('data-chapter-src') && entry.get('data-status') !== 'draft') continue;
+    const target = await readMenuTarget(file, entry.get("data-chapter-src"), { allowDraft: true, draft: entry.get('data-status') === 'draft' });
     if (!target) continue;
     const menu = readAttributes(findOpeningTag(target.source, "data-learning-menu"));
     if (menu.get("data-menu-kind") !== "topics" || menu.get("data-subject-id") !== subject || menu.get("data-chapter-id") !== entry.get("data-chapter")) {
@@ -342,10 +377,16 @@ for (const name of await readdir(pagesDirectory)) {
   }
 }
 
-if (errors.length) {
-  console.error("Activity Content V1 validation failed:\n");
-  errors.forEach((error) => console.error(`- ${error}`));
-  process.exitCode = 1;
-} else {
-  console.log(`Activity Content V1 passed (${files.length} file${files.length === 1 ? "" : "s"}).`);
+diagnostics.sort((a,b) => a.file.localeCompare(b.file) || a.line - b.line || a.message.localeCompare(b.message));
+return { diagnostics, errors, fileCount: files.length };
+}
+return { run, validateFile, diagnostics, errors };
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  const result = await createContentValidator().run();
+  if (process.env.CONTENT_VALIDATION_REPORT) await writeFile(process.env.CONTENT_VALIDATION_REPORT, JSON.stringify(result, null, 2) + '\n');
+  await reportContentDiagnostics(result.diagnostics);
+  if (result.errors.length) process.exitCode = 1;
+  else console.log(`Activity Content V1 passed (${result.fileCount} files; drafts allowed).`);
 }

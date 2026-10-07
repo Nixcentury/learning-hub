@@ -20,16 +20,37 @@ export function localCatalogPath(href, from, folder = 'content/', allowSearch = 
 // Only reachable, declared navigation is indexed. Never include answers/user data.
 export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
   const files = new Map(), routeKeys = new Map(), contentById = new Map(), contentFiles = new Map();
+  const placeholders = new Map();
   const routes = [], pendingReadings = [], scannedReadings = new Set();
-  function fail(file, text) { throw Error(`${file}: ${text}`); }
+  function fail(file, text, node) { throw Error(`${file}:${node?.line || 1}: ${text}`); }
   function id(value, file, label = 'ID') {
     if (!routeSegmentPattern.test(value || '')) fail(file, `Invalid ${label}: ${value}`);
     return value;
   }
   async function load(file) {
     if (!files.has(file)) files.set(file, Promise.resolve().then(() => read(file)).then(readMetadata)
-      .catch(error => { throw Error(`${file}: ${error.message}`); }));
+      .catch(error => { throw Object.assign(Error(`${file}:${error.line || 1}: ${error.message}`), { code: error.code }); }));
     return files.get(file);
+  }
+  // Only genuinely absent files become drafts. Parse errors, permissions, unsafe
+  // URLs and mismatching IDs still fail; a blanket catch would hide real defects.
+  async function menuSource(href, file, node = { attrs: {} }) {
+    const status = node.attrs['data-status'];
+    if (status && !['draft', 'ready'].includes(status)) fail(file, 'data-status must be draft or ready', node);
+    let source = null;
+    if (href?.trim()) {
+      try { source = localCatalogPath(href.trim(), file); }
+      catch (error) { fail(file, error.message, node); }
+    }
+    if (!source || status === 'draft') return null;
+    try { await load(source); return source; }
+    catch (error) { if (['ENOENT', 'ENOTDIR'].includes(error.code)) return null; throw error; }
+  }
+  function preparingContent({ contentId, parent, placement, title, file }) {
+    if (!/^[a-z][a-z0-9-]{0,127}$/.test(contentId)) fail(file, `Invalid content ID: ${contentId}`);
+    const where = { parentHash: parent.hash, ...contextOf(parent) };
+    addRoute({ ...placement, kind: 'content-placeholder', status: 'preparing', contentId, ...where, ...title }, file);
+    if (!placeholders.has(contentId)) placeholders.set(contentId, { contentId, ...where, ...title, file });
   }
   function unique(root, attribute, file, templates = false) {
     const found = nodesWith(root, attribute, templates);
@@ -110,26 +131,26 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
       const placement = childPath(parent, node, key, file);
       const href = entry.href?.trim();
       if (!isContent) {
-        const source = href ? localCatalogPath(href, file) : null;
+        const source = await menuSource(href, file, node);
         const topic = addRoute({ ...placement, kind: 'topic', status: source ? 'ready' : 'preparing',
           subjectId: parent.subjectId, chapterId: parent.chapterId, topicId: key, parentHash: parent.hash, source, ...title }, file);
         if (source) await menu(source, topic, 'tools');
       } else {
         const toolKind = entry['data-tool-kind'];
-        if (!['quiz', 'simulation', 'html'].includes(toolKind)) fail(file, `Content ${key}: data-tool-kind must be quiz, simulation, or html (received ${toolKind || '(empty)'})`);
-        if (!href) fail(file, `Content ${key}: missing href to the destination HTML file`);
-        await registerContent({ contentId: key, toolKind,
-          source: localCatalogPath(href, file), parent: kind === 'topics' ? { ...parent, topicId: 'chapter-reference' } : parent, placement, title, file });
+        if (!['quiz', 'simulation', 'html'].includes(toolKind)) fail(file, `Content ${key}: data-tool-kind must be quiz, simulation, or html (received ${toolKind || '(empty)'})`, node);
+        const source = await menuSource(href, file, node);
+        const values = { contentId: key, toolKind, source, parent: kind === 'topics' ? { ...parent, topicId: 'chapter-reference' } : parent, placement, title, file };
+        if (source) await registerContent(values); else preparingContent(values);
       }
     }
     if (has(root, 'data-chapter-overview-src')) {
       if (kind !== 'topics') fail(file, 'Overview belongs to a chapter, not a topic');
       const key = `${parent.subjectId}-chapter-${parent.chapterId}-overview`;
-      const source = a['data-chapter-overview-src'].trim();
+      const source = await menuSource(a['data-chapter-overview-src'], file);
       const placement = childPath(parent, { attrs: {} }, 'overview', file);
       const title = { titleTh: 'ผลการเรียนรู้และสรุปบท', titleEn: 'Learning outcomes and chapter summary' };
-      if (source) await registerContent({ contentId: key, toolKind: 'html', source: localCatalogPath(source, file), parent: { ...parent, topicId: 'chapter-overview' }, placement, title, file });
-      else addRoute({ ...placement, kind: 'content-placeholder', status: 'preparing', parentHash: parent.hash, ...contextOf(parent), ...title }, file);
+      const values = { contentId: key, toolKind: 'html', source, parent: { ...parent, topicId: 'chapter-overview' }, placement, title, file };
+      if (source) await registerContent(values); else preparingContent(values);
     }
   }
   async function legacyTools(chapter, file) {
@@ -179,10 +200,11 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
         if (seenIds.has(chapterId)) fail(page, `Duplicate chapter ID ${chapterId}`);
         seenIds.add(chapterId);
         const title = unique(node, 'data-chapter-title', page);
-        const source = node.attrs['data-chapter-src'] ? localCatalogPath(node.attrs['data-chapter-src'], page) : null;
-        const chapter = addRoute({ ...childPath(sectionRoute, node, chapterId, page), kind: 'chapter', status: source ? 'ready' : 'legacy',
+        const declaredMenu = has(node, 'data-chapter-src') || node.attrs['data-status'] === 'draft';
+        const source = await menuSource(node.attrs['data-chapter-src'], page, node);
+        const chapter = addRoute({ ...childPath(sectionRoute, node, chapterId, page), kind: 'chapter', status: source ? 'ready' : declaredMenu ? 'preparing' : 'legacy',
           subjectId: key, chapterId, source, parentHash: sectionRoute.hash, ...labels(title, 'data-', chapterId) }, page);
-        if (source) await menu(source, chapter, 'topics'); else await legacyTools(chapter, page);
+        if (source) await menu(source, chapter, 'topics'); else if (!declaredMenu) await legacyTools(chapter, page);
       }
     }
     await htmlLinks(doc, page, sectionRoute);
@@ -200,6 +222,11 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
     const first = content.placements[0];
     addRoute({ hash: content.canonicalHash, aliases: [], kind: 'content', status: 'ready', contentId: content.id,
       ...first, titleTh: content.titleTh, titleEn: content.titleEn }, content.source);
+  }
+  for (const [id, entry] of placeholders) {
+    if (contentById.has(id)) continue; // A ready placement keeps its canonical URL.
+    const { file, ...route } = entry;
+    addRoute({ hash: `#content/${id}`, aliases: [], kind: 'content-placeholder', status: 'preparing', ...route }, file);
   }
   return { schemaVersion: routeCatalogVersion, routes: routes.sort((a, b) => compare(a.hash, b.hash)),
     contents: [...contentById.values()].sort((a, b) => compare(a.id, b.id)) };

@@ -1,16 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import { fileURLToPath, pathToFileURL } from "node:url";
-import { extname, join, relative, sep } from "node:path";
-import vm from "node:vm";
+import { fileURLToPath } from "node:url";
+import { join } from "node:path";
+import { createContentValidator } from './validate-activity-content.mjs';
 import { htmlLinkEntry } from "../js/html-link.js";
 import { createContentTool } from "../js/content-tool.js";
 
 // Exercise the real validator with a read-only in-memory filesystem, not live content.
-const moduleUrl = new URL("./validate-activity-content.mjs", import.meta.url);
-const source = readFileSync(moduleUrl, "utf8").split("const files = await listHtmlFiles(contentDirectory);")[0]
-  .replace(/^import .*;\r?\n/gm, "").replaceAll("import.meta.url", JSON.stringify(moduleUrl.href));
 const contentRoot = fileURLToPath(new URL("../public/content/", import.meta.url));
 const file = join(contentRoot, "test", "chapter.html");
 const html = '<!doctype html><html data-learning-html><head><title>Summary</title></head><body><h1>Outcomes</h1></body></html>';
@@ -18,23 +14,22 @@ const menu = (attribute = 'data-chapter-overview-src="summary.html"', kind = "to
   `<nav data-learning-menu data-menu-kind="${kind}" data-subject-id="chemistry" data-chapter-id="10" data-topic-id="topic" data-title-th="บท" data-title-en="Chapter" ${attribute}><a data-topic-id="future" data-th="เตรียม" data-en="Preparing"></a></nav>`;
 async function check(menuSource, destination = html) {
   const records = new Map([[file, menuSource], [join(contentRoot, "test", "summary.html"), destination]]);
-  const context = vm.createContext({ fileURLToPath, pathToFileURL, URL, extname, join, relative, sep,
-    readFile: async path => { if (!records.has(path) || records.get(path) === null) throw Error("Missing"); return records.get(path); },
-    parseNumericAnswer() { throw Error("Unexpected quiz in summary fixture"); } });
-  vm.runInContext(source, context);
-  context.fixtureFile = file;
-  await vm.runInContext("validateFile(fixtureFile)", context);
-  return Array.from(vm.runInContext("errors", context));
+  const validator = createContentValidator({ read: async path => {
+    if (!records.has(path) || records.get(path) === null) throw Object.assign(Error('Missing'), { code: 'ENOENT' });
+    return records.get(path);
+  } });
+  await validator.validateFile(file);
+  return validator.errors;
 }
 test("overview link is optional; empty link is an explicit preparing state", async () => {
   assert.deepEqual(await check(menu("")), []);
   assert.deepEqual(await check(menu('data-chapter-overview-src=""')), []);
   assert.deepEqual(await check(menu()), []);
 });
-test("overview rejects missing, remote and out-of-content files", async () => {
-  assert.match((await check(menu(), null)).join(), /Missing or invalid/);
+test("overview allows unfinished files but rejects remote and out-of-content links", async () => {
+  assert.deepEqual(await check(menu(), null), []);
   for (const link of ["https://example.test/x.html", "../../../admin.html", "summary.html?x=1", "summary.html#x", "%252e%252e/x.html"]) {
-    assert.match((await check(menu(`data-chapter-overview-src="${link}"`))).join(), /Missing or invalid/, link);
+    assert.match((await check(menu(`data-chapter-overview-src="${link}"`))).join(), /Invalid local/, link);
   }
 });
 test("overview requires the HTML marker and only belongs to layer 2", async () => {

@@ -29,8 +29,19 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Test existing engines without live services
         run: pnpm test:unit
-      - name: Validate content and build only Learning Hub
+      # The validator emits file/line annotations and a Thai job summary.
+      # Draft warnings exit successfully; malformed/unsafe content still fails.
+      - name: Validate content (drafts allowed) and build Learning Hub
+        env:
+          CONTENT_VALIDATION_REPORT: ${{ runner.temp }}/content-validation-report.json
         run: pnpm build
+      - name: Upload content validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-validation-report
+          path: ${{ runner.temp }}/content-validation-report.json
+          if-no-files-found: ignore
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

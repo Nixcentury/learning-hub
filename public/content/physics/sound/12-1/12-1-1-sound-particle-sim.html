@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="th" data-learning-simulation data-activity-id="phys-sound-12-1-1-particle-sim">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>แบบจำลองกลไกการเกิดคลื่นเสียงและการสั่นของอนุภาค | Sound Wave &amp; Particle Mechanics Simulator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #f4f8ff;
+      color: #233454;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Thai", Tahoma, sans-serif;
+      line-height: 1.5;
+      padding: 16px;
+    }
+    .sim-container {
+      max-width: 990px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .sim-header {
+      background: #ffffff;
+      border: 1px solid #dbe5f3;
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .sim-title h1 {
+      font-size: 19px;
+      color: #172b56;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sim-tag {
+      background: #fff7bb;
+      color: #8b6a13;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid #f2d636;
+    }
+    .sim-status-badge {
+      font-size: 13px;
+      color: #66748d;
+      background: #f8fafc;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .sim-main-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 16px;
+    }
+    @media (max-width: 890px) {
+      .sim-main-grid { grid-template-columns: 1fr; }
+    }
+
+    /* พื้นที่ Canvas แสดงผล */
+    .sim-stage-card {
+      background: #ffffff;
+      border: 1px solid #dbe5f3;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .sim-canvas-wrapper {
+      position: relative;
+      background: #090d16;
+      border-radius: 8px;
+      overflow: hidden;
+      width: 100%;
+      height: 410px;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+      touch-action: none;
+    }
+    canvas#simCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .sim-legend-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 12px;
+      color: #475569;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .sim-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sim-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* แผงควบคุมและแท็บ */
+    .sim-controls-card {
+      background: #fbfdff;
+      border: 1px solid #dbe5f3;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .sim-tabs {
+      display: flex;
+      border-bottom: 1px solid #dbe5f3;
+      gap: 4px;
+    }
+    .sim-tab-btn {
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .sim-tab-btn.active {
+      color: #0284c7;
+      border-bottom-color: #0284c7;
+    }
+    .sim-tab-content { display: none; }
+    .sim-tab-content.active { display: flex; flex-direction: column; gap: 12px; }
+
+    .sim-control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sim-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+    }
+    .sim-slider {
+      width: 100%;
+      accent-color: #f2d636;
+      cursor: pointer;
+    }
+    .sim-btn-row {
+      display: flex;
+      gap: 8px;
+    }
+    .sim-btn {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #1e293b;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+    .sim-btn:hover { background: #f1f5f9; }
+    .sim-btn-primary {
+      background: #f2d636;
+      color: #715206;
+      border-color: #e5c317;
+    }
+    .sim-btn-primary:hover { background: #ecd025; }
+    .sim-btn-active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0369a1;
+    }
+
+    /* กล่องข้อมูล Probe */
+    .sim-probe-panel {
+      background: #fffdf5;
+      border: 1px solid #fef08a;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+      color: #854d0e;
+    }
+
+    /* การ์ดภารกิจ Auto-Freeze */
+    .mission-stepper {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .step-pill {
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: #e2e8f0;
+      transition: background 0.2s;
+    }
+    .step-pill.active { background: #0284c7; }
+    .step-pill.done { background: #22c55e; }
+
+    .guided-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .guided-step-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0369a1;
+      background: #e0f2fe;
+      padding: 2px 8px;
+      border-radius: 4px;
+      width: fit-content;
+    }
+    .guided-q-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.45;
+    }
+    .guided-options {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .guided-opt-btn {
+      text-align: left;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      font-size: 12.5px;
+      color: #1e293b;
+      cursor: pointer;
+      line-height: 1.4;
+      transition: all 0.15s ease;
+    }
+    .guided-opt-btn:hover {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+    }
+    .guided-feedback {
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      display: none;
+      line-height: 1.4;
+    }
+    .guided-feedback.correct {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+      display: block;
+    }
+    .guided-feedback.wrong {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+      display: block;
+    }
+
+    /* DevTools */
+    .sim-devtools {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #64748b;
+    }
+  /* Same cards, palette and font stack as the supplied Learning Hub simulation. */
+[hidden] { display:none !important; }
+button, input, select { font:inherit; }
+button:disabled { opacity:.58; cursor:default; }
+button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline:3px solid #0284c7; outline-offset:3px; }
+.sim-container { max-width:1180px; }
+.sim-main-grid { grid-template-columns:minmax(0,1fr) 360px; align-items:start; }
+.sim-stage-card,.sim-controls-card { min-width:0; }
+.sim-controls-card { gap:12px; }
+.sim-controls-card h2 { font-size:18px; }
+.sim-controls-card h3 { font-size:16px; margin-bottom:8px; }
+.sim-btn { min-height:40px; }
+.sim-canvas-wrapper { height:430px; }
+.sim-note { font-size:12px; color:#52637d; line-height:1.65; }
+.frequency-row { display:flex; align-items:center; gap:12px; }
+.frequency-row input[type=number] { width:110px; padding:8px; border:1px solid #cbd5e1; border-radius:8px; }
+select { padding:8px; border:1px solid #cbd5e1; border-radius:8px; background:white; }
+.mission-nav { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+.mission-nav button { padding:8px 3px; }
+.mission-nav [aria-current=step] { background:#fff7bb; border-color:#e5c317; color:#715206; }
+.observe-buttons { display:grid; gap:8px; margin-top:12px; }
+#observationStatus { font-size:12px; margin-top:10px; color:#52637d; }
+.question-block { border:1px solid #dbe5f3; border-radius:10px; padding:12px; margin-bottom:12px; }
+.question-block legend { font-size:14px; font-weight:700; padding:0 4px; }
+.answer-options { display:grid; gap:7px; }
+.answer-options button { text-align:left; line-height:1.6; }
+.answer-options button[aria-pressed=true] { border-color:#0284c7; background:#e0f2fe; }
+.answer-feedback { margin-top:8px; font-size:13px; }
+.answer-feedback.correct { color:#166534; }
+.answer-feedback.wrong { color:#9a3412; }
+.hearing-panel { border:1px solid #dbe5f3; background:#f8fafc; padding:12px; border-radius:8px; font-size:13px; }
+#probeReadings { display:grid; grid-template-columns:1fr 1fr; gap:6px 14px; margin:8px 0; font-variant-numeric:tabular-nums; }
+#probeState { font-size:12px; }
+.blue { color:#0284c7; }.red { color:#dc2626; }.yellow { color:#9c7900; }
+#modelNotes p { margin:10px 0; font-size:14px; }
+#modelNotes ul { padding-left:24px; }
+@media(max-width:960px) { .sim-main-grid { grid-template-columns:1fr; } }
+@media(max-width:520px) { body { padding:8px; } .sim-header { padding:12px; } .sim-title h1 { font-size:17px; } .sim-stage-card,.sim-controls-card { padding:10px; } .sim-canvas-wrapper { height:420px; } .sim-btn { min-height:44px; } }
+
+</style>
+
+</head>
+<body>
+<main class="sim-container">
+  <header class="sim-header">
+    <div class="sim-title"><h1 data-th="คลื่นเสียง: มองอนุภาค อ่านกราฟ แล้วหาคำตอบ" data-en="Sound waves: observe particles, read graphs, explain">คลื่นเสียง: มองอนุภาค อ่านกราฟ แล้วหาคำตอบ</h1>
+      <span class="sim-tag" data-th="4 ภารกิจ · ภาพจำลองไม่มีการเปิดเสียง" data-en="4 missions · Visual model, no audio">4 ภารกิจ · ภาพจำลองไม่มีการเปิดเสียง</span></div>
+    <div class="sim-btn-row"><button class="sim-btn" id="langButton">English</button><span id="saveStatus" class="sim-status-badge" role="status"></span></div>
+  </header>
+  <div class="sim-main-grid">
+    <section class="sim-stage-card" aria-label="Sound model">
+      <div class="sim-btn-row stage-buttons">
+        <button id="playButton" class="sim-btn"></button><button id="slowButton" class="sim-btn" aria-pressed="false" data-th="ช้าลง ¼ เท่า" data-en="Quarter speed">ช้าลง ¼ เท่า</button>
+        <button id="stepButton" class="sim-btn" data-th="เลื่อนภาพทีละ ⅛ รอบ" data-en="Advance ⅛ cycle">เลื่อนภาพทีละ ⅛ รอบ</button>
+      </div>
+      <div class="sim-canvas-wrapper"><canvas id="simCanvas" role="img" aria-label="Particle motion and displacement and pressure graphs"></canvas></div>
+      <p id="scaleNote" class="sim-note"></p>
+      <div class="sim-legend-bar"><span><b class="red">●</b> <span data-th="อนุภาคที่ติดตาม" data-en="Tracked particle">อนุภาคที่ติดตาม</span></span><span><b class="blue">━</b> s/A</span><span><b class="red">━</b> Δp/(1 Pa)</span><span><b class="yellow">┆</b> <span data-th="หัววัดที่ตำแหน่งสมดุล" data-en="Probe at equilibrium position">หัววัดที่ตำแหน่งสมดุล</span></span></div>
+      <div class="sim-probe-panel" id="probePanel" role="group" aria-label="Probe readings"><strong id="probeTitle"></strong><div id="probeReadings"></div><p id="probeState"></p></div>
+      <div class="sim-control-group"><label for="probeSlider" id="probeLabel"></label><input id="probeSlider" class="sim-slider" type="range" min="0.1" max="1.9" step="0.01" value="0.75"></div>
+      <div class="sim-control-group"><label for="frequencyInput" data-th="ความถี่ของแหล่งกำเนิด (Hz)" data-en="Source frequency (Hz)">ความถี่ของแหล่งกำเนิด (Hz)</label>
+        <div class="frequency-row"><input id="frequencyInput" type="number" min="1" max="40000" step="1" value="500"><input id="frequencySlider" class="sim-slider" aria-label="Frequency" type="range" min="1" max="40000" step="1" value="500"></div>
+        <div class="sim-btn-row"><button class="sim-btn" data-frequency="10">10 Hz</button><button class="sim-btn" data-frequency="500">500 Hz</button><button class="sim-btn" data-frequency="25000">25,000 Hz</button></div>
+      </div>
+      <div class="sim-btn-row"><label><span data-th="ตัวกลาง" data-en="Medium">ตัวกลาง</span> <select id="mediumSelect"><option value="air" data-th="อากาศ" data-en="Air">อากาศ</option><option value="vacuum" data-th="สุญญากาศ" data-en="Vacuum">สุญญากาศ</option></select></label><button id="pulseButton" class="sim-btn" data-th="ทดลองเคาะ 1 ครั้ง" data-en="Try a single pulse">ทดลองเคาะ 1 ครั้ง</button><button id="continuousButton" class="sim-btn" data-th="กลับเป็นคลื่นต่อเนื่อง" data-en="Continuous wave">กลับเป็นคลื่นต่อเนื่อง</button></div>
+      <div id="bandPanel" class="hearing-panel"><strong id="bandTitle"></strong><p id="bandDescription"></p></div>
+    </section>
+    <section class="sim-controls-card" aria-label="Guided missions">
+      <h2 data-th="สังเกตทีละด่าน" data-en="Observe, one mission at a time">สังเกตทีละด่าน</h2>
+      <nav id="missionNav" class="mission-nav" aria-label="Choose mission"></nav>
+      <p id="progress" class="sim-note" role="status"></p>
+      <div class="guided-card"><h3 id="missionTitle"></h3><p id="missionInstruction"></p><div id="observeButtons" class="observe-buttons"></div><p id="observationStatus" role="status" aria-live="polite"></p></div>
+      <div id="questions"></div>
+      <div id="missionResult" role="status"></div>
+      <button id="nextMission" class="sim-btn sim-btn-primary" hidden></button>
+      <button id="resetButton" class="sim-btn" data-th="เริ่มทั้ง 4 ด่านใหม่" data-en="Reset all 4 missions">เริ่มทั้ง 4 ด่านใหม่</button>
+    </section>
+  </div>
+  <details class="sim-stage-card"><summary data-th="อ่านกราฟอย่างไร · ขอบเขตการได้ยิน · ข้อตกลงของแบบจำลอง" data-en="Reading the graphs · Hearing limits · Model assumptions">อ่านกราฟอย่างไร · ขอบเขตการได้ยิน · ข้อตกลงของแบบจำลอง</summary>
+    <div id="modelNotes"></div>
+    <p class="sim-note">s = A cos(kx − ωt), Δp = −B ∂s/∂x = BkA sin(kx − ωt), λ = c/f, u = Δp/(ρc).</p>
+    <p class="sim-note"><a href="https://openstax.org/books/university-physics-volume-1/pages/17-1-sound-waves" target="_blank" rel="noopener">OpenStax: Sound Waves</a> · <a href="https://openstax.org/books/college-physics/pages/17-6-hearing" target="_blank" rel="noopener">Hearing</a> · <a href="https://www.ncbi.nlm.nih.gov/books/NBK20366/" target="_blank" rel="noopener">NIH: Hearing and communication</a></p>
+  </details>
+</main>
+
+<script id="sound-model">
+/* Linear, right-travelling plane sound in air. All physical values are SI.
+ * Pressure and particle displacement share one analytic model, not two drawings.
+ */
+const SoundModel = (() => {
+  const TAU = 2 * Math.PI, c = 343, rho = 1.204, p0 = 101325, pressureAmplitude = 1;
+  const bulk = rho * c * c;
+  const wrap = angle => ((angle % TAU) + TAU) % TAU;
+  function parameters(f) {
+    if (!Number.isFinite(f) || f < 1 || f > 40000) throw Error('Frequency must be 1–40000 Hz');
+    const wavelength = c / f, omega = TAU * f, k = TAU / wavelength;
+    return { f, wavelength, omega, k, amplitude: pressureAmplitude / (bulk * k), period: 1 / f };
+  }
+  function at(q, phase, f, mode = 'continuous', pulseStart = 0) {
+    const m = parameters(f), theta = TAU * q - phase;
+    let displacementNorm = Math.cos(theta), pressureNorm = Math.sin(theta);
+    if (mode === 'pulse') {
+      const distance = q - (phase - pulseStart) / TAU + .55, sigma = .16;
+      displacementNorm = Math.exp(-distance * distance / (2 * sigma * sigma));
+      pressureNorm = distance * displacementNorm / (TAU * sigma * sigma);
+    }
+    const pressure = pressureAmplitude * pressureNorm;
+    return { displacementNorm, pressureNorm, displacement: m.amplitude * displacementNorm,
+      pressure, absolutePressure: p0 + pressure, velocity: pressure / (rho * c) };
+  }
+  // phase increases in time, whereas theta = kx - phase decreases.
+  function nextStop(phase, q, targetTheta, minimumCycles = .8) {
+    let delta = wrap(TAU * q - targetTheta - phase);
+    while (delta < minimumCycles * TAU) delta += TAU;
+    return phase + delta;
+  }
+  function advance(phase, seconds, rate, target = null) {
+    const next = phase + TAU * seconds * rate;
+    return target !== null && next >= target ? { phase: target, reached: true } : { phase: next, reached: false };
+  }
+  function band(f) { return f < 20 ? 'infra' : f > 20000 ? 'ultra' : 'audible'; }
+  return Object.freeze({ TAU, c, rho, p0, bulk, pressureAmplitude, wrap, parameters, at, nextStop, advance, band });
+})();
+
+</script>
+<script id="sound-missions">
+const SOUND_MISSIONS = [
+  {
+    title:['1 · อนุภาคไปไหน คลื่นไปไหน','1 · Where do the particle and wave go?'],
+    instruction:['กดดูการเคลื่อนที่ 2 รอบ ตามจุดสีแดงเทียบกับเส้นสมดุลเดิม แล้วดูส่วนอัดเคลื่อนไปทางขวา ภาพจะหยุดให้ตอบหลังสังเกตครบ','Watch two cycles. Follow the red particle against its equilibrium marker, and follow a compression to the right. The scene then pauses.'],
+    observations:['motion'],
+    questions:[
+      { text:['จุดสีแดงเคลื่อนที่อย่างไร เมื่อเทียบกับตำแหน่งสมดุลเดิม?','How does the red particle move relative to its equilibrium position?'], options:[['เดินทางตามส่วนอัดไปทางขวาตลอด','Travels continuously right with a compression'],['สั่นซ้าย–ขวารอบตำแหน่งเดิม','Oscillates left and right about the same position']], answer:1,
+        explain:['คลื่นเคลื่อนไป แต่อนุภาคในแบบจำลองสั่นกลับไปมา เส้นตั้งสีแดงบอกตำแหน่งสมดุล ไม่ใช่กำแพง','The wave travels while each model particle oscillates. The red vertical line marks equilibrium; it is not a wall.'] },
+      { text:['แนวการสั่นของอนุภาคสัมพันธ์กับทิศที่คลื่นเคลื่อนไปอย่างไร?','How is particle motion oriented relative to wave propagation?'], options:[['ขนานกัน จึงเป็นคลื่นตามยาวในอากาศ','Parallel: this is a longitudinal wave in air'],['ตั้งฉากกัน เพราะกราฟมีรูปขึ้น–ลง','Perpendicular, because the graph rises and falls']], answer:0,
+        explain:['ความสูงของกราฟแทนค่าการกระจัดหรือความดัน อนุภาคในภาพด้านบนไม่ได้เคลื่อนขึ้น–ลงตามเส้นกราฟ','Graph height represents displacement or pressure. The particles above do not move vertically along the graph.'] }
+    ]
+  },
+  {
+    title:['2 · กึ่งกลางส่วนอัดกับกราฟ','2 · Compression and the graphs'],
+    instruction:['กดหยุดที่ส่วนอัด ดูระยะห่างของอนุภาคใกล้เส้นเหลือง แล้วลากสายตาลงมาที่กราฟทั้งสอง ณ x เดียวกัน ตรวจค่าความเร็วอนุภาคด้วย','Freeze at compression. Compare neighbouring particles near the yellow line, then read both graphs at the same x and check particle velocity.'],
+    observations:['compression'],
+    questions:[
+      { text:['ที่กึ่งกลางส่วนอัดสูงสุด กราฟสองเส้นมีค่าใด?','At maximum compression, what do the two graphs show?'], options:[['s = +A และ Δp = 0','s = +A and Δp = 0'],['s = 0 และ Δp = +Δpₘₐₓ','s = 0 and Δp = +Δpₘₐₓ']], answer:1,
+        explain:['กราฟสีน้ำเงินตัดศูนย์ ส่วนกราฟสีแดงอยู่ยอดบวก ความดันสูงสุดตรงกับการกระจัดเป็นศูนย์ในคลื่นต่อเนื่องนี้','The blue curve crosses zero and the red curve reaches its positive peak: maximum pressure occurs at zero displacement in this travelling sinusoidal wave.'] },
+      { text:['s = 0 ในภาพนี้ แปลว่าอนุภาคหยุดนิ่งหรือไม่?','Does s = 0 here mean the particle is stationary?'], options:[['ใช่ อยู่สมดุลจึงมีความเร็วเป็นศูนย์เสมอ','Yes: equilibrium always means zero velocity'],['ไม่ใช่ กำลังผ่านสมดุลไปทางขวาด้วยความเร็วสูงสุด','No: it crosses equilibrium rightwards at maximum speed']], answer:1,
+        explain:['การกระจัดกับความเร็วเป็นคนละปริมาณ ดู u ที่หัววัด: ในคลื่นเดินทางไปขวา u กับ Δp มีเครื่องหมายเดียวกัน','Displacement and velocity are different quantities. Read u at the probe: for this right-travelling wave, u and Δp have the same sign.'] }
+    ]
+  },
+  {
+    title:['3 · ส่วนขยายและจุดกลับตัว','3 · Rarefaction and a turning point'],
+    instruction:['เก็บภาพสังเกต 2 แบบ: ส่วนขยาย และจุดที่ Δp = 0 เปรียบเทียบ p กับ p₀ รวมทั้ง s และ u ไม่ต้องเดาจากสีเพียงอย่างเดียว','Capture two states: rarefaction and Δp = 0. Compare p with p₀, as well as s and u; do not rely on colour alone.'],
+    observations:['rarefaction','turn'],
+    questions:[
+      { text:['ที่ส่วนขยาย Δp = −1 Pa หมายความว่าอย่างไร เมื่อ p₀ = 101,325 Pa?','At rarefaction, what does Δp = −1 Pa mean if p₀ = 101,325 Pa?'], options:[['p = 101,324 Pa ต่ำกว่าค่าปกติเล็กน้อย ยังมีอากาศ','p = 101,324 Pa: slightly below ambient, with air still present'],['ความดันสัมบูรณ์ติดลบและกลายเป็นสุญญากาศ','Absolute pressure is negative and a vacuum has formed']], answer:0,
+        explain:['Δp คือส่วนต่างจากความดันเดิม: p = p₀ + Δp เครื่องหมายลบจึงไม่ได้แปลว่าไม่มีอากาศ','Δp is a deviation: p = p₀ + Δp. A negative deviation does not mean air is absent.'] },
+      { text:['ภาพ “จุดกลับตัว” ที่ Δp = 0 บอกอะไรเกี่ยวกับการกระจัดและความเร็ว?','At the captured turning point with Δp = 0, what happens to displacement and velocity?'], options:[['s = 0 และ |u| สูงสุด','s = 0 and speed is maximal'],['|s| = A และ u = 0 ชั่วขณะก่อนกลับทิศ','|s| = A and u = 0 momentarily before reversal']], answer:1,
+        explain:['ยอดการกระจัดห่างจากยอดความดัน λ/4 หรือ ¼ รอบ (90°) และอนุภาคหยุดชั่วขณะที่จุดกลับตัว ไม่ได้วิ่งผ่านจุดนั้นด้วยความเร็วสูงสุด','Displacement and pressure peaks are λ/4, or a quarter cycle (90°), apart. At a turning point the particle momentarily stops before reversing.'] }
+    ]
+  },
+  {
+    title:['4 · มีคลื่นเสียง แล้วใครได้ยิน?','4 · A sound wave—but who hears it?'],
+    instruction:['ลอง 10, 500 และ 25,000 Hz ดูว่า λ และคาบจริงเปลี่ยนอย่างไร แล้วลองสุญญากาศ ภาพถูกชะลอเวลาอัตโนมัติ จึงห้ามนับรอบบนจอเป็นความถี่จริง','Try 10, 500 and 25,000 Hz: compare wavelength and physical period. Then try vacuum. Automatic slow motion means screen cycles are not real-time frequency.'],
+    observations:['infra','audible','ultra','vacuum'],
+    questions:[
+      { text:['ในอากาศ 10 Hz กับ 25,000 Hz ควรจัดประเภทอย่างไร โดยอ้างอิงมนุษย์ทั่วไป?','In air, how are 10 Hz and 25,000 Hz classified relative to typical human hearing?'], options:[['10 Hz ใต้เสียง และ 25,000 Hz เหนือเสียง ทั้งคู่ยังเป็นคลื่นเสียงทางฟิสิกส์','10 Hz is infrasound; 25,000 Hz is ultrasound. Both remain physical sound waves'],['ทั้งคู่ไม่ใช่คลื่นเสียง เพราะคนทั่วไปไม่ได้ยิน','Neither is sound, because people generally cannot hear them']], answer:0,
+        explain:['ใช้ 20–20,000 Hz เป็นช่วงอ้างอิงโดยประมาณของมนุษย์ ไม่ได้เป็นเส้นแบ่งระหว่างมีคลื่นกับไม่มีคลื่น','20–20,000 Hz is an approximate human reference range, not a boundary between the existence and absence of sound waves.'] },
+      { text:['เมื่อเปลี่ยนจาก 500 เป็น 25,000 Hz ค่า λ และ T ที่แสดงเปลี่ยนอย่างไร แม้ภาพยังเห็น 2 ช่วงคลื่น?','Changing 500 to 25,000 Hz, how do the displayed λ and T change even though the view still shows two wavelengths?'], options:[['เท่าเดิม เพราะจำนวนลูกคลื่นบนจอเท่าเดิม','Unchanged, since the screen shows the same number of waves'],['เหลือ 1/50 ของเดิมทั้งคู่ จอซูมและชะลอเวลาใหม่','Both become 1/50 as large; the view zooms and slows time again']], answer:1,
+        explain:['อ่านสเกลจริง: λ เปลี่ยนจาก 686 mm เป็น 13.72 mm และ T จาก 2 ms เป็น 0.04 ms เมื่อ c คงที่ λ = c/f และ T = 1/f จำนวนลูกคลื่นบนจอจึงใช้ตัดสินระยะจริงไม่ได้','Read the physical scale: λ changes from 686 mm to 13.72 mm and T from 2 ms to 0.04 ms. With constant c, λ = c/f and T = 1/f; the number of waves on the auto-zoomed screen does not measure physical length.'] },
+      { text:['ถ้าเป็น 500 Hz รับประกันว่าทุกคนและสัตว์ทุกชนิดจะได้ยินหรือไม่?','Does 500 Hz guarantee hearing for every person and every animal species?'], options:[['รับประกัน เพราะอยู่ระหว่าง 20–20,000 Hz','Yes, because it lies between 20 and 20,000 Hz'],['ไม่รับประกัน ยังขึ้นกับระดับเสียง ผู้ฟัง และชนิดสัตว์','No: sound level, the listener and animal species also matter']], answer:1,
+        explain:['ขอบเขตการได้ยินขึ้นกับทั้งความถี่และความไวของผู้ฟัง สัตว์ต่างชนิดมีช่วงการได้ยินต่างกัน เช่น สัตว์บางชนิดรับคลื่นเหนือเสียงได้','Hearing depends on frequency and sensitivity. Species differ; some animals can detect ultrasound.'] },
+      { text:['ในช่องสุญญากาศ แหล่งกำเนิดยังสั่น แต่เหตุใดไม่มีคลื่นเสียงเดินทางในช่องนั้น?','In the vacuum region, why does the vibrating source not launch a sound wave across the region?'], options:[['เพราะความถี่กลายเป็นศูนย์','Because its frequency becomes zero'],['เพราะไม่มีตัวกลางถ่ายทอดการรบกวน ไม่ใช่แค่หูฟังไม่ถึง','Because no medium transmits the disturbance—not merely because a listener cannot hear it']], answer:1,
+        explain:['การสั่นของแหล่งกำเนิดอย่างเดียวไม่รับประกันว่าจะมีเสียงส่งถึงผู้ฟัง ต้องมีการถ่ายทอดสู่ตัวกลาง และการได้ยินยังมีเงื่อนไขเพิ่มเติม','Source vibration alone does not guarantee that sound reaches a listener. It must couple into a medium; perception has further requirements.'] }
+    ]
+  }
+];
+
+</script>
+<script id="sound-app">
+(() => {
+  'use strict';
+  const M=SoundModel, $=id=>document.getElementById(id), CONTENT_ID='phys-sound-12-1-1-particle-sim';
+  let lang='th', identity='guest', storageFailed=false, subscriber=null;
+  let f=500, q=.75, phase=0, mode='continuous', medium='air', pulseStart=0, rate=1, paused=true;
+  let mission=0, target=null, observationKey=null, lastFrame=null, lastReadout=0;
+  let observations=[{}, {}, {}, {}], answers=SOUND_MISSIONS.map(m=>m.questions.map(()=>null));
+  const L=(th,en)=>lang==='th'?th:en, P=pair=>pair[lang==='th'?0:1];
+  const labels={motion:['ดูอนุภาคสั่น 2 รอบ','Watch two particle cycles'],compression:['หยุดที่กึ่งกลางส่วนอัด','Freeze at compression'],rarefaction:['หยุดที่กึ่งกลางส่วนขยาย','Freeze at rarefaction'],turn:['หยุดที่จุดกลับตัว (Δp = 0)','Freeze at turning point (Δp = 0)'],infra:['ทดลอง 10 Hz · ใต้เสียง','Try 10 Hz · Infrasound'],audible:['ทดลอง 500 Hz · ย่านได้ยิน','Try 500 Hz · Audible range'],ultra:['ทดลอง 25,000 Hz · เหนือเสียง','Try 25,000 Hz · Ultrasound'],vacuum:['ทดลองไม่มีอากาศ · สุญญากาศ','Try no air · Vacuum']};
+  const complete=i=>SOUND_MISSIONS[i].observations.every(key=>observations[i][key]) && SOUND_MISSIONS[i].questions.every((question,j)=>answers[i][j]===question.answer);
+  const storageKey=()=>`learning-hub-simulation:v2:${identity}:${CONTENT_ID}`;
+  function getState(){ return {schemaVersion:2,contentId:CONTENT_ID,identityKey:identity,frequency:f,probe:q,phase,pulseStart,mode,medium,rate,mission,observations,answers}; }
+  function save(){ try{localStorage.setItem(storageKey(),JSON.stringify(getState()));storageFailed=false;}catch{storageFailed=true;} status();subscriber?.(); }
+  function status(){ $('saveStatus').textContent=storageFailed?L('ยังบันทึกในเครื่องไม่ได้','Device save unavailable'):L('คำตอบภารกิจเก็บในเครื่องนี้','Mission answers saved on this device'); }
+  function restore(saved){
+    if(!saved||saved.schemaVersion!==2||saved.contentId!==CONTENT_ID||saved.identityKey!==identity)return false;
+    if(!Number.isFinite(saved.frequency)||saved.frequency<1||saved.frequency>40000||!Number.isFinite(saved.probe)||saved.probe<.1||saved.probe>1.9||!Number.isFinite(saved.phase))return false;
+    if(!Number.isInteger(saved.mission)||saved.mission<0||saved.mission>3||!Array.isArray(saved.observations)||saved.observations.length!==4||!Array.isArray(saved.answers)||saved.answers.length!==4)return false;
+    const obs=SOUND_MISSIONS.map((m,i)=>Object.fromEntries(m.observations.filter(key=>saved.observations[i]?.[key]===true).map(key=>[key,true])));
+    const ans=SOUND_MISSIONS.map((m,i)=>m.questions.map((question,j)=>Number.isInteger(saved.answers[i]?.[j])&&saved.answers[i][j]>=0&&saved.answers[i][j]<question.options.length?saved.answers[i][j]:null));
+    f=saved.frequency;q=saved.probe;phase=saved.phase;mission=saved.mission;observations=obs;answers=ans;
+    mode=saved.mode==='pulse'?'pulse':'continuous';medium=saved.medium==='vacuum'?'vacuum':'air';rate=saved.rate===.25?.25:1;paused=true;target=null;observationKey=null;pulseStart=Number.isFinite(saved.pulseStart)?saved.pulseStart:phase;
+    return true;
+  }
+  function load(){try{restore(JSON.parse(localStorage.getItem(storageKey())||'null'));}catch{storageFailed=true;}}
+  function blank(){f=500;q=.75;phase=0;mode='continuous';medium='air';rate=1;mission=0;paused=true;target=null;observationKey=null;observations=[{},{},{},{}];answers=SOUND_MISSIONS.map(m=>m.questions.map(()=>null));}
+  function selectMission(i){target=null;observationKey=null;paused=true;mission=i;renderControls();renderMission();save();}
+  function button(text,action,cls='sim-btn'){const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=text;b.onclick=action;return b;}
+  function renderMission(){
+    const m=SOUND_MISSIONS[mission];$('missionTitle').textContent=P(m.title);$('missionInstruction').textContent=P(m.instruction);
+    $('missionNav').replaceChildren();SOUND_MISSIONS.forEach((entry,i)=>{const b=button(`${i+1}${complete(i)?' ✓':''}`,()=>selectMission(i));b.setAttribute('aria-label',P(entry.title));if(i===mission)b.setAttribute('aria-current','step');$('missionNav').append(b);});
+    $('progress').textContent=L(`ผ่านแล้ว ${SOUND_MISSIONS.filter((_,i)=>complete(i)).length}/4 ด่าน` ,`${SOUND_MISSIONS.filter((_,i)=>complete(i)).length}/4 missions completed`);
+    $('observeButtons').replaceChildren();m.observations.forEach(key=>{const b=button((observations[mission][key]?'✓ ':'')+P(labels[key]),()=>observe(key),'sim-btn sim-btn-primary');b.dataset.observe=key;b.disabled=target!==null;$('observeButtons').append(b);});
+    const seen=m.observations.filter(key=>observations[mission][key]).length;
+    $('observationStatus').textContent=target!==null?L('กำลังเคลื่อนที่ให้สังเกต แล้วจะหยุดตรงจุดที่ระบุ…','Observe the motion; it will stop at the specified state…'):L(`สังเกตแล้ว ${seen}/${m.observations.length} แบบ · กดปุ่มเดิมเพื่อดูซ้ำได้`,`${seen}/${m.observations.length} observations · Use the same button to replay`);
+    $('questions').replaceChildren();
+    if(seen===m.observations.length){m.questions.forEach((question,j)=>{
+      const field=document.createElement('fieldset');field.className='question-block';const legend=document.createElement('legend');legend.textContent=`${j+1}. ${P(question.text)}`;field.append(legend);
+      const group=document.createElement('div');group.className='answer-options';question.options.forEach((option,k)=>{const b=button(P(option),()=>{answers[mission][j]=k;save();renderMission();});b.dataset.answer=`${j}-${k}`;b.setAttribute('aria-pressed',String(answers[mission][j]===k));group.append(b);});field.append(group);
+      if(answers[mission][j]!==null){const right=answers[mission][j]===question.answer;const feedback=document.createElement('p');feedback.className='answer-feedback '+(right?'correct':'wrong');feedback.setAttribute('role','status');feedback.textContent=right?L('✓ ถูกต้อง — ','✓ Correct — ')+P(question.explain):L('ยังไม่ตรงกับภาพ ลองดูจุดสังเกตที่ระบุอีกครั้ง แล้วเลือกใหม่ได้','Not consistent with the observation yet. Replay the indicated state and try again.');field.append(feedback);}
+      $('questions').append(field);
+    });}
+    $('missionResult').textContent=complete(mission)?L('✓ ผ่านด่านนี้แล้ว กลับมาทดลองซ้ำได้','✓ Mission complete. You can return and explore again.'):'';
+    $('nextMission').hidden=!complete(mission)||mission===3;$('nextMission').textContent=L('ไปด่านถัดไป →','Next mission →');
+    const busy=target!==null;['frequencyInput','frequencySlider','probeSlider','mediumSelect','pulseButton','continuousButton','stepButton','slowButton'].forEach(id=>$(id).disabled=busy);
+  }
+  function observe(key){
+    paused=false;mode='continuous';medium='air';q=.75;rate=1;
+    if(['infra','audible','ultra','vacuum'].includes(key)){
+      f=key==='infra'?10:key==='ultra'?25000:500;medium=key==='vacuum'?'vacuum':'air';phase=0;
+      observations[mission][key]=true;target=null;observationKey=null;save();
+    }else{
+      f=500;const theta={motion:0,compression:Math.PI/2,rarefaction:3*Math.PI/2,turn:0}[key];
+      target=key==='motion'?phase+2*M.TAU:M.nextStop(phase,q,theta);observationKey=key;
+    }
+    renderControls();renderMission();draw();
+  }
+  function renderControls(){
+    $('frequencyInput').value=f;$('frequencySlider').value=f;$('probeSlider').value=q;$('mediumSelect').value=medium;
+    $('playButton').textContent=paused?L('▶ เล่นต่อ','▶ Play'):L('Ⅱ หยุดภาพ','Ⅱ Pause');
+    $('slowButton').setAttribute('aria-pressed',String(rate===.25));$('slowButton').classList.toggle('sim-btn-active',rate===.25);
+    $('continuousButton').classList.toggle('sim-btn-active',mode==='continuous');$('pulseButton').classList.toggle('sim-btn-active',mode==='pulse');readouts();status();
+  }
+  const nice=(value,digits=4)=>Math.abs(value)<1e-10?'0':Number(value.toPrecision(digits)).toLocaleString(lang==='th'?'th-TH':'en-US',{maximumFractionDigits:6});
+  function length(value){return Math.abs(value)<.001?`${nice(value*1e6)} µm`:Math.abs(value)<1?`${nice(value*1000)} mm`:`${nice(value)} m`;}
+  function readouts(){
+    const m=M.parameters(f), r=M.at(q,phase,f,mode,pulseStart), physicalTime=phase/(M.TAU*f);
+    $('probeLabel').textContent=L(`หัววัดที่ตำแหน่งสมดุล x = ${length(q*m.wavelength)}`,`Probe equilibrium position x = ${length(q*m.wavelength)}`);
+    $('probeTitle').textContent=L(`ค่าที่เส้นเหลือง · t = ${nice(physicalTime*1000)} ms`,`At the yellow line · t = ${nice(physicalTime*1000)} ms`);
+    const rows=medium==='air'?[`s = ${length(r.displacement)} (${nice(r.displacementNorm)} A)`,`Δp = ${nice(r.pressure)} Pa`,`p = ${nice(r.absolutePressure,9)} Pa`,`u = ${nice(r.velocity*1000)} mm/s`]:[L('ไม่มีอนุภาคอากาศให้วัด s หรือ u','No air particles: s and u are undefined here'),L('ไม่มีคลื่นความดันในช่องสุญญากาศ','No acoustic pressure wave in the vacuum region')];
+    $('probeReadings').replaceChildren(...rows.map(text=>{const node=document.createElement('span');node.textContent=text;return node;}));
+    $('probeState').textContent=medium!=='air'?L('แหล่งกำเนิดยังสั่นได้ แต่ไม่มีคลื่นเสียงผ่านช่องที่ไม่มีตัวกลาง','The source can still vibrate, but sound cannot cross this region without a medium'):mode==='pulse'?L('พัลส์: ดูส่วนอัดนำหน้าและส่วนขยายตามหลัง ไม่ใช้ความสัมพันธ์ ¼ รอบแบบคลื่นไซน์','Pulse: observe its compression and rarefaction; the sinusoidal quarter-cycle rule does not apply'):Math.abs(r.pressureNorm)<.015?L('Δp ≈ 0 · อนุภาคอยู่ใกล้จุดกลับตัว |s| ≈ A และ u ≈ 0','Δp ≈ 0 · Near a turning point: |s| ≈ A and u ≈ 0'):r.pressure>0?L('ส่วนอัด: Δp > 0 · ความดันสูงกว่าค่าปกติ','Compression: Δp > 0 · Above ambient pressure'):L('ส่วนขยาย: Δp < 0 · ความดันต่ำกว่าค่าปกติ','Rarefaction: Δp < 0 · Below ambient pressure');
+    $('scaleNote').textContent=L(`สเกลอ้างอิงคลื่นต่อเนื่อง: λ = ${length(m.wavelength)}, T = ${nice(m.period*1000)} ms · จอซูมตาม λ ให้เห็น 2 ช่วงคลื่น · ชะลอเวลา ${nice(f/rate,6)} เท่า · ขยายการสั่นของจุดประมาณ ${nice(.025*m.wavelength/m.amplitude,3)} เท่า (ไม่ใช่ระยะจริง)`,`Continuous-wave reference: λ = ${length(m.wavelength)}, T = ${nice(m.period*1000)} ms · View auto-zooms to 2 wavelengths · Time slowed ${nice(f/rate,6)}× · Particle displacement exaggerated about ${nice(.025*m.wavelength/m.amplitude,3)}× (not actual distance)`);
+    const band=M.band(f), bandNames={infra:['คลื่นใต้เสียง · ต่ำกว่า 20 Hz','Infrasound · Below 20 Hz'],audible:['อยู่ในย่านความถี่ที่มนุษย์ทั่วไปได้ยิน · 20–20,000 Hz','Within the typical human frequency range · 20–20,000 Hz'],ultra:['คลื่นเหนือเสียง · สูงกว่า 20,000 Hz','Ultrasound · Above 20,000 Hz']};
+    $('bandTitle').textContent=medium!=='air'?L('สุญญากาศ: ไม่มีคลื่นเสียงส่งผ่านในช่องนี้','Vacuum: no sound wave transmitted here'):mode==='pulse'?L('คลื่นดล: ไม่ใช่เสียงความถี่เดียว','A pulse is not a single-frequency tone'):P(bandNames[band]);
+    $('bandDescription').textContent=mode==='pulse'?L('ตัวเลข f ใช้กำหนดสเกลระยะและเวลาของพัลส์นี้ ไม่สามารถจัดพัลส์เป็นใต้เสียงหรือเหนือเสียงจากตัวเลขเดียว','Here f sets the pulse length and time scales; it cannot classify the whole pulse into one hearing band'):L('ช่วงอ้างอิงของมนุษย์เป็นค่าโดยประมาณ การได้ยินยังขึ้นกับระดับเสียง อายุ และผู้ฟัง สัตว์ต่างชนิดมีขอบเขตต่างกัน ภาพนี้ไม่ได้ทดสอบการได้ยินของคุณ','Human limits are approximate. Hearing also depends on sound level, age and the listener. Animal species differ. This visual model is not a hearing test.');
+  }
+  const canvas=$('simCanvas'), ctx=canvas.getContext('2d');let width=600,height=430;
+  function resize(){const box=canvas.getBoundingClientRect();width=Math.max(box.width,260);height=box.height;const dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);draw();}
+  function draw(){
+    if(!ctx)return;ctx.clearRect(0,0,width,height);ctx.fillStyle='#090d16';ctx.fillRect(0,0,width,height);
+    const left=48,right=width-16,span=right-left,X=z=>left+span*z/2,m=M.parameters(f), redQ=.75;
+    ctx.font='12px Tahoma,sans-serif';ctx.textAlign='left';ctx.fillStyle='#cbd5e1';ctx.fillText(medium==='air'?L('อนุภาคอากาศ · คลื่นไปทางขวา →','Air particles · wave travels right →'):L('แหล่งกำเนิดสั่น · ช่องสุญญากาศ','Vibrating source · vacuum region'),12,20);
+    const sourceShift=11*M.at(0,phase,f,mode,pulseStart).displacementNorm;ctx.fillStyle='#475569';ctx.fillRect(9,58,14,67);ctx.fillStyle='#f97316';ctx.fillRect(30+sourceShift,50,5,84);
+    if(medium==='air'){
+      ctx.save();ctx.beginPath();ctx.rect(left,28,span,132);ctx.clip();
+      ctx.setLineDash([3,3]);ctx.strokeStyle='#b4535377';ctx.beginPath();ctx.moveTo(X(redQ),33);ctx.lineTo(X(redQ),145);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle='#ef444433';ctx.fillRect(X(redQ-.025),83,X(redQ+.025)-X(redQ-.025),12);
+      for(let row=0;row<7;row++)for(let col=-2;col<=82;col++){
+        const z=col/40,v=M.at(z,phase,f,mode,pulseStart),isRed=row===3&&col===30;ctx.fillStyle=isRed?'#ef4444':'#cbd5e1';ctx.beginPath();ctx.arc(X(z+.025*v.displacementNorm),42+row*16,isRed?5:2,0,M.TAU);ctx.fill();
+      }
+      ctx.restore();
+      const r=M.at(q,phase,f,mode,pulseStart);
+      graph(215,'s/A', '#38bdf8','displacementNorm',r.displacementNorm);
+      graph(337,'Δp/(1 Pa)','#f87171','pressureNorm',r.pressureNorm);
+      ctx.strokeStyle='#facc15';ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(X(q),29);ctx.lineTo(X(q),height-22);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle='#facc15';ctx.fillText('x',Math.min(X(q)+4,width-12),38);
+    }else{
+      ctx.textAlign='center';ctx.fillStyle='#cbd5e1';ctx.font='15px Tahoma,sans-serif';ctx.fillText(L('ไม่มีอากาศในช่องนี้','No air in this region'),(left+right)/2,140);ctx.font='12px Tahoma,sans-serif';ctx.fillText(L('แหล่งกำเนิดสั่น ≠ มีคลื่นเสียงส่งผ่านเสมอ','Source vibration ≠ sound transmission in every medium'),width/2,210);ctx.fillText(L('กราฟของตัวกลางไม่แสดงในสุญญากาศ','Medium graphs are not defined in vacuum'),width/2,255);
+    }
+    function graph(mid,label,color,field,value){
+      const amp=35;ctx.font='11px Tahoma,sans-serif';ctx.textAlign='left';ctx.fillStyle=color;ctx.fillText(label+'   '+L('เทียบกับตำแหน่ง x ณ เวลาเดียวกัน','against x at one instant'),10,mid-49);
+      for(const val of [-1,0,1]){const y=mid-val*amp;ctx.strokeStyle=val===0?'#64748b':'#1e293b';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();ctx.fillStyle='#94a3b8';ctx.fillText(val>0?'+1':String(val),10,y+4);}
+      for(let n=0;n<=4;n++){const z=n*.5,x=X(z);ctx.strokeStyle='#1e293b';ctx.beginPath();ctx.moveTo(x,mid-amp);ctx.lineTo(x,mid+amp);ctx.stroke();ctx.textAlign=n===0?'left':n===4?'right':'center';ctx.fillStyle='#94a3b8';ctx.fillText(length(z*m.wavelength),x,mid+amp+18);}
+      ctx.textAlign='left';ctx.strokeStyle=color;ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<=span;i++){const val=M.at(2*i/span,phase,f,mode,pulseStart)[field],y=mid-amp*val;if(i===0)ctx.moveTo(left+i,y);else ctx.lineTo(left+i,y);}ctx.stroke();
+      ctx.fillStyle=color;ctx.beginPath();ctx.arc(X(q),mid-amp*value,4,0,M.TAU);ctx.fill();
+    }
+  }
+  function frame(timestamp){
+    const dt=lastFrame===null?0:Math.min((timestamp-lastFrame)/1000,.06);lastFrame=timestamp;
+    if(!paused){const next=M.advance(phase,dt,rate,target);phase=next.phase;if(next.reached){paused=true;observations[mission][observationKey]=true;target=null;observationKey=null;renderControls();renderMission();save();}}
+    draw();if(timestamp-lastReadout>100){readouts();lastReadout=timestamp;}requestAnimationFrame(frame);
+  }
+  function notes(){ $('modelNotes').innerHTML=lang==='th'?`<p><strong>อ่านกราฟ:</strong> แกนนอนเป็นตำแหน่งสมดุล x ในอากาศ ณ เวลาเดียวกัน เส้นสีน้ำเงินคือ s/A และสีแดงคือ Δp/(1 Pa) โดย 1 Pa เป็นแอมพลิจูดความดันของคลื่นต่อเนื่อง ส่วนพัลส์ใช้สเกลอ้างอิงเดียวกัน จึงเปรียบเทียบเฟสได้ แต่ไม่ได้แปลว่าการกระจัดกับความดันมีหน่วยหรือขนาดเท่ากัน</p><p><strong>เสียงกับการได้ยิน:</strong> การสั่นที่ถ่ายทอดการรบกวนผ่านตัวกลางทำให้เกิดคลื่นเสียง ส่วนการได้ยินต้องมีผู้รับที่ไวต่อความถี่และระดับเสียงนั้นด้วย ในสุญญากาศไม่มีตัวกลางส่งผ่านเสียง</p><ul><li>ต่ำกว่า 20 Hz: คลื่นใต้เสียง เช่น องค์ประกอบความถี่ต่ำในการสื่อสารของช้าง</li><li>ประมาณ 20–20,000 Hz: ช่วงอ้างอิงของมนุษย์ทั่วไป ไม่ใช่ขอบเขตตายตัวสำหรับทุกคน</li><li>สูงกว่า 20,000 Hz: คลื่นเหนือเสียง สัตว์บางชนิด เช่น ค้างคาวและสุนัข รับบางช่วงเหนือขอบเขตมนุษย์ได้ ไม่ใช่สัตว์ทุกชนิดได้ยินทุกความถี่</li></ul><p><strong>แบบจำลอง:</strong> คลื่นระนาบขนาดเล็กเดินทางไปขวาในอากาศสม่ำเสมอ (c = 343 m/s, ρ = 1.204 kg/m³, Δpₘₐₓ = 1 Pa) ไม่รวมการสะท้อนหรือการลดทอน จุดแทนอนุภาคตัวกลางโดยละการเคลื่อนที่สุ่มจากความร้อน ภาพขยายการสั่นและซูมตาม λ จึงอ่านระยะจริงจากตัวเลข ไม่ใช่ขนาดบนจอ</p>`:`<p><strong>Graphs:</strong> The horizontal axis is equilibrium position x at one instant. Blue is s/A and red is Δp/(1 Pa). For the continuous wave, 1 Pa is its pressure amplitude; the pulse uses the same reference scale. This compares phase, not equal physical units or amplitudes.</p><p><strong>Sound and hearing:</strong> A vibrating source must transmit a disturbance through a medium. Hearing additionally requires a listener sensitive to that frequency and level. Vacuum provides no medium for sound transmission.</p><ul><li>Below 20 Hz: infrasound, including low-frequency components used in elephant communication.</li><li>Approximately 20–20,000 Hz: a typical human reference range, not an exact limit for every individual.</li><li>Above 20,000 Hz: ultrasound. Some animals, including bats and dogs, detect certain frequencies above human limits; no species hears every frequency.</li></ul><p><strong>Model:</strong> A small-amplitude plane wave travels right through uniform air (c = 343 m/s, ρ = 1.204 kg/m³, peak pressure = 1 Pa), without reflection or attenuation. Dots represent medium elements; random thermal motion is omitted. Motion is exaggerated and the view auto-zooms with wavelength, so read physical distances from the numbers.</p>`; }
+  function language(next){lang=next==='en'?'en':'th';document.documentElement.lang=lang;document.querySelectorAll('[data-th][data-en]').forEach(node=>node.textContent=node.dataset[lang]);$('langButton').textContent=lang==='th'?'English':'ภาษาไทย';notes();renderControls();renderMission();draw();}
+  $('langButton').onclick=()=>language(lang==='th'?'en':'th');
+  $('playButton').onclick=()=>{paused=!paused;renderControls();save();};
+  $('slowButton').onclick=()=>{rate=rate===1?.25:1;renderControls();save();};
+  $('stepButton').onclick=()=>{paused=true;phase+=M.TAU/8;renderControls();save();draw();};
+  function changeFrequency(value){const next=Number(value);if(!Number.isFinite(next)||next<1||next>40000){$('frequencyInput').reportValidity();return;}f=next;phase=0;pulseStart=0;renderControls();draw();save();}
+  $('frequencyInput').onchange=event=>changeFrequency(event.target.value);$('frequencySlider').oninput=event=>changeFrequency(event.target.value);
+  document.querySelectorAll('[data-frequency]').forEach(b=>b.onclick=()=>{if(target!==null)return;changeFrequency(b.dataset.frequency);});
+  $('probeSlider').oninput=e=>{q=Number(e.target.value);readouts();draw();save();};
+  $('mediumSelect').onchange=e=>{medium=e.target.value;renderControls();draw();save();};
+  $('pulseButton').onclick=()=>{mode='pulse';pulseStart=phase;paused=false;renderControls();save();};
+  $('continuousButton').onclick=()=>{mode='continuous';renderControls();save();};
+  $('nextMission').onclick=()=>selectMission(Math.min(mission+1,3));
+  $('resetButton').onclick=()=>{if(!confirm(L('ล้างคำตอบและเริ่ม 4 ด่านใหม่ในเครื่องนี้หรือไม่?','Clear this device’s mission answers and restart all four missions?')))return;blank();language(lang);save();};
+  window.addEventListener('message',event=>{
+    if(event.source!==parent||event.origin!==location.origin||event.data?.type!=='learning-hub-context')return;
+    const nextIdentity=event.data.identity?.uid||'guest';if(nextIdentity!==identity){save();identity=nextIdentity;blank();load();}
+    language(event.data.language||lang);
+  });
+  window.addEventListener('pagehide',save);
+  window.LearningHubSimulation={getState:()=>structuredClone(getState()),restoreState:s=>{if(!restore(s))return false;language(lang);save();return true;},subscribe:callback=>{subscriber=typeof callback==='function'?callback:null;return()=>{subscriber=null;};}};
+  load();language('th');new ResizeObserver(resize).observe(canvas);resize();requestAnimationFrame(frame);
+  if(parent!==window)parent.postMessage({type:'learning-hub-tool-ready'},location.origin);
+})();
+
+</script>
+</body>
+</html>

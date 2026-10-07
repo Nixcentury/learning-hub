@@ -1,4 +1,5 @@
 // Menu HTML is data only: copy text/links into shared cards, never execute its markup.
+import { readMenuCatalog, availableMenuSource } from './menu-availability.js';
 export function createSubjectContentNavigation({ root, subject, setStage, backToChapters, requestNavigation = () => false }) {
   const panel = document.createElement("section");
   panel.className = "activity-view content-menu-view";
@@ -54,6 +55,8 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
     let parsed;
     try {
       const response = await fetch(url, { signal: requestController.signal, cache: "no-cache" });
+      if ([404, 410].includes(response.status) && !response.redirected) return version === loadVersion
+        ? { url, entries: [], kind, topicId, th: chapter.th, en: chapter.en } : null;
       if (!response.ok || response.redirected) throw new Error("Menu unavailable");
       parsed = new DOMParser().parseFromString(await response.text(), "text/html");
     } finally { clearTimeout(timeout); }
@@ -70,14 +73,15 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
       const key = kind === "topics" && !isHtml ? d.topicId : d.contentId;
       const href = (link.getAttribute("href") || "").trim();
       if (!idPattern.test(key || "") || seen.has(key) || !d.th || !d.en ||
-          ((kind === "tools" || isHtml) && (!href || !["quiz", "simulation", "html"].includes(d.toolKind))) ||
+          ((kind === "tools" || isHtml) && !["quiz", "simulation", "html"].includes(d.toolKind)) ||
+          (d.status && !['draft', 'ready'].includes(d.status)) ||
           (isHtml && !/^[a-z]/.test(key))) {
         throw new Error("Invalid menu entry");
       }
       seen.add(key);
       return { id: key, th: d.th, en: d.en, descriptionTh: d.descriptionTh || "",
         descriptionEn: d.descriptionEn || "", toolKind: d.toolKind,
-        topicId: isHtml ? (topicId || "chapter-reference") : undefined,
+        status: d.status, topicId: isHtml ? (topicId || "chapter-reference") : undefined,
         source: href ? urlFor(href, url) : null };
     });
     let overview = null;
@@ -90,6 +94,16 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
         th: `ผลการเรียนรู้และสรุป · ${menu.dataset.titleTh || chapter.th}`,
         en: `Learning outcomes and summary · ${menu.dataset.titleEn || chapter.en}` };
     }
+    const availabilityTimeout = setTimeout(() => requestController.abort(), 12000);
+    try {
+      const catalog = await readMenuCatalog(new URL('../route-catalog.v1.json', location.href), { signal: requestController.signal });
+      await Promise.all([...entries, ...(overview ? [overview] : [])].map(async entry => {
+        const isTopic = kind === 'topics' && entry.toolKind !== 'html';
+        entry.source = await availableMenuSource({ ...entry, kind: isTopic ? 'topic' : 'content', subjectId: subject.id, chapterId: chapter.id,
+          topicId: isTopic ? entry.id : entry.topicId || topicId, contentId: entry.id }, { catalog, signal: requestController.signal });
+      }));
+    } finally { clearTimeout(availabilityTimeout); }
+    if (version !== loadVersion) return null;
     return { url, entries, kind, topicId, overview, th: menu.dataset.titleTh || chapter.th,
       en: menu.dataset.titleEn || chapter.en, descriptionTh: menu.dataset.descriptionTh || "",
       descriptionEn: menu.dataset.descriptionEn || "" };
@@ -208,11 +222,12 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
   panel.querySelector("[data-menu-back]").addEventListener("click", () => mode === "topics" ? backToChapters() : showTopics());
   return {
     hide,
-    async open(definition, topicId = null) {
+    async open(definition, topicId = null, preparing = false) {
       hide(); panel.hidden = false; cards.replaceChildren(); mode = "topics"; chapterMenu = null; topicMenu = null; lastLaunch = null;
       const title = definition.querySelector("[data-chapter-title]");
       chapter = { id: definition.dataset.chapter, th: title.dataset.th, en: title.dataset.en };
       render({ kind: "topics", th: chapter.th, en: chapter.en, entries: [] });
+      if (preparing || definition.dataset.status === 'draft' || !definition.dataset.chapterSrc) return true;
       try {
         const menu = await readMenu(definition.dataset.chapterSrc, location.href, "topics");
         if (menu) {

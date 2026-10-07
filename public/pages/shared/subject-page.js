@@ -304,7 +304,7 @@ function buildSubjectPage() {
     const version = ++navigationVersion;
     contentNavigation?.hide();
     bankNavigation?.hide();
-    if (definition?.dataset.chapterSrc) {
+    if (definition.hasAttribute('data-chapter-src') || definition.dataset.status === 'draft') {
       setNavigationMode(true);
       chapterView.hidden = true;
       activityView.hidden = true;
@@ -318,7 +318,7 @@ function buildSubjectPage() {
       try {
         const navigation = await contentNavigationPromise;
         if (version !== navigationVersion) return false;
-        return await navigation.open(definition, route?.topicId);
+        return await navigation.open(definition, route?.topicId, route?.status === 'preparing');
       } catch {
         if (version !== navigationVersion) return false;
         showChapters(true);

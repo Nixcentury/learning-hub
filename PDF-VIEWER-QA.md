@@ -1,22 +1,41 @@
-# PDF กลาง — ผลตรวจก่อนเผยแพร่ 14 ตุลาคม 2026
+# PDF กลาง — ผลตรวจและเผยแพร่ 14 ตุลาคม 2026
 
 ฐาน GitHub ล่าสุดที่ตรวจ: d25fb41029d3195dd0307086967f529af27fd890 (ตรงกับฐานงานนี้)
-Branch งาน: feat/pdf-viewer-ai-guide
-เอกสารนี้บันทึกผลตรวจโค้ดก่อนส่ง GitHub การเผยแพร่จริงต้องดู Actions run ที่ตรง commit ไม่ใช่อ้างจาก build local
+Branch ส่งงาน: feat/pdf-drive-common-th-en-20261014; รวมเข้า main ผ่าน PR #1 แล้ว
+รุ่น player: 1.1.2; code commit e3d1fc585e38f318437f0b24865965f240ee8409
+GitHub Actions run 38523695866: build และ deploy สำเร็จ ตรวจเว็บจริงใน Chrome โหมด Guest แล้ว
+https://github.com/Nixcentury/learning-hub/actions/runs/38523695866
+https://nixcentury.github.io/learning-hub/#test/5/pdf-tools/pdf-inline-demo
 
 ## ผลตรวจรุ่นไฟล์ร่วม/TH/EN
 
 | รายการ | ผล |
 | --- | --- |
-| pnpm test:pdf | 23/23 ผ่าน (contract 14 + actual-player/DOM จำลอง 9) |
-| pnpm test:unit | 259/259 ผ่าน ไม่มีข้าม/ล้มเหลว |
+| pnpm test:pdf | 24/24 ผ่าน (contract 14 + actual-player/DOM จำลอง 10) |
+| pnpm test:unit | 260/260 ผ่าน ไม่มีข้าม/ล้มเหลว |
 | pnpm validate:routes | ผ่าน รวม inline PDF, descriptor และ canonical preparing routes |
 | pnpm build | ผ่านครบ validator → TypeScript → Vite → Pages verification |
 | Content validation | 0 errors, 18 draft warnings; ลิงก์ว่างไม่ขวาง build |
 | Pages verification | 323 public files ตรงต้นฉบับและพาธอยู่ใต้ /learning-hub/ |
 | git diff --cached --check (ไม่รวม vendor) | ผ่าน; upstream licenses คง bytes เดิม รวม whitespace ของเจ้าของลิขสิทธิ์ |
 | PDF.js จริงกับ PDF ตัวอย่าง | ตรวจไว้รอบ 11 ต.ค. render สองหน้าใน Node/canvas พร้อมลิงก์ภายนอกและปลายทางหน้า 1 |
-| Browser จริง / iPad Safari / Drive จริงของผู้ใช้ | ไม่อ้างว่าผ่านจาก Node tests; ตรวจเพิ่มหลัง deploy และยังต้องลองไฟล์/สิทธิ์จริง |
+| Chrome บนเว็บที่ deploy จริง | ผ่านเมนู/inline/descriptor วาดสองหน้า internal link เปลี่ยนภาษาและ zoom ของไฟล์ร่วม |
+| ดาวน์โหลด PDF จริง | Chrome download event สำเร็จ และไฟล์ที่โหลด bytes ตรงกับ PDF ตัวอย่างใน repo |
+| iPad Safari / Drive จริงของผู้ใช้ | ยังต้องลองอุปกรณ์ ไฟล์ และสิทธิ์จริง ไม่อ้างว่าผ่านจาก Chrome/Node |
+
+## ตรวจเว็บจริงหลังเผยแพร่
+
+- Test → บท 5 → เมนู PDF เดิมและ inline เปิดใน Workspace ได้
+- PDF สองหน้าแสดงจริง พร้อม overlay ลิงก์ภายนอก และกดลิงก์ภายในกลับหน้า 1 ได้
+- ไฟล์ร่วมอ่านหน้า 2 ซูม 150% สลับ EN/TH แล้วยังคงหน้าและค่า zoom ไม่ย้อนหน้า 1
+- รายการเมนูลิงก์ว่างเป็น preparing/disabled ไม่ทำให้เมนูหรือ build ล้ม
+- ปุ่มดาวน์โหลดในตัวเล่นส่งไฟล์ PDF จริง ไม่ใช่ภาพ canvas และ bytes ตรงต้นฉบับ
+- ภาพหลักฐาน: [PDF viewer บนเว็บจริง](docs/pdf-viewer-live-20261014.jpg)
+
+จุดที่พบและแก้จากการตรวจจริง: PDF.js 6 ไม่มี convertToViewportRectangle แล้ว
+เปลี่ยน overlay ให้ใช้ convertToViewportPoint สองมุม และเพิ่ม regression test ให้ viewport ไม่มี API เดิม
+เพิ่มรุ่นใน URL player/script เพื่อไม่ให้ browser ใช้ JS เก่าหลังอัปเดต
+ไม่มีการลด sandbox/เปลี่ยนสิทธิ์ หรือเปลี่ยน engine/ฟอนต์กลางเพื่อแก้ปัญหานี้
 
 actual-player tests รัน pdf-player.js จริงด้วย DOM/PDF.js จำลอง ตรวจ:
 - ไฟล์ร่วมสลับ TH/EN ไม่โหลดใหม่ หน้า/zoom เดิม

@@ -6,6 +6,7 @@ import { mountNumericAnswer, hideMathKeyboard } from "./quiz-math-input.js";
 import { mountDragAnswer } from "./quiz-drag-view.js";
 import { dragAnswerSummary } from "./quiz-drag-model.js";
 import { readBankSelection, loadBankQuiz } from "./question-bank-player.js";
+import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
 
 /* ==============================================================
    Quiz Engine กลางของ Learning Hub
@@ -1204,6 +1205,9 @@ import { readBankSelection, loadBankQuiz } from "./question-bank-player.js";
         root?.querySelectorAll("img[src]").forEach(image => {
           image.src = new URL(image.getAttribute("src"), response.url || new URL(source, location.href)).href;
         });
+        // Quiz fragments are copied into the player: preserve the authored PDF
+        // descriptor's base before that move (including translated rich text).
+        resolveAuthoredPdfLinks(root, response.url || new URL(source, location.href));
       }
       if (loadVersion !== contentLoadVersion) return;
       const validation = validateContent(root);

@@ -10,6 +10,7 @@ import {
 } from "./content-context.js";
 import { createContentTool } from "./content-tool.js";
 import { createBankTool } from "./question-bank-tools.js";
+import { pdfLinkEntry } from "./pdf-link.js";
 import { htmlLinkEntry } from "./html-link.js";
 import { renderHtmlMath } from "./html-math.js";
 import { openHtmlPrint } from "./html-print.js";
@@ -319,7 +320,7 @@ export function createWorkspace({
 
   function postContext(record) {
     // Read-only HTML does not need the learner's identity or privileged bridges.
-    if (record.tool.context.toolKind === "html") return;
+    if (["html", "pdf"].includes(record.tool.context.toolKind)) return;
     const targetOrigin = location.origin === "null" ? "*" : location.origin;
     record.frame.contentWindow?.postMessage(
       createHubContextMessage({
@@ -489,7 +490,7 @@ export function createWorkspace({
   }
 
   function flushLocalBeforeRemoval(record) {
-    if (record.tool.context.toolKind === "html") return;
+    if (["html", "pdf"].includes(record.tool.context.toolKind)) return;
     try {
       // Synchronous: removing an iframe cancels its pending debounce timers.
       return record.frame.contentWindow?.LearningHubQuiz?.flushLocal?.();
@@ -774,21 +775,23 @@ export function createWorkspace({
     if (!doc || htmlLinkDocuments.has(doc)) return;
     htmlLinkDocuments.add(doc);
     doc.addEventListener("click", event => {
-      const node = event.target?.closest?.("a[data-hub-html], button[data-hub-html]");
+      const node = event.target?.closest?.("a[data-hub-html], button[data-hub-html], a[data-hub-pdf], button[data-hub-pdf]");
       if (!node || node.disabled || event.defaultPrevented || event.button > 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
       const subject = doc.querySelector("[data-subject-id]")?.dataset.subjectId;
-      const entry = htmlLinkEntry(node, doc.URL, ownerRecord?.tool.context || { subjectId: subject });
+      const isPdf = node.hasAttribute("data-hub-pdf");
+      const entry = (isPdf ? pdfLinkEntry : htmlLinkEntry)(node, doc.URL, ownerRecord?.tool.context || { subjectId: subject });
       const tool = createContentTool(entry, location.href);
-      if (!tool || !openContent(entry)) {
+      if (!tool || tool.preparing || !openContent(entry)) {
         let notice = doc.querySelector("[data-html-link-error]");
         if (!notice) {
           notice = doc.createElement("p"); notice.dataset.htmlLinkError = "";
           notice.setAttribute("role", "alert"); node.after(notice);
         }
-        notice.textContent = language() === "en"
-          ? "Cannot open HTML. Check the content ID and local HTML file path."
-          : "เปิด HTML ไม่ได้ กรุณาตรวจรหัสเนื้อหาและลิงก์ไฟล์ HTML ภายในเว็บ";
+        notice.textContent = tool?.preparing ? (language() === "en" ? "Document in preparation." : "กำลังเตรียมเอกสาร")
+          : language() === "en"
+            ? (isPdf ? "Cannot open PDF. Check its content ID and PDF links." : "Cannot open HTML. Check the content ID and local HTML file path.")
+            : (isPdf ? "เปิด PDF ไม่ได้ กรุณาตรวจรหัสเนื้อหาและลิงก์ PDF" : "เปิด HTML ไม่ได้ กรุณาตรวจรหัสเนื้อหาและลิงก์ไฟล์ HTML ภายในเว็บ");
         return;
       }
       doc.querySelector("[data-html-link-error]")?.remove();

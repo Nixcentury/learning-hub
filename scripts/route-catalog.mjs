@@ -1,6 +1,7 @@
 import { routeCatalogVersion, routeSegmentPattern, parseHubRoute } from '../js/hub-routes.js';
 import { toolCatalog } from '../js/legacy-tool-catalog.js';
 import { readMetadata, metadataNodes, metadataText } from './route-html-metadata.mjs';
+import { inlinePdfSources, createInlinePdfManifest, createPdfManifest } from '../public/shared/pdf-content-model.js';
 
 const site = new URL('https://catalog.invalid/learning-hub/');
 const has = (node, attr) => Object.hasOwn(node.attrs, attr);
@@ -49,7 +50,7 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
   function preparingContent({ contentId, parent, placement, title, file }) {
     if (!/^[a-z][a-z0-9-]{0,127}$/.test(contentId)) fail(file, `Invalid content ID: ${contentId}`);
     const where = { parentHash: parent.hash, ...contextOf(parent) };
-    addRoute({ ...placement, kind: 'content-placeholder', status: 'preparing', contentId, ...where, ...title }, file);
+    if (placement) addRoute({ ...placement, kind: 'content-placeholder', status: 'preparing', contentId, ...where, ...title }, file);
     if (!placeholders.has(contentId)) placeholders.set(contentId, { contentId, ...where, ...title, file });
   }
   function unique(root, attribute, file, templates = false) {
@@ -84,37 +85,60 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
   function contextOf(route) {
     return { subjectId: route.subjectId || route.sectionId || 'general', chapterId: route.chapterId || '1', topicId: route.topicId || 'html-reference' };
   }
-  async function registerContent({ contentId, toolKind, source, parent, title, placement, file }) {
+  async function registerContent({ contentId, toolKind, source, pdfSources, parent, title, placement, file }) {
     id(contentId, file, 'content ID');
-    if (!/^[a-z]/.test(contentId) || !['quiz', 'simulation', 'html'].includes(toolKind)) fail(file, 'Invalid content kind or ID');
-    const doc = await load(source);
-    const marker = toolKind === 'html' ? 'data-learning-html' : toolKind === 'quiz' ? 'data-learning-activity-content' : 'data-learning-simulation';
-    const target = unique(doc, marker, source);
-    if (toolKind === 'html' && target.tag !== 'html') fail(source, 'Reading marker must be on html');
-    if (toolKind !== 'html' && target.attrs['data-activity-id'] !== contentId) fail(file, `Content ID ${contentId} does not match destination activity ID`);
-    if (toolKind === 'quiz' && target.attrs['data-activity-kind'] !== 'quiz') fail(source, 'Expected a quiz');
+    if (!/^[a-z]/.test(contentId) || !['quiz', 'simulation', 'html', 'pdf'].includes(toolKind)) fail(file, 'Invalid content kind or ID');
+    const inline = toolKind === 'pdf' && pdfSources !== undefined;
+    let doc;
+    if (inline) {
+      const manifest = createInlinePdfManifest(pdfSources, contentId, new URL(file, site).href, site.href);
+      if (!manifest.ready) { preparingContent({ contentId, parent, title, placement, file }); return; }
+      pdfSources = Object.fromEntries(Object.entries(manifest.sources).map(([key, value]) => {
+        const url = new URL(value.originalUrl);
+        return [key, url.origin === site.origin ? url.pathname.slice(site.pathname.length) : url.href];
+      }));
+    } else {
+      doc = await load(source);
+      const marker = toolKind === 'pdf' ? 'data-learning-pdf' : toolKind === 'html' ? 'data-learning-html' : toolKind === 'quiz' ? 'data-learning-activity-content' : 'data-learning-simulation';
+      const target = unique(doc, marker, source);
+      if (['html', 'pdf'].includes(toolKind) && target.tag !== 'html') fail(source, 'Reading marker must be on html');
+      if (toolKind !== 'html' && target.attrs['data-activity-id'] !== contentId) fail(file, `Content ID ${contentId} does not match destination activity ID`);
+      if (toolKind === 'quiz' && target.attrs['data-activity-kind'] !== 'quiz') fail(source, 'Expected a quiz');
+      if (toolKind === 'pdf' && !createPdfManifest(target.attrs, [], new URL(source, site).href, site.href).ready) {
+        preparingContent({ contentId, parent, title, placement, file }); return;
+      }
+    }
     const previous = contentById.get(contentId);
-    if (previous && (previous.source !== source || previous.toolKind !== toolKind)) fail(file, `Content ID conflict: ${contentId} already points to ${previous.source}`);
-    const otherId = contentFiles.get(source);
+    if (previous && (previous.toolKind !== toolKind || (inline
+        ? JSON.stringify(previous.pdfSources) !== JSON.stringify(pdfSources)
+        : previous.pdfSources || previous.source !== source))) fail(file, `Content ID conflict: ${contentId} already points to ${previous.source}`);
+    const otherId = !inline && contentFiles.get(source);
     if (otherId && otherId !== contentId) fail(file, `Content file ${source} has two IDs: ${otherId}, ${contentId}`);
-    const content = previous || { id: contentId, toolKind, source, ...title, canonicalHash: `#content/${contentId}`, placements: [] };
-    contentById.set(contentId, content); contentFiles.set(source, contentId);
+    const content = previous || { id: contentId, toolKind, source, ...(inline ? { pdfSources } : {}), ...title, canonicalHash: `#content/${contentId}`, placements: [] };
+    contentById.set(contentId, content);
+    if (!inline) contentFiles.set(source, contentId);
     const where = { parentHash: parent.hash, ...contextOf(parent) };
     if (!content.placements.some(item => JSON.stringify(item) === JSON.stringify(where))) content.placements.push(where);
     if (placement) addRoute({ ...placement, kind: 'content', status: 'ready', contentId, ...where, ...title }, file);
     // Shared HTML buttons may also appear inside an authored Quiz or simulation.
-    pendingReadings.push({ doc, source, parent: { ...where, hash: content.canonicalHash, aliases: [] } });
+    if (!inline) pendingReadings.push({ doc, source, parent: { ...where, hash: content.canonicalHash, aliases: [] } });
   }
   async function htmlLinks(doc, file, parent) {
-    for (const node of nodesWith(doc, 'data-hub-html')) {
+    for (const node of metadataNodes(doc, node => has(node, 'data-hub-html') || has(node, 'data-hub-pdf'))) {
       if (!['a', 'button'].includes(node.tag)) continue;
       const a = node.attrs;
+      const isPdf = has(node, 'data-hub-pdf');
+      const pdfSources = isPdf ? inlinePdfSources(a) ?? (!(a['data-pdf-src'] || a.href)?.trim() ? {} : undefined) : undefined;
       const where = { ...parent, subjectId: a['data-subject-id'] || contextOf(parent).subjectId,
         chapterId: a['data-chapter-id'] || contextOf(parent).chapterId, topicId: a['data-topic-id'] || contextOf(parent).topicId };
       for (const field of ['subjectId', 'chapterId', 'topicId']) id(where[field], file, field);
-      await registerContent({ contentId: a['data-content-id'], toolKind: 'html',
-        source: localCatalogPath(a['data-html-src'] || a.href, file), parent: where,
-        title: labels(node, 'data-', metadataText(node)), file });
+      const values = { contentId: a['data-content-id'], toolKind: isPdf ? 'pdf' : 'html', parent: where,
+        title: labels(node, 'data-', metadataText(node)), file };
+      const source = pdfSources !== undefined ? file : await menuSource(a[isPdf ? 'data-pdf-src' : 'data-html-src'] || a.href, file, node);
+      if (isPdf && a['data-status'] === 'draft') preparingContent(values);
+      else if (source) await registerContent({ ...values, source, ...(pdfSources !== undefined ? { pdfSources } : {}) });
+      else if (isPdf) preparingContent(values);
+      else fail(file, 'HTML link destination is unavailable', node);
     }
   }
   async function menu(file, parent, kind) {
@@ -125,7 +149,7 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
         a['data-chapter-id'] !== parent.chapterId || (kind === 'tools' && a['data-topic-id'] !== parent.topicId)) fail(file, 'Menu context mismatch');
     for (const node of metadataNodes(root, item => item.tag === 'a')) {
       const entry = node.attrs;
-      const isContent = kind === 'tools' || entry['data-tool-kind'] === 'html';
+      const isContent = kind === 'tools' || ['html', 'pdf'].includes(entry['data-tool-kind']);
       const key = id(entry[isContent ? 'data-content-id' : 'data-topic-id'], file);
       const title = labels(node, 'data-', key);
       const placement = childPath(parent, node, key, file);
@@ -137,10 +161,12 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
         if (source) await menu(source, topic, 'tools');
       } else {
         const toolKind = entry['data-tool-kind'];
-        if (!['quiz', 'simulation', 'html'].includes(toolKind)) fail(file, `Content ${key}: data-tool-kind must be quiz, simulation, or html (received ${toolKind || '(empty)'})`, node);
-        const source = await menuSource(href, file, node);
+        if (!['quiz', 'simulation', 'html', 'pdf'].includes(toolKind)) fail(file, `Content ${key}: data-tool-kind must be quiz, simulation, html, or pdf (received ${toolKind || '(empty)'})`, node);
+        const pdfSources = toolKind === 'pdf' ? inlinePdfSources(entry) ?? (!href ? {} : undefined) : undefined;
+        const source = pdfSources !== undefined ? file : await menuSource(href, file, node);
         const values = { contentId: key, toolKind, source, parent: kind === 'topics' ? { ...parent, topicId: 'chapter-reference' } : parent, placement, title, file };
-        if (source) await registerContent(values); else preparingContent(values);
+        if (source && entry['data-status'] !== 'draft') await registerContent({ ...values, ...(pdfSources !== undefined ? { pdfSources } : {}) });
+        else preparingContent(values);
       }
     }
     if (has(root, 'data-chapter-overview-src')) {

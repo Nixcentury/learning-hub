@@ -1,0 +1,59 @@
+คุณกำลังเพิ่มบทเรียนให้ https://github.com/Nixcentury/learning-hub
+ระบบ PDF กลางมีอยู่แล้ว ผู้ใช้เก็บ PDF บน Drive และจะใส่ลิงก์เอง
+อ่าน START-HERE.txt และ PDF-VIEWER-START-HERE.md ใน repo ก่อนเขียนงาน
+อ่าน HTML/Menu เป้าหมายจริงก่อนแก้ รักษา CSS ระบบตัวแปรและ ID เดิม
+ใช้ public/content/templates/pdf-button-template.html เป็นแม่แบบ
+
+ปุ่มใน HTML ที่แสดงจริงใน Hub:
+<button type="button" data-hub-pdf data-content-id="new-stable-content-id"
+  data-pdf-common=""
+  data-pdf-th=""
+  data-pdf-en=""
+  data-th="เปิดชีทติว" data-en="Open worksheet">เปิดชีทติว</button>
+
+common = ไฟล์ร่วมใช้ทั้ง TH/EN เช่นชีทหัวข้อสองภาษาให้เขียนเติม
+th = ฉบับไทยถ้ามีไฟล์แยก; en = ฉบับอังกฤษถ้ามีไฟล์แยก
+ผู้ใช้จะวางลิงก์ Drive /file/d/FILE_ID/view เอง หรือให้ URL จริงมาก่อน
+ช่องที่ไม่มีไฟล์ปล่อย "" หรือไม่เขียน attribute แม้ไม่มีทั้งหมดต้อง build ผ่าน
+ห้ามแต่งลิงก์ ใส่ FILE_ID/TH_LINK/คำอธิบายแทน URL ในไฟล์ที่จะ build
+ภาษาอิงช่องข้อมูล ไม่เดาจากชื่อไฟล์ ไม่แปล PDF อัตโนมัติ
+ระบบเลือก: ฉบับภาษาที่เลือก > ไฟล์ร่วม > อีกภาษาพร้อมแจ้ง > กำลังเตรียม
+ใช้ TH/EN เดิมบนหัวหน้าต่าง ไม่สร้างระบบภาษา/ตัวแสดงผลอีกชุด
+Drive เปิด preview ตามสิทธิ์ มีปุ่มเปิด Drive และดาวน์โหลดผ่าน Drive ตามไฟล์ที่แสดง
+
+ในเมนู topics/tools ใช้ anchor ข้อมูลล้วน:
+<a data-tool-kind="pdf" data-content-id="new-stable-content-id"
+  data-pdf-common="" data-pdf-th="" data-pdf-en=""
+  data-th="ชีทติว" data-en="Worksheet">ชีทติว</a>
+ไม่ต้องมี href สำหรับ inline ไม่ใส่ data-hub-pdf ซ้ำบนรายการเมนู
+รักษา subjectId/chapterId/topicId ของ nav เดิม
+ไม่มีลิงก์เป็นกำลังเตรียม ไม่แต่งไฟล์เพื่อให้ build ผ่าน
+
+ใน Quiz ใช้ <a data-hub-pdf ...> ใน DOM ของ summary/question-context ไม่ใช้ button/script
+ไม่วางในตัวเลือก/ช่องลากวาง ไม่ซ่อน HTML เป็น string ใน data-th/en ของ parent
+พาธ relative อ้างจากไฟล์ Quiz engine จะแปลงให้ก่อนย้ายลง player
+หน้าวิชา/Hub/Simulation ใช้ปุ่มเดียวกันใน DOM จริง ระบุบริบทวิชา/บท/หัวข้อเมื่อจำเป็น
+ปุ่มใน template ที่ไม่ได้ render จะไม่แสดงเอง
+
+ID เริ่ม a-z ตามด้วย a-z/0-9/- รวมไม่เกิน 128 ตัว ไม่ใช้ ID ของ Quiz เป็น PDF ID
+เรียกชุดเดียวหลายที่ใช้ ID เดียวและ URL จริงชุดเดียวกัน เปลี่ยนไฟล์ไม่เปลี่ยน ID
+ถ้าจะแก้ลิงก์ศูนย์กลางจุดเดียวหลายบท ใช้ descriptor เดิมได้ตามคู่มือ
+data-pdf-src บนปุ่มเดิมชี้ descriptor .html ไม่ใช่ PDF จริง
+ห้ามใส่ descriptor path และสามช่อง inline พร้อมกัน
+
+ข้อกำหนด:
+- ไม่มี/ว่างลิงก์หรือ PDF local ยังไม่มาเป็นงานร่างที่ build ผ่าน
+- ลิงก์ที่ใส่ต้องปลอดภัย ถูกชนิด ไม่ยอม javascript:/data:/file: traversal credentials HTTP ต่างเว็บ หรือลิงก์ผิดชนิด
+- Drive หาย/ไม่มีสิทธิ์เป็นปัญหาตอนเปิดอ่าน ไม่เรียก Drive เพื่อ gate build
+- ไม่ลดกติกา Quiz พร้อมใช้ยังต้องมีคำถามตามสัญญาเดิม
+- ไม่สร้าง viewer/modal/iframe/PDF.js controller ใหม่ในบทเรียน
+- ไม่ลด sandbox ไม่แก้ CSS กลาง Firebase Apps Script identity Quiz storage หรือ notebook
+- ไม่เปลี่ยน IDs คำตอบหรือคะแนนเดิมเพื่อเพิ่มปุ่ม
+- ไม่ใส่ public/ ใน URL ไม่ hardcode localhost หรือพาธ / จากรากโดเมน
+- ไม่เปลี่ยนสิทธิ์ Drive เผยแพร่ไฟล์ส่วนตัว หรือใส่ token/password ใน repo
+- ไม่ push/merge/deploy โดยไม่มีคำสั่งผู้ใช้ ไม่แก้ dist/generated catalog ด้วยมือ
+
+ก่อนส่งรัน pnpm test:pdf, pnpm test:unit, pnpm validate:routes, pnpm build, git diff --check
+ระบุไฟล์ที่แก้ ID ตำแหน่งปุ่มและช่องที่รอผู้ใช้ใส่ลิงก์
+รายงานผลจริง แยก build/commit/push/deploy ไม่อ้าง iPad/Drive ผ่านหากยังไม่ทดสอบ
+งานนี้ไม่แปลง PPT/PDF หรืออัปโหลด Drive ให้เอง

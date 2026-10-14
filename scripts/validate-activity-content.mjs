@@ -2,7 +2,8 @@ import { readdir, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { extname, join, relative, sep, resolve } from "node:path";
 import { parseNumericAnswer } from "../public/shared/quiz-question-model.js";
-import { readMetadata } from "./route-html-metadata.mjs";
+import { createPdfManifest, createInlinePdfManifest, inlinePdfSources } from "../public/shared/pdf-content-model.js";
+import { readMetadata, metadataNodes } from "./route-html-metadata.mjs";
 import { validateLearningSheet } from "../js/learning-sheet-model.js";
 import { lineAt, withoutComments, reportContentDiagnostics } from './content-diagnostics.mjs';
 
@@ -72,17 +73,27 @@ async function validateMenu(file, source) {
   for (const match of source.matchAll(/<a\b[^>]*>/gi)) {
     offsets.set(file, match.index);
     const entry = readAttributes(match[0]);
-    const isHtml = entry.get("data-tool-kind") === "html";
+    const isPdf = entry.get("data-tool-kind") === "pdf";
+    const isHtml = ["html", "pdf"].includes(entry.get("data-tool-kind"));
     const id = entry.get(kind === "topics" && !isHtml ? "data-topic-id" : "data-content-id");
     if (!stableMenuId.test(id || "") || seen.has(id)) addError(file, `Missing, invalid or duplicate menu entry ID: ${id}`);
     seen.add(id);
     if (!hasBilingualText(match[0])) addError(file, `${id} needs data-th and data-en.`);
     if (entry.get('data-status') && !['draft', 'ready'].includes(entry.get('data-status'))) addError(file, `${id}: data-status ใช้ draft หรือ ready เท่านั้น`);
-    if (kind === 'tools' && !['quiz', 'simulation', 'html'].includes(entry.get('data-tool-kind'))) addError(file, `${id}: data-tool-kind ต้องเป็น quiz, simulation หรือ html`);
+    if (kind === 'tools' && !['quiz', 'simulation', 'html', 'pdf'].includes(entry.get('data-tool-kind'))) addError(file, `${id}: data-tool-kind ต้องเป็น quiz, simulation, html หรือ pdf`);
     if ((kind === 'tools' || isHtml) && !/^[a-z]/.test(id || '')) addError(file, `${id}: data-content-id ต้องขึ้นต้นด้วยตัวอักษร`);
+    if (isPdf) {
+      try {
+        const pdfSources = inlinePdfSources(Object.fromEntries(entry)) ?? (!entry.get('href')?.trim() ? {} : undefined);
+        if (pdfSources !== undefined) { await validateInlinePdf(file, pdfSources, id); continue; }
+      } catch (error) { addError(file, error.message); continue; }
+    }
     const target = await readMenuTarget(file, entry.get("href"), { allowDraft: true, draft: entry.get('data-status') === 'draft' });
     if (!target) continue;
-    if (isHtml) {
+    if (isPdf) {
+      const destination = readAttributes(findOpeningTag(target.source, "data-learning-pdf"));
+      if (destination.get("data-learning-pdf") !== "1" || destination.get("data-activity-id") !== id) addError(file, `${id} must match the PDF descriptor data-activity-id.`);
+    } else if (isHtml) {
       if (!/^[a-z][a-z0-9-]{0,127}$/.test(id || "")) addError(file, "HTML content ID must start with a letter.");
       if (!/<html\b[^>]*\bdata-learning-html(?:\s|=|>)/i.test(target.source)) {
         addError(file, `${id} must link to a document with <html data-learning-html>.`);
@@ -148,13 +159,75 @@ function addError(file, message, line) { addDiagnostic('error', file, message, l
 function addWarning(file, message) { addDiagnostic('warning', file, message); }
 
 async function validateHtmlLinks(file, source) {
-  for (const match of source.matchAll(/<(?:a|button)\b[^>]*\bdata-hub-html(?:\s|=|>)[^>]*>/gi)) {
-    offsets.set(file, match.index);
-    const attributes = readAttributes(match[0]);
-    if (!/^[a-z][a-z0-9-]{0,127}$/.test(attributes.get("data-content-id") || "")) addError(file, "HTML link needs a stable data-content-id starting with a letter.");
-    const target = await readMenuTarget(file, attributes.get("data-html-src") || attributes.get("href"));
-    if (target && !/<html\b[^>]*\bdata-learning-html(?:\s|=|>)/i.test(target.source)) addError(file, "HTML link must point to <html data-learning-html>.");
+  const tree = readMetadata(source);
+  for (const node of metadataNodes(tree, node => ['a', 'button'].includes(node.tag) &&
+      (Object.hasOwn(node.attrs, 'data-hub-html') || Object.hasOwn(node.attrs, 'data-hub-pdf')))) {
+    const attributes = node.attrs, isPdf = Object.hasOwn(attributes, 'data-hub-pdf');
+    const id = attributes['data-content-id'];
+    if (isPdf && Object.hasOwn(attributes, 'data-hub-html')) addError(file, 'A link cannot be both data-hub-html and data-hub-pdf.', node.line);
+    if (!/^[a-z][a-z0-9-]{0,127}$/.test(id || '')) addError(file, 'Content link needs a stable data-content-id starting with a letter.', node.line);
+    if (isPdf) {
+      try {
+        const pdfSources = inlinePdfSources(attributes) ?? (!(attributes['data-pdf-src'] || attributes.href)?.trim() ? {} : undefined);
+        if (pdfSources !== undefined) { await validateInlinePdf(file, pdfSources, id); continue; }
+      } catch (error) { addError(file, error.message, node.line); continue; }
+    }
+    const target = await readMenuTarget(file, attributes[isPdf ? 'data-pdf-src' : 'data-html-src'] || attributes.href, { allowDraft: isPdf });
+    if (!target) continue;
+    const marker = isPdf ? 'data-learning-pdf' : 'data-learning-html';
+    const destination = readAttributes(findOpeningTag(target.source, marker));
+    if (!destination.has(marker)) addError(file, `Content link must point to <html ${marker}>.`, node.line);
+    if (isPdf && destination.get('data-activity-id') !== id) addError(file, 'PDF link content ID must match its descriptor.', node.line);
   }
+}
+
+const pdfHubUrl = 'https://validation.invalid/learning-hub/';
+function pdfWebUrl(file) {
+  const webPath = relative(join(root, 'public'), file).split(sep).join('/');
+  return new URL(webPath === '../index.html' ? 'index.html' : webPath, pdfHubUrl).href;
+}
+async function validatePdfSources(file, manifest) {
+  if (!manifest.ready) addWarning(file, 'PDF ยังไม่มีลิงก์: กำลังเตรียมเอกสาร ใส่ไฟล์ร่วม/TH/EN เมื่อพร้อม');
+  for (const [language, source] of Object.entries(manifest.sources)) {
+    const url = new URL(source.url), hub = new URL(pdfHubUrl);
+    if (source.kind !== 'pdf' || url.origin !== hub.origin) continue;
+    const path = join(root, 'public', decodeURIComponent(url.pathname.slice(hub.pathname.length)));
+    let bytes;
+    try { bytes = await read(path); }
+    catch (error) {
+      if (!['ENOENT', 'ENOTDIR'].includes(error.code)) throw error;
+      addWarning(file, `PDF (${language}) ยังไม่มีไฟล์ ${url.pathname}: build ต่อได้ ตรวจไฟล์ก่อนใช้งานจริง`);
+      continue;
+    }
+    if (!Buffer.from(bytes).subarray(0, 1024).includes(Buffer.from('%PDF-'))) throw Error(`Local PDF (${language}) has no PDF header.`);
+  }
+}
+async function validateInlinePdf(file, sources, id) {
+  const manifest = createInlinePdfManifest(sources, id, pdfWebUrl(file), pdfHubUrl);
+  await validatePdfSources(file, manifest);
+}
+
+async function validatePdf(file, source) {
+  const tree = readMetadata(source);
+  const roots = metadataNodes(tree, node => Object.hasOwn(node.attrs, 'data-learning-pdf'));
+  if (roots.length !== 1 || roots[0].tag !== 'html') { addError(file, 'PDF descriptor needs exactly one html data-learning-pdf root.'); return; }
+  // The metadata reader deliberately skips raw script/style bodies; check the
+  // authored source too so data-only descriptors cannot hide executable tags.
+  if (/<\s*(script|style|link|iframe|object|embed|form|input|button|base|template)\b/i.test(source) || /\son[a-z]+\s*=/i.test(source))
+    addError(file, 'PDF descriptor cannot contain scripts, styles, handlers or embedded controls.');
+  if (metadataNodes(tree, node => ['script', 'style', 'link', 'iframe', 'object', 'embed', 'form', 'input', 'button', 'base'].includes(node.tag) ||
+      Object.keys(node.attrs).some(key => /^on/.test(key) || ['data-learning-html', 'data-learning-menu', 'data-learning-activity-content', 'data-learning-simulation'].includes(key))).length)
+    addError(file, 'PDF descriptor is data only: no scripts, handlers, embedded frames, forms, styles or other content kinds.');
+  try {
+    const hubUrl = 'https://validation.invalid/learning-hub/';
+    const webPath = relative(join(root, 'public'), file).split(sep).join('/');
+    const descriptorUrl = new URL(webPath, hubUrl).href;
+    const links = metadataNodes(tree, node => Object.hasOwn(node.attrs, 'data-pdf-link'));
+    if (links.some(node => node.tag !== 'a')) throw Error('data-pdf-link belongs on an anchor.');
+    const manifest = createPdfManifest(roots[0].attrs, links.map(node => node.attrs), descriptorUrl, hubUrl);
+    trackActivityId(file, manifest.contentId);
+    await validatePdfSources(file, manifest);
+  } catch (error) { addError(file, error.message); }
 }
 
 function validateQuestion(file, openingTag, body, index, seenIds) {
@@ -252,6 +325,7 @@ async function validateFile(file) {
   catch (error) { addError(file, error.message, error.line); return; }
   await validateHtmlLinks(file, source);
   offsets.set(file, 0);
+  if (findOpeningTag(source, "data-learning-pdf")) { await validatePdf(file, source); return; }
   if (findOpeningTag(source, "data-learning-html")) {
     const roots = [...source.matchAll(/<html\b[^>]*\bdata-learning-html(?:\s|=|>)[^>]*>/gi)];
     if (roots.length !== 1) addError(file, "Read-only HTML needs exactly one <html data-learning-html> root.");

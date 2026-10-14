@@ -25,7 +25,7 @@ export function createContentTool(entry, hubUrl) {
     if (hasPlayer && !inline) page.searchParams.set("content", source.href);
     if (entry.toolKind === "pdf") {
       page.searchParams.set("id", entry.contentId);
-      page.searchParams.set("v", "1.1.1");
+      page.searchParams.set("v", "1.1.2");
     }
     const title = (value, fallback) => typeof value === "string" && value.trim()
       ? value.trim().slice(0, 180) : fallback;

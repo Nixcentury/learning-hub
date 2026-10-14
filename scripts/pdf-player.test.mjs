@@ -74,9 +74,12 @@ function harness(sources = {}, { auto = true, language = 'th', legacy = false } 
       const pdf = { numPages: 10,
         getPage: async number => ({
           getViewport: ({ scale }) => ({ width: 400 * scale, height: 300 * scale,
-            convertToViewportRectangle: box => box }),
+            convertToViewportPoint: (x, y) => [x * scale, (300 - y) * scale] }),
           render: () => { renders.push({ url: options.url, page: number }); return { promise: Promise.resolve(), cancel() {} }; },
-          getAnnotations: async () => [],
+          getAnnotations: async () => [
+            { subtype: 'Link', rect: [10, 20, 100, 40], url: 'https://example.test/video' },
+            { subtype: 'Link', rect: [10, 50, 100, 70], dest: [0] },
+          ],
         }),
         getData: async () => new Uint8Array([37, 80, 68, 70, 45]),
         getDestination: async () => [0], getPageIndex: async () => 0,
@@ -110,6 +113,22 @@ test('shared PDF keeps page and zoom on TH/EN changes without fetching or reload
   assert.equal(h.nodes['pdf-zoom'].value, '1.5');
   assert.equal(h.nodes['pdf-language-note'].hidden, true);
   assert.equal(h.fetches.length, 0);
+  h.close();
+});
+
+test('PDF.js 6 point-only viewports render external and internal link overlays without obsolete rectangle APIs', async () => {
+  const h = harness({ common: new URL('content/p/shared.pdf', hub).href });
+  await h.flush();
+  const paper = h.nodes['pdf-page-stage'].children[0];
+  assert.ok(paper, 'The PDF page must not disappear when it has link annotations.');
+  const [canvas, external, internal] = paper.children;
+  assert.equal(canvas.tag, 'canvas');
+  assert.equal(external.href, 'https://example.test/video');
+  assert.equal(external.target, '_blank');
+  assert.equal(internal.tag, 'button');
+  assert.ok(Number.isFinite(parseFloat(external.style.top)));
+  await h.page(5); internal.events.click(); await h.flush();
+  assert.equal(h.nodes['pdf-page-stage'].dataset.pageNumber, 1);
   h.close();
 });
 

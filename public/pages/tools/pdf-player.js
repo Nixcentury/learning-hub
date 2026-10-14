@@ -21,6 +21,7 @@ const languageObserver = new MutationObserver(() => {
 });
 languageObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 function message(th, en, error = false) {
+  if (!error) delete status.dataset.errorDetail;
   status.dataset.th = th; status.dataset.en = en;
   status.classList.toggle('is-error', error); status.hidden = !th; translate();
 }
@@ -42,7 +43,9 @@ function linkOverlay(annotations, pageViewport, paper) {
     if (annotation.subtype !== 'Link' || !Array.isArray(annotation.rect)) continue;
     const href = annotation.url && safePdfLink(annotation.url, variant.source.url);
     if (!href && !annotation.dest) continue;
-    const box = pageViewport.convertToViewportRectangle(annotation.rect);
+    // PDF.js 6 retains point conversion but no longer exposes rectangle conversion.
+    const box = [...pageViewport.convertToViewportPoint(annotation.rect[0], annotation.rect[1]),
+      ...pageViewport.convertToViewportPoint(annotation.rect[2], annotation.rect[3])];
     if (!box.every(Number.isFinite)) continue;
     const link = document.createElement(href ? 'a' : 'button');
     link.className = 'pdf-page-link';

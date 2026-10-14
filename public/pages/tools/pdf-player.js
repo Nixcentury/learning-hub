@@ -87,6 +87,8 @@ async function renderPage() {
     message('', '');
   } catch (error) {
     if (token !== revision || disposed || error.name === 'RenderingCancelledException') return;
+    console.warn('Learning Hub PDF render failed:', error);
+    status.dataset.errorDetail = `${error.name}: ${error.message}`.slice(0, 500);
     message('แสดงหน้านี้ไม่สำเร็จ ลองเปลี่ยนหน้า หรือกดเปิดไฟล์ต้นฉบับ', 'This page could not render. Try another page or open the original.', true);
   }
 }

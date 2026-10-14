@@ -23,7 +23,10 @@ export function createContentTool(entry, hubUrl) {
     const page = hasPlayer
       ? new URL(`pages/tools/${entry.toolKind}-player.html`, hub) : new URL(source.href);
     if (hasPlayer && !inline) page.searchParams.set("content", source.href);
-    if (entry.toolKind === "pdf") page.searchParams.set("id", entry.contentId);
+    if (entry.toolKind === "pdf") {
+      page.searchParams.set("id", entry.contentId);
+      page.searchParams.set("v", "1.1.1");
+    }
     const title = (value, fallback) => typeof value === "string" && value.trim()
       ? value.trim().slice(0, 180) : fallback;
     if (inline) {

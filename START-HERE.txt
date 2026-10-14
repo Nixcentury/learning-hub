@@ -17,6 +17,10 @@ Repository: https://github.com/Nixcentury/learning-hub
 แม่แบบข้อกา+เติมคำตอบ: public/content/templates/quiz-template.html
 แม่แบบลากวาง: public/content/templates/quiz-drag-template.html
 พรอมป์สำหรับ AI: public/content/templates/quiz-ai-prompt.txt และ quiz-drag-ai-prompt.txt
+หน้าต่างสไลด์ PDF: PDF-VIEWER-START-HERE.md (คู่มือเรียกจากทุกชั้น)
+แม่แบบปุ่ม PDF (ไฟล์ร่วม/TH/EN ช่องว่างได้): public/content/templates/pdf-button-template.html
+พรอมป์ AI/Gemini: public/content/templates/pdf-ai-prompt.txt; descriptor เดิม: pdf-template.html
+ผลตรวจ PDF ก่อนเผยแพร่: PDF-VIEWER-QA.md
 คู่มือ 4 ชั้น: public/content/chemistry/START-HERE.txt
 แผนลิงก์แชร์ เฟส 1 (ยังไม่เปิดปุ่มแชร์): SHARING-PHASE1-START-HERE.txt
 ลิงก์วิชา/บท/เรื่องย่อย เฟส 2 และวิธีลอง: SHARING-PHASE2-START-HERE.txt

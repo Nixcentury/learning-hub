@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <link rel="stylesheet" href="tool.css">
+  <link rel="stylesheet" href="pdf-player.css">
+  <title>PDF · Learning Hub</title>
+</head>
+<body class="tool-pdf">
+  <main class="pdf-shell">
+    <nav class="pdf-toolbar" aria-label="PDF">
+      <div id="pdf-controls" class="pdf-controls" hidden>
+        <button type="button" id="pdf-prev" data-th="ก่อนหน้า" data-en="Previous">ก่อนหน้า</button>
+        <label><span data-th="หน้า" data-en="Page">หน้า</span> <input id="pdf-page" type="number" min="1" value="1" inputmode="numeric" aria-label="หน้า / Page"> / <output id="pdf-total">0</output></label>
+        <button type="button" id="pdf-next" data-th="ถัดไป" data-en="Next">ถัดไป</button>
+        <select id="pdf-zoom" aria-label="ขนาด / Zoom">
+          <option value="page" data-th="พอดีหน้า" data-en="Fit page">พอดีหน้า</option>
+          <option value="width" data-th="พอดีความกว้าง" data-en="Fit width">พอดีความกว้าง</option>
+          <option value="1">100%</option><option value="1.5">150%</option><option value="2">200%</option>
+        </select>
+      </div>
+      <a id="pdf-download" target="_blank" rel="noopener noreferrer" hidden data-th="ดาวน์โหลด PDF" data-en="Download PDF">ดาวน์โหลด PDF</a>
+      <a id="pdf-original" target="_blank" rel="noopener noreferrer" hidden data-th="เปิดไฟล์ต้นฉบับ ↗" data-en="Open original ↗">เปิดไฟล์ต้นฉบับ ↗</a>
+    </nav>
+    <p id="pdf-language-note" class="pdf-note" role="status" data-th="" data-en="" hidden></p>
+    <nav id="pdf-resources" class="pdf-resources" aria-label="ลิงก์ประกอบ / Related links" hidden></nav>
+    <p id="pdf-status" role="status" aria-live="polite" data-th="กำลังเปิด PDF…" data-en="Opening PDF…">กำลังเปิด PDF…</p>
+    <p id="pdf-drive-note" class="pdf-note" hidden data-th="ดาวน์โหลดและพิมพ์ได้จากหน้าต้นฉบับตามสิทธิ์ของ Drive เมื่อสลับภาษา เอกสารจะเปิดใหม่ หากไม่แสดงให้ตรวจสิทธิ์ไฟล์" data-en="Download and print from the original, subject to Drive permissions. Switching language reopens the document. If it does not appear, check file access.">ดาวน์โหลดและพิมพ์ได้จากหน้าต้นฉบับตามสิทธิ์ของ Drive เมื่อสลับภาษา เอกสารจะเปิดใหม่ หากไม่แสดงให้ตรวจสิทธิ์ไฟล์</p>
+    <section id="pdf-viewport" tabindex="0" aria-label="เอกสาร PDF / PDF document">
+      <div id="pdf-page-stage"></div>
+    </section>
+    <iframe id="pdf-drive-frame" title="PDF · Google Drive" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox" allow="fullscreen" hidden></iframe>
+    <noscript>เปิด PDF ต้องใช้ JavaScript / JavaScript is required to open this PDF.</noscript>
+  </main>
+  <script type="module" src="pdf-player.js"></script>
+</body>
+</html>

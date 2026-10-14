@@ -1,0 +1,26 @@
+body.tool-pdf { --accent: #7d6abb; --soft: #f0edff; height: 100dvh; min-height: 0; overflow: hidden; }
+.pdf-shell { position: relative; height: 100%; display: flex; flex-direction: column; }
+.pdf-toolbar, .pdf-controls, .pdf-resources { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.pdf-toolbar { padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--surface); }
+.pdf-controls { flex: 1; }
+.pdf-toolbar button, .pdf-toolbar a, .pdf-toolbar select, .pdf-resources a { font: inherit; font-size: 13px; color: var(--navy); border: 1px solid var(--line); background: white; border-radius: 10px; padding: 9px 12px; min-height: 42px; text-decoration: none; cursor: pointer; }
+.pdf-toolbar button:hover, .pdf-toolbar a:hover, .pdf-resources a:hover { background: var(--soft); }
+.pdf-toolbar button:disabled { opacity: .45; cursor: default; }
+.pdf-toolbar a[aria-busy="true"] { opacity: .6; cursor: progress; }
+#pdf-language-note { background: var(--soft); }
+.pdf-controls label { white-space: nowrap; font-size: 13px; }
+#pdf-page { width: 58px; min-height: 42px; border: 1px solid var(--line); border-radius: 8px; padding: 6px; font: inherit; color: var(--navy); background: white; }
+.pdf-resources { padding: 8px 14px; background: var(--soft); }
+.pdf-resources a { padding: 7px 10px; }
+#pdf-status, .pdf-note { margin: 0; padding: 10px 16px; font-size: 13px; color: var(--muted); }
+#pdf-status { position: absolute; bottom: 12px; left: 12px; right: 12px; z-index: 5; background: white; border-radius: 10px; box-shadow: 0 2px 12px #172b5620; pointer-events: none; }
+#pdf-status.is-error { color: #9a3131; background: #fff0f0; }
+#pdf-viewport { flex: 1; min-height: 0; overflow: auto; padding: 16px; background: #e7ebf2; overscroll-behavior: contain; }
+#pdf-page-stage { position: relative; width: max-content; margin: 0 auto; }
+.pdf-paper { position: relative; background: white; box-shadow: 0 4px 22px #172b5620; }
+.pdf-paper canvas { display: block; }
+.pdf-page-link { position: absolute; display: block; border: 0; border-radius: 2px; background: transparent; padding: 0; cursor: pointer; }
+.pdf-page-link:hover { background: #6789cf20; }
+.pdf-page-link:focus-visible, .pdf-toolbar :focus-visible, .pdf-resources a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+#pdf-drive-frame { flex: 1; min-height: 0; width: 100%; border: 0; background: white; }
+@media (max-width: 540px) { .pdf-toolbar { padding: 8px; } .pdf-controls { gap: 5px; } .pdf-toolbar button, .pdf-toolbar a, .pdf-toolbar select { padding: 8px; } #pdf-viewport { padding: 8px; } }

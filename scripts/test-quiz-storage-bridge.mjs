@@ -191,7 +191,9 @@ function workspaceHarness() {
     requestAnimationFrame: (fn) => fn(),
   });
   vm.runInContext(readModule("../js/content-context.js"), context);
+  vm.runInContext(readModule("../public/shared/pdf-content-model.js"), context);
   vm.runInContext(readModule("../js/content-tool.js"), context);
+  vm.runInContext(readModule("../js/pdf-link.js"), context);
   vm.runInContext(readModule("../js/legacy-tool-catalog.js"), context);
   vm.runInContext(readModule("../js/workspace.js"), context);
   const windowLayer = new FakeElement();
@@ -260,6 +262,38 @@ test("legacy tools without the new local-flush hook still close normally", () =>
   const h = workspaceHarness();
   h.workspace.open("physics-c1-simulation");
   assert.doesNotThrow(() => h.workspace.clear());
+});
+
+test("PDF windows reuse and restore one record without receiving identity or Quiz storage access", () => {
+  const h = workspaceHarness();
+  const entry = { toolKind: 'pdf', subjectId: 'physics', chapterId: '12', topicId: 'sound',
+    contentId: 'sound-slides', source: 'content/physics/slides.html', titleTh: 'สไลด์', titleEn: 'Slides' };
+  assert.equal(h.workspace.openContent(entry), true);
+  const element = h.windowLayer.children[0], frame = element.querySelector('.workspace-tool-frame');
+  assert.equal(h.context.isWorkspaceQuizSource(frame.contentWindow), false);
+  h.workspace.setContext();
+  assert.deepEqual(frame.contentWindow.messages, []);
+  element.querySelector('.is-minimize').listeners.click();
+  assert.equal(element.hidden, true);
+  assert.equal(h.workspace.openContent({ ...entry, topicId: 'review' }), true);
+  assert.equal(h.windowLayer.children.length, 1);
+  assert.equal(element.hidden, false);
+  assert.equal(h.workspace.openContent({ ...entry, source: 'content/physics/other.html' }), false);
+});
+
+test("delegated PDF clicks in rendered documents open the shared player", () => {
+  const h = workspaceHarness(), listeners = {};
+  const attrs = { 'data-hub-pdf': '', 'data-pdf-src': 'slides.html' };
+  const link = { dataset: { contentId: 'sound-slides', subjectId: 'physics', chapterId: '12', topicId: 'sound' },
+    textContent: 'Slides', getAttribute: name => attrs[name], hasAttribute: name => Object.hasOwn(attrs, name) };
+  const doc = { URL: origin + '/content/physics/lesson.html', querySelector: () => null,
+    addEventListener: (name, fn) => { listeners[name] = fn; } };
+  h.workspace.bindHtmlLinks(doc);
+  let prevented = false;
+  listeners.click({ target: { closest: () => link }, button: 0, preventDefault: () => { prevented = true; } });
+  assert.equal(prevented, true);
+  assert.equal(h.windowLayer.children[0].dataset.toolId, 'content-pdf-sound-slides');
+  assert.equal(h.windowLayer.children.length, 1);
 });
 
 test("closing a Quiz waits for committed handwriting and keeps the frame on failure", async () => {

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ทดลองสร้างเสียงและสำรวจคลื่นเสียง | Sound Generation &amp; Wave Mechanics V2</title>
+  <title>ทดลองสร้างเสียงและสำรวจคลื่นเสียง | Sound Generation &amp; Wave Mechanics V4</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -363,6 +363,13 @@ select { padding:8px; border:1px solid #cbd5e1; border-radius:8px; background:wh
 .metric-chip .value { font-size:14px; font-weight:700; color:#0f172a; }
 @media(max-width:680px){ .compare-grid,.current-metrics{grid-template-columns:1fr;} }
 
+
+  /* V4: a true fixed-time comparison instead of three identically zoomed views. */
+  .frequency-compare-canvas {display:block; width:100%; height:auto; background:#fbfdff; border:1px solid #dbe5f3; border-radius:8px;}
+  .compare-grid {grid-template-columns:repeat(3,minmax(0,1fr));}
+  .audio-row .sim-btn {flex:0 1 210px;}
+  .compare-card {overflow-wrap:anywhere;}
+  @media(max-width:680px){.compare-grid{grid-template-columns:1fr;}.audio-row .sim-btn{flex:1;}}
 </style>
 
 </head>
@@ -400,22 +407,25 @@ select { padding:8px; border:1px solid #cbd5e1; border-radius:8px; background:wh
       </div>
       <div class="sim-btn-row"><label><span data-th="ตัวกลาง" data-en="Medium">ตัวกลาง</span> <select id="mediumSelect"><option value="air" data-th="อากาศ" data-en="Air">อากาศ</option><option value="vacuum" data-th="สุญญากาศ" data-en="Vacuum">สุญญากาศ</option></select></label><button id="pulseButton" class="sim-btn" data-th="ทดลองเคาะ 1 ครั้ง" data-en="Try a single pulse">ทดลองเคาะ 1 ครั้ง</button><button id="continuousButton" class="sim-btn" data-th="กลับเป็นคลื่นต่อเนื่อง" data-en="Continuous wave">กลับเป็นคลื่นต่อเนื่อง</button></div>
       <div id="bandPanel" class="hearing-panel"><strong id="bandTitle"></strong><p id="bandDescription"></p></div>
-      <div class="audio-panel" id="audioPanel">
+      <div class="audio-panel" id="audioPanel" hidden>
         <div class="audio-row">
-          <button id="audioToggleButton" class="sim-btn" data-th="🔈 เปิดเสียงตัวอย่าง" data-en="🔈 Enable sample audio">🔈 เปิดเสียงตัวอย่าง</button>
-          <span id="audioStatus" class="audio-status"></span>
+          <button id="audioToggleButton" class="sim-btn" data-th="🔈 เปิดเสียงตัวอย่าง" data-en="🔈 Play a sample tone">🔈 เปิดเสียงตัวอย่าง</button>
+          <span id="audioStatus" class="audio-status" role="status" aria-live="polite"></span>
         </div>
         <p class="compare-note" id="audioNote"></p>
       </div>
-      <div id="mission5Panel" class="compare-panel">
+      <div id="mission5Panel" class="compare-panel" hidden>
         <h3 data-th="ด่าน 5 · ตารางเทียบความถี่ คาบ และความยาวคลื่น" data-en="Mission 5 · Compare frequency, period and wavelength">ด่าน 5 · ตารางเทียบความถี่ คาบ และความยาวคลื่น</h3>
+        <p id="frequencyGraphIntro" class="compare-note"></p>
+        <p id="vacuumCompareNotice" class="compare-note" hidden></p>
+        <canvas id="frequencyCompareCanvas" class="frequency-compare-canvas" width="720" height="286" role="img" aria-label="Three time-domain sound waveforms over the same 20-millisecond interval"></canvas>
         <div id="currentMetrics" class="current-metrics"></div>
         <div id="compareGrid" class="compare-grid"></div>
         <p id="compareNote" class="compare-note"></p>
       </div>
     </section>
     <section class="sim-controls-card" aria-label="Guided missions">
-      <h2 data-th="สังเกตทีละด่าน" data-en="Observe, one mission at a time">สังเกตทีละด่าน</h2>
+      <h2 data-th="สังเกตทีละด่าน" data-en="Explore one mission at a time">สังเกตทีละด่าน</h2>
       <nav id="missionNav" class="mission-nav" aria-label="Choose mission"></nav>
       <p id="progress" class="sim-note" role="status"></p>
       <div class="guided-card"><h3 id="missionTitle"></h3><p id="missionInstruction"></p><div id="predictionPanel" class="question-block" hidden><strong id="predictionTitle"></strong><p id="predictionPrompt" class="sim-note"></p><div id="predictionChoices" class="answer-options"></div><p id="predictionFeedback" class="sim-note" role="status"></p></div><div id="observeButtons" class="observe-buttons"></div><p id="observationStatus" role="status" aria-live="polite"></p></div>
@@ -488,66 +498,66 @@ const SoundModel = (() => {
 <script id="sound-missions">
 const SOUND_MISSIONS = [
   {
-    title:['1 · ทำให้แหล่งกำเนิดสั่น แล้วเกิดอะไรขึ้น?','1 · Make the source vibrate: what happens next?'],
-    instruction:['ทดลองครบ 3 แบบ: สั่นต่อเนื่อง เคาะหนึ่งครั้ง และสั่นในสุญญากาศ จับตาแผ่นสีส้มทางซ้าย อนุภาคอากาศ และการรบกวนที่เดินทางออกไป ภาพจะหยุดหลังแสดงผล','Try all three: continuous vibration, one tap and vibration in vacuum. Track the orange source, air particles and moving disturbance. Each demonstration will pause for inspection.'],
+    title:['1 · ทำให้แหล่งกำเนิดสั่น แล้วเกิดอะไรขึ้น?','1 · What happens when a sound source vibrates?'],
+    instruction:['ทดลองครบ 3 แบบ: สั่นต่อเนื่อง เคาะหนึ่งครั้ง และสั่นในสุญญากาศ จับตาแผ่นสีส้มทางซ้าย อนุภาคอากาศ และการรบกวนที่เดินทางออกไป ภาพจะหยุดหลังแสดงผล','Try three experiments: continuous vibration, a single tap, and vibration in a vacuum. Watch the orange plate, the air particles, and how the disturbance spreads. Each experiment pauses so you can inspect the result.'],
     observations:['sourceWave','sourcePulse','sourceVacuum'],
     questions:[
-      { text:['เมื่อแผ่นสีส้มเริ่มสั่นในอากาศ อนุภาคที่อยู่ไกลจากแผ่นจะเริ่มสั่นพร้อมกันทันทีหรือไม่?','When the plate starts vibrating in air, do distant particles start moving at the same instant?'],
-        options:[['ใช่ ทุกอนุภาคเริ่มพร้อมกันทันที','Yes, all particles start simultaneously'],['ไม่ การรบกวนเคลื่อนจากแหล่งกำเนิดออกไปด้วยอัตราเร็วจำกัด','No, the disturbance travels outward at a finite speed']],answer:1,
-        explain:['ก่อนหน้าคลื่นจะไปถึง อากาศบริเวณนั้นยังอยู่นิ่งในแบบจำลอง เมื่อหน้าคลื่นผ่านจึงเกิดการสั่น','Air remains at rest in the model until the wavefront reaches it.'] },
-      { text:['หลังแหล่งกำเนิดถูกเคาะเพียงครั้งเดียว คลื่นที่ปล่อยไปแล้วเป็นอย่างไร?','After the source is tapped only once, what happens to the disturbance already launched?'],
-        options:[['คลื่นดลยังเคลื่อนผ่านอากาศต่อไป แม้แหล่งกำเนิดหยุดเคลื่อนแล้ว','The pulse keeps travelling through air after the source settles'],['คลื่นทั้งหมดหายไปทันทีที่แหล่งกำเนิดหยุด','The entire wave disappears immediately when the source stops']],answer:0,
+      { text:['เมื่อแผ่นสีส้มเริ่มสั่นในอากาศ อนุภาคที่อยู่ไกลจากแผ่นจะเริ่มสั่นพร้อมกันทันทีหรือไม่?','When the plate starts vibrating, do distant air particles begin to vibrate at the same time?'],
+        options:[['ใช่ ทุกอนุภาคเริ่มพร้อมกันทันที','Yes, all the air particles begin vibrating at once'],['ไม่ การรบกวนเคลื่อนจากแหล่งกำเนิดออกไปด้วยอัตราเร็วจำกัด','No, the disturbance takes time to reach distant particles']],answer:1,
+        explain:['ก่อนหน้าคลื่นจะไปถึง อากาศบริเวณนั้นยังอยู่นิ่งในแบบจำลอง เมื่อหน้าคลื่นผ่านจึงเกิดการสั่น','In this model, air particles remain at rest until the wavefront reaches them.'] },
+      { text:['หลังแหล่งกำเนิดถูกเคาะเพียงครั้งเดียว คลื่นที่ปล่อยไปแล้วเป็นอย่างไร?','If the source is struck once, what happens to the pulse it produces?'],
+        options:[['คลื่นดลยังเคลื่อนผ่านอากาศต่อไป แม้แหล่งกำเนิดหยุดเคลื่อนแล้ว','The pulse continues through the air after the source stops moving'],['คลื่นทั้งหมดหายไปทันทีที่แหล่งกำเนิดหยุด','The pulse disappears as soon as the source stops moving']],answer:0,
         explain:['พลังงานถ่ายทอดจากบริเวณที่ถูกรบกวนไปยังบริเวณถัดไป จึงไม่จำเป็นต้องมีแหล่งกำเนิดเคลื่อนต่อเนื่องตลอดเวลา','Energy transfers from one region to the next, so a launched pulse continues after the source settles.'] },
-      { text:['แผ่นสีส้มสั่นในสุญญากาศ เหตุใดกราฟคลื่นเสียงในบริเวณนั้นจึงไม่ปรากฏ?','Why is there no acoustic wave graph when the plate vibrates into a vacuum?'],
+      { text:['แผ่นสีส้มสั่นในสุญญากาศ เหตุใดกราฟคลื่นเสียงในบริเวณนั้นจึงไม่ปรากฏ?','Why does the model show no sound wave when the plate vibrates in a vacuum?'],
         options:[['ไม่มีตัวกลางถ่ายทอดการรบกวนแบบคลื่นเสียง','There is no medium to transmit a mechanical sound wave'],['แผ่นสีส้มจะไม่สามารถเคลื่อนไหวได้เลย','The orange plate is physically unable to move']],answer:0,
         explain:['แหล่งกำเนิดสามารถสั่นได้ แต่หากไม่มีตัวกลาง คลื่นเสียงเชิงกลจะไม่แพร่ผ่านช่องว่างนั้น','The source may vibrate, but a mechanical sound wave cannot propagate without a medium.'] }
     ]
   },
   {
-    title:['2 · อนุภาคไปไหน คลื่นไปไหน','2 · Where do the particle and wave go?'],
-    instruction:['กดดูการเคลื่อนที่ 2 รอบ ตามจุดสีแดงเทียบกับเส้นสมดุลเดิม แล้วดูส่วนอัดเคลื่อนไปทางขวา ภาพจะหยุดให้ตอบหลังสังเกตครบ','Watch two cycles. Follow the red particle against its equilibrium marker, and follow a compression to the right. The scene then pauses.'],
+    title:['2 · อนุภาคไปไหน คลื่นไปไหน','2 · Do air particles travel with the sound wave?'],
+    instruction:['กดดูการเคลื่อนที่ 2 รอบ ตามจุดสีแดงเทียบกับเส้นสมดุลเดิม แล้วดูส่วนอัดเคลื่อนไปทางขวา ภาพจะหยุดให้ตอบหลังสังเกตครบ','Watch two cycles. Follow the red particle relative to its equilibrium position, then track a compression travelling to the right. The model will pause so you can compare them.'],
     observations:['motion'],
     questions:[
-      { text:['จุดสีแดงเคลื่อนที่อย่างไร เมื่อเทียบกับตำแหน่งสมดุลเดิม?','How does the red particle move relative to its equilibrium position?'], options:[['เดินทางตามส่วนอัดไปทางขวาตลอด','Travels continuously right with a compression'],['สั่นซ้าย–ขวารอบตำแหน่งเดิม','Oscillates left and right about the same position']], answer:1,
+      { text:['จุดสีแดงเคลื่อนที่อย่างไร เมื่อเทียบกับตำแหน่งสมดุลเดิม?','How does the red particle move relative to its original equilibrium position?'], options:[['เดินทางตามส่วนอัดไปทางขวาตลอด','Travels steadily to the right with the compression'],['สั่นซ้าย–ขวารอบตำแหน่งเดิม','Oscillates left and right about the same position']], answer:1,
         explain:['คลื่นเคลื่อนไป แต่อนุภาคในแบบจำลองสั่นกลับไปมา เส้นตั้งสีแดงบอกตำแหน่งสมดุล ไม่ใช่กำแพง','The wave travels while each model particle oscillates. The red vertical line marks equilibrium; it is not a wall.'] },
-      { text:['แนวการสั่นของอนุภาคสัมพันธ์กับทิศที่คลื่นเคลื่อนไปอย่างไร?','How is particle motion oriented relative to wave propagation?'], options:[['ขนานกัน จึงเป็นคลื่นตามยาวในอากาศ','Parallel: this is a longitudinal wave in air'],['ตั้งฉากกัน เพราะกราฟมีรูปขึ้น–ลง','Perpendicular, because the graph rises and falls']], answer:0,
+      { text:['แนวการสั่นของอนุภาคสัมพันธ์กับทิศที่คลื่นเคลื่อนไปอย่างไร?','How is particle motion oriented relative to wave propagation?'], options:[['ขนานกัน จึงเป็นคลื่นตามยาวในอากาศ','Parallel: sound in air is a longitudinal wave'],['ตั้งฉากกัน เพราะกราฟมีรูปขึ้น–ลง','Perpendicular, because the graph rises and falls']], answer:0,
         explain:['ความสูงของกราฟแทนค่าการกระจัดหรือความดัน อนุภาคในภาพด้านบนไม่ได้เคลื่อนขึ้น–ลงตามเส้นกราฟ','Graph height represents displacement or pressure. The particles above do not move vertically along the graph.'] }
     ]
   },
   {
-    title:['3 · กึ่งกลางส่วนอัดกับกราฟ','3 · Compression and the graphs'],
-    instruction:['กดหยุดที่ส่วนอัด ดูระยะห่างของอนุภาคใกล้เส้นเหลือง แล้วลากสายตาลงมาที่กราฟทั้งสอง ณ x เดียวกัน ตรวจค่าความเร็วอนุภาคด้วย','Freeze at compression. Compare neighbouring particles near the yellow line, then read both graphs at the same x and check particle velocity.'],
+    title:['3 · กึ่งกลางส่วนอัดกับกราฟ','3 · Connecting compression to the graphs'],
+    instruction:['กดหยุดที่ส่วนอัด ดูระยะห่างของอนุภาคใกล้เส้นเหลือง แล้วลากสายตาลงมาที่กราฟทั้งสอง ณ x เดียวกัน ตรวจค่าความเร็วอนุภาคด้วย','Freeze the model at maximum compression. Examine the spacing of particles near the yellow line, compare both graphs at that position, and check the particle velocity.'],
     observations:['compression'],
     questions:[
-      { text:['ที่กึ่งกลางส่วนอัดสูงสุด กราฟสองเส้นมีค่าใด?','At maximum compression, what do the two graphs show?'], options:[['s = +A และ Δp = 0','s = +A and Δp = 0'],['s = 0 และ Δp = +Δpₘₐₓ','s = 0 and Δp = +Δpₘₐₓ']], answer:1,
+      { text:['ที่กึ่งกลางส่วนอัดสูงสุด กราฟสองเส้นมีค่าใด?','At the centre of maximum compression, what do the displacement and pressure graphs show?'], options:[['s = +A และ Δp = 0','s = +A and Δp = 0'],['s = 0 และ Δp = +Δpₘₐₓ','s = 0 and Δp = +Δpₘₐₓ']], answer:1,
         explain:['กราฟสีน้ำเงินตัดศูนย์ ส่วนกราฟสีแดงอยู่ยอดบวก ความดันสูงสุดตรงกับการกระจัดเป็นศูนย์ในคลื่นต่อเนื่องนี้','The blue curve crosses zero and the red curve reaches its positive peak: maximum pressure occurs at zero displacement in this travelling sinusoidal wave.'] },
-      { text:['s = 0 ในภาพนี้ แปลว่าอนุภาคหยุดนิ่งหรือไม่?','Does s = 0 here mean the particle is stationary?'], options:[['ใช่ อยู่สมดุลจึงมีความเร็วเป็นศูนย์เสมอ','Yes: equilibrium always means zero velocity'],['ไม่ใช่ กำลังผ่านสมดุลไปทางขวาด้วยความเร็วสูงสุด','No: it crosses equilibrium rightwards at maximum speed']], answer:1,
+      { text:['s = 0 ในภาพนี้ แปลว่าอนุภาคหยุดนิ่งหรือไม่?','Does s = 0 here mean the particle is stationary?'], options:[['ใช่ อยู่สมดุลจึงมีความเร็วเป็นศูนย์เสมอ','Yes: equilibrium always means zero velocity'],['ไม่ใช่ กำลังผ่านสมดุลไปทางขวาด้วยความเร็วสูงสุด','No: at that instant, it passes through equilibrium to the right at maximum speed']], answer:1,
         explain:['การกระจัดกับความเร็วเป็นคนละปริมาณ ดู u ที่หัววัด: ในคลื่นเดินทางไปขวา u กับ Δp มีเครื่องหมายเดียวกัน','Displacement and velocity are different quantities. Read u at the probe: for this right-travelling wave, u and Δp have the same sign.'] }
     ]
   },
   {
-    title:['4 · ส่วนขยายและจุดกลับตัว','4 · Rarefaction and a turning point'],
-    instruction:['เก็บภาพสังเกต 2 แบบ: ส่วนขยาย และจุดที่ Δp = 0 เปรียบเทียบ p กับ p₀ รวมทั้ง s และ u ไม่ต้องเดาจากสีเพียงอย่างเดียว','Capture two states: rarefaction and Δp = 0. Compare p with p₀, as well as s and u; do not rely on colour alone.'],
+    title:['4 · ส่วนขยายและจุดกลับตัว','4 · Rarefaction and particle turning points'],
+    instruction:['เก็บภาพสังเกต 2 แบบ: ส่วนขยาย และจุดที่ Δp = 0 เปรียบเทียบ p กับ p₀ รวมทั้ง s และ u ไม่ต้องเดาจากสีเพียงอย่างเดียว','Freeze the model at maximum rarefaction and again at a particle turning point (Δp = 0). Compare p with p₀, then examine displacement s and particle velocity u.'],
     observations:['rarefaction','turn'],
     questions:[
       { text:['ที่ส่วนขยาย Δp = −1 Pa หมายความว่าอย่างไร เมื่อ p₀ = 101,325 Pa?','At rarefaction, what does Δp = −1 Pa mean if p₀ = 101,325 Pa?'], options:[['p = 101,324 Pa ต่ำกว่าค่าปกติเล็กน้อย ยังมีอากาศ','p = 101,324 Pa: slightly below ambient, with air still present'],['ความดันสัมบูรณ์ติดลบและกลายเป็นสุญญากาศ','Absolute pressure is negative and a vacuum has formed']], answer:0,
         explain:['Δp คือส่วนต่างจากความดันเดิม: p = p₀ + Δp เครื่องหมายลบจึงไม่ได้แปลว่าไม่มีอากาศ','Δp is a deviation: p = p₀ + Δp. A negative deviation does not mean air is absent.'] },
-      { text:['ภาพ “จุดกลับตัว” ที่ Δp = 0 บอกอะไรเกี่ยวกับการกระจัดและความเร็ว?','At the captured turning point with Δp = 0, what happens to displacement and velocity?'], options:[['s = 0 และ |u| สูงสุด','s = 0 and speed is maximal'],['|s| = A และ u = 0 ชั่วขณะก่อนกลับทิศ','|s| = A and u = 0 momentarily before reversal']], answer:1,
+      { text:['ภาพ “จุดกลับตัว” ที่ Δp = 0 บอกอะไรเกี่ยวกับการกระจัดและความเร็ว?','At the particle turning point where Δp = 0, what are its displacement and velocity?'], options:[['s = 0 และ |u| สูงสุด','s = 0 and speed is maximal'],['|s| = A และ u = 0 ชั่วขณะก่อนกลับทิศ','|s| = A and u = 0 momentarily before reversal']], answer:1,
         explain:['ยอดการกระจัดห่างจากยอดความดัน λ/4 หรือ ¼ รอบ (90°) และอนุภาคหยุดชั่วขณะที่จุดกลับตัว ไม่ได้วิ่งผ่านจุดนั้นด้วยความเร็วสูงสุด','Displacement and pressure peaks are λ/4, or a quarter cycle (90°), apart. At a turning point the particle momentarily stops before reversing.'] }
     ]
   },
   {
-    title:['5 · มีคลื่นเสียง แล้วใครได้ยิน?','5 · A sound wave—but who hears it?'],
-    instruction:['ลอง 10, 500 และ 25,000 Hz ดูว่า λ และคาบจริงเปลี่ยนอย่างไร แล้วลองสุญญากาศ ภาพถูกชะลอเวลาอัตโนมัติ จึงห้ามนับรอบบนจอเป็นความถี่จริง','Try 10, 500 and 25,000 Hz: compare wavelength and physical period. Then try vacuum. Automatic slow motion means screen cycles are not real-time frequency.'],
+    title:['5 · มีคลื่นเสียง แล้วใครได้ยิน?','5 · Which sound frequencies can we hear?'],
+    instruction:['ลอง 10, 500 และ 25,000 Hz โดยดูกราฟที่มีช่วงเวลาเท่ากัน 20 ms เปรียบเทียบความถี่ คาบ และความยาวคลื่น พร้อมทดลองฟังเสียง 500 Hz แล้วจึงทดลองสุญญากาศ ภาพหลักถูกซูมและชะลอเวลาอัตโนมัติ','Compare 10, 500 and 25,000 Hz on the fixed 20 ms graph. Check each frequency, period and wavelength, and listen to the 500 Hz sample tone. Finally, try the vacuum setting. The main animation is slowed down and zoomed in.'],
     observations:['infra','audible','ultra','vacuum'],
     questions:[
       { text:['ในอากาศ 10 Hz กับ 25,000 Hz ควรจัดประเภทอย่างไร โดยอ้างอิงมนุษย์ทั่วไป?','In air, how are 10 Hz and 25,000 Hz classified relative to typical human hearing?'], options:[['10 Hz ใต้เสียง และ 25,000 Hz เหนือเสียง ทั้งคู่ยังเป็นคลื่นเสียงทางฟิสิกส์','10 Hz is infrasound; 25,000 Hz is ultrasound. Both remain physical sound waves'],['ทั้งคู่ไม่ใช่คลื่นเสียง เพราะคนทั่วไปไม่ได้ยิน','Neither is sound, because people generally cannot hear them']], answer:0,
         explain:['ใช้ 20–20,000 Hz เป็นช่วงอ้างอิงโดยประมาณของมนุษย์ ไม่ได้เป็นเส้นแบ่งระหว่างมีคลื่นกับไม่มีคลื่น','20–20,000 Hz is an approximate human reference range, not a boundary between the existence and absence of sound waves.'] },
-      { text:['เมื่อเปลี่ยนจาก 500 เป็น 25,000 Hz ค่า λ และ T ที่แสดงเปลี่ยนอย่างไร แม้ภาพยังเห็น 2 ช่วงคลื่น?','Changing 500 to 25,000 Hz, how do the displayed λ and T change even though the view still shows two wavelengths?'], options:[['เท่าเดิม เพราะจำนวนลูกคลื่นบนจอเท่าเดิม','Unchanged, since the screen shows the same number of waves'],['เหลือ 1/50 ของเดิมทั้งคู่ จอซูมและชะลอเวลาใหม่','Both become 1/50 as large; the view zooms and slows time again']], answer:1,
+      { text:['เมื่อเปลี่ยนจาก 500 เป็น 25,000 Hz ค่า λ และ T ที่แสดงเปลี่ยนอย่างไร แม้ภาพยังเห็น 2 ช่วงคลื่น?','When the frequency increases from 500 Hz to 25,000 Hz, how do λ and T change, even though the main view still shows two wavelengths?'], options:[['เท่าเดิม เพราะจำนวนลูกคลื่นบนจอเท่าเดิม','Unchanged, since the screen shows the same number of waves'],['เหลือ 1/50 ของเดิมทั้งคู่ จอซูมและชะลอเวลาใหม่','Both become 1/50 as large; the view zooms and slows time again']], answer:1,
         explain:['อ่านสเกลจริง: λ เปลี่ยนจาก 686 mm เป็น 13.72 mm และ T จาก 2 ms เป็น 0.04 ms เมื่อ c คงที่ λ = c/f และ T = 1/f จำนวนลูกคลื่นบนจอจึงใช้ตัดสินระยะจริงไม่ได้','Read the physical scale: λ changes from 686 mm to 13.72 mm and T from 2 ms to 0.04 ms. With constant c, λ = c/f and T = 1/f; the number of waves on the auto-zoomed screen does not measure physical length.'] },
       { text:['ถ้าเป็น 500 Hz รับประกันว่าทุกคนและสัตว์ทุกชนิดจะได้ยินหรือไม่?','Does 500 Hz guarantee hearing for every person and every animal species?'], options:[['รับประกัน เพราะอยู่ระหว่าง 20–20,000 Hz','Yes, because it lies between 20 and 20,000 Hz'],['ไม่รับประกัน ยังขึ้นกับระดับเสียง ผู้ฟัง และชนิดสัตว์','No: sound level, the listener and animal species also matter']], answer:1,
         explain:['ขอบเขตการได้ยินขึ้นกับทั้งความถี่และความไวของผู้ฟัง สัตว์ต่างชนิดมีช่วงการได้ยินต่างกัน เช่น สัตว์บางชนิดรับคลื่นเหนือเสียงได้','Hearing depends on frequency and sensitivity. Species differ; some animals can detect ultrasound.'] },
-      { text:['ในช่องสุญญากาศ แหล่งกำเนิดยังสั่น แต่เหตุใดไม่มีคลื่นเสียงเดินทางในช่องนั้น?','In the vacuum region, why does the vibrating source not launch a sound wave across the region?'], options:[['เพราะความถี่กลายเป็นศูนย์','Because its frequency becomes zero'],['เพราะไม่มีตัวกลางถ่ายทอดการรบกวน ไม่ใช่แค่หูฟังไม่ถึง','Because no medium transmits the disturbance—not merely because a listener cannot hear it']], answer:1,
+      { text:['ในบริเวณสุญญากาศ แม้แหล่งกำเนิดยังสั่น เหตุใดจึงไม่มีคลื่นเสียงเดินทางผ่านบริเวณดังกล่าว?','Why can the vibrating source not transmit a sound wave through the vacuum?'], options:[['เพราะความถี่กลายเป็นศูนย์','Because its frequency becomes zero'],['เพราะไม่มีตัวกลางถ่ายทอดการรบกวน ไม่ใช่แค่หูฟังไม่ถึง','Because no medium transmits the disturbance—not merely because a listener cannot hear it']], answer:1,
         explain:['การสั่นของแหล่งกำเนิดอย่างเดียวไม่รับประกันว่าจะมีเสียงส่งถึงผู้ฟัง ต้องมีการถ่ายทอดสู่ตัวกลาง และการได้ยินยังมีเงื่อนไขเพิ่มเติม','Source vibration alone does not guarantee that sound reaches a listener. It must couple into a medium; perception has further requirements.'] }
     ]
   }
@@ -577,29 +587,29 @@ const SOUND_MISSIONS = [
     const obs=SOUND_MISSIONS.map((m,i)=>Object.fromEntries(m.observations.filter(key=>saved.observations[i]?.[key]===true).map(key=>[key,true])));
     const ans=SOUND_MISSIONS.map((m,i)=>m.questions.map((question,j)=>Number.isInteger(saved.answers[i]?.[j])&&saved.answers[i][j]>=0&&saved.answers[i][j]<question.options.length?saved.answers[i][j]:null));
     f=saved.frequency;q=saved.probe;phase=saved.phase;mission=saved.mission;prediction=[0,1].includes(saved.prediction)?saved.prediction:null;observations=obs;answers=ans;
-    mode=['pulse','continuous','launch'].includes(saved.mode)?saved.mode:'launch';medium=saved.medium==='vacuum'?'vacuum':'air';rate=saved.rate===.25?.25:1;audioEnabled=saved.audioEnabled===true;paused=true;target=null;observationKey=null;pulseStart=Number.isFinite(saved.pulseStart)?saved.pulseStart:phase;
+    mode=['pulse','continuous','launch'].includes(saved.mode)?saved.mode:'launch';medium=saved.medium==='vacuum'?'vacuum':'air';rate=saved.rate===.25?.25:1;audioEnabled=false;paused=true;target=null;observationKey=null;pulseStart=Number.isFinite(saved.pulseStart)?saved.pulseStart:phase;
     return true;
   }
   function load(){try{restore(JSON.parse(localStorage.getItem(storageKey())||'null'));}catch{storageFailed=true;}}
   function blank(){f=500;q=.75;phase=0;mode='launch';medium='air';rate=1;mission=0;prediction=null;audioEnabled=false;paused=true;target=null;observationKey=null;observations=SOUND_MISSIONS.map(()=>({}));answers=SOUND_MISSIONS.map(m=>m.questions.map(()=>null));}
-  function selectMission(i){target=null;observationKey=null;paused=true;mission=i;renderControls();renderMission();save();}
+  function selectMission(i){target=null;observationKey=null;paused=true;mission=i;renderControls();renderMission();syncAudio();save();}
   function button(text,action,cls='sim-btn'){const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=text;b.onclick=action;return b;}
   function renderPrediction(){
     const panel=$('predictionPanel');panel.hidden=mission!==0;
     if(mission!==0)return;
     $('predictionTitle').textContent=L('ก่อนทดลอง: ทำนายผลด้วยตัวเอง','Before you experiment: make a prediction');
-    $('predictionPrompt').textContent=L('เมื่อแผ่นเริ่มสั่น อนุภาคอากาศที่อยู่ไกลจะเริ่มสั่นพร้อมกันทุกตำแหน่งหรือไม่?','When the plate starts moving, do distant air particles begin moving simultaneously?');
-    const options=[L('น่าจะเริ่มสั่นพร้อมกัน','Yes, all at once'),L('น่าจะค่อย ๆ เคลื่อนการรบกวนไปถึง','No, the disturbance travels outward')];
+    $('predictionPrompt').textContent=L('เมื่อแผ่นเริ่มสั่น อนุภาคอากาศที่อยู่ไกลจะเริ่มสั่นพร้อมกันทุกตำแหน่งหรือไม่?','When the plate starts vibrating, do distant air particles begin vibrating at the same time?');
+    const options=[L('น่าจะเริ่มสั่นพร้อมกัน','Yes, all at once'),L('น่าจะค่อย ๆ เคลื่อนการรบกวนไปถึง','No, the disturbance takes time to travel')];
     $('predictionChoices').replaceChildren();
     options.forEach((str,i)=>{const b=button(str,()=>{prediction=i;save();renderPrediction();});b.setAttribute('aria-pressed',String(prediction===i));$('predictionChoices').append(b);});
     const allSeen=SOUND_MISSIONS[0].observations.every(k=>observations[0][k]);
-    $('predictionFeedback').textContent=prediction===null?L('เลือกคำทำนายก่อนสังเกตได้ โดยยังไม่เฉลย','Choose a prediction first. The answer stays hidden.'):
+    $('predictionFeedback').textContent=prediction===null?L('เลือกคำทำนายก่อนสังเกตได้ โดยยังไม่เฉลย','Choose a prediction before examining the results. No answer is revealed yet.'):
       !allSeen?L('บันทึกคำทำนายแล้ว ทดลองทั้งสามแบบก่อนตรวจสอบ','Prediction saved. Try all three experiments before checking it.'):
       prediction===1?L('หลักฐานที่สังเกตได้สนับสนุนคำทำนายของคุณ: คลื่นเดินทางด้วยอัตราเร็วจำกัด','Your observation supports the prediction: the wavefront moves at finite speed.'):
         L('ลองปรับคำอธิบาย: ก่อนหน้าคลื่นมาถึง อนุภาคยังไม่สั่นตามแหล่งกำเนิด','Revise your prediction: distant particles remain still until the wave arrives.');
   }
   function renderMission(){
-    const m=SOUND_MISSIONS[mission];$('missionTitle').textContent=P(m.title);$('missionInstruction').textContent=P(m.instruction);
+    const m=SOUND_MISSIONS[mission];$('mission5Panel').hidden=mission!==4;$('audioPanel').hidden=mission!==4;$('missionTitle').textContent=P(m.title);$('missionInstruction').textContent=P(m.instruction);
     $('missionNav').replaceChildren();SOUND_MISSIONS.forEach((entry,i)=>{const b=button(`${i+1}${complete(i)?' ✓':''}`,()=>selectMission(i));b.setAttribute('aria-label',P(entry.title));if(i===mission)b.setAttribute('aria-current','step');$('missionNav').append(b);});
     $('progress').textContent=L(`ผ่านแล้ว ${SOUND_MISSIONS.filter((_,i)=>complete(i)).length}/${SOUND_MISSIONS.length} ด่าน` ,`${SOUND_MISSIONS.filter((_,i)=>complete(i)).length}/${SOUND_MISSIONS.length} missions completed`);
     $('observeButtons').replaceChildren();m.observations.forEach(key=>{const b=button((observations[mission][key]?'✓ ':'')+P(labels[key]),()=>observe(key),'sim-btn sim-btn-primary');b.dataset.observe=key;b.disabled=target!==null;$('observeButtons').append(b);});
@@ -666,7 +676,7 @@ const SOUND_MISSIONS = [
     $('bandDescription').textContent=mode==='pulse'?L('ตัวเลข f ใช้กำหนดสเกลระยะและเวลาของพัลส์นี้ ไม่สามารถจัดพัลส์เป็นใต้เสียงหรือเหนือเสียงจากตัวเลขเดียว','Here f sets the pulse length and time scales; it cannot classify the whole pulse into one hearing band'):L('ช่วงอ้างอิงของมนุษย์เป็นค่าโดยประมาณ การได้ยินยังขึ้นกับระดับเสียง อายุ และผู้ฟัง สัตว์ต่างชนิดมีขอบเขตต่างกัน ภาพนี้ไม่ได้ทดสอบการได้ยินของคุณ','Human limits are approximate. Hearing also depends on sound level, age and the listener. Animal species differ. This visual model is not a hearing test.');
   }
   const canvas=$('simCanvas'), ctx=canvas.getContext('2d');let width=600,height=430;
-  function resize(){const box=canvas.getBoundingClientRect();width=Math.max(box.width,260);height=box.height;const dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);draw();}
+  function resize(){const box=canvas.getBoundingClientRect();width=Math.max(box.width,260);height=box.height;const dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);draw();drawFrequencyCompare();}
   function draw(){
     if(!ctx)return;ctx.clearRect(0,0,width,height);ctx.fillStyle='#090d16';ctx.fillRect(0,0,width,height);
     const left=48,right=width-16,span=right-left,X=z=>left+span*z/2,m=M.parameters(f), redQ=.75;
@@ -715,35 +725,76 @@ const SOUND_MISSIONS = [
   function humanHearingLabel(freq){ return freq<20?L('คนทั่วไปไม่ได้ยิน (ต่ำเกิน)','Typically not heard (too low)'):freq>20000?L('คนทั่วไปไม่ได้ยิน (สูงเกิน)','Typically not heard (too high)'):L('คนทั่วไปอาจได้ยิน','Typically audible'); }
   function renderComparePanel(){
     const presets=[10,500,25000];
-    const current=M.parameters(f);
+    const current=M.parameters(f),isVacuum=medium==='vacuum';
     const metrics=[
       [L('ค่าปัจจุบัน f','Current f'), `${nice(f,6)} Hz`],
       [L('คาบ T','Period T'), metricPeriod(current.period)],
-      [L('ความยาวคลื่น λ','Wavelength λ'), length(current.wavelength)],
-      [L('จัดประเภท','Band'), compareBandLabel(f)]
+      [L('ความยาวคลื่น λ','Wavelength λ'), isVacuum ? L('ไม่กำหนด','Undefined') : length(current.wavelength)],
+      [L('จัดประเภท','Band'), isVacuum ? L('ไม่มีคลื่นเสียง','No sound wave') : compareBandLabel(f)]
     ];
     $('currentMetrics').replaceChildren(...metrics.map(([label,value])=>{ const box=document.createElement('div'); box.className='metric-chip'; box.innerHTML=`<span class="label">${label}</span><span class="value">${value}</span>`; return box; }));
     $('compareGrid').replaceChildren(...presets.map(freq=>{ const pm=M.parameters(freq); const card=document.createElement('div'); card.className='compare-card'+(f===freq?' active':''); card.innerHTML=`<div class="compare-title">${freq.toLocaleString()} Hz</div><span class="compare-badge">${compareBandLabel(freq)}</span><div class="compare-meta"><div><strong>T</strong> = ${metricPeriod(pm.period)}</div><div><strong>λ</strong> = ${length(pm.wavelength)}</div><div>${humanHearingLabel(freq)}</div></div>`; return card; }));
-    $('compareNote').textContent = L('ภาพบนจอซูมให้เห็นประมาณ 2 ช่วงคลื่นเสมอ จึงต้องอ่านความแตกต่างจริงจากค่า f, T และ λ ในตารางนี้ ไม่ใช่จากจำนวนลูกคลื่นบนจอเพียงอย่างเดียว','The display auto-zooms to about two wavelengths, so compare real differences using f, T and λ here rather than counting waves on screen.');
+    $('frequencyGraphIntro').textContent=L('กราฟตัวอย่างทั้งสามเป็นกรณีคลื่นเสียงในอากาศ แสดงการเปลี่ยนแปลงความดัน ณ ตำแหน่งหนึ่ง ด้วยช่วงเวลาเดียวกัน 20 ms และแอมพลิจูดปรับเท่ากัน','All three examples represent sound in air, showing pressure variation at one position over the same 20 ms interval with normalized amplitudes.');
+    $('vacuumCompareNotice').hidden=!isVacuum;
+    $('vacuumCompareNotice').textContent=L('สุญญากาศ: แหล่งกำเนิดอาจสั่นได้ แต่ไม่มีคลื่นความดันหรือความยาวคลื่นเสียงในบริเวณนี้ ข้อมูลกราฟด้านล่างเป็นตัวอย่างสำหรับอากาศเท่านั้น','Vacuum: The source may vibrate, but no acoustic pressure wave or sound wavelength exists here. The comparisons below refer to air only.');
+    $('frequencyCompareCanvas').hidden=isVacuum;
+    $('compareGrid').hidden=isVacuum;
+    $('compareNote').textContent = isVacuum ? L('กลับไปเลือกอากาศเพื่อเปรียบเทียบความยาวคลื่นและกราฟอีกครั้ง','Select air to compare wavelengths and graphs again.') : L('กราฟด้านบนใช้แกนเวลาเดียวกัน ส่วนภาพอนุภาคหลักถูกซูมให้เห็น 2 ช่วงคลื่นเสมอ 25,000 Hz มี 500 รอบใน 20 ms จึงแสดงเป็นแถบหนาแน่นแทนการวาดทีละรอบ','The graphs use one fixed time scale. The main particle view always zooms to two wavelengths. At 25,000 Hz, 500 cycles occur in 20 ms, so the dense trace is represented as a filled band instead of individual cycles.');
+    drawFrequencyCompare();
+  }
+  function drawFrequencyCompare(){
+    const canvas=$('frequencyCompareCanvas'); if(!canvas)return;
+    const dpr=Math.min(window.devicePixelRatio||1,2), width=Math.max(300,Math.round(canvas.getBoundingClientRect().width||680)),height=286;
+    canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
+    const g=canvas.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);
+    g.fillStyle='#fbfdff';g.fillRect(0,0,width,height);
+    const start=65, stop=width-18, span=stop-start, windowSeconds=0.020;
+    const rows=[10,500,25000];
+    rows.forEach((hz,i)=>{
+      const mid=55+i*78, cycles=hz*windowSeconds, selected=hz===f;
+      if(selected){g.fillStyle='#e0f2fe';g.fillRect(4,mid-35,width-8,69);}
+      g.strokeStyle='#cbd5e1';g.lineWidth=1;g.beginPath();g.moveTo(start,mid);g.lineTo(stop,mid);g.stroke();
+      g.font='bold 12px Tahoma,sans-serif';g.textAlign='left';g.fillStyle='#334155';g.fillText(hz===25000?'25 kHz':`${hz} Hz`,7,mid-12);
+      g.font='10px Tahoma,sans-serif';g.fillStyle='#64748b';g.fillText(`${cycles>=1?Number(cycles.toFixed(2)):cycles.toFixed(1)} ${L('รอบ','cycles')}`,7,mid+16);
+      g.save();g.beginPath();g.rect(start,mid-29,span,58);g.clip();
+      if(cycles>=100){
+        // Sub-pixel cycles cannot be individually resolved. The full peak-to-peak
+        // band conveys density without drawing a false low-frequency alias.
+        g.fillStyle='rgba(220,38,38,.17)';g.fillRect(start,mid-22,span,44);
+        g.strokeStyle='rgba(220,38,38,.27)';g.lineWidth=.7;
+        for(let x=start;x<stop;x+=2.8){g.beginPath();g.moveTo(x,mid-22);g.lineTo(x,mid+22);g.stroke();}
+        g.fillStyle='#7f1d1d';g.font='11px Tahoma,sans-serif';g.textAlign='center';
+        g.fillText(L('รอบหนาแน่นเกินการแสดงผลแบบรายรอบ','Too many cycles to resolve'),(start+stop)/2,mid+4);
+      }else{
+        g.strokeStyle=selected?'#0369a1':'#dc2626';g.lineWidth=2;g.beginPath();
+        for(let x=0;x<=span;x++){const u=x/span,y=mid-22*Math.sin(2*Math.PI*cycles*u);if(x===0)g.moveTo(start+x,y);else g.lineTo(start+x,y);}
+        g.stroke();
+      }
+      g.restore();
+    });
+    g.strokeStyle='#94a3b8';g.lineWidth=1;g.beginPath();g.moveTo(start,267);g.lineTo(stop,267);g.stroke();
+    g.textAlign='left';g.font='11px Tahoma,sans-serif';g.fillStyle='#475569';g.fillText('0 ms',start,281);
+    g.textAlign='right';g.fillText('20 ms',stop,281);
   }
   function ensureAudio(){ if(audioCtx) return true; try{ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); audioOsc=audioCtx.createOscillator(); audioGain=audioCtx.createGain(); audioOsc.type='sine'; audioGain.gain.value=0; audioOsc.connect(audioGain).connect(audioCtx.destination); audioOsc.start(); return true; } catch(err){ return false; } }
   function syncAudio(){
     const btn=$('audioToggleButton');
     if(!btn) return;
-    const canPlay = audioEnabled && medium==='air' && mode!=='pulse' && f>=20 && f<=5000;
+    // Sound sample is independent of the paused/slowed animation, and works in both launch and continuous vibration modes.
+    const canPlay = audioEnabled && mission===4 && medium==='air' && mode!=='pulse' && f>=20 && f<=5000;
     btn.textContent = audioEnabled ? L('🔇 ปิดเสียงตัวอย่าง','🔇 Mute sample audio') : L('🔈 เปิดเสียงตัวอย่าง','🔈 Enable sample audio');
     if(!$('audioStatus')) return;
     if(!audioEnabled){ $('audioStatus').textContent=L('ปิดเสียงอยู่','Audio off'); }
     else if(medium!=='air'){ $('audioStatus').textContent=L('สุญญากาศ: ไม่มีเสียงให้เล่น','Vacuum: no sound to play'); }
     else if(mode==='pulse'){ $('audioStatus').textContent=L('โหมดพัลส์ไม่เล่นโทนคงที่','Pulse mode does not play a steady tone'); }
-    else if(f<20 || f>5000){ $('audioStatus').textContent=L('นอกช่วงเล่นตัวอย่างอย่างเหมาะสม — แนะนำลอง 500 Hz','Outside practical demo playback — try 500 Hz'); }
-    else { $('audioStatus').textContent=L(`กำลังเล่นโทนประมาณ ${nice(f,6)} Hz`,`Playing a tone near ${nice(f,6)} Hz`); }
-    $('audioNote').textContent=L('เพื่อความสมจริง ลองเปิดเสียงเมื่อเลือก 500 Hz แล้วสังเกตว่าค่า T และ λ เปลี่ยนจาก 10 Hz และ 25,000 Hz อย่างไร เสียงตัวอย่างใช้เพื่อเชื่อมกับประสบการณ์ ไม่ใช่การวัดระดับเสียงจริง','For a realistic connection, try enabling audio at 500 Hz and compare how T and λ differ from 10 Hz and 25,000 Hz. The sample tone is for intuition, not a sound-level measurement.');
+    else if(f<20 || f>5000){ $('audioStatus').textContent=L('ไม่เปิดเสียงตัวอย่างที่ความถี่นี้ · ลอง 500 Hz','No sample played at this frequency · Try 500 Hz'); }
+    else { $('audioStatus').textContent=L(`กำลังเล่นเสียงตัวอย่าง ${nice(f,6)} Hz`,`Playing a ${nice(f,6)} Hz sample tone`); }
+    $('audioNote').textContent=L('เริ่มด้วยระดับเสียงลำโพงเบา ๆ: เสียงตัวอย่างเล่นตามเวลาจริง แยกจากภาพจำลองที่อาจหยุดหรือชะลอเวลา ปุ่มนี้ไม่ใช่เครื่องทดสอบการได้ยิน และการไม่เล่นเสียงที่ 10 หรือ 25,000 Hz ไม่ได้หมายความว่าไม่มีคลื่นเสียง','Start with low speaker volume. The sample tone plays independently of the paused or slowed animation. This is not a hearing test; no sample is played at 10 or 25,000 Hz.');
     if(!audioCtx || !audioOsc || !audioGain) return;
     const now = audioCtx.currentTime;
     audioOsc.frequency.setTargetAtTime(Math.min(Math.max(f,20),5000), now, 0.015);
     audioGain.gain.cancelScheduledValues(now);
-    audioGain.gain.setTargetAtTime(canPlay?0.03:0, now, 0.02);
+    audioGain.gain.setTargetAtTime(canPlay?0.04:0, now, 0.03);
   }
 
   function language(next){lang=next==='en'?'en':'th';document.documentElement.lang=lang;document.querySelectorAll('[data-th][data-en]').forEach(node=>node.textContent=node.dataset[lang]);$('langButton').textContent=lang==='th'?'English':'ภาษาไทย';notes();renderControls();renderMission();draw();}
@@ -758,7 +809,7 @@ const SOUND_MISSIONS = [
   $('mediumSelect').onchange=e=>{if(target!==null)return;medium=e.target.value;renderControls();draw();save();};
   $('pulseButton').onclick=()=>{if(target!==null)return;mode='pulse';phase=0;pulseStart=0;medium='air';paused=false;renderControls();save();};
   $('continuousButton').onclick=()=>{if(target!==null)return;mode='continuous';paused=true;renderControls();save();};
-  $('audioToggleButton').onclick=async()=>{ if(!audioEnabled){ if(!ensureAudio()){ $('audioStatus').textContent=L('อุปกรณ์นี้ไม่รองรับการเล่นเสียงตัวอย่าง','This device could not start the sample audio'); return; } if(audioCtx && audioCtx.state==='suspended') await audioCtx.resume(); audioEnabled=true; } else { audioEnabled=false; } syncAudio(); save(); };
+  $('audioToggleButton').onclick=async()=>{ if(!audioEnabled){ if(!ensureAudio()){ $('audioStatus').textContent=L('อุปกรณ์นี้ไม่รองรับการเล่นเสียงตัวอย่าง','This device could not start the sample audio'); return; } if(audioCtx && audioCtx.state==='suspended'){ try{await audioCtx.resume();} catch(err){$('audioStatus').textContent=L('เบราว์เซอร์ไม่อนุญาตให้เปิดเสียง ลองแตะปุ่มอีกครั้ง','Browser blocked audio; tap the button again');return;} } audioEnabled=true; } else { audioEnabled=false; } syncAudio(); save(); };
   function sourceExperiment(kind){
     if(target!==null) return;
     if(mission===0){observe(kind);return;}

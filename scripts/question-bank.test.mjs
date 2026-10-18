@@ -8,6 +8,30 @@ import { createBankClient } from '../public/shared/question-bank-client.js';
 import { resolveHubRoute, createHubShareUrl } from '../js/hub-routes.js';
 import { activityForRoute, menuForRoute, routeForTool } from '../js/hub-activity-routes.js';
 import { routeForSelection } from '../js/hub-navigation.js';
+import { BANK_ALL_CHAPTERS, BANK_OTHER_CHAPTER, bankChapterKey, bankChapters, filterBankSets, bankTitlePair } from '../public/shared/question-bank-menu.js';
+
+test('chapter menu preserves Sheet order, scopes search, and keeps empty topics and exact IDs', () => {
+  const make = (id, chapter, title) => ({ bankKey: id, legacyId: `ID-${id}`, title,
+    path: ['ฟิสิกส์', 'Learning hub', chapter, title], questionCount: 0 });
+  const sets = [make('first', 'เสียง(Sound)', 'การได้ยิน(Hearing)'), make('second', 'คลื่น(Waves)', 'การได้ยินซ้ำ'),
+    make('third', 'เสียง(Sound)', 'อัตราเร็วเสียง'), { bankKey: 'old', legacyId: 'old-id', title: 'Legacy', path: ['ฟิสิกส์', 'Legacy'], questionCount: 1 }];
+  const original = structuredClone(sets);
+  assert.deepEqual(bankChapters(sets).map(entry => [entry.title, entry.count]), [['เสียง(Sound)', 2], ['คลื่น(Waves)', 1], ['', 1]]);
+  const sound = bankChapterKey(sets[0]);
+  assert.deepEqual(filterBankSets(sets, '', 'การได้ยิน'), []);
+  assert.deepEqual(filterBankSets(sets, BANK_ALL_CHAPTERS, '  '), []);
+  assert.deepEqual(filterBankSets(sets, sound).map(set => set.bankKey), ['first', 'third']);
+  assert.deepEqual(filterBankSets(sets, sound, 'การได้ยิน').map(set => set.bankKey), ['first']);
+  assert.deepEqual(filterBankSets(sets, BANK_ALL_CHAPTERS, 'การได้ยิน').map(set => set.bankKey), ['first', 'second']);
+  assert.deepEqual(filterBankSets(sets, BANK_ALL_CHAPTERS, 'id-THIRD').map(set => set.bankKey), ['third']);
+  assert.deepEqual(filterBankSets(sets, BANK_OTHER_CHAPTER).map(set => set.bankKey), ['old']);
+  assert.deepEqual(sets, original);
+});
+test('bilingual menu labels preserve source titles and non-translation parentheses', () => {
+  assert.deepEqual(bankTitlePair('เสียง(Sound)'), ['เสียง', 'Sound']);
+  assert.deepEqual(bankTitlePair('การเคลื่อนที่ (Straight-Line Motion)'), ['การเคลื่อนที่', 'Straight-Line Motion']);
+  for (const title of ['ฟิสิกส์', 'Sound (Part 1)', 'แรง (ข้อ 1)', 'รูปแบบ (A (B))']) assert.deepEqual(bankTitlePair(title), [title, title]);
+});
 
 const code = await readFile(new URL('../services/question-bank/Code.gs', import.meta.url), 'utf8');
 function service() {

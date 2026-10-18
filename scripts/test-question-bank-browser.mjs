@@ -13,11 +13,12 @@ const built = process.env.QA_BUILT === '1', prefix = '/learning-hub/';
 const output = resolve(root, 'qa-output'); await mkdir(output, { recursive: true });
 const routeCatalog = await catalogFromRepository();
 const key = 'b-' + 'a'.repeat(24), contentId = bankContentId('physics', key);
+const mechanics = 'กลศาสตร์(Mechanics)', sound = 'เสียง(Sound)';
 const question = (text, answer = 'A') => `<div class="question-step" data-ans="${answer}"><h3>${text} $F=ma$</h3>
 <table><tr><td>ข้อมูล</td><td>2</td></tr></table><div class="hint-box">Hint secret</div><div class="options">
 <label><input name="q1" type="radio" value="A">A. $2$ N</label><label><input name="q1" type="radio" value="B">B. $4$ N</label></div><div class="feedback-box">เฉลย SECRET-SOLUTION</div></div>`;
 async function snapshot(html) {
-  const value = { schemaVersion: 1, subjectId: 'physics', bankKey: key, legacyId: 'ฟิสิกส์ - ทดสอบ', title: 'แรงและการเคลื่อนที่', rows: [{ rowNumber: 2, html }] };
+  const value = { schemaVersion: 1, subjectId: 'physics', bankKey: key, legacyId: 'ฟิสิกส์ - ทดสอบ', title: 'แรงและการเคลื่อนที่(Forces and Motion)', rows: [{ rowNumber: 2, html }] };
   value.revision = await sha256(JSON.stringify(bankSnapshotBody(value))); return value;
 }
 const first = await snapshot(question('โจทย์เดิมข้อหนึ่ง') + question('โจทย์เดิมข้อสอง', 'B'));
@@ -70,7 +71,7 @@ await new Promise(done => server.listen(0, '127.0.0.1', done));
 const origin = `http://127.0.0.1:${server.address().port}`;
 let browser;
 try {
-  browser = await chromium.launch({ channel: 'msedge', headless: true });
+  browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_BROWSER_CHANNEL || (process.platform === 'win32' ? 'msedge' : undefined), headless: true });
   async function makeContext(account = false) {
     const context = await browser.newContext({ viewport: { width: 1360, height: 1000 } });
     await context.route('**/*', async route => {
@@ -80,7 +81,11 @@ try {
       if (url.hostname === 'bank.test') {
         const subject = url.searchParams.get('subject');
         const value = url.searchParams.get('action') === 'catalog'
-          ? { schemaVersion: 1, subjectId: subject, sets: subject === 'physics' ? [{ bankKey: key, legacyId: current.legacyId, title: current.title, path: ['ฟิสิกส์', current.title], questionCount: current === first ? 2 : 3 }] : [] }
+          ? { schemaVersion: 1, subjectId: subject, sets: subject === 'physics' ? [
+            { bankKey: key, legacyId: current.legacyId, title: current.title, path: ['ฟิสิกส์', 'Learning hub', mechanics, current.title], questionCount: current === first ? 2 : 3 },
+            { bankKey: 'b-' + 'b'.repeat(24), legacyId: 'empty-mechanics', title: 'งานและพลังงาน(Work and Energy)', path: ['ฟิสิกส์', 'Learning hub', mechanics, 'งานและพลังงาน(Work and Energy)'], questionCount: 0 },
+            { bankKey: 'b-' + 'c'.repeat(24), legacyId: 'empty-sound', title: 'แรงดันเสียง(Sound Pressure)', path: ['ฟิสิกส์', 'Learning hub', sound, 'แรงดันเสียง(Sound Pressure)'], questionCount: 0 },
+          ] : [] }
           : url.searchParams.get('revision') ? archives.get(url.searchParams.get('revision')) : current;
         return route.fulfill({ contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify(value ? { ok: true, data: value } : { ok: false, code: 'snapshot-not-found' }) });
       }
@@ -95,11 +100,49 @@ try {
   page.on('pageerror', e => errors.push(e.message)); page.on('dialog', dialog => dialog.accept());
   await page.goto(origin + prefix + '#physics'); await page.locator('#guest-button').click();
   const subject = page.frameLocator('#hub-page-frame');
-  await subject.locator('.bank-entry').click(); await subject.locator('[data-bank-cards] button').first().waitFor();
+  await subject.locator('.bank-entry').click(); await subject.locator('[data-bank-chapter] option').nth(3).waitFor({ state: 'attached' });
   assert.equal(new URL(page.url()).hash, '#physics/bank');
+  assert.equal(await subject.locator('[data-bank-cards] button').count(), 0);
+  assert.equal(await subject.locator('[data-bank-search]').isDisabled(), true);
+  await subject.locator('[data-bank-chapter]').selectOption('chapter:' + sound);
+  assert.equal(await subject.locator('[data-bank-cards] button').count(), 1);
+  await subject.locator('[data-bank-cards] button').click();
+  assert.equal(await subject.locator('[data-bank-cards] button').first().isDisabled(), true);
+  await subject.locator('[data-bank-back]').click();
+  await subject.locator('[data-bank-chapter]').waitFor({ state: 'visible' });
+  assert.equal(await subject.locator('[data-bank-chapter]').inputValue(), 'chapter:' + sound);
+  await subject.locator('[data-bank-chapter]').selectOption('all');
+  assert.equal(await subject.locator('[data-bank-cards] button').count(), 0);
+  await subject.locator('[data-bank-search]').fill('แรง');
+  assert.equal(await subject.locator('[data-bank-cards] button').count(), 2);
+  await subject.locator('[data-bank-chapter]').selectOption('chapter:' + mechanics);
+  assert.equal(await subject.locator('[data-bank-cards] button').count(), 2);
+  assert.equal(await subject.locator('[data-bank-search]').inputValue(), '');
   await subject.locator('[data-bank-search]').fill('ไม่เจอ'); assert.equal(await subject.locator('[data-bank-cards] button').count(), 0);
+  await subject.locator('[data-bank-refresh]').click();
+  await subject.locator('[data-bank-refresh]').waitFor({ state: 'visible' });
+  await page.waitForFunction(() => !document.querySelector('#hub-page-frame').contentDocument.querySelector('[data-bank-refresh]').disabled);
+  assert.equal(await subject.locator('[data-bank-search]').inputValue(), 'ไม่เจอ');
   await subject.locator('[data-bank-search]').fill('แรง'); await subject.locator('[data-bank-cards] button').first().click();
   assert.equal(new URL(page.url()).hash, `#physics/bank/${key}`);
+  await subject.locator('[data-bank-back]').click();
+  await subject.locator('[data-bank-chapter]').waitFor({ state: 'visible' });
+  assert.equal(await subject.locator('[data-bank-chapter]').inputValue(), 'chapter:' + mechanics);
+  assert.equal(await subject.locator('[data-bank-search]').inputValue(), 'แรง');
+  assert.equal(await subject.locator('[data-bank-cards] button').count(), 1);
+  await page.reload();
+  await subject.locator('[data-bank-chapter]').waitFor({ state: 'visible' });
+  assert.equal(await subject.locator('[data-bank-chapter]').inputValue(), 'chapter:' + mechanics);
+  assert.equal(await subject.locator('[data-bank-search]').inputValue(), 'แรง');
+  await page.locator('[data-language="en"]:visible').click();
+  await page.waitForFunction(() => document.querySelector('#hub-page-frame').contentDocument.documentElement.lang === 'en');
+  assert.equal(await subject.locator('[data-bank-cards] strong').first().textContent(), 'Forces and Motion');
+  assert.match(await subject.locator('[data-bank-chapter]').evaluate(node => node.selectedOptions[0].textContent), /Mechanics/);
+  assert.equal(await subject.locator('[data-bank-search]').getAttribute('placeholder'), 'Topic name or ID');
+  await page.locator('[data-language="th"]:visible').click();
+  await page.waitForFunction(() => document.querySelector('#hub-page-frame').contentDocument.documentElement.lang === 'th');
+  await subject.locator('[data-bank-cards] button').first().click();
+  console.log('PASS chapter-first menu, scoped/global search, TH/EN, empty topics and remembered filters after back/refresh/reload');
   await subject.locator('[data-bank-cards] button').first().click();
   let frame = page.frameLocator('.workspace-tool-frame');
   await frame.locator('[data-current-options] .quiz-option').first().waitFor();
@@ -157,6 +200,15 @@ try {
     const root = adaptLegacyBank(first); return { dangerous: root.querySelectorAll('script,[onclick],input').length, count: root.querySelectorAll('[data-question]').length };
   }, first);
   assert.deepEqual(sanitation, { dangerous: 0, count: 2 });
+  await page.setViewportSize({ width: 820, height: 1180 });
+  await page.goto(origin + prefix + '#physics/bank');
+  await subject.locator('[data-bank-chapter]').waitFor({ state: 'visible' });
+  const tabletControls = await subject.locator('.bank-controls').evaluate(node => {
+    const labels = [...node.querySelectorAll('label')].map(label => label.getBoundingClientRect());
+    return { stacked: labels[1].top >= labels[0].bottom, widthFits: document.body.scrollWidth <= innerWidth + 1 };
+  });
+  assert.deepEqual(tabletControls, { stacked: true, widthFits: true });
+  await page.screenshot({ path: resolve(output, 'question-bank-chapters-tablet.png') });
   await page.setViewportSize({ width: 430, height: 900 });
   await page.goto(origin + prefix + '#physics/bank/' + key); await subject.locator('[data-bank-cards] button').first().waitFor();
   await page.screenshot({ path: resolve(output, 'question-bank-mobile.png') });

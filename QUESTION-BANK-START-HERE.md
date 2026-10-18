@@ -68,6 +68,8 @@
 
 ## เพิ่มเครื่องมือในแต่ละ ID
 
+แผนให้ผู้สร้างแก้เมนู HTML ราย ID และมี Open quiz บังคับโดยระบบ: [QUESTION-BANK-HTML-MENU-PLAN.md](QUESTION-BANK-HTML-MENU-PLAN.md) พร้อมแม่แบบใน `docs/examples/bank-tools-menu-proposed.html` **ยังเป็นแบบออกแบบ ไม่ได้แทนวิธี JavaScript ด้านล่างในเว็บที่เผยแพร่**
+
 แก้ `questionBankTools` ใน `public/shared/question-bank-config.js` ตัวอย่าง:
 
 ```js

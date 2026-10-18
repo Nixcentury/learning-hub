@@ -5,7 +5,7 @@ import { BANK_ALL_CHAPTERS, BANK_OTHER_CHAPTER, bankChapterKey, bankChapters, fi
 
 export function createSubjectBankNavigation({ root, subject, setStage, requestNavigation, backToChapters }) {
   if (!Object.hasOwn(bankSubjects, subject.id)) return null;
-  const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = new URL('subject-bank.css', import.meta.url); document.head.append(css);
+  const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = new URL('subject-bank.css?v=bank-chapters-20261019', import.meta.url); document.head.append(css);
   const launch = document.createElement('button'); launch.type = 'button'; launch.className = 'bank-entry surface';
   launch.innerHTML = '<span class="bank-entry-icon" aria-hidden="true">▤</span><span><strong></strong><small></small></span><b aria-hidden="true">→</b>';
   const localize = (node, th, en) => { node.dataset.th = th; node.dataset.en = en || th;

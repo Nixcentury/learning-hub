@@ -18,6 +18,8 @@
 
 โค้ดเมนู: `public/pages/shared/subject-bank-nav.js`, `subject-bank.css` และ `public/shared/question-bank-menu.js` จอไม่เกิน 900px วางตัวเลือกบทกับช่องค้นหาคนละบรรทัด
 
+ไฟล์ public ไม่ได้ใช้ชื่อ hash จึงกำกับรุ่น `v=bank-chapters-20261019` ใน script ของ `physics.html`/`chemistry.html`, URL เมนูใน `subject-page.js` และ URL CSS ใน `subject-bank-nav.js` เมื่อแก้รุ่นเมนูให้เปลี่ยนค่าเหล่านี้พร้อมกัน เพื่อให้หน้าเดิมโหลดไฟล์ใหม่ได้โดยไม่ล้างข้อมูลเว็บไซต์
+
 คง CSS เดิมของ Learning Hub: ใช้ page.css, subject-orbit.css, activity-card, back-button และหน้าต่าง Workspace เดิม ส่วน CSS ใหม่จำกัดเฉพาะการจัดหน้าคลังและอ้างสี/ฟอนต์จากตัวแปรธีมรายวิชาเดิม
 
 ครูทำเหมือนเดิม: เพิ่มหมวดใน Sitemap → เลือก ID จาก “กรอง id” ลง QuizID(1) หรือ QuizID(2) → ใส่ HTML_Content → รีเฟรชคลัง ไม่ต้อง Push โจทย์ใหม่ขึ้น GitHub

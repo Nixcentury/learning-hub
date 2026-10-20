@@ -8,6 +8,30 @@ import { createBankClient } from '../public/shared/question-bank-client.js';
 import { resolveHubRoute, createHubShareUrl } from '../js/hub-routes.js';
 import { activityForRoute, menuForRoute, routeForTool } from '../js/hub-activity-routes.js';
 import { routeForSelection } from '../js/hub-navigation.js';
+import { BANK_ALL_CHAPTERS, BANK_OTHER_CHAPTER, bankChapterKey, bankChapters, filterBankSets, bankTitlePair } from '../public/shared/question-bank-menu.js';
+
+test('chapter menu preserves Sheet order, scopes search, and keeps empty topics and exact IDs', () => {
+  const make = (id, chapter, title) => ({ bankKey: id, legacyId: `ID-${id}`, title,
+    path: ['ฟิสิกส์', 'Learning hub', chapter, title], questionCount: 0 });
+  const sets = [make('first', 'เสียง(Sound)', 'การได้ยิน(Hearing)'), make('second', 'คลื่น(Waves)', 'การได้ยินซ้ำ'),
+    make('third', 'เสียง(Sound)', 'อัตราเร็วเสียง'), { bankKey: 'old', legacyId: 'old-id', title: 'Legacy', path: ['ฟิสิกส์', 'Legacy'], questionCount: 1 }];
+  const original = structuredClone(sets);
+  assert.deepEqual(bankChapters(sets).map(entry => [entry.title, entry.count]), [['เสียง(Sound)', 2], ['คลื่น(Waves)', 1], ['', 1]]);
+  const sound = bankChapterKey(sets[0]);
+  assert.deepEqual(filterBankSets(sets, '', 'การได้ยิน'), []);
+  assert.deepEqual(filterBankSets(sets, BANK_ALL_CHAPTERS, '  '), []);
+  assert.deepEqual(filterBankSets(sets, sound).map(set => set.bankKey), ['first', 'third']);
+  assert.deepEqual(filterBankSets(sets, sound, 'การได้ยิน').map(set => set.bankKey), ['first']);
+  assert.deepEqual(filterBankSets(sets, BANK_ALL_CHAPTERS, 'การได้ยิน').map(set => set.bankKey), ['first', 'second']);
+  assert.deepEqual(filterBankSets(sets, BANK_ALL_CHAPTERS, 'id-THIRD').map(set => set.bankKey), ['third']);
+  assert.deepEqual(filterBankSets(sets, BANK_OTHER_CHAPTER).map(set => set.bankKey), ['old']);
+  assert.deepEqual(sets, original);
+});
+test('bilingual menu labels preserve source titles and non-translation parentheses', () => {
+  assert.deepEqual(bankTitlePair('เสียง(Sound)'), ['เสียง', 'Sound']);
+  assert.deepEqual(bankTitlePair('การเคลื่อนที่ (Straight-Line Motion)'), ['การเคลื่อนที่', 'Straight-Line Motion']);
+  for (const title of ['ฟิสิกส์', 'Sound (Part 1)', 'แรง (ข้อ 1)', 'รูปแบบ (A (B))']) assert.deepEqual(bankTitlePair(title), [title, title]);
+});
 
 const code = await readFile(new URL('../services/question-bank/Code.gs', import.meta.url), 'utf8');
 function service() {
@@ -31,9 +55,53 @@ function service() {
     Utilities: { DigestAlgorithm: { SHA_256: '' }, Charset: { UTF_8: '' }, computeDigest: (_, text) => [...createHash('sha256').update(text).digest()], newBlob: text => ({ getBytes: () => Buffer.from(text) }) },
     ContentService: { MimeType: { JSON: 'application/json' }, createTextOutput: text => ({ setMimeType: () => JSON.parse(text) }) } });
   vm.runInContext(code, context);
-  return { tables, archive, reads, properties, id, second, q,
+  return { tables, archive, reads, properties, id, second, q, menu,
     get: params => context.doGet({ parameter: { subject: 'physics', action: 'catalog', ...params } }) };
 }
+test('chemistry uses its own tab and publication rules, including empty sets and explicit subject activation', () => {
+  const h = service();
+  h.tables.Sitemap.push(h.menu(h.id, 'ALL', '', 'CHEMISTRY'), h.menu('chem-empty', '', '', 'CHEMISTRY'),
+    h.menu('chem-private', 'STUDENT', '', 'CHEMISTRY'), h.menu('chem-closed', '', 'ปิด', 'CHEMISTRY'),
+    h.menu('chem-duplicate', '', '', 'CHEMISTRY'), h.menu('chem-duplicate', 'STUDENT', '', 'CHEMISTRY'));
+  h.tables.CHEMISTRY.push([h.id, h.id, h.q('H<sub>2</sub>O') + h.q('Fe<sup>3+</sup>')],
+    ['chem-private', 'chem-closed', h.q('private')], [h.id + '-extra', '', h.q('different full ID')]);
+  h.properties.set('HUB_BANK_ENABLED_SUBJECTS', 'physics');
+  assert.equal(h.get({ subject: 'chemistry' }).code, 'set-unavailable');
+  assert.deepEqual(h.reads, []);
+  h.properties.set('HUB_BANK_ENABLED_SUBJECTS', 'physics,chemistry');
+  const catalog = h.get({ subject: 'chemistry' }).data;
+  assert.equal(catalog.subjectId, 'chemistry');
+  assert.deepEqual(catalog.sets.map(set => set.legacyId), [h.id, 'chem-empty']);
+  assert.deepEqual(catalog.sets.map(set => set.questionCount), [2, 0]);
+  assert.deepEqual(h.reads, ['Sitemap', 'CHEMISTRY']);
+  assert.equal(h.get({ subject: 'chemistry', action: 'questions', key: catalog.sets[1].bankKey }).code, 'invalid-set-size');
+});
+test('identical legacy IDs in physics and chemistry keep distinct questions, revisions and archives', async () => {
+  const h = service();
+  h.tables.Sitemap.push(h.menu(h.id, '', '', 'CHEMISTRY'));
+  const chemicalHtml = h.q('H<sub>2</sub>O and Fe<sup>3+</sup>').replace('</h3>',
+    '</h3><table><tr><td>pH</td><td>7</td></tr></table><img src="https://example.org/structure.png" alt="Molecular structure">');
+  h.tables.CHEMISTRY.push([h.id, h.id, chemicalHtml]);
+  const physicsKey = h.get().data.sets[0].bankKey;
+  const chemistryKey = h.get({ subject: 'chemistry' }).data.sets[0].bankKey;
+  assert.notEqual(chemistryKey, physicsKey);
+  const physics = h.get({ action: 'questions', key: physicsKey }).data;
+  const chemistry = h.get({ subject: 'chemistry', action: 'questions', key: chemistryKey }).data;
+  await validateBankSnapshot(physics, 'physics', physicsKey);
+  await validateBankSnapshot(chemistry, 'chemistry', chemistryKey);
+  assert.equal(chemistry.rows.length, 1);
+  assert.equal(chemistry.rows[0].html, chemicalHtml);
+  assert.notEqual(chemistry.revision, physics.revision);
+  assert.equal(h.get({ subject: 'chemistry', action: 'questions', key: physicsKey }).code, 'set-unavailable');
+  assert.equal(h.get({ action: 'questions', key: chemistryKey }).code, 'set-unavailable');
+  assert.equal(h.get({ subject: 'chemistry', action: 'questions', key: chemistryKey, revision: physics.revision }).code, 'snapshot-not-found');
+  h.tables.CHEMISTRY[0][2] = h.q('Changed chemistry');
+  const latest = h.get({ subject: 'chemistry', action: 'questions', key: chemistryKey }).data;
+  assert.notEqual(latest.revision, chemistry.revision);
+  assert.equal(h.get({ subject: 'chemistry', action: 'questions', key: chemistryKey, revision: chemistry.revision }).data.rows[0].html, chemicalHtml);
+  assert.equal(h.get({ action: 'questions', key: physicsKey, revision: physics.revision }).data.rows[0].html, physics.rows[0].html);
+  assert.deepEqual([...h.archive.keys()].map(name => name.split('-')[0]).sort(), ['chemistry', 'chemistry', 'physics']);
+});
 test('service publishes only allowed public menus, rejects private/closed/duplicate access and arbitrary tabs', () => {
   const h = service(), catalog = h.get().data;
   assert.deepEqual(catalog.sets.map(set => set.legacyId), [h.id, h.second]);

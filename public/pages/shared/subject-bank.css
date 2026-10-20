@@ -7,7 +7,11 @@
 .bank-view { padding-bottom: 28px; }
 .bank-controls { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; margin: 20px 0; }
 .bank-controls label { display: grid; flex: 1; gap: 7px; min-width: 180px; }
-.bank-controls input { width: 100%; box-sizing: border-box; border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; background: var(--surface); color: inherit; font: inherit; }
+.bank-controls label[hidden] { display: none; }
+.bank-controls .bank-chapter-control { flex: 1.5; min-width: 0; }
+.bank-controls input, .bank-controls select { width: 100%; min-width: 0; min-height: 48px; box-sizing: border-box; border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; background: var(--surface); color: inherit; font: inherit; }
+.bank-controls select { text-overflow: ellipsis; cursor: pointer; }
+.bank-controls input:disabled { opacity: .55; }
 .bank-card { min-width: 0; text-align: start; }
 .bank-card .activity-copy { overflow-wrap: anywhere; min-width: 0; }
 .bank-card:disabled { opacity: .6; cursor: default; }
@@ -15,5 +19,6 @@
 .bank-view details p { padding: 12px; background: var(--subject-soft); border-radius: 10px; }
 .bank-view .content-breadcrumb { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
 .bank-view .content-breadcrumb button { color: var(--subject-accent); border: 0; background: transparent; font: inherit; cursor: pointer; padding: 6px; }
-.bank-entry:focus-visible, .bank-view button:focus-visible, .bank-view input:focus-visible { outline: 3px solid var(--subject-accent); outline-offset: 3px; }
+.bank-entry:focus-visible, .bank-view button:focus-visible, .bank-view input:focus-visible, .bank-view select:focus-visible { outline: 3px solid var(--subject-accent); outline-offset: 3px; }
+@media (max-width: 900px) { .bank-controls { flex-direction: column; align-items: stretch; } .bank-controls label, .bank-controls .bank-chapter-control { flex: auto; min-width: 0; } }
 @media (max-width: 620px) { .bank-entry { padding: 18px; gap: 12px; } .bank-view .activity-grid { grid-template-columns: 1fr; } }

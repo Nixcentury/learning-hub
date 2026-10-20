@@ -563,6 +563,9 @@ function showSection(sectionId, force = false) {
 
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
+  if (["physics", "chemistry"].includes(sectionId)) {
+    pageUrl.searchParams.set("v", "bank-chapters-20261019");
+  }
   pageFrameLoading.hidden = false;
   // Child-frame navigations must not add extra entries to the Hub's Back history.
   pageFrame.contentWindow.location.replace(pageUrl.href);

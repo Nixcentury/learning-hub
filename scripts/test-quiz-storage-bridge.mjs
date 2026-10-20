@@ -19,9 +19,19 @@ function bridgeHarness() {
   const stored = new Map();
   const source = { postMessage: (message) => replies.push(message) };
   const sources = new Set([source]);
+  // Live production Rules verified 2026-10-20: quizProgress/$quizId/$uid,
+  // auth != null && auth.uid === $uid. Do not let an unrestricted fake DB
+  // hide a client path that production rejects.
+  function authorize(path) {
+    const [root, quizId, ownerUid, ...extra] = path.split('/');
+    if (root !== 'quizProgress' || !quizId || extra.length ||
+        session.status !== 'signed-in' || session.user?.uid !== ownerUid) {
+      throw { code: 'PERMISSION_DENIED' };
+    }
+  }
   const io = {
-    get: async (path) => ({ exists: () => stored.has(path), val: () => stored.get(path) }),
-    set: async (path, value) => { writes.push({ path, value }); stored.set(path, value); },
+    get: async (path) => { authorize(path); return { exists: () => stored.has(path), val: () => stored.get(path) }; },
+    set: async (path, value) => { authorize(path); writes.push({ path, value }); stored.set(path, value); },
   };
   const context = vm.createContext({
     console: { warn() {} }, location: { origin }, firebaseApp: {},
@@ -51,7 +61,7 @@ test("bridge overwrites one latest record and binds server-side uid/contentId", 
   await h.send({ value: { version: 2, latestScore: { score: 1 }, uid: "forged", contentId: "forged" } });
   await h.send({ value: { version: 2, latestScore: { score: 2 } } });
   assert.equal(h.stored.size, 1);
-  assert.equal(h.stored.get("quizProgress/user-a/quiz-one").latestScore.score, 2);
+  assert.equal(h.stored.get("quizProgress/quiz-one/user-a").latestScore.score, 2);
   assert.equal(h.writes[0].value.uid, "user-a");
   assert.equal(h.writes[0].value.contentId, "quiz-one");
   assert.equal(h.replies.at(-1).uid, "user-a");
@@ -100,12 +110,28 @@ test("invalid content IDs, invalid records and oversized payloads are rejected",
 
 test("load returns only the requested user's quiz, including null for a new quiz", async () => {
   const h = bridgeHarness();
-  h.stored.set("quizProgress/user-a/quiz-one", { version: 2, answers: { q1: "b" } });
-  h.stored.set("quizProgress/user-b/quiz-one", { private: true });
+  h.stored.set("quizProgress/quiz-one/user-a", { version: 2, answers: { q1: "b" } });
+  h.stored.set("quizProgress/quiz-one/user-b", { private: true });
   await h.send({ type: "learning-hub-quiz-load" });
   assert.equal(h.replies.at(-1).value.answers.q1, "b");
   await h.send({ type: "learning-hub-quiz-load", contentId: "new-quiz" });
   assert.equal(h.replies.at(-1).value, null);
+});
+
+test("production owner rule permits the matching account and denies inverted paths, other accounts and guests", async () => {
+  const h = bridgeHarness();
+  await h.send({ value: { version: 2, answers: { q1: "a" } } });
+  assert.equal(h.replies.at(-1).ok, true);
+  await assert.rejects(h.io.get("quizProgress/user-a/quiz-one"), error => error.code === 'PERMISSION_DENIED');
+  await assert.rejects(h.io.get("quizProgress/quiz-one/user-b"), error => error.code === 'PERMISSION_DENIED');
+  h.session({ status: 'signed-in', user: { uid: 'user-b' } });
+  await h.send({ uid: 'user-b', value: { version: 2, answers: { q1: "b" } } });
+  await h.send({ uid: 'user-b', type: 'learning-hub-quiz-load' });
+  assert.equal(h.replies.at(-1).value.answers.q1, 'b');
+  assert.equal(h.stored.get('quizProgress/quiz-one/user-a').answers.q1, 'a');
+  await assert.rejects(h.io.get("quizProgress/quiz-one/user-a"), error => error.code === 'PERMISSION_DENIED');
+  h.session({ status: 'guest', user: null });
+  await assert.rejects(h.io.get("quizProgress/quiz-one/user-b"), error => error.code === 'PERMISSION_DENIED');
 });
 
 test("an old load cannot expose data after an account switch or sign-out/sign-in cycle", async () => {
@@ -131,7 +157,7 @@ test("pending writes retain original path and never acknowledge a new account as
   h.session({ status: "signed-in", user: { uid: "user-b" } });
   finish();
   await pending;
-  assert.equal(h.writes[0].path, "quizProgress/user-a/quiz-one");
+  assert.equal(h.writes[0].path, "quizProgress/quiz-one/user-a");
   assert.equal(h.replies.at(-1).code, "quiz-progress/session-changed");
 });
 

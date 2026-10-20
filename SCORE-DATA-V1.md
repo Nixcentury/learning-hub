@@ -5,7 +5,7 @@ Quiz เป็นเจ้าของคะแนน ส่วน Classroom จ
 ## เส้นทางที่โค้ดใช้จริง
 
 ```text
-quizProgress/{uid}/{contentId}
+quizProgress/{contentId}/{uid}
 ├── answers / giveUps / hintLevels / masteredIds
 ├── currentIndex / currentQuestionId / attempt / view
 ├── elapsedMs / savedAt
@@ -19,6 +19,8 @@ quizProgress/{uid}/{contentId}
 ```
 
 ใช้ Firebase Realtime Database ไม่ใช่ Firestore หนึ่งผู้ใช้ต่อหนึ่ง Quiz มี snapshot ล่าสุดหนึ่งรายการ เขียนทับรายการเดิม ไม่เพิ่มแถวประวัติทุกครั้ง ค่า attempt เป็นสถานะของรอบฝึกปัจจุบัน ไม่ใช่คลังประวัติคะแนน
+
+แก้ 20 ตุลาคม 2026: ตรวจ Firebase Console จริงแล้ว Rules เดิมอนุญาต `quizProgress/$quizId/$uid` เฉพาะ `auth.uid === $uid` จึงแก้ bridge ให้ใช้ contentId ก่อน uid ตามโครงสร้างเดิม คำขอแบบ uid ก่อน contentId ถูกปฏิเสธด้วย Permission denied และทำให้คลังข้อสอบเปิดไม่ได้เมื่อเข้าสู่บัญชี การแก้นี้ไม่เปลี่ยน Rules ไม่ย้าย/ลบข้อมูล ไม่เปลี่ยน contentId/questionId และไม่เปลี่ยนคีย์ที่เก็บในเครื่อง
 
 คะแนนล่าสุดอยู่ใน latestScore เมื่อกลับไปแก้คำตอบ คะแนนเดิมยังเป็นผลจากการส่งตรวจครั้งก่อนจนกว่าจะส่งตรวจใหม่ ส่วนปุ่มเริ่มทำใหม่จะล้างคะแนนในร่างปัจจุบัน จึงต้องอ่านคู่กับสถานะ draft ไม่ถือว่าคำตอบที่เพิ่งแก้ได้รับการตรวจแล้ว
 

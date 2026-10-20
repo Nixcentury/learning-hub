@@ -73,7 +73,7 @@ try {
     return frame;
   }
   async function frameObject() { return await page.locator(".workspace-tool-frame").elementHandle().then(handle => handle.contentFrame()); }
-  const cloudKey = "quizProgress/qa-a/quiz-template-test-v1";
+  const cloudKey = "quizProgress/quiz-template-test-v1/qa-a";
   const saved = {version:2,answers:{q1:"b"},giveUps:{},hintLevels:{},masteredIds:[],currentIndex:0,attempt:1,view:"exam",elapsedMs:0,savedAt:100,latestScore:null};
   await page.evaluate(({cloudKey,saved})=>{db.records[cloudKey]=saved;db.hold=true;},{cloudKey,saved});
   let frame = await open();
@@ -127,7 +127,7 @@ try {
   await page.evaluate(()=>{db.fail=false;});
   await frame.getByRole('button',{name:'Retry cloud sync',exact:true}).click();
   await frame.locator('[data-quiz-storage-status][data-tone="cloud"]').waitFor();
-  assert.equal(await page.evaluate(()=>db.records['quizProgress/qa-c/quiz-template-test-v1'].answers.q1),'b');
+  assert.equal(await page.evaluate(()=>db.records['quizProgress/quiz-template-test-v1/qa-c'].answers.q1),'b');
   console.log("PASS failed load + visible retry syncs without a stuck saving state");
   await child.evaluate(()=>window.LearningHubQuiz.flushLocal());
   await frame.locator('[data-reasoning-input]').fill('Local draft to preserve');
@@ -138,7 +138,7 @@ try {
   assert.equal(await frame.locator('[data-reasoning-input]').inputValue(),'Local draft to preserve');
   assert.equal((await child.evaluate(()=>LearningHubQuiz.getState())).answers.q1,'b');
   console.log("PASS real iframe reload restores correct account and draft");
-  await page.evaluate(({saved})=>{db.hold=true;db.records['quizProgress/qa-d/quiz-template-test-v1']=saved;qa.setUser('qa-d');},{saved});
+  await page.evaluate(({saved})=>{db.hold=true;db.records['quizProgress/quiz-template-test-v1/qa-d']=saved;qa.setUser('qa-d');},{saved});
   await frame.locator('.quiz-option').nth(0).click();
   await page.evaluate(()=>qa.release());
   await frame.locator('[data-quiz-storage-status][data-tone="conflict"]').waitFor();
@@ -170,7 +170,7 @@ try {
   console.log('Numeric keyboard value:',mathValue);
   assert.match(mathValue,/frac/);
   await frame.locator('[data-quiz-storage-status][data-tone="cloud"]').waitFor();
-  assert.equal(await page.evaluate(()=>db.records['quizProgress/qa-d/numeric-input-demo-v1'].answers['fraction-sum']),mathValue);
+  assert.equal(await page.evaluate(()=>db.records['quizProgress/numeric-input-demo-v1/qa-d'].answers['fraction-sum']),mathValue);
   await page.locator('.is-close').click();
   await page.evaluate(()=>qa.workspace.open('test-c2-quiz'));
   frame=page.frameLocator('.workspace-tool-frame');child=await frameObject();
@@ -187,8 +187,8 @@ try {
   const second=await context.newPage();
   await second.goto(origin+'/__qa');
   await second.waitForFunction(()=>window.qaReady);
-  const numericRecord=await page.evaluate(()=>db.records['quizProgress/qa-d/numeric-input-demo-v1']);
-  await second.evaluate(record=>{localStorage.clear();db.records['quizProgress/qa-d/numeric-input-demo-v1']=record;qa.setUser('qa-d');qa.workspace.open('test-c2-quiz');},numericRecord);
+  const numericRecord=await page.evaluate(()=>db.records['quizProgress/numeric-input-demo-v1/qa-d']);
+  await second.evaluate(record=>{localStorage.clear();db.records['quizProgress/numeric-input-demo-v1/qa-d']=record;qa.setUser('qa-d');qa.workspace.open('test-c2-quiz');},numericRecord);
   const secondFrame=second.frameLocator('.workspace-tool-frame');
   await secondFrame.locator('[data-quiz-storage-status][data-tone="cloud"]').waitFor();
   const secondChild=await second.locator('.workspace-tool-frame').elementHandle().then(handle=>handle.contentFrame());

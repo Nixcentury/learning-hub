@@ -82,7 +82,9 @@ window.addEventListener("message", async (event) => {
     return;
   }
 
-  const progressRef = ref(database, `quizProgress/${uid}/${contentId}`);
+  // Production Rules bind the owner at quizProgress/$quizId/$uid.
+  // Keep that existing layout so account reads/writes remain owner-only.
+  const progressRef = ref(database, `quizProgress/${contentId}/${uid}`);
   try {
     if (message.type === "learning-hub-quiz-load") {
       const snapshot = await get(progressRef);

@@ -223,7 +223,7 @@ try {
     const achild = await account.locator('.workspace-tool-frame').elementHandle().then(handle => handle.contentFrame());
     await achild.evaluate(() => LearningHubQuiz.save());
     const records = await account.evaluate(() => bankDb);
-    assert.equal(records[`quizProgress/student-a/${contentId}`].bankRevision, second.revision);
+    assert.equal(records[`quizProgress/${contentId}/student-a`].bankRevision, second.revision);
     current = first;
     const newDevice = await makeContext(true);
     await newDevice.addInitScript(records => { window.bankDb = records; }, records);

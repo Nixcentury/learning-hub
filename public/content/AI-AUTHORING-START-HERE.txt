@@ -1,0 +1,321 @@
+Learning Hub — คู่มือส่งต่อ AI: ไฟล์ 4 ชั้นและเครื่องมือกลาง
+ปรับปรุง 20 ตุลาคม 2026
+======================================================
+
+ใช้เอกสารนี้เป็นบริบทเริ่มต้นก่อนเพิ่มบท เรื่องย่อย PDF HTML Simulation หรือ Quiz
+
+Repository: https://github.com/Nixcentury/learning-hub
+เว็บจริง: https://nixcentury.github.io/learning-hub/
+พาธในคู่มือนับจากรากของ repository นี้
+ไฟล์ใต้ public/ จะแสดงบนเว็บโดยไม่มีคำว่า public/ ใน URL
+
+1. ก่อนลงมือ
+------------
+
+- อ่านไฟล์ปัจจุบันจาก main และคู่มือที่เกี่ยวข้องก่อน อย่าเดาโครงสร้างจากชื่อไฟล์
+- ถ้าเข้าถึง repo หรือไฟล์แนบไม่ได้ ให้บอกตามจริงและขอไฟล์/ลิงก์ที่ต้องใช้
+- งานนี้ใช้ Nixcentury/learning-hub; สำเนา Hub ใน Physic-subject มีไว้ย้อนกลับ
+- แก้เฉพาะบท/เรื่อง/รายการงานที่ได้รับมอบหมาย
+- ตรวจเนื้อหาเดิมและการเปลี่ยนแปลงก่อน commit เพื่อไม่ให้ลิงก์หรือบทอื่นหาย
+- ชื่อ ข้อความ และคำอธิบายรองรับ TH/EN ตามรูปแบบเดิม
+- รายงานแยกให้ชัดว่าแก้ไฟล์แล้ว, ทดสอบแล้ว, commit แล้ว, push แล้ว หรือ deploy แล้ว
+- ห้ามอ้างว่าทดสอบเปิดเว็บ/PDF/iPad/บัญชีจริงแล้ว ถ้าไม่ได้ทดสอบจริง
+
+คู่มือหลักใน repo:
+START-HERE.txt
+public/content/chemistry/START-HERE.txt
+PDF-VIEWER-START-HERE.md
+CHAPTER-OVERVIEW-START-HERE.txt
+LEARNING-SHEET-START-HERE.txt
+CONTENT-DRAFTS.md
+public/content/templates/quiz-ai-prompt.txt
+public/content/templates/quiz-drag-ai-prompt.txt
+
+ตัวอย่างในคู่มือเก่าอาจกล่าวถึงโฟลเดอร์ LEARNING HUB/ ให้ใช้พาธ public/... ใน repo ปัจจุบัน
+เมื่อข้อมูลคู่มือเก่าต่างจากโค้ดปัจจุบัน ให้ตรวจแม่แบบและโค้ดจริง พร้อมอธิบายสิ่งที่พบ
+
+2. โครงสร้าง 4 ชั้น
+-------------------
+
+ชั้น 1 — เลือกบทในหน้าวิชา
+ไฟล์ตัวอย่าง: public/pages/physics.html
+บทแต่ละบทอยู่ใน <article data-chapter="เลขบท">
+เพิ่ม data-chapter-src บน article เดิม เพื่อชี้ไปเมนูชั้น 2
+แต่ละ data-chapter ต้องมีเพียงหนึ่งรายการในหน้าวิชา
+
+ชั้น 2 — เมนูเรื่องย่อยของบท
+ไฟล์ตัวอย่าง: public/content/physics/atomic-physics.html
+ใช้ <nav data-learning-menu data-menu-kind="topics">
+กำหนด data-subject-id, data-chapter-id และชื่อ/คำอธิบาย TH/EN
+รายการเรื่องย่อยใช้ <a data-topic-id="..." href="...">
+href ชี้ไปเมนูชั้น 3 โดยนับจากตำแหน่งไฟล์เมนูบทนี้
+
+ชั้น 3 — เมนูรายการเครื่องมือในเรื่องย่อย
+ไฟล์ตัวอย่าง: public/content/physics/atomic-physics/19-1-atomic-models.html
+ใช้ <nav data-learning-menu data-menu-kind="tools">
+กำหนด data-subject-id, data-chapter-id, data-topic-id ให้ตรงกับชั้น 2
+แต่ละงานเป็น <a data-tool-kind="..." data-content-id="...">
+เรื่องหนึ่งมีหลายรายการได้ เช่น PDF นักเรียน, PDF ครู, HTML, Simulation และ Quiz
+
+ชั้น 4 — เนื้อหาที่เครื่องมือกลางเปิดแสดง
+Quiz: ไฟล์เนื้อหาตามแม่แบบ ให้ Quiz Engine กลางประกอบเครื่องมือ
+HTML: เอกสารอ่านที่มี <html data-learning-html>
+Simulation: HTML ของการจำลองที่มี marker และรหัสตามสัญญา
+PDF: ไฟล์จริงใน Google Drive หรือพาธ PDF ที่รองรับ เปิดด้วย PDF viewer กลาง
+PDF แบบ inline ไม่ต้องสร้าง HTML descriptor แยกอีกไฟล์
+
+เพิ่มไฟล์อย่างเดียวไม่ทำให้มีรายการนำทาง ต้องเชื่อมชั้นที่เกี่ยวข้องด้วย
+
+3. ตัวอย่างเชื่อมบท 19 และเรื่อง 19.1
+------------------------------------
+
+ชั้น 1: ใน public/pages/physics.html หา article ของบท 19 ที่มีอยู่แล้ว
+แก้เฉพาะแท็กเปิด โดยคงชื่อและคำอธิบายเดิมที่ต้องการไว้:
+
+<article data-chapter="19" data-chapter-src="../content/physics/atomic-physics.html">
+
+อย่าสร้าง article บท 19 ซ้ำ และอย่าวางทับบทอื่น
+เคยเกิดกรณีบท 19 ไปแทนบท 12 เสียง ทำให้ ID 19 ซ้ำและบท 12 หาย
+ให้ตรวจเลขบททั้งหมดหลังแก้
+
+ชั้น 2: ภายใน nav ของ public/content/physics/atomic-physics.html
+
+<a data-topic-id="19-1-atomic-models"
+   href="atomic-physics/19-1-atomic-models.html"
+   data-th="19.1 พัฒนาการของแบบจำลองอะตอมและหลักฐานเชิงทดลอง"
+   data-en="19.1 Development of Atomic Models and Experimental Evidence">
+  19.1 พัฒนาการของแบบจำลองอะตอมและหลักฐานเชิงทดลอง
+</a>
+
+ชั้น 3: ในไฟล์ปลายทาง ใช้ nav:
+
+<nav data-learning-menu data-menu-kind="tools"
+  data-subject-id="physics"
+  data-chapter-id="19"
+  data-topic-id="19-1-atomic-models"
+  data-title-th="19.1 พัฒนาการของแบบจำลองอะตอมและหลักฐานเชิงทดลอง"
+  data-title-en="19.1 Development of Atomic Models and Experimental Evidence">
+  <!-- เพิ่มรายการงานภายใน nav นี้ -->
+</nav>
+
+ไฟล์เมนูเป็นข้อมูลล้วน ให้ระบบกลางสร้างการ์ด หน้าตา ภาษา และการเปิดหน้าต่าง
+ไม่ใส่ script/style/onclick หรือสร้าง modal/iframe เองในไฟล์เมนู
+
+4. เรียกเครื่องมือกลางจากเมนู
+------------------------------
+
+PDF:
+ใช้ data-tool-kind="pdf", data-content-id และสามช่องลิงก์ตามหัวข้อ 5
+ไม่ต้องมี href เมื่อใช้สามช่อง PDF แบบ inline
+
+HTML:
+<a data-tool-kind="html" data-content-id="physics-example-reading"
+  href="reading.html"
+  data-th="สรุปเนื้อหา" data-en="Reading summary">สรุปเนื้อหา</a>
+
+ปลายทาง reading.html ต้องมี <html lang="th" data-learning-html>
+ใช้ HTML, CSS, รูป ตาราง และสมการได้ตามแม่แบบอ่าน
+เอกสารอ่านไม่รัน JavaScript และไม่ใช้ระบบบัญชีเอง
+แม่แบบ: public/content/templates/chapter-overview-template.html
+
+Simulation:
+<a data-tool-kind="simulation" data-content-id="physics-example-simulation"
+  href="simulation.html"
+  data-th="ทดลองจำลอง" data-en="Simulation">ทดลองจำลอง</a>
+
+ปลายทางเป็น HTML เต็ม และมี:
+<html lang="th" data-learning-simulation data-activity-id="physics-example-simulation">
+
+Simulation มีส่วนควบคุมการทดลองของตัวเองได้
+การเปิดผ่าน Hub ไม่ได้ทำให้บันทึกคะแนนหรือขั้นตอนลง Firebase ให้อัตโนมัติ
+หากต้องเชื่อมการบันทึก ให้ตรวจสัญญาระบบก่อนพัฒนา
+
+Quiz:
+<a data-tool-kind="quiz" data-content-id="physics-example-practice"
+  href="practice.html"
+  data-th="แบบฝึกหัด" data-en="Practice quiz">แบบฝึกหัด</a>
+
+data-content-id ในเมนูต้องตรงกับ data-activity-id ในไฟล์ Quiz
+คัดลอก public/content/templates/quiz-template.html สำหรับข้อกา/ตัวเลข
+คัดลอก public/content/templates/quiz-drag-template.html สำหรับลากวาง
+
+หมายเหตุ: ชื่อไฟล์และรหัส example ในหัวข้อนี้เป็นตัวอย่างสำหรับสร้างงานใหม่
+ตั้งชื่อ/รหัสใหม่ให้เหมาะกับงานจริงก่อนนำไปใช้ อย่าคัดลอกรหัสซ้ำกับเอกสารคนละชุด
+
+5. PDF กลาง: ไฟล์ร่วม / TH / EN และฉบับครู / นักเรียน
+-----------------------------------------------------
+
+ตัวอย่างรายการในเมนูชั้น 2 หรือชั้น 3:
+
+<a data-tool-kind="pdf"
+  data-content-id="physics-example-worksheet-student"
+  data-pdf-common=""
+  data-pdf-th=""
+  data-pdf-en=""
+  data-th="ชีทติว (ฉบับนักเรียน)"
+  data-en="Handout (Student Edition)">
+  ชีทติว (ฉบับนักเรียน)
+</a>
+
+data-pdf-common: ไฟล์ร่วม ใช้ได้ทั้งตอนเลือก TH และ EN
+data-pdf-th: ไฟล์ฉบับภาษาไทย ถ้ามี
+data-pdf-en: ไฟล์ฉบับภาษาอังกฤษ ถ้ามี
+
+- ชีทสองภาษาไฟล์เดียว: ใส่ลิงก์ใน data-pdf-common
+- แยกไฟล์ TH/EN: ใส่ลิงก์ในช่องภาษาที่ตรงกัน
+- เลือกภาษานั้นก่อน ถ้าไม่มีใช้ไฟล์ร่วม แล้วจึงอีกภาษาพร้อมแจ้ง fallback
+- สามช่องเว้นว่างได้ ระบบแสดงกำลังเตรียมเอกสาร และ build ผ่านได้
+- ไม่ใช้ชื่อไฟล์เดาว่าเป็นภาษาใด ให้ดูช่องลิงก์ที่กำหนด
+- ใช้ลิงก์ Drive ของไฟล์ PDF โดยตรง เช่นรูปแบบ /file/d/<รหัสจริง>/view
+- ไม่ใส่ลิงก์โฟลเดอร์หรือรหัสไฟล์ปลอมในช่องที่จะ build
+- คง resourcekey และใช้ &amp; แทน & เมื่อต้องเขียนหลาย query parameters ใน HTML
+- คงสิทธิ์แชร์ Drive เดิม Hub ไม่เปลี่ยนสิทธิ์หรือเข้าสู่ระบบ Google แทนผู้เรียน
+
+ฉบับครูและฉบับนักเรียน:
+สร้างคนละรายการและคนละ data-content-id
+แต่ละฉบับอาจใช้ data-pdf-common ของตัวเอง
+การเลือก TH/EN ใช้สำหรับภาษาเอกสาร
+
+ตัวอย่างจริงของ 19.1 อยู่ใน:
+public/content/physics/atomic-physics/19-1-atomic-models.html
+
+รหัสที่ใช้อยู่แล้ว:
+phys-atomic-19-1-worksheet-student
+phys-atomic-19-1-worksheet-teacher
+
+หากแก้ลิงก์หรือเปลี่ยนไฟล์ของสองรายการนี้ ให้คงรหัสเดิม
+ถ้าเป็นเอกสารใหม่คนละงาน ให้ตั้งรหัสใหม่
+
+จอ PDF กลางมีทางเปิดใน Google Drive และดาวน์โหลดผ่าน Drive ตามสิทธิ์ไฟล์
+ไม่ต้องสร้าง viewer หรือ iframe สำหรับแต่ละบท
+รายละเอียด fallback, resourcekey และ descriptor เดิมอยู่ใน PDF-VIEWER-START-HERE.md
+
+6. เรียก HTML/PDF จากหน้าที่แสดงอยู่แล้ว
+----------------------------------------
+
+ลิงก์ HTML กลางใน DOM ที่แสดงจริง:
+
+<a data-hub-html data-content-id="physics-example-reading"
+  href="reading.html"
+  data-th="เปิดสรุป" data-en="Open summary">เปิดสรุป</a>
+
+ปุ่ม PDF กลางใน HTML บทเรียน/Simulation:
+
+<button type="button" data-hub-pdf
+  data-content-id="physics-example-worksheet-student"
+  data-pdf-common=""
+  data-pdf-th=""
+  data-pdf-en=""
+  data-th="เปิดชีทติว" data-en="Open handout">เปิดชีทติว</button>
+
+ถ้าไม่มีบริบทวิชา/บท/เรื่องจากหน้าต่างบทเรียน ให้เพิ่ม data-subject-id,
+data-chapter-id และ data-topic-id ตามคู่มือ PDF
+
+ภายใน Quiz ให้ใช้ <a data-hub-pdf ...> ในสรุปหรือ data-question-context
+ไม่วางในตัวเลือกหรือช่องลากวาง และไม่ซ่อนแท็กลิงก์ไว้ใน string ของ data-th/data-en
+
+ข้อสำคัญ:
+- href และพาธ local อ้างจากไฟล์ที่เขียนลิงก์
+- รายการ PDF ใน nav ใช้ data-tool-kind="pdf"; ปุ่มใน DOM ใช้ data-hub-pdf
+- ลิงก์ในไฟล์เมนูใช้ anchor ตามรูปแบบเมนู
+- template ที่ซ่อนอยู่ไม่ได้ทำให้ปุ่มลอยแสดงเอง
+- main ของหน้าวิชาถูกระบบวาดใหม่ หากเพิ่มปุ่มเฉพาะหน้าให้ทำตามคู่มือ HTML กลาง
+- การเปิด HTML เดี่ยวด้วย file:// ไม่ได้ประกอบระบบ Hub ให้
+
+สรุปบทท้ายชั้น 2:
+เพิ่ม data-chapter-overview-src="โฟลเดอร์/summary.html" บน nav topics เดิม
+ปลายทางต้องมี <html data-learning-html>
+ระบบสร้างปุ่มท้ายบทเอง ใช้รหัส <subject>-chapter-<chapter>-overview
+ดู CHAPTER-OVERVIEW-START-HERE.txt สำหรับตัวอย่างครบ
+
+ใบเรียนรู้แบบเติมช่อง:
+ใช้ public/content/templates/learning-sheet-template.html
+อ่าน LEARNING-SHEET-START-HERE.txt และ learning-sheet-ai-prompt.txt ก่อนสร้างช่องคำตอบ
+
+7. รักษา Quiz Engine และรหัส
+----------------------------
+
+- Quiz เป็น HTML fragment ตามแม่แบบ เริ่มด้วย article data-learning-activity-content
+- รากมี data-activity-id และ data-activity-kind="quiz" ตามแม่แบบ
+- แต่ละข้อมี data-question-id ไม่ซ้ำในชุด
+- ข้อกา: data-question-type="choice"; data-answer ตรง data-choice-id จริง
+- ตัวเลข: data-question-type="number"; คำตอบไม่มีหน่วย; tolerance ไม่ติดลบ
+- ข้อกาและตัวเลขอยู่ชุดเดียวกันได้
+- ลากวางใช้ชุดแยกและ data-quiz-mode="drag-drop" ตามแม่แบบ
+- รองรับข้อความ TH/EN ด้วย data-th/data-en หรือ data-quiz-language ตามแม่แบบ
+- สูตรใช้ \(...\) ในบรรทัด และ \[...\] สำหรับสมการแยกบรรทัด
+- ไฟล์ Quiz ไม่มี CSS, script, input/form หรือปุ่ม Engine ที่สร้างเอง
+- ระบบกลางจัดปุ่ม ภาษา สมุดทด AI การพิมพ์ และการเชื่อมการบันทึกตามสัญญาของมัน
+- คง data-activity-id, data-content-id, data-question-id เมื่อแก้ข้อความของงานเดิม
+- งานเดิมอยู่หลายเมนูให้ลิงก์ไฟล์เดิมและใช้รหัสเดิม
+- งานใหม่คนละชุดให้ใช้รหัสใหม่
+- data-content-id เริ่ม a-z ตามด้วย a-z/0-9/- ความยาวรวมไม่เกิน 128 ตัว
+
+เมื่อเพิ่มบทหรือเนื้อหาปกติ ให้ใช้ระบบ Login, Workspace, Notebook, AI Worker,
+Print Core, PDF viewer, Quiz Engine, CSS กลาง และการเชื่อม Firebase/Apps Script เดิม
+งานที่ต้องเปลี่ยนระบบกลางจริงให้ตรวจโค้ดและวางขอบเขตก่อนแก้
+
+งานคลังข้อสอบจาก Google Sheet/Sitemap:
+อ่าน QUESTION-BANK-START-HERE.md ก่อน
+คง Bank Key, ID และการเชื่อมเดิมตามสัญญาคลังข้อสอบ
+แผนเมนู HTML ของคลังอยู่ใน QUESTION-BANK-HTML-MENU-PLAN.md
+ตรวจสถานะ implementation จริงก่อนอ้างว่ารองรับ
+
+8. งานร่างและไฟล์ที่ยังไม่พร้อม
+-------------------------------
+
+- เมนูยังไม่มี href หรือไฟล์ปลายทางยังไม่มี: warning และแสดงกำลังเตรียมเนื้อหา
+- PDF ยังไม่มีลิงก์: preparing/warning
+- data-status="draft": พักรายการ แม้มีไฟล์แล้ว เมื่อพร้อมให้นำออก
+- ห้ามใส่ URL ปลอมเพื่อหลอกให้รายการดูพร้อม
+- ID ซ้ำ, รูปแบบผิด, ลิงก์ไม่ปลอดภัย, context ไม่ตรง หรือเมนูมี script ยังเป็น error
+- ไม่แก้ validator หรือปิด test เพื่อให้เนื้อหาผิดรูปแบบผ่าน
+
+9. ตรวจและเผยแพร่
+-----------------
+
+ใช้ Node.js 24 และ pnpm ตาม package.json ปัจจุบัน
+
+pnpm install --frozen-lockfile
+pnpm test:unit
+pnpm validate:content
+pnpm validate:routes
+pnpm build
+git diff --check
+
+pnpm build เรียก validation ที่กำหนดไว้ใน package.json อยู่แล้ว
+เลือกทดสอบเฉพาะทางเพิ่มเมื่อแก้เครื่องมือนั้น เช่น pnpm test:pdf
+ถ้าสภาพแวดล้อมรันคำสั่งไม่ได้ ให้บอกตามจริงและตรวจผลจาก GitHub Actions ที่รันจริงแทน
+
+ก่อน commit ตรวจ:
+- บทเดิมครบและเลขบทไม่ซ้ำ
+- subject/chapter/topic IDs ตรงกันทุกชั้น
+- href ถูกจากตำแหน่งไฟล์จริง
+- content IDs ตรงกับปลายทางและไม่ซ้ำขัดแย้ง
+- ข้อความ TH/EN และฉบับครู/นักเรียนตรงกับลิงก์
+- มีเมนูนำทางไปยังไฟล์ใหม่
+- งานเดิมและลิงก์เดิมยังอยู่
+
+Commit/Push main ของ Nixcentury/learning-hub
+ไม่แก้ dist หรือ generated route catalog ด้วยมือ
+รอ Actions ให้ผ่านทั้ง build และ deploy ก่อนบอกว่าเว็บอัปเดตแล้ว
+ตรวจ commit ของ deployment.json บนเว็บเมื่อเครื่องมือเข้าถึงได้
+หากเปิดทดสอบ browser/PDF/iPad ไม่ได้ ให้แยกบอกข้อจำกัดจากผล build
+
+Actions: https://github.com/Nixcentury/learning-hub/actions/
+ตัวอย่างจริง 19.1:
+https://nixcentury.github.io/learning-hub/#physics/19/19-1-atomic-models
+
+10. ข้อความสั้นพร้อมส่งให้แชทอื่น
+---------------------------------
+
+งานนี้อยู่ใน Nixcentury/learning-hub โปรดอ่านคู่มือรวมนี้และไฟล์ปัจจุบันก่อนแก้
+ระบบใช้ 4 ชั้น: หน้าวิชา/บท -> เมนูเรื่องย่อย topics -> เมนูงาน tools -> เนื้อหาที่เปิดด้วยเครื่องมือกลาง
+แก้ article บทเดิมและเชื่อม data-chapter-src; ห้ามเพิ่มเลขบทซ้ำหรือวางทับบทอื่น
+เมนูใช้ nav data-learning-menu และ anchor data-tool-kind พร้อม context/ID ที่ตรงกัน
+ใช้ Quiz/HTML/PDF/Simulation ตามแม่แบบและจอกลางเดิม คง CSS, Login, Notebook, AI, Print และการบันทึกเดิม
+PDF ใช้ data-pdf-common/data-pdf-th/data-pdf-en; ฉบับครู/นักเรียนแยกการ์ดและ content ID
+ลิงก์หรือไฟล์ที่ยังไม่มีเว้นว่างได้ตามกติกา draft; อย่าใส่ลิงก์ปลอม
+คงรหัสงานและรหัสข้อเดิมเมื่อแก้เนื้อหา รองรับ TH/EN และพาธสัมพันธ์กับไฟล์ผู้เรียก
+ตรวจการเปลี่ยนแปลง ทดสอบตามงาน แล้ว commit/push main และตรวจ Actions ทั้ง build/deploy
+รายงานตามจริงว่าเข้าถึงไฟล์ รันทดสอบ และเผยแพร่แล้วหรือยัง

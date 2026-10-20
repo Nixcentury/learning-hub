@@ -104,6 +104,10 @@ function makeHarness() {
     serializeCloud() { return this.data; }
     needsExport() { return false; }
     mount() {}
+    markContextChanged(id) { (this.changed ||= []).push(id); }
+    missingForAnswered() { return []; }
+    noteSubmission() {}
+    async reviewPending() {}
   }
   const document = {
     documentElement: { lang: "en" },
@@ -153,11 +157,15 @@ function makeHarness() {
     .replace(/^import[^\n]+\n/gm, "")
     .replace(/  void loadContent\(\);\s*\}\)\(\);\s*$/, `
       render = () => {};
+      renderQuestion = () => {};
+      renderNavigation = () => {};
+      renderStats = () => {};
       globalThis.__quizTest = {
         state, loadContent, applyHubContext, applySnapshot, snapshot, loadLocal,
         saveLocalNow, loadCloud, saveCloudNow, persist, persistLocalOnly,
         storageKey, pendingStorageRequests, renderStorageStatus,
         persistNavigation, retrySync, resolveCloudConflict,
+        giveUp, retryGivenUp, editAnswers, selectAnswer, submitAll, resultFor,
         evidence: () => evidenceManager,
         setContentReady: (ready) => { contentRoot = ready ? {} : null; },
       };
@@ -211,6 +219,68 @@ function makeHarness() {
     },
   };
 }
+
+test("give-up questions can be retried immediately and earn credit only after a correct resubmission", async () => {
+  const h = makeHarness();
+  await h.load();
+  h.state.hintLevels.q1 = 1;
+  h.giveUp();
+  assert.equal(h.resultFor(h.state.questions[0]).status, "giveup");
+  await h.submitAll();
+  assert.equal(h.state.latestScore.score, 0);
+  h.retryGivenUp("q1");
+  assert.equal(h.state.view, "exam");
+  assert.equal(h.state.giveUps.q1, undefined);
+  assert.equal(h.state.hintLevels.q1, undefined);
+  assert.equal(h.state.latestScore.score, 0, "Retrying alone does not award credit");
+  h.selectAnswer("q1", "B");
+  await h.submitAll();
+  assert.equal(h.state.latestScore.score, 0, "An incorrect retry is still incorrect");
+  h.editAnswers();
+  h.selectAnswer("q1", "A");
+  await h.submitAll();
+  assert.equal(h.state.latestScore.score, 1);
+  assert.deepEqual(plain(h.state.masteredIds), ["q1"]);
+});
+
+test("Edit answers reopens give-ups, preserves mastered work and reasoning, and survives reload", async () => {
+  const h = makeHarness();
+  await h.load();
+  assert.equal(h.applySnapshot(baseline({
+    answers: { q1: "A" }, masteredIds: ["q1"], giveUps: { q2: true },
+    hintLevels: { q1: 2, q2: 1 }, view: "results",
+    latestScore: { score: 1, maxScore: 2 },
+    evidence: { version: 1, entries: { q2: { reasoning: "Keep my working" } } },
+  })), true);
+  h.editAnswers();
+  assert.equal(h.state.currentIndex, 1);
+  assert.equal(h.state.view, "exam");
+  assert.deepEqual(plain(h.state.giveUps), {});
+  assert.deepEqual(plain(h.state.answers), { q1: "A" });
+  assert.deepEqual(plain(h.state.hintLevels), { q1: 2 });
+  h.saveLocalNow();
+  const restored = makeHarness();
+  restored.seed("guest", h.read("guest"));
+  await restored.load();
+  assert.deepEqual(plain(restored.state.giveUps), {});
+  assert.deepEqual(plain(restored.state.masteredIds), ["q1"]);
+  assert.equal(restored.evidence().data.entries.q2.reasoning, "Keep my working");
+  restored.retryGivenUp("q1");
+  assert.deepEqual(plain(restored.state.masteredIds), ["q1"], "Retry cannot unlock a mastered question");
+});
+
+test("reopening a saved account give-up persists the unlocked state to the same cloud context", async () => {
+  const h = makeHarness();
+  await h.load();
+  await h.choose("student-a", baseline({ giveUps: { q1: true } }));
+  h.retryGivenUp("q1");
+  await h.advance(1000);
+  const save = h.messages.findLast(message => message.type === "learning-hub-quiz-save");
+  assert.equal(save.uid, "student-a");
+  assert.equal(save.contentId, "sample-quiz");
+  assert.deepEqual(save.value.giveUps, {});
+  assert.deepEqual(h.read("student-a").giveUps, {});
+});
 
 test("context received before HTML load selects the correct local account and starts cloud load", async () => {
   const h = makeHarness();

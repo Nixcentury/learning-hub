@@ -622,6 +622,14 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
       const copy = document.createElement("div");
       cloneInto(copy, question.solution, true);
       solutionTarget.append(heading, copy);
+      if (isGivenUp) {
+        const retryNote = document.createElement("p");
+        retryNote.textContent = label(
+          "กด “ลองทำข้อนี้ใหม่” เพื่อซ่อนเฉลยและลองตอบอีกครั้ง คะแนนจะเปลี่ยนหลังส่งตรวจใหม่",
+          "Choose “Try this question again” to hide the solution and answer again. Your score updates after resubmitting.",
+        );
+        solutionTarget.append(retryNote);
+      }
     } else {
       solutionTarget.hidden = true;
     }
@@ -631,7 +639,13 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
     document.querySelector("[data-hint-button]").disabled =
       isMastered || isGivenUp || visibleHintCount >= question.hints.length;
     document.querySelector("[data-hint-count]").textContent = String(visibleHintCount + 1);
-    document.querySelector("[data-giveup-button]").disabled = isMastered || isGivenUp;
+    const giveUpButton = document.querySelector("[data-giveup-button]");
+    giveUpButton.disabled = isMastered;
+    giveUpButton.textContent = isGivenUp
+      ? label("↻ ลองทำข้อนี้ใหม่", "↻ Try this question again")
+      : label("⚑ ยอมแพ้", "⚑ Give up");
+    giveUpButton.classList.toggle("quiz-giveup-button", !isGivenUp);
+    giveUpButton.classList.toggle("quiz-primary-button", isGivenUp);
     document.querySelector("[data-previous-button]").disabled = state.currentIndex === 0;
     document.querySelector("[data-next-button]").disabled = state.currentIndex === state.questions.length - 1;
     document.querySelector("[data-question-lock]").hidden = !isMastered;
@@ -746,13 +760,7 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
       list.append(item);
     });
 
-    document.querySelector("[data-edit-results]")?.addEventListener("click", () => {
-      state.view = "exam";
-      const firstUnmastered = state.questions.findIndex((question) => !state.masteredIds.includes(question.id));
-      state.currentIndex = firstUnmastered < 0 ? 0 : firstUnmastered;
-      persistNavigation();
-      render();
-    });
+    document.querySelector("[data-edit-results]")?.addEventListener("click", editAnswers);
     document.querySelector("[data-retry]")?.addEventListener("click", startRetry);
     document.querySelector("[data-restart]")?.addEventListener("click", restart);
     document.querySelector("[data-export-evidence]")?.addEventListener("click", () => {
@@ -874,6 +882,34 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
     renderNavigation();
     renderQuestion();
     renderStats();
+  }
+
+  function reopenGivenUp(questionId) {
+    if (!state.giveUps[questionId] || state.masteredIds.includes(questionId)) return false;
+    evidenceManager?.markContextChanged(questionId);
+    delete state.giveUps[questionId];
+    delete state.answers[questionId];
+    delete state.hintLevels[questionId];
+    return true;
+  }
+
+  function retryGivenUp(questionId) {
+    if (submissionBusy || closing || !reopenGivenUp(questionId)) return;
+    state.currentIndex = state.questions.findIndex(question => question.id === questionId);
+    state.view = "exam";
+    persist();
+    render();
+  }
+
+  function editAnswers() {
+    if (submissionBusy || closing) return;
+    let reopened = false;
+    state.questions.forEach(question => { if (reopenGivenUp(question.id)) reopened = true; });
+    state.view = "exam";
+    const firstUnmastered = state.questions.findIndex(question => !state.masteredIds.includes(question.id));
+    state.currentIndex = firstUnmastered < 0 ? 0 : firstUnmastered;
+    if (reopened) persist(); else persistNavigation();
+    render();
   }
 
   function confirmMissingEvidence(questions) {
@@ -1089,7 +1125,11 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
 
   function bindExamActions() {
     document.querySelector("[data-hint-button]")?.addEventListener("click", revealHint);
-    document.querySelector("[data-giveup-button]")?.addEventListener("click", giveUp);
+    document.querySelector("[data-giveup-button]")?.addEventListener("click", () => {
+      const question = currentQuestion();
+      if (question && state.giveUps[question.id]) retryGivenUp(question.id);
+      else giveUp();
+    });
     document.querySelector("[data-previous-button]")?.addEventListener("click", () => goTo(state.currentIndex - 1));
     document.querySelector("[data-next-button]")?.addEventListener("click", () => goTo(state.currentIndex + 1));
     document.querySelector("[data-submit-all]")?.addEventListener("click", () => {

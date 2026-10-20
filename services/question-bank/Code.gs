@@ -88,7 +88,9 @@ function bankQuestions_(subject, key, revision, catalog) {
   const rows = [];
   catalog.sourceRows.forEach(function(row, index) {
     if (row[0].trim() === set.legacyId || row[1].trim() === set.legacyId) {
-      if (!row[2].trim()) throw Error('empty-question-row');
+      // IDs may be prepared before the HTML is authored. Publish ready rows
+      // only, matching the catalog count, and keep their original row numbers.
+      if (!row[2].trim()) return;
       rows.push({ rowNumber: index + 2, html: row[2] });
     }
   });

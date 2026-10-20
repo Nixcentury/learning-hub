@@ -102,6 +102,28 @@ test('identical legacy IDs in physics and chemistry keep distinct questions, rev
   assert.equal(h.get({ action: 'questions', key: physicsKey, revision: physics.revision }).data.rows[0].html, physics.rows[0].html);
   assert.deepEqual([...h.archive.keys()].map(name => name.split('-')[0]).sort(), ['chemistry', 'chemistry', 'physics']);
 });
+test('prepared chemistry IDs with blank HTML do not block ready questions or change archived versions', async () => {
+  const h = service();
+  h.tables.Sitemap.push(h.menu(h.id, '', '', 'CHEMISTRY'), h.menu('chem-draft', '', '', 'CHEMISTRY'));
+  h.tables.CHEMISTRY.push(...Array.from({ length: 35 }, (_, index) =>
+    [h.id, h.id, index < 5 ? h.q(`Question ${index + 1}`) : index % 2 ? ' \n ' : '']));
+  h.tables.CHEMISTRY.push(['chem-draft', 'chem-draft', '']);
+  const catalog = h.get({ subject: 'chemistry' }).data;
+  assert.deepEqual(catalog.sets.map(set => set.questionCount), [5, 0]);
+  const key = catalog.sets[0].bankKey;
+  const published = h.get({ subject: 'chemistry', action: 'questions', key });
+  assert.equal(published.ok, true);
+  assert.deepEqual(published.data.rows.map(row => row.rowNumber), [2, 3, 4, 5, 6]);
+  await validateBankSnapshot(published.data, 'chemistry', key);
+  assert.equal(h.get({ subject: 'chemistry', action: 'questions', key: catalog.sets[1].bankKey }).code, 'invalid-set-size');
+  // Fill a later prepared row: original row numbers and saved versions survive.
+  h.tables.CHEMISTRY[7][2] = h.q('Question 8');
+  const latest = h.get({ subject: 'chemistry', action: 'questions', key }).data;
+  assert.deepEqual(latest.rows.map(row => row.rowNumber), [2, 3, 4, 5, 6, 9]);
+  assert.notEqual(latest.revision, published.data.revision);
+  const saved = h.get({ subject: 'chemistry', action: 'questions', key, revision: published.data.revision }).data;
+  assert.deepEqual(saved.rows.map(row => row.rowNumber), [2, 3, 4, 5, 6]);
+});
 test('service publishes only allowed public menus, rejects private/closed/duplicate access and arbitrary tabs', () => {
   const h = service(), catalog = h.get().data;
   assert.deepEqual(catalog.sets.map(set => set.legacyId), [h.id, h.second]);

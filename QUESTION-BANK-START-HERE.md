@@ -24,7 +24,7 @@
 
 โค้ดเมนู: `public/pages/shared/subject-bank-nav.js`, `subject-bank.css` และ `public/shared/question-bank-menu.js` จอไม่เกิน 900px วางตัวเลือกบทกับช่องค้นหาคนละบรรทัด
 
-ไฟล์ public ไม่ได้ใช้ชื่อ hash จึงกำกับรุ่น `v=bank-chapters-20261019` ใน URL หน้าวิชาจาก `js/app.js`, script ของ `physics.html`/`chemistry.html`, URL เมนูใน `subject-page.js` และ URL CSS ใน `subject-bank-nav.js` เมื่อแก้รุ่นเมนูให้เปลี่ยนค่าเหล่านี้พร้อมกัน เพื่อให้หน้าเดิมโหลดไฟล์ใหม่ได้โดยไม่ล้างข้อมูลเว็บไซต์
+ไฟล์ public ไม่ได้ใช้ชื่อ hash จึงกำกับรุ่น `v=bank-html-20261021` ใน URL หน้าวิชาจาก `js/app.js`, script ของ `physics.html`/`chemistry.html`, URL เมนูใน `subject-page.js` และ URL CSS ใน `subject-bank-nav.js` เมื่อแก้รุ่นเมนูให้เปลี่ยนค่าเหล่านี้พร้อมกัน เพื่อให้หน้าเดิมโหลดไฟล์ใหม่ได้โดยไม่ล้างข้อมูลเว็บไซต์
 
 คง CSS เดิมของ Learning Hub: ใช้ page.css, subject-orbit.css, activity-card, back-button และหน้าต่าง Workspace เดิม ส่วน CSS ใหม่จำกัดเฉพาะการจัดหน้าคลังและอ้างสี/ฟอนต์จากตัวแปรธีมรายวิชาเดิม
 
@@ -74,7 +74,17 @@
 
 ## เพิ่มเครื่องมือในแต่ละ ID
 
-แผนให้ผู้สร้างแก้เมนู HTML ราย ID และมี Open quiz บังคับโดยระบบ: [QUESTION-BANK-HTML-MENU-PLAN.md](QUESTION-BANK-HTML-MENU-PLAN.md) พร้อมแม่แบบใน `docs/examples/bank-tools-menu-proposed.html` **ยังเป็นแบบออกแบบ ไม่ได้แทนวิธี JavaScript ด้านล่างในเว็บที่เผยแพร่**
+ตัวเชื่อมเมนู HTML ราย ID อยู่ใน branch `codex/bank-html-menus-20261021` วันที่ 21 ตุลาคม 2026 แต่ยังรอชุดทดสอบ/Build และตรวจเว็บจริงก่อน merge ไม่ได้ยืนยันว่าเว็บ main เปิดใช้แล้ว อ่าน [QUESTION-BANK-HTML-MENU-START-HERE.md](QUESTION-BANK-HTML-MENU-START-HERE.md) และ [ผลตรวจ/ข้อจำกัด](QUESTION-BANK-HTML-MENU-QA.md)
+
+เมื่อเผยแพร่ตัวเชื่อมแล้ว ผู้สร้างคัดลอก `public/content/templates/bank-tools-menu-template.html` ไป `public/content/bank/<subject>/<bankKey>.html` เติมเฉพาะสื่อที่ต้องการและตั้ง `data-route-slug` ได้ โดยยังรักษา URL bankKey เดิม ปุ่ม Quiz และ Notebook เป็นปุ่มระบบเสมอ ช่องว่าง/ไฟล์ที่ยังไม่พร้อมเป็นการ์ดร่าง สื่อใช้ Workspace และตัวแสดงผลเดิม ไม่มีการเปลี่ยน endpoint, ID หรือ revision ของข้อสอบ
+
+คู่มือส่งต่อฉบับข้อความ: `public/content/templates/bank-id-authoring-guide.txt`
+และ `bank-id-handoff.txt` ในโฟลเดอร์เดียวกัน
+แผนเดิมเก็บใน [QUESTION-BANK-HTML-MENU-PLAN.md](QUESTION-BANK-HTML-MENU-PLAN.md)
+
+### วิธี JavaScript เดิม (ยังรองรับเพื่อความเข้ากันได้)
+
+ไม่ต้องย้ายรายการเดิมทันที และไม่ลงทะเบียน tool-key เดียวกันซ้ำระหว่าง JS กับ HTML; ตัว build จะรายงานการชนแทนการเลือกทับเงียบ ๆ
 
 แก้ `questionBankTools` ใน `public/shared/question-bank-config.js` ตัวอย่าง:
 

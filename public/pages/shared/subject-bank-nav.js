@@ -1,11 +1,13 @@
 import { bankClient } from '../../shared/question-bank-client.js';
 import { bankSubjects } from '../../shared/question-bank-model.js';
 import { questionBankTools } from '../../shared/question-bank-config.js';
+import { authoredBankTools } from '../../shared/question-bank-authored.js?v=bank-html-20261021';
+import { readMenuCatalog } from './menu-availability.js';
 import { BANK_ALL_CHAPTERS, BANK_OTHER_CHAPTER, bankChapterKey, bankChapters, filterBankSets, bankTitlePair } from '../../shared/question-bank-menu.js';
 
 export function createSubjectBankNavigation({ root, subject, setStage, requestNavigation, backToChapters }) {
   if (!Object.hasOwn(bankSubjects, subject.id)) return null;
-  const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = new URL('subject-bank.css?v=bank-chapters-20261019', import.meta.url); document.head.append(css);
+  const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = new URL('subject-bank.css?v=bank-html-20261021', import.meta.url); document.head.append(css);
   const launch = document.createElement('button'); launch.type = 'button'; launch.className = 'bank-entry surface';
   launch.innerHTML = '<span class="bank-entry-icon" aria-hidden="true">▤</span><span><strong></strong><small></small></span><b aria-hidden="true">→</b>';
   const localize = (node, th, en) => { node.dataset.th = th; node.dataset.en = en || th;
@@ -37,7 +39,7 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
   function rememberFilters() {
     try { sessionStorage.setItem(storageKey, JSON.stringify({ chapter: selectedChapter, query: search.value })); } catch { /* Optional session preference. */ }
   }
-  let catalog = null, currentKey = null, request = 0;
+  let catalog = null, toolsCatalog = null, toolsState = 'idle', currentKey = null, request = 0;
   localize(panel.querySelector('[data-bank-chapter-label]'), 'เลือกบท', 'Choose chapter');
   localize(refresh, 'รีเฟรชคลัง', 'Refresh bank');
   panel.querySelector('[data-bank-id] summary').textContent = 'ID';
@@ -84,7 +86,8 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
     search.placeholder = document.documentElement.lang === 'en' ? 'Topic name or ID' : 'ชื่อหัวข้อหรือ ID';
     search.disabled = !selectedChapter;
     panel.querySelector('[data-bank-id]').hidden = !set;
-    if (set) panel.querySelector('[data-bank-id] p').textContent = set.legacyId;
+    if (set) panel.querySelector('[data-bank-id] p').replaceChildren(
+      set.legacyId, document.createElement('br'), `bankKey: ${set.bankKey}`);
     setStage(currentKey ? 3 : 2);
     if (currentKey && !set) {
       status('ไม่พบชุดนี้ หรือครูยังไม่ได้เปิดให้ใช้งาน', 'This set was not found or has not been published.', true); return;
@@ -99,7 +102,22 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
         if (!/^[a-z][a-z0-9-]{0,63}$/.test(tool.key || '') || ['quiz', 'notebook'].includes(tool.key)) continue;
         card({ title: [tool.titleTh || tool.key, tool.titleEn || tool.titleTh || tool.key], detail: ['เปิดเครื่องมือ', 'Open tool'], action: () => open(tool.key) });
       }
-      status('งานที่เซฟไว้จะเปิดพร้อมโจทย์รุ่นเดิม', 'Saved work resumes with its original question version.');
+      for (const tool of authoredBankTools(toolsCatalog, subject.id, set.bankKey)) {
+        const preparing = tool.status !== 'ready';
+        card({ title: [tool.titleTh || tool.key, tool.titleEn || tool.titleTh || tool.key],
+          detail: preparing ? ['กำลังเตรียมเนื้อหา', 'Content in preparation'] :
+            [tool.descriptionTh || 'เปิดเครื่องมือ', tool.descriptionEn || tool.descriptionTh || 'Open tool'],
+          icon: tool.toolKind === 'quiz' ? '✓' : tool.toolKind === 'simulation' ? '◉' : '▤',
+          disabled: preparing, action: () => open(tool.key) });
+      }
+      status(toolsState === 'unavailable'
+        ? 'งานที่เซฟไว้จะเปิดพร้อมโจทย์รุ่นเดิม · โหลดรายการสื่อเสริมไม่ได้ ลองรีเฟรชคลัง'
+        : toolsState === 'loading' ? 'งานที่เซฟไว้จะเปิดพร้อมโจทย์รุ่นเดิม · กำลังโหลดสื่อเสริม…'
+          : 'งานที่เซฟไว้จะเปิดพร้อมโจทย์รุ่นเดิม',
+        toolsState === 'unavailable'
+          ? 'Saved work resumes with its original question version. Extra tools could not load; refresh the bank.'
+          : toolsState === 'loading' ? 'Saved work resumes with its original question version. Loading extra tools…'
+            : 'Saved work resumes with its original question version.');
     } else {
       const chapters = bankChapters(catalog.sets);
       const selected = chapters.find(entry => entry.key === selectedChapter);
@@ -125,9 +143,23 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
     refresh.disabled = true; search.disabled = true; chapter.disabled = true;
     status('กำลังโหลดคลังข้อสอบ…', 'Loading question bank…');
     try {
+      // Failure of the optional media catalog must not disable the Sheet bank.
+      // Bound this request independently so extra tools cannot hang Open quiz.
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 8000);
+      let sheetReady = false;
+      toolsCatalog = null; toolsState = 'loading';
+      void readMenuCatalog(new URL('../../route-catalog.v1.json', import.meta.url),
+        { signal: controller.signal }).catch(() => null).finally(() => clearTimeout(timer)).then(authored => {
+          if (version !== request) return;
+          toolsCatalog = authored; toolsState = authored ? 'ready' : 'unavailable';
+          if (sheetReady) render();
+        });
+      // Do not await the optional catalog: the original Quiz/Notebook can open
+      // as soon as the live Sheet returns, even when media loading is offline.
       const value = await bankClient.catalog(subject.id, { force });
       if (version !== request) return false;
-      catalog = value;
+      catalog = value; sheetReady = true;
       if (currentKey && !selectedChapter) {
         const set = catalog.sets.find(entry => entry.bankKey === currentKey);
         if (set) selectedChapter = bankChapterKey(set);

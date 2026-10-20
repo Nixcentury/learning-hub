@@ -1,52 +1,69 @@
 <!doctype html>
 <!--
-  PROPOSED TEMPLATE — not connected to the published bank yet.
-  Read QUESTION-BANK-HTML-MENU-PLAN.md before using this example.
-  Future destination for this topic:
-  public/content/bank/physics/b-02c6faffabcebd4b78508937.html
-
-  The system always inserts Open quiz first and preserves Notebook.
-  List ONLY additional tools below. Do not replace the bank Quiz with an HTML quiz.
-  Blank links are intentional; do not invent filenames or Drive URLs.
+  Historical example updated to the implementation contract — copy to public/content/bank/<subjectId>/<bankKey>.html.
+  Change ALL subject/topic/content IDs and the route slug for your actual topic.
+  The filename and data-topic-id MUST use the real bankKey copied from Hub.
+  This example is the Physics topic "Acquiring Physics Knowledge", NOT an exam set.
+  Open quiz and Notebook are inserted by the system. List only extra tools here.
+  Blank links are intentional drafts; never invent a Drive URL or content file.
+  Read content/templates/bank-id-authoring-guide.txt before authoring.
 -->
 <html lang="th">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>เครื่องมือ: การค้นหาความรู้ทางฟิสิกส์ / Acquiring Physics Knowledge</title>
+  <title>เครื่องมือรายหัวข้อ / Topic tools</title>
 </head>
 <body>
   <nav data-learning-menu data-menu-kind="tools"
     data-subject-id="physics"
     data-chapter-id="bank"
     data-topic-id="b-02c6faffabcebd4b78508937"
+    data-route-slug="acquiring-physics-knowledge"
     data-title-th="การค้นหาความรู้ทางฟิสิกส์"
     data-title-en="Acquiring Physics Knowledge">
 
-    <!-- HTML summary: fill href when the real content file is ready. -->
-    <a data-tool-kind="html"
-      data-content-id="physics-acquiring-knowledge-summary"
+    <a data-tool-key="review"
+      data-tool-kind="html"
+      data-content-id="physics-ipst-acquiring-knowledge-review"
       href=""
-      data-th="สรุปเนื้อหา" data-en="Summary">
-      สรุปเนื้อหา
+      data-th="ทบทวนเนื้อหาเร็ว" data-en="Quick review"
+      data-description-th="แนวคิดสำคัญและสิ่งที่ควรจำ" data-description-en="Key ideas and essential knowledge">
+      ทบทวนเนื้อหาเร็ว
     </a>
 
-    <!-- A shared PDF or separate TH/EN editions; empty fields stay preparing. -->
-    <a data-tool-kind="pdf"
-      data-content-id="physics-acquiring-knowledge-pdf"
+    <a data-tool-key="learning-sheet"
+      data-tool-kind="html"
+      data-content-id="physics-ipst-acquiring-knowledge-sheet"
+      href=""
+      data-th="ใบเรียนรู้" data-en="Learning sheet">
+      ใบเรียนรู้
+    </a>
+
+    <a data-tool-key="pdf"
+      data-tool-kind="pdf"
+      data-content-id="physics-ipst-acquiring-knowledge-pdf"
       data-pdf-common=""
       data-pdf-th=""
       data-pdf-en=""
-      data-th="ชีทติว PDF" data-en="PDF handout">
-      ชีทติว PDF
+      data-th="ชีท PDF" data-en="PDF handout">
+      ชีท PDF
     </a>
 
-    <!-- Simulation HTML: its data-activity-id must match this content ID. -->
-    <a data-tool-kind="simulation"
-      data-content-id="physics-acquiring-knowledge-sim"
+    <a data-tool-key="simulation"
+      data-tool-kind="simulation"
+      data-content-id="physics-ipst-acquiring-knowledge-sim"
       href=""
-      data-th="กิจกรรมทดลอง" data-en="Simulation">
-      กิจกรรมทดลอง
+      data-th="ทดลองและสำรวจ" data-en="Simulation">
+      ทดลองและสำรวจ
+    </a>
+
+    <a data-tool-key="practice-01"
+      data-tool-kind="quiz"
+      data-content-id="physics-ipst-acquiring-knowledge-practice-01"
+      href=""
+      data-th="แบบฝึกหัดทบทวน" data-en="Review practice">
+      แบบฝึกหัดทบทวน
     </a>
   </nav>
 </body>

@@ -27,7 +27,9 @@ export function routeForSelection(catalog, selection) {
     if (selection.bankKey) parts.push(selection.bankKey);
     if (selection.toolKey) { if (!selection.bankKey) return null; parts.push(selection.toolKey); }
     const route = resolveHubRoute(catalog, '#' + parts.join('/')).route;
-    return ['bank', 'bank-tool'].includes(route?.kind) ? route : null;
+    return ['bank', 'bank-tool'].includes(route?.kind) ||
+      (route?.bankKey === selection.bankKey && ['content', 'content-placeholder'].includes(route.kind))
+      ? route : null;
   }
   const { subjectId, chapterId = null, topicId = null } = selection;
   if (topicId && !chapterId) return null;

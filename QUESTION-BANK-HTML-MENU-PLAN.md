@@ -2,13 +2,15 @@
 
 สถานะเอกสาร: แผนออกแบบเดิม — 19 ตุลาคม 2026
 
-อัปเดต 21 ตุลาคม: มีโค้ดตัวเชื่อมตามแผนใน branch `codex/bank-html-menus-20261021`
-แต่ยังรอรัน tests/Build และตรวจเว็บก่อนเผยแพร่ คู่มือที่ตรงกับ implementation อยู่ใน
+อัปเดต 21 ตุลาคม: ตัวเชื่อมจาก branch `codex/bank-html-menus-20261021` เผยแพร่บน main แล้ว
+ผ่าน tests/Build, Pages build+deploy และตรวจ Guest จริง คู่มือที่ตรงกับ implementation อยู่ใน
 [QUESTION-BANK-HTML-MENU-START-HERE.md](QUESTION-BANK-HTML-MENU-START-HERE.md)
 และสถานะจริงอยู่ใน [QUESTION-BANK-HTML-MENU-QA.md](QUESTION-BANK-HTML-MENU-QA.md)
 เนื้อหาด้านล่างเก็บเป็นข้อกำหนดออกแบบ ไม่ใช่หลักฐานว่า main/deploy พร้อมแล้ว
 
-**ระบบที่เผยแพร่ยังใช้ `questionBankTools` ใน JavaScript อยู่ เมนู HTML ที่อธิบายในเอกสารนี้ยังไม่ได้เชื่อมเข้าหน้าคลัง** แม่แบบอยู่ที่ `docs/examples/bank-tools-menu-proposed.html` นอก public จึงไม่ถูกนำไปแสดงบนเว็บ
+แม่แบบใช้งานจริงอยู่ที่ `public/content/templates/bank-tools-menu-template.html` และเชื่อมหน้าคลังแล้ว
+ส่วน `docs/examples/bank-tools-menu-proposed.html` เป็นตัวอย่างออกแบบเดิมนอก public
+ทะเบียน `questionBankTools` ใน JavaScript ยังรองรับเพื่อความเข้ากันได้
 
 ## เป้าหมาย
 

@@ -16,7 +16,7 @@ Work branch: `codex/physics-4-1-equilibrium-sheet-20261021`
 - Stable new content ID: `physics-ipst-equilibrium-4-1-sheet`.
 - Public catalog read on this date identified the physics topic `สมดุลกล(Mechanical Equilibrium)` as `b-746a471754733ee41d2e7c4d`, with path `ฟิสิกส์ (PHYSIC) / Learning hub / สมดุลกล(Mechanical Equilibrium) / สมดุลกล(Mechanical Equilibrium)`.
 - Its bank menu contains one authored `learning-sheet` item, with no route slug. Quiz and Notebook remain system-provided. The catalog reported zero questions in this topic at the time of lookup.
-- Target route after publication: `#physics/bank/b-746a471754733ee41d2e7c4d/learning-sheet`.
+- Published route: `https://nixcentury.github.io/learning-hub/#physics/bank/b-746a471754733ee41d2e7c4d/learning-sheet`.
 
 ## Automated checks
 
@@ -45,6 +45,14 @@ Environment adapters for browser checks were kept only in ignored `qa-output/`: 
 
 ## Publication and remaining device checks
 
-This work is prepared and checked in the work branch. It has not been merged into main or deployed to GitHub Pages by this task. Local preview is not evidence of a live deployment.
+Merged in [PR #2](https://github.com/Nixcentury/learning-hub/pull/2), publication commit `31e3fa8f71274193a6ab5b1de310554a120f360b`. [Pages run 39537683367](https://github.com/Nixcentury/learning-hub/actions/runs/39537683367) passed both build and deploy using the repository's pinned pnpm 11.19.0. Public `deployment.json` returned this exact commit, build time `2026-10-21T03:17:01.469Z`, and 334 public files.
+
+The actual public GitHub Pages site was then checked in Chromium using Guest, with no service/Firebase stubs:
+
+- The bank deep link and stable `#content/physics-ipst-equilibrium-4-1-sheet` alias opened the authored HTML in the shared Workspace; MathJax reported ready.
+- Individual reveal, reveal all, hide all, and TH/EN shared reveal state worked. The Share dialog returned the bank learning-sheet URL above.
+- Central print preview generated TH blank/answers (13 pages each) and EN blank/answers (14 pages each). Blank previews contained zero answer elements; answers contained all 68 selected-language answers.
+- The actual topic menu kept system Quiz and Notebook. Quiz was disabled for the catalog's zero-question topic. Notebook opened with the correct bank context and its existing Guest/temporary-page notice, then the learning sheet reopened from the menu.
+- Saved-revision resume, reset and legacy quiz regression checks used isolated fixtures in the built Hub; they were not performed against production student records or reported as a live quiz attempt.
 
 Native iPad/Safari printing, Apple Pencil and real-account Cloud behavior require device/account checks. No production student records were read or written by the browser checks. No Apps Script, Sheet contents, endpoints, Firebase, Quiz engine, CI or outside-course content was changed.

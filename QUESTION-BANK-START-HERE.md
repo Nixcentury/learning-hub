@@ -74,9 +74,9 @@
 
 ## เพิ่มเครื่องมือในแต่ละ ID
 
-ตัวเชื่อมเมนู HTML ราย ID อยู่ใน branch `codex/bank-html-menus-20261021` วันที่ 21 ตุลาคม 2026 แต่ยังรอชุดทดสอบ/Build และตรวจเว็บจริงก่อน merge ไม่ได้ยืนยันว่าเว็บ main เปิดใช้แล้ว อ่าน [QUESTION-BANK-HTML-MENU-START-HERE.md](QUESTION-BANK-HTML-MENU-START-HERE.md) และ [ผลตรวจ/ข้อจำกัด](QUESTION-BANK-HTML-MENU-QA.md)
+ตัวเชื่อมเมนู HTML ราย ID เผยแพร่บน main วันที่ 21 ตุลาคม 2026 พร้อมใบเรียนรู้ฟิสิกส์ 4.1 สมดุล ผ่าน tests/Build, Pages build+deploy และตรวจ Guest บนเว็บจริงแล้ว เริ่มงานใหม่จาก main ที่มีตัวเชื่อมนี้ อ่าน [QUESTION-BANK-HTML-MENU-START-HERE.md](QUESTION-BANK-HTML-MENU-START-HERE.md) และ [ผลตรวจ/ข้อจำกัด](QUESTION-BANK-HTML-MENU-QA.md)
 
-เมื่อเผยแพร่ตัวเชื่อมแล้ว ผู้สร้างคัดลอก `public/content/templates/bank-tools-menu-template.html` ไป `public/content/bank/<subject>/<bankKey>.html` เติมเฉพาะสื่อที่ต้องการและตั้ง `data-route-slug` ได้ โดยยังรักษา URL bankKey เดิม ปุ่ม Quiz และ Notebook เป็นปุ่มระบบเสมอ ช่องว่าง/ไฟล์ที่ยังไม่พร้อมเป็นการ์ดร่าง สื่อใช้ Workspace และตัวแสดงผลเดิม ไม่มีการเปลี่ยน endpoint, ID หรือ revision ของข้อสอบ
+ผู้สร้างคัดลอก `public/content/templates/bank-tools-menu-template.html` ไป `public/content/bank/<subject>/<bankKey>.html` เติมเฉพาะสื่อที่ต้องการและตั้ง `data-route-slug` ได้ โดยยังรักษา URL bankKey เดิม ปุ่ม Quiz และ Notebook เป็นปุ่มระบบเสมอ ช่องว่าง/ไฟล์ที่ยังไม่พร้อมเป็นการ์ดร่าง สื่อใช้ Workspace และตัวแสดงผลเดิม ไม่มีการเปลี่ยน endpoint, ID หรือ revision ของข้อสอบ
 
 คู่มือส่งต่อฉบับข้อความ: `public/content/templates/bank-id-authoring-guide.txt`
 และ `bank-id-handoff.txt` ในโฟลเดอร์เดียวกัน

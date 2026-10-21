@@ -3,7 +3,7 @@
 นี่คืองานเนื้อหา ไม่ใช่งานแก้ระบบ Quiz/Apps Script/Firebase
 
 Repository: https://github.com/Nixcentury/learning-hub
-Branch ที่ต้องใช้: [ตรวจ branch ที่มีตัวเชื่อม HTML นี้แล้ว]
+Branch ที่ต้องใช้: [main ล่าสุดที่ตรวจ deployment.json แล้ว หรือ branch งานที่ต่อจาก main นั้น]
 subjectId: [physics หรือ chemistry]
 bankKey จริง: [b- ตามด้วย hex ตัวเล็ก 24 ตัว จากหัวข้อเป้าหมาย]
 ชื่อหัวข้อ TH / EN: [...]

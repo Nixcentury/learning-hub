@@ -110,7 +110,9 @@ export const questionBankTools = Object.freeze({
 
 การเชื่อมนี้แก้เฉพาะ Hub ไม่ต้องเปลี่ยน endpoint หรือ deployment ของบริการ Apps Script ที่ส่ง HTML อยู่แล้ว การเริ่มทำ/ตรวจทั้งหมด/เซฟ/พิมพ์ใช้ Quiz กลางตามเดิม และไม่รีเซ็ต attempt หรือสลับ snapshot ที่นักเรียนทำค้างไว้ให้โดยอัตโนมัติ ตัวแปลงมี DOM tests ใน `scripts/question-bank-adapter.test.mjs` รวมใน `test:bank` และ `test:unit`; การทดสอบนี้ไม่ใช่หลักฐานว่าได้ลองคีย์บอร์ดบน iPad หรือบันทึก Cloud จริงแล้ว
 
-JavaScript/event handlers/styles จาก Sheet ไม่ถูกนำมารัน สื่อฝัง เช่น SVG/canvas/iframe ต้องแปลงก่อนและจะแจ้งแถว/ข้อแทนการข้ามเงียบ ๆ Simulation ให้เปิดผ่านเครื่องมือที่ลงทะเบียน
+SVG ภาพนิ่งรองรับทั้ง `<img src="https://…/diagram.svg" alt="…">` และ `<svg>` ที่ฝังใน Sheet โดยใช้ได้ในโจทย์ บริบท ตัวเลือก คำใบ้ และเฉลย ตัวเลือกภาพต้องมีข้อความกำกับภายนอกภาพด้วย SVG ที่ฝังต้องมี `viewBox` หรือขนาด width/height ที่เป็นตัวเลข รองรับรูปทรง path/เส้น/วงกลม ข้อความ กลุ่ม สีไล่ระดับ ลูกศร marker, clipPath และ symbol/use ที่อ้างอิงภายในภาพ และ presentation style แบบจำกัด เช่น fill/stroke/font-size
+
+ตัวแปลงสร้าง SVG ใหม่จากรายการที่อนุญาตแล้วแสดงเป็นภาพ SVG เพื่อให้ IDs/ลูกศร/สีของแต่ละภาพและสำเนาพิมพ์ไม่ชนกัน ไม่แปลงเป็นภาพ raster ไม่รับ script/event handlers, foreignObject, animation, style block/class, filter หรือทรัพยากรภายนอกภายใน SVG หากเกินขอบเขตจะแจ้งแถว/ข้อแทนการข้ามเงียบ ๆ ภาพซับซ้อนเกิน 2,000 nodes หรือ 250,000 อักขระหลังสร้างใหม่ต้องย่อหรือใช้ไฟล์ภาพ HTTPS แทน JavaScript/event handlers/styles ของ HTML จาก Sheet ยังไม่ถูกนำมารัน สื่อ canvas/iframe ต้องแปลงก่อน ส่วน Simulation ให้เปิดผ่านเครื่องมือที่ลงทะเบียน
 
 พิมพ์จากปุ่ม Quiz เดิม เลือกข้อได้ และเลือกระหว่างชุดเปล่ากับเฉลย โดยรอจัดสูตรคณิตก่อนเปิดพิมพ์ ชุดเปล่าตัดส่วนเฉลยออกจากสำเนาที่พิมพ์ การพิมพ์ไม่แก้คำตอบบนจอ
 

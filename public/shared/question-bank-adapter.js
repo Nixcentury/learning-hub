@@ -1,6 +1,7 @@
 import { bankContentId, bankQuestionId } from './question-bank-model.js';
 import { readQuizContent } from './quiz-content-adapter.js';
 import { parseNumericAnswer } from './quiz-question-model.js';
+import { staticBankSvgImage } from './question-bank-svg.js?v=bank-svg-1';
 
 // Construct fresh nodes with an allowlist. Never attach the remote document,
 // execute its scripts, or copy its styles, event handlers or IDs. Only the
@@ -12,6 +13,7 @@ function copyRich(source, target, doc) {
     if (child.nodeType === 3) { target.append(doc.createTextNode(child.textContent)); continue; }
     if (child.nodeType !== 1) continue;
     const tag = child.localName;
+    if (tag === 'svg') { target.append(staticBankSvgImage(child, doc)); continue; }
     if (discard.has(tag)) continue;
     if (!safeTags.has(tag)) { copyRich(child, target, doc); continue; }
     const node = doc.createElement(tag);
@@ -20,6 +22,7 @@ function copyRich(source, target, doc) {
       try { url = new URL(child.getAttribute('src')); } catch { throw Error('รูปต้องใช้ URL เต็มแบบ HTTPS / Image needs an absolute HTTPS URL'); }
       if (url.protocol !== 'https:' || url.username || url.password) throw Error('Unsupported image URL');
       node.src = url.href; node.alt = child.getAttribute('alt') || ''; node.referrerPolicy = 'no-referrer';
+      if (url.pathname.toLowerCase().endsWith('.svg')) node.dataset.bankSvg = '';
     }
     if (['td', 'th'].includes(tag)) for (const attribute of ['colspan', 'rowspan']) {
       const value = child.getAttribute(attribute); if (/^[1-9]\d?$/.test(value || '')) node.setAttribute(attribute, value);
@@ -43,8 +46,11 @@ export function adaptLegacyBank(snapshot, { document: doc = document, Parser = D
     for (const step of steps) {
       ++ordinal;
       const fail = message => { throw Error(`แถว ${row.rowNumber}, ข้อ ${ordinal}: ${message}`); };
+      const rich = (source, target) => {
+        try { copyRich(source, target, doc); } catch (error) { fail(error.message); }
+      };
       if (step.querySelector('.question-step')) fail('Nested questions are not supported');
-      if (step.querySelector('svg, math, canvas, iframe, object, embed, audio, video')) fail('มีภาพหรือสื่อที่ต้องแปลงก่อน / This embedded media needs conversion');
+      if (step.querySelector('math, canvas, iframe, object, embed, audio, video')) fail('มีภาพหรือสื่อที่ต้องแปลงก่อน / This embedded media needs conversion');
       const prompt = step.querySelector('h3');
       const inputs = [...step.querySelectorAll('.options input')];
       const numeric = step.dataset.type === 'fill-in';
@@ -65,7 +71,7 @@ export function adaptLegacyBank(snapshot, { document: doc = document, Parser = D
         article.dataset.tolerance = step.dataset.tolerance ?? '0';
         for (const key of ['unitTh', 'unitEn']) if (step.dataset[key]) article.dataset[key] = step.dataset[key];
       }
-      const promptTarget = doc.createElement('div'); promptTarget.dataset.questionPrompt = ''; copyRich(prompt, promptTarget, doc); article.append(promptTarget);
+      const promptTarget = doc.createElement('div'); promptTarget.dataset.questionPrompt = ''; rich(prompt, promptTarget); article.append(promptTarget);
       // Images, tables or paragraphs placed between h3 and the option block are
       // part of the question too. Do not lose them by copying h3 alone.
       const contextSource = step.cloneNode(true);
@@ -81,7 +87,7 @@ export function adaptLegacyBank(snapshot, { document: doc = document, Parser = D
           field.remove();
         });
       }
-      const context = doc.createElement('div'); context.dataset.questionContext = ''; copyRich(contextSource, context, doc);
+      const context = doc.createElement('div'); context.dataset.questionContext = ''; rich(contextSource, context);
       if (context.textContent.trim() || context.querySelector('img, table')) article.prepend(context);
       if (!numeric) {
         const choices = doc.createElement('ol'); choices.dataset.questionOptions = '';
@@ -91,19 +97,21 @@ export function adaptLegacyBank(snapshot, { document: doc = document, Parser = D
           const label = input.closest('label') || [...step.querySelectorAll('label[for]')].find(item => item.htmlFor === input.id);
           if (!/^[a-z][a-z0-9-]{0,15}$/.test(id) || seen.has(id) || !label || !label.textContent.trim()) fail('ตัวเลือกไม่ครบหรือรหัสซ้ำ / Invalid choices');
           seen.add(id);
-          const option = doc.createElement('li'); option.dataset.choiceId = id; copyRich(label, option, doc); choices.append(option);
+          const option = doc.createElement('li'); option.dataset.choiceId = id; rich(label, option);
+          if (!option.textContent.trim()) fail('ตัวเลือกภาพต้องมีข้อความกำกับ / Image choices need a text caption');
+          choices.append(option);
         }
         if (!seen.has(answer)) fail('เฉลยไม่ตรงกับตัวเลือก / Invalid answer');
         article.append(choices);
       }
       const hints = doc.createElement('ol'); hints.dataset.questionHints = ''; hints.hidden = true;
       step.querySelectorAll('.hint-box').forEach(hint => {
-        const node = doc.createElement('li'); node.dataset.questionHint = ''; copyRich(hint, node, doc); hints.append(node);
+        const node = doc.createElement('li'); node.dataset.questionHint = ''; rich(hint, node); hints.append(node);
       });
       article.append(hints);
       const solution = doc.createElement('div'); solution.dataset.questionSolution = '';
       const feedback = step.querySelector('.feedback-box');
-      if (feedback) copyRich(feedback, solution, doc); else solution.textContent = `เฉลย / Answer: ${numeric ? answer : answer.toUpperCase()}`;
+      if (feedback) rich(feedback, solution); else solution.textContent = `เฉลย / Answer: ${numeric ? answer : answer.toUpperCase()}`;
       article.append(solution); questions.append(article);
     }
   }

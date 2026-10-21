@@ -478,6 +478,14 @@ html[lang="en"] [data-quiz-language="th"] {
   margin-inline: auto;
 }
 
+/* Static bank SVG is an image document, also in hints, choices and print. */
+img[data-bank-svg] {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: .5rem auto;
+}
+
 [data-quiz-visual~="graph"] {
   overflow-x: auto;
   padding: 14px;
@@ -718,6 +726,12 @@ svg [data-quiz-visual~="axis-label"] {
   display: block;
   margin-bottom: 10px;
   color: #176746;
+}
+
+/* The print source also supplies the on-screen solution clone. Its paper-only
+   class must not hide the solution after the Quiz has unlocked it. */
+.quiz-solution .activity-question-solution {
+  display: block;
 }
 
 .quiz-action-dock {

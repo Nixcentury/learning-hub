@@ -1,6 +1,8 @@
 import { routeCatalogVersion, routeSegmentPattern, parseHubRoute } from '../js/hub-routes.js';
 import { toolCatalog } from '../js/legacy-tool-catalog.js';
 import { readMetadata, metadataNodes, metadataText } from './route-html-metadata.mjs';
+import { bankSubjects, bankKeyPattern } from '../public/shared/question-bank-model.js';
+import { questionBankTools } from '../public/shared/question-bank-config.js';
 import { inlinePdfSources, createInlinePdfManifest, createPdfManifest } from '../public/shared/pdf-content-model.js';
 
 const site = new URL('https://catalog.invalid/learning-hub/');
@@ -19,7 +21,7 @@ export function localCatalogPath(href, from, folder = 'content/', allowSearch = 
 
 // read(webPath) is injected: build uses the repository; unit tests use memory.
 // Only reachable, declared navigation is indexed. Never include answers/user data.
-export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
+export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog, bankMenus = [], bankTools = questionBankTools }) {
   const files = new Map(), routeKeys = new Map(), contentById = new Map(), contentFiles = new Map();
   const placeholders = new Map();
   const routes = [], pendingReadings = [], scannedReadings = new Set();
@@ -147,12 +149,20 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
     const a = root.attrs;
     if (root.tag !== 'nav' || a['data-menu-kind'] !== kind || a['data-subject-id'] !== parent.subjectId ||
         a['data-chapter-id'] !== parent.chapterId || (kind === 'tools' && a['data-topic-id'] !== parent.topicId)) fail(file, 'Menu context mismatch');
+    let bankOrder = 0;
     for (const node of metadataNodes(root, item => item.tag === 'a')) {
       const entry = node.attrs;
       const isContent = kind === 'tools' || ['html', 'pdf'].includes(entry['data-tool-kind']);
       const key = id(entry[isContent ? 'data-content-id' : 'data-topic-id'], file);
       const title = labels(node, 'data-', key);
-      const placement = childPath(parent, node, key, file);
+      const bank = Boolean(parent.bankKey);
+      const toolKey = bank ? entry['data-tool-key'] || key : key;
+      if (bank && (!/^[a-z][a-z0-9-]{0,63}$/.test(toolKey) || ['quiz', 'notebook'].includes(toolKey)))
+        fail(file, 'Bank tools need a unique data-tool-key (not quiz or notebook)', node);
+      const placement = { ...childPath(parent, node, toolKey, file),
+        ...(bank ? { bankKey: parent.bankKey, toolKey, bankOrder: bankOrder++,
+          descriptionTh: entry['data-description-th']?.trim() || '',
+          descriptionEn: entry['data-description-en']?.trim() || '' } : {}) };
       const href = entry.href?.trim();
       if (!isContent) {
         const source = await menuSource(href, file, node);
@@ -234,6 +244,40 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog }) {
       }
     }
     await htmlLinks(doc, page, sectionRoute);
+  }
+  // Optional, filesystem-discovered tool menus augment the live Sheet hierarchy.
+  // They never enumerate/publish sets or modify their question/snapshot identity.
+  for (const file of [...new Set(bankMenus)].sort(compare)) {
+    const match = /^content\/bank\/(physics|chemistry)\/(b-[a-f0-9]{24})\.html$/.exec(file);
+    if (!match) fail(file, 'Bank menu path must be content/bank/<subject>/<bankKey>.html');
+    const [, subjectId, bankKey] = match;
+    const section = routes.find(route => route.kind === 'section' && route.subjectId === subjectId);
+    if (!section || !Object.hasOwn(bankSubjects, subjectId)) fail(file, 'Bank subject is not a declared Hub subject');
+    const doc = await load(file);
+    const root = unique(doc, 'data-learning-menu', file);
+    // Reject another hash-shaped ID used as a friendly alias: it could hijack
+    // a live Sheet set that has no authored menu yet.
+    const slugs = [root.attrs['data-route-slug'], ...(root.attrs['data-route-aliases'] || '').trim().split(/\s+/)];
+    if (slugs.some(slug => bankKeyPattern.test(slug || '') && slug !== bankKey))
+      fail(file, 'A bank route cannot alias a different bankKey', root);
+    const parent = { hash: `#${subjectId}/bank`, aliases: [] };
+    const bank = addRoute({ ...childPath(parent, root, bankKey, file), kind: 'bank', status: 'ready',
+      subjectId, chapterId: 'bank', topicId: bankKey, bankKey, source: file,
+      parentHash: parent.hash, ...labels(root, 'data-title-', bankKey) }, file);
+    const systemTools = [
+      { key: 'quiz', titleTh: 'แสดงข้อสอบ', titleEn: 'Open quiz' },
+      { key: 'notebook', titleTh: 'สมุดบันทึก', titleEn: 'Notebook' },
+    ];
+    const manualTools = (bankTools[`${subjectId}/${bankKey}`] || []).filter(tool =>
+      /^[a-z][a-z0-9-]{0,63}$/.test(tool?.key || '') && !['quiz', 'notebook'].includes(tool.key));
+    for (const tool of [...systemTools, ...manualTools]) {
+      addRoute({ ...childPath(bank, { attrs: {} }, tool.key, file), kind: 'bank-tool', status: 'ready',
+        subjectId, bankKey, toolKey: tool.key, parentHash: bank.hash,
+        titleTh: tool.titleTh || tool.key, titleEn: tool.titleEn || tool.titleTh || tool.key }, file);
+    }
+    // The existing parser registers HTML/Quiz/Simulation/PDF and safe drafts.
+    // Route collision checks also prohibit overriding the built-ins/manual tools.
+    await menu(file, bank, 'tools');
   }
   await htmlLinks(index, 'index.html', routes.find(route => route.hash === '#overview') || routes[0]);
   for (let i = 0; i < pendingReadings.length; i += 1) {

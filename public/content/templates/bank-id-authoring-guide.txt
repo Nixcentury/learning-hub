@@ -1,0 +1,214 @@
+LEARNING HUB — คู่มือสร้างสื่อในหน้าราย ID คลังข้อสอบ
+========================================================
+ฉบับพัฒนาระบบ 21 ตุลาคม 2026
+Repository: https://github.com/Nixcentury/learning-hub
+Implementation branch: codex/bank-html-menus-20261021
+
+สถานะที่ต้องอ่านก่อน
+--------------------
+คู่มือนี้ตรงกับโค้ดใน implementation branch ข้างต้น ไม่ใช่คำยืนยันว่า main
+หรือเว็บ GitHub Pages เปิดระบบนี้แล้ว ผู้พัฒนายังต้องรัน tests, validate,
+build และตรวจเว็บจริงก่อนประกาศพร้อมใช้ ดู QUESTION-BANK-HTML-MENU-QA.md
+ถ้า main ยังไม่มีตัวเชื่อมนี้ การอัปโหลด HTML อย่างเดียวจะไม่สร้างการ์ดในคลัง
+
+เป้าหมาย
+---------
+ในคลัง: เนื้อหาตามหัวข้อ สสวท. / IPST เพื่อทบทวนเร็วและฝึกตามหัวข้อ
+นอกคลัง: หลักสูตรเฉพาะครูที่รวมหลายแหล่ง ยังคงเมนูและโครงสร้างเดิม
+ทั้งสองใช้ Workspace, PDF viewer, Quiz, ภาษา, ใบเรียนรู้ และ CSS กลางเดิม
+สื่อชิ้นเดียวกันใช้ไฟล์และ contentId เดิมร่วมกันได้เมื่อเนื้อหาเป็นงานเดียวกัน
+
+หน้าตาระบบ
+-----------
+วิชา > คลังข้อสอบ > เลือกบท/หัวข้อจาก Sheet > เครื่องมือของ ID > Workspace
+ชื่อบท หัวข้อ ลำดับ และจำนวนข้อยังอ่านจากระบบข้อสอบครูนิคเดิม
+HTML ไม่ใช้สร้างสารบัญ 213 หัวข้อซ้ำ และไม่ใช้สั่งเปิดชุดที่ Sheet ไม่เผยแพร่
+หนึ่งหัวข้อสร้างเมนู HTML เฉพาะเมื่อมีสื่อเพิ่ม ไม่ต้องสร้างให้ครบทุก ID
+ปุ่ม "แสดงข้อสอบ / Open quiz" และ Notebook ระบบใส่ให้เองเสมอ
+ถ้าไม่มีข้อสอบที่รองรับ ปุ่ม Open quiz ยังอยู่แต่ปิดการกดตามจำนวนจาก Sheet
+
+อ่านก่อนแก้
+-----------
+1. START-HERE.txt และ QUESTION-BANK-START-HERE.md
+2. คู่มือนี้ และไฟล์เมนู/เนื้อหาเป้าหมายจริงใน branch ที่กำลังทำ
+3. คู่มือชนิดเนื้อหาที่จะสร้าง:
+   PDF-VIEWER-START-HERE.md
+   LEARNING-SHEET-START-HERE.txt
+   LANGUAGE-START-HERE.txt
+   CHAPTER-OVERVIEW-START-HERE.txt
+   public/content/templates/quiz-ai-prompt.txt (ถ้าทำ Quiz)
+อย่าเดาว่าอ่านไฟล์ได้ หรือมีไฟล์/รูป/ลิงก์อยู่แล้ว หากเข้า repo ไม่ได้
+ให้ขอผู้ใช้แนบคู่มือ เมนูเป้าหมาย และไฟล์ต้นฉบับที่เกี่ยวข้อง
+
+วิธีเพิ่มแบบสั้นที่สุด
+----------------------
+1. เปิดหน้าหัวข้อใน Hub และคัดลอก bankKey จริง:
+   b- ตามด้วยตัวเลข/อักษรฐานสิบหกตัวเล็ก 24 ตัว
+   เมื่อลิงก์เป็นชื่ออ่านง่ายแล้ว ให้กดดูรายละเอียด "ID" ในหน้าหัวข้อ
+   ระบบแสดง legacyId เดิมและ bankKey ให้คัดลอก หรือดูชื่อไฟล์เมนูเดิมใน repo
+   ห้ามคำนวณ/แต่ง bankKey เอง และอย่าใช้ ID ชุดสอบรายปีแทน ID หัวข้อ
+
+2. คัดลอก public/content/templates/bank-tools-menu-template.html ไป:
+   public/content/bank/<subjectId>/<bankKey>.html
+   subjectId ที่รองรับคือ physics และ chemistry เท่านั้น
+
+3. แก้ nav ให้ตรงหัวข้อ:
+   data-subject-id="physics" หรือ "chemistry"
+   data-chapter-id="bank" คงที่
+   data-topic-id="bankKey จริง" ตรงกับชื่อไฟล์
+   data-title-th และ data-title-en เป็นชื่อหัวข้อสำหรับลิงก์แชร์
+   data-route-slug เป็นชื่ออังกฤษสั้น ๆ อ่านรู้เรื่อง เช่น measurement
+   ชื่อ/ลำดับในหน้าคลังยังยึด Sheet ไม่ได้เขียนทับด้วย nav
+
+4. ลบรายการที่ไม่ต้องการ เติมเฉพาะสื่อที่มี ทุกช่องไม่ต้องครบ:
+   Quick review / learning sheet: data-tool-kind="html"
+   PDF: data-tool-kind="pdf"
+   Simulation: data-tool-kind="simulation"
+   Quiz เสริม: data-tool-kind="quiz"
+   แต่ละรายการมี data-tool-key, data-content-id, data-th, data-en
+   จัดลำดับใน HTML ตามที่ต้องการแสดง ระบบวางต่อท้าย Quiz และ Notebook
+
+5. เก็บไฟล์จริงใน public/content/<วิชา>/ ตามโครงเดิมหรือโฟลเดอร์หัวข้อ:
+   ตัวอย่างชื่อใหม่ที่แนะนำ (ไม่ใช่โฟลเดอร์ที่มีครบแล้ว):
+   public/content/physics/ipst/acquiring-knowledge/review.html
+   public/content/physics/ipst/acquiring-knowledge/learning-sheet.html
+   public/content/physics/ipst/acquiring-knowledge/simulation.html
+   public/content/physics/ipst/acquiring-knowledge/practice-01.html
+
+   จากเมนู content/bank/physics/<bankKey>.html อ้างไฟล์ข้างต้นด้วย:
+   href="../../physics/ipst/acquiring-knowledge/review.html"
+   ไม่ใส่ public/ ใน URL ไม่ใช้ C:\... ไม่ชี้ player เอง
+   href ของ HTML/Simulation/Quiz ต้องเป็น .html ภายใน content/
+   ไม่มี query หรือ fragment และไม่ใช้ URL ภายนอก
+
+6. ตรวจและ build ตามหัวข้อทดสอบท้ายคู่มือ จากนั้น commit/push ตามขั้นตอน
+   ของ branch งาน ไม่ต้องแก้ questionBankTools หรือ route-catalog ด้วยมือ
+   build จะค้นเมนูใน content/bank/ และสร้างทะเบียนเดียวให้การ์ด/ลิงก์ตรง
+
+กติกา ID และลิงก์สวย
+---------------------
+- bankKey, legacyId, contentId ของ Quiz คลัง และ questionId เดิมห้ามเปลี่ยน
+- data-tool-key: ตัวเล็กอังกฤษขึ้นต้น ยาวไม่เกิน 64 ใช้ a-z 0-9 และ -
+  ตัวอย่าง review, learning-sheet, pdf-student, simulation, practice-01
+- ห้ามใช้ quiz หรือ notebook เป็น tool-key ของสื่อเสริม
+  "quiz" คือปุ่มโหลดข้อสอบจาก Sheet ไม่ใช่ Quiz HTML ที่ผู้สร้างแต่ง
+- data-content-id: รหัสเนื้อหาคงที่ ขึ้นต้น a-z ยาวไม่เกิน 128
+  เช่น physics-ipst-acquiring-knowledge-review
+- Simulation/Quiz/PDF descriptor: data-activity-id ในไฟล์ตรงกับ contentId
+  สรุป/ใบเรียนรู้ใช้ html data-learning-html ไม่ต้องสร้าง activity-id เอง
+- data-route-slug และ data-route-aliases เป็นชื่อ URL เท่านั้น ไม่ใช่รหัสเซฟ
+  รูปแบบตัวเล็ก a-z 0-9 และ - ยาวไม่เกิน 128
+- ลิงก์ตัวอย่างหลังเชื่อมและเผยแพร่:
+  #physics/bank/acquiring-physics-knowledge
+  #physics/bank/acquiring-physics-knowledge/quiz
+  #physics/bank/acquiring-physics-knowledge/review
+  ลิงก์ #physics/bank/b-02c6faffabcebd4b78508937 และลูกเดิมยังเป็น alias
+- ถ้าเปลี่ยน slug ที่เผยแพร่แล้ว ให้ใส่ชื่อเก่าใน data-route-aliases:
+  data-route-slug="measurement" data-route-aliases="measuring old-measurement"
+  หลายชื่อคั่นด้วยช่องว่าง; ใช้กับ nav หรือ a ได้
+- URL ซ้ำ ชนกับปุ่มระบบ ชนทะเบียน JS เดิม หรือ alias เป็น bankKey ของคนละชุด
+  จะทำให้ build ไม่ผ่าน เพื่อป้องกันลิงก์เปิดผิดหัวข้อ
+- ตัวอย่างเมนูฟิสิกส์ใน branch นี้ยังเป็นช่องร่างทั้งหมด ไม่ใช่เนื้อหาที่แต่งแล้ว
+- การเปลี่ยนข้อความที่ใช้ TEXTJOIN สร้าง ID ใน Sitemap อาจทำให้ bankKey เปลี่ยน
+  ลิงก์สวยไม่ได้ย้ายประวัติให้โดยอัตโนมัติ ต้องวางแผน mapping แยกก่อน
+
+งานร่างที่ยอมรับ
+----------------
+- ไม่สร้างเมนูสำหรับ ID นั้น: ได้ Quiz/Notebook เดิม
+- เมนูว่าง: ได้ Quiz/Notebook เดิม
+- ลบรายการเสริม: ไม่ทำให้ Quiz คลังหาย
+- href="" หรือไฟล์ยังไม่สร้าง: แสดงการ์ดกำลังเตรียม และไม่ขวาง build
+- data-status="draft": ปิดรายการนั้น แม้ไฟล์มีอยู่แล้ว
+- PDF ว่างทั้งสามช่อง: กำลังเตรียมเอกสาร ไม่สร้างลิงก์จำลอง
+- ลิงก์ที่มีค่าแต่ผิดชนิด, ID ผิด/ชน, HTML ไม่ปลอดภัย หรือบริบทไม่ตรง:
+  เป็นข้อผิดพลาดจริง ต้องแก้ ไม่เปลี่ยนเป็น warning เพื่อกลบปัญหา
+- อ่าน catalog สื่อเสริมไม่ได้: คลัง Sheet และปุ่มเดิมยังใช้กลไกเดิมได้
+  มีข้อความให้รีเฟรชคลัง; การโหลดสื่อเสริมมี timeout ของตนเอง
+
+PDF ง่ายที่สุด
+---------------
+ใน a ของเมนู ใส่ 3 บรรทัดติดกัน:
+data-pdf-common=""
+data-pdf-th=""
+data-pdf-en=""
+ใช้ common เมื่อเป็นชีทเดียวร่วมสองภาษา หรือ th/en เมื่อเป็นคนละไฟล์
+ใส่เฉพาะลิงก์ที่มีได้ ใช้ Drive /file/d/FILE_ID/view?usp=sharing
+PDF เปิดผ่าน viewer กลางพร้อมปุ่มเปิดใน Drive/ดาวน์โหลดตามระบบเดิม
+ไม่ต้องสร้าง PDF descriptor เพิ่มสำหรับรูปแบบสามช่องนี้
+ถ้ามี Student/Teacher edition ให้เป็นคนละปุ่มและคนละ contentId
+ห้ามใช้ TH แทนนักเรียน และ EN แทนครู
+ไฟล์/เฉลยที่อยู่ใน public หรือ Drive ที่แชร์สาธารณะไม่ใช่ข้อมูลลับ
+การซ่อนการ์ดไม่ใช่ระบบจำกัดสิทธิ์ครู ต้องออกแบบสิทธิ์แยกถ้าต้องการป้องกันจริง
+
+แนวทาง Quick review และใบเรียนรู้
+---------------------------------
+ยึดขอบเขตหัวข้อ สสวท. จากต้นฉบับ/สารบัญที่ตรวจได้ ไม่เดาว่าครบตามหนังสือ
+เขียนสรุปของตนเอง อ้างอิงชื่อแหล่ง/ฉบับ/หัวข้อ ไม่คัดทั้งบทโดยไม่ดูสิทธิ์
+เสนอเนื้อหาก่อนลง HTML:
+เป้าหมาย > แนวคิดหลัก > สูตร/เงื่อนไข > จุดสับสน > ตัวอย่าง > แบบฝึก
+ระดับความยาวต้องเหมาะกับ quick review ไม่ยัดหลักสูตรภายนอกเข้ามาทั้งเล่ม
+หากไม่มีหนังสือหรือ PDF แหล่งอ้างอิง ให้ระบุสิ่งที่ยังยืนยันไม่ได้
+
+Quick review ใช้ <html data-learning-html> ตาม chapter-overview-template.html
+แต่เขียนเฉพาะหัวข้อ ไม่เรียกว่าเนื้อหาทั้งบทถ้าไม่ใช่ทั้งบท
+MathJax/mhchem มาจาก Hub ใช้ \(...\), \[...\] หรือ $$...$$; ไม่ใช้ $...$
+สูตรเคมีใช้ \(\ce{H2O}\) เป็นต้น ไม่โหลด MathJax/CDN ซ้ำ
+ใช้ LANGUAGE-START-HERE.txt: บล็อก TH/EN ยาวใช้ data-content-lang
+ไม่วาง data-th/data-en ทับ container ที่มีสมการ/รูป/HTML ย่อย
+ไม่เขียน JS, toolbar, iframe, form หรือ viewer ใหม่ในเอกสารอ่านอย่างเดียว
+
+Learning sheet ใช้ learning-sheet-template.html / learning-sheet-ai-prompt.txt
+ใช้ data-learning-sheet="1", data-sheet-slot และ data-sheet-answer ตามคู่มือ
+ตัวเลือกเปิด/ปิดเฉลยและพิมพ์มาจากระบบกลาง ไม่สร้างระบบซ้ำ
+ปรับ relative path ของ learning-sheet.css ให้ตรงความลึกโฟลเดอร์จริง
+การเปิดไฟล์ standalone อาจเห็นเฉลย ไม่ใช่มาตรการรักษาความลับ
+
+Simulation และ Quiz เสริม
+--------------------------
+Simulation ใช้ html data-learning-simulation และ activity-id ตรง contentId
+ดูไฟล์จริง public/content/physics/sound/12-1/12-1-1-sound-particle-sim.html
+ไม่มี universal simulation engine หรือ simulation-template.html กลาง
+ผู้สร้างยังต้องออกแบบแบบจำลอง/การโต้ตอบและภาษาในไฟล์กิจกรรมเอง
+เก็บ state เมื่อสลับ TH/EN; postMessage ตรวจ origin/source/type ตามต้นแบบ
+
+Quiz เสริมใช้ quiz-template.html + quiz-ai-prompt.txt เป็น content fragment
+รองรับ choice/number; ลากวางใช้ quiz-drag-template.html แยก
+ใช้ data-quiz-language ไม่ใช่ data-content-lang สำหรับคำถามใน native Quiz
+ไม่ใช้ .question-step ของคอลัมน์ C มาแทน native quiz-template
+ไม่แตะตัวโหลด Quiz คลัง ไม่เปลี่ยน Give up/คะแนน/Retry ในงานทำสื่อ
+
+ส่งต่องานให้ AI
+---------------
+คัดลอก public/content/templates/bank-id-handoff.txt
+เติม subjectId, bankKey, เมนูเป้าหมาย, แหล่งอ้างอิง และสิ่งที่ต้องสร้าง
+ส่งคู่มือนี้พร้อมเมนูจริงและคู่มือเครื่องมือที่เกี่ยวข้อง
+ถ้า AI เปิดลิงก์ไม่ได้ ให้วางข้อความ/แนบไฟล์ ไม่สรุปว่าอ่าน repo แล้ว
+รับงานเป็นรอบ: ตรวจแหล่งและขอบเขต > เสนอแบบ > สร้างไฟล์ > QA > เผยแพร่
+ผู้สร้างเนื้อหาไม่แก้ js/, services/, endpoint, Firebase หรือ CI เอง
+
+ตรวจรับก่อนเรียกว่าเสร็จ
+-------------------------
+Node.js 24 และ pnpm 11.19.0 ตาม package.json
+pnpm install --frozen-lockfile (เมื่อยังไม่มี dependencies)
+pnpm test:bank
+pnpm test:unit
+pnpm validate:content
+pnpm validate:routes
+pnpm build
+git diff --check
+
+ตรวจเว็บจาก preview และหลัง deploy:
+1. หัวข้อมีเมนู/ไม่มีเมนู/เมนูว่าง ยังมี Quiz และ Notebook เดิม
+2. ชุด 0 ข้อปิด Quiz; ชุดมีข้อโหลดจริงจาก Sheet เดิม
+3. เลือกบท ค้นหา TH/EN และรีเฟรชยังทำงาน
+4. HTML/ใบเรียนรู้/PDF/Simulation/Quiz เสริมเปิด Workspace เดิม
+5. ลิงก์ slug, hash เก่า, #content/id, Back/Forward และ Share เปิดตรงกัน
+6. เนื้อหาชิ้นเดียวเรียกจากนอกคลังและในคลังได้ ไม่เปลี่ยนรหัสงานเดิม
+7. งาน Quiz เดิมเปิดต่อพร้อม revision/คำตอบเดิม โดยใช้ Guest/บัญชีเดิม
+8. ตรวจ Safari/iPad การจัดสูตร การพิมพ์ และบัญชี Cloud แยกด้วยอุปกรณ์จริง
+9. ห้ามล้าง site data เพื่อแก้แคช เพราะอาจลบสมุด Guest
+10. รายงานแยก: แก้ไฟล์แล้ว / commit แล้ว / tests ผ่าน / build ผ่าน /
+    deploy ผ่าน / ตรวจเว็บจริงแล้ว ห้ามเหมารวมเป็นสถานะเดียว
+
+การ Push GitHub ไม่แก้ Apps Script deployment หรือข้อมูลใน Sheet
+งานเมนูนี้ไม่ย้ายบัญชี ไม่แก้คะแนน ไม่เปลี่ยน Firebase Rules และไม่ย้าย archive

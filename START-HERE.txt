@@ -22,6 +22,9 @@ Repository: https://github.com/Nixcentury/learning-hub
 พรอมป์ AI/Gemini: public/content/templates/pdf-ai-prompt.txt; descriptor เดิม: pdf-template.html
 ผลตรวจ PDF ก่อนเผยแพร่: PDF-VIEWER-QA.md
 คลังข้อสอบจาก Google Sheet / Apps Script เดิม: QUESTION-BANK-START-HERE.md
+เมนู HTML ราย ID คลังข้อสอบ (branch พัฒนา ยังรอ tests/build): QUESTION-BANK-HTML-MENU-START-HERE.md
+คู่มือ/แม่แบบส่งต่อ: public/content/templates/bank-id-authoring-guide.txt, bank-tools-menu-template.html, bank-id-handoff.txt
+สถานะการตรวจตัวเชื่อม: QUESTION-BANK-HTML-MENU-QA.md (อย่าถือว่าเผยแพร่แล้วเพียงเพราะมีไฟล์)
 สถานะเปิดคลังเคมีและผลตรวจจริง 15 ต.ค. 2026: CHEMISTRY-BANK-QA.md
 คู่มือ 4 ชั้น: public/content/chemistry/START-HERE.txt
 แผนลิงก์แชร์ เฟส 1 (ยังไม่เปิดปุ่มแชร์): SHARING-PHASE1-START-HERE.txt

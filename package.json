@@ -23,6 +23,7 @@
     "validate:routes": "node scripts/build-route-catalog.mjs",
     "test:resume": "node --test --test-isolation=none scripts/quiz-resume.test.mjs scripts/test-quiz-storage-bridge.mjs scripts/quiz-evidence-resume.test.mjs",
     "test:resume:browser": "node scripts/test-quiz-resume-browser.mjs",
+    "test:quiz-print:browser": "node scripts/test-quiz-print-refresh-browser.mjs",
     "test:number": "node --test scripts/quiz-number.test.mjs",
     "test:navigation": "node --test scripts/content-tool.test.mjs",
     "test:navigation:browser": "node scripts/test-content-navigation-browser.mjs",

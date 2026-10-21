@@ -135,6 +135,7 @@ function makeHarness() {
     QuizEvidenceManager: EvidenceStub,
     createNotebookBackupUi: () => ({ busy: false, open() {}, invalidate() {} }),
     readQuizContent, hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, MAX_ANSWER_LENGTH, dragAnswerSummary, readBankSelection, resolveAuthoredPdfLinks,
+    warmQuizEngine: async () => 'https://example.test/quiz-player.html?quizRefresh=test',
     hideMathKeyboard() {}, mountNumericAnswer() {},
     localStorage: {
       getItem(storageKey) { if (storageFails) throw new Error("Storage disabled"); return storage.get(storageKey) ?? null; },

@@ -221,7 +221,8 @@
       const option = [...question.querySelectorAll("[data-choice-id]")].find(
         (candidate) => candidate.dataset.choiceId === answer,
       );
-      return option?.textContent?.trim() || answer;
+      const active = option?.querySelector(`[data-quiz-language="${language()}"]`) || option;
+      return active?.textContent?.trim() || answer;
     }
 
     const unit = question.dataset[language() === "en" ? "unitEn" : "unitTh"] || question.querySelector(".activity-number-response span")?.textContent?.trim();
@@ -255,8 +256,47 @@
     );
 
     const solution = question.querySelector("[data-question-solution]");
-    if (solution) solution.before(result);
+    if (solution) { solution.hidden = false; solution.before(result); }
     else question.append(result);
+  }
+
+  function decorateQuizPaper(question, mode) {
+    const prompt = question.querySelector('[data-question-prompt]');
+    if (prompt) {
+      const number = document.createElement('span');
+      number.className = 'quiz-paper-number';
+      number.textContent = `${question.dataset.printIndex}.`;
+      prompt.prepend(number);
+    }
+    const options = [...question.querySelectorAll('[data-choice-id]')];
+    let longest = 0;
+    options.forEach((option, index) => {
+      const active = option.querySelector(`[data-quiz-language="${language()}"]`) || option;
+      longest = Math.max(longest, active.textContent.trim().length);
+      if (active.querySelector('img, svg, table')) longest = Infinity;
+      const letter = document.createElement('span');
+      letter.className = 'quiz-paper-letter';
+      letter.textContent = `${String.fromCharCode(65 + index)}.`;
+      option.prepend(letter);
+    });
+    const authored = Number(question.dataset.printColumns);
+    const columns = authored >= 1 && authored <= 5 && Number.isInteger(authored) ? authored : longest <= 24 ? 5 : longest <= 65 ? 2 : 1;
+    question.style.setProperty('--quiz-paper-columns', String(columns));
+    if (mode !== 'worksheet') return;
+    const choice = Number(document.querySelector('[data-print-workspace]')?.value) || 40;
+    const custom = Number(question.dataset.printWorkspaceMm);
+    const height = custom >= 20 && custom <= 120 ? custom : choice;
+    const workspace = document.createElement('section');
+    workspace.className = 'quiz-paper-workspace';
+    workspace.style.setProperty('--quiz-paper-space', `${height}mm`);
+    const caption = document.createElement('div');
+    caption.className = 'quiz-paper-workspace-caption';
+    caption.append(createDualText('span', 'เหตุผล / วิธีทำ / แผนภาพ', 'Reasoning / working / diagram'));
+    const answer = document.createElement('span');
+    answer.textContent = localized('ตอบ __________', 'Answer __________');
+    caption.append(answer);
+    workspace.append(caption);
+    question.append(workspace);
   }
 
   function buildPrintDocument(mode) {
@@ -272,6 +312,10 @@
     });
 
     clone.classList.add("activity-print-document", `activity-print-mode-${mode}`);
+    // Localize leaves before adding paper labels. Rich text and SVG stay intact.
+    clone.querySelectorAll('[data-th][data-en]').forEach(node => {
+      if (!node.children.length) node.textContent = node.dataset[language()];
+    });
     const summary = clone.querySelector("[data-activity-summary]");
     const questionSection = clone.querySelector("[data-activity-questions]");
 
@@ -284,6 +328,7 @@
       selected.forEach((question) => {
         if (mode === "answer") decorateAnswerKey(question);
         else question.querySelector("[data-question-solution]")?.remove();
+        if (clone.classList.contains('quiz-print-content')) decorateQuizPaper(question, mode);
       });
     }
 

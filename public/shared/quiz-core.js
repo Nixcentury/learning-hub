@@ -7,6 +7,7 @@ import { mountDragAnswer } from "./quiz-drag-view.js";
 import { dragAnswerSummary } from "./quiz-drag-model.js";
 import { readBankSelection, loadBankQuiz } from "./question-bank-player.js";
 import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
+import { warmQuizEngine } from "./quiz-refresh.js";
 
 /* ==============================================================
    Quiz Engine กลางของ Learning Hub
@@ -1103,24 +1104,16 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
   }
 
   function restart() {
-    if (bankSelection) {
-      if (bankReloadBusy || cloudLoadPending) return;
-      if (!window.confirm(label('เริ่มใหม่ด้วยโจทย์ล่าสุดและล้างคำตอบรอบนี้หรือไม่?', 'Start with the latest questions and clear this attempt?'))) return;
-      void startLatestBankQuiz(); return;
+    if (!contentReady || submissionBusy || closing || bankReloadBusy || notebookBackupUi.busy) return;
+    if (cloudLoadPending || pendingRemote) {
+      window.alert(label("กรุณารอซิงก์หรือเลือกงานที่ต้องการเก็บก่อนเริ่มใหม่", "Finish syncing or resolve the saved-work conflict before restarting."));
+      return;
     }
-    state.questions.forEach(question => evidenceManager?.markContextChanged(question.id));
-    state.answers = {};
-    state.giveUps = {};
-    state.hintLevels = {};
-    state.masteredIds = [];
-    state.currentIndex = 0;
-    state.attempt = 1;
-    state.view = "exam";
-    state.startedAt = Date.now();
-    state.elapsedBeforeMs = 0;
-    state.latestScore = null;
-    persist();
-    render();
+    if (!window.confirm(label(
+      "เริ่มทำใหม่และโหลดฉบับล่าสุดหรือไม่? คำตอบ คำใบ้ คะแนน และเวลารอบนี้จะเริ่มใหม่ ระบบจะเก็บสำเนารอบเดิมในเครื่องก่อน ส่วนสมุดจดยังอยู่",
+      "Restart and load the latest version? Answers, hints, score and timer will reset. A copy of this attempt will be kept on this device; notebook work is retained.",
+    ))) return;
+    return startLatestQuiz();
   }
 
   function bindExamActions() {
@@ -1191,23 +1184,32 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
     evidenceManager.restore(state.evidenceSnapshot);
   }
 
-  async function startLatestBankQuiz() {
+  async function startLatestQuiz() {
     if (!contentReady || submissionBusy || closing || bankReloadBusy || cloudLoadPending) return;
     bankReloadBusy = true;
     const epoch = identityEpoch;
     const banner = document.querySelector('[data-bank-version]');
     if (banner) banner.inert = true;
     app.inert = true;
+    document.querySelectorAll('[data-restart-latest], [data-restart]').forEach(button => { button.disabled = true; });
     try {
-      flushLocal();
+      if (!flushLocal() || (evidenceManager && !await evidenceManager.flushAll())) throw Error(label('ยังเก็บงานรอบเดิมไม่ได้', 'Could not save the current work'));
       await saveCloudNow();
       if (epoch !== identityEpoch || closing) return;
+      const destination = await warmQuizEngine(location.href);
+      if (epoch !== identityEpoch || closing) return;
       clearTimeout(localSaveHandle); clearTimeout(cloudSaveHandle);
-      await loadContent({ fresh: true });
+      if (!await loadContent({ fresh: true }) || epoch !== identityEpoch || closing) return;
+      await saveCloudNow();
+      if (epoch !== identityEpoch || closing) return;
+      location.replace(destination);
+    } catch (error) {
+      window.alert(label(`โหลดฉบับล่าสุดไม่สำเร็จ: ${error.message} กรุณาลองอีกครั้ง`, `Could not load the latest version: ${error.message}. Please retry.`));
     } finally {
       bankReloadBusy = false;
       if (banner) banner.inert = false;
       if (!closing) app.inert = false;
+      document.querySelectorAll('[data-restart-latest], [data-restart]').forEach(button => { button.disabled = !contentReady; });
     }
   }
 
@@ -1223,6 +1225,7 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
 
   async function loadContent({ fresh = false } = {}) {
     const loadVersion = ++contentLoadVersion;
+    const epoch = identityEpoch;
     try {
       let root, bankResult;
       if (bankSelection) {
@@ -1238,7 +1241,9 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
       } else {
         const source = resolveContentSource();
         if (!source) throw new Error("No content file was selected.");
-        const response = await fetch(new URL(source, location.href));
+        const url = new URL(source, location.href);
+        if (fresh) url.searchParams.set('quizFresh', String(Date.now()));
+        const response = await fetch(url, { cache: fresh ? 'reload' : 'no-cache' });
         if (!response.ok) throw new Error(`Content request failed (${response.status}).`);
         const documentCopy = new DOMParser().parseFromString(await response.text(), "text/html");
         root = documentCopy.querySelector("[data-learning-activity-content]");
@@ -1249,15 +1254,24 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
         // descriptor's base before that move (including translated rich text).
         resolveAuthoredPdfLinks(root, response.url || new URL(source, location.href));
       }
-      if (loadVersion !== contentLoadVersion) return;
+      if (loadVersion !== contentLoadVersion || epoch !== identityEpoch) return false;
       const validation = validateContent(root);
       if (validation.errors.length) throw new Error(validation.errors.join(" "));
 
       if (fresh) {
+        if (root.dataset.activityId !== state.contentId) throw Error('The quiz ID changed; the current attempt was kept.');
+        // Archive before replacing anything. If storage is unavailable, leave
+        // the active attempt intact. Never clear unrelated quizzes or history.
+        const archiveKey = `learning-hub-quiz-restarts:v1:${state.identityKey}:${state.contentId}`;
+        const archive = JSON.parse(localStorage.getItem(archiveKey) || '[]');
+        if (!Array.isArray(archive)) throw Error('Cannot read the previous-attempt archive');
+        archive.push({ archivedAt: Date.now(), ...snapshot({ includeLocalEvidence: true }) });
+        localStorage.setItem(archiveKey, JSON.stringify(archive));
+        const evidence = bankSelection ? null : evidenceManager?.serializeLocal();
         evidenceManager?.dispose(); evidenceManager = null;
         Object.assign(state, { answers: {}, giveUps: {}, hintLevels: {}, masteredIds: [], currentIndex: 0,
-          attempt: 1, view: 'exam', startedAt: Date.now(), elapsedBeforeMs: 0, latestScore: null, savedAt: 0, evidenceSnapshot: null });
-        syncBase = null; unsyncedChanges = false; pendingRemote = null; cloudReady = false;
+          attempt: 1, view: 'exam', startedAt: Date.now(), elapsedBeforeMs: 0, latestScore: null, savedAt: 0, evidenceSnapshot: evidence });
+        if (bankSelection) { syncBase = null; unsyncedChanges = false; pendingRemote = null; cloudReady = false; }
       }
       if (bankResult) { state.bankRevision = bankResult.revision; bankReplacementBase = bankResult.replacementBase; }
 
@@ -1269,6 +1283,10 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
       contentReady = true;
       if (!fresh) loadLocal();
       initializeEvidenceManager();
+      if (fresh && !bankSelection) {
+        state.questions.forEach(question => evidenceManager?.markContextChanged(question.id));
+        markEdited(); saveLocalNow();
+      }
       if (latestHubContext) applyHubContext(latestHubContext);
       if (bankSelection) {
         document.querySelector('[data-summary-open]').hidden = true;
@@ -1282,7 +1300,10 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
         button.dataset.th = 'เริ่มชุดล่าสุด'; button.dataset.en = 'Start latest set'; button.textContent = button.dataset[language()]; button.onclick = restart;
         banner.append(text, button);
         if (fresh) { markEdited(); saveLocalNow(); }
-        if (state.identityKey !== 'guest') void loadCloud();
+        if (state.identityKey !== 'guest') {
+          if (fresh) await loadCloud();
+          else void loadCloud();
+        }
       }
 
       window.LearningHubPrint?.configure({
@@ -1293,6 +1314,8 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
       loading.hidden = true;
       errorBox.hidden = true;
       app.hidden = false;
+      const restartButton = document.querySelector('[data-restart-latest]');
+      if (restartButton) restartButton.disabled = false;
       render();
       document.dispatchEvent(
         new CustomEvent("learning-hub-quiz-ready", { detail: { contentId: state.contentId, count: state.questions.length } }),
@@ -1300,6 +1323,7 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
       if (parent !== window) {
         parent.postMessage({ type: "learning-hub-quiz-ready" }, location.origin === "null" ? "*" : location.origin);
       }
+      return true;
     } catch (error) {
       if (loadVersion !== contentLoadVersion) return;
       loading.hidden = true;
@@ -1311,6 +1335,7 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
         retry.onclick = () => { retry.disabled = true; void loadContent({ fresh }); };
         errorBox.append(document.createElement('br'), retry);
       }
+      return false;
     }
   }
 
@@ -1382,6 +1407,7 @@ import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
     });
   });
   document.querySelector("[data-summary-open]")?.addEventListener("click", openSummary);
+  document.querySelector("[data-restart-latest]")?.addEventListener("click", restart);
   document.querySelector("[data-notebook-backup-open]")?.addEventListener("click", () => {
     hideMathKeyboard();
     void notebookBackupUi.open();

@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="light" />
-    <link rel="stylesheet" href="../../shared/print-core.css?v=6a1" />
-    <link rel="stylesheet" href="../../shared/quiz-core.css?v=6b-numeric-1" />
+    <link rel="stylesheet" href="../../shared/print-core.css?v=worksheet-20261021" />
+    <link rel="stylesheet" href="../../shared/quiz-core.css?v=worksheet-20261021" />
     <link rel="stylesheet" href="../../shared/quiz-drag.css?v=drag-1" />
     <link rel="stylesheet" href="notebook-core.css?v=6b1" />
     <link rel="stylesheet" href="../../shared/quiz-evidence.css?v=6c3" />
@@ -35,6 +35,9 @@
         </a>
 
         <div class="quiz-top-actions">
+          <button class="quiz-quiet-button" type="button" data-restart-latest disabled>
+            <span data-th="เริ่มทำใหม่ · โหลดฉบับล่าสุด" data-en="Restart · load latest">เริ่มทำใหม่ · โหลดฉบับล่าสุด</span>
+          </button>
           <button class="quiz-quiet-button" type="button" data-notebook-backup-open>
             <span data-th="สำรอง / นำเข้าสมุด" data-en="Notebook backup / import">สำรอง / นำเข้าสมุด</span>
           </button>
@@ -101,6 +104,14 @@
         <button type="button" data-print-dialog-close aria-label="Close">×</button>
       </header>
       <div class="quiz-print-dialog-body">
+        <label class="quiz-print-space-setting">
+          <span data-th="พื้นที่เขียนต่อข้อ" data-en="Writing space per question">พื้นที่เขียนต่อข้อ</span>
+          <select data-print-workspace>
+            <option value="25" data-th="น้อย (2.5 ซม.)" data-en="Small (2.5 cm)">น้อย (2.5 ซม.)</option>
+            <option value="40" selected data-th="ปกติ (4 ซม.)" data-en="Standard (4 cm)">ปกติ (4 ซม.)</option>
+            <option value="65" data-th="มาก (6.5 ซม.)" data-en="Large (6.5 cm)">มาก (6.5 ซม.)</option>
+          </select>
+        </label>
         <div class="quiz-print-selection-actions">
           <button type="button" data-print-select-all disabled data-th="เลือกทั้งหมด" data-en="Select all">
             เลือกทั้งหมด
@@ -143,9 +154,9 @@
     <div data-evidence-export-host aria-hidden="true"></div>
 
     <script src="../../shared/learning-hub-tools.js"></script>
-    <script src="../../shared/print-core.js?v=drag-1"></script>
+    <script src="../../shared/print-core.js?v=worksheet-20261021"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-    <script type="module" src="../../shared/quiz-core.js?v=giveup-retry-20261020"></script>
+    <script type="module" src="../../shared/quiz-core.js?v=worksheet-restart-20261021"></script>
   </body>
 </html>

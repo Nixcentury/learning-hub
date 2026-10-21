@@ -1,6 +1,6 @@
 import { bankClient } from './question-bank-client.js';
 import { bankContentId, chooseBankRevision } from './question-bank-model.js';
-import { adaptLegacyBank } from './question-bank-adapter.js';
+import { adaptLegacyBank } from './question-bank-adapter.js?v=bank-number-1';
 
 export function readBankSelection(search) {
   const params = new URLSearchParams(search);

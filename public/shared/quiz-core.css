@@ -1315,6 +1315,11 @@ svg [data-quiz-visual~="axis-label"] {
     flex-direction: column;
   }
 
+  .quiz-topic-review-footer > button,
+  .quiz-topic-review-footer > form {
+    flex: 0 0 auto;
+  }
+
   .quiz-dialog-footer.is-print {
     grid-template-columns: 1fr;
   }

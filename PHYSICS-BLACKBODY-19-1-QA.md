@@ -37,3 +37,9 @@ Both numerical activities explicitly say they are simulated/model data, not Plan
 Local evidence: `qa-output/planck-*` (not committed). Native Safari/iPad, Apple Pencil and account/cloud behavior are not verified by these Chromium checks. No shared engine, login, notebook, question-bank service, source IDs, scores or database rules were changed.
 
 Public release status must be checked against the actual merged commit and Pages deployment; a local build alone does not establish publication.
+
+## Revision, 23 October 2026 (Bangkok)
+
+Added an original licensed hot-metal photograph alongside the infrared example. Rebalanced the student sheet: eleven definition/principle/formula areas now have content headings above blank note spaces; observation questions remain around the photographs, graph and two data activities. Removed repeated “จด / Record” commands. Existing note IDs and all seven main problems remain; one new temperature/colour note makes 44 paired slots. The hot-metal asset credit and license are recorded in the asset README.
+
+Revision validation: 312 unit tests and production build passed. All 44 paired note areas, four figures, seven main problems, TH/EN controls and narrow layouts passed browser checks. Updated print editions were visually reviewed: Thai blank/answers 15 pages each, English blank/answers 16 pages each.

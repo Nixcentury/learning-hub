@@ -5,3 +5,5 @@
 - cavity-radiator.svg: Original explanatory diagram of a cavity radiator. English labels are shared by both language editions. Incident-radiation path and emitted-radiation path are distinct schematic rays.
 
 The two numerical classroom activities are explicitly simulated data, following the quantum model and rounded h = 6.6e-34 J s. They illustrate the hypotheses; they are not Planck’s experimental measurements or independent evidence for quantization. Worked calculations use h = 6.626e-34 J s, c = 3.00e8 m/s and 1 eV = 1.60e-19 J.
+
+- hot-metal-bar.jpg: Original photo “Induction heating of bar.jpg” by C Paice / Vector1 nz, 13 February 2008. Source: https://commons.wikimedia.org/wiki/File:Induction_heating_of_bar.jpg . Licensed CC BY-SA 3.0: https://creativecommons.org/licenses/by-sa/3.0/ . Original bytes retained; displayed at a smaller size with CSS. The work depicts a heated metal bar; the worksheet discusses the familiar incandescence of iron/steel without assigning a numerical temperature to this photograph.

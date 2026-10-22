@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="light" />
     <link rel="stylesheet" href="../../shared/print-core.css?v=worksheet-20261021" />
-    <link rel="stylesheet" href="../../shared/quiz-core.css?v=worksheet-20261021-bank-svg-1" />
+    <link rel="stylesheet" href="../../shared/quiz-core.css?v=topic-review-20261022-1" />
     <link rel="stylesheet" href="../../shared/quiz-drag.css?v=drag-1" />
     <link rel="stylesheet" href="notebook-core.css?v=6b1" />
     <link rel="stylesheet" href="../../shared/quiz-evidence.css?v=6c3" />
@@ -86,6 +86,27 @@
       </footer>
     </dialog>
 
+    <dialog class="quiz-dialog quiz-topic-review-dialog" id="quiz-topic-review" data-topic-review-dialog aria-labelledby="quiz-topic-review-title">
+      <form method="dialog" class="quiz-dialog-header">
+        <div>
+          <strong id="quiz-topic-review-title" data-th="ทวนเนื้อหา" data-en="Topic review">ทวนเนื้อหา</strong>
+        </div>
+        <button type="submit" aria-label="ปิด / Close">×</button>
+      </form>
+      <div class="quiz-topic-review-content" data-allow-selection>
+        <div class="quiz-topic-review-icon" aria-hidden="true">📖</div>
+        <h2 data-th="กำลังเตรียมเนื้อหา" data-en="Content is being prepared">กำลังเตรียมเนื้อหา</h2>
+        <p data-th="บททวนเรื่องนี้กำลังจัดทำ สามารถกลับไปทำโจทย์ต่อได้เลย" data-en="This topic review is being prepared. You can continue the quiz in the meantime.">
+          บททวนเรื่องนี้กำลังจัดทำ สามารถกลับไปทำโจทย์ต่อได้เลย
+        </p>
+      </div>
+      <footer class="quiz-dialog-footer">
+        <form method="dialog">
+          <button class="quiz-primary-button" type="submit" data-th="กลับไปทำ Quiz" data-en="Back to quiz">กลับไปทำ Quiz</button>
+        </form>
+      </footer>
+    </dialog>
+
     <section
       class="quiz-dialog quiz-print-dialog"
       data-print-selection-panel
@@ -157,6 +178,6 @@
     <script src="../../shared/print-core.js?v=worksheet-20261021"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-    <script type="module" src="../../shared/quiz-core.js?v=worksheet-restart-20261021-bank-svg-1"></script>
+    <script type="module" src="../../shared/quiz-core.js?v=topic-review-20261022-1"></script>
   </body>
 </html>

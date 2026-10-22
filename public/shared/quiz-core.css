@@ -986,6 +986,19 @@ svg [data-quiz-visual~="axis-label"] {
   width: min(640px, calc(100% - 24px));
 }
 
+.quiz-topic-review-footer {
+  flex-wrap: wrap;
+}
+
+.quiz-topic-review-footer > button,
+.quiz-topic-review-footer > form {
+  flex: 1 1 220px;
+}
+
+.quiz-topic-review-footer > form > button {
+  width: 100%;
+}
+
 .quiz-topic-review-content {
   padding: 32px 24px;
   text-align: center;

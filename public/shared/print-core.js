@@ -363,6 +363,7 @@
   }
 
   function restore() {
+    window.MathJax?.typesetClear?.([printHost]);
     document.title = originalTitle;
     delete document.body.dataset.printMode;
     printHost.setAttribute("aria-hidden", "true");
@@ -389,6 +390,46 @@
     } catch {
       restore();
       window.alert(localized('จัดสูตรสำหรับพิมพ์ไม่สำเร็จ กรุณาลองอีกครั้ง', 'Could not prepare equations for printing. Please retry.'));
+    } finally { preparingPrint = false; }
+  }
+
+  // Print the review panel without reconfiguring the quiz or its selected questions.
+  async function printReview({ content, title } = {}) {
+    if (preparingPrint || !content?.isConnected) return false;
+    const dialog = content.closest('dialog');
+    const isCurrent = () => content.isConnected && (!dialog || dialog.open);
+    preparingPrint = true;
+    try {
+      const clone = content.cloneNode(true);
+      clone.querySelectorAll('script, style, iframe, object, embed, form, button, input, textarea, select, [hidden], [data-no-print], .no-print, .quiz-topic-review-icon').forEach(node => node.remove());
+      clone.querySelectorAll('[data-th][data-en]').forEach(node => {
+        if (!node.children.length) node.textContent = node.dataset[language()];
+      });
+      clone.querySelectorAll('[data-content-lang], [data-quiz-language]').forEach(node => {
+        if ((node.dataset.contentLang || node.dataset.quizLanguage) !== language()) node.remove();
+      });
+      const page = document.createElement('article');
+      page.className = 'activity-print-document activity-topic-review-print';
+      const heading = document.createElement('h1');
+      heading.textContent = title?.trim() || localized('ทวนเนื้อหา', 'Topic review');
+      page.append(heading, ...clone.childNodes);
+      printHost.replaceChildren(page);
+      printHost.setAttribute('aria-hidden', 'false');
+      activeMode = 'topic-review';
+      document.body.dataset.printMode = activeMode;
+      document.title = `${heading.textContent} · Learning Hub`;
+      await typesetPrint();
+      await Promise.all([...printHost.querySelectorAll('img')].map(image => {
+        image.loading = 'eager';
+        return image.decode ? image.decode() : Promise.resolve();
+      }));
+      if (!isCurrent()) { restore(); return false; }
+      window.print();
+      return true;
+    } catch {
+      restore();
+      window.alert(localized('เตรียมบททวนสำหรับพิมพ์ไม่สำเร็จ กรุณาตรวจรูปภาพหรือสมการแล้วลองใหม่', 'Could not prepare the topic review. Check its images or equations and retry.'));
+      return false;
     } finally { preparingPrint = false; }
   }
 
@@ -424,6 +465,7 @@
     prepare,
     typesetPrint,
     print,
+    printReview,
     restore,
     selectAll: () => setAllQuestions(true),
     selectNone: () => setAllQuestions(false),

@@ -260,6 +260,41 @@
     background: white;
   }
 
+  .activity-topic-review-print {
+    color: #111;
+    font: 11pt/1.65 Tahoma, Arial, sans-serif;
+  }
+
+  .activity-topic-review-print h1 {
+    margin: 0 0 5mm;
+    padding-bottom: 3mm;
+    border-bottom: 1pt solid #555;
+    font-size: 18pt;
+  }
+
+  .activity-topic-review-print h2,
+  .activity-topic-review-print h3 {
+    break-after: avoid;
+  }
+
+  .activity-topic-review-print table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .activity-topic-review-print th,
+  .activity-topic-review-print td {
+    border: 0.75pt solid #777;
+    padding: 2mm;
+    overflow-wrap: anywhere;
+  }
+
+  .activity-topic-review-print thead { display: table-header-group; }
+  .activity-topic-review-print tr,
+  .activity-topic-review-print figure { break-inside: avoid; }
+  .activity-topic-review-print img,
+  .activity-topic-review-print svg { max-width: 100%; height: auto; }
+
   .tool-shell,
   .activity-shell {
     width: 100% !important;

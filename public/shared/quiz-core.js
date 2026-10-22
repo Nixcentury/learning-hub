@@ -1416,6 +1416,24 @@ import { warmQuizEngine } from "./quiz-refresh.js";
     });
   });
   document.querySelector("[data-summary-open]")?.addEventListener("click", openSummary);
+  topicReviewDialog?.addEventListener("close", () => {
+    if (document.body.dataset.printMode === "topic-review") window.LearningHubPrint.restore();
+  });
+  document.querySelector("[data-topic-review-print]")?.addEventListener("click", async (event) => {
+    if (!topicReviewDialog?.open || submissionBusy || closing) return;
+    const button = event.currentTarget;
+    button.disabled = true;
+    hideMathKeyboard();
+    try {
+      await window.LearningHubPrint.printReview({
+        content: topicReviewDialog.querySelector("[data-topic-review-content]"),
+        title: topicReviewDialog.querySelector("#quiz-topic-review-title")?.textContent,
+      });
+    } finally {
+      button.disabled = false;
+      if (topicReviewDialog.open) button.focus({ preventScroll: true });
+    }
+  });
   document.querySelector("[data-restart-latest]")?.addEventListener("click", restart);
   document.querySelector("[data-notebook-backup-open]")?.addEventListener("click", () => {
     hideMathKeyboard();

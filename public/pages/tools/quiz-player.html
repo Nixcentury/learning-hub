@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="light" />
-    <link rel="stylesheet" href="../../shared/print-core.css?v=worksheet-20261021" />
-    <link rel="stylesheet" href="../../shared/quiz-core.css?v=topic-review-20261022-1" />
+    <link rel="stylesheet" href="../../shared/print-core.css?v=topic-review-print-20261023-1" />
+    <link rel="stylesheet" href="../../shared/quiz-core.css?v=topic-review-print-20261023-1" />
     <link rel="stylesheet" href="../../shared/quiz-drag.css?v=drag-1" />
     <link rel="stylesheet" href="notebook-core.css?v=6b1" />
     <link rel="stylesheet" href="../../shared/quiz-evidence.css?v=6c3" />
@@ -93,14 +93,18 @@
         </div>
         <button type="submit" aria-label="ปิด / Close">×</button>
       </form>
-      <div class="quiz-topic-review-content" data-allow-selection>
+      <div class="quiz-topic-review-content" data-topic-review-content data-allow-selection>
         <div class="quiz-topic-review-icon" aria-hidden="true">📖</div>
         <h2 data-th="กำลังเตรียมเนื้อหา" data-en="Content is being prepared">กำลังเตรียมเนื้อหา</h2>
         <p data-th="บททวนเรื่องนี้กำลังจัดทำ สามารถกลับไปทำโจทย์ต่อได้เลย" data-en="This topic review is being prepared. You can continue the quiz in the meantime.">
           บททวนเรื่องนี้กำลังจัดทำ สามารถกลับไปทำโจทย์ต่อได้เลย
         </p>
       </div>
-      <footer class="quiz-dialog-footer">
+      <footer class="quiz-dialog-footer quiz-topic-review-footer">
+        <button type="button" class="quiz-print-action is-summary" data-topic-review-print>
+          <span aria-hidden="true">▤</span>
+          <span data-th="พิมพ์ / บันทึก PDF" data-en="Print / Save PDF">พิมพ์ / บันทึก PDF</span>
+        </button>
         <form method="dialog">
           <button class="quiz-primary-button" type="submit" data-th="กลับไปทำ Quiz" data-en="Back to quiz">กลับไปทำ Quiz</button>
         </form>
@@ -175,9 +179,9 @@
     <div data-evidence-export-host aria-hidden="true"></div>
 
     <script src="../../shared/learning-hub-tools.js"></script>
-    <script src="../../shared/print-core.js?v=worksheet-20261021"></script>
+    <script src="../../shared/print-core.js?v=topic-review-print-20261023-1"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-    <script type="module" src="../../shared/quiz-core.js?v=topic-review-20261022-1"></script>
+    <script type="module" src="../../shared/quiz-core.js?v=topic-review-print-20261023-1"></script>
   </body>
 </html>

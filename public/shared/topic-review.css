@@ -1,0 +1,38 @@
+.quiz-topic-review-dialog { width: min(1000px, calc(100% - 24px)); }
+.topic-review-browser { padding: 18px 24px 0; text-align: start; }
+.review-help { margin: 0 0 14px; color: #52627d; line-height: 1.6; font-size: 14px; }
+.review-controls { display: grid; grid-template-columns: 140px minmax(180px, 1fr) minmax(240px, 1.5fr); gap: 12px; }
+.review-controls label { display: grid; min-width: 0; gap: 7px; font-size: 14px; font-weight: 700; color: #203b63; }
+.review-controls select { width: 100%; min-width: 0; min-height: 46px; border: 1px solid #c9d8ec; border-radius: 12px; padding: 10px 12px; background: white; color: #203b63; font: inherit; text-overflow: ellipsis; }
+.review-controls select:focus-visible { outline: 3px solid #94c2ff; outline-offset: 2px; }
+.review-controls select:disabled { opacity: .6; }
+.review-status { margin: 12px 0 0; color: #5b6880; font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
+.review-status:empty { display: none; }
+[data-review-retry] { margin-top: 12px; }
+.topic-review-body { padding: 24px; text-align: start; line-height: 1.75; min-height: 200px; overflow-wrap: anywhere; }
+.topic-review-body h1, .topic-review-body h2, .topic-review-body h3 { color: #132e53; line-height: 1.5; }
+.topic-review-body h2:first-child { margin-top: 0; }
+.topic-review-body img, .topic-review-body svg { max-width: 100%; height: auto; }
+.topic-review-body table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+.topic-review-body th, .topic-review-body td { padding: 10px; border: 1px solid #bac9db; overflow-wrap: anywhere; }
+.topic-review-body a { color: #214f9e; text-decoration: underline; }
+.review-writing-space { min-height: 64px; margin: 12px 0; border-bottom: 1px solid #8993a3; }
+.review-page { width: min(1100px, calc(100% - 32px)); margin: 28px auto; }
+.review-page-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 22px; }
+.review-page-heading > div { flex: 1; min-width: 220px; }
+.review-page-heading h1 { margin: 4px 0; font-size: 28px; }
+.review-page-heading p { margin: 0; color: #52627d; }
+.review-page-heading a { display: inline-block; padding: 10px 14px; color: #214f9e; text-decoration: none; }
+.review-page-panel { border: 1px solid #d4e0ee; border-radius: 22px; background: white; box-shadow: 0 16px 44px #243e6410; overflow: hidden; }
+.review-page-footer { display: flex; justify-content: flex-end; padding: 16px 24px; border-top: 1px solid #dce6f2; }
+@media (max-width: 720px) {
+  .review-controls { grid-template-columns: 1fr; }
+  .topic-review-browser, .topic-review-body { padding-left: 18px; padding-right: 18px; }
+  .quiz-topic-review-dialog { max-height: calc(100dvh - 24px); }
+  .review-page { width: calc(100% - 20px); margin: 16px auto; }
+  .review-page-footer > button { width: 100%; }
+}
+@media print {
+  .topic-review-browser, .review-page-heading, .review-page-footer { display: none !important; }
+  .activity-topic-review-print .review-writing-space { min-height: 18mm; border-bottom: .75pt solid #666; }
+}

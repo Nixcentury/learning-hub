@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>คลังเนื้อหาทบทวน · Learning Hub</title>
+  <link rel="stylesheet" href="../../shared/print-core.css?v=topic-review-library-20261023-1">
+  <link rel="stylesheet" href="../../shared/quiz-core.css?v=topic-review-library-20261023-1">
+  <link rel="stylesheet" href="../../shared/topic-review.css?v=topic-review-library-20261023-1">
+  <script>
+    window.MathJax = {
+      loader: { load: ['ui/safe'] },
+      tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"], ["$$", "$$"]] },
+      options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] },
+    };
+  </script>
+  <script defer src="../../vendor/mathjax-3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+  <main class="review-page">
+    <header class="review-page-heading">
+      <a href="../../index.html#chemistry/bank" data-review-back data-th="← กลับคลังข้อสอบ" data-en="← Back to question bank">← กลับคลังข้อสอบ</a>
+      <div><h1 data-th="คลังเนื้อหาทบทวน" data-en="Topic review library">คลังเนื้อหาทบทวน</h1>
+        <p data-th="เลือกบทและหัวข้อเพื่ออ่าน ทวน และพิมพ์" data-en="Choose a chapter and topic to read, review and print">เลือกบทและหัวข้อเพื่ออ่าน ทวน และพิมพ์</p></div>
+      <div class="quiz-language" aria-label="Language">
+        <button type="button" data-review-language="th" aria-pressed="true">ไทย</button>
+        <button type="button" data-review-language="en" aria-pressed="false">EN</button>
+      </div>
+    </header>
+    <section class="review-page-panel">
+      <div data-topic-review-browser></div>
+      <div class="topic-review-body" data-topic-review-content data-allow-selection></div>
+      <footer class="review-page-footer">
+        <button class="quiz-print-action" type="button" data-topic-review-print disabled>
+          <span aria-hidden="true">▤</span><span data-th="พิมพ์ / บันทึก PDF" data-en="Print / Save PDF">พิมพ์ / บันทึก PDF</span>
+        </button>
+      </footer>
+    </section>
+  </main>
+  <script src="../../shared/print-core.js?v=topic-review-library-20261023-1"></script>
+  <script type="module" src="../../shared/topic-review-page.js?v=topic-review-library-20261023-1"></script>
+</body>
+</html>

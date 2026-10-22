@@ -8,6 +8,7 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
 import { readBankSelection, loadBankQuiz } from "./question-bank-player.js?v=bank-svg-1";
 import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
 import { warmQuizEngine } from "./quiz-refresh.js";
+import { createTopicReviewBrowser } from "./topic-review.js?v=topic-review-library-20261023-1";
 
 /* ==============================================================
    Quiz Engine กลางของ Learning Hub
@@ -75,6 +76,13 @@ import { warmQuizEngine } from "./quiz-refresh.js";
   let bankContextWaiter = null, contentLoadVersion = 0, bankReloadBusy = false;
   try { bankSelection = readBankSelection(location.search); }
   catch (error) { loading.hidden = true; errorBox.hidden = false; errorBox.textContent = error.message; return; }
+
+  const topicReviewBrowser = topicReviewDialog && createTopicReviewBrowser({
+    root: topicReviewDialog.querySelector('[data-topic-review-browser]'),
+    content: topicReviewDialog.querySelector('[data-topic-review-content]'),
+    printButton: topicReviewDialog.querySelector('[data-topic-review-print]'),
+    language,
+  });
 
   const notebookBackupUi = createNotebookBackupUi({
     getManager: () => evidenceManager,
@@ -1138,6 +1146,10 @@ import { warmQuizEngine } from "./quiz-refresh.js";
     if (!currentQuestion() || submissionBusy || closing || !topicReviewDialog) return;
     hideMathKeyboard();
     if (!topicReviewDialog.open) topicReviewDialog.showModal();
+    void topicReviewBrowser?.open({
+      subjectId: bankSelection?.subjectId || latestHubContext?.subjectId || contentRoot?.dataset.subjectId,
+      preferred: [...(currentQuestion()?.topicIds || []), bankSelection?.bankKey],
+    });
   }
 
   function openSummary() {
@@ -1161,6 +1173,7 @@ import { warmQuizEngine } from "./quiz-refresh.js";
       }
     });
     render();
+    topicReviewBrowser?.refreshLanguage();
   }
 
   function initializeEvidenceManager() {
@@ -1417,12 +1430,14 @@ import { warmQuizEngine } from "./quiz-refresh.js";
   });
   document.querySelector("[data-summary-open]")?.addEventListener("click", openSummary);
   topicReviewDialog?.addEventListener("close", () => {
+    topicReviewBrowser?.close();
     if (document.body.dataset.printMode === "topic-review") window.LearningHubPrint.restore();
   });
   document.querySelector("[data-topic-review-print]")?.addEventListener("click", async (event) => {
     if (!topicReviewDialog?.open || submissionBusy || closing) return;
     const button = event.currentTarget;
     button.disabled = true;
+    topicReviewBrowser?.setPrinting(true);
     hideMathKeyboard();
     try {
       await window.LearningHubPrint.printReview({
@@ -1430,7 +1445,7 @@ import { warmQuizEngine } from "./quiz-refresh.js";
         title: topicReviewDialog.querySelector("#quiz-topic-review-title")?.textContent,
       });
     } finally {
-      button.disabled = false;
+      topicReviewBrowser?.setPrinting(false);
       if (topicReviewDialog.open) button.focus({ preventScroll: true });
     }
   });

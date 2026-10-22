@@ -11,3 +11,11 @@ Credit: UNSW School of Physics / Physclips. Site licence: Creative Commons Attri
 - diffraction-widths.jpg: https://physicslabs.colorado.edu/media/images/6C10_C6tQKCs.10_1.max-1200x800.jpg ; University of Colorado Boulder, Physics Undergraduate Labs. Context: https://physicslabs.colorado.edu/demos/optics/diffraction/diffraction-through-one-slit/electroformed-single-slits/ . Original photograph retained; four single-slit patterns compare different slit widths.
 
 Source review: 22 October 2026. Teaching scope: IPST Physics Book 3 pp. 107–108; teacher guide pp. 120–121. The extended wave review and astronomical examples follow the teacher’s approved plan.
+
+## Labelled reference diagrams added in the concept revision
+
+- 15-angle-short-wavelength.svg and 15-angle-long-wavelength.svg: same opening and screen distance; wavelengths differ.
+- 16-angle-wide-opening.svg and 16-angle-narrow-opening.svg: same wavelength and screen distance; opening widths differ.
+- Angles mark the forward axis to the first far-field single-slit minimum. The central-band boundary is not the full extent of the wave; side bands exist. The geometry uses the standard first-minimum relation internally; no slit-position formula is introduced in the student sheet.
+- 17-double-slit-pattern.svg and 17-single-slit-pattern.svg: original schematic apparatus plus normalised far-field patterns at the same wavelength, slit width and screen scale. The double-slit separation is three slit widths. Display brightness is compressed to keep side bands visible; the figures compare pattern structure, not absolute intensity.
+- All six are original explanatory SVGs with labels always visible. Source context: UNSW / Physclips single-slit and Young experiment pages linked in the sheet.

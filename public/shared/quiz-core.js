@@ -25,6 +25,7 @@ import { warmQuizEngine } from "./quiz-refresh.js";
   const summaryDialog = document.querySelector("[data-summary-dialog]");
   const summaryContent = document.querySelector("[data-summary-content]");
   const summaryTitle = document.querySelector("[data-summary-title]");
+  const topicReviewDialog = document.querySelector("[data-topic-review-dialog]");
   const printPanel = document.querySelector("[data-print-selection-panel]");
   const printToggle = document.querySelector("[data-print-selection-toggle]");
   const pendingStorageRequests = new Map();
@@ -820,6 +821,7 @@ import { warmQuizEngine } from "./quiz-refresh.js";
             <span class="quiz-stopwatch">● <strong data-elapsed-time>${formatDuration(elapsedMs())}</strong></span>
           </div>
           <div class="quiz-action-grid">
+            <button type="button" class="quiz-review-button" data-topic-review-open aria-haspopup="dialog" aria-controls="quiz-topic-review">📖 ${label("ทวนเนื้อหา", "Review topic")}</button>
             <button type="button" class="quiz-hint-button" data-hint-button>💡 ${label("คำใบ้", "Hint")} #<span data-hint-count>1</span></button>
             <button type="button" class="quiz-giveup-button" data-giveup-button>⚑ ${label("ยอมแพ้", "Give up")}</button>
             <button type="button" class="quiz-secondary-button" data-previous-button>‹ ${label("ก่อนหน้า", "Previous")}</button>
@@ -1117,6 +1119,7 @@ import { warmQuizEngine } from "./quiz-refresh.js";
   }
 
   function bindExamActions() {
+    document.querySelector("[data-topic-review-open]")?.addEventListener("click", openTopicReview);
     document.querySelector("[data-hint-button]")?.addEventListener("click", revealHint);
     document.querySelector("[data-giveup-button]")?.addEventListener("click", () => {
       const question = currentQuestion();
@@ -1129,6 +1132,12 @@ import { warmQuizEngine } from "./quiz-refresh.js";
       void submitAll();
     });
     document.querySelector("[data-open-print]")?.addEventListener("click", () => printToggle?.click());
+  }
+
+  function openTopicReview() {
+    if (!currentQuestion() || submissionBusy || closing || !topicReviewDialog) return;
+    hideMathKeyboard();
+    if (!topicReviewDialog.open) topicReviewDialog.showModal();
   }
 
   function openSummary() {

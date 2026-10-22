@@ -34,3 +34,10 @@ No shared engine, authentication, Firebase configuration, saved-work IDs, questi
 - Shared engines, content ID, bank menu and all retained slot IDs are unchanged.
 
 Revision checks: full suite 312/312 passes; content/routes/build pass; 76 paired slots and five examples verified in the shared-components harness and the real local Hub guest deep link. All four print editions pass with answer DOM physically absent from blanks. All six new SVGs have been checked for label clipping. The printed opening review and transverse-wave summary stay together on the first page.
+
+## Focused wavelength-figure revision, 22 October 2026
+
+- Only the short/long wavelength comparison in section 8 is revised, in both languages. The separate wavefront and angle panels are replaced with one integrated pair using the same aperture, wavelength ratio and screen geometry. Directions 1 and 2 share the slit-centre origin, and a larger theta arc marks the angle between them.
+- The existing diagram slot, student drawing variant and conclusion slot are retained; all 76 paired answer IDs are unchanged. Sections 1–7 and 9–10, and the opening-width and edge comparisons, are byte-equivalent at the parsed section/slot level.
+- Outgoing crests reuse the scalar angular-spectrum model. Screen intensities and first-minimum markers use the same far-field single-slit relation and angular coordinate in both cases. The caption explicitly distinguishes the near-field sketch and the distant screen, which is not to scale.
+- Build/content validation passes. The shared-components browser harness verifies TH/EN, all images, equations, preserved answer state and 390px layout. All four A4 editions pass; blank copies contain no answer DOM. Updated figure pages were rendered and visually inspected. No engine or other teaching section is changed.

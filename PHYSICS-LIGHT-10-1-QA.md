@@ -8,7 +8,7 @@ Authored 22 October 2026 for the existing Learning Sheet V1 system.
 - Bank menu: `b-08c93bb5cd14a7bc7de0a8e0` (the existing Wave Model of Light topic).
 - Hub entry: `#physics/bank/b-08c93bb5cd14a7bc7de0a8e0/learning-sheet`.
 - Author file: `public/content/physics/ipst/wave-optics/10-1-wave-model-learning-sheet.html`.
-- TH and EN are complete separate language blocks sharing 82 semantic answer IDs. Existing language, answer controls, MathJax and printing are reused.
+- TH and EN are complete separate language blocks sharing 83 semantic answer IDs. Existing language, answer controls, MathJax and printing are reused.
 - Ten teaching sections cover electromagnetic-wave review, spectrum and uses, visible colours, relations and units, five worked examples through light-years, reflection/refraction, superposition and source phase, diffraction review, experimental light evidence, and the two IPST 10.1 understanding questions.
 - Fourteen original SVG designs each have student and answer versions. Student versions physically omit solution paths, labels and answer metadata.
 - Three local original experimental images: two from UNSW and one from the University of Colorado Boulder. Credits and source links accompany each image and are recorded in the assets directory.
@@ -51,3 +51,8 @@ Revision checks: full suite 312/312 passes; content/routes/build pass; 76 paired
 - Moved the refractive-index explanation and superposition principle into their existing answer slots, with more writing space. Converted the experimental pattern/phenomenon table and scientist/idea record into structured note fields. The repeated fixed experimental conclusion now appears in the existing reasoning answer. The electromagnetic overview remains a completed short review, as explicitly requested.
 - There are now 82 paired TH/EN note slots: two drawing slots removed, eight written-note slots added. Sections 1–3, 5 and 6, all existing calculation problems, the shared engines and content ID are unchanged.
 - Current validation: content/routes/build and unit checks; browser language/reveal state, all images/equations, 390px layout and real Hub deep link; four A4 editions with no answer DOM in blank copies. All four completed diffraction references remain in both print editions. Changed print pages are rendered for visual review.
+
+
+## Section 1 summary note, 22 October 2026
+
+The teacher requested writing space in the electromagnetic overview. Its completed summary is now the answer to one TH/EN note slot (`em-fields-summary`), with 28 mm minimum writing height. A short prompt asks students to relate E, B and propagation and identify the wave type. The fully labelled field diagram, stellar review and all other sections are retained. There are 83 paired note slots. Content/build, language/reveal controls and all four printed editions are checked; first-page layout is visually reviewed.

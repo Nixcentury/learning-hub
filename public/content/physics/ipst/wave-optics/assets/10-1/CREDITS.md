@@ -14,7 +14,7 @@ Source review: 22 October 2026. Teaching scope: IPST Physics Book 3 pp. 107–10
 
 ## Labelled reference diagrams added in the concept revision
 
-- 15-angle-short-wavelength.svg and 15-angle-long-wavelength.svg: same opening and screen distance; wavelengths differ.
+- 15-angle-short-wavelength.svg and 15-angle-long-wavelength.svg: a single coherent short/long comparison combining incident crests, angular-spectrum outgoing crests, the common slit centre, numbered forward/first-dark directions, an enlarged angle arc and a normalised far-field screen pattern. Both cases use opening width 2 model units and the same screen distance; wavelengths are 0.5 and 1 model units. The near-field wavefront sketch and distant screen are schematic, not to scale. The matching `-student.svg` variants omit outgoing crests for the existing drawing exercise while retaining the angle construction. The first-dark directions are far-field reference directions, not boundaries enclosing all wavefronts.
 - 16-angle-wide-opening.svg and 16-angle-narrow-opening.svg: same wavelength and screen distance; opening widths differ.
 - Angles mark the forward axis to the first far-field single-slit minimum. The central-band boundary is not the full extent of the wave; side bands exist. The geometry uses the standard first-minimum relation internally; no slit-position formula is introduced in the student sheet.
 - 17-double-slit-pattern.svg and 17-single-slit-pattern.svg: original schematic apparatus plus normalised far-field patterns at the same wavelength, slit width and screen scale. The double-slit separation is three slit widths. Display brightness is compressed to keep side bands visible; the figures compare pattern structure, not absolute intensity.

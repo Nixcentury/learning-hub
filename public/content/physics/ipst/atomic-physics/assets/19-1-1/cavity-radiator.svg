@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" role="img" aria-labelledby="cavity-title cavity-desc">
+<title id="cavity-title">A cavity radiator with a small opening</title><desc id="cavity-desc">An incoming ray enters a small hole and undergoes multiple reflections. Heated cavity walls emit radiation; some radiation leaves through the opening.</desc>
+<defs><marker id="ray-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="context-stroke" stroke-width="1.5"/></marker></defs>
+<rect width="900" height="340" fill="white"/><path d="M300 125V55H755V285H300V190" fill="#f2f3f3" stroke="#354958" stroke-width="9"/>
+<path d="M60 100L300 155L750 258.125L654.545 280L305 199.896L750 97.917L584.545 60L305 124.062" fill="none" stroke="#38668b" stroke-width="3" marker-end="url(#ray-arrow)"/>
+<path d="M345 180Q315 163 290 180T235 180T180 180T125 180" fill="none" stroke="#ae6241" stroke-width="3" marker-end="url(#ray-arrow)"/>
+<text x="55" y="65" font-size="22" fill="#38668b" font-family="Arial,sans-serif">Incident radiation</text>
+<text x="38" y="238" font-size="22" fill="#ae6241" font-family="Arial,sans-serif">Emitted radiation</text>
+<text x="445" y="320" font-size="22" fill="#354958" font-family="Arial,sans-serif">Walls at temperature T</text>
+<text x="785" y="110" font-size="20" fill="#354958" font-family="Arial,sans-serif">Cavity</text>
+<path d="M780 120L730 135" stroke="#354958" fill="none"/>
+<text x="155" y="300" font-size="20" fill="#354958" font-family="Arial,sans-serif">Small opening</text><path d="M265 278L298 195" stroke="#354958" fill="none"/>
+</svg>

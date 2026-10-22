@@ -7,7 +7,7 @@ import { BANK_ALL_CHAPTERS, BANK_OTHER_CHAPTER, bankChapterKey, bankChapters, fi
 
 export function createSubjectBankNavigation({ root, subject, setStage, requestNavigation, backToChapters }) {
   if (!Object.hasOwn(bankSubjects, subject.id)) return null;
-  const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = new URL('subject-bank.css?v=bank-html-20261021', import.meta.url); document.head.append(css);
+  const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = new URL('subject-bank.css?v=topic-review-library-20261023-1', import.meta.url); document.head.append(css);
   const launch = document.createElement('button'); launch.type = 'button'; launch.className = 'bank-entry surface';
   launch.innerHTML = '<span class="bank-entry-icon" aria-hidden="true">▤</span><span><strong></strong><small></small></span><b aria-hidden="true">→</b>';
   const localize = (node, th, en) => { node.dataset.th = th; node.dataset.en = en || th;
@@ -28,6 +28,17 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
   root.append(panel);
   const cards = panel.querySelector('[data-bank-cards]'), notice = panel.querySelector('[data-bank-notice]');
   const search = panel.querySelector('[data-bank-search]'), refresh = panel.querySelector('[data-bank-refresh]');
+  const review = document.createElement('a'); review.className = 'back-button bank-review-entry';
+  review.target = '_blank'; review.rel = 'noopener';
+  panel.querySelector('.activity-heading').append(review);
+  function updateReviewLink() {
+    const url = new URL('../tools/topic-review-player.html', import.meta.url);
+    url.searchParams.set('subject', subject.id);
+    url.searchParams.set('lang', document.documentElement.lang === 'en' ? 'en' : 'th');
+    if (currentKey) url.searchParams.set('topic', currentKey);
+    review.href = url.href;
+    localize(review, '📖 คลังเนื้อหาทบทวน ↗', '📖 Topic review library ↗');
+  }
   const chapter = panel.querySelector('[data-bank-chapter]');
   const storageKey = `learning-hub:bank-menu:${subject.id}`;
   let selectedChapter = '';
@@ -40,6 +51,7 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
     try { sessionStorage.setItem(storageKey, JSON.stringify({ chapter: selectedChapter, query: search.value })); } catch { /* Optional session preference. */ }
   }
   let catalog = null, toolsCatalog = null, toolsState = 'idle', currentKey = null, request = 0;
+  updateReviewLink();
   localize(panel.querySelector('[data-bank-chapter-label]'), 'เลือกบท', 'Choose chapter');
   localize(refresh, 'รีเฟรชคลัง', 'Refresh bank');
   panel.querySelector('[data-bank-id] summary').textContent = 'ID';
@@ -68,6 +80,7 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
     node.onclick = action; cards.append(node);
   }
   function render() {
+    updateReviewLink();
     cards.replaceChildren();
     if (!catalog) return;
     const set = currentKey && catalog.sets.find(entry => entry.bankKey === currentKey);

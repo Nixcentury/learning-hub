@@ -17,7 +17,7 @@ Authored 22 October 2026 for the existing Learning Sheet V1 system.
 ## Validation
 
 - Content validation, route catalog and production build pass.
-- Focused existing learning-sheet and bank-menu tests: 15 passed, 0 failed.
+- Full existing unit suite: 312 passed, 0 failed. Focused learning-sheet and bank-menu tests also pass (15/15).
 - Browser verification uses the real shared sheet, MathJax, language and print components in a local same-origin, scripts-disabled iframe. It verifies all 71 paired answer slots, shared reveal state between languages, loaded images, rendered equations, and no horizontal overflow at a 390px viewport.
 - All four print editions were generated with the shared paginator: TH/EN × blank/answers. Blank copies contain zero answer elements, retain the student diagrams, and contain only the selected language.
 - PDFs were rendered for visual review. Thai fonts were supplied in the QA environment; these temporary fonts and the harness are not production changes.

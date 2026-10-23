@@ -30,7 +30,9 @@ export function normalizeBankCatalog(value, subjectId) {
 // metadata is diagnostic only; it is excluded from the content fingerprint.
 export function bankSnapshotBody(value) {
   return { schemaVersion: 1, subjectId: value.subjectId, bankKey: value.bankKey,
-    legacyId: value.legacyId, title: value.title, html: value.rows.map(row => row.html) };
+    legacyId: value.legacyId, title: value.title, html: value.rows.map(row => row.html),
+    ...(value.rows.some(row => Object.hasOwn(row, 'reviewTopicKey'))
+      ? { reviewTopicKeys: value.rows.map(row => row.reviewTopicKey) } : {}) };
 }
 export async function sha256(text) {
   const bytes = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
@@ -42,7 +44,8 @@ export async function validateBankSnapshot(value, subjectId, bankKey, revision =
       !bankRevisionPattern.test(value.revision || '') || (revision && value.revision !== revision) ||
       typeof value.legacyId !== 'string' || !value.legacyId || value.legacyId.length > 2000 ||
       typeof value.title !== 'string' || !value.title || !Array.isArray(value.rows) || !value.rows.length || value.rows.length > 1000 ||
-      value.rows.some(row => !Number.isInteger(row.rowNumber) || row.rowNumber < 2 || typeof row.html !== 'string' || !row.html.trim())) throw Error('Invalid bank snapshot');
+      value.rows.some(row => !Number.isInteger(row.rowNumber) || row.rowNumber < 2 || typeof row.html !== 'string' || !row.html.trim() ||
+        (Object.hasOwn(row, 'reviewTopicKey') && row.reviewTopicKey !== '' && !bankKeyPattern.test(row.reviewTopicKey)))) throw Error('Invalid bank snapshot');
   const body = JSON.stringify(bankSnapshotBody(value));
   if (new TextEncoder().encode(body).length > BANK_MAX_BYTES || await sha256(body) !== value.revision) throw Error('Bank snapshot integrity check failed');
   return value;

@@ -186,7 +186,15 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
   labels(); setPrint(false);
   return {
     async open({ subjectId: nextSubject = '', preferred = [] } = {}) {
-      if (opened && catalog && (!nextSubject || subjectId === nextSubject)) { await showTopic(); return; }
+      if (opened && catalog && (!nextSubject || subjectId === nextSubject)) {
+        if (preferred.length) {
+          lastPreferred = preferred;
+          selected = preferredReviewTopic(topics, preferred);
+          chapter = selectedTopic()?.chapterKey || '';
+          controls();
+        }
+        await showTopic(); return;
+      }
       opened = true; subjectId = Object.hasOwn(bankSubjects, nextSubject) ? nextSubject : '';
       lastPreferred = preferred; await load();
     },

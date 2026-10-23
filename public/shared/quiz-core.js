@@ -5,10 +5,10 @@ import { hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer } from "
 import { mountNumericAnswer, hideMathKeyboard } from "./quiz-math-input.js";
 import { mountDragAnswer } from "./quiz-drag-view.js";
 import { dragAnswerSummary } from "./quiz-drag-model.js";
-import { readBankSelection, loadBankQuiz } from "./question-bank-player.js?v=bank-svg-1";
+import { readBankSelection, loadBankQuiz } from "./question-bank-player.js?v=column-b-20261023";
 import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
 import { warmQuizEngine } from "./quiz-refresh.js";
-import { createTopicReviewBrowser } from "./topic-review.js?v=review-answers-20261023-1";
+import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023";
 
 /* ==============================================================
    Quiz Engine กลางของ Learning Hub

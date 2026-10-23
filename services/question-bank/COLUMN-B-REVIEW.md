@@ -15,9 +15,11 @@ URL. No setup function or new archive folder is needed.
 The GitHub Pages frontend can deploy before this service update. Older snapshots
 remain readable with the original digest. New snapshots sign their row topic
 keys as part of the revision; changing a topic therefore creates a new revision.
-Existing saved attempts remain pinned to their original question version. Use
-“Restart · load latest” to start a fresh attempt with column B metadata after the
-service update; do not rewrite archived attempts.
+Existing saved attempts remain pinned to their original question version. On
+reopening, legacy attempts can borrow current review metadata only when the row
+number and complete question HTML are unchanged. This does not replace the saved
+question revision or answers. Changed or moved rows are not guessed. Do not
+rewrite archived attempts.
 
 ## Check
 

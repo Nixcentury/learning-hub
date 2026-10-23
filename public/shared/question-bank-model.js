@@ -61,3 +61,15 @@ export function chooseBankRevision(local, remote) {
   if (localRevision && (!remoteRevision || local?.localSync?.dirty)) return localRevision;
   return remoteRevision || localRevision;
 }
+
+// Review navigation may use verified current metadata for an unchanged legacy
+// row. Never replace archived question HTML, IDs, order or scoring revision.
+export function bankRowsWithReviewTopics(snapshot, latest) {
+  if (snapshot.subjectId !== latest.subjectId || snapshot.bankKey !== latest.bankKey) return snapshot.rows;
+  return snapshot.rows.map(row => {
+    if (Object.hasOwn(row, 'reviewTopicKey')) return row;
+    const matches = latest.rows.filter(candidate => candidate.rowNumber === row.rowNumber && candidate.html === row.html);
+    if (matches.length !== 1 || !bankKeyPattern.test(matches[0].reviewTopicKey || '')) return row;
+    return { ...row, reviewTopicKey: matches[0].reviewTopicKey };
+  });
+}

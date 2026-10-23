@@ -1,5 +1,5 @@
 import { bankClient } from './question-bank-client.js';
-import { bankContentId, chooseBankRevision } from './question-bank-model.js';
+import { bankContentId, chooseBankRevision, bankRowsWithReviewTopics } from './question-bank-model.js?v=review-resume-20261023';
 import { adaptLegacyBank } from './question-bank-adapter.js?v=column-b-20261023';
 
 export function readBankSelection(search) {
@@ -19,7 +19,16 @@ export async function loadBankQuiz({ selection, identityKey, loadCloud, fresh = 
   if (remote && (remote.identityKey !== identityKey || remote.contentId !== selection.contentId)) throw Error('Cloud bank context mismatch');
   const revision = fresh ? '' : chooseBankRevision(local, remote);
   const snapshot = await client.snapshot(selection.subjectId, selection.bankKey, revision);
-  return { root: adaptLegacyBank(snapshot), revision: snapshot.revision,
+  let reviewRows = snapshot.rows;
+  if (revision && snapshot.rows.some(row => !Object.hasOwn(row, 'reviewTopicKey'))) {
+    try {
+      const latest = await client.snapshot(selection.subjectId, selection.bankKey);
+      reviewRows = bankRowsWithReviewTopics(snapshot, latest);
+    } catch {
+      // Optional review metadata must not prevent a saved quiz from opening.
+    }
+  }
+  return { root: adaptLegacyBank({ ...snapshot, rows: reviewRows }), revision: snapshot.revision,
     // This is a compare-and-set precondition, not part of the public URL.
     replacementBase: fresh ? remote?.bankRevision || '' : local?.localSync?.bankReplacementBase,
     pinned: Boolean(revision) };

@@ -122,3 +122,35 @@ test('all questions in a sheet row inherit its column B topic while keeping thei
   assert.deepEqual(questions.map(q=>q.topicIds),[[topic],[topic],[]]);
   assert.deepEqual(questions.map(q=>q.id),[1,2,3].map(i=>bankQuestionId('chemistry',key,i)));
 });
+
+test('opening a pinned attempt enriches review links without replacing its revision, even if current metadata is unavailable', async () => {
+  const {loadBankQuiz}=await import('../public/shared/question-bank-player.js');
+  const {bankContentId}=await import('../public/shared/question-bank-model.js');
+  const previous={document:globalThis.document,DOMParser:globalThis.DOMParser,localStorage:globalThis.localStorage};
+  const {document}=parseHTML('<html><body></body></html>');
+  const oldRevision='1'.repeat(64), topic='b-'+'c'.repeat(24);
+  const selection={subjectId:'chemistry',bankKey:key,contentId:bankContentId('chemistry',key)};
+  globalThis.document=document;globalThis.DOMParser=DOMParser;
+  globalThis.localStorage={getItem:()=>JSON.stringify({identityKey:'guest',contentId:selection.contentId,bankRevision:oldRevision})};
+  try {
+    for(const unavailable of [false,true]) {
+      const calls=[];
+      const client={snapshot:async(subject,bank,revision)=>{
+        calls.push(revision);
+        if(!revision && unavailable) throw Error('Offline');
+        return {subjectId:subject,bankKey:bank,title:'Exam',revision:revision||'2'.repeat(64),rows:[
+          {rowNumber:2,html:choice,...(!revision?{reviewTopicKey:topic}:{})}
+        ]};
+      }};
+      const result=await loadBankQuiz({selection,identityKey:'guest',client});
+      assert.deepEqual(calls,[oldRevision,undefined]);
+      assert.equal(result.revision,oldRevision);
+      assert.equal(result.pinned,true);
+      assert.equal(result.root.dataset.bankRevision,oldRevision);
+      const q=readQuizContent(result.root).questions[0];
+      assert.equal(q.id,bankQuestionId('chemistry',key,1));
+      assert.equal(q.answer,'b');
+      assert.deepEqual(q.topicIds,unavailable?[]:[topic]);
+    }
+  } finally { Object.assign(globalThis,previous); }
+});

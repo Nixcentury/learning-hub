@@ -17,6 +17,16 @@
 .topic-review-body th, .topic-review-body td { padding: 10px; border: 1px solid #bac9db; overflow-wrap: anywhere; }
 .topic-review-body a { color: #214f9e; text-decoration: underline; }
 .review-writing-space { min-height: 64px; margin: 12px 0; border-bottom: 1px solid #8993a3; }
+.review-answer-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; margin-top: 16px; }
+.review-answer-tools[hidden], .topic-review-body [hidden] { display: none !important; }
+.review-answer-tools span { font-size: 13px; color: #52627d; }
+.review-answer-toggle { min-height: 42px; padding: 9px 16px; border: 1px solid #afc2de; border-radius: 10px; color: #203b63; background: #f2f6fc; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.review-answer-toggle:hover { background: #e5eefb; }
+.review-answer-toggle:focus-visible { outline: 3px solid #94c2ff; outline-offset: 2px; }
+.review-answer-toggle:disabled { opacity: .6; cursor: default; }
+.review-answer { margin: 12px 0 20px; padding: 12px 16px; border-left: 3px solid #6c8db5; background: #f2f6fc; }
+.review-answer > :first-child { margin-top: 0; }
+.review-answer > :last-child { margin-bottom: 0; }
 .review-page { width: min(1100px, calc(100% - 32px)); margin: 28px auto; }
 .review-page-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 22px; }
 .review-page-heading > div { flex: 1; min-width: 220px; }
@@ -33,6 +43,8 @@
   .review-page-footer > button { width: 100%; }
 }
 @media print {
+  .review-answer-toggle, .review-answer-tools { display: none !important; }
   .topic-review-browser, .review-page-heading, .review-page-footer { display: none !important; }
   .activity-topic-review-print .review-writing-space { min-height: 18mm; border-bottom: .75pt solid #666; }
+  .activity-topic-review-print .review-answer { color: #111; background: white; border-left-color: #777; }
 }

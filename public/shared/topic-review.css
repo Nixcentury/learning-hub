@@ -13,6 +13,7 @@
 .topic-review-body h1, .topic-review-body h2, .topic-review-body h3 { color: #132e53; line-height: 1.5; }
 .topic-review-body h2:first-child { margin-top: 0; }
 .topic-review-body img, .topic-review-body svg { max-width: 100%; height: auto; }
+.topic-review-body figure { margin: 16px 0; }
 .topic-review-body table { border-collapse: collapse; width: 100%; table-layout: fixed; }
 .topic-review-body th, .topic-review-body td { padding: 10px; border: 1px solid #bac9db; overflow-wrap: anywhere; }
 .topic-review-body a { color: #214f9e; text-decoration: underline; }
@@ -47,4 +48,5 @@
   .topic-review-browser, .review-page-heading, .review-page-footer { display: none !important; }
   .activity-topic-review-print .review-writing-space { min-height: 18mm; border-bottom: .75pt solid #666; }
   .activity-topic-review-print .review-answer { color: #111; background: white; border-left-color: #777; }
+  .activity-topic-review-print figure { margin: 4mm 0; }
 }

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="th" data-learning-html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>__TITLE_TH__ · Quick Review</title><style>
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #20344e; background: #f7f9fc; font: 16px/1.75 Tahoma, Arial, sans-serif; }
+    .page-heading, main { max-width: 960px; margin: auto; padding: 24px; }
+    .page-heading { padding-bottom: 0; }
+    .page-heading small { color: #536b8c; font-weight: 700; letter-spacing: .08em; }
+    h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.4; margin: 10px 0; }
+    h2 { font-size: 22px; line-height: 1.5; margin: 0 0 12px; }
+    h3 { font-size: 18px; margin: 18px 0 8px; }
+    p { margin: 10px 0; }
+    .block { padding: 22px; margin: 0 0 18px; background: white; border: 1px solid #d8e1ed; border-radius: 16px; }
+    .aim { padding: 16px 20px; margin: 0 0 18px; border-left: 4px solid #536b8c; background: #edf3fa; }
+    table { border-collapse: collapse; width: 100%; margin: 14px 0; }
+    th, td { border: 1px solid #adb9c7; padding: 10px 12px; text-align: start; vertical-align: top; overflow-wrap: anywhere; }
+    th { background: #edf2f8; }
+    .recall td { height: 46px; }
+    ul { padding-left: 22px; }
+    li + li { margin-top: 6px; }
+    figure { margin: 16px 0; }
+    img { display: block; width: 100%; max-width: 660px; height: auto; margin: auto; }
+    figcaption, .small { font-size: 14px; color: #536273; }
+    .review-writing-space { min-height: 64px; margin: 12px 0 20px; border-bottom: 1px solid #8896a5; }
+    .sources { font-size: 14px; }
+    a { color: #214f9e; overflow-wrap: anywhere; }
+    html[lang="th"] [data-content-lang="en"], html[lang="en"] [data-content-lang="th"] { display: none; }
+    @media (max-width: 520px) { .page-heading, main { padding: 18px 14px; } .block { padding: 18px 14px; } th, td { padding: 8px; } }
+    @media print {
+      @page { size: A4; margin: 15mm; }
+      body { color: #111; background: white; font-size: 11pt; }
+      .page-heading, main { padding: 0; max-width: none; }
+      .page-heading { margin-bottom: 6mm; }
+      .block { border: 0; border-radius: 0; padding: 0; margin-bottom: 6mm; }
+      .aim, th { background: white; }
+      h1 { font-size: 21pt; } h2 { font-size: 15pt; } h3 { font-size: 12pt; }
+      h2, h3 { break-after: avoid; }
+      tr, figure { break-inside: avoid; }
+      thead { display: table-header-group; }
+      .review-writing-space { min-height: 18mm; }
+    }
+  </style></head>
+<body>
+<header class="page-heading"><small>__SUBJECT_LABEL_EN__ · QUICK REVIEW</small>
+<h1 data-th="__TITLE_TH__" data-en="__TITLE_EN__">__TITLE_TH__</h1></header>
+<main data-topic-review-document>
+  <section data-content-lang="th" lang="th">
+    <p><strong>เรื่องนี้ต้องจำ:</strong> __RECALL_GOALS_TH__</p>
+    <section>
+      <h2>1. __SECTION_TITLE_TH__</h2>
+      <p>__SUMMARY_TH__</p>
+      <!-- Add a local static SVG figure or table here when it helps understanding. -->
+      <section data-review-question>
+        <h3>คำถาม 1 — __QUESTION_TITLE_TH__</h3>
+        <p><strong>ก.</strong> __QUESTION_A_TH__</p>
+        <div class="review-writing-space" data-review-blank data-review-writing-space></div>
+        <p><strong>ข.</strong> __QUESTION_B_TH__</p>
+        <div class="review-writing-space" data-review-blank data-review-writing-space></div>
+        <div data-review-answer hidden>
+          <p><strong>ก.</strong> __ANSWER_A_TH__</p>
+          <p><strong>ข.</strong> __ANSWER_B_TH__</p>
+        </div>
+      </section>
+    </section>
+    <section><h2>แหล่งศึกษาต่อและตรวจสอบ</h2><p><a href="__SOURCE_URL__">__SOURCE_LABEL__</a></p></section>
+  </section>
+  <section data-content-lang="en" lang="en">
+    <p><strong>Recall goals:</strong> __RECALL_GOALS_EN__</p>
+    <section>
+      <h2>1. __SECTION_TITLE_EN__</h2>
+      <p>__SUMMARY_EN__</p>
+      <section data-review-question>
+        <h3>Question 1 — __QUESTION_TITLE_EN__</h3>
+        <p><strong>a.</strong> __QUESTION_A_EN__</p>
+        <div class="review-writing-space" data-review-blank data-review-writing-space></div>
+        <p><strong>b.</strong> __QUESTION_B_EN__</p>
+        <div class="review-writing-space" data-review-blank data-review-writing-space></div>
+        <div data-review-answer hidden>
+          <p><strong>a.</strong> __ANSWER_A_EN__</p>
+          <p><strong>b.</strong> __ANSWER_B_EN__</p>
+        </div>
+      </section>
+    </section>
+    <section><h2>Sources and further study</h2><p><a href="__SOURCE_URL__">__SOURCE_LABEL__</a></p></section>
+  </section>
+</main>
+</body></html>

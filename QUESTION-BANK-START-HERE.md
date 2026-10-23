@@ -1,5 +1,7 @@
 # คลังข้อสอบจาก Sheet เดิม
 
+งานสร้าง **Topic Review** ใหม่/ส่งต่อให้บัญชีอื่น: อ่าน [คู่มือ Topic Review](docs/topic-review/README.md) พร้อม template และตัวตรวจในโฟลเดอร์นั้นก่อนเริ่ม ไม่ต้องแก้ Apps Script เพื่อเพิ่มไฟล์สรุปตามปกติ
+
 สถานะล่าสุด 15 ตุลาคม 2026 — เปิดใช้คลังฟิสิกส์และเคมีบน Learning Hub จริงแล้ว ใช้ Google Sheet และ endpoint เดิมร่วมกัน โดยตั้ง Script Property `HUB_BANK_ENABLED_SUBJECTS` เป็น `physics,chemistry`
 
 ตรวจจริงจาก Guest บน GitHub Pages: ฟิสิกส์ 10 ชุด; เคมี 4 ชุด ซึ่งมีโจทย์พร้อมใช้ 3 ชุดรวม 33 ข้อ และอีก 1 ชุดยังไม่มีโจทย์ รายการที่จำกัด StudentID หรือสถานะไม่อนุญาตยังถูกกรองออก ผลตรวจและรายละเอียดการเปิดเคมีอยู่ใน [CHEMISTRY-BANK-QA.md](CHEMISTRY-BANK-QA.md)

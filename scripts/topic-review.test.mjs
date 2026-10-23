@@ -81,6 +81,18 @@ function uiSetup(fetcher) {
 }
 const response = body => ({ok:true,redirected:false,text:async()=>typeof body==='string'?body:JSON.stringify(body)});
 
+test('Hub history can explicitly return to the library without losing the current topic by default', async () => {
+  const ui = uiSetup(async url => response(url.endsWith('.json') ? authored : '<main>Review</main>'));
+  await ui.browser.open({subjectId:'chemistry',preferred:[key]});
+  assert.deepEqual(ui.browser.getSelection(), {subjectId:'chemistry',bankKey:key});
+  await ui.browser.open({subjectId:'chemistry'});
+  assert.equal(ui.browser.getSelection().bankKey,key);
+  await ui.browser.open({subjectId:'chemistry',clearSelection:true});
+  assert.deepEqual(ui.browser.getSelection(), {subjectId:'chemistry',bankKey:null});
+  await ui.browser.open({subjectId:'chemistry',preferred:['b-'+'f'.repeat(24)]});
+  assert.match(ui.document.querySelector('[data-review-status]').textContent,/ไม่พบหัวข้อ/);
+});
+
 const recall = `<main><section data-review-question><h3>Question A</h3><p>Count particles.</p>
   <div data-review-blank data-review-writing-space></div><div data-review-answer hidden><p>Answer A \\(N_e=Z-q\\)</p></div></section>
   <section data-review-question><h3>Question B</h3><table data-review-blank><tr><td>________</td></tr></table>

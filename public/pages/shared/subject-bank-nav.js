@@ -29,16 +29,17 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
   const cards = panel.querySelector('[data-bank-cards]'), notice = panel.querySelector('[data-bank-notice]');
   const search = panel.querySelector('[data-bank-search]'), refresh = panel.querySelector('[data-bank-refresh]');
   const review = document.createElement('a'); review.className = 'back-button bank-review-entry';
-  review.target = '_blank'; review.rel = 'noopener';
   panel.querySelector('.activity-heading').append(review);
   function updateReviewLink() {
-    const url = new URL('../tools/topic-review-player.html', import.meta.url);
-    url.searchParams.set('subject', subject.id);
-    url.searchParams.set('lang', document.documentElement.lang === 'en' ? 'en' : 'th');
-    if (currentKey) url.searchParams.set('topic', currentKey);
+    const url = new URL('../../index.html', import.meta.url);
+    url.hash = `${subject.id}/review${currentKey ? '/' + currentKey : ''}`;
     review.href = url.href;
-    localize(review, '📖 คลังเนื้อหาทบทวน ↗', '📖 Topic review library ↗');
+    localize(review, '📖 คลังเนื้อหาทบทวน', '📖 Topic review library');
   }
+  review.addEventListener('click', event => {
+    if (event.button > 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    if (requestNavigation({ review: true, bankKey: currentKey })) event.preventDefault();
+  });
   const chapter = panel.querySelector('[data-bank-chapter]');
   const storageKey = `learning-hub:bank-menu:${subject.id}`;
   let selectedChapter = '';

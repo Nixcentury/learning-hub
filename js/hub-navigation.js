@@ -22,6 +22,10 @@ export function resolveNavigation(catalog, hash) {
 
 export function routeForSelection(catalog, selection) {
   if (!selection || typeof selection.subjectId !== 'string') return null;
+  if (selection.review === true) {
+    const route = resolveHubRoute(catalog, `#${selection.subjectId}/review${selection.bankKey ? '/' + selection.bankKey : ''}`).route;
+    return route?.kind === 'topic-review' ? route : null;
+  }
   if (selection.bank === true) {
     const parts = [selection.subjectId, 'bank'];
     if (selection.bankKey) parts.push(selection.bankKey);
@@ -155,6 +159,12 @@ export function createHubNavigation({ pageFrame, navButtons, showSection, notice
   }
   return {
     handleMessage,
+    async select(selection) {
+      try {
+        const route = routeForSelection(await loadCatalog(), selection);
+        if (route) await navigate(route.hash);
+      } catch { showNotice('catalog-unavailable'); }
+    },
     sessionChanged() { void navigate(location.hash, 'replace'); },
     toolActivated(tool) {
       if (applyingWorkspace || !canOpenWorkspace()) return;

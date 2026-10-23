@@ -8,7 +8,7 @@
 const subjectRoot = document.querySelector("[data-subject-page]");
 const chapterTemplate = document.querySelector("#subject-chapters");
 const contentNavigationUrl = new URL("subject-content-nav.js", document.currentScript.src).href;
-const bankNavigationUrl = new URL("subject-bank-nav.js?v=topic-review-library-20261023-1", document.currentScript.src).href;
+const bankNavigationUrl = new URL("subject-bank-nav.js?v=review-in-hub-20261023-1", document.currentScript.src).href;
 
 function setLocalizedText(element, thai, english) {
   element.dataset.th = thai;

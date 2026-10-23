@@ -2,12 +2,18 @@ import { resolveHubRoute } from './hub-routes.js';
 import { createContentTool } from './content-tool.js';
 import { toolCatalog } from './legacy-tool-catalog.js';
 import { createBankTool } from './question-bank-tools.js';
+import { createTopicReviewTool } from './topic-review-tools.js';
 
 export const isMenuRoute = route => ['section', 'chapter', 'topic', 'bank'].includes(route?.kind);
-export const isActivityRoute = route => ['content', 'legacy-tool', 'bank-tool'].includes(route?.kind);
+export const isActivityRoute = route => ['content', 'legacy-tool', 'bank-tool', 'topic-review'].includes(route?.kind);
 
 // Resolve only authored catalog entries, never a source URL supplied in the hash.
 export function activityForRoute(catalog, route, hubUrl) {
+  if (route?.kind === 'topic-review') {
+    const review = { subjectId: route.subjectId, bankKey: route.bankKey };
+    const tool = createTopicReviewTool(review, hubUrl);
+    return tool ? { review, tool } : null;
+  }
   if (route?.kind === 'bank-tool') {
     const bank = { subjectId: route.subjectId, bankKey: route.bankKey, toolKey: route.toolKey };
     const tool = createBankTool(bank, hubUrl);
@@ -50,6 +56,13 @@ export function menuForRoute(catalog, route) {
 
 export function routeForTool(catalog, tool, current, hubUrl) {
   if (!tool) return null;
+  if (tool.reviewRoute) {
+    const route = resolveHubRoute(catalog, tool.reviewRoute).route;
+    const expected = activityForRoute(catalog, route, hubUrl)?.tool;
+    return route?.kind === 'topic-review' && expected?.id === tool.id && expected.source === tool.source &&
+      expected.reviewSelection?.subjectId === tool.reviewSelection?.subjectId &&
+      expected.reviewSelection?.bankKey === tool.reviewSelection?.bankKey ? route : null;
+  }
   if (tool.bankRoute) {
     const route = resolveHubRoute(catalog, tool.bankRoute).route;
     const expected = activityForRoute(catalog, route, hubUrl)?.tool;

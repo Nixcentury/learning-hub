@@ -135,6 +135,7 @@ const workspace = createWorkspace({
   onToolActivated: tool => navigation?.toolActivated(tool),
   onWorkspaceIdle: () => navigation?.workspaceIdle(),
   onLanguageChange: language => setLanguage(language),
+  onReviewBack: selection => void navigation?.select({ ...selection, bank: true }),
   onShare: (tool, opener) => void openHubShare({
     getTarget: () => navigation.shareTarget(tool), getLanguage: () => currentLanguage, opener,
   }),
@@ -634,7 +635,8 @@ navigation = createHubNavigation({
   pageFrame, navButtons, showSection,
   noticeElement: document.querySelector('#hub-route-notice'),
   canOpenWorkspace: () => ['signed-in', 'guest'].includes(activeSession.status),
-  openActivity: activity => activity.bank ? workspace.openBank(activity.bank)
+  openActivity: activity => activity.review ? workspace.openReview(activity.review)
+    : activity.bank ? workspace.openBank(activity.bank)
     : activity.entry ? workspace.openContent(activity.entry) : workspace.open(activity.toolId),
   showMenu: () => workspace.showMenu(),
 });

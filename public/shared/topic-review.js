@@ -6,6 +6,7 @@ const siteUrl = new URL('../', import.meta.url);
 let reviewInstance = 0;
 
 export function createTopicReviewBrowser({ root, content, printButton, language = () => document.documentElement.lang,
+  allowEmptySubject = true,
   client = bankClient, fetcher = (...args) => fetch(...args), Parser = DOMParser, onChange = () => {},
   typeset = async node => {
     await window.MathJax?.startup?.promise;
@@ -86,7 +87,8 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
     for (const [key, th, en] of [['subject', 'วิชา', 'Subject'], ['chapter', 'เลือกบท', 'Chapter'], ['topic', 'หัวข้อที่ต้องการทวน', 'Review topic']])
       root.querySelector(`[data-review-${key}-label]`).textContent = text(th, en);
     retry.textContent = text('ลองโหลดอีกครั้ง', 'Try again');
-    subject.replaceChildren(); option(subject, '', text('เลือกวิชา', 'Choose a subject'));
+    subject.replaceChildren();
+    if (allowEmptySubject) option(subject, '', text('เลือกวิชา', 'Choose a subject'));
     Object.entries(bankSubjects).forEach(([key, value]) => option(subject, key, text(value.th, value.en)));
     subject.value = subjectId;
   }
@@ -166,6 +168,7 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
       chapter = selectedTopic()?.chapterKey || '';
       controls();
       await showTopic();
+      if (lastPreferred.some(key => key) && !selected) status.textContent = text('ไม่พบหัวข้อจากลิงก์นี้ หรือหัวข้อนี้ยังไม่เปิดใช้งาน', 'This linked topic was not found or is not published yet.');
       if (!topics.length) message(text('ยังไม่มีหัวข้อที่เปิดใช้งานในวิชานี้', 'No published topics for this subject yet'));
       else if (!authored) { status.textContent = text('โหลดรายการบททวนไม่สำเร็จ · ลองโหลดอีกครั้ง', 'Review availability could not load. Try again.'); retry.hidden = false; }
     } catch (error) {
@@ -174,7 +177,10 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
       status.textContent = ''; retry.hidden = false;
     } finally { clearTimeout(timer); }
   }
-  subject.addEventListener('change', () => { subjectId = subject.value; lastPreferred = []; void load(); });
+  subject.addEventListener('change', () => {
+    subjectId = subject.value; lastPreferred = []; selected = ''; chapter = '';
+    onChange(null); void load();
+  });
   chapters.addEventListener('change', () => { chapter = chapters.value; selected = ''; controls(); void showTopic(); });
   topic.addEventListener('change', () => { selected = topic.value; void showTopic(); });
   retry.addEventListener('click', () => { lastPreferred = [selected]; void load(true); });
@@ -185,20 +191,23 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
   });
   labels(); setPrint(false);
   return {
-    async open({ subjectId: nextSubject = '', preferred = [] } = {}) {
+    async open({ subjectId: nextSubject = '', preferred = [], clearSelection = false } = {}) {
       if (opened && catalog && (!nextSubject || subjectId === nextSubject)) {
-        if (preferred.length) {
+        if (preferred.length || clearSelection) {
           lastPreferred = preferred;
           selected = preferredReviewTopic(topics, preferred);
           chapter = selectedTopic()?.chapterKey || '';
           controls();
         }
-        await showTopic(); return;
+        await showTopic();
+        if (lastPreferred.some(key => key) && !selected) status.textContent = text('ไม่พบหัวข้อจากลิงก์นี้ หรือหัวข้อนี้ยังไม่เปิดใช้งาน', 'This linked topic was not found or is not published yet.');
+        return;
       }
       opened = true; subjectId = Object.hasOwn(bankSubjects, nextSubject) ? nextSubject : '';
       lastPreferred = preferred; await load();
     },
     refreshLanguage() { if (opened) { controls(); void showTopic(); } },
+    getSelection() { return { subjectId, bankKey: selected || null }; },
     setPrinting(value) { printing = value; controls(); answerControls(); setPrint(Boolean(selectedTopic())); },
     close() { ++version; controller?.abort(); },
   };

@@ -235,7 +235,17 @@ node scripts/validate-topic-review.mjs --content-only public/content/reviews/che
 
 **ห้ามแก้ expected test count ให้ตรงเลขในเอกสารนี้** ใช้ชุดทดสอบจริงล่าสุด; ฐานส่งต่อผ่าน 330 unit tests ก่อนเพิ่มเครื่องมือส่งต่อนี้
 
-### ลิงก์ player ตรง
+### ลิงก์หัวข้อใน Learning Hub
+
+```text
+https://nixcentury.github.io/learning-hub/#<subjectId>/review/<bankKey>
+```
+
+ใช้ลิงก์นี้เมื่อต้องการหน้าต่างเครื่องมือและระบบแชร์/Back/Forward ของ Hub เดิม.
+ปุ่มคลังเนื้อหาทบทวนบนหน้าคลังข้อสอบทั้งสองวิชาใช้หน้าต่างนี้แล้ว.
+หัวข้อและไฟล์ยังอ้างจาก review anchor ในเมนู bankKey เดิม ไม่ต้องลงทะเบียนไฟล์ซ้ำ.
+
+### ลิงก์ player เดิม (ยังรองรับ)
 
 ```text
 https://nixcentury.github.io/learning-hub/pages/tools/topic-review-player.html?subject=<subjectId>&topic=<bankKey>&lang=th

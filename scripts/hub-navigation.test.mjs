@@ -4,6 +4,8 @@ import { resolveNavigation, routeForSelection } from '../js/hub-navigation.js';
 import { activityForRoute, menuForRoute, routeForTool, isActivityRoute } from '../js/hub-activity-routes.js';
 import { catalogFromRepository } from './build-route-catalog.mjs';
 import { toolCatalog } from '../js/legacy-tool-catalog.js';
+import { createHubShareUrl, resolveHubRoute } from '../js/hub-routes.js';
+import { createTopicReviewTool } from '../js/topic-review-tools.js';
 
 const section = { hash: '#physics', aliases: [], kind: 'section', sectionId: 'physics', subjectId: 'physics' };
 const chapter = { hash: '#physics/natural', aliases: ['#physics/1'], kind: 'chapter', subjectId: 'physics', chapterId: '1', parentHash: '#physics', status: 'ready' };
@@ -14,6 +16,36 @@ const catalog = { schemaVersion: 1, contents: [{ id:'quiz-one', toolKind:'quiz',
   { hash: '#content/quiz-one', aliases: [], kind: 'content', contentId:'quiz-one', subjectId:'physics',chapterId:'1',topicId:'measurement', parentHash: topic.hash },
   { hash: '#tool/physics-c1-notebook', aliases: [], kind: 'legacy-tool', toolId:'physics-c1-notebook', storageContentId:'physics-c1-notebook', parentHash: chapter.hash },
 ] };
+
+test('review libraries and topic deep links share the owned Hub player and retain their bank menu', () => {
+  const key = 'b-' + 'a'.repeat(24);
+  for (const subjectId of ['physics', 'chemistry']) for (const bankKey of [null, key]) {
+    const hash = `#${subjectId}/review${bankKey ? '/' + bankKey : ''}`;
+    const { route, notice } = resolveNavigation(catalog, hash);
+    assert.equal(notice, ''); assert.equal(route.kind, 'topic-review');
+    assert.equal(menuForRoute(catalog, route).hash, `#${subjectId}/bank${bankKey ? '/' + bankKey : ''}`);
+    const activity = activityForRoute(catalog, route, hubUrl);
+    assert.equal(activity.tool.id, 'topic-review-library');
+    assert.deepEqual(activity.review, { subjectId, bankKey });
+    assert.equal(new URL(activity.tool.page).pathname, '/learning-hub/pages/tools/topic-review-player.html');
+    assert.equal(new URL(activity.tool.page).searchParams.get('embedded'), '1');
+    assert.equal(routeForTool(catalog, activity.tool, null, hubUrl).hash, hash);
+    assert.equal(routeForSelection(catalog, { subjectId, review: true, bankKey }).hash, hash);
+    const shared = new URL(createHubShareUrl(catalog, hash, hubUrl));
+    assert.equal(shared.hash, hash); assert.equal(shared.search, '');
+  }
+});
+
+test('review routes reject forged subjects, topic IDs, extra path segments and privileged source URLs', () => {
+  for (const hash of ['#biology/review', '#chemistry/review/not-a-key', '#physics/review/bad/quiz'])
+    assert.equal(resolveHubRoute(catalog, hash).route, undefined);
+  for (const value of [{ subjectId: 'admin' }, { subjectId: 'physics', bankKey: '../../secret' }, { subjectId: 'chemistry', bankKey: 123 }])
+    assert.equal(createTopicReviewTool(value, hubUrl), null);
+  const tool = createTopicReviewTool({ subjectId: 'physics' }, hubUrl);
+  assert.equal(routeForTool(catalog, { ...tool, source: 'https://evil.test/player.html' }, null, hubUrl), null);
+  assert.equal(routeForTool(catalog, { ...tool, reviewSelection: { subjectId: 'chemistry', bankKey: null } }, null, hubUrl), null);
+  assert.equal(createTopicReviewTool({ subjectId: 'physics' }, 'javascript:alert(1)'), null);
+});
 
 test('phase 2 resolves aliases and preparing topics without rewriting their stable IDs', () => {
   assert.deepEqual(resolveNavigation(catalog, '#physics/1'), { route: chapter, notice: '' });

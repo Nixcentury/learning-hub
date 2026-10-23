@@ -36,6 +36,8 @@
 .review-page-heading a { display: inline-block; padding: 10px 14px; color: #214f9e; text-decoration: none; }
 .review-page-panel { border: 1px solid #d4e0ee; border-radius: 22px; background: white; box-shadow: 0 16px 44px #243e6410; overflow: hidden; }
 .review-page-footer { display: flex; justify-content: flex-end; padding: 16px 24px; border-top: 1px solid #dce6f2; }
+body[data-review-embedded] .review-page { width: calc(100% - 24px); margin: 12px auto; }
+body[data-review-embedded] .review-page-heading h1 { font-size: 22px; }
 @media (max-width: 720px) {
   .review-controls { grid-template-columns: 1fr; }
   .topic-review-browser, .topic-review-body { padding-left: 18px; padding-right: 18px; }

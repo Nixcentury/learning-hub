@@ -10,6 +10,7 @@ import {
 } from "./content-context.js";
 import { createContentTool } from "./content-tool.js";
 import { createBankTool } from "./question-bank-tools.js";
+import { createTopicReviewTool } from "./topic-review-tools.js";
 import { pdfLinkEntry } from "./pdf-link.js";
 import { htmlLinkEntry } from "./html-link.js";
 import { renderHtmlMath } from "./html-math.js";
@@ -90,6 +91,7 @@ export function createWorkspace({
   onWorkspaceIdle = () => {},
   onShare = () => {},
   onLanguageChange = () => {},
+  onReviewBack = () => {},
 }) {
   const records = new Map();
   let highestZIndex = 30;
@@ -319,6 +321,16 @@ export function createWorkspace({
   }
 
   function postContext(record) {
+    if (record.tool.context.toolKind === 'review') {
+      if (!record.reviewReady) return;
+      const signature = JSON.stringify([record.tool.reviewSelection, language()]);
+      if (record.reviewLastSent === signature) return;
+      record.reviewLastSent = signature;
+      record.reviewCommand = (record.reviewCommand || 0) + 1;
+      record.frame.contentWindow?.postMessage({ type: 'learning-hub-review-select',
+        commandId: record.reviewCommand, selection: record.tool.reviewSelection, language: language() }, location.origin);
+      return;
+    }
     // Read-only HTML does not need the learner's identity or privileged bridges.
     if (["html", "pdf"].includes(record.tool.context.toolKind)) return;
     const targetOrigin = location.origin === "null" ? "*" : location.origin;
@@ -397,7 +409,7 @@ export function createWorkspace({
 
   function applyFrameLanguage(record) {
     // Quiz owns its translated questions and answer DOM through its context bridge.
-    if (record.tool.context.toolKind === "quiz") return;
+    if (["quiz", "review"].includes(record.tool.context.toolKind)) return;
     try {
       const doc = record.frame.contentDocument;
       const result = applyContentLanguage(doc, language());
@@ -770,6 +782,21 @@ export function createWorkspace({
     return open(tool.id);
   }
 
+  function openReview(selection) {
+    const tool = createTopicReviewTool(selection, location.href);
+    if (!tool) return false;
+    toolCatalog[tool.id] = tool;
+    const record = records.get(tool.id);
+    if (record) {
+      record.tool = tool;
+      updateRecordText(record);
+      restore(record);
+      postContext(record);
+      return true;
+    }
+    return open(tool.id);
+  }
+
   const htmlLinkDocuments = new WeakSet();
   function bindHtmlLinks(doc, ownerRecord = null) {
     if (!doc || htmlLinkDocuments.has(doc)) return;
@@ -837,6 +864,33 @@ export function createWorkspace({
   }
 
   window.addEventListener("message", (event) => {
+    if (typeof event.data?.type === 'string' && event.data.type.startsWith('learning-hub-review-')) {
+      if (event.origin !== location.origin) return;
+      const record = [...records.values()].find(candidate => candidate.frame.isConnected &&
+        candidate.frame.contentWindow === event.source && candidate.tool.context.toolKind === 'review');
+      if (!record) return;
+      if (event.data.type === 'learning-hub-review-ready') {
+        record.reviewReady = true;
+        record.reviewLastSent = null;
+        postContext(record);
+        return;
+      }
+      if (event.data.commandId !== record.reviewCommand) return;
+      if (event.data.type === 'learning-hub-review-back') {
+        onReviewBack(record.tool.reviewSelection);
+        return;
+      }
+      if (event.data.type !== 'learning-hub-review-selection' || record.minimized ||
+          !record.element.classList.contains('is-active')) return;
+      const tool = createTopicReviewTool(event.data.selection, location.href);
+      if (!tool || tool.reviewRoute === record.tool.reviewRoute) return;
+      record.tool = tool;
+      toolCatalog[tool.id] = tool;
+      record.reviewLastSent = JSON.stringify([tool.reviewSelection, language()]);
+      updateRecordText(record);
+      onToolActivated(tool);
+      return;
+    }
     if (event.origin === location.origin && event.data?.type === "learning-hub-language-request" &&
         ["th", "en"].includes(event.data.language)) {
       const record = [...records.values()].find(candidate => candidate.frame.isConnected && candidate.frame.contentWindow === event.source);
@@ -875,5 +929,5 @@ export function createWorkspace({
     });
   });
 
-  return { open, openContent, openBank, bindHtmlLinks, showMenu, setLanguage, setContext, clear, prepareAllForClose };
+  return { open, openContent, openBank, openReview, bindHtmlLinks, showMenu, setLanguage, setContext, clear, prepareAllForClose };
 }

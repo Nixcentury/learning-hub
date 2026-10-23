@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="204" viewBox="0 0 660 204" role="img" aria-labelledby="title desc">
+  <title id="title">Three neutral hydrogen isotopes</title>
+  <desc id="desc">Protium has one proton and no neutrons. Deuterium has one proton and one neutron. Tritium has one proton and two neutrons. Each neutral atom has one electron. Positions and sizes are schematic; no electron orbit is shown.</desc>
+  <rect x="1" y="1" width="208" height="202" rx="12" fill="#ffffff" stroke="#9aa7b5"/>
+  <rect x="226" y="1" width="208" height="202" rx="12" fill="#ffffff" stroke="#9aa7b5"/>
+  <rect x="451" y="1" width="208" height="202" rx="12" fill="#ffffff" stroke="#9aa7b5"/>
+  <g font-family="Arial, sans-serif" fill="#172235" text-anchor="middle">
+    <text x="105" y="30" font-size="19" font-weight="bold">Protium (H-1)</text>
+    <text x="330" y="30" font-size="19" font-weight="bold">Deuterium (H-2)</text>
+    <text x="555" y="30" font-size="19" font-weight="bold">Tritium (H-3)</text>
+    <circle cx="81" cy="100" r="29" fill="none" stroke="#84909e" stroke-dasharray="4 4"/>
+    <circle cx="81" cy="100" r="15" fill="#243b53"/>
+    <text x="81" y="105" font-size="15" fill="#ffffff">p+</text>
+    <circle cx="305" cy="100" r="37" fill="none" stroke="#84909e" stroke-dasharray="4 4"/>
+    <circle cx="290" cy="100" r="15" fill="#243b53"/>
+    <text x="290" y="105" font-size="15" fill="#ffffff">p+</text>
+    <circle cx="320" cy="100" r="15" fill="#dce2e8" stroke="#536273"/>
+    <text x="320" y="105" font-size="15">n</text>
+    <circle cx="530" cy="100" r="40" fill="none" stroke="#84909e" stroke-dasharray="4 4"/>
+    <circle cx="515" cy="91" r="15" fill="#243b53"/>
+    <text x="515" y="96" font-size="15" fill="#ffffff">p+</text>
+    <circle cx="546" cy="91" r="15" fill="#dce2e8" stroke="#536273"/>
+    <text x="546" y="96" font-size="15">n</text>
+    <circle cx="530" cy="118" r="15" fill="#dce2e8" stroke="#536273"/>
+    <text x="530" y="123" font-size="15">n</text>
+    <circle cx="157" cy="78" r="6" fill="#172235"/><text x="158" y="63" font-size="18">e−</text>
+    <circle cx="382" cy="78" r="6" fill="#172235"/><text x="383" y="63" font-size="18">e−</text>
+    <circle cx="607" cy="78" r="6" fill="#172235"/><text x="608" y="63" font-size="18">e−</text>
+    <text x="81" y="154" font-size="15">nucleus</text>
+    <text x="305" y="154" font-size="15">nucleus</text>
+    <text x="530" y="154" font-size="15">nucleus</text>
+    <text x="105" y="184" font-size="18">1 p · 0 n · 1 e</text>
+    <text x="330" y="184" font-size="18">1 p · 1 n · 1 e</text>
+    <text x="555" y="184" font-size="18">1 p · 2 n · 1 e</text>
+  </g>
+</svg>

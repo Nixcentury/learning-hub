@@ -8,7 +8,7 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
 import { readBankSelection, loadBankQuiz } from "./question-bank-player.js?v=bank-svg-1";
 import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
 import { warmQuizEngine } from "./quiz-refresh.js";
-import { createTopicReviewBrowser } from "./topic-review.js?v=topic-review-library-20261023-1";
+import { createTopicReviewBrowser } from "./topic-review.js?v=review-answers-20261023-1";
 
 /* ==============================================================
    Quiz Engine กลางของ Learning Hub

@@ -105,9 +105,10 @@
 
       <section class="block recall">
         <h2>ลองตอบด้วยตนเอง</h2>
-        <p>ปิดส่วนสรุปก่อนตอบ เขียนเหตุผลหรือวิธีคิดในพื้นที่ว่าง แล้วตรวจกลับด้วยความสัมพันธ์ด้านบน</p>
+        <p>ปิดส่วนสรุปก่อนตอบ เขียนเหตุผลหรือวิธีคิดในพื้นที่ว่าง แล้วกดเปิดเฉลยเพื่อตรวจคำตอบและวิธีคิด</p>
+        <section data-review-question>
         <h3>คำถาม 1 — เติมจำนวนอนุภาค</h3>
-        <table>
+        <table data-review-blank>
           <thead><tr><th scope="col">อะตอมหรือไอออน</th><th scope="col">โปรตอน</th><th scope="col">นิวตรอน</th><th scope="col">อิเล็กตรอน</th></tr></thead>
           <tbody>
             <tr><td>\({}^{23}_{11}\mathrm{Na}\)</td><td>________</td><td>________</td><td>________</td></tr>
@@ -116,19 +117,49 @@
             <tr><td>\({}^{24}_{12}\mathrm{Mg}^{2+}\)</td><td>________</td><td>________</td><td>________</td></tr>
           </tbody>
         </table>
+                <div data-review-answer hidden>
+        <p><strong>เฉลย 1:</strong> ใช้ \(N_p=Z\), \(N_n=A-Z\) และ \(N_e=Z-q\)</p>
+        <table><thead><tr><th>อะตอมหรือไอออน</th><th>โปรตอน</th><th>นิวตรอน</th><th>อิเล็กตรอน</th></tr></thead><tbody>
+          <tr><td>\({}^{23}_{11}\mathrm{Na}\)</td><td>11</td><td>12</td><td>11</td></tr>
+          <tr><td>\({}^{23}_{11}\mathrm{Na}^{+}\)</td><td>11</td><td>12</td><td>10</td></tr>
+          <tr><td>\({}^{35}_{17}\mathrm{Cl}^{-}\)</td><td>17</td><td>18</td><td>18</td></tr>
+          <tr><td>\({}^{24}_{12}\mathrm{Mg}^{2+}\)</td><td>12</td><td>12</td><td>10</td></tr>
+        </tbody></table>
+        <p>เช่น \(\mathrm{Cl}^{-}\) มี \(N_e=17-(-1)=18\) ตัว ส่วน \(\mathrm{Mg}^{2+}\) มี \(N_e=12-2=10\) ตัว การเกิดไอออนไม่เปลี่ยนจำนวนโปรตอนหรือนิวตรอน</p>
+        </div>
+        </section>
+        <section data-review-question>
         <h3>คำถาม 2 — แยกไอโซโทปกับไอออน</h3>
         <p>อธิบายว่า \({}^{35}_{17}\mathrm{Cl}\) กับ \({}^{37}_{17}\mathrm{Cl}\) เป็นไอโซโทปกันเพราะอะไร และมีจำนวนนิวตรอนต่างกันเท่าใด ถ้าชนิดแรกได้รับอิเล็กตรอน 1 ตัว จะเปลี่ยนเป็นธาตุอื่นหรือไม่ เพราะอะไร</p>
-        <div data-review-writing-space class="review-writing-space"></div>
+        <div data-review-blank data-review-writing-space class="review-writing-space"></div>
+                <div data-review-answer hidden>
+        <p><strong>เฉลย 2:</strong> ทั้งคู่มีโปรตอน 17 ตัวเท่ากัน จึงเป็นธาตุคลอรีนเหมือนกัน แต่มีนิวตรอน \(35-17=18\) และ \(37-17=20\) ตัว จึงเป็นไอโซโทปกันและมีนิวตรอนต่างกัน 2 ตัว</p>
+        <p>เมื่อ \({}^{35}_{17}\mathrm{Cl}\) รับอิเล็กตรอน 1 ตัว จะเป็น \({}^{35}_{17}\mathrm{Cl}^{-}\) มีอิเล็กตรอน 18 ตัว แต่โปรตอนยังเป็น 17 ตัว จึงยังเป็นคลอรีนไอโซโทปเดิม ไม่ได้เปลี่ยนธาตุ</p>
+        </div>
+        </section>
+        <section data-review-question>
         <h3>คำถาม 3 — ย้อนหาสัญลักษณ์นิวเคลียร์</h3>
         <p>ไอออนของแคลเซียม \(\mathrm{Ca}\) มีนิวตรอน 22 ตัว อิเล็กตรอน 18 ตัว และประจุ \(2+\) จงหาจำนวนโปรตอน เลขอะตอม เลขมวล และเขียนสัญลักษณ์นิวเคลียร์พร้อมประจุ โดยแสดงวิธีคิด</p>
-        <div data-review-writing-space class="review-writing-space"></div>
-        <div data-review-writing-space class="review-writing-space"></div>
+        <div data-review-blank data-review-writing-space class="review-writing-space"></div>
+        <div data-review-blank data-review-writing-space class="review-writing-space"></div>
+                <div data-review-answer hidden>
+        <p><strong>เฉลย 3:</strong> ประจุ \(2+\) หมายถึงมีโปรตอนมากกว่าอิเล็กตรอน 2 ตัว ดังนั้น \(N_p=N_e+q=18+2=20\) ตัว</p>
+        <p>เลขอะตอม \(Z=20\) และเลขมวล \(A=N_p+N_n=20+22=42\) จึงเขียนได้เป็น \({}^{42}_{20}\mathrm{Ca}^{2+}\)</p>
+        <p>ตรวจกลับ: \(N_n=42-20=22\) และ \(N_e=20-2=18\) ตรงกับโจทย์</p>
+        </div>
+        </section>
+        <section data-review-question>
         <h3>คำถาม 4 — แก้ข้อความให้ถูกต้อง</h3>
         <p>ก. “อะตอมทุกชนิดต้องมีนิวตรอน” จงยกตัวอย่างที่โต้แย้งข้อความนี้</p>
-        <div data-review-writing-space class="review-writing-space"></div>
+        <div data-review-blank data-review-writing-space class="review-writing-space"></div>
         <p>ข. “เลขมวลเท่ากับมวลอะตอมเฉลี่ยในตารางธาตุเสมอ” จงแก้ข้อความและอธิบายความหมายของสองค่านี้</p>
-        <div data-review-writing-space class="review-writing-space"></div>
-      </section>
+        <div data-review-blank data-review-writing-space class="review-writing-space"></div>
+        <div data-review-answer hidden>
+        <p><strong>เฉลย 4 ก:</strong> ข้อความนี้ไม่ถูกต้อง เพราะโปรเทียม \({}^{1}_{1}\mathrm{H}\) มีโปรตอน 1 ตัวและนิวตรอน \(1-1=0\) ตัว</p>
+        <p><strong>เฉลย 4 ข:</strong> เลขมวล \(A\) คือจำนวนโปรตอนรวมกับนิวตรอนของอะตอมหนึ่งอะตอม จึงเป็นจำนวนเต็มและไม่มีหน่วย ส่วนมวลอะตอมเฉลี่ยเป็นค่าเฉลี่ยถ่วงน้ำหนักของมวลไอโซโทปตามสัดส่วนที่พบ จึงไม่จำเป็นต้องเป็นจำนวนเต็มหรือเท่ากับเลขมวล เช่น คลอรีนมีเลขมวล 35 หรือ 37 แต่มีมวลอะตอมเฉลี่ยประมาณ \(35.45\,\mathrm{u}\)</p>
+        </div>
+        </section>
+              </section>
 
       <section class="block sources">
         <h2>ศึกษาต่อจากแหล่งทางการ</h2>
@@ -194,9 +225,10 @@
 
       <section class="block recall">
         <h2>Try it yourself</h2>
-        <p>Cover the summary before answering. Write your reasoning in the spaces, then check it using the relationships above.</p>
+        <p>Cover the summary before answering. Write your reasoning in the spaces, then show the answers to check your work and reasoning.</p>
+        <section data-review-question>
         <h3>Question 1 — Complete the particle counts</h3>
-        <table>
+        <table data-review-blank>
           <thead><tr><th scope="col">Atom or ion</th><th scope="col">Protons</th><th scope="col">Neutrons</th><th scope="col">Electrons</th></tr></thead>
           <tbody>
             <tr><td>\({}^{23}_{11}\mathrm{Na}\)</td><td>________</td><td>________</td><td>________</td></tr>
@@ -205,19 +237,49 @@
             <tr><td>\({}^{24}_{12}\mathrm{Mg}^{2+}\)</td><td>________</td><td>________</td><td>________</td></tr>
           </tbody>
         </table>
+                <div data-review-answer hidden>
+        <p><strong>Answer 1:</strong> Use \(N_p=Z\), \(N_n=A-Z\) and \(N_e=Z-q\).</p>
+        <table><thead><tr><th>Atom or ion</th><th>Protons</th><th>Neutrons</th><th>Electrons</th></tr></thead><tbody>
+          <tr><td>\({}^{23}_{11}\mathrm{Na}\)</td><td>11</td><td>12</td><td>11</td></tr>
+          <tr><td>\({}^{23}_{11}\mathrm{Na}^{+}\)</td><td>11</td><td>12</td><td>10</td></tr>
+          <tr><td>\({}^{35}_{17}\mathrm{Cl}^{-}\)</td><td>17</td><td>18</td><td>18</td></tr>
+          <tr><td>\({}^{24}_{12}\mathrm{Mg}^{2+}\)</td><td>12</td><td>12</td><td>10</td></tr>
+        </tbody></table>
+        <p>For example, \(\mathrm{Cl}^{-}\) has \(N_e=17-(-1)=18\) electrons, while \(\mathrm{Mg}^{2+}\) has \(N_e=12-2=10\). Ion formation does not change proton or neutron numbers.</p>
+        </div>
+        </section>
+        <section data-review-question>
         <h3>Question 2 — Distinguish isotopes from ions</h3>
         <p>Explain why \({}^{35}_{17}\mathrm{Cl}\) and \({}^{37}_{17}\mathrm{Cl}\) are isotopes and find the difference in neutron number. If the first atom gains one electron, does it become a different element? Explain.</p>
-        <div data-review-writing-space class="review-writing-space"></div>
+        <div data-review-blank data-review-writing-space class="review-writing-space"></div>
+                <div data-review-answer hidden>
+        <p><strong>Answer 2:</strong> Both have 17 protons, so both are chlorine. Their neutron numbers are \(35-17=18\) and \(37-17=20\). They are isotopes whose neutron numbers differ by 2.</p>
+        <p>Gaining one electron changes \({}^{35}_{17}\mathrm{Cl}\) into \({}^{35}_{17}\mathrm{Cl}^{-}\), with 18 electrons. It still has 17 protons, so it remains chlorine and the same isotope.</p>
+        </div>
+        </section>
+        <section data-review-question>
         <h3>Question 3 — Work backwards to a nuclear symbol</h3>
         <p>A calcium ion, \(\mathrm{Ca}\), has 22 neutrons, 18 electrons and charge \(2+\). Find its proton number, atomic number and mass number, then write its nuclear symbol with charge. Show your reasoning.</p>
-        <div data-review-writing-space class="review-writing-space"></div>
-        <div data-review-writing-space class="review-writing-space"></div>
+        <div data-review-blank data-review-writing-space class="review-writing-space"></div>
+        <div data-review-blank data-review-writing-space class="review-writing-space"></div>
+                <div data-review-answer hidden>
+        <p><strong>Answer 3:</strong> A charge of \(2+\) means there are two more protons than electrons. Therefore \(N_p=N_e+q=18+2=20\).</p>
+        <p>The atomic number is \(Z=20\) and the mass number is \(A=N_p+N_n=20+22=42\). The symbol is \({}^{42}_{20}\mathrm{Ca}^{2+}\).</p>
+        <p>Check: \(N_n=42-20=22\) and \(N_e=20-2=18\), as given.</p>
+        </div>
+        </section>
+        <section data-review-question>
         <h3>Question 4 — Correct the statements</h3>
         <p>a. “Every atom must contain neutrons.” Give a counterexample.</p>
-        <div data-review-writing-space class="review-writing-space"></div>
+        <div data-review-blank data-review-writing-space class="review-writing-space"></div>
         <p>b. “Mass number always equals the average atomic mass in the periodic table.” Correct the statement and explain the two quantities.</p>
-        <div data-review-writing-space class="review-writing-space"></div>
-      </section>
+        <div data-review-blank data-review-writing-space class="review-writing-space"></div>
+        <div data-review-answer hidden>
+        <p><strong>Answer 4 a:</strong> The statement is false. Protium, \({}^{1}_{1}\mathrm{H}\), has one proton and \(1-1=0\) neutrons.</p>
+        <p><strong>Answer 4 b:</strong> Mass number \(A\) counts the protons plus neutrons in one atom, so it is a whole number with no unit. Average atomic mass is a weighted mean of isotope masses using their abundances. It need not be a whole number or equal a mass number. For example, chlorine isotopes have mass numbers 35 and 37, while chlorine's average atomic mass is about \(35.45\,\mathrm{u}\).</p>
+        </div>
+        </section>
+              </section>
 
       <section class="block sources">
         <h2>Continue with official resources</h2>

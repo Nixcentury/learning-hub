@@ -40,7 +40,7 @@ export function reviewDocument(html, sourceUrl, { document: doc, Parser = DOMPar
   function copy(parent, into) {
     for (const child of parent.childNodes) {
       if (child.nodeType === 3) { into.append(doc.createTextNode(child.textContent)); continue; }
-      if (child.nodeType !== 1 || child.hasAttribute('hidden') || child.hasAttribute('data-no-review')) continue;
+      if (child.nodeType !== 1 || (child.hasAttribute('hidden') && !child.hasAttribute('data-review-answer')) || child.hasAttribute('data-no-review')) continue;
       const lang = child.dataset.contentLang || child.dataset.quizLanguage;
       if (lang && lang !== language) continue;
       if (child.localName === 'svg') { into.append(staticBankSvgImage(child, doc)); continue; }
@@ -63,6 +63,11 @@ export function reviewDocument(html, sourceUrl, { document: doc, Parser = DOMPar
         if (/^[1-9]\d?$/.test(child.getAttribute(attr) || '')) node.setAttribute(attr, child.getAttribute(attr));
       }
       if (child.hasAttribute('data-review-writing-space')) node.className = 'review-writing-space';
+      for (const marker of ['data-review-question', 'data-review-blank', 'data-review-answer']) {
+        if (child.hasAttribute(marker)) node.setAttribute(marker, '');
+      }
+      // Answers always start closed, including files whose author omitted hidden.
+      if (child.hasAttribute('data-review-answer')) { node.hidden = true; node.classList.add('review-answer'); }
       if (child.dataset.th && child.dataset.en && !child.children.length) node.textContent = child.dataset[language];
       else copy(child, node);
       into.append(node);

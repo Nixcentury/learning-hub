@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { parseHTML, DOMParser } from 'linkedom';
 import { reviewTopics, preferredReviewTopic, reviewContentUrl, reviewDocument } from '../public/shared/topic-review-model.js';
 import { createTopicReviewBrowser } from '../public/shared/topic-review.js';
@@ -79,6 +80,65 @@ function uiSetup(fetcher) {
   return {browser,document,content,printButton,choose,setLang:value=>{lang=value;browser.refreshLanguage();}};
 }
 const response = body => ({ok:true,redirected:false,text:async()=>typeof body==='string'?body:JSON.stringify(body)});
+
+const recall = `<main><section data-review-question><h3>Question A</h3><p>Count particles.</p>
+  <div data-review-blank data-review-writing-space></div><div data-review-answer hidden><p>Answer A \\(N_e=Z-q\\)</p></div></section>
+  <section data-review-question><h3>Question B</h3><table data-review-blank><tr><td>________</td></tr></table>
+  <div data-review-answer><p>Answer B</p><script>unsafe()</script></div></section><div hidden>Unrelated hidden content</div></main>`;
+
+test('recall answers start hidden, open independently or together, and reset for another topic', async () => {
+  const ui = uiSetup(async url => response(url.endsWith('.json') ? authored : recall));
+  await ui.browser.open({subjectId:'chemistry',preferred:[key]});
+  const buttons = [...ui.content.querySelectorAll('[data-review-answer-toggle]')];
+  const answers = [...ui.content.querySelectorAll('[data-review-answer]')];
+  const blanks = [...ui.content.querySelectorAll('[data-review-blank]')];
+  const all = ui.document.querySelector('[data-review-answers-toggle]');
+  const click = node => node.dispatchEvent(new window.Event('click'));
+  assert.equal(buttons.length,2);
+  assert.ok(answers.every(node=>node.hidden));
+  assert.ok(blanks.every(node=>!node.hidden));
+  assert.doesNotMatch(ui.content.innerHTML,/unsafe|Unrelated hidden content|<script/);
+  assert.equal(buttons[0].getAttribute('aria-controls'), answers[0].id);
+  click(buttons[0]);
+  assert.equal(answers[0].hidden,false);
+  assert.equal(answers[1].hidden,true);
+  assert.equal(blanks[0].hidden,true);
+  assert.equal(blanks[1].hidden,false);
+  assert.equal(buttons[0].getAttribute('aria-expanded'),'true');
+  click(all);
+  assert.ok(answers.every(node=>!node.hidden));
+  assert.equal(all.getAttribute('aria-expanded'),'true');
+  ui.browser.setPrinting(true);
+  assert.equal(all.disabled,true);
+  assert.ok(buttons.every(node=>node.disabled));
+  click(buttons[0]); click(all);
+  assert.ok(answers.every(node=>!node.hidden));
+  ui.browser.setPrinting(false);
+  click(all);
+  assert.ok(answers.every(node=>node.hidden));
+  assert.ok(blanks.every(node=>!node.hidden));
+  click(buttons[1]);
+  ui.setLang('en'); await new Promise(resolve=>setImmediate(resolve));
+  assert.ok([...ui.content.querySelectorAll('[data-review-answer]')].every(node=>node.hidden));
+  assert.equal(all.textContent,'Show all answers');
+  assert.equal(ui.content.querySelector('[data-review-answer-toggle]').textContent,'Show answer');
+  await ui.choose('[data-review-chapter]','');
+  await ui.choose('[data-review-topic]',other);
+  assert.ok([...ui.content.querySelectorAll('[data-review-answer]')].every(node=>node.hidden));
+});
+
+test('the bilingual subatomic review supplies an answer and writing area for every recall question', () => {
+  const html = fs.readFileSync(new URL('../public/content/reviews/chemistry/subatomic-particles-and-isotopes.html',import.meta.url),'utf8');
+  const {document} = parseHTML('<html></html>');
+  for (const language of ['th','en']) {
+    const content = reviewDocument(html,new URL('https://example.test/content/subatomic.html'),{document,Parser:DOMParser,language});
+    const questions = [...content.querySelectorAll('[data-review-question]')];
+    assert.equal(questions.length,4);
+    assert.ok(questions.every(node=>node.querySelector('[data-review-blank]') && node.querySelector('[data-review-answer]')?.hidden));
+    assert.match(questions[2].querySelector('[data-review-answer]').textContent,/18\+2=20/);
+    assert.match(questions[2].querySelector('[data-review-answer]').textContent,/42/);
+  }
+});
 
 test('topic switching ignores late responses and does not let another topic overwrite the screen', async()=>{
   let finish;

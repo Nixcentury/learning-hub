@@ -60,6 +60,33 @@ test('English review printing includes the selected translation and paper table'
   assert.doesNotMatch(printed[0].html, /ข้อความไทย/);
 });
 
+test('printing follows each answer state, keeps student space when hidden, and omits toggle buttons', async () => {
+  const {api, document, printed} = setup();
+  const content = document.querySelector('#review');
+  content.innerHTML = `<section><h3>Recall A</h3><button>Show answer</button>
+    <div data-review-blank>STUDENT SPACE A</div><div data-review-answer hidden>ANSWER A \\(N_e=Z-q\\)</div></section>
+    <section><h3>Recall B</h3><button>Show answer</button>
+    <div data-review-blank>STUDENT SPACE B</div><div data-review-answer hidden>ANSWER B</div></section>`;
+  await api.printReview({content});
+  assert.match(printed[0].html,/STUDENT SPACE A/);
+  assert.match(printed[0].html,/STUDENT SPACE B/);
+  assert.doesNotMatch(printed[0].html,/ANSWER A|ANSWER B|<button/);
+  const answers = content.querySelectorAll('[data-review-answer]');
+  const blanks = content.querySelectorAll('[data-review-blank]');
+  answers[0].hidden = false; blanks[0].hidden = true;
+  await api.printReview({content});
+  assert.match(printed[1].html,/ANSWER A/);
+  assert.match(printed[1].html,/STUDENT SPACE B/);
+  assert.doesNotMatch(printed[1].html,/STUDENT SPACE A|ANSWER B|<button/);
+  assert.equal(answers[0].hidden,false);
+  assert.equal(answers[1].hidden,true);
+  answers[1].hidden = false; blanks[1].hidden = true;
+  await api.printReview({content});
+  assert.match(printed[2].html,/ANSWER A/);
+  assert.match(printed[2].html,/ANSWER B/);
+  assert.doesNotMatch(printed[2].html,/STUDENT SPACE|<button/);
+});
+
 test('a failed math preparation restores the screen and allows a later print', async () => {
   const {api, window, document, printed, alerts} = setup();
   window.MathJax.typesetPromise = async () => { throw Error('Math unavailable'); };

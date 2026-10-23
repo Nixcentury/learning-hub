@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="344" viewBox="0 0 660 344" role="img" aria-labelledby="title desc">
+<title id="title">Lewis structure of water</title>
+<desc id="desc">O is single-bonded to two H atoms and has two lone pairs. The straight layout shows connectivity, not the actual shape of water.</desc>
+<rect width="660" height="344" rx="16" fill="#fff"/>
+<g font-family="Arial, sans-serif" fill="#172d49">
+<text x="330" y="38" font-size="26" text-anchor="middle" font-weight="bold">H₂O: bonds and lone pairs</text><text x="330" y="70" font-size="22" text-anchor="middle">Two single bonds; two lone pairs on O</text><text x="150" y="197" font-size="52" text-anchor="middle">H</text><text x="330" y="197" font-size="52" text-anchor="middle">O</text><text x="510" y="197" font-size="52" text-anchor="middle">H</text><g id="water-bonds"><path d="M178 180 L292 180" fill="none" stroke="#172d49" stroke-width="3"/><path d="M368 180 L482 180" fill="none" stroke="#172d49" stroke-width="3"/></g><g id="water-lone-pairs"><circle cx="323" cy="132" r="4.5" fill="#172d49"/><circle cx="337" cy="132" r="4.5" fill="#172d49"/><circle cx="323" cy="228" r="4.5" fill="#172d49"/><circle cx="337" cy="228" r="4.5" fill="#172d49"/></g><text x="330" y="290" font-size="22" text-anchor="middle">4 bonding electrons + 4 lone-pair electrons</text><text x="330" y="322" font-size="20" text-anchor="middle">Connectivity only; not the actual bond angle.</text>
+</g>
+</svg>

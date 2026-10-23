@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="450" viewBox="0 0 660 450" role="img" aria-labelledby="title desc">
+  <title id="title">Count unpaired electrons in d nine and d ten</title>
+  <desc id="desc">Five d-orbital boxes per row. In d nine, four boxes hold opposite-spin pairs and one holds a single electron. In d ten, all five boxes hold pairs. This diagram shows electron counting, not ligand-field energy splitting.</desc>
+  <rect width="660" height="450" rx="16" fill="#fff"/>
+  <g font-family="Arial, sans-serif" fill="#172d49">
+    <text x="28" y="38" font-size="26" font-weight="bold">5 d orbitals · at most 2 electrons each</text>
+    <text x="28" y="84" font-size="24">Cu<tspan baseline-shift="super" font-size="16">2+</tspan>: 3d<tspan baseline-shift="super" font-size="16">9</tspan></text>
+    <text x="28" y="245" font-size="24">Zn<tspan baseline-shift="super" font-size="16">2+</tspan>: 3d<tspan baseline-shift="super" font-size="16">10</tspan></text>
+    <g stroke="#435d78" stroke-width="2" fill="#f7f9fc">
+      <path d="M75 105 h88 v64 H75 Z M180 105 h88 v64 H180 Z M285 105 h88 v64 H285 Z M390 105 h88 v64 H390 Z M495 105 h88 v64 H495 Z"/>
+      <path d="M75 266 h88 v64 H75 Z M180 266 h88 v64 H180 Z M285 266 h88 v64 H285 Z M390 266 h88 v64 H390 Z M495 266 h88 v64 H495 Z"/>
+    </g>
+    <g fill="none" stroke="#172d49" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M102 153 V121 l-7 8 M136 121 V153 l7-8 M207 153 V121 l-7 8 M241 121 V153 l7-8 M312 153 V121 l-7 8 M346 121 V153 l7-8 M417 153 V121 l-7 8 M451 121 V153 l7-8 M522 153 V121 l-7 8"/>
+      <path d="M102 314 V282 l-7 8 M136 282 V314 l7-8 M207 314 V282 l-7 8 M241 282 V314 l7-8 M312 314 V282 l-7 8 M346 282 V314 l7-8 M417 314 V282 l-7 8 M451 282 V314 l7-8 M522 314 V282 l-7 8 M556 282 V314 l7-8"/>
+    </g>
+    <text x="28" y="205" font-size="24" font-weight="bold">1 unpaired electron → paramagnetic</text>
+    <text x="28" y="366" font-size="24" font-weight="bold">0 unpaired electrons → diamagnetic</text>
+    <text x="28" y="414" font-size="19">Boxes = orbitals; arrows = electrons and spin.</text>
+    <text x="28" y="439" font-size="19">Electron counting only; not a ligand-field energy diagram.</text>
+  </g>
+</svg>

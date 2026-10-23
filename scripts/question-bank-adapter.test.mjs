@@ -109,3 +109,16 @@ test('numeric questions retain the same rich content restrictions as choice ques
   }
   assert.throws(() => adapt([choice.replace('data-ans="B"', 'data-ans="E"')]), /Invalid answer/);
 });
+
+test('all questions in a sheet row inherit its column B topic while keeping their IDs', () => {
+  const { document } = parseHTML('<html><body></body></html>');
+  const topic = 'b-' + 'c'.repeat(24);
+  const root = adaptLegacyBank({subjectId:'chemistry',bankKey:key,revision:'a'.repeat(64),title:'Exam',rows:[
+    {rowNumber:2,html:choice+numeric(),reviewTopicKey:topic},
+    {rowNumber:3,html:choice,reviewTopicKey:''}
+  ]},{document,Parser:DOMParser});
+  const {questions,errors}=readQuizContent(root);
+  assert.deepEqual(errors,[]);
+  assert.deepEqual(questions.map(q=>q.topicIds),[[topic],[topic],[]]);
+  assert.deepEqual(questions.map(q=>q.id),[1,2,3].map(i=>bankQuestionId('chemistry',key,i)));
+});

@@ -1,4 +1,4 @@
-import { bankContentId, bankQuestionId } from './question-bank-model.js';
+import { bankContentId, bankQuestionId, bankKeyPattern } from './question-bank-model.js';
 import { readQuizContent } from './quiz-content-adapter.js';
 import { parseNumericAnswer } from './quiz-question-model.js';
 import { staticBankSvgImage } from './question-bank-svg.js?v=bank-svg-1';
@@ -67,6 +67,7 @@ export function adaptLegacyBank(snapshot, { document: doc = document, Parser = D
       } else if (inputs.length < 2 || inputs.length > 12 || inputs.some(input => input.type !== 'radio')) fail('รองรับข้อเลือกตอบหรือข้อเติมตัวเลขที่มีข้อมูลครบเท่านั้น / Incomplete choice or numeric question');
       const article = doc.createElement('article');
       Object.assign(article.dataset, { question: '', questionId: bankQuestionId(snapshot.subjectId, snapshot.bankKey, ordinal), questionType: numeric ? 'number' : 'choice', answer });
+      if (bankKeyPattern.test(row.reviewTopicKey || '')) article.dataset.topicIds = row.reviewTopicKey;
       if (numeric) {
         article.dataset.tolerance = step.dataset.tolerance ?? '0';
         for (const key of ['unitTh', 'unitEn']) if (step.dataset[key]) article.dataset[key] = step.dataset[key];

@@ -69,7 +69,8 @@ function setupBankArchive() {
 }
 function bankSnapshot_(subject, set, rows) {
   const body = { schemaVersion: 1, subjectId: subject, bankKey: set.bankKey,
-    legacyId: set.legacyId, title: set.title, html: rows.map(function(row) { return row.html; }) };
+    legacyId: set.legacyId, title: set.title, html: rows.map(function(row) { return row.html; }),
+    reviewTopicKeys: rows.map(function(row) { return row.reviewTopicKey; }) };
   const serialized = JSON.stringify(body);
   if (Utilities.newBlob(serialized).getBytes().length > HUB_BANK.maxBytes) throw Error('set-too-large');
   return { schemaVersion: 1, subjectId: subject, bankKey: set.bankKey, legacyId: set.legacyId,
@@ -91,7 +92,8 @@ function bankQuestions_(subject, key, revision, catalog) {
       // IDs may be prepared before the HTML is authored. Publish ready rows
       // only, matching the catalog count, and keep their original row numbers.
       if (!row[2].trim()) return;
-      rows.push({ rowNumber: index + 2, html: row[2] });
+      var topic = catalog.sets.find(function(entry) { return entry.legacyId === row[1].trim(); });
+      rows.push({ rowNumber: index + 2, html: row[2], reviewTopicKey: topic ? topic.bankKey : '' });
     }
   });
   if (!rows.length || rows.length > 1000 || set.questionCount > 1000) throw Error('invalid-set-size');

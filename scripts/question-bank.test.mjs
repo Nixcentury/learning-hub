@@ -194,3 +194,21 @@ test('client coalesces requests, validates response type and never sends credent
   const wrong = createBankClient({ config: { endpoint: 'https://bank.example/exec' }, fetcher: async () => new Response('<html>login</html>') });
   await assert.rejects(wrong.catalog('physics'));
 });
+
+test('column B supplies a signed published review topic per row, without exposing private IDs', async () => {
+  const h = service();
+  const sets = h.get({}).data.sets;
+  const exam = sets.find(set => set.legacyId === h.id);
+  const topic = sets.find(set => set.legacyId === h.second);
+  let snapshot = h.get({action:'questions',key:exam.bankKey}).data;
+  assert.equal(snapshot.rows[0].reviewTopicKey, topic.bankKey);
+  assert.equal(snapshot.rows[1].reviewTopicKey, exam.bankKey);
+  await validateBankSnapshot(snapshot,'physics',exam.bankKey);
+  const changed = structuredClone(snapshot);
+  changed.rows[0].reviewTopicKey = exam.bankKey;
+  await assert.rejects(validateBankSnapshot(changed,'physics',exam.bankKey),/integrity/);
+  h.tables.PHYSIC[0][1] = 'private';
+  snapshot = h.get({action:'questions',key:exam.bankKey}).data;
+  assert.equal(snapshot.rows[0].reviewTopicKey,'');
+  assert.notEqual(snapshot.revision,changed.revision);
+});

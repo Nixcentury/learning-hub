@@ -173,3 +173,15 @@ test('a missing summary stays selectable, survives reopening and language change
   assert.equal(failed.printButton.disabled,true);
   assert.match(failed.content.textContent,/ยังตรวจสถานะบททวนไม่ได้/);
 });
+
+test('reopening from a different quiz question selects that question topic', async () => {
+  const ui=uiSetup(async url=>response(url.endsWith('.json')?authored:'<main>Review</main>'));
+  await ui.browser.open({subjectId:'chemistry',preferred:[key]});
+  assert.equal(ui.document.querySelector('[data-review-topic]').value,key);
+  ui.browser.close();
+  await ui.browser.open({subjectId:'chemistry',preferred:[other]});
+  assert.equal(ui.document.querySelector('[data-review-topic]').value,other);
+  ui.browser.close();
+  await ui.browser.open({subjectId:'chemistry',preferred:['unknown']});
+  assert.equal(ui.document.querySelector('[data-review-topic]').value,'');
+});

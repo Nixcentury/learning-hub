@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import vm from 'node:vm';
-import { bankContentId, bankQuestionId, bankSnapshotBody, validateBankSnapshot, chooseBankRevision } from '../public/shared/question-bank-model.js';
+import { bankContentId, bankQuestionId, bankSnapshotBody, validateBankSnapshot, chooseBankRevision, bankRowsWithReviewTopics } from '../public/shared/question-bank-model.js';
 import { createBankClient } from '../public/shared/question-bank-client.js';
 import { resolveHubRoute, createHubShareUrl } from '../js/hub-routes.js';
 import { activityForRoute, menuForRoute, routeForTool } from '../js/hub-activity-routes.js';
@@ -211,4 +211,27 @@ test('column B supplies a signed published review topic per row, without exposin
   snapshot = h.get({action:'questions',key:exam.bankKey}).data;
   assert.equal(snapshot.rows[0].reviewTopicKey,'');
   assert.notEqual(snapshot.revision,changed.revision);
+});
+
+
+test('saved legacy rows gain current review topics only when row number and full question HTML match', () => {
+  const key = 'b-' + 'a'.repeat(24), topic = 'b-' + 'b'.repeat(24);
+  const old = {subjectId:'chemistry', bankKey:key, revision:'1'.repeat(64), rows:[
+    {rowNumber:2,html:'original question'}, {rowNumber:3,html:'changed question'},
+    {rowNumber:4,html:'moved question'}, {rowNumber:5,html:'explicit blank',reviewTopicKey:''}
+  ]};
+  const latest = {...old, revision:'2'.repeat(64), rows:[
+    {rowNumber:2,html:'original question',reviewTopicKey:topic},
+    {rowNumber:3,html:'replacement question',reviewTopicKey:topic},
+    {rowNumber:8,html:'moved question',reviewTopicKey:topic},
+    {rowNumber:5,html:'explicit blank',reviewTopicKey:topic}
+  ]};
+  const before=structuredClone(old);
+  const rows=bankRowsWithReviewTopics(old,latest);
+  assert.deepEqual(rows.map(row=>row.reviewTopicKey),[topic,undefined,undefined,'']);
+  assert.deepEqual(rows.map(row=>row.html),old.rows.map(row=>row.html));
+  assert.deepEqual(rows.map(row=>row.rowNumber),old.rows.map(row=>row.rowNumber));
+  assert.deepEqual(old,before);
+  assert.equal(bankRowsWithReviewTopics(old,{...latest,subjectId:'physics'}),old.rows);
+  assert.equal(bankRowsWithReviewTopics(old,{...latest,bankKey:topic}),old.rows);
 });

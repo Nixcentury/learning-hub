@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="417" viewBox="0 0 660 417" role="img" aria-labelledby="title desc">
+<title id="title">Electron-deficient BF3 and odd-electron NO</title><desc id="desc">The BF3 Lewis diagram has three B-F single bonds and three lone pairs on each F, with no lone pair on B: 24 electrons total and six around B. The NO Lewis diagram has a double bond, one lone pair and one unpaired electron on N, and two lone pairs on O: 11 electrons total, seven around N and eight around O. An orange dot marks the unpaired electron.</desc>
+<rect width="660" height="417" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="23" font-weight="bold" text-anchor="start" fill="#20344e" >Octet exceptions: keep the electron budget</text>
+<text x="26" y="62" font-size="18" font-weight="normal" text-anchor="start" fill="#536273" >A deficient center and an odd electron total</text>
+<rect x="20" y="85" width="300" height="280" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<rect x="340" y="85" width="300" height="280" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="170" y="114" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e" >BF₃ · electron deficient</text>
+<text x="490" y="114" font-size="19" font-weight="bold" text-anchor="middle" fill="#20344e" >NO · odd-electron molecule</text>
+<g data-molecule="BF3" data-ion-charge="0" data-electron-budget="24">
+<text x="170" y="253" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="B" data-element="B">B</text>
+<text x="170" y="183" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="F1" data-element="F">F</text>
+<text x="95" y="293" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="F2" data-element="F">F</text>
+<text x="245" y="293" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="F3" data-element="F">F</text>
+<line data-bond="F1:B" x1="170" y1="196" x2="170" y2="221" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="B:F2" x1="151" y1="257" x2="116" y2="272" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="B:F3" x1="189" y1="257" x2="224" y2="272" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<circle data-lone-pair-on="F1" cx="164" cy="143" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="F1" cx="176" cy="143" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="F1" cx="138" cy="168" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="F1" cx="138" cy="180" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="F1" cx="202" cy="168" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="F1" cx="202" cy="180" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="F2" cx="89" cy="253" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="F2" cx="101" cy="253" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="F2" cx="89" cy="315" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="F2" cx="101" cy="315" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="F2" cx="63" cy="278" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="F2" cx="63" cy="290" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="F3" cx="239" cy="253" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="F3" cx="251" cy="253" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="F3" cx="239" cy="315" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="F3" cx="251" cy="315" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="F3" cx="277" cy="278" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="F3" cx="277" cy="290" r="3.5" fill="#214f9e"/>
+</g>
+<text x="170" y="348" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273" >24 total · B counts 6</text>
+<g data-molecule="NO" data-ion-charge="0" data-electron-budget="11">
+<text x="450" y="253" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="N" data-element="N">N</text>
+<text x="540" y="253" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="O" data-element="O">O</text>
+<line data-bond="N:O" x1="473" y1="239" x2="517" y2="239" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="N:O" x1="473" y1="249" x2="517" y2="249" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<circle data-lone-pair-on="N" cx="444" cy="212" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="N" cx="456" cy="212" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O" cx="534" cy="212" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O" cx="546" cy="212" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O" cx="534" cy="276" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O" cx="546" cy="276" r="3.5" fill="#214f9e"/>
+<circle data-unpaired-on="N" cx="415" cy="244" r="4" fill="#a94e16"/>
+</g>
+<text x="490" y="348" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273" >11 total · N counts 7 · O counts 8</text>
+<text x="330" y="394" font-size="18" font-weight="normal" text-anchor="middle" fill="#536273" >The orange dot is one unpaired electron.</text>
+<text x="330" y="415" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273" >One dot = 1 electron. One bond line = 2 electrons.</text>
+</g></svg>

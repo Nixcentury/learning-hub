@@ -10,7 +10,7 @@ Date: 24 October 2026.
 - Subsequent notes cover coherence and initial phase, path difference, phase cycles, fringe type/order, far-field angle geometry, the small-angle approximation, screen positions and adjacent-fringe spacing, and variable changes.
 - 61 paired semantic answer slots per language: 14 headed knowledge/conclusion notes and 47 individual question/answer areas. The questions comprise 20 scaffold checks, seven subparts across the four original examples, five subparts across all four understanding-check questions, five subparts across all three Exercise 10.2 questions, and ten additional practice questions.
 - Understanding questions are inserted next to the relevant concept. Original Exercise 10.2 remains together at the end of the teaching sequence. Every subpart has its own answer area directly below it.
-- Further practice 1–5 adapts selected chapter-end problems; 6–10 supplies parallel fluency in angular positions, distances across opposite sides, multiple intervals, and inverse calculations. Source figures and provenance are documented in `assets/10-2/SOURCES.md`.
+- Questions 21–25 adapt selected chapter-end problems; 26–30 supply parallel fluency in angular positions, distances across opposite sides, multiple intervals, and inverse calculations. Source figures and provenance are documented in `assets/10-2/SOURCES.md`.
 - Exact existing catalog BankKey: `b-21460452889578f11c3a8bac`, under Physics / Learning hub / Wave Optics. Content ID: `physics-ipst-wave-optics-10-2-sheet`. Readable route: `#physics/bank/double-slit-interference/learning-sheet`.
 - Uses existing language, reveal, math and print engines. No engine, shared CSS, account, database, dependency or lockfile changes. Existing 10.1 and 4.2 materials are unchanged.
 
@@ -38,9 +38,16 @@ Production build served through managed preview, read-only Guest use in Chromium
 
 - Actual Hub bank deep link opens the sheet. All 122 slot instances and 34 image instances load. Individual reveal preserves geometry; reveal state carries across TH/EN; reveal-all and hide-all work.
 - Separate 390px iframe fixtures use the same language, learning-sheet and math controllers. Both languages have 375px usable width after native scrollbars, no horizontal overflow, 61 answer slots, 47 question rows, no broken images/math errors and an answer area under every question. This checks worksheet responsive layout, not the full mobile Hub shell or native iPad Safari.
-- Final central A4 previews pass all four editions: TH blank/answers both **25 pages**, EN blank/answers both **26 pages**. All have 61 slots, 47 questions and 17 images. Blank editions contain zero answer elements; answer editions contain all 61. The opposite language is removed, every question keeps its answer area, and page bodies do not overflow.
+- Final central A4 previews pass all four editions: TH blank/answers and EN blank/answers are all **25 pages** after the wording revision below. All have 61 slots, 47 questions and 17 images. Blank editions contain zero answer elements; answer editions contain all 61. The opposite language is removed, every question keeps its answer area, and page bodies do not overflow.
 - A first pre-fix TH answer preview overflowed after changing edition. Native image dimensions were added, then all four editions were regenerated from a refreshed build and passed. No shared-engine change was required.
 - Formula/geometry and mobile screenshots were visually inspected. Full central-print HTML snapshots, page-by-page measurements and narrow-frame reports are retained in ignored `qa-output/slit-*`.
 - Page counts refer to the central A4 preview; native browser PDF export and native Safari remain device checks.
 
 Publication is verified separately against the GitHub Pages deployment marker and exact authored public-file bytes.
+
+## Wording revision requested by the teacher
+
+- Removed the pedagogical check/remember/further-practice captions from the authored student content in both languages. Generic question labels now run continuously from Question 1 to Question 30. Section titles describe the content directly. The cross-reference from Question 27 to Question 26 is updated.
+- Retained the formal IPST understanding-check and Exercise 10.2 identifiers so that the original questions remain identifiable.
+- Compared the revised HTML against the preceding version: all 61 answers and all 61 writing-area sizes per language are identical; all 47 question areas remain. No source image changes.
+- Rebuilt and checked the actual Hub headings and question sequence, then regenerated all four central A4 previews. Each has 25 pages with no missing answers, broken images, math errors, question/area separation or page-body overflow. Evidence: ignored `qa-output/slit-labels-*` reports and HTML snapshots. These are browser preview checks, not a claim of native PDF export or native iPad Safari testing.

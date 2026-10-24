@@ -28,6 +28,6 @@ All JPEGs are native PDF-region renderings. Student crops use 2.5× PDF coordina
 
 `slit-types.svg` and `wavefronts.svg` are original explanatory diagrams made for this worksheet. They are qualitative and explicitly not to scale. The former is a front view showing parallel vertical openings: a is one opening's width, d is centre-to-centre separation. The latter is a top-view wavefront cross-section, with common incident plane wavefronts and spreading waves beyond each opening. They do not represent quantitative intensity plots.
 
-Further practice 1–5 is selected and adapted from the guide's chapter-end problems 1–5 (teacher printed pp.152–154). Further practice 6–10 is newly authored parallel practice. No third-party internet image is copied. The guide is also used to verify the original numerical answers, including the approximate 1.20–1.85 cm reading in Exercise 10.2 Q3.
+Questions 21–25 are selected and adapted from the guide's chapter-end problems 1–5 (teacher printed pp.152–154). Questions 26–30 are newly authored parallel practice. No third-party internet image is copied. The guide is also used to verify the original numerical answers, including the approximate 1.20–1.85 cm reading in Exercise 10.2 Q3.
 
 All fringe formulas assume initially in-phase, monochromatic coherent sources in the same medium. Far-field geometry and small-angle screen formulas are distinguished. Complete minima additionally assume equal amplitudes. The finite-slit diffraction envelope is mentioned qualitatively; section 10.3 is outside this sheet's scope.

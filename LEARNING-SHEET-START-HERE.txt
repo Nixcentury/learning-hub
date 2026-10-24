@@ -1,5 +1,12 @@
 Learning Sheet V1 — HTML/ตาราง + พิมพ์สองฉบับ + คู่มือ AI (3 ตุลาคม 2026)
 
+ส่งต่องานใบเรียนรู้ประกอบไอดีคลังให้ AI (25 ตุลาคม 2026):
+เริ่มที่ docs/learning-sheet/README.md
+ส่ง docs/learning-sheet/STARTER-PROMPT-TH.txt พร้อม TASK-BRIEF-TEMPLATE.md
+และใช้ docs/learning-sheet/QA-CHECKLIST.md รับงาน
+ตัวอย่างสไตล์หลักคือใบ 10.2 สลิตคู่ฉบับล่าสุด; ดู 4.2 สำหรับส่วนการทดลอง
+สถานะ/จำนวน tests ในบันทึกเก่าด้านล่างเป็นประวัติ ต้องตรวจงานและ main ปัจจุบันใหม่
+
 เริ่มลอง: แท็บทดสอบ → ใบเรียนรู้ (พื้นที่ 4) → ใบเรียนรู้กรด–เบส
 ลิงก์ใน Hub: #content/learning-sheet-demo
 ตัวอย่าง: public/content/samples/learning-sheet-demo.html

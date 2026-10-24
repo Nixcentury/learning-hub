@@ -3,30 +3,30 @@
    เว็บนี้ตั้งใจใช้เฉพาะโทนเย็น: ขาวอมฟ้า น้ำเงิน มิ้นต์ ม่วง
 ================================================================ */
 :root {
-  --page: #eaf0f6;
-  --page-deep: #dce5f0;
-  --surface: #ffffff;
-  --surface-solid: #ffffff;
-  --navy: #172b56;
-  --navy-hover: #203b72;
+  --page: var(--hub-page);
+  --page-deep: var(--hub-page-deep);
+  --surface: var(--hub-surface);
+  --surface-solid: var(--hub-surface);
+  --navy: var(--hub-navy);
+  --navy-hover: var(--hub-navy-hover);
   --blue: #4c6fbd;
   --blue-soft: #e8f0ff;
   --mint: #dff7f3;
   --violet: #eeeaff;
-  --text: #233454;
-  --muted: #46566f;
-  --faint: #52627b;
-  --line: #7d8da5;
-  --control-border: #61718b;
-  --focus: #005fcc;
-  --control-shadow: 0 3px 0 #b7c3d4;
-  --control-pressed: inset 0 2px 4px #172b5640;
+  --text: var(--hub-text);
+  --muted: var(--hub-muted);
+  --faint: var(--hub-faint);
+  --line: var(--hub-line);
+  --control-border: var(--hub-control-border);
+  --focus: var(--hub-focus);
+  --control-shadow: var(--hub-raised);
+  --control-pressed: var(--hub-pressed);
   --workspace-top: 148px;
   --white-line: rgba(255, 255, 255, 0.88);
   --shadow: 0 28px 85px rgba(48, 76, 128, 0.14);
-  --radius-large: 8px;
-  --radius-medium: 6px;
-  --radius-small: 4px;
+  --radius-large: var(--hub-radius-panel);
+  --radius-medium: var(--hub-radius-group);
+  --radius-small: var(--hub-radius-control);
   --font: "Noto Sans Thai", "Leelawadee UI", Tahoma, Arial, sans-serif;
 }
 

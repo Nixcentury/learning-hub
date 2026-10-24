@@ -1,17 +1,19 @@
+@import url("../../shared/hub-ui.css?v=hub-1");
+
 :root {
-  --page: #eaf0f6;
-  --surface: #ffffff;
-  --navy: #172b56;
+  --page: var(--hub-page);
+  --surface: var(--hub-surface);
+  --navy: var(--hub-navy);
   --blue: #4c6fbd;
   --blue-soft: #e8f0ff;
   --mint: #dff7f3;
   --violet: #eeeaff;
-  --text: #233454;
-  --muted: #46566f;
-  --faint: #52627b;
-  --line: #7d8da5;
-  --control-border: #61718b;
-  --focus: #005fcc;
+  --text: var(--hub-text);
+  --muted: var(--hub-muted);
+  --faint: var(--hub-faint);
+  --line: var(--hub-line);
+  --control-border: var(--hub-control-border);
+  --focus: var(--hub-focus);
   --shadow: 0 24px 70px rgba(48, 76, 128, 0.12);
   --font: "Noto Sans Thai", "Leelawadee UI", Tahoma, Arial, sans-serif;
   --subject-accent: #476bb3;

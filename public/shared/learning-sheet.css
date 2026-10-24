@@ -1,3 +1,6 @@
+@import url("./hub-ui.css?v=hub-1");
+@import url("./hub-engine.css?v=hub-1");
+
 /* Opt-in only. Answers stay readable without the Hub/controller. */
 html[data-learning-sheet="1"] [data-sheet-slot] {
   --sheet-width: 6ch;

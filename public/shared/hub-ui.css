@@ -1,0 +1,27 @@
+/* Shared design tokens for the Hub, subject menus and owned engines. */
+:root {
+  --hub-page: #eaf0f6;
+  --hub-page-deep: #dce5f0;
+  --hub-surface: #ffffff;
+  --hub-navy: #172b56;
+  --hub-navy-hover: #203b72;
+  --hub-text: #233454;
+  --hub-muted: #46566f;
+  --hub-faint: #52627b;
+  --hub-line: #7d8da5;
+  --hub-control-border: #61718b;
+  --hub-focus: #005fcc;
+  --hub-soft: #e2ebf8;
+  --hub-success: #226b4d;
+  --hub-success-soft: #e7f5ee;
+  --hub-error: #9f2345;
+  --hub-error-soft: #fff0f3;
+  --hub-warning: #856000;
+  --hub-warning-soft: #fff6d9;
+  --hub-radius-panel: 8px;
+  --hub-radius-group: 6px;
+  --hub-radius-control: 4px;
+  --hub-raised: 0 3px 0 #b7c3d4;
+  --hub-pressed: inset 0 2px 4px #172b5640;
+  --hub-panel-shadow: 0 3px 0 #c3cedd;
+}

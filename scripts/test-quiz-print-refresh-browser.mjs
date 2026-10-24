@@ -37,7 +37,7 @@ const server = createServer(async (request, response) => {
     if (url.pathname === '/__bank') { response.setHeader('Content-Type', 'text/html'); response.end(harness); return; }
     const pathname = decodeURIComponent(url.pathname.replace(/^\/learning-hub/, ''));
     if (failAssets && pathname === '/shared/quiz-refresh.js') { response.writeHead(503); response.end(); return; }
-    if (/\.js$/.test(pathname)) assetRequests.push(pathname);
+    if (/\.(?:js|css)$/.test(pathname)) assetRequests.push(pathname);
     let data;
     if (pathname === contentPath) {
       if (failContent && url.searchParams.has('quizFresh')) { response.writeHead(503); response.end(); return; }
@@ -162,6 +162,8 @@ try {
   assert.ok(ink > 0, 'Handwriting survives a fresh engine navigation');
   assert.ok(assetRequests.filter(path => path === '/shared/quiz-evidence.js').length >= 2);
   assert.ok(assetRequests.filter(path => path === '/pages/tools/notebook-core.js').length >= 2);
+  assert.ok(assetRequests.filter(path => path === '/shared/hub-ui.css').length >= 2, 'Restart revalidates the shared Hub tokens');
+  assert.ok(assetRequests.filter(path => path === '/shared/hub-engine.css').length >= 2, 'Restart revalidates the engine theme');
   console.log('PASS cancel/network/quota failures preserve draft; latest content and cached modules reload; reasoning, ink, history and other quizzes survive');
   await page.setViewportSize({ width: 390, height: 844 });
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));

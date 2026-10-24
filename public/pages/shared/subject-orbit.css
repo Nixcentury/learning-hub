@@ -154,14 +154,74 @@
   .subject-orbit-page *, .subject-orbit-page *::before { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .subject-orbit-page .magnetic-content, .subject-orbit-page .activity-icon { transform: none !important; }
 }
+/* The orbit stays in place; solid panels distinguish description, cards and controls. */
+.subject-orbit-page { --orbit-ink: #172b56; background: var(--page); }
+.subject-orbit-page .subject-heading { padding: 16px 20px; }
+.subject-orbit-page .stage-path {
+  padding: 8px;
+  border: 2px solid var(--line);
+  border-radius: 6px;
+  background: #f4f7fc;
+  gap: 8px;
+}
+.subject-orbit-page .stage { padding: 8px; border: 1px solid var(--line); background: #fff; color: var(--muted); }
+.subject-orbit-page .stage.is-active { border-color: var(--navy); background: var(--navy); color: #fff; }
+.subject-orbit-page .stage.is-active strong { background: #fff; color: var(--navy); }
+.subject-orbit-page .stage.is-complete { border-color: #46735d; background: #e5f4ec; color: #20563c; }
+.subject-orbit-page .section-intro { margin-bottom: 18px; }
+.orbit-layout { gap: 22px; align-items: start; }
+.orbit-details,
+.orbit-browser { border: 2px solid var(--line); border-radius: 8px; background: #fff; }
+.orbit-details { max-width: none; padding: 24px; }
+.orbit-browser { padding: 0 12px 16px; }
+.orbit-detail-number { border: 2px solid var(--control-border); border-radius: 4px; }
+.orbit-controls { padding-top: 14px; border-top: 2px solid var(--line); }
+:is(.orbit-detail-description, .orbit-status, .orbit-caption, .orbit-jump, .orbit-help),
+.subject-orbit-page :is(.subject-heading small, .section-intro > p, .activity-heading p) { color: var(--muted); }
+.orbit-help { font-size: 11px; }
+.orbit-open,
+.orbit-arrow,
+.orbit-select,
+.subject-orbit-page .back-button { border: 2px solid var(--control-border); border-radius: 4px; box-shadow: 0 3px 0 #b7c3d4; }
+.orbit-open { border-color: var(--navy); background: var(--navy); color: #fff; }
+.orbit-arrow,
+.orbit-select { background: #fff; color: var(--navy); }
+.orbit-open::before,
+.orbit-arrow::before { display: none; }
+.subject-orbit-page .magnetic-content,
+.subject-orbit-page .activity-icon { transform: none; }
+.subject-orbit-page .orbit-cards .chapter-card { border: 2px solid var(--line); border-radius: 8px; background: var(--orbit-light); }
+.subject-orbit-page .orbit-cards .chapter-card.is-neighbor { opacity: .65; }
+.subject-orbit-page .orbit-cards .chapter-card.is-selected {
+  border-color: var(--navy);
+  box-shadow: 0 5px 0 #9cacc3, 0 10px 20px #172b5626;
+}
+.orbit-card-label { opacity: 1; }
+.subject-orbit-page .orbit-cards .chapter-card > .orbit-card-bottom { border-color: var(--control-border); }
+.subject-orbit-page .activity-heading,
+.subject-orbit-page .activity-card { border: 2px solid var(--line); border-radius: 8px; background: #fff; box-shadow: 0 3px 0 #c3cedd; }
+.subject-orbit-page :is(button, select):focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+@media (hover: hover) {
+  .subject-orbit-page .orbit-open:hover { background: var(--navy-hover, #203b72); border-color: var(--navy); color: #fff; }
+  .subject-orbit-page .orbit-arrow:hover { background: #e2ebf8; border-color: var(--navy); }
+  .subject-orbit-page .activity-card:hover { border-color: var(--navy); box-shadow: 0 3px 0 #8396b4; transform: translateY(-1px); }
+  .subject-orbit-page .orbit-cards .chapter-card.is-selected:hover { box-shadow: 0 5px 0 #8396b4, 0 10px 20px #172b5626; }
+}
+.orbit-open:active,
+.orbit-arrow:active,
+.subject-orbit-page .activity-card:active:not(:disabled) { box-shadow: inset 0 2px 4px #172b5640; transform: translateY(2px); }
+.subject-orbit-page .orbit-cards .chapter-card:active { box-shadow: inset 0 3px 6px #172b5640; }
+
 /* Keep the selected card and main action visible inside the Hub's shorter frame. */
-@media (min-width: 641px) and (max-height: 720px) {
+@media (min-width: 641px) and (max-height: 900px) {
   .subject-orbit-page .page-shell { padding-top: 20px; }
   .subject-orbit-page .subject-heading { margin-bottom: 18px; }
-  .subject-orbit-page .stage-path { display: none; }
+  .subject-orbit-page .stage-path { margin-bottom: 18px; padding: 6px; }
+  .subject-orbit-page .stage { min-height: 30px; padding: 6px; }
+  .subject-orbit-page .subject-heading { padding: 12px 16px; }
   .subject-orbit-page .section-intro h2 { font-size: 25px; }
   .orbit-stage { height: 380px; --orbit-travel: .72; }
-  .orbit-details { padding: 26px 0; }
+  .orbit-details { padding: 22px; }
   .orbit-detail-title { font-size: 29px; margin: 14px 0 12px; }
   .orbit-detail-description { font-size: 13px; line-height: 1.8; }
   .orbit-status { margin-top: 18px; }

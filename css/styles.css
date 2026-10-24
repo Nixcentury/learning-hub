@@ -3,10 +3,10 @@
    เว็บนี้ตั้งใจใช้เฉพาะโทนเย็น: ขาวอมฟ้า น้ำเงิน มิ้นต์ ม่วง
 ================================================================ */
 :root {
-  --page: #f4f8ff;
-  --page-deep: #eaf2ff;
-  --surface: rgba(255, 255, 255, 0.78);
-  --surface-solid: #fbfdff;
+  --page: #eaf0f6;
+  --page-deep: #dce5f0;
+  --surface: #ffffff;
+  --surface-solid: #ffffff;
   --navy: #172b56;
   --navy-hover: #203b72;
   --blue: #4c6fbd;
@@ -14,14 +14,19 @@
   --mint: #dff7f3;
   --violet: #eeeaff;
   --text: #233454;
-  --muted: #66748d;
-  --faint: #8793a8;
-  --line: rgba(155, 179, 217, 0.38);
+  --muted: #46566f;
+  --faint: #52627b;
+  --line: #7d8da5;
+  --control-border: #61718b;
+  --focus: #005fcc;
+  --control-shadow: 0 3px 0 #b7c3d4;
+  --control-pressed: inset 0 2px 4px #172b5640;
+  --workspace-top: 148px;
   --white-line: rgba(255, 255, 255, 0.88);
   --shadow: 0 28px 85px rgba(48, 76, 128, 0.14);
-  --radius-large: 26px;
-  --radius-medium: 18px;
-  --radius-small: 12px;
+  --radius-large: 8px;
+  --radius-medium: 6px;
+  --radius-small: 4px;
   --font: "Noto Sans Thai", "Leelawadee UI", Tahoma, Arial, sans-serif;
 }
 
@@ -2216,6 +2221,213 @@ body.has-maximized-workspace .hub-taskbar {
 .workspace-window.is-learning-sheet .window-timer-controls { display: none; }
 .workspace-window.is-learning-sheet .workspace-window-bar { grid-template-columns: auto minmax(0, 1fr) auto; }
 .workspace-window.is-learning-sheet .window-leading-tools { min-width: 0; }
+
+/* Clear page regions and consistent raised / pressed / selected controls. */
+.login-view,
+.hub-view { background: var(--page); }
+.login-view::before,
+.ambient { display: none; }
+
+.glass-surface,
+.glass-chip,
+.content-surface {
+  border-color: var(--line);
+  background: var(--surface);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 4px 12px #172b5612;
+}
+.glass-surface,
+.content-surface { border-width: 2px; }
+.topbar,
+.login-card,
+.role-panel,
+.presence-panel,
+.hub-taskbar,
+.hub-share-dialog,
+.html-print-dialog { border-radius: var(--radius-large); }
+.login-card { box-shadow: 0 6px 0 #c5cfdd, 0 12px 24px #172b5614; }
+.login-card::before { display: none; }
+.hub-topbar { border-width: 0 0 2px; border-color: var(--navy); box-shadow: none; }
+.hub-nav { border-width: 0 0 2px; background: #dce5f0; box-shadow: none; }
+.hub-taskbar { border-color: var(--navy); background: #fff; box-shadow: 0 4px 12px #172b5626; }
+.hub-frame-host { background: var(--page); }
+.hub-layout { display: flex; height: calc(100svh - 74px); min-height: 0; flex-direction: column; }
+.hub-nav { flex-shrink: 0; }
+.hub-frame-host { height: auto; min-height: 0; flex: 1; }
+.workspace-window-layer { top: var(--workspace-top); }
+
+.cloud-note,
+.notice,
+.role-summary-card,
+.role-approved,
+.role-request-status,
+.teacher-request-form,
+.presence-summary,
+.presence-empty,
+.account-chip {
+  border-color: var(--line);
+  border-radius: var(--radius-medium);
+  background: #f4f7fc;
+}
+.role-panel,
+.presence-panel { border: 2px solid var(--navy); background: #fff; }
+.privacy-note,
+.site-footer { color: var(--muted); }
+.role-privacy,
+.presence-privacy,
+.html-print-toolbar,
+.html-print-metadata { border-color: var(--line); }
+.account-chip { background: #fff; }
+.language-switch,
+.window-language {
+  border: 2px solid var(--control-border);
+  border-radius: var(--radius-small);
+  background: #f4f7fc;
+  box-shadow: none;
+}
+.language-switch { padding: 3px; }
+
+:is(.button, .language-button, .nav-button, .icon-button, .role-button,
+  .presence-button, .role-close, .presence-close, .role-submit, .secondary-button,
+  .hub-share-button, .window-share, .window-html-print, .taskbar-item,
+  .window-stopwatch-toggle, .window-stopwatch-reset, .window-timer-toggle,
+  .window-timer-adjust, .window-timer-reset, .window-language button,
+  .hub-share-actions button, .html-print-actions button, .html-print-metadata button) {
+  border: 2px solid var(--control-border);
+  border-radius: var(--radius-small);
+  background: #fff;
+  color: var(--navy);
+  box-shadow: var(--control-shadow);
+  transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+}
+.language-button,
+.window-language button { border-width: 1px; box-shadow: none; }
+.nav-button { color: var(--text); }
+.nav-icon,
+.taskbar-item-icon,
+.window-icon { border-radius: var(--radius-small); }
+:is(.button-primary, .role-submit, .language-button.is-active,
+  .window-language button[aria-pressed="true"], .hub-share-actions [data-share-copy],
+  .html-print-actions [data-print-confirm]) {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: #fff;
+  box-shadow: inset 0 -3px 0 #0b1934;
+}
+.nav-button.is-active {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: #fff;
+}
+.nav-button.is-active,
+.nav-button:is([data-section="physics"], [data-section="chemistry"], [data-section="biology"]).is-active {
+  box-shadow: inset 0 -4px 0 var(--navy);
+}
+.nav-button[data-section="physics"].is-active { background: #f2d636; color: #172b56; }
+.nav-button[data-section="chemistry"].is-active { background: #b1a0f6; color: #172b56; }
+.nav-button[data-section="biology"].is-active { background: #86d4ae; color: #172b56; }
+.taskbar-item.is-active,
+.role-button[aria-expanded="true"],
+.presence-button[aria-expanded="true"] {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: #fff;
+  box-shadow: inset 0 -3px 0 #0b1934;
+}
+:is(.role-button, .presence-button)[aria-expanded="true"] :is(strong, .role-button-icon) { color: #fff; }
+.taskbar-item.is-active .taskbar-state { color: #fff; }
+.taskbar-item.is-active .taskbar-item-icon { background: #fff; color: var(--navy); }
+.taskbar-item.is-minimized { border-color: var(--control-border); opacity: 1; }
+.window-control { width: 22px; height: 22px; border: 1px solid #40516d; border-radius: 3px; color: #172b56; box-shadow: 0 2px 0 #172b5640; }
+.window-stopwatch-toggle,
+.window-timer-toggle { font-size: 9px; }
+.window-stopwatch-toggle.is-running,
+.window-timer-toggle.is-finished { background: #ffe6ec; border-color: #9f2345; color: #851a38; }
+.window-timer-toggle.is-running { background: #daf4e8; border-color: #226b4d; color: #185239; }
+
+@media (hover: hover) {
+  :is(.button-google, .language-button:not(.is-active), .nav-button:not(.is-active),
+    .icon-button, .role-button:not([aria-expanded="true"]), .presence-button:not([aria-expanded="true"]), .secondary-button,
+    .hub-share-button, .window-share, .window-html-print, .taskbar-item:not(.is-active)):hover {
+    border-color: var(--navy);
+    background: #e2ebf8;
+    color: var(--navy);
+    box-shadow: 0 3px 0 #8396b4;
+    transform: none;
+  }
+  .button-primary:hover { background: var(--navy-hover); box-shadow: 0 3px 0 #0b1934; transform: none; }
+}
+:is(.button, .language-button, .nav-button, .icon-button, .role-button,
+  .presence-button, .role-close, .presence-close, .role-submit, .secondary-button,
+  .hub-share-button, .window-share, .window-html-print, .taskbar-item, .window-control,
+  .window-stopwatch-toggle, .window-stopwatch-reset, .window-timer-toggle,
+  .window-timer-adjust, .window-timer-reset, .window-language button,
+  .hub-share-actions button, .html-print-actions button, .html-print-metadata button):active:not(:disabled) {
+  box-shadow: var(--control-pressed);
+  transform: translateY(2px);
+}
+:is(button, a, input, textarea, select):focus-visible,
+[tabindex="-1"]:focus-visible,
+.hub-share-button:focus-visible,
+.window-share:focus-visible,
+.window-html-print:focus-visible,
+.window-language button:focus-visible,
+.hub-share-dialog :focus-visible,
+.html-print-dialog :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+:is(.role-field input, .role-field textarea, .hub-share-dialog input,
+  .html-print-metadata input, .html-print-metadata select, .html-print-edition select) {
+  border: 2px solid var(--control-border);
+  border-radius: var(--radius-small);
+  background: #fff;
+}
+.workspace-window {
+  border: 2px solid var(--line);
+  border-radius: var(--radius-large);
+  background: #fff;
+  box-shadow: 0 12px 28px #172b5626;
+  opacity: 1;
+  transform: none;
+}
+.workspace-window.is-active {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 1px var(--navy), 0 16px 36px #172b563d;
+}
+.workspace-window-bar { position: relative; border-bottom: 2px solid var(--line); background: #e9eff7; }
+.workspace-window-bar::after { top: auto; bottom: -2px; opacity: 1; }
+
+@media (max-width: 900px) {
+  :root { --workspace-top: 146px; }
+}
+@media (max-width: 700px) {
+  .hub-topbar { gap: 8px; padding-inline: 10px; }
+  .hub-topbar .brand-name,
+  .hub-topbar .account-copy,
+  .hub-topbar .role-button > span:last-child,
+  .hub-topbar .presence-label { display: none; }
+  .hub-topbar .brand-icon { width: 34px; height: 34px; }
+  .hub-topbar .language-button { padding-inline: 6px; }
+  .hub-topbar .account-chip { padding: 3px; flex-shrink: 0; }
+  .hub-topbar .account-avatar { width: 25px; height: 25px; flex-basis: 25px; }
+  .hub-topbar :is(.role-button, .presence-button, .icon-button) { width: 34px; flex-shrink: 0; }
+  .hub-topbar .hub-share-button { min-width: 34px; padding: 6px; }
+}
+@media (max-width: 360px) {
+  .hub-actions { gap: 3px; }
+  .hub-topbar { padding-inline: 8px; }
+  .hub-topbar .brand-icon { width: 32px; height: 32px; }
+  .hub-topbar .language-button { padding-inline: 4px; }
+  .hub-topbar :is(.role-button, .presence-button, .icon-button) { width: 30px; }
+  .hub-topbar .hub-share-button { min-width: 30px; padding: 5px; }
+  .hub-topbar .account-avatar { width: 23px; height: 23px; flex-basis: 23px; }
+  .hub-topbar .account-chip { padding: 2px; }
+}
+@media (max-width: 640px) {
+  .workspace-window-bar { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 0; padding-block: 8px; }
+  .window-leading-tools { grid-column: 1 / -1; }
+  .window-identity { grid-column: 1; padding-left: 12px; }
+  .window-trailing-tools { grid-column: 2; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,

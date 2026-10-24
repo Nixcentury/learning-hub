@@ -1,15 +1,17 @@
 :root {
-  --page: #f4f8ff;
-  --surface: rgba(255, 255, 255, 0.82);
+  --page: #eaf0f6;
+  --surface: #ffffff;
   --navy: #172b56;
   --blue: #4c6fbd;
   --blue-soft: #e8f0ff;
   --mint: #dff7f3;
   --violet: #eeeaff;
   --text: #233454;
-  --muted: #66748d;
-  --faint: #8793a8;
-  --line: rgba(155, 179, 217, 0.38);
+  --muted: #46566f;
+  --faint: #52627b;
+  --line: #7d8da5;
+  --control-border: #61718b;
+  --focus: #005fcc;
   --shadow: 0 24px 70px rgba(48, 76, 128, 0.12);
   --font: "Noto Sans Thai", "Leelawadee UI", Tahoma, Arial, sans-serif;
   --subject-accent: #476bb3;
@@ -681,6 +683,75 @@ button.chapter-card:focus-visible,
   color: #5b72a0;
   font-size: 9px;
   font-weight: 800;
+}
+
+/* Solid regions and legible control states throughout the subject menus. */
+body { background: var(--page); }
+:is(.surface, .feature-card, .chapter-card, .classroom-card, .activity-card) {
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 3px 0 #c3cedd;
+  backdrop-filter: none;
+}
+.page-heading {
+  padding: 16px 20px;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+.page-icon,
+.activity-icon { border-radius: 4px; }
+.stage-path {
+  border: 2px solid var(--line);
+  border-radius: 6px;
+  background: #f4f7fc;
+}
+.stage {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--muted);
+}
+.stage strong { border-radius: 3px; }
+.stage.is-active { border-color: var(--navy); background: var(--navy); color: #fff; }
+.stage.is-active strong { background: #fff; color: var(--navy); }
+.stage.is-complete { border-color: #46735d; background: #e5f4ec; color: #20563c; }
+.section-intro { padding-bottom: 14px; border-bottom: 2px solid var(--line); }
+.content-breadcrumb {
+  padding: 8px 12px;
+  border: 2px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+}
+.content-breadcrumb [aria-current="page"] { color: var(--navy); font-weight: 800; }
+:is(.back-button, .authoring-kit-actions a, .content-breadcrumb button) {
+  border: 2px solid var(--control-border);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--navy);
+  box-shadow: 0 3px 0 #b7c3d4;
+}
+.content-breadcrumb button { padding: 6px 9px; }
+.prototype-badge,
+.content-menu-notice,
+.role-note { border: 1px solid var(--line); border-radius: 4px; }
+.content-menu-notice.is-error { border-color: #9f1239; }
+:is(.activity-card, .back-button, .authoring-kit-actions a, .content-breadcrumb button):hover {
+  border-color: var(--navy);
+  box-shadow: 0 3px 0 #8396b4;
+}
+:is(.activity-card, .back-button, .authoring-kit-actions a, .content-breadcrumb button):active:not(:disabled),
+body:not(.subject-orbit-page) button.chapter-card:active:not(:disabled) {
+  box-shadow: inset 0 2px 4px #172b5640;
+  transform: translateY(2px);
+}
+:is(button, a, select, input):focus-visible,
+button.chapter-card:focus-visible,
+.activity-card:focus-visible,
+.back-button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
 }
 
 @media (max-width: 820px) {

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="670" viewBox="0 0 660 670" role="img" aria-labelledby="title desc">
+<title id="title">Lewis writing stages for CO2</title><desc id="desc">A 16-electron budget is first partly placed in an O-C-O skeleton, then fully placed with 3 lone pairs on each oxygen. Moving one lone pair from each oxygen into additional bonding gives O=C=O, with 2 lone pairs on each oxygen and an octet on every atom.</desc>
+<rect width="660" height="670" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="25" font-weight="bold" text-anchor="start" fill="#20344e">CO₂: 16 valence electrons</text>
+<text x="26" y="62" font-size="17" font-weight="normal" text-anchor="start" fill="#536273">Drawing stages, not a reaction pathway.</text>
+<rect x="20" y="82" width="620" height="140" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="112" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e">1. Skeleton: 4 placed, 12 unplaced</text>
+<g data-stage="1" data-electron-budget="16">
+<text x="180" y="173" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">O</text>
+<text x="330" y="173" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">C</text>
+<text x="480" y="173" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">O</text>
+<line data-bond="O1-C" x1="203" y1="164" x2="307" y2="164" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="C-O2" x1="353" y1="164" x2="457" y2="164" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+</g>
+<text x="330" y="204" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">Two single bonds; lone pairs not placed yet.</text>
+<rect x="20" y="238" width="620" height="190" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="268" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e">2. Fill terminal O atoms: all 16 placed</text>
+<g data-stage="2" data-electron-budget="16">
+<text x="180" y="343" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">O</text>
+<text x="330" y="343" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">C</text>
+<text x="480" y="343" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">O</text>
+<line data-bond="O1-C" x1="203" y1="334" x2="307" y2="334" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="C-O2" x1="353" y1="334" x2="457" y2="334" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<circle data-lone-pair-on="O1" cx="174" cy="305" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O1" cx="186" cy="305" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O1" cx="174" cy="363" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O1" cx="186" cy="363" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O2" cx="474" cy="305" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O2" cx="486" cy="305" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O2" cx="474" cy="363" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O2" cx="486" cy="363" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O1" cx="145" cy="328" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O1" cx="145" cy="340" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O2" cx="515" cy="328" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O2" cx="515" cy="340" r="3.5" fill="#214f9e"/>
+</g>
+<text x="330" y="410" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">Each O has 3 lone pairs; C counts only 4.</text>
+<rect x="20" y="444" width="620" height="192" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="474" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e">3. Reuse 2 lone pairs for extra bonding</text>
+<g data-stage="3" data-electron-budget="16">
+<text x="180" y="549" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">O</text>
+<text x="330" y="549" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">C</text>
+<text x="480" y="549" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">O</text>
+<line data-bond="O1-C" x1="203" y1="534" x2="307" y2="534" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="C-O2" x1="353" y1="534" x2="457" y2="534" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="O1-C" x1="203" y1="546" x2="307" y2="546" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="C-O2" x1="353" y1="546" x2="457" y2="546" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<circle data-lone-pair-on="O1" cx="174" cy="511" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O1" cx="186" cy="511" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O1" cx="174" cy="569" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O1" cx="186" cy="569" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O2" cx="474" cy="511" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O2" cx="486" cy="511" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O2" cx="474" cy="569" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O2" cx="486" cy="569" r="3.5" fill="#214f9e"/>
+</g>
+<text x="330" y="618" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">O=C=O: 8 in bonds + 8 in lone pairs = 16.</text>
+<text x="330" y="661" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273">One dot = 1 electron. One bond line = 2 electrons.</text>
+</g></svg>

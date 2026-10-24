@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="425" viewBox="0 0 660 425" role="img" aria-labelledby="title desc">
+<title id="title">Full Lewis structures of ammonium and hydroxide</title><desc id="desc">Ammonium has 4 N-H single bonds, no lone pairs, and a plus charge outside square brackets. Hydroxide has one O-H single bond and 3 lone pairs on oxygen, with a minus charge outside square brackets. Both structures contain 8 valence electrons. These flat drawings do not represent the three-dimensional shapes.</desc>
+<rect width="660" height="425" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="25" font-weight="bold" text-anchor="start" fill="#20344e">Polyatomic ions: brackets and charge</text>
+<text x="26" y="62" font-size="18" font-weight="normal" text-anchor="start" fill="#536273">8 valence electrons in each ion</text>
+<rect x="20" y="82" width="300" height="285" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<rect x="340" y="82" width="300" height="285" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="170" y="113" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e">NH₄⁺ · ammonium</text>
+<text x="490" y="113" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e">OH⁻ · hydroxide</text>
+<g data-molecule="NH4+" data-electron-budget="8" data-ion-charge="1">
+<text x="170" y="235" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">N</text>
+<text x="170" y="169" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">H</text>
+<text x="170" y="301" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">H</text>
+<text x="103" y="235" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">H</text>
+<text x="237" y="235" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">H</text>
+<line data-bond="N-H1" x1="170" y1="180" x2="170" y2="203" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="N-H2" x1="170" y1="249" x2="170" y2="269" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="H3-N" x1="125" y1="226" x2="147" y2="226" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="N-H4" x1="193" y1="226" x2="215" y2="226" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<path data-ion-brackets="true" d="M 76 134 H 64 V 319 H 76 M 264 134 H 276 V 319 H 264" fill="none" stroke="#20344e" stroke-width="2.5"/>
+<text x="291" y="140" font-size="25" font-weight="bold" text-anchor="start" fill="#20344e">+</text>
+</g>
+<text x="170" y="347" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">4 bonds · no lone pairs</text>
+<g data-molecule="OH-" data-electron-budget="8" data-ion-charge="-1">
+<text x="461" y="235" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">O</text>
+<text x="535" y="235" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e">H</text>
+<line data-bond="O-H" x1="484" y1="226" x2="512" y2="226" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<circle data-lone-pair-on="O" cx="455" cy="195" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O" cx="467" cy="195" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O" cx="455" cy="257" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O" cx="467" cy="257" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O" cx="426" cy="220" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O" cx="426" cy="232" r="3.5" fill="#214f9e"/>
+<path data-ion-brackets="true" d="M 409 174 H 397 V 278 H 409 M 558 174 H 570 V 278 H 558" fill="none" stroke="#20344e" stroke-width="2.5"/>
+<text x="585" y="181" font-size="25" font-weight="bold" text-anchor="start" fill="#20344e">−</text>
+</g>
+<text x="490" y="347" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">1 bond · 3 lone pairs on O</text>
+<text x="330" y="395" font-size="18" font-weight="normal" text-anchor="middle" fill="#536273">Charge belongs to the whole bracketed ion.</text>
+<text x="330" y="419" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273">Lewis accounting diagrams, not three-dimensional shapes.</text>
+</g></svg>

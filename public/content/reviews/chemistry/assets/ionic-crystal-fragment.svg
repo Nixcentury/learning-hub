@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="534" viewBox="0 0 660 534" role="img" aria-labelledby="title desc">
+  <title id="title">A small fragment of a sodium chloride crystal</title>
+  <desc id="desc">Eight alternating Na plus and Cl minus sites illustrate part of the repeating arrangement in three dimensions. Dashed extensions show continuation. The fragment is not an isolated molecule or a crystallographic unit cell; guides indicate positions, not single covalent bonds. Sizes and perspective are schematic.</desc>
+  <rect width="660" height="534" rx="16" fill="#fff"/>
+  <g font-family="Arial, sans-serif" fill="#172d49" text-anchor="middle">
+    <text x="330" y="38" font-size="26" font-weight="bold">NaCl: a continuous ionic crystal</text>
+    <text x="330" y="70" font-size="21">The arrangement repeats in three dimensions.</text>
+    <!-- These sites are a finite fragment, not a crystallographic unit cell. -->
+    <g fill="none" stroke="#9eabbc" stroke-width="1.7" stroke-dasharray="3 5">
+      <path d="M205 365 H360 M205 365 L300 290 M205 365 V220"/>
+      <path d="M360 365 L455 290 M360 365 V220"/>
+      <path d="M300 290 H455 M300 290 V145 M455 290 V145"/>
+      <path d="M205 220 H360 M205 220 L300 145 M360 220 L455 145 M300 145 H455"/>
+    </g>
+    <g fill="none" stroke="#526a87" stroke-width="2" stroke-dasharray="6 5">
+      <path d="M455 290 H575 M455 145 L520 95 M205 220 V106"/>
+    </g>
+    <g fill="none" stroke="#526a87" stroke-width="2.2">
+      <path d="M566 283 L575 290 L566 297 M509 97 L520 95 L516 106 M198 115 L205 106 L212 115"/>
+    </g>
+    <g id="site-011" data-ion="Na+">
+      <circle cx="300" cy="145" r="26" fill="#d8e8f6" stroke="#294762" stroke-width="2"/>
+      <text x="300" y="153" font-size="24" font-weight="bold">Na⁺</text>
+    </g>
+    <g id="site-111" data-ion="Cl-">
+      <circle cx="455" cy="145" r="32" fill="#fff" stroke="#294762" stroke-width="2.3"/>
+      <text x="455" y="153" font-size="24" font-weight="bold">Cl⁻</text>
+    </g>
+    <g id="site-001" data-ion="Cl-">
+      <circle cx="205" cy="220" r="32" fill="#fff" stroke="#294762" stroke-width="2.3"/>
+      <text x="205" y="228" font-size="24" font-weight="bold">Cl⁻</text>
+    </g>
+    <g id="site-101" data-ion="Na+">
+      <circle cx="360" cy="220" r="26" fill="#d8e8f6" stroke="#294762" stroke-width="2"/>
+      <text x="360" y="228" font-size="24" font-weight="bold">Na⁺</text>
+    </g>
+    <g id="site-010" data-ion="Cl-">
+      <circle cx="300" cy="290" r="32" fill="#fff" stroke="#294762" stroke-width="2.3"/>
+      <text x="300" y="298" font-size="24" font-weight="bold">Cl⁻</text>
+    </g>
+    <g id="site-110" data-ion="Na+">
+      <circle cx="455" cy="290" r="26" fill="#d8e8f6" stroke="#294762" stroke-width="2"/>
+      <text x="455" y="298" font-size="24" font-weight="bold">Na⁺</text>
+    </g>
+    <g id="site-000" data-ion="Na+">
+      <circle cx="205" cy="365" r="26" fill="#d8e8f6" stroke="#294762" stroke-width="2"/>
+      <text x="205" y="373" font-size="24" font-weight="bold">Na⁺</text>
+    </g>
+    <g id="site-100" data-ion="Cl-">
+      <circle cx="360" cy="365" r="32" fill="#fff" stroke="#294762" stroke-width="2.3"/>
+      <text x="360" y="373" font-size="24" font-weight="bold">Cl⁻</text>
+    </g>
+    <text x="330" y="446" font-size="25" font-weight="bold">Na⁺ : Cl⁻ = 1 : 1 in the crystal</text>
+    <text x="330" y="482" font-size="20">The fragment continues beyond the displayed ions.</text>
+    <text x="330" y="514" font-size="19">Guides mark positions, not separate molecular bonds.</text>
+  </g>
+</svg>

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="740" viewBox="0 0 660 740" role="img" aria-labelledby="title desc">
+<title id="title">A schematic model of brittleness in ionic crystals</title>
+<desc id="desc">Two finite two-dimensional slices show the same eight alternating ions. Before shifting, opposite charges face across the marked plane. After the top row shifts right by one site spacing, three facing pairs have the same charge. Paired arrows point away from the plane to represent repulsion. Sizes and the fracture path are schematic.</desc>
+<defs><marker id="repel" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#243e5c"/></marker></defs>
+<rect width="660" height="740" rx="16" fill="white"/>
+<g font-family="Arial, sans-serif" fill="#172d49" text-anchor="middle">
+<text x="330" y="35" font-size="27" font-weight="bold">Ionic crystals: hard but brittle</text>
+<text x="330" y="79" font-size="22" >1. Before shifting: opposite charges face</text>
+<g data-panel="before">
+<path d="M90 190.0 H500" stroke="#9aa7b7" stroke-dasharray="5 5" stroke-width="1.5"/>
+<text x="560" y="197.0" font-size="19" >Plane</text>
+<g data-row="0" data-charge="+" data-x="150" data-y="140">
+<circle cx="150" cy="140" r="23" fill="#deebf5" stroke="#243e5c" stroke-width="2"/>
+<text x="150" y="149" font-size="30" font-weight="bold">+</text>
+</g>
+<g data-row="0" data-charge="−" data-x="230" data-y="140">
+<circle cx="230" cy="140" r="23" fill="#fff" stroke="#243e5c" stroke-width="2"/>
+<text x="230" y="149" font-size="30" font-weight="bold">−</text>
+</g>
+<g data-row="0" data-charge="+" data-x="310" data-y="140">
+<circle cx="310" cy="140" r="23" fill="#deebf5" stroke="#243e5c" stroke-width="2"/>
+<text x="310" y="149" font-size="30" font-weight="bold">+</text>
+</g>
+<g data-row="0" data-charge="−" data-x="390" data-y="140">
+<circle cx="390" cy="140" r="23" fill="#fff" stroke="#243e5c" stroke-width="2"/>
+<text x="390" y="149" font-size="30" font-weight="bold">−</text>
+</g>
+<g data-row="1" data-charge="−" data-x="150" data-y="240">
+<circle cx="150" cy="240" r="23" fill="#fff" stroke="#243e5c" stroke-width="2"/>
+<text x="150" y="249" font-size="30" font-weight="bold">−</text>
+</g>
+<g data-row="1" data-charge="+" data-x="230" data-y="240">
+<circle cx="230" cy="240" r="23" fill="#deebf5" stroke="#243e5c" stroke-width="2"/>
+<text x="230" y="249" font-size="30" font-weight="bold">+</text>
+</g>
+<g data-row="1" data-charge="−" data-x="310" data-y="240">
+<circle cx="310" cy="240" r="23" fill="#fff" stroke="#243e5c" stroke-width="2"/>
+<text x="310" y="249" font-size="30" font-weight="bold">−</text>
+</g>
+<g data-row="1" data-charge="+" data-x="390" data-y="240">
+<circle cx="390" cy="240" r="23" fill="#deebf5" stroke="#243e5c" stroke-width="2"/>
+<text x="390" y="249" font-size="30" font-weight="bold">+</text>
+</g>
+</g>
+<text x="330" y="363" font-size="22" >2. Shift the upper layer by one site spacing</text>
+<path d="M110 413 H190" stroke="#243e5c" stroke-width="2.5" marker-end="url(#repel)"/>
+<text x="380" y="425" font-size="20" >Upper layer moves right</text>
+<g data-panel="after">
+<path d="M90 520.0 H500" stroke="#9aa7b7" stroke-dasharray="5 5" stroke-width="1.5"/>
+<text x="560" y="527.0" font-size="19" >Plane</text>
+<g data-row="0" data-charge="+" data-x="230" data-y="470">
+<circle cx="230" cy="470" r="23" fill="#deebf5" stroke="#243e5c" stroke-width="2"/>
+<text x="230" y="479" font-size="30" font-weight="bold">+</text>
+</g>
+<g data-row="0" data-charge="−" data-x="310" data-y="470">
+<circle cx="310" cy="470" r="23" fill="#fff" stroke="#243e5c" stroke-width="2"/>
+<text x="310" y="479" font-size="30" font-weight="bold">−</text>
+</g>
+<g data-row="0" data-charge="+" data-x="390" data-y="470">
+<circle cx="390" cy="470" r="23" fill="#deebf5" stroke="#243e5c" stroke-width="2"/>
+<text x="390" y="479" font-size="30" font-weight="bold">+</text>
+</g>
+<g data-row="0" data-charge="−" data-x="470" data-y="470">
+<circle cx="470" cy="470" r="23" fill="#fff" stroke="#243e5c" stroke-width="2"/>
+<text x="470" y="479" font-size="30" font-weight="bold">−</text>
+</g>
+<g data-row="1" data-charge="−" data-x="150" data-y="570">
+<circle cx="150" cy="570" r="23" fill="#fff" stroke="#243e5c" stroke-width="2"/>
+<text x="150" y="579" font-size="30" font-weight="bold">−</text>
+</g>
+<g data-row="1" data-charge="+" data-x="230" data-y="570">
+<circle cx="230" cy="570" r="23" fill="#deebf5" stroke="#243e5c" stroke-width="2"/>
+<text x="230" y="579" font-size="30" font-weight="bold">+</text>
+</g>
+<g data-row="1" data-charge="−" data-x="310" data-y="570">
+<circle cx="310" cy="570" r="23" fill="#fff" stroke="#243e5c" stroke-width="2"/>
+<text x="310" y="579" font-size="30" font-weight="bold">−</text>
+</g>
+<g data-row="1" data-charge="+" data-x="390" data-y="570">
+<circle cx="390" cy="570" r="23" fill="#deebf5" stroke="#243e5c" stroke-width="2"/>
+<text x="390" y="579" font-size="30" font-weight="bold">+</text>
+</g>
+<path d="M230 520 V501" fill="none" stroke="#243e5c" stroke-width="2.2" marker-end="url(#repel)"/>
+<path d="M230 520 V539" fill="none" stroke="#243e5c" stroke-width="2.2" marker-end="url(#repel)"/>
+<path d="M310 520 V501" fill="none" stroke="#243e5c" stroke-width="2.2" marker-end="url(#repel)"/>
+<path d="M310 520 V539" fill="none" stroke="#243e5c" stroke-width="2.2" marker-end="url(#repel)"/>
+<path d="M390 520 V501" fill="none" stroke="#243e5c" stroke-width="2.2" marker-end="url(#repel)"/>
+<path d="M390 520 V539" fill="none" stroke="#243e5c" stroke-width="2.2" marker-end="url(#repel)"/>
+</g>
+<text x="330" y="646" font-size="22" font-weight="bold">Like charges face → repulsion promotes fracture</text>
+<text x="330" y="691" font-size="20" >Paired arrows: repulsion, not electron motion</text>
+<text x="330" y="723" font-size="19" >Two-dimensional slices · not to scale</text>
+</g></svg>

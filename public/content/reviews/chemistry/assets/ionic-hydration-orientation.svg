@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="700" viewBox="0 0 680 700" role="img" aria-labelledby="title desc">
+<title id="title">Water orientation around sodium and chloride ions</title>
+<desc id="desc">Partial negative oxygen ends of two bent water molecules face a sodium cation. Partial positive hydrogen ends face a chloride anion in the lower panel. Solid lines join O and H within each water molecule. Dashed lines indicate ion–water attractions, not covalent bonds. Only a few waters are shown, not a fixed hydration-shell coordination count. Not to scale.</desc>
+<rect width="680" height="700" rx="16" fill="white"/>
+<g font-family="Arial, sans-serif" fill="#172d49" text-anchor="middle">
+<text x="340" y="36" font-size="27" font-weight="bold">Water orientation around ions</text>
+<text x="340" y="75" font-size="20" >δ marks partial charge; each water is neutral</text>
+<text x="340" y="122" font-size="23" font-weight="bold">1. Na⁺(aq): oxygen ends face inward</text>
+<text x="340" y="402" font-size="23" font-weight="bold">2. Cl⁻(aq): hydrogen ends face inward</text>
+<g data-ion="Na+">
+<path d="M232 230 L302 230" stroke="#526a87" stroke-width="2" stroke-dasharray="5 5"/>
+<path d="M448 230 L378 230" stroke="#526a87" stroke-width="2" stroke-dasharray="5 5"/>
+<g data-water="">
+<path d="M205 230 L160 172" stroke="#243e5c" stroke-width="3"/>
+<path d="M205 230 L160 288" stroke="#243e5c" stroke-width="3"/>
+<circle data-atom="O" cx="205" cy="230" r="27" fill="#e4e9ef" stroke="#243e5c" stroke-width="1.8"/>
+<text x="205" y="236" font-size="19" >O δ−</text>
+<circle data-atom="H" cx="160" cy="172" r="23" fill="#fff" stroke="#243e5c" stroke-width="1.8"/>
+<text x="160" y="178" font-size="18" >H δ+</text>
+<circle data-atom="H" cx="160" cy="288" r="23" fill="#fff" stroke="#243e5c" stroke-width="1.8"/>
+<text x="160" y="294" font-size="18" >H δ+</text>
+</g>
+<g data-water="">
+<path d="M475 230 L520 172" stroke="#243e5c" stroke-width="3"/>
+<path d="M475 230 L520 288" stroke="#243e5c" stroke-width="3"/>
+<circle data-atom="O" cx="475" cy="230" r="27" fill="#e4e9ef" stroke="#243e5c" stroke-width="1.8"/>
+<text x="475" y="236" font-size="19" >O δ−</text>
+<circle data-atom="H" cx="520" cy="172" r="23" fill="#fff" stroke="#243e5c" stroke-width="1.8"/>
+<text x="520" y="178" font-size="18" >H δ+</text>
+<circle data-atom="H" cx="520" cy="288" r="23" fill="#fff" stroke="#243e5c" stroke-width="1.8"/>
+<text x="520" y="294" font-size="18" >H δ+</text>
+</g>
+<circle data-ion-centre="" cx="340" cy="230" r="38" fill="#deebf5" stroke="#243e5c" stroke-width="2.3"/>
+<text x="340" y="240" font-size="30" font-weight="bold">Na⁺</text>
+</g>
+<g data-ion="Cl-">
+<path d="M212 461 L304 495" stroke="#526a87" stroke-width="2" stroke-dasharray="5 5"/>
+<path d="M212 559 L304 525" stroke="#526a87" stroke-width="2" stroke-dasharray="5 5"/>
+<path d="M468 461 L376 495" stroke="#526a87" stroke-width="2" stroke-dasharray="5 5"/>
+<path d="M468 559 L376 525" stroke="#526a87" stroke-width="2" stroke-dasharray="5 5"/>
+<g data-water="">
+<path d="M145 510 L190 452" stroke="#243e5c" stroke-width="3"/>
+<path d="M145 510 L190 568" stroke="#243e5c" stroke-width="3"/>
+<circle data-atom="O" cx="145" cy="510" r="27" fill="#e4e9ef" stroke="#243e5c" stroke-width="1.8"/>
+<text x="145" y="516" font-size="19" >O δ−</text>
+<circle data-atom="H" cx="190" cy="452" r="23" fill="#fff" stroke="#243e5c" stroke-width="1.8"/>
+<text x="190" y="458" font-size="18" >H δ+</text>
+<circle data-atom="H" cx="190" cy="568" r="23" fill="#fff" stroke="#243e5c" stroke-width="1.8"/>
+<text x="190" y="574" font-size="18" >H δ+</text>
+</g>
+<g data-water="">
+<path d="M535 510 L490 452" stroke="#243e5c" stroke-width="3"/>
+<path d="M535 510 L490 568" stroke="#243e5c" stroke-width="3"/>
+<circle data-atom="O" cx="535" cy="510" r="27" fill="#e4e9ef" stroke="#243e5c" stroke-width="1.8"/>
+<text x="535" y="516" font-size="19" >O δ−</text>
+<circle data-atom="H" cx="490" cy="452" r="23" fill="#fff" stroke="#243e5c" stroke-width="1.8"/>
+<text x="490" y="458" font-size="18" >H δ+</text>
+<circle data-atom="H" cx="490" cy="568" r="23" fill="#fff" stroke="#243e5c" stroke-width="1.8"/>
+<text x="490" y="574" font-size="18" >H δ+</text>
+</g>
+<circle data-ion-centre="" cx="340" cy="510" r="38" fill="#deebf5" stroke="#243e5c" stroke-width="2.3"/>
+<text x="340" y="520" font-size="30" font-weight="bold">Cl⁻</text>
+</g>
+<text x="340" y="334" font-size="22" font-weight="bold">O δ− toward +     ·     H δ+ toward −</text>
+<text x="340" y="626" font-size="20" >Solid: O–H bonds  ·  Dashed: ion–water attractions</text>
+<text x="340" y="661" font-size="18" >Selected waters only · no fixed shell count · not to scale</text>
+</g></svg>

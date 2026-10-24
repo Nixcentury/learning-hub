@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="552" viewBox="0 0 660 552" role="img" aria-labelledby="title desc">
+  <title id="title">Ion formation: electron loss and gain</title>
+  <desc id="desc">Na loses one electron to form Na plus; Cl gains one electron to form Cl minus. Na goes from one displayed dot to zero, and Cl goes from seven to eight. Proton numbers do not change. Inner-shell electrons are omitted.</desc>
+  <rect width="660" height="552" rx="16" fill="#fff"/>
+  <g font-family="Arial, sans-serif" fill="#172d49" text-anchor="middle">
+    <text x="330" y="38" font-size="26" font-weight="bold">Formation of Na⁺ and Cl⁻</text>
+    <text x="330" y="70" font-size="20">Dots show outer-shell electron accounting.</text>
+    <rect x="20" y="90" width="620" height="160" rx="12" fill="#f5f8fc" stroke="#6a7f96" stroke-width="1.5"/>
+    <g id="neutral-Na"><text x="145" y="182" font-size="50">Na</text><circle cx="199" cy="165" r="4.5"/></g>
+    <text x="325" y="140" font-size="20">loses 1 electron</text>
+    <path d="M260 165 H390 M382 158 L390 165 L382 172" stroke="#172d49" stroke-width="2.5" fill="none"/>
+    <g id="ion-Na"><text x="510" y="182" font-size="50">Na</text></g>
+    <path d="M464 124 H452 V207 H464 M556 124 H568 V207 H556" stroke="#172d49" stroke-width="2.5" fill="none"/>
+    <text x="588" y="133" font-size="27" font-weight="bold">+</text>
+    <text x="145" y="232" font-size="21">1 dot</text><text x="510" y="232" font-size="21">no dots displayed</text>
+    <rect x="20" y="270" width="620" height="200" rx="12" fill="#f5f8fc" stroke="#6a7f96" stroke-width="1.5"/>
+    <g id="neutral-Cl">
+      <text x="145" y="382" font-size="50">Cl</text>
+      <circle cx="138" cy="316" r="4.5"/><circle cx="152" cy="316" r="4.5"/>
+      <circle cx="194" cy="365" r="4.5"/>
+      <circle cx="138" cy="414" r="4.5"/><circle cx="152" cy="414" r="4.5"/>
+      <circle cx="96" cy="358" r="4.5"/><circle cx="96" cy="372" r="4.5"/>
+    </g>
+    <text x="325" y="340" font-size="20">gains 1 electron</text>
+    <path d="M260 365 H390 M382 358 L390 365 L382 372" stroke="#172d49" stroke-width="2.5" fill="none"/>
+    <g id="ion-Cl">
+      <text x="510" y="382" font-size="50">Cl</text>
+      <circle cx="503" cy="316" r="4.5"/><circle cx="517" cy="316" r="4.5"/>
+      <circle cx="559" cy="358" r="4.5"/><circle cx="559" cy="372" r="4.5"/>
+      <circle cx="503" cy="414" r="4.5"/><circle cx="517" cy="414" r="4.5"/>
+      <circle cx="461" cy="358" r="4.5"/><circle cx="461" cy="372" r="4.5"/>
+    </g>
+    <path d="M449 304 H437 V426 H449 M571 304 H583 V426 H571" stroke="#172d49" stroke-width="2.5" fill="none"/>
+    <text x="605" y="314" font-size="27" font-weight="bold">−</text>
+    <text x="145" y="452" font-size="21">7 dots</text><text x="510" y="452" font-size="21">8 dots</text>
+    <text x="330" y="506" font-size="23" font-weight="bold">No change in proton number.</text>
+    <text x="330" y="536" font-size="19">Schematic positions; inner-shell electrons omitted.</text>
+  </g>
+</svg>

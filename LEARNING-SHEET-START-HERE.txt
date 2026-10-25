@@ -89,3 +89,18 @@ UI เฉพาะใบเรียนรู้: pnpm test:sheet:browser
   ส่วนเปรียบเทียบกรดอยู่ด้วยกัน ไม่แยกหัวข้อออกจากกล่อง และไม่เปลี่ยน state บนหน้าสอน
 - หลักฐานอยู่ qa-output/ (ไฟล์ตรวจในเครื่อง ไม่ใช่เนื้อหาเผยแพร่)
 - ยังไม่ได้ commit/push/deploy งานใบเรียนรู้ครั้งนี้
+
+แก้ปุ่มเฉลยบน iPad / WebKit — 25 ตุลาคม 2026
+---------------------------------------------
+WebKit บล็อก click และ link-load listeners ที่ parent ติดตั้งใน iframe ซึ่งปิด scripts
+(รายงานต้นทาง: https://bugs.webkit.org/show_bug.cgi?id=218086)
+ปุ่มเฉลยกลางจึงใช้ native details/summary และ MutationObserver ที่ทำงานใน parent
+รองรับแตะ เมาส์ Space/Enter สถานะ TH/EN และเปิด/ปิดทั้งหมด; เป้าสัมผัส +/− ขั้นต่ำ 44px
+ยังคง sandbox="allow-same-origin" ไม่เปิด scripts ในเนื้อหาและไม่เปลี่ยนสัญญาไฟล์ผู้เขียน
+โหลด CSS รุ่นใหม่พร้อมตรวจ stylesheet จาก parent แทนพึ่ง load event ในกรอบอย่างเดียว
+การพิมพ์ตัดตัวควบคุมที่ฉีดเข้ามาทั้งชุดออกจากสำเนา เนื้อหาและรูปแบบเอกสารเดิม
+
+Browser regression เดิมรองรับ QA_BROWSER=webkit และ QA_BROWSER_EXECUTABLE เพิ่มแล้ว
+ตรวจทั้ง sample และใบเรียนรู้ 4.1 สมดุลที่รายงานจริง (physics-ipst-equilibrium-4-1-sheet)
+WebKit ตรวจการแตะ/คีย์บอร์ดและ print preview; Chromium ตรวจเพิ่ม PDF TH/EN x ว่าง/เฉลย
+การทดสอบ WebKit ในเครื่องยังต้องให้ผู้ใช้ลองยืนยันบน iPad/เบราว์เซอร์ในแอปจริงอีกครั้ง

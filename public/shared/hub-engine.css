@@ -226,14 +226,14 @@
   html[data-learning-sheet="1"][data-hub-sheet-ready] [data-hub-sheet-toolbar] {
     border-bottom: 2px solid var(--hub-line); background: #f4f7fc; color: var(--hub-navy);
   }
-  html[data-learning-sheet="1"][data-hub-sheet-ready] [data-hub-sheet-toolbar] button,
+  html[data-learning-sheet="1"][data-hub-sheet-ready] [data-hub-sheet-toolbar] :is(button, [data-hub-sheet-command]),
   html[data-learning-sheet="1"][data-hub-sheet-ready] [data-hub-sheet-toggle] {
     border: 2px solid var(--hub-control-border); border-radius: var(--hub-radius-control);
     background: #fff; color: var(--hub-navy); box-shadow: var(--hub-raised);
   }
   html[data-learning-sheet="1"][data-hub-sheet-ready] [data-hub-sheet-toggle][aria-expanded="true"] { background: var(--hub-navy); color: #fff; }
-  html[data-learning-sheet="1"][data-hub-sheet-ready] :is([data-hub-sheet-toolbar] button, [data-hub-sheet-toggle]):focus-visible { outline: 3px solid var(--hub-focus); outline-offset: 3px; }
-  html[data-learning-sheet="1"][data-hub-sheet-ready] :is([data-hub-sheet-toolbar] button, [data-hub-sheet-toggle]):active { box-shadow: var(--hub-pressed); transform: translateY(2px); }
+  html[data-learning-sheet="1"][data-hub-sheet-ready] :is([data-hub-sheet-toolbar] button, [data-hub-sheet-command], [data-hub-sheet-toggle]):focus-visible { outline: 3px solid var(--hub-focus); outline-offset: 3px; }
+  html[data-learning-sheet="1"][data-hub-sheet-ready] :is([data-hub-sheet-toolbar] button, [data-hub-sheet-command], [data-hub-sheet-toggle]):active { box-shadow: var(--hub-pressed); transform: translateY(2px); }
 }
 
 @media screen and (hover: hover) {

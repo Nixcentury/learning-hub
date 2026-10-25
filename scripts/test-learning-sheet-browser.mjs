@@ -9,7 +9,8 @@ import { catalogFromRepository } from './build-route-catalog.mjs';
 // Real Hub, author sample and sandbox; only Firebase is stubbed. No live writes.
 const root = fileURLToPath(new URL('../', import.meta.url));
 const built = process.env.QA_BUILT === '1';
-const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const browserName = process.env.QA_BROWSER || 'chromium';
+const browserType = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'playwright')[browserName];
 const prefix = '/learning-hub/';
 const output = resolve(root, 'qa-output');
 const catalog = await catalogFromRepository();
@@ -47,8 +48,11 @@ await new Promise(done => server.listen(0, '127.0.0.1', done));
 const origin = `http://127.0.0.1:${server.address().port}`;
 let browser;
 try {
-  browser = await chromium.launch({ channel: 'msedge', headless: true });
-  const context = await browser.newContext({ viewport: { width: 1360, height: 1000 } });
+  browser = await browserType.launch({ headless: true,
+    ...(process.env.QA_BROWSER_EXECUTABLE ? { executablePath: process.env.QA_BROWSER_EXECUTABLE }
+      : browserName === 'chromium' ? { channel: 'msedge' } : {}),
+  });
+  const context = await browser.newContext({ viewport: { width: 1360, height: 1000 }, hasTouch: true });
   await context.route('**/*', route => {
     const url = new URL(route.request().url());
     if (url.origin === origin) return route.continue();
@@ -88,13 +92,18 @@ try {
   assert.equal(await slot.getByRole('button').getAttribute('aria-expanded'), 'false');
   await slot.getByRole('button').press('Enter');
   console.log('PASS mouse/keyboard toggles, accessible hidden state and stable geometry');
+  await slot.getByRole('button').tap();
+  assert.equal(await slot.getByRole('button').getAttribute('aria-expanded'), 'false');
+  await slot.getByRole('button').tap();
+  assert.equal(await slot.getByRole('button').getAttribute('aria-expanded'), 'true');
+  console.log(`PASS ${browserName} native touch activation in a scripts-disabled iframe`);
 
   const sheetFrame = page.frames().find(frame => frame.url().includes('/learning-sheet-demo.html'));
   const formulaCount = await sheet.locator('[data-hub-math]').count();
   await win.locator('[data-window-language="en"]').click();
   await en.waitFor({ state: 'visible' });
-  assert.equal(await en.locator('[data-sheet-slot="acid-role"] button').getAttribute('aria-expanded'), 'true');
-  assert.equal(await en.locator('[data-sheet-slot="base-role"] button').getAttribute('aria-expanded'), 'false');
+  assert.equal(await en.locator('[data-sheet-slot="acid-role"] [data-hub-sheet-toggle]').getAttribute('aria-expanded'), 'true');
+  assert.equal(await en.locator('[data-sheet-slot="base-role"] [data-hub-sheet-toggle]').getAttribute('aria-expanded'), 'false');
   await sheet.getByRole('button', { name: 'Reveal all', exact: true }).click();
   assert.equal(await sheet.locator('[data-hub-sheet-open="true"]').count(), 16);
   await sheet.getByRole('button', { name: 'Hide all', exact: true }).click();
@@ -144,7 +153,7 @@ try {
   for (const lang of ['th', 'en']) {
     await win.locator(`[data-window-language="${lang}"]`).click();
     await sheet.locator(`[data-content-lang="${lang}"]`).waitFor({ state: 'visible' });
-    await sheet.locator(`[data-content-lang="${lang}"] [data-sheet-slot="acid-role"] button`).click();
+    await sheet.locator(`[data-content-lang="${lang}"] [data-sheet-slot="acid-role"] [data-hub-sheet-toggle]`).click();
     const beforePrint = await sheet.locator('body').innerHTML();
     await win.locator('.window-html-print').click();
     const dialog = page.locator('[data-html-print-dialog]');
@@ -167,14 +176,16 @@ try {
       const areas = await printFrame.locator('[data-sheet-slot]').evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().height));
       assert.ok(areas.every(value => value > 10), 'blank note areas must retain height');
       const source = await printFrame.locator('html').evaluate(node => '<!doctype html>\n' + node.outerHTML);
-      const pdfPage = await context.newPage();
-      await pdfPage.setContent(source, { waitUntil: 'load' });
-      await pdfPage.evaluate(() => document.fonts.ready);
-      const file = `learning-sheet-${built ? 'built' : 'source'}-${lang}-${edition}.pdf`;
-      await pdfPage.pdf({ path: resolve(output, file), preferCSSPageSize: true, printBackground: true });
+      const file = browserName === 'chromium' ? `learning-sheet-${built ? 'built' : 'source'}-${lang}-${edition}.pdf` : null;
+      if (file) {
+        const pdfPage = await context.newPage();
+        await pdfPage.setContent(source, { waitUntil: 'load' });
+        await pdfPage.evaluate(() => document.fonts.ready);
+        await pdfPage.pdf({ path: resolve(output, file), preferCSSPageSize: true, printBackground: true });
+        await pdfPage.close();
+      }
       const pages = Number(await printFrame.locator('html').getAttribute('data-hub-print-pages'));
       printReport.push({ lang, edition, file, pages });
-      await pdfPage.close();
       assert.equal(await sheet.locator('body').innerHTML(), beforePrint, 'Print editions never change the teaching state');
     }
     // Exercise the iPad layout profile, without claiming a native Safari test.
@@ -186,7 +197,31 @@ try {
     await dialog.locator('[data-print-close]').click();
   }
   await writeFile(resolve(output, `learning-sheet-${built ? 'built' : 'source'}-print-report.json`), JSON.stringify(printReport, null, 2));
-  console.log('PASS blank/answer PDFs in TH/EN, no answer DOM in blanks, source state unchanged, A4 and device-margin profiles');
+  console.log(`PASS blank/answer ${browserName === 'chromium' ? 'PDFs' : 'print previews'} in TH/EN, no answer DOM in blanks, source state unchanged, A4 and device-margin profiles`);
+
+  // The actual iPad report: the + controls in the 4.1 force-vocabulary table.
+  await page.goto(origin + prefix + '#content/physics-ipst-equilibrium-4-1-sheet');
+  const equilibriumWindow = page.locator('[data-tool-id="content-html-physics-ipst-equilibrium-4-1-sheet"]');
+  const equilibrium = page.frameLocator('[data-tool-id="content-html-physics-ipst-equilibrium-4-1-sheet"] iframe');
+  await equilibrium.locator('html[data-hub-sheet-ready]').waitFor();
+  await equilibriumWindow.locator('[data-window-language="th"]').click();
+  const weight = equilibrium.locator('[data-content-lang="th"] [data-sheet-slot="force-vocab-1"]');
+  await weight.getByRole('button').tap();
+  assert.equal(await weight.getByRole('button').getAttribute('aria-expanded'), 'true');
+  assert.equal(await weight.locator('[data-sheet-answer]').getAttribute('aria-hidden'), 'false');
+  await weight.getByRole('button').tap();
+  assert.equal(await weight.getByRole('button').getAttribute('aria-expanded'), 'false');
+  await equilibrium.getByRole('button', { name: 'เปิดทั้งหมด', exact: true }).tap();
+  assert.equal(await equilibrium.locator('[data-hub-sheet-open="false"]').count(), 0);
+  await equilibrium.getByRole('button', { name: 'ปิดทั้งหมด', exact: true }).tap();
+  assert.equal(await equilibrium.locator('[data-hub-sheet-open="true"]').count(), 0);
+  await weight.getByRole('button').tap();
+  await equilibriumWindow.locator('[data-window-language="en"]').click();
+  assert.equal(await equilibrium.locator('[data-content-lang="en"] [data-sheet-slot="force-vocab-1"] [data-hub-sheet-toggle]').getAttribute('aria-expanded'), 'true');
+  await equilibriumWindow.locator('[data-window-language="th"]').click();
+  await weight.getByRole('button').scrollIntoViewIfNeeded();
+  await page.screenshot({ path: resolve(output, `learning-sheet-${browserName}-equilibrium-touch.png`) });
+  console.log(`PASS ${browserName} touch on the reported 4.1 worksheet, reveal/hide all and TH/EN state`);
 
   await page.goto(origin + prefix + '#content/chemistry-chapter-10-overview');
   const normalWindow = page.locator('[data-tool-id="content-html-chemistry-chapter-10-overview"]');

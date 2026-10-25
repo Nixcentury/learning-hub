@@ -712,7 +712,7 @@ export function createWorkspace({
         record.printButton.disabled = !doc?.documentElement.hasAttribute('data-learning-html');
         updateRecordText(record);
         void attachLearningSheet(doc, {
-          stylesheetUrl: new URL('shared/learning-sheet.css', location.href).href,
+          stylesheetUrl: new URL('shared/learning-sheet.css?v=sheet-touch-20261025', location.href).href,
           language: language(),
           isCurrent: () => record.frame.isConnected && record.frame.contentDocument === doc,
         }).then(controller => {

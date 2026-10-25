@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="415" viewBox="0 0 660 415" role="img" aria-labelledby="title desc">
+<title id="title">Equivalent resonance forms of nitrite</title><desc id="desc">Both bracketed nitrite resonance forms have 18 valence electrons and net charge minus one. The O-N-O atomic skeleton is unchanged. One N-O bond is double and one is single in each form. N has one lone pair, double-bonded O has two lone pairs, single-bonded O has three lone pairs and formal charge minus one. A double-headed resonance arrow joins the drawings. The actual bonds are equivalent in the resonance hybrid.</desc>
+<rect width="660" height="415" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e" >NO₂⁻: two equivalent resonance forms</text>
+<text x="26" y="62" font-size="18" font-weight="normal" text-anchor="start" fill="#536273" >Each drawing: 18 electrons and net charge −1</text>
+<rect x="20" y="85" width="290" height="235" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="165" y="115" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e" >Form A</text>
+<g data-molecule="NO2-" data-form="A" data-ion-charge="-1" data-electron-budget="18">
+<text x="70" y="239" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="O1" data-element="O">O</text>
+<text x="140" y="239" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="N" data-element="N">N</text>
+<text x="210" y="239" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="O2" data-element="O">O</text>
+<circle data-lone-pair-on="O1" cx="64" cy="198" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O1" cx="76" cy="198" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O1" cx="64" cy="262" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O1" cx="76" cy="262" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O2" cx="204" cy="198" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O2" cx="216" cy="198" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O2" cx="204" cy="262" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O2" cx="216" cy="262" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="N" cx="134" cy="198" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="N" cx="146" cy="198" r="3.5" fill="#214f9e"/>
+<line data-bond="O1:N" x1="92" y1="225" x2="118" y2="225" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="O1:N" x1="92" y1="235" x2="118" y2="235" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="N:O2" x1="162" y1="230" x2="188" y2="230" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<circle data-lone-pair-on="O2" cx="242" cy="224" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O2" cx="242" cy="236" r="3.5" fill="#214f9e"/>
+<text x="226" y="218" font-size="20" font-weight="bold" text-anchor="start" fill="#a94e16" data-formal-charge-on="O2" data-charge="-1">−</text>
+<path data-ion-brackets="true" d="M 36 160 H 25 V 292 H 36 M 244 160 H 255 V 292 H 244" fill="none" stroke="#20344e" stroke-width="2.5"/>
+<text x="270" y="169" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e" >−</text>
+</g>
+<rect x="350" y="85" width="290" height="235" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="495" y="115" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e" >Form B</text>
+<g data-molecule="NO2-" data-form="B" data-ion-charge="-1" data-electron-budget="18">
+<text x="400" y="239" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="O1" data-element="O">O</text>
+<text x="470" y="239" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="N" data-element="N">N</text>
+<text x="540" y="239" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="O2" data-element="O">O</text>
+<circle data-lone-pair-on="O1" cx="394" cy="198" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O1" cx="406" cy="198" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O1" cx="394" cy="262" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O1" cx="406" cy="262" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O2" cx="534" cy="198" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O2" cx="546" cy="198" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="O2" cx="534" cy="262" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O2" cx="546" cy="262" r="3.5" fill="#214f9e"/>
+<circle data-lone-pair-on="N" cx="464" cy="198" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="N" cx="476" cy="198" r="3.5" fill="#214f9e"/>
+<line data-bond="O1:N" x1="422" y1="230" x2="448" y2="230" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<circle data-lone-pair-on="O1" cx="368" cy="224" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="O1" cx="368" cy="236" r="3.5" fill="#214f9e"/>
+<text x="380" y="218" font-size="20" font-weight="bold" text-anchor="start" fill="#a94e16" data-formal-charge-on="O1" data-charge="-1">−</text>
+<line data-bond="N:O2" x1="492" y1="225" x2="518" y2="225" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="N:O2" x1="492" y1="235" x2="518" y2="235" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<path data-ion-brackets="true" d="M 366 160 H 355 V 292 H 366 M 574 160 H 585 V 292 H 574" fill="none" stroke="#20344e" stroke-width="2.5"/>
+<text x="600" y="169" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e" >−</text>
+</g>
+<text x="330" y="238" font-size="32" font-weight="bold" text-anchor="middle" fill="#20344e" data-resonance-arrow="true">↔</text>
+<text x="330" y="350" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e" >Hybrid: the two N–O bonds are equivalent.</text>
+<text x="330" y="380" font-size="18" font-weight="normal" text-anchor="middle" fill="#536273" >Model average bond order: (1 + 2)/2 = 1.5</text>
+<text x="330" y="407" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273" >Same atoms; different electron placement. No switching.</text>
+</g></svg>

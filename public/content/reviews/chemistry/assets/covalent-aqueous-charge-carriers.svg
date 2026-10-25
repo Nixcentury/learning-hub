@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="510" viewBox="0 0 660 510" role="img" aria-labelledby="title desc">
+<title id="title">Mobile charge carriers in aqueous molecular solutions</title><desc id="desc">Ethanol in water is represented by four neutral ethanol solute molecules. Hydrogen chloride in water is represented by two hydronium and two chloride ions, giving total charge zero. Under an applied potential, positive hydronium ions move toward the negative electrode and chloride ions toward the positive electrode. Solvent water and its trace ions are omitted. This is not a concentration or speed scale, and does not depict electrode reactions.</desc>
+<rect width="660" height="510" fill="white"/>
+<g font-family="Arial, sans-serif">
+<defs><marker id="ion-motion" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#23654f"/></marker></defs>
+<text x="26" y="35" font-size="23" font-weight="bold" text-anchor="start" fill="#20344e" >Aqueous charge carriers: molecules or ions</text>
+<text x="26" y="65" font-size="17" font-weight="normal" text-anchor="start" fill="#536273" >Solvent water omitted · applied potential across electrodes</text>
+<text x="169.5" y="111" font-size="21" font-weight="bold" text-anchor="middle" fill="#20344e" >Ethanol in water</text>
+<rect x="22" y="136" width="295" height="269" rx="12" fill="#f7f9fc" stroke="#adb9c7"/>
+<g data-solution="ethanol">
+<rect data-electrode-sign="1" x="42" y="172" width="8" height="208" fill="#536273"/>
+<text x="46" y="161" font-size="24" font-weight="bold" text-anchor="middle" fill="#20344e" >+</text>
+<rect data-electrode-sign="-1" x="289" y="172" width="8" height="208" fill="#536273"/>
+<text x="293" y="161" font-size="24" font-weight="bold" text-anchor="middle" fill="#20344e" >−</text>
+<g data-solute-formula="C2H6O" data-charge="0"><rect x="124.5" y="200" width="90" height="32" rx="16" fill="#e4ebf5" stroke="#214f9e"/>
+<text x="169.5" y="221" font-size="16" font-weight="bold" text-anchor="middle" fill="#20344e" >C₂H₅OH</text>
+</g>
+<g data-solute-formula="C2H6O" data-charge="0"><rect x="124.5" y="243" width="90" height="32" rx="16" fill="#e4ebf5" stroke="#214f9e"/>
+<text x="169.5" y="264" font-size="16" font-weight="bold" text-anchor="middle" fill="#20344e" >C₂H₅OH</text>
+</g>
+<g data-solute-formula="C2H6O" data-charge="0"><rect x="124.5" y="286" width="90" height="32" rx="16" fill="#e4ebf5" stroke="#214f9e"/>
+<text x="169.5" y="307" font-size="16" font-weight="bold" text-anchor="middle" fill="#20344e" >C₂H₅OH</text>
+</g>
+<g data-solute-formula="C2H6O" data-charge="0"><rect x="124.5" y="329" width="90" height="32" rx="16" fill="#e4ebf5" stroke="#214f9e"/>
+<text x="169.5" y="350" font-size="16" font-weight="bold" text-anchor="middle" fill="#20344e" >C₂H₅OH</text>
+</g>
+</g>
+<text x="169.5" y="436" font-size="18" font-weight="bold" text-anchor="middle" fill="#23654f" >Neutral solute molecules</text>
+<text x="490.5" y="111" font-size="21" font-weight="bold" text-anchor="middle" fill="#20344e" >HCl in water</text>
+<rect x="343" y="136" width="295" height="269" rx="12" fill="#f7f9fc" stroke="#adb9c7"/>
+<g data-solution="HCl">
+<rect data-electrode-sign="1" x="363" y="172" width="8" height="208" fill="#536273"/>
+<text x="367" y="161" font-size="24" font-weight="bold" text-anchor="middle" fill="#20344e" >+</text>
+<rect data-electrode-sign="-1" x="610" y="172" width="8" height="208" fill="#536273"/>
+<text x="614" y="161" font-size="24" font-weight="bold" text-anchor="middle" fill="#20344e" >−</text>
+<g data-solute-formula="H3O" data-charge="1"><rect x="457.5" y="200" width="66" height="32" rx="16" fill="#fae7df" stroke="#a94e16"/>
+<text x="490.5" y="221" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e" >H₃O⁺</text>
+</g>
+<line data-ion-motion-charge="1" data-electrode-sign="-1" x1="530.5" y1="216" x2="599" y2="216" stroke="#23654f" stroke-width="2.2" marker-end="url(#ion-motion)"/>
+<g data-solute-formula="Cl" data-charge="-1"><rect x="457.5" y="243" width="66" height="32" rx="16" fill="#dce8f7" stroke="#214f9e"/>
+<text x="490.5" y="264" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e" >Cl⁻</text>
+</g>
+<line data-ion-motion-charge="-1" data-electrode-sign="1" x1="450.5" y1="259" x2="382" y2="259" stroke="#23654f" stroke-width="2.2" marker-end="url(#ion-motion)"/>
+<g data-solute-formula="H3O" data-charge="1"><rect x="457.5" y="286" width="66" height="32" rx="16" fill="#fae7df" stroke="#a94e16"/>
+<text x="490.5" y="307" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e" >H₃O⁺</text>
+</g>
+<line data-ion-motion-charge="1" data-electrode-sign="-1" x1="530.5" y1="302" x2="599" y2="302" stroke="#23654f" stroke-width="2.2" marker-end="url(#ion-motion)"/>
+<g data-solute-formula="Cl" data-charge="-1"><rect x="457.5" y="329" width="66" height="32" rx="16" fill="#dce8f7" stroke="#214f9e"/>
+<text x="490.5" y="350" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e" >Cl⁻</text>
+</g>
+<line data-ion-motion-charge="-1" data-electrode-sign="1" x1="450.5" y1="345" x2="382" y2="345" stroke="#23654f" stroke-width="2.2" marker-end="url(#ion-motion)"/>
+</g>
+<text x="490.5" y="436" font-size="18" font-weight="bold" text-anchor="middle" fill="#23654f" >Mobile ions carry charge</text>
+<text x="330" y="475" font-size="19" font-weight="bold" text-anchor="middle" fill="#20344e" >Each solution is neutral overall.</text>
+<text x="330" y="502" font-size="15" font-weight="normal" text-anchor="middle" fill="#536273" >Particle symbols are schematic; trace water ions are omitted.</text>
+</g></svg>

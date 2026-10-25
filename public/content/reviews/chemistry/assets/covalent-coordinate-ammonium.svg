@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="415" viewBox="0 0 660 415" role="img" aria-labelledby="title desc">
+<title id="title">Coordinate formation of ammonium from ammonia and a proton</title><desc id="desc">Ammonia has three N-H single bonds and one lone pair on N. A blue donor arrow points from the N lone pair to an incoming H plus ion. The product is bracketed NH4 plus with four single bonds and no lone pair. The blue product bond traces the original donated pair only; all four N-H bonds are equivalent after formation. Both sides have eight valence electrons.</desc>
+<rect width="660" height="415" fill="white"/>
+<g font-family="Arial, sans-serif">
+<defs><marker id="donor-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M 0 0 L 7 3.5 L 0 7 Z" fill="#214f9e"/></marker></defs>
+<text x="26" y="35" font-size="23" font-weight="bold" text-anchor="start" fill="#20344e" >Coordinate formation: NH₃ + H⁺ → NH₄⁺</text>
+<text x="26" y="62" font-size="18" font-weight="normal" text-anchor="start" fill="#536273" >The existing lone pair becomes a new shared pair.</text>
+<rect x="20" y="85" width="290" height="250" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<rect x="370" y="85" width="270" height="250" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="165" y="115" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e" >Donor + acceptor</text>
+<text x="505" y="115" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e" >Product</text>
+<g data-molecule="reactants" data-ion-charge="1" data-electron-budget="8">
+<text x="155" y="229" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="N" data-element="N">N</text>
+<text x="155" y="159" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="85" y="229" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+<text x="155" y="299" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H3" data-element="H">H</text>
+<text x="265" y="229" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H4" data-element="H">H</text>
+<text x="281" y="202" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e" >+</text>
+<line data-bond="H1:N" x1="155" y1="172" x2="155" y2="197" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="H2:N" x1="107" y1="220" x2="132" y2="220" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="N:H3" x1="155" y1="243" x2="155" y2="267" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<circle data-lone-pair-on="N" cx="187" cy="214" r="3.5" fill="#214f9e"/><circle data-lone-pair-on="N" cx="187" cy="226" r="3.5" fill="#214f9e"/>
+<path data-donor="N" data-acceptor="H4" d="M 199 220 H 239" fill="none" stroke="#214f9e" stroke-width="2.5" marker-end="url(#donor-arrow)"/>
+</g>
+<text x="340" y="231" font-size="30" font-weight="bold" text-anchor="middle" fill="#20344e" >→</text>
+<g data-molecule="NH4+" data-ion-charge="1" data-electron-budget="8">
+<text x="505" y="229" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="N" data-element="N">N</text>
+<text x="505" y="159" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="435" y="229" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+<text x="505" y="299" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H3" data-element="H">H</text>
+<text x="575" y="229" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H4" data-element="H">H</text>
+<line data-bond="H1:N" x1="505" y1="172" x2="505" y2="197" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="H2:N" x1="457" y1="220" x2="482" y2="220" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="N:H3" x1="505" y1="243" x2="505" y2="267" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="N:H4" x1="528" y1="220" x2="552" y2="220" stroke="#214f9e" stroke-width="3" stroke-linecap="round"/>
+<path data-ion-brackets="true" d="M 403 130 H 392 V 317 H 403 M 601 130 H 612 V 317 H 601" fill="none" stroke="#20344e" stroke-width="2.5"/>
+<text x="624" y="139" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e" >+</text>
+</g>
+<text x="330" y="365" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e" >Pair-donation arrow: N → H</text>
+<text x="330" y="392" font-size="18" font-weight="normal" text-anchor="middle" fill="#536273" >After formation, all four N–H bonds are equivalent.</text>
+<text x="330" y="412" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273" >Color traces the pair origin; both sides contain 8 electrons.</text>
+</g></svg>

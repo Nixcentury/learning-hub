@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="570" viewBox="0 0 660 570" role="img" aria-labelledby="title desc">
+<title id="title">Qualitative potential energy against internuclear separation</title>
+<desc id="desc">The zero reference corresponds to widely separated atoms. As atoms approach from far apart, energy falls to a minimum at equilibrium separation. At much shorter separations, repulsion raises energy steeply. The curve approaches zero from below at large separation. No numerical energy or distance scale is implied.</desc>
+<defs><marker id="axis-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#243e5c"/></marker></defs>
+<rect width="660" height="570" rx="16" fill="#fff"/>
+<g font-family="Arial, sans-serif" fill="#172d49" text-anchor="middle">
+<text x="330" y="35" font-size="27" font-weight="bold">Energy and atomic separation</text>
+<g fill="none" stroke="#243e5c" stroke-width="2"><path d="M75 470 V65" marker-end="url(#axis-arrow)"/><path d="M75 470 H630" marker-end="url(#axis-arrow)"/></g>
+<text x="25" y="280" font-size="22" transform="rotate(-90 25 280)">Potential energy</text>
+<text x="355" y="509" font-size="22" >Distance between nuclei</text>
+<path d="M75 160 H625" stroke="#7a899b" stroke-width="1.5" stroke-dasharray="6 5"/>
+<text x="427" y="132" font-size="21" >Separated atoms: reference 0</text>
+<polyline id="potential-curve" points="262,86.285 264,119.783 266,150.293 268,178.029 270,203.191 272,225.965 274,246.526 276,265.036 278,281.647 280,296.500 282,309.726 284,321.450 286,331.785 288,340.839 290,348.710 292,355.493 294,361.274 296,366.132 298,370.143 300,373.377 302,375.898 304,377.766 306,379.039 308,379.767 310,380.000 312,379.782 314,379.154 316,378.157 318,376.824 320,375.190 322,373.286 324,371.140 326,368.777 328,366.224 330,363.501 332,360.631 334,357.631 336,354.520 338,351.314 340,348.028 342,344.676 344,341.270 346,337.822 348,334.342 350,330.840 352,327.326 354,323.806 356,320.289 358,316.781 360,313.288 362,309.815 364,306.367 366,302.950 368,299.566 370,296.219 372,292.913 374,289.650 376,286.432 378,283.263 380,280.142 382,277.073 384,274.056 386,271.093 388,268.183 390,265.329 392,262.531 394,259.788 396,257.102 398,254.472 400,251.899 402,249.381 404,246.919 406,244.514 408,242.163 410,239.867 412,237.625 414,235.437 416,233.302 418,231.219 420,229.188 422,227.208 424,225.277 426,223.396 428,221.564 430,219.778 432,218.040 434,216.347 436,214.700 438,213.096 440,211.536 442,210.017 444,208.540 446,207.104 448,205.707 450,204.348 452,203.028 454,201.744 456,200.496 458,199.284 460,198.105 462,196.961 464,195.848 466,194.768 468,193.719 470,192.699 472,191.710 474,190.749 476,189.816 478,188.910 480,188.030 482,187.177 484,186.348 486,185.544 488,184.763 490,184.006 492,183.271 494,182.558 496,181.866 498,181.195 500,180.544 502,179.912 504,179.300 506,178.705 508,178.129 510,177.570 512,177.028 514,176.502 516,175.992 518,175.498 520,175.018 522,174.553 524,174.102 526,173.665 528,173.242 530,172.831 532,172.433 534,172.047 536,171.673 538,171.310 540,170.958 542,170.617 544,170.287 546,169.967 548,169.656 550,169.356 552,169.064 554,168.781 556,168.508 558,168.242 560,167.985 562,167.736 564,167.494 566,167.260 568,167.034 570,166.814 572,166.601 574,166.394 576,166.194 578,166.001 580,165.813 582,165.631 584,165.455 586,165.284 588,165.119 590,164.958 592,164.803 594,164.653 596,164.507 598,164.366 600,164.229 602,164.096 604,163.968 606,163.843 608,163.723 610,163.606" fill="none" stroke="#243e5c" stroke-width="3.2"/>
+<path d="M310 380 V470" stroke="#7a899b" stroke-width="1.5" stroke-dasharray="5 5"/>
+<circle data-minimum="" cx="310" cy="380" r="5" fill="#172d49"/>
+<text x="180" y="245" font-size="21" font-weight="bold">Too close:</text>
+<text x="180" y="274" font-size="20" >repulsion raises</text>
+<text x="180" y="303" font-size="20" >the energy</text>
+<text x="500" y="330" font-size="20" >Attraction lowers</text>
+<text x="500" y="359" font-size="20" >the energy on approach</text>
+<text x="310" y="417" font-size="22" font-weight="bold">Equilibrium</text>
+<text x="310" y="444" font-size="20" >energy minimum</text>
+<text x="330" y="550" font-size="20" >Qualitative model · no numerical scale</text>
+</g></svg>

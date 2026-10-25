@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="535" viewBox="0 0 660 535" role="img" aria-labelledby="title desc">
+<title id="title">Orientation of permanent HCl dipoles</title><desc id="desc">The first pair of neutral HCl molecules places partial negative Cl near partial positive H, giving an attractive intermolecular contact. The second reverses one HCl so two partial negative Cl ends face, giving repulsion. Solid H-Cl covalent bonds remain within each molecule in both panels. Each molecule has London forces too; the pictures are snapshots rather than a fixed liquid lattice. Partial-charge signs are not full ionic charges.</desc>
+<rect width="660" height="535" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e" >Permanent dipoles: orientation matters</text>
+<text x="26" y="64" font-size="17" font-weight="normal" text-anchor="start" fill="#536273" >Solid: H–Cl bond · dashed: intermolecular contact</text>
+<rect x="20" y="86" width="620" height="180" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="114" font-size="19" font-weight="bold" text-anchor="start" fill="#20344e" >Opposite partial-charge ends face: attraction</text>
+<g data-orientation="attract">
+<text x="105" y="211" font-size="29" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H" data-molecule="1" data-partial-sign="1">H</text>
+<text x="105" y="172" font-size="23" font-weight="bold" text-anchor="middle" fill="#214f9e" >δ+</text>
+<text x="245" y="211" font-size="29" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="Cl1" data-element="Cl" data-molecule="1" data-partial-sign="-1">Cl</text>
+<text x="245" y="172" font-size="23" font-weight="bold" text-anchor="middle" fill="#214f9e" >δ−</text>
+<text x="415" y="211" font-size="29" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H" data-molecule="2" data-partial-sign="1">H</text>
+<text x="415" y="172" font-size="23" font-weight="bold" text-anchor="middle" fill="#214f9e" >δ+</text>
+<text x="555" y="211" font-size="29" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="Cl2" data-element="Cl" data-molecule="2" data-partial-sign="-1">Cl</text>
+<text x="555" y="172" font-size="23" font-weight="bold" text-anchor="middle" fill="#214f9e" >δ−</text>
+<line data-covalent-bond="H1:Cl1" x1="128" y1="202" x2="216" y2="202" stroke="#20344e" stroke-width="3"/>
+<line data-covalent-bond="H2:Cl2" x1="444" y1="202" x2="532" y2="202" stroke="#20344e" stroke-width="3"/>
+<line data-interaction="dipole-dipole" data-atoms="Cl1:H2" data-outcome="attract" x1="276" y1="202" x2="389" y2="202" stroke="#23654f" stroke-width="2.5" stroke-dasharray="4 6"/>
+<text x="330" y="245" font-size="17" font-weight="bold" text-anchor="middle" fill="#23654f" >δ− ··· δ+: attract</text>
+</g>
+<rect x="20" y="286" width="620" height="180" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="314" font-size="19" font-weight="bold" text-anchor="start" fill="#20344e" >Like Cl ends face: repulsion</text>
+<g data-orientation="repel">
+<text x="105" y="411" font-size="29" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H" data-molecule="1" data-partial-sign="1">H</text>
+<text x="105" y="372" font-size="23" font-weight="bold" text-anchor="middle" fill="#214f9e" >δ+</text>
+<text x="245" y="411" font-size="29" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="Cl1" data-element="Cl" data-molecule="1" data-partial-sign="-1">Cl</text>
+<text x="245" y="372" font-size="23" font-weight="bold" text-anchor="middle" fill="#214f9e" >δ−</text>
+<text x="415" y="411" font-size="29" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="Cl2" data-element="Cl" data-molecule="2" data-partial-sign="-1">Cl</text>
+<text x="415" y="372" font-size="23" font-weight="bold" text-anchor="middle" fill="#214f9e" >δ−</text>
+<text x="555" y="411" font-size="29" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H" data-molecule="2" data-partial-sign="1">H</text>
+<text x="555" y="372" font-size="23" font-weight="bold" text-anchor="middle" fill="#214f9e" >δ+</text>
+<line data-covalent-bond="H1:Cl1" x1="128" y1="402" x2="216" y2="402" stroke="#20344e" stroke-width="3"/>
+<line data-covalent-bond="H2:Cl2" x1="444" y1="402" x2="532" y2="402" stroke="#20344e" stroke-width="3"/>
+<line data-interaction="dipole-dipole" data-atoms="Cl1:Cl2" data-outcome="repel" x1="276" y1="402" x2="389" y2="402" stroke="#a94e16" stroke-width="2.5" stroke-dasharray="4 6"/>
+<text x="330" y="445" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" >δ− ··· δ−: repel</text>
+</g>
+<text x="330" y="498" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273" >London forces are still present in both orientations.</text>
+<text x="330" y="525" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273" >These are snapshots, not a fixed liquid lattice.</text>
+</g></svg>

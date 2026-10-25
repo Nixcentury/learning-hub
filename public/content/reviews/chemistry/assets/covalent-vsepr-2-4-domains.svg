@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="775" viewBox="0 0 660 775" role="img" aria-labelledby="title desc">
+<title id="title">Ideal electron-domain geometries for two, three and four domains</title><desc id="desc">Two unit-vector directions are opposite, giving linear 180-degree geometry. Three coplanar unit vectors form trigonal planar 120-degree geometry. Four tetrahedral unit vectors have pairwise angles about 109.5 degrees, drawn with two ordinary in-page bonds, one solid wedge toward the viewer and one dashed bond behind the page. A is the center and X a bonded atom. No central lone pairs occur. Projected page angles are not physical bond angles.</desc>
+<rect width="660" height="775" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="25" font-weight="bold" text-anchor="start" fill="#20344e">Basic geometries: 2–4 domains</text>
+<text x="26" y="63" font-size="17" font-weight="normal" text-anchor="start" fill="#536273">A = center · X = bonded atom · no central lone pairs</text>
+<rect x="20" y="86" width="620" height="195" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="114" font-size="22" font-weight="bold" text-anchor="start" fill="#20344e">2 domains · linear</text>
+<g data-geometry-domains="2" data-central-lone-pairs="0" data-projection-z="0.65">
+<g data-domain="1" data-vx="-1" data-vy="0" data-vz="0" data-position="equivalent" data-screen-x="152.000000" data-screen-y="201.000000">
+<line data-depth="page" x1="215" y1="201" x2="152.0" y2="201.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="2" data-vx="1" data-vy="0" data-vz="0" data-position="equivalent" data-screen-x="278.000000" data-screen-y="201.000000">
+<line data-depth="page" x1="215" y1="201" x2="278.0" y2="201.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<circle cx="152.0" cy="201.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="152.0" y="206.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="278.0" cy="201.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="278.0" y="206.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="215" cy="201" r="18" fill="white" stroke="#20344e" stroke-width="2"/>
+<text x="215" y="207" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e">A</text>
+</g>
+<text x="425" y="168" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e">AX₂</text>
+<text x="425" y="202" font-size="26" font-weight="bold" text-anchor="start" fill="#20344e">180°</text>
+<text x="425" y="237" font-size="18" font-weight="normal" text-anchor="start" fill="#536273">Example: CO₂</text>
+<rect x="20" y="301" width="620" height="195" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="329" font-size="22" font-weight="bold" text-anchor="start" fill="#20344e">3 domains · trigonal planar</text>
+<g data-geometry-domains="3" data-central-lone-pairs="0" data-projection-z="0.65">
+<g data-domain="1" data-vx="6.12323399573677e-17" data-vy="1" data-vz="0" data-position="equivalent" data-screen-x="215.000000" data-screen-y="353.000000">
+<line data-depth="page" x1="215" y1="416" x2="215.0" y2="353.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="2" data-vx="-0.866025403784439" data-vy="-0.5" data-vz="0" data-position="equivalent" data-screen-x="160.440400" data-screen-y="447.500000">
+<line data-depth="page" x1="215" y1="416" x2="160.44039956158036" y2="447.5" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="3" data-vx="0.866025403784438" data-vy="-0.5" data-vz="0" data-position="equivalent" data-screen-x="269.559600" data-screen-y="447.500000">
+<line data-depth="page" x1="215" y1="416" x2="269.55960043841964" y2="447.5" stroke="#214f9e" stroke-width="3"/>
+</g>
+<circle cx="215.0" cy="353.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="215.0" y="358.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="160.44039956158036" cy="447.5" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="160.44039956158036" y="452.5" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="269.55960043841964" cy="447.5" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="269.55960043841964" y="452.5" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="215" cy="416" r="18" fill="white" stroke="#20344e" stroke-width="2"/>
+<text x="215" y="422" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e">A</text>
+</g>
+<text x="425" y="383" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e">AX₃</text>
+<text x="425" y="417" font-size="26" font-weight="bold" text-anchor="start" fill="#20344e">120°</text>
+<text x="425" y="452" font-size="18" font-weight="normal" text-anchor="start" fill="#536273">Example: BF₃</text>
+<rect x="20" y="516" width="620" height="195" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="544" font-size="22" font-weight="bold" text-anchor="start" fill="#20344e">4 domains · tetrahedral</text>
+<g data-geometry-domains="4" data-central-lone-pairs="0" data-projection-z="0.65">
+<g data-domain="1" data-vx="0" data-vy="1" data-vz="0" data-position="equivalent" data-screen-x="215.000000" data-screen-y="568.000000">
+<line data-depth="page" x1="215" y1="631" x2="215.0" y2="568.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="2" data-vx="-0.942809041582063" data-vy="-0.333333333333333" data-vz="0" data-position="equivalent" data-screen-x="155.603030" data-screen-y="652.000000">
+<line data-depth="page" x1="215" y1="631" x2="155.60303038033" y2="652.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="3" data-vx="0.471404520791032" data-vy="-0.333333333333333" data-vz="0.816496580927726" data-position="equivalent" data-screen-x="278.134020" data-screen-y="618.564465">
+<polygon data-depth="front" points="215,631 279.29356281762364,624.4513538317328 276.9744767800271,612.6775761902863" fill="#214f9e"/>
+</g>
+<g data-domain="4" data-vx="0.471404520791032" data-vy="-0.333333333333333" data-vz="-0.816496580927726" data-position="equivalent" data-screen-x="211.262950" data-screen-y="685.435535">
+<line data-depth="behind" x1="215" y1="631" x2="211.26294982084463" y2="685.4355349889904" stroke="#214f9e" stroke-width="3" stroke-dasharray="4 5"/>
+</g>
+<circle cx="215.0" cy="568.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="215.0" y="573.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="155.60303038033" cy="652.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="155.60303038033" y="657.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="278.13401979882536" cy="618.5644650110096" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="278.13401979882536" y="623.5644650110096" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="211.26294982084463" cy="685.4355349889904" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="211.26294982084463" y="690.4355349889904" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="215" cy="631" r="18" fill="white" stroke="#20344e" stroke-width="2"/>
+<text x="215" y="637" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e">A</text>
+</g>
+<text x="425" y="598" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e">AX₄</text>
+<text x="425" y="632" font-size="26" font-weight="bold" text-anchor="start" fill="#20344e">≈109.5°</text>
+<text x="425" y="667" font-size="18" font-weight="normal" text-anchor="start" fill="#536273">Example: CH₄</text>
+<text x="330" y="742" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">Solid wedge: toward viewer · dashed bond: behind page</text>
+<text x="330" y="767" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273">Spatial projections: do not measure page angles.</text>
+</g></svg>

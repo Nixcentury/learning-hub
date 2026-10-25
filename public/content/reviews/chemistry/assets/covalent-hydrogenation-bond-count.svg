@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="590" viewBox="0 0 660 590" role="img" aria-labelledby="title desc">
+<title id="title">Count bond types in ethene hydrogenation</title><desc id="desc">Ethene has one carbon-carbon double bond and four carbon-hydrogen single bonds. Hydrogen has one hydrogen-hydrogen bond. Ethane has one carbon-carbon single bond and six carbon-hydrogen bonds. Count the pair of double-bond lines as one C=C position, using its tabulated energy once. Drawings show connectivity rather than three-dimensional geometry.</desc>
+<rect width="660" height="590" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="25" font-weight="bold" text-anchor="start" fill="#20344e" >Count bond types before calculating</text>
+<text x="26" y="65" font-size="21" font-weight="normal" text-anchor="start" fill="#20344e" >C₂H₄(g) + H₂(g) → C₂H₆(g)</text>
+<rect x="20" y="90" width="620" height="190" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<rect x="20" y="310" width="620" height="220" rx="12" fill="#f0f7f4" stroke="#d8e1ed"/>
+<text x="36" y="120" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e" >Reactants</text>
+<g data-molecule="C2H4" data-coefficient="1">
+<text x="155" y="194" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="C1" data-element="C">C</text>
+<text x="235" y="194" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="C2" data-element="C">C</text>
+<text x="110" y="154" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="110" y="234" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+<text x="280" y="154" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H3" data-element="H">H</text>
+<text x="280" y="234" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H4" data-element="H">H</text>
+<line data-bond="C1:C2" data-bond-type="C=C" x1="177" y1="180" x2="213" y2="180" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="C1:C2" data-bond-type="C=C" x1="177" y1="190" x2="213" y2="190" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="C1:H1" data-bond-type="C-H" x1="137" y1="170" x2="125" y2="160" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="C1:H2" data-bond-type="C-H" x1="137" y1="200" x2="125" y2="210" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="C2:H3" data-bond-type="C-H" x1="253" y1="170" x2="265" y2="160" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="C2:H4" data-bond-type="C-H" x1="253" y1="200" x2="265" y2="210" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+</g>
+<text x="355" y="193" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" >+</text>
+<g data-molecule="H2" data-coefficient="1">
+<text x="440" y="194" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="520" y="194" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+<line data-bond="H1:H2" data-bond-type="H-H" x1="462" y1="185" x2="498" y2="185" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+</g>
+<text x="330" y="263" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e" >1 C=C + 4 C–H + 1 H–H</text>
+<text x="330" y="304" font-size="27" font-weight="bold" text-anchor="middle" fill="#20344e" >↓</text>
+<text x="36" y="340" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e" >Product</text>
+<g data-molecule="C2H6" data-coefficient="1">
+<text x="275" y="416" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="C1" data-element="C">C</text>
+<text x="385" y="416" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="C2" data-element="C">C</text>
+<text x="205" y="416" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="275" y="359" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+<text x="275" y="473" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H3" data-element="H">H</text>
+<text x="455" y="416" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H4" data-element="H">H</text>
+<text x="385" y="359" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H5" data-element="H">H</text>
+<text x="385" y="473" font-size="28" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H6" data-element="H">H</text>
+<line data-bond="C1:C2" data-bond-type="C-C" x1="297" y1="407" x2="363" y2="407" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="H1:C1" data-bond-type="C-H" x1="227" y1="407" x2="253" y2="407" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="H2:C1" data-bond-type="C-H" x1="275" y1="372" x2="275" y2="385" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="C1:H3" data-bond-type="C-H" x1="275" y1="429" x2="275" y2="442" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="C2:H4" data-bond-type="C-H" x1="407" y1="407" x2="433" y2="407" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="H5:C2" data-bond-type="C-H" x1="385" y1="372" x2="385" y2="385" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+<line data-bond="C2:H6" data-bond-type="C-H" x1="385" y1="429" x2="385" y2="442" stroke="#20344e" stroke-width="3" stroke-linecap="round"/>
+</g>
+<text x="330" y="514" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e" >1 C–C + 6 C–H</text>
+<text x="330" y="560" font-size="18" font-weight="normal" text-anchor="middle" fill="#536273" >One C=C position uses D(C=C) once, not 2D(C–C).</text>
+<text x="330" y="582" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273" >Connectivity diagrams, not three-dimensional shapes.</text>
+</g></svg>

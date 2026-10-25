@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="540" viewBox="0 0 660 540" role="img" aria-labelledby="title desc">
+<title id="title">Gas-phase bond-energy accounting for hydrogen chloride formation</title><desc id="desc">For H2 gas plus Cl2 gas forming 2 HCl gas, breaking one mole of H-H bonds and one mole of Cl-Cl bonds requires 436 plus 243, or 679 kilojoules. Formation of two moles of H-Cl bonds releases 864 kilojoules. Products are below reactants in energy; the estimated net enthalpy change is minus 185 kilojoules per equation as written. Vertical spacing is schematic and the atomic route is not an actual reaction mechanism.</desc>
+<rect width="660" height="540" fill="white"/>
+<g font-family="Arial, sans-serif">
+<defs><marker id="up-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="#214f9e"/></marker><marker id="down-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="#23654f"/></marker></defs>
+<text x="26" y="35" font-size="25" font-weight="bold" text-anchor="start" fill="#20344e" >Gas-phase bond-energy accounting</text>
+<text x="26" y="65" font-size="21" font-weight="normal" text-anchor="start" fill="#20344e" >H₂(g) + Cl₂(g) → 2HCl(g)</text>
+<g data-state="atoms" data-energy-kj="679">
+<line x1="180" y1="135" x2="520" y2="135" stroke="#20344e" stroke-width="3"/>
+<text x="350" y="110" font-size="21" font-weight="bold" text-anchor="middle" fill="#20344e" >2H(g) + 2Cl(g)</text>
+</g>
+<g data-state="reactants" data-energy-kj="0">
+<line x1="130" y1="335" x2="350" y2="335" stroke="#20344e" stroke-width="3"/>
+<text x="240" y="365" font-size="21" font-weight="bold" text-anchor="middle" fill="#20344e" >H₂(g) + Cl₂(g)</text>
+</g>
+<g data-state="products" data-energy-kj="-185">
+<line x1="410" y1="400" x2="610" y2="400" stroke="#20344e" stroke-width="3"/>
+<text x="510" y="434" font-size="21" font-weight="bold" text-anchor="middle" fill="#20344e" >2HCl(g)</text>
+</g>
+<path data-energy-step="break" data-energy-kj="679" d="M 210 335 V 140" fill="none" stroke="#214f9e" stroke-width="3" marker-end="url(#up-arrow)"/>
+<text x="28" y="214" font-size="20" font-weight="bold" text-anchor="start" fill="#214f9e" >Break bonds</text>
+<text x="28" y="244" font-size="23" font-weight="bold" text-anchor="start" fill="#214f9e" >+679 kJ</text>
+<text x="28" y="273" font-size="18" font-weight="normal" text-anchor="start" fill="#536273" >436 + 243</text>
+<path data-energy-step="form" data-energy-kj="-864" d="M 480 135 V 395" fill="none" stroke="#23654f" stroke-width="3" marker-end="url(#down-arrow)"/>
+<text x="495" y="214" font-size="20" font-weight="bold" text-anchor="start" fill="#23654f" >Form bonds</text>
+<text x="495" y="244" font-size="23" font-weight="bold" text-anchor="start" fill="#23654f" >−864 kJ</text>
+<text x="495" y="273" font-size="18" font-weight="normal" text-anchor="start" fill="#536273" >−2 × 432</text>
+<text x="330" y="479" font-size="24" font-weight="bold" text-anchor="middle" fill="#20344e" >Net: +679 − 864 = −185 kJ</text>
+<text x="330" y="508" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273" >Per written equation · vertical spacing is schematic</text>
+<text x="330" y="528" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273" >Energy-accounting route, not a reaction mechanism.</text>
+</g></svg>

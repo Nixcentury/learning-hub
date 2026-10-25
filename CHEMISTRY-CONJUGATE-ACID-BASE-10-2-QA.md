@@ -2,6 +2,8 @@
 
 25 October 2026, Asia/Bangkok. Content work on `codex/chemistry-conjugate-pairs-10-2-20261025`, based on main `d3cb52f7a0a4ea404aa78c651ef1091b66503f35`.
 
+The original author checks below describe submission `d7849c567a4e434ecc3013d044f6cb96e8f7b02f`. A subsequent wording-only review has its own results at the end. In particular, the original exported PDFs are evidence for the original wording, not a new PDF export of the revised text.
+
 ## Placement and scope
 
 - The existing chemistry service catalog was read using the repository's current endpoint and client parameters on 25 October. The exact topic is `คู่กรด-เบส(Conjugate Acid-Base Pairs)`, path `เคมี (CHEMISTRY) / Learning hub / กรด-เบส(Acids and Bases) / คู่กรด-เบส(Conjugate Acid-Base Pairs)`, bankKey `b-5e60aad52e28d90a4d818b29`, with zero bank quiz questions. No hash was computed or borrowed.
@@ -73,3 +75,16 @@ Chromium 151 Chrome Headless Shell served the production `dist` under `/learning
 - Native iPad/Safari, its print/PDF driver, Apple Pencil and physical printer: not tested.
 - Browser PNGs are internal QA evidence, not user screenshot deliverables.
 - No public deployment is claimed here. The branch/PR must be merged and the Pages build/deploy plus live deployment marker and worksheet route verified before reporting that it is on the public website.
+
+## Wording-only readability review
+
+Requested by the teacher after reviewing PR41 and its conjugate-base definition. The content, questions, equations, diagrams and layout are retained.
+
+- Replaced unexplained student-facing “สปีชีส์”/“species” with context-appropriate “อนุภาค”, “สาร”, “particle” or “substance” in both languages, including prompts, captions and accessible labels. The internal `.species` CSS class is unchanged.
+- Simplified awkward wording such as “เปลี่ยนเป็นใคร”, “โครงอะตอม”, and repeated “บริบท” phrasing. Definitions still retain the proton transfer, charge changes and the distinction between amphiprotic and amphoteric behaviour.
+- Compared the final text with the original HTML: all TeX expressions, chemical-formula spans, image paths/sizes, semantic slot keys and writing-area heights are identical. Both languages still have 76 slots and 58 question/example containers; table answers and original exercise numbering remain intact.
+- Independent production build passed: content validation has zero errors and 32 existing draft warnings, with 485 public files verified. `git diff --check` passed. No engine, asset, dependency or data changes; no new unit tests were needed for this text-only revision.
+- Opened the revised production build in the actual Hub through its bank deep link, using Guest. All images/formulas loaded; the updated conjugate-base definition and individual reveal were checked through the shared controller.
+- Regenerated all four central A4 previews: TH/EN × blank/answers remain 25 pages each, 76 slots and 58 question/example areas, with no page-body overflow, broken images, math errors or missing question/answer areas. Blank editions contain zero answer elements and three given images; answer editions contain all 76 answers and nine images. The opposite language is absent.
+- Follow-up evidence is in ignored `qa-output/pr41-review/`: wording-change inventory, structural comparison, build log, four preview HTML snapshots and print report.
+- This wording review did not re-export native PDFs or repeat native iPad/Safari, physical-printer or responsive-device tests. The earlier original-author PDF/device evidence and limits remain separately identified above. The PR remains open for review; no merge or public deployment is claimed by this follow-up.

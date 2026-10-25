@@ -408,6 +408,12 @@ function readSubjectMenuCollapsed() {
   }
 }
 
+function syncWorkspaceTop() {
+  if (hubView.hidden) return;
+  const top = pageFrame.parentElement.getBoundingClientRect().top;
+  document.body.style.setProperty("--workspace-top", `${Math.ceil(top)}px`);
+}
+
 function renderSubjectMenu() {
   hubView.classList.toggle("is-subject-menu-collapsed", subjectMenuCollapsed);
   document.body.classList.toggle("is-subject-menu-collapsed", subjectMenuCollapsed);
@@ -420,6 +426,7 @@ function renderSubjectMenu() {
     ? subjectMenuToggle.dataset.ariaTh : subjectMenuToggle.dataset.ariaEn;
   subjectMenuToggle.setAttribute("aria-label", label);
   subjectMenuToggle.setAttribute("title", label);
+  requestAnimationFrame(syncWorkspaceTop);
 }
 
 function setLanguage(language) {
@@ -460,6 +467,7 @@ function setLanguage(language) {
 function showHub() {
   loginView.hidden = true;
   hubView.hidden = false;
+  syncWorkspaceTop();
   pageFrame.focus();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -603,6 +611,14 @@ function showSection(sectionId, force = false) {
 }
 
 setLanguage(currentLanguage);
+
+if (typeof ResizeObserver === "function") {
+  const menuResizeObserver = new ResizeObserver(syncWorkspaceTop);
+  menuResizeObserver.observe(subjectMenuPanel);
+  menuResizeObserver.observe(document.querySelector(".hub-topbar"));
+}
+window.addEventListener("resize", syncWorkspaceTop);
+subjectMenuPanel.addEventListener("transitionend", syncWorkspaceTop);
 
 subjectMenuToggle.addEventListener("click", () => {
   subjectMenuCollapsed = !subjectMenuCollapsed;

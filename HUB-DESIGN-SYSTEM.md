@@ -15,3 +15,5 @@ Validation for this change:
 - Learning-sheet checks: accessible toggles, stable blanks, Thai/English and original print output.
 - Review checks: Hub routing, topic/language selection, answers, print and legacy links.
 - Real browser checks at 1280, 820, 390 and 302 pixels: MCQ, numeric, drag/tap, results/retry, notebook mode, backup and PDF page controls.
+
+Subject navigation uses flat screen-only palettes from `hub-ui.css`: Physics yellow, Chemistry purple, Biology green, Science cyan, Mathematics coral red and Test blue. `showSection()` sets `data-hub-section` on the Hub view so the surrounding background follows tab clicks, shared routes and Back/Forward. Existing subject-body classes select the same palette in menu frames, including when a menu opens on its own. White reading panels, dark control borders and raised/pressed/focus states remain in place. Overview and Classroom keep their original colours. These menu palettes do not change player or PDF content, or printed layouts.

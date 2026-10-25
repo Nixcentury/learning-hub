@@ -550,6 +550,7 @@ function showSection(sectionId, force = false) {
   displayedSectionId = sectionId;
 
   activeSectionId = sectionId;
+  hubView.dataset.hubSection = sectionId;
   ++classroomPageRevision;
   syncClassrooms();
   navButtons.forEach((button) => {

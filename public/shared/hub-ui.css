@@ -25,3 +25,50 @@
   --hub-pressed: inset 0 2px 4px #172b5640;
   --hub-panel-shadow: 0 3px 0 #c3cedd;
 }
+
+/* Flat subject colours are shared by the Hub tabs and subject menus only.
+   Classroom, documents, owned engines and printed pages retain their base palette. */
+@media screen {
+  :where(.theme-physics, [data-hub-section="physics"], .nav-button[data-section="physics"]) {
+    --hub-subject-page: #ffe98c;
+    --hub-subject-soft: #fff6c7;
+    --hub-subject-accent: #f2d636;
+    --hub-subject-ink: #715200;
+    --hub-subject-edge: #886811;
+  }
+  :where(.theme-chemistry, [data-hub-section="chemistry"], .nav-button[data-section="chemistry"]) {
+    --hub-subject-page: #dbc7f6;
+    --hub-subject-soft: #f2eaff;
+    --hub-subject-accent: #b1a0f6;
+    --hub-subject-ink: #61349c;
+    --hub-subject-edge: #76509b;
+  }
+  :where(.theme-biology, [data-hub-section="biology"], .nav-button[data-section="biology"]) {
+    --hub-subject-page: #b7e6c5;
+    --hub-subject-soft: #e6f7e9;
+    --hub-subject-accent: #86d4ae;
+    --hub-subject-ink: #236e50;
+    --hub-subject-edge: #397b55;
+  }
+  :where(.theme-science, [data-hub-section="lower-science"], .nav-button[data-section="lower-science"], [data-hub-section="science-ep"], .nav-button[data-section="science-ep"]) {
+    --hub-subject-page: #b9e9f1;
+    --hub-subject-soft: #e6f8fb;
+    --hub-subject-accent: #66cbd8;
+    --hub-subject-ink: #146371;
+    --hub-subject-edge: #257482;
+  }
+  :where(.theme-math, [data-hub-section="math-ep"], .nav-button[data-section="math-ep"], [data-hub-section="upper-math"], .nav-button[data-section="upper-math"]) {
+    --hub-subject-page: #ffc8c2;
+    --hub-subject-soft: #fff0ec;
+    --hub-subject-accent: #f48d86;
+    --hub-subject-ink: #902f35;
+    --hub-subject-edge: #9f4147;
+  }
+  :where(.theme-test, [data-hub-section="test"], .nav-button[data-section="test"]) {
+    --hub-subject-page: #cadbff;
+    --hub-subject-soft: #eef3ff;
+    --hub-subject-accent: #8fb4f4;
+    --hub-subject-ink: #2c538a;
+    --hub-subject-edge: #3d6092;
+  }
+}

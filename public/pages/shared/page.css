@@ -1,4 +1,4 @@
-@import url("../../shared/hub-ui.css?v=hub-1");
+@import url("../../shared/hub-ui.css?v=hub-2");
 
 :root {
   --page: var(--hub-page);
@@ -835,5 +835,24 @@ button.chapter-card:focus-visible,
 
   .stage span {
     display: none;
+  }
+}
+
+/* Shared subject palettes apply to menus without tinting authored lesson content. */
+@media screen {
+  body:is(.theme-physics, .theme-chemistry, .theme-biology, .theme-science, .theme-math, .theme-test) {
+    --page: var(--hub-subject-page);
+    --subject-accent: var(--hub-subject-ink);
+    --subject-soft: var(--hub-subject-soft);
+    background: var(--page);
+  }
+  body:is(.theme-physics, .theme-chemistry, .theme-biology, .theme-science, .theme-math, .theme-test) .page-heading {
+    border-color: var(--hub-subject-edge);
+    background: var(--hub-subject-soft);
+  }
+  body.subject-orbit-page:is(.theme-physics, .theme-chemistry, .theme-biology) {
+    --orbit-accent: var(--hub-subject-accent);
+    --orbit-light: var(--hub-subject-soft);
+    --orbit-deep: var(--hub-subject-ink);
   }
 }

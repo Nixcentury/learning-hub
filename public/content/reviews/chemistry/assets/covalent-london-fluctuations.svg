@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="420" viewBox="0 0 660 420" role="img" aria-labelledby="title desc">
+<title id="title">London dispersion in one temporary snapshot</title><desc id="desc">Two neutral molecules are shown with schematic electron-density regions. In this instantaneous configuration each has a partial positive left side and partial negative right side. The first molecule negative side faces the second positive side, allowing attraction. The temporary dipoles are correlated through induction, can change, and do not require permanent molecular polarity. The picture does not show actual electron positions.</desc>
+<rect width="660" height="420" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="23" font-weight="bold" text-anchor="start" fill="#20344e" >London dispersion: one instantaneous snapshot</text>
+<text x="26" y="64" font-size="17" font-weight="normal" text-anchor="start" fill="#536273" >Temporary correlated poles · each molecule stays neutral</text>
+<text x="180" y="123" font-size="21" font-weight="bold" text-anchor="middle" fill="#20344e" >Molecule 1</text>
+<g data-molecule="1" data-net-charge="0" data-dipole-kind="temporary">
+<ellipse cx="180" cy="215" rx="100" ry="65" fill="#eef2f8" stroke="#adb9c7" stroke-width="1.5"/>
+<ellipse cx="145" cy="215" rx="58" ry="53" fill="#fae7df"/>
+<ellipse cx="215" cy="215" rx="58" ry="53" fill="#dce8f7"/>
+<text x="138" y="225" font-size="29" font-weight="bold" text-anchor="middle" fill="#a94e16" data-relative-side="left" data-partial-sign="1">δ+</text>
+<text x="222" y="225" font-size="29" font-weight="bold" text-anchor="middle" fill="#214f9e" data-relative-side="right" data-partial-sign="-1">δ−</text>
+</g>
+<text x="480" y="123" font-size="21" font-weight="bold" text-anchor="middle" fill="#20344e" >Molecule 2</text>
+<g data-molecule="2" data-net-charge="0" data-dipole-kind="temporary">
+<ellipse cx="480" cy="215" rx="100" ry="65" fill="#eef2f8" stroke="#adb9c7" stroke-width="1.5"/>
+<ellipse cx="445" cy="215" rx="58" ry="53" fill="#fae7df"/>
+<ellipse cx="515" cy="215" rx="58" ry="53" fill="#dce8f7"/>
+<text x="438" y="225" font-size="29" font-weight="bold" text-anchor="middle" fill="#a94e16" data-relative-side="left" data-partial-sign="1">δ+</text>
+<text x="522" y="225" font-size="29" font-weight="bold" text-anchor="middle" fill="#214f9e" data-relative-side="right" data-partial-sign="-1">δ−</text>
+</g>
+<line data-interaction="london" data-left-molecule="1" data-right-molecule="2" data-left-sign="-1" data-right-sign="1" data-outcome="attract" x1="285" y1="215" x2="375" y2="215" stroke="#23654f" stroke-width="2.5" stroke-dasharray="3 6"/>
+<text x="330" y="182" font-size="18" font-weight="bold" text-anchor="middle" fill="#23654f" >Attract</text>
+<text x="330" y="319" font-size="18" font-weight="normal" text-anchor="middle" fill="#20344e" >Electron density fluctuates; these poles can change.</text>
+<text x="330" y="361" font-size="23" font-weight="bold" text-anchor="middle" fill="#20344e" >No permanent dipole is required.</text>
+<text x="330" y="401" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273" >Schematic density regions, not fixed electron positions.</text>
+</g></svg>

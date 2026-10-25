@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="705" viewBox="0 0 660 705" role="img" aria-labelledby="title desc">
+<title id="title">Hydrogen-bond donors and acceptors in water and dimethyl ether</title><desc id="desc">The upper panel shows water donating through its original O-H covalent bond to a lone pair on a second water oxygen. The lower panel shows water donating to the lone-pair-bearing oxygen of dimethyl ether, which has two methyl groups and no O-H bond. Solid covalent bonds remain intact; the green dotted hydrogen bond joins donor H to acceptor O on a different molecule. Oxygen lone pairs are shown; methyl groups are abbreviated. The diagrams are not distance or angle measurements.</desc>
+<rect width="660" height="705" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="23" font-weight="bold" text-anchor="start" fill="#20344e" >Hydrogen bonding: check donor and acceptor</text>
+<text x="26" y="64" font-size="17" font-weight="normal" text-anchor="start" fill="#536273" >Solid O–H remains · green H···O joins separate molecules</text>
+<rect x="20" y="86" width="620" height="250" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="114" font-size="19" font-weight="bold" text-anchor="start" fill="#20344e" >Both water partners can donate and accept</text>
+<g data-example="water-water">
+<g data-molecule-id="donor" data-formula="H2O">
+<text x="110" y="231" font-size="27" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="O1" data-element="O">O</text>
+<text x="190" y="231" font-size="27" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="89.96959967564469" y="153.5481887697514" font-size="27" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+<line data-covalent-bond="O1:H1" x1="128.0" y1="223.0" x2="172.0" y2="223.0" stroke="#20344e" stroke-width="3"/>
+<line data-covalent-bond="O1:H2" x1="105.49315992702006" y1="205.57334247319406" x2="94.47643974862463" y2="162.97484629655733" stroke="#20344e" stroke-width="3"/>
+<circle data-nonbonding-on="O1" cx="78" cy="218" r="3" fill="#214f9e"/><circle data-nonbonding-on="O1" cx="78" cy="228" r="3" fill="#214f9e"/>
+<circle data-nonbonding-on="O1" cx="105" cy="254" r="3" fill="#214f9e"/><circle data-nonbonding-on="O1" cx="115" cy="254" r="3" fill="#214f9e"/>
+</g>
+<g data-molecule-id="acceptor" data-formula="H2O">
+<text x="330" y="231" font-size="27" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="O2" data-element="O">O</text>
+<circle data-nonbonding-on="O2" cx="295" cy="206" r="3" fill="#214f9e"/><circle data-nonbonding-on="O2" cx="305" cy="206" r="3" fill="#214f9e"/>
+<circle data-nonbonding-on="O2" cx="295" cy="240" r="3" fill="#214f9e"/><circle data-nonbonding-on="O2" cx="305" cy="240" r="3" fill="#214f9e"/>
+<text x="377.75294784268704" y="169.3262132479802" font-size="27" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H3" data-element="H">H</text>
+<line data-covalent-bond="O2:H3" x1="341.01991104062006" y1="208.76758767261083" x2="366.733036802067" y2="175.55862557536938" stroke="#20344e" stroke-width="3"/>
+<text x="377.75294784268704" y="292.6737867520198" font-size="27" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H4" data-element="H">H</text>
+<line data-covalent-bond="O2:H4" x1="341.01991104062006" y1="237.23241232738917" x2="366.733036802067" y2="270.4413744246306" stroke="#20344e" stroke-width="3"/>
+</g>
+<line data-interaction="hydrogen-bond" data-donor-atom="O1" data-hydrogen="H1" data-acceptor-atom="O2" x1="209" y1="223" x2="311" y2="223" stroke="#23654f" stroke-width="3" stroke-dasharray="2 6"/>
+<text x="190" y="196" font-size="20" font-weight="bold" text-anchor="middle" fill="#214f9e" >δ+</text>
+<text x="330" y="196" font-size="20" font-weight="bold" text-anchor="middle" fill="#214f9e" >δ−</text>
+<text x="257" y="210" font-size="15" font-weight="bold" text-anchor="middle" fill="#23654f" >H-bond</text>
+</g>
+<text x="465" y="169" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e" >Water + water</text>
+<text x="465" y="207" font-size="18" font-weight="normal" text-anchor="start" fill="#20344e" >O–H donor</text>
+<text x="465" y="242" font-size="17" font-weight="normal" text-anchor="start" fill="#20344e" >O lone-pair acceptor</text>
+<rect x="20" y="356" width="620" height="280" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="384" font-size="19" font-weight="bold" text-anchor="start" fill="#20344e" >Ether can accept without an O–H donor</text>
+<g data-example="water-ether">
+<g data-molecule-id="donor" data-formula="H2O">
+<text x="110" y="507" font-size="27" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="O1" data-element="O">O</text>
+<text x="190" y="507" font-size="27" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="89.96959967564469" y="429.5481887697514" font-size="27" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+<line data-covalent-bond="O1:H1" x1="128.0" y1="499.0" x2="172.0" y2="499.0" stroke="#20344e" stroke-width="3"/>
+<line data-covalent-bond="O1:H2" x1="105.49315992702006" y1="481.5733424731941" x2="94.47643974862463" y2="438.9748462965573" stroke="#20344e" stroke-width="3"/>
+<circle data-nonbonding-on="O1" cx="78" cy="494" r="3" fill="#214f9e"/><circle data-nonbonding-on="O1" cx="78" cy="504" r="3" fill="#214f9e"/>
+<circle data-nonbonding-on="O1" cx="105" cy="530" r="3" fill="#214f9e"/><circle data-nonbonding-on="O1" cx="115" cy="530" r="3" fill="#214f9e"/>
+</g>
+<g data-molecule-id="acceptor" data-formula="C2H6O">
+<text x="330" y="507" font-size="27" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="O2" data-element="O">O</text>
+<circle data-nonbonding-on="O2" cx="295" cy="482" r="3" fill="#214f9e"/><circle data-nonbonding-on="O2" cx="305" cy="482" r="3" fill="#214f9e"/>
+<circle data-nonbonding-on="O2" cx="295" cy="516" r="3" fill="#214f9e"/><circle data-nonbonding-on="O2" cx="305" cy="516" r="3" fill="#214f9e"/>
+<text x="373.61704647071826" y="441.33506934070675" font-size="23" font-weight="bold" text-anchor="middle" fill="#20344e" data-group="Me1" data-group-formula="CH3" data-group-center="C">CH₃</text>
+<line data-covalent-bond="O2:Me1" x1="340.06547226247346" y1="484.07732369400924" x2="360.19641678742033" y2="454.23197108202777" stroke="#20344e" stroke-width="3"/>
+<text x="373.61704647071826" y="570.6649306592933" font-size="23" font-weight="bold" text-anchor="middle" fill="#20344e" data-group="Me2" data-group-formula="CH3" data-group-center="C">CH₃</text>
+<line data-covalent-bond="O2:Me2" x1="340.06547226247346" y1="513.9226763059908" x2="360.19641678742033" y2="543.7680289179723" stroke="#20344e" stroke-width="3"/>
+</g>
+<line data-interaction="hydrogen-bond" data-donor-atom="O1" data-hydrogen="H1" data-acceptor-atom="O2" x1="209" y1="499" x2="311" y2="499" stroke="#23654f" stroke-width="3" stroke-dasharray="2 6"/>
+<text x="190" y="472" font-size="20" font-weight="bold" text-anchor="middle" fill="#214f9e" >δ+</text>
+<text x="330" y="472" font-size="20" font-weight="bold" text-anchor="middle" fill="#214f9e" >δ−</text>
+<text x="257" y="486" font-size="15" font-weight="bold" text-anchor="middle" fill="#23654f" >H-bond</text>
+</g>
+<text x="465" y="444" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e" >Water + ether</text>
+<text x="465" y="483" font-size="18" font-weight="normal" text-anchor="start" fill="#20344e" >Ether O accepts</text>
+<text x="465" y="519" font-size="17" font-weight="normal" text-anchor="start" fill="#20344e" >No O–H in ether</text>
+<text x="465" y="555" font-size="17" font-weight="normal" text-anchor="start" fill="#20344e" >No self-pair donor</text>
+<text x="330" y="666" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273" >Green H···O contacts are intermolecular hydrogen bonds.</text>
+<text x="330" y="693" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273" >H stays covalently bonded to its original donor O.</text>
+</g></svg>

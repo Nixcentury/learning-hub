@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="635" viewBox="0 0 660 635" role="img" aria-labelledby="title desc">
+<title id="title">Ideal electron-domain geometries for five and six domains</title><desc id="desc">Five domains form a trigonal bipyramid with two axial positions and three equatorial positions. Axial pairs are 180 degrees apart, equatorial pairs 120 and cross-class pairs 90. Blue denotes axial and green equatorial. Six domains form an octahedron with three opposite pairs and angles 90 or 180; all six positions are equivalent. Solid wedges point out of the page and dashed spokes point behind it. No central lone pairs occur.</desc>
+<rect width="660" height="635" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="25" font-weight="bold" text-anchor="start" fill="#20344e">Basic geometries: 5–6 domains</text>
+<text x="26" y="63" font-size="17" font-weight="normal" text-anchor="start" fill="#536273">Ideal angles · no central lone pairs · projected views</text>
+<rect x="20" y="86" width="620" height="230" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="114" font-size="22" font-weight="bold" text-anchor="start" fill="#20344e">5 domains · trigonal bipyramidal</text>
+<g data-geometry-domains="5" data-central-lone-pairs="0" data-projection-z="0.65">
+<g data-domain="1" data-vx="0" data-vy="1" data-vz="0" data-position="axial" data-screen-x="215.000000" data-screen-y="143.000000">
+<line data-depth="page" x1="215" y1="218" x2="215.0" y2="143.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="2" data-vx="0" data-vy="-1" data-vz="0" data-position="axial" data-screen-x="215.000000" data-screen-y="293.000000">
+<line data-depth="page" x1="215" y1="218" x2="215.0" y2="293.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="3" data-vx="0.939692620785908" data-vy="0" data-vz="0.342020143325669" data-position="equatorial" data-screen-x="302.150429" data-screen-y="201.326518">
+<polygon data-depth="front" points="215,218 303.2778903883059,207.2196351671733 301.02296670383316,195.43340085857398" fill="#23654f"/>
+</g>
+<g data-domain="4" data-vx="-0.766044443118978" data-vy="0" data-vz="0.642787609686539" data-position="equatorial" data-screen-x="188.882563" data-screen-y="186.664104">
+<polygon data-depth="front" points="215,218 193.4915872662935,182.82263387947697 184.27353821029743,190.50557417608545" fill="#23654f"/>
+</g>
+<g data-domain="5" data-vx="-0.17364817766693" data-vy="0" data-vz="-0.984807753012208" data-position="equatorial" data-screen-x="153.967009" data-screen-y="266.009378">
+<line data-depth="behind" x1="215" y1="218" x2="153.96700871563507" y2="266.00937795934516" stroke="#23654f" stroke-width="3" stroke-dasharray="4 5"/>
+</g>
+<circle cx="215.0" cy="143.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="215.0" y="148.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="215.0" cy="293.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="215.0" y="298.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="302.1504285460695" cy="201.32651801287363" r="15" fill="white" stroke="#23654f" stroke-width="2"/>
+<text x="302.1504285460695" y="206.32651801287363" font-size="15" font-weight="bold" text-anchor="middle" fill="#23654f">X</text>
+<circle cx="188.88256273829546" cy="186.6641040277812" r="15" fill="white" stroke="#23654f" stroke-width="2"/>
+<text x="188.88256273829546" y="191.6641040277812" font-size="15" font-weight="bold" text-anchor="middle" fill="#23654f">X</text>
+<circle cx="153.96700871563507" cy="266.00937795934516" r="15" fill="white" stroke="#23654f" stroke-width="2"/>
+<text x="153.96700871563507" y="271.00937795934516" font-size="15" font-weight="bold" text-anchor="middle" fill="#23654f">X</text>
+<circle cx="215" cy="218" r="18" fill="white" stroke="#20344e" stroke-width="2"/>
+<text x="215" y="224" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e">A</text>
+</g>
+<text x="410" y="167" font-size="18" font-weight="bold" text-anchor="start" fill="#20344e">AX₅ · PCl₅ molecule</text>
+<text x="410" y="201" font-size="18" font-weight="bold" text-anchor="start" fill="#214f9e">2 axial positions</text>
+<text x="410" y="231" font-size="18" font-weight="bold" text-anchor="start" fill="#23654f">3 equatorial positions</text>
+<text x="410" y="270" font-size="23" font-weight="bold" text-anchor="start" fill="#20344e">90° · 120° · 180°</text>
+<rect x="20" y="336" width="620" height="230" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="364" font-size="22" font-weight="bold" text-anchor="start" fill="#20344e">6 domains · octahedral</text>
+<g data-geometry-domains="6" data-central-lone-pairs="0" data-projection-z="0.65">
+<g data-domain="1" data-vx="1" data-vy="0" data-vz="0" data-position="equivalent" data-screen-x="290.000000" data-screen-y="468.000000">
+<line data-depth="page" x1="215" y1="468" x2="290.0" y2="468.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="2" data-vx="-1" data-vy="0" data-vz="0" data-position="equivalent" data-screen-x="140.000000" data-screen-y="468.000000">
+<line data-depth="page" x1="215" y1="468" x2="140.0" y2="468.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="3" data-vx="0" data-vy="1" data-vz="0" data-position="equivalent" data-screen-x="215.000000" data-screen-y="393.000000">
+<line data-depth="page" x1="215" y1="468" x2="215.0" y2="393.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="4" data-vx="0" data-vy="-1" data-vz="0" data-position="equivalent" data-screen-x="215.000000" data-screen-y="543.000000">
+<line data-depth="page" x1="215" y1="468" x2="215.0" y2="543.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="5" data-vx="0" data-vy="0" data-vz="1" data-position="equivalent" data-screen-x="263.750000" data-screen-y="419.250000">
+<polygon data-depth="front" points="215,468 267.99264068711926,423.49264068711926 259.50735931288074,415.00735931288074" fill="#214f9e"/>
+</g>
+<g data-domain="6" data-vx="0" data-vy="0" data-vz="-1" data-position="equivalent" data-screen-x="166.250000" data-screen-y="516.750000">
+<line data-depth="behind" x1="215" y1="468" x2="166.25" y2="516.75" stroke="#214f9e" stroke-width="3" stroke-dasharray="4 5"/>
+</g>
+<circle cx="290.0" cy="468.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="290.0" y="473.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="140.0" cy="468.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="140.0" y="473.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="215.0" cy="393.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="215.0" y="398.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="215.0" cy="543.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="215.0" y="548.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="263.75" cy="419.25" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="263.75" y="424.25" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="166.25" cy="516.75" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="166.25" y="521.75" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">X</text>
+<circle cx="215" cy="468" r="18" fill="white" stroke="#20344e" stroke-width="2"/>
+<text x="215" y="474" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e">A</text>
+</g>
+<text x="410" y="416" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e">AX₆ · e.g. SF₆</text>
+<text x="410" y="451" font-size="18" font-weight="normal" text-anchor="start" fill="#20344e">6 equivalent positions</text>
+<text x="410" y="481" font-size="18" font-weight="normal" text-anchor="start" fill="#20344e">3 opposite pairs</text>
+<text x="410" y="524" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e">90° · 180°</text>
+<text x="330" y="596" font-size="18" font-weight="normal" text-anchor="middle" fill="#536273">Octahedron: 6 vertices and 8 triangular faces.</text>
+<text x="330" y="625" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273">Wedge/dash depth follows the same convention as above.</text>
+</g></svg>

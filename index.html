@@ -160,10 +160,20 @@
     ========================================================== -->
     <section class="view hub-view" id="hub-view" hidden>
       <header class="hub-topbar glass-surface">
-        <a class="brand" href="#" aria-label="Learning Hub">
-          <img class="brand-icon" src="%BASE_URL%favicon.svg?v=lh-1" width="42" height="42" alt="" />
-          <span class="brand-name">Learning Hub</span>
-        </a>
+        <div class="hub-brand-group">
+          <button class="icon-button hub-menu-toggle" id="hub-menu-toggle" type="button"
+            aria-controls="hub-subject-menu" aria-expanded="true"
+            aria-label="ซ่อนเมนูวิชา" title="ซ่อนเมนูวิชา"
+            data-aria-th="ซ่อนเมนูวิชา" data-aria-en="Hide subject menu">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <a class="brand" href="#" aria-label="Learning Hub">
+            <img class="brand-icon" src="%BASE_URL%favicon.svg?v=lh-1" width="42" height="42" alt="" />
+            <span class="brand-name">Learning Hub</span>
+          </a>
+        </div>
 
         <div class="hub-actions">
           <button class="hub-share-button" id="hub-share-button" type="button" aria-label="แชร์ลิงก์หน้านี้" data-aria-th="แชร์ลิงก์หน้านี้" data-aria-en="Share this location">
@@ -235,62 +245,67 @@
       </header>
 
       <div class="hub-layout">
-        <nav
-          class="hub-nav glass-surface"
-          data-aria-th="ส่วนต่าง ๆ ของ Learning Hub"
-          data-aria-en="Learning Hub sections"
-          aria-label="ส่วนต่าง ๆ ของ Learning Hub"
-        >
-          <div class="nav-scroll">
-            <button class="nav-button is-active" type="button" data-section="overview" data-page-src="pages/overview.html">
-              <span class="nav-icon">⌂</span>
-              <span data-th="ภาพรวม" data-en="Overview">ภาพรวม</span>
-            </button>
-            <button class="nav-button" type="button" data-section="classroom" data-page-src="pages/classroom.html">
-              <span class="nav-icon">◎</span>
-              <span data-th="ห้องเรียน" data-en="Classroom">ห้องเรียน</span>
-            </button>
-
-            <p class="nav-label" data-th="รายวิชา" data-en="Subjects">รายวิชา</p>
-
-            <button class="nav-button" type="button" data-section="physics" data-page-src="pages/physics.html">
-              <span class="nav-icon subject-physics">⚛</span>
-              <span data-th="ฟิสิกส์" data-en="Physics">ฟิสิกส์</span>
-            </button>
-            <button class="nav-button" type="button" data-section="chemistry" data-page-src="pages/chemistry.html">
-              <span class="nav-icon subject-chemistry">⚗</span>
-              <span data-th="เคมี" data-en="Chemistry">เคมี</span>
-            </button>
-            <button class="nav-button" type="button" data-section="biology" data-page-src="pages/biology.html">
-              <span class="nav-icon subject-biology">◌</span>
-              <span data-th="ชีววิทยา" data-en="Biology">ชีววิทยา</span>
-            </button>
-            <button class="nav-button" type="button" data-section="lower-science" data-page-src="pages/lower-science.html">
-              <span class="nav-icon subject-science">✦</span>
-              <span data-th="วิทยาศาสตร์ ม.ต้น" data-en="Lower Secondary Science">
-                วิทยาศาสตร์ ม.ต้น
-              </span>
-            </button>
-            <button class="nav-button" type="button" data-section="science-ep" data-page-src="pages/science-ep.html">
-              <span class="nav-icon subject-science">✦</span>
-              <span data-th="วิทยาศาสตร์ EP" data-en="Science EP">วิทยาศาสตร์ EP</span>
-            </button>
-            <button class="nav-button" type="button" data-section="math-ep" data-page-src="pages/math-ep.html">
-              <span class="nav-icon subject-math">∑</span>
-              <span data-th="คณิตศาสตร์ EP" data-en="Mathematics EP">คณิตศาสตร์ EP</span>
-            </button>
-            <button class="nav-button" type="button" data-section="upper-math" data-page-src="pages/upper-math.html">
-              <span class="nav-icon subject-math">∑</span>
-              <span data-th="คณิตศาสตร์ ม.ปลาย" data-en="Upper Secondary Mathematics">
-                คณิตศาสตร์ ม.ปลาย
-              </span>
-            </button>
-            <button class="nav-button" type="button" data-section="test" data-page-src="pages/test.html">
-              <span class="nav-icon subject-test">T</span>
-              <span data-th="ทดสอบ" data-en="Test">ทดสอบ</span>
-            </button>
+        <div class="hub-nav-panel" id="hub-subject-menu">
+          <div class="hub-nav-clip">
+            <nav
+              class="hub-nav glass-surface"
+              data-aria-th="ส่วนต่าง ๆ ของ Learning Hub"
+              data-aria-en="Learning Hub sections"
+              aria-label="ส่วนต่าง ๆ ของ Learning Hub"
+            >
+              <div class="nav-scroll">
+                <button class="nav-button is-active" type="button" data-section="overview" data-page-src="pages/overview.html">
+                  <span class="nav-icon">⌂</span>
+                  <span data-th="ภาพรวม" data-en="Overview">ภาพรวม</span>
+                </button>
+                <button class="nav-button" type="button" data-section="classroom" data-page-src="pages/classroom.html">
+                  <span class="nav-icon">◎</span>
+                  <span data-th="ห้องเรียน" data-en="Classroom">ห้องเรียน</span>
+                </button>
+    
+                <p class="nav-label" data-th="รายวิชา" data-en="Subjects">รายวิชา</p>
+    
+                <button class="nav-button" type="button" data-section="physics" data-page-src="pages/physics.html">
+                  <span class="nav-icon subject-physics">⚛</span>
+                  <span data-th="ฟิสิกส์" data-en="Physics">ฟิสิกส์</span>
+                </button>
+                <button class="nav-button" type="button" data-section="chemistry" data-page-src="pages/chemistry.html">
+                  <span class="nav-icon subject-chemistry">⚗</span>
+                  <span data-th="เคมี" data-en="Chemistry">เคมี</span>
+                </button>
+                <button class="nav-button" type="button" data-section="biology" data-page-src="pages/biology.html">
+                  <span class="nav-icon subject-biology">◌</span>
+                  <span data-th="ชีววิทยา" data-en="Biology">ชีววิทยา</span>
+                </button>
+                <button class="nav-button" type="button" data-section="lower-science" data-page-src="pages/lower-science.html">
+                  <span class="nav-icon subject-science">✦</span>
+                  <span data-th="วิทยาศาสตร์ ม.ต้น" data-en="Lower Secondary Science">
+                    วิทยาศาสตร์ ม.ต้น
+                  </span>
+                </button>
+                <button class="nav-button" type="button" data-section="science-ep" data-page-src="pages/science-ep.html">
+                  <span class="nav-icon subject-science">✦</span>
+                  <span data-th="วิทยาศาสตร์ EP" data-en="Science EP">วิทยาศาสตร์ EP</span>
+                </button>
+                <button class="nav-button" type="button" data-section="math-ep" data-page-src="pages/math-ep.html">
+                  <span class="nav-icon subject-math">∑</span>
+                  <span data-th="คณิตศาสตร์ EP" data-en="Mathematics EP">คณิตศาสตร์ EP</span>
+                </button>
+                <button class="nav-button" type="button" data-section="upper-math" data-page-src="pages/upper-math.html">
+                  <span class="nav-icon subject-math">∑</span>
+                  <span data-th="คณิตศาสตร์ ม.ปลาย" data-en="Upper Secondary Mathematics">
+                    คณิตศาสตร์ ม.ปลาย
+                  </span>
+                </button>
+                <!-- Retain the legacy Test route for existing development links only. -->
+                <button class="nav-button" type="button" data-section="test" data-page-src="pages/test.html" hidden>
+                  <span class="nav-icon subject-test">T</span>
+                  <span data-th="ทดสอบ" data-en="Test">ทดสอบ</span>
+                </button>
+              </div>
+            </nav>
           </div>
-        </nav>
+        </div>
 
         <main class="hub-content hub-frame-host">
           <aside class="hub-route-notice" id="hub-route-notice" role="status" aria-live="polite" hidden>

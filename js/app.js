@@ -33,9 +33,12 @@ import { openHubShare } from "./hub-sharing.js";
 import "./quiz-progress.js";
 
 const languageStorageKey = "learning-hub-language";
+const subjectMenuStorageKey = "learning-hub-subject-menu-collapsed";
 
 const loginView = document.querySelector("#login-view");
 const hubView = document.querySelector("#hub-view");
+const subjectMenuToggle = document.querySelector("#hub-menu-toggle");
+const subjectMenuPanel = document.querySelector("#hub-subject-menu");
 const googleButton = document.querySelector("#google-button");
 const guestButton = document.querySelector("#guest-button");
 const signOutButton = document.querySelector("#sign-out-button");
@@ -84,6 +87,7 @@ const workspaceCount = document.querySelector("#workspace-count");
 
 const fallbackAvatar = accountAvatar.src;
 let currentLanguage = readSavedLanguage();
+let subjectMenuCollapsed = readSubjectMenuCollapsed();
 let activeSession = { status: "loading", isGuest: false, user: null };
 let navigation = null;
 let activePresence = {
@@ -396,6 +400,28 @@ function renderPresence(presence) {
   presenceList.append(lockedList);
 }
 
+function readSubjectMenuCollapsed() {
+  try {
+    return localStorage.getItem(subjectMenuStorageKey) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function renderSubjectMenu() {
+  hubView.classList.toggle("is-subject-menu-collapsed", subjectMenuCollapsed);
+  document.body.classList.toggle("is-subject-menu-collapsed", subjectMenuCollapsed);
+  subjectMenuPanel.inert = subjectMenuCollapsed;
+  subjectMenuPanel.setAttribute("aria-hidden", String(subjectMenuCollapsed));
+  subjectMenuToggle.setAttribute("aria-expanded", String(!subjectMenuCollapsed));
+  subjectMenuToggle.dataset.ariaTh = subjectMenuCollapsed ? "แสดงเมนูวิชา" : "ซ่อนเมนูวิชา";
+  subjectMenuToggle.dataset.ariaEn = subjectMenuCollapsed ? "Show subject menu" : "Hide subject menu";
+  const label = currentLanguage === "th"
+    ? subjectMenuToggle.dataset.ariaTh : subjectMenuToggle.dataset.ariaEn;
+  subjectMenuToggle.setAttribute("aria-label", label);
+  subjectMenuToggle.setAttribute("title", label);
+}
+
 function setLanguage(language) {
   currentLanguage = language;
   document.documentElement.lang = language;
@@ -425,6 +451,7 @@ function setLanguage(language) {
   renderAccount(activeSession);
   renderPresence(activePresence);
   renderRole(activeRole);
+  renderSubjectMenu();
   postContextToPage();
   workspace.setLanguage(language);
   saveLanguage(language);
@@ -576,6 +603,16 @@ function showSection(sectionId, force = false) {
 }
 
 setLanguage(currentLanguage);
+
+subjectMenuToggle.addEventListener("click", () => {
+  subjectMenuCollapsed = !subjectMenuCollapsed;
+  renderSubjectMenu();
+  try {
+    localStorage.setItem(subjectMenuStorageKey, subjectMenuCollapsed ? "1" : "0");
+  } catch {
+    // The current view still works when browser storage is unavailable.
+  }
+});
 
 languageButtons.forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.language));

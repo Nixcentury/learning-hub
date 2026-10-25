@@ -59,7 +59,7 @@ try {
   await page.goto(origin + '/learning-hub/');
   await page.locator('#guest-button').click();
   await page.locator('#hub-view').waitFor({ state: 'visible' });
-  for (const section of ['physics', 'chemistry', 'biology', 'lower-science', 'science-ep', 'math-ep', 'upper-math', 'test', 'classroom']) {
+  for (const section of ['physics', 'chemistry', 'biology', 'lower-science', 'science-ep', 'math-ep', 'upper-math', 'classroom']) {
     await page.locator(`[data-section="${section}"]`).click();
     await page.waitForFunction(section => {
       const url = document.querySelector('#hub-page-frame')?.contentDocument?.URL;

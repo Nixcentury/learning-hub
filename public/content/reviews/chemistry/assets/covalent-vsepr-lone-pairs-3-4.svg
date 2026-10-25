@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="775" viewBox="0 0 660 775" role="img" aria-labelledby="title desc">
+<title id="title">Lone-pair shapes from three and four total domains</title><desc id="desc">Ozone has two bonded atoms and one central lone pair, with trigonal planar domain geometry and a bent shape. Its compressed bond angle is illustrated below 120 degrees. Ammonia has three bonded atoms and one lone pair, tetrahedral domains and a trigonal pyramidal shape; its bond vectors show about 107 degrees. Water has two bonded atoms and two central lone pairs, tetrahedral domains and a bent shape with bond vectors at 104.5 degrees. Orange paired regions are schematic central lone-pair markers. Terminal lone pairs are omitted.</desc>
+<rect width="660" height="775" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="25" font-weight="bold" text-anchor="start" fill="#20344e">Lone pairs: 3–4 total domains</text>
+<text x="26" y="63" font-size="18" font-weight="normal" text-anchor="start" fill="#536273">Orange paired dots = central lone pairs (LP)</text>
+<rect x="20" y="86" width="620" height="195" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="114" font-size="22" font-weight="bold" text-anchor="start" fill="#20344e">O₃ · bent</text>
+<g data-molecule="O3" data-center="O" data-terminal="O" data-bonding-domains="2" data-central-lone-pairs="1" data-parent="trigonal-planar" data-angle-kind="illustrative-compression" data-center-x="215" data-center-y="201" data-scale="63" data-projection-x="0.65" data-projection-y="0.35">
+<g data-domain="1" data-kind="bond" data-position="schematic" data-vx="0.852640164354092" data-vy="-0.522498564715949" data-vz="0" data-screen-x="268.716330" data-screen-y="233.917410">
+<line data-bond-depth="page" x1="215" y1="201" x2="268.7163303543078" y2="233.9174095771048" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="2" data-kind="bond" data-position="schematic" data-vx="-0.852640164354092" data-vy="-0.522498564715949" data-vz="0" data-screen-x="161.283670" data-screen-y="233.917410">
+<line data-bond-depth="page" x1="215" y1="201" x2="161.28366964569219" y2="233.9174095771048" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="3" data-kind="lone-pair" data-position="schematic" data-vx="0" data-vy="1" data-vz="0" data-screen-x="215.000000" data-screen-y="138.000000">
+<line data-lp-guide="true" x1="215" y1="201" x2="215.0" y2="138.0" stroke="#a94e16" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="2 5"/>
+</g>
+<circle data-terminal-atom="1" cx="268.7163303543078" cy="233.9174095771048" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="268.7163303543078" y="238.9174095771048" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">O</text>
+<circle data-terminal-atom="2" cx="161.28366964569219" cy="233.9174095771048" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="161.28366964569219" y="238.9174095771048" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">O</text>
+<g data-lp-region="3"><ellipse cx="215.0" cy="138.0" rx="16" ry="10" fill="#fff4ea" stroke="#a94e16" stroke-width="1.5"/>
+<circle cx="210.0" cy="138.0" r="3" fill="#a94e16"/><circle cx="220.0" cy="138.0" r="3" fill="#a94e16"/>
+</g>
+<circle cx="215" cy="201" r="18" fill="white" stroke="#20344e" stroke-width="2"/>
+<text x="215" y="207" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e">O</text>
+</g>
+<text x="405" y="167" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e">AX₂E · 3 domains</text>
+<text x="405" y="202" font-size="17" font-weight="normal" text-anchor="start" fill="#20344e">Trigonal planar domains</text>
+<text x="405" y="241" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e">Below 120°</text>
+<rect x="20" y="301" width="620" height="195" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="329" font-size="22" font-weight="bold" text-anchor="start" fill="#20344e">NH₃ · trigonal pyramidal</text>
+<g data-molecule="NH3" data-center="N" data-terminal="H" data-bonding-domains="3" data-central-lone-pairs="1" data-parent="tetrahedral" data-angle-kind="approximate-bond-angles" data-center-x="215" data-center-y="416" data-scale="63" data-projection-x="0.65" data-projection-y="0.35">
+<g data-domain="1" data-kind="bond" data-position="schematic" data-vx="-0.928213949734556" data-vy="-0.372046856616442" data-vz="1.13673424246635e-16" data-screen-x="156.522521" data-screen-y="439.438952">
+<line data-bond-depth="page" x1="215" y1="416" x2="156.52252116672298" y2="439.4389519668359" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="2" data-kind="bond" data-position="schematic" data-vx="0.464106974867278" data-vy="-0.372046856616442" data-vz="0.803856860617217" data-screen-x="277.156678" data-screen-y="421.713908">
+<polygon data-bond-depth="front" points="215,416 276.6074287190035,427.68871575050025 277.7059269988236,415.7391006299522" fill="#214f9e"/>
+</g>
+<g data-domain="3" data-kind="bond" data-position="schematic" data-vx="0.464106974867278" data-vy="-0.372046856616442" data-vz="-0.803856860617217" data-screen-x="211.320801" data-screen-y="457.163996">
+<line data-bond-depth="behind" x1="215" y1="416" x2="211.32080097436346" y2="457.1639957434455" stroke="#214f9e" stroke-width="3" stroke-dasharray="4 5"/>
+</g>
+<g data-domain="4" data-kind="lone-pair" data-position="schematic" data-vx="0" data-vy="1" data-vz="0" data-screen-x="215.000000" data-screen-y="353.000000">
+<line data-lp-guide="true" x1="215" y1="416" x2="215.0" y2="353.0" stroke="#a94e16" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="2 5"/>
+</g>
+<circle data-terminal-atom="1" cx="156.52252116672298" cy="439.4389519668359" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="156.52252116672298" y="444.4389519668359" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">H</text>
+<circle data-terminal-atom="2" cx="277.15667785891355" cy="421.7139081902262" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="277.15667785891355" y="426.7139081902262" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">H</text>
+<circle data-terminal-atom="3" cx="211.32080097436346" cy="457.1639957434455" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="211.32080097436346" y="462.1639957434455" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">H</text>
+<g data-lp-region="4"><ellipse cx="215.0" cy="353.0" rx="16" ry="10" fill="#fff4ea" stroke="#a94e16" stroke-width="1.5"/>
+<circle cx="210.0" cy="353.0" r="3" fill="#a94e16"/><circle cx="220.0" cy="353.0" r="3" fill="#a94e16"/>
+</g>
+<circle cx="215" cy="416" r="18" fill="white" stroke="#20344e" stroke-width="2"/>
+<text x="215" y="422" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e">N</text>
+</g>
+<text x="405" y="382" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e">AX₃E · 4 domains</text>
+<text x="405" y="417" font-size="17" font-weight="normal" text-anchor="start" fill="#20344e">Tetrahedral domains</text>
+<text x="405" y="456" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e">≈107°</text>
+<rect x="20" y="516" width="620" height="195" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="544" font-size="22" font-weight="bold" text-anchor="start" fill="#20344e">H₂O · bent</text>
+<g data-molecule="H2O" data-center="O" data-terminal="H" data-bonding-domains="2" data-central-lone-pairs="2" data-parent="tetrahedral" data-angle-kind="approximate-bond-angles" data-center-x="215" data-center-y="631" data-scale="63" data-projection-x="0.65" data-projection-y="0.35">
+<g data-domain="1" data-kind="bond" data-position="schematic" data-vx="0.790689573743843" data-vy="-0.612217280034449" data-vz="0" data-screen-x="264.813443" data-screen-y="669.569689">
+<line data-bond-depth="page" x1="215" y1="631" x2="264.81344314586215" y2="669.5696886421703" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="2" data-kind="bond" data-position="schematic" data-vx="-0.790689573743843" data-vy="-0.612217280034449" data-vz="0" data-screen-x="165.186557" data-screen-y="669.569689">
+<line data-bond-depth="page" x1="215" y1="631" x2="165.18655685413788" y2="669.5696886421703" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="3" data-kind="lone-pair" data-position="schematic" data-vx="0" data-vy="0.5" data-vz="0.866025403784439" data-screen-x="250.463740" data-screen-y="580.404140">
+<line data-lp-guide="true" x1="215" y1="631" x2="250.46374028497274" y2="580.4041398465531" stroke="#a94e16" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="2 5"/>
+</g>
+<g data-domain="4" data-kind="lone-pair" data-position="schematic" data-vx="0" data-vy="0.5" data-vz="-0.866025403784439" data-screen-x="179.536260" data-screen-y="618.595860">
+<line data-lp-guide="true" x1="215" y1="631" x2="179.53625971502726" y2="618.5958601534469" stroke="#a94e16" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="2 5"/>
+</g>
+<circle data-terminal-atom="1" cx="264.81344314586215" cy="669.5696886421703" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="264.81344314586215" y="674.5696886421703" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">H</text>
+<circle data-terminal-atom="2" cx="165.18655685413788" cy="669.5696886421703" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="165.18655685413788" y="674.5696886421703" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">H</text>
+<g data-lp-region="3"><ellipse cx="250.46374028497274" cy="580.4041398465531" rx="16" ry="10" fill="#fff4ea" stroke="#a94e16" stroke-width="1.5"/>
+<circle cx="245.46374028497274" cy="580.4041398465531" r="3" fill="#a94e16"/><circle cx="255.46374028497274" cy="580.4041398465531" r="3" fill="#a94e16"/>
+</g>
+<g data-lp-region="4"><ellipse cx="179.53625971502726" cy="618.5958601534469" rx="16" ry="10" fill="#fff4ea" stroke="#a94e16" stroke-width="1.5"/>
+<circle cx="174.53625971502726" cy="618.5958601534469" r="3" fill="#a94e16"/><circle cx="184.53625971502726" cy="618.5958601534469" r="3" fill="#a94e16"/>
+</g>
+<circle cx="215" cy="631" r="18" fill="white" stroke="#20344e" stroke-width="2"/>
+<text x="215" y="637" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e">O</text>
+</g>
+<text x="405" y="597" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e">AX₂E₂ · 4 domains</text>
+<text x="405" y="632" font-size="17" font-weight="normal" text-anchor="start" fill="#20344e">Tetrahedral domains</text>
+<text x="405" y="671" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e">≈104.5°</text>
+<text x="330" y="741" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273">LP regions are schematic; terminal lone pairs are omitted.</text>
+<text x="330" y="766" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">Shape diagrams, not complete Lewis structures.</text>
+</g></svg>

@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="635" viewBox="0 0 660 635" role="img" aria-labelledby="title desc">
+<title id="title">Molecular shapes derived from six electron domains</title><desc id="desc">Bromine pentafluoride has five bonding domains and one central lone pair in an octahedral parent arrangement, giving a square pyramidal shape. Xenon tetrafluoride has four bonds and two opposite central lone pairs, giving a square planar shape with 90- and 180-degree ideal bond angles. The lone pairs in XeF4 are opposite at 180 degrees. Pale orange guides are not chemical bonds. Terminal F lone pairs are omitted.</desc>
+<rect width="660" height="635" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e">Six domains: octahedral parent geometry</text>
+<text x="26" y="63" font-size="17" font-weight="normal" text-anchor="start" fill="#536273">Orange pairs are LP · blue connections are bonds</text>
+<rect x="20" y="86" width="620" height="230" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="114" font-size="22" font-weight="bold" text-anchor="start" fill="#20344e">BrF₅ · square pyramidal</text>
+<g data-molecule="BrF5" data-center="Br" data-terminal="F" data-bonding-domains="5" data-central-lone-pairs="1" data-parent="octahedral" data-angle-kind="ideal-parent" data-center-x="215" data-center-y="218" data-scale="70" data-projection-x="0.65" data-projection-y="0.65">
+<g data-domain="1" data-kind="bond" data-position="equivalent" data-vx="1" data-vy="0" data-vz="0" data-screen-x="285.000000" data-screen-y="218.000000">
+<line data-bond-depth="page" x1="215" y1="218" x2="285.0" y2="218.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="2" data-kind="bond" data-position="equivalent" data-vx="0" data-vy="1" data-vz="0" data-screen-x="215.000000" data-screen-y="148.000000">
+<line data-bond-depth="page" x1="215" y1="218" x2="215.0" y2="148.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="3" data-kind="bond" data-position="equivalent" data-vx="-1" data-vy="0" data-vz="0" data-screen-x="145.000000" data-screen-y="218.000000">
+<line data-bond-depth="page" x1="215" y1="218" x2="145.0" y2="218.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="4" data-kind="lone-pair" data-position="equivalent" data-vx="0" data-vy="-1" data-vz="0" data-screen-x="215.000000" data-screen-y="288.000000">
+<line data-lp-guide="true" x1="215" y1="218" x2="215.0" y2="288.0" stroke="#a94e16" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="2 5"/>
+</g>
+<g data-domain="5" data-kind="bond" data-position="equivalent" data-vx="0" data-vy="0" data-vz="1" data-screen-x="260.500000" data-screen-y="172.500000">
+<polygon data-bond-depth="front" points="215,218 264.74264068711926,176.7426406871193 256.25735931288074,168.2573593128807" fill="#214f9e"/>
+</g>
+<g data-domain="6" data-kind="bond" data-position="equivalent" data-vx="0" data-vy="0" data-vz="-1" data-screen-x="169.500000" data-screen-y="263.500000">
+<line data-bond-depth="behind" x1="215" y1="218" x2="169.5" y2="263.5" stroke="#214f9e" stroke-width="3" stroke-dasharray="4 5"/>
+</g>
+<circle data-terminal-atom="1" cx="285.0" cy="218.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="285.0" y="223.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">F</text>
+<circle data-terminal-atom="2" cx="215.0" cy="148.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="215.0" y="153.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">F</text>
+<circle data-terminal-atom="3" cx="145.0" cy="218.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="145.0" y="223.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">F</text>
+<g data-lp-region="4"><ellipse cx="215.0" cy="288.0" rx="16" ry="10" fill="#fff4ea" stroke="#a94e16" stroke-width="1.5"/>
+<circle cx="210.0" cy="288.0" r="3" fill="#a94e16"/><circle cx="220.0" cy="288.0" r="3" fill="#a94e16"/>
+</g>
+<circle data-terminal-atom="5" cx="260.5" cy="172.5" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="260.5" y="177.5" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">F</text>
+<circle data-terminal-atom="6" cx="169.5" cy="263.5" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="169.5" y="268.5" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">F</text>
+<circle cx="215" cy="218" r="20" fill="white" stroke="#20344e" stroke-width="2"/>
+<text x="215" y="224" font-size="16" font-weight="bold" text-anchor="middle" fill="#20344e">Br</text>
+</g>
+<text x="405" y="164" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e">AX₅E · 6 domains</text>
+<text x="405" y="201" font-size="18" font-weight="normal" text-anchor="start" fill="#20344e">Octahedral domains</text>
+<text x="405" y="238" font-size="18" font-weight="normal" text-anchor="start" fill="#a94e16">1 central LP</text>
+<text x="405" y="278" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e">Ref: 90°, 180°</text>
+<rect x="20" y="336" width="620" height="230" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="364" font-size="22" font-weight="bold" text-anchor="start" fill="#20344e">XeF₄ · square planar</text>
+<g data-molecule="XeF4" data-center="Xe" data-terminal="F" data-bonding-domains="4" data-central-lone-pairs="2" data-parent="octahedral" data-angle-kind="ideal-parent" data-center-x="215" data-center-y="468" data-scale="70" data-projection-x="0.65" data-projection-y="0.65">
+<g data-domain="1" data-kind="bond" data-position="equivalent" data-vx="1" data-vy="0" data-vz="0" data-screen-x="285.000000" data-screen-y="468.000000">
+<line data-bond-depth="page" x1="215" y1="468" x2="285.0" y2="468.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="2" data-kind="bond" data-position="equivalent" data-vx="0" data-vy="1" data-vz="0" data-screen-x="215.000000" data-screen-y="398.000000">
+<line data-bond-depth="page" x1="215" y1="468" x2="215.0" y2="398.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="3" data-kind="bond" data-position="equivalent" data-vx="-1" data-vy="0" data-vz="0" data-screen-x="145.000000" data-screen-y="468.000000">
+<line data-bond-depth="page" x1="215" y1="468" x2="145.0" y2="468.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="4" data-kind="bond" data-position="equivalent" data-vx="0" data-vy="-1" data-vz="0" data-screen-x="215.000000" data-screen-y="538.000000">
+<line data-bond-depth="page" x1="215" y1="468" x2="215.0" y2="538.0" stroke="#214f9e" stroke-width="3"/>
+</g>
+<g data-domain="5" data-kind="lone-pair" data-position="equivalent" data-vx="0" data-vy="0" data-vz="1" data-screen-x="260.500000" data-screen-y="422.500000">
+<line data-lp-guide="true" x1="215" y1="468" x2="260.5" y2="422.5" stroke="#a94e16" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="2 5"/>
+</g>
+<g data-domain="6" data-kind="lone-pair" data-position="equivalent" data-vx="0" data-vy="0" data-vz="-1" data-screen-x="169.500000" data-screen-y="513.500000">
+<line data-lp-guide="true" x1="215" y1="468" x2="169.5" y2="513.5" stroke="#a94e16" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="2 5"/>
+</g>
+<circle data-terminal-atom="1" cx="285.0" cy="468.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="285.0" y="473.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">F</text>
+<circle data-terminal-atom="2" cx="215.0" cy="398.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="215.0" y="403.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">F</text>
+<circle data-terminal-atom="3" cx="145.0" cy="468.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="145.0" y="473.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">F</text>
+<circle data-terminal-atom="4" cx="215.0" cy="538.0" r="15" fill="white" stroke="#214f9e" stroke-width="2"/>
+<text x="215.0" y="543.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#214f9e">F</text>
+<g data-lp-region="5"><ellipse cx="260.5" cy="422.5" rx="16" ry="10" fill="#fff4ea" stroke="#a94e16" stroke-width="1.5"/>
+<circle cx="255.5" cy="422.5" r="3" fill="#a94e16"/><circle cx="265.5" cy="422.5" r="3" fill="#a94e16"/>
+</g>
+<g data-lp-region="6"><ellipse cx="169.5" cy="513.5" rx="16" ry="10" fill="#fff4ea" stroke="#a94e16" stroke-width="1.5"/>
+<circle cx="164.5" cy="513.5" r="3" fill="#a94e16"/><circle cx="174.5" cy="513.5" r="3" fill="#a94e16"/>
+</g>
+<circle cx="215" cy="468" r="20" fill="white" stroke="#20344e" stroke-width="2"/>
+<text x="215" y="474" font-size="16" font-weight="bold" text-anchor="middle" fill="#20344e">Xe</text>
+</g>
+<text x="405" y="414" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e">AX₄E₂ · 6 domains</text>
+<text x="405" y="451" font-size="18" font-weight="normal" text-anchor="start" fill="#20344e">Octahedral domains</text>
+<text x="405" y="488" font-size="18" font-weight="normal" text-anchor="start" fill="#a94e16">Opposite LP: 180°</text>
+<text x="405" y="528" font-size="20" font-weight="bold" text-anchor="start" fill="#20344e">F–Xe–F: 90° / 180°</text>
+<text x="330" y="596" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">LP guides show domains, not extra bonded atoms.</text>
+<text x="330" y="625" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273">Terminal lone pairs omitted · projected shape diagrams</text>
+</g></svg>

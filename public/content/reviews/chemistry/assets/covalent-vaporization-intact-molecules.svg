@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="520" viewBox="0 0 660 520" role="img" aria-labelledby="title desc">
+<title id="title">Vaporization retains water molecules</title><desc id="desc">Both panels contain six complete water molecules. Each oxygen has two covalent O-H bonds. Liquid molecules are close together; vapor molecules occupy more space. Internal bonds remain in vaporization and condensation. Molecule sizes, distances and densities are schematic; solvent interactions and lone pairs are omitted.</desc>
+<rect width="660" height="520" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e" >Phase change keeps molecules intact</text>
+<text x="26" y="65" font-size="18" font-weight="normal" text-anchor="start" fill="#536273" >Same H₂O units · different intermolecular spacing</text>
+<text x="169.5" y="114" font-size="22" font-weight="bold" text-anchor="middle" fill="#20344e" >Liquid</text>
+<rect x="32" y="136" width="275" height="269" rx="12" fill="#f7f9fc" stroke="#adb9c7"/>
+<path d="M 33 225 H 306 V 393 Q 306 404 295 404 H 44 Q 33 404 33 393 Z" fill="#e6eef7"/>
+<g data-phase="liquid">
+<g data-molecule-id="liquid-1" data-formula="H2O">
+<line data-covalent-bond="O:H1" x1="83.67448341004925" y1="259.8977382402756" x2="75.17457049230293" y2="266.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<line data-covalent-bond="O:H2" x1="96.32551658995075" y1="259.8977382402756" x2="104.82542950769707" y2="266.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<text x="90" y="260" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" data-atom="O" data-element="O">O</text>
+<text x="70.23276065640391" y="275.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="109.76723934359609" y="275.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+</g>
+<g data-molecule-id="liquid-2" data-formula="H2O">
+<line data-covalent-bond="O:H1" x1="161.67448341004925" y1="252.8977382402756" x2="153.17457049230293" y2="259.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<line data-covalent-bond="O:H2" x1="174.32551658995075" y1="252.8977382402756" x2="182.82542950769707" y2="259.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<text x="168" y="253" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" data-atom="O" data-element="O">O</text>
+<text x="148.2327606564039" y="268.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="187.7672393435961" y="268.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+</g>
+<g data-molecule-id="liquid-3" data-formula="H2O">
+<line data-covalent-bond="O:H1" x1="238.67448341004925" y1="274.8977382402756" x2="230.17457049230293" y2="281.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<line data-covalent-bond="O:H2" x1="251.32551658995075" y1="274.8977382402756" x2="259.8254295076971" y2="281.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<text x="245" y="275" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" data-atom="O" data-element="O">O</text>
+<text x="225.2327606564039" y="290.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="264.7672393435961" y="290.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+</g>
+<g data-molecule-id="liquid-4" data-formula="H2O">
+<line data-covalent-bond="O:H1" x1="78.67448341004925" y1="322.8977382402756" x2="70.17457049230293" y2="329.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<line data-covalent-bond="O:H2" x1="91.32551658995075" y1="322.8977382402756" x2="99.82542950769707" y2="329.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<text x="85" y="323" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" data-atom="O" data-element="O">O</text>
+<text x="65.23276065640391" y="338.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="104.76723934359609" y="338.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+</g>
+<g data-molecule-id="liquid-5" data-formula="H2O">
+<line data-covalent-bond="O:H1" x1="158.67448341004925" y1="324.8977382402756" x2="150.17457049230293" y2="331.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<line data-covalent-bond="O:H2" x1="171.32551658995075" y1="324.8977382402756" x2="179.82542950769707" y2="331.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<text x="165" y="325" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" data-atom="O" data-element="O">O</text>
+<text x="145.2327606564039" y="340.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="184.7672393435961" y="340.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+</g>
+<g data-molecule-id="liquid-6" data-formula="H2O">
+<line data-covalent-bond="O:H1" x1="238.67448341004925" y1="339.8977382402756" x2="230.17457049230293" y2="346.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<line data-covalent-bond="O:H2" x1="251.32551658995075" y1="339.8977382402756" x2="259.8254295076971" y2="346.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<text x="245" y="340" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" data-atom="O" data-element="O">O</text>
+<text x="225.2327606564039" y="355.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="264.7672393435961" y="355.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+</g>
+</g>
+<text x="490.5" y="114" font-size="22" font-weight="bold" text-anchor="middle" fill="#20344e" >Vapor</text>
+<rect x="353" y="136" width="275" height="269" rx="12" fill="#f7f9fc" stroke="#adb9c7"/>
+<g data-phase="vapor">
+<g data-molecule-id="vapor-1" data-formula="H2O">
+<line data-covalent-bond="O:H1" x1="415.6744834100493" y1="177.8977382402756" x2="407.1745704923029" y2="184.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<line data-covalent-bond="O:H2" x1="428.3255165899507" y1="177.8977382402756" x2="436.8254295076971" y2="184.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<text x="422" y="178" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" data-atom="O" data-element="O">O</text>
+<text x="402.2327606564039" y="193.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="441.7672393435961" y="193.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+</g>
+<g data-molecule-id="vapor-2" data-formula="H2O">
+<line data-covalent-bond="O:H1" x1="567.6744834100492" y1="159.8977382402756" x2="559.1745704923029" y2="166.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<line data-covalent-bond="O:H2" x1="580.3255165899508" y1="159.8977382402756" x2="588.8254295076971" y2="166.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<text x="574" y="160" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" data-atom="O" data-element="O">O</text>
+<text x="554.2327606564039" y="175.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="593.7672393435961" y="175.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+</g>
+<g data-molecule-id="vapor-3" data-formula="H2O">
+<line data-covalent-bond="O:H1" x1="499.6744834100493" y1="240.8977382402756" x2="491.1745704923029" y2="247.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<line data-covalent-bond="O:H2" x1="512.3255165899508" y1="240.8977382402756" x2="520.8254295076971" y2="247.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<text x="506" y="241" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" data-atom="O" data-element="O">O</text>
+<text x="486.2327606564039" y="256.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="525.7672393435961" y="256.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+</g>
+<g data-molecule-id="vapor-4" data-formula="H2O">
+<line data-covalent-bond="O:H1" x1="405.6744834100493" y1="311.8977382402756" x2="397.1745704923029" y2="318.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<line data-covalent-bond="O:H2" x1="418.3255165899507" y1="311.8977382402756" x2="426.8254295076971" y2="318.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<text x="412" y="312" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" data-atom="O" data-element="O">O</text>
+<text x="392.2327606564039" y="327.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="431.7672393435961" y="327.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+</g>
+<g data-molecule-id="vapor-5" data-formula="H2O">
+<line data-covalent-bond="O:H1" x1="577.6744834100492" y1="329.8977382402756" x2="569.1745704923029" y2="336.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<line data-covalent-bond="O:H2" x1="590.3255165899508" y1="329.8977382402756" x2="598.8254295076971" y2="336.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<text x="584" y="330" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" data-atom="O" data-element="O">O</text>
+<text x="564.2327606564039" y="345.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="603.7672393435961" y="345.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+</g>
+<g data-molecule-id="vapor-6" data-formula="H2O">
+<line data-covalent-bond="O:H1" x1="503.6744834100493" y1="378.8977382402756" x2="495.1745704923029" y2="385.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<line data-covalent-bond="O:H2" x1="516.3255165899508" y1="378.8977382402756" x2="524.8254295076971" y2="385.47907400064594" stroke="#20344e" stroke-width="2.2"/>
+<text x="510" y="379" font-size="17" font-weight="bold" text-anchor="middle" fill="#a94e16" data-atom="O" data-element="O">O</text>
+<text x="490.2327606564039" y="394.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H1" data-element="H">H</text>
+<text x="529.7672393435961" y="394.30543200086123" font-size="17" font-weight="bold" text-anchor="middle" fill="#20344e" data-atom="H2" data-element="H">H</text>
+</g>
+</g>
+<text x="330" y="440" font-size="20" font-weight="bold" text-anchor="middle" fill="#23654f" >Liquid → vapor: absorbs energy</text>
+<text x="330" y="472" font-size="20" font-weight="bold" text-anchor="middle" fill="#23654f" >Vapor → liquid: releases energy</text>
+<text x="330" y="506" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273" >Schematic spacing, not measured density or distance.</text>
+</g></svg>

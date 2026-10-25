@@ -565,9 +565,8 @@ function showSection(sectionId, force = false) {
 
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
-  if (["physics", "chemistry"].includes(sectionId)) {
-    pageUrl.searchParams.set("v", "bank-html-20261021");
-  }
+  // Keep cached menu documents and their shared subject palette in sync.
+  pageUrl.searchParams.set("v", "subject-colours-20261025");
   pageFrameLoading.hidden = false;
   // Child-frame navigations must not add extra entries to the Hub's Back history.
   pageFrame.contentWindow.location.replace(pageUrl.href);

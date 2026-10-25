@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="635" viewBox="0 0 660 635" role="img" aria-labelledby="title desc">
+<title id="title">Tetrahedral CCl4 is nonpolar but tetrahedral CH3Cl is polar</title><desc id="desc">Carbon tetrachloride has four equivalent C-to-Cl bond arrows whose three-dimensional vector sum is zero. Chloromethane replaces three Cl atoms by H. Its C-to-Cl arrow points outward toward Cl, while its weaker H-to-C arrows point inward. These vectors give a nonzero net toward the Cl side. Wedges and dashes indicate depth. All magnitudes are illustrative and are not measured moments or values calculated directly from electronegativity differences.</desc>
+<rect width="660" height="635" fill="white"/>
+<defs><marker id="bond-arrow" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="#214f9e"/></marker><marker id="net-arrow" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="#23654f"/></marker></defs>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e">Tetrahedral shape: check terminal atoms</text>
+<text x="26" y="63" font-size="17" font-weight="normal" text-anchor="start" fill="#536273">Illustrative vectors · wedge/dash views show depth</text>
+<rect x="20" y="86" width="620" height="230" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="114" font-size="21" font-weight="bold" text-anchor="start" fill="#20344e">CCl₄ · four equivalent C–Cl bonds</text>
+<g data-molecule="CCl4" data-center="C" data-center-en="2.55" data-center-x="215" data-center-y="214" data-scale="75" data-projection-x="0.65" data-projection-y="0.65" data-net-polar="false">
+<g data-bond="1" data-terminal="Cl" data-terminal-en="3.16" data-order="1" data-vx="0" data-vy="1" data-vz="0" data-sign="1" data-weight="1" data-screen-x="215.000000" data-screen-y="139.000000">
+<line data-bond-depth="page" x1="215.0" y1="214.0" x2="215.0" y2="139.0" stroke="#aeb9c8" stroke-width="3"/>
+<line data-dipole-arrow="bond" data-positive-atom="C" data-negative-atom="Cl" x1="227.0" y1="191.5" x2="227.0" y2="157.75" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="223.0" y1="191.5" x2="231.0" y2="191.5" stroke="#214f9e" stroke-width="2.3"/>
+</g>
+<g data-bond="2" data-terminal="Cl" data-terminal-en="3.16" data-order="1" data-vx="-0.942809041582063" data-vy="-0.333333333333333" data-vz="0" data-sign="1" data-weight="1" data-screen-x="144.289322" data-screen-y="239.000000">
+<line data-bond-depth="page" x1="215.0" y1="214.0" x2="144.28932188134524" y2="239.0" stroke="#aeb9c8" stroke-width="3"/>
+<line data-dipole-arrow="bond" data-positive-atom="C" data-negative-atom="Cl" x1="189.78679656440357" y1="210.18629150101523" x2="157.96699141100893" y2="221.43629150101523" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="191.12012989773692" y1="213.9575276673435" x2="188.45346323107023" y2="206.41505533468697" stroke="#214f9e" stroke-width="2.3"/>
+</g>
+<g data-bond="3" data-terminal="Cl" data-terminal-en="3.16" data-order="1" data-vx="0.471404520791032" data-vy="-0.333333333333333" data-vz="0.816496580927726" data-sign="1" data-weight="1" data-screen-x="290.159547" data-screen-y="199.195792">
+<polygon data-bond-depth="front" points="215,214 291.31909039835233,205.0826805004966 289.0000043607558,193.3089028590501" fill="#aeb9c8"/>
+<line data-dipole-arrow="bond" data-positive-atom="C" data-negative-atom="Cl" x1="239.86695025146275" y1="221.33251514537847" x2="273.68874657226206" y2="214.67062140127646" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="239.0939215722639" y1="217.40792259822965" x2="240.6399789306616" y2="225.25710769252728" stroke="#214f9e" stroke-width="2.3"/>
+</g>
+<g data-bond="4" data-terminal="Cl" data-terminal-en="3.16" data-order="1" data-vx="0.471404520791032" data-vy="-0.333333333333333" data-vz="-0.816496580927726" data-sign="1" data-weight="1" data-screen-x="210.551131" data-screen-y="278.804208">
+<line data-bond-depth="behind" x1="215.0" y1="214.0" x2="210.55113073910073" y2="278.8042083202266" stroke="#aeb9c8" stroke-width="3" stroke-dasharray="4 5"/>
+<line data-dipole-arrow="bond" data-positive-atom="C" data-negative-atom="Cl" x1="201.6935173614319" y1="232.61938577460484" x2="199.69152619402723" y2="261.7812795187068" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="205.684124648198" y1="232.89334468175923" x2="197.7029100746658" y2="232.34542686745044" stroke="#214f9e" stroke-width="2.3"/>
+</g>
+<circle cx="215.0" cy="139.0" r="17" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="215.0" y="144.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#20344e">Cl</text>
+<circle cx="144.28932188134524" cy="239.0" r="17" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="144.28932188134524" y="244.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#20344e">Cl</text>
+<circle cx="290.15954737955406" cy="199.19579167977335" r="17" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="290.15954737955406" y="204.19579167977335" font-size="15" font-weight="bold" text-anchor="middle" fill="#20344e">Cl</text>
+<circle cx="210.55113073910073" cy="278.8042083202266" r="17" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="210.55113073910073" y="283.8042083202266" font-size="15" font-weight="bold" text-anchor="middle" fill="#20344e">Cl</text>
+<circle cx="215" cy="214" r="18" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="215" y="220" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e">C</text>
+</g>
+<text x="405" y="186" font-size="29" font-weight="bold" text-anchor="start" fill="#20344e">μ = 0</text>
+<text x="405" y="233" font-size="21" font-weight="bold" text-anchor="start" fill="#20344e">Nonpolar</text>
+<rect x="20" y="336" width="620" height="230" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="364" font-size="21" font-weight="bold" text-anchor="start" fill="#20344e">CH₃Cl · different terminal atoms</text>
+<g data-molecule="CH3Cl" data-center="C" data-center-en="2.55" data-center-x="215" data-center-y="464" data-scale="75" data-projection-x="0.65" data-projection-y="0.65" data-net-polar="true">
+<g data-bond="1" data-terminal="Cl" data-terminal-en="3.16" data-order="1" data-vx="0" data-vy="1" data-vz="0" data-sign="1" data-weight="1" data-screen-x="215.000000" data-screen-y="389.000000">
+<line data-bond-depth="page" x1="215.0" y1="464.0" x2="215.0" y2="389.0" stroke="#aeb9c8" stroke-width="3"/>
+<line data-dipole-arrow="bond" data-positive-atom="C" data-negative-atom="Cl" x1="227.0" y1="441.5" x2="227.0" y2="407.75" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="223.0" y1="441.5" x2="231.0" y2="441.5" stroke="#214f9e" stroke-width="2.3"/>
+</g>
+<g data-bond="2" data-terminal="H" data-terminal-en="2.2" data-order="1" data-vx="-0.942809041582063" data-vy="-0.333333333333333" data-vz="0" data-sign="-1" data-weight="0.55" data-screen-x="144.289322" data-screen-y="489.000000">
+<line data-bond-depth="page" x1="215.0" y1="464.0" x2="144.28932188134524" y2="489.0" stroke="#aeb9c8" stroke-width="3"/>
+<line data-dipole-arrow="bond" data-positive-atom="H" data-negative-atom="C" x1="165.1264475705227" y1="468.90504150101526" x2="182.62734040488976" y2="462.71754150101526" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="163.79311423718937" y1="465.133805334687" x2="166.45978090385606" y2="472.6762776673435" stroke="#214f9e" stroke-width="2.3"/>
+</g>
+<g data-bond="3" data-terminal="H" data-terminal-en="2.2" data-order="1" data-vx="0.471404520791032" data-vy="-0.333333333333333" data-vz="0.816496580927726" data-sign="-1" data-weight="0.55" data-screen-x="290.159547" data-screen-y="449.195792">
+<polygon data-bond-depth="front" points="215,464 291.31909039835233,455.0826805004966 289.0000043607558,443.30890285905014" fill="#aeb9c8"/>
+<line data-dipole-arrow="bond" data-positive-atom="H" data-negative-atom="C" x1="266.07884240008224" y1="466.16954749369944" x2="247.4768544236426" y2="469.8335890529556" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="266.85187107928107" y1="470.0941400408483" x2="265.3058137208834" y2="462.2449549465506" stroke="#214f9e" stroke-width="2.3"/>
+</g>
+<g data-bond="4" data-terminal="H" data-terminal-en="2.2" data-order="1" data-vx="0.471404520791032" data-vy="-0.333333333333333" data-vz="-0.816496580927726" data-sign="-1" data-weight="0.55" data-screen-x="210.551131" data-screen-y="528.804208">
+<line data-bond-depth="behind" x1="215.0" y1="464.0" x2="210.55113073910073" y2="528.8042083202266" stroke="#aeb9c8" stroke-width="3" stroke-dasharray="4 5"/>
+<line data-dipole-arrow="bond" data-positive-atom="H" data-negative-atom="C" x1="200.14197420669328" y1="505.2198534262839" x2="201.24306934876586" y2="489.1808118670278" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="196.15136691992717" y1="504.9458945191295" x2="204.13258149345938" y2="505.4938123334383" stroke="#214f9e" stroke-width="2.3"/>
+</g>
+<circle cx="215.0" cy="389.0" r="17" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="215.0" y="394.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#20344e">Cl</text>
+<circle cx="144.28932188134524" cy="489.0" r="15" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="144.28932188134524" y="494.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#20344e">H</text>
+<circle cx="290.15954737955406" cy="449.1957916797734" r="15" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="290.15954737955406" y="454.1957916797734" font-size="15" font-weight="bold" text-anchor="middle" fill="#20344e">H</text>
+<circle cx="210.55113073910073" cy="528.8042083202266" r="15" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="210.55113073910073" y="533.8042083202266" font-size="15" font-weight="bold" text-anchor="middle" fill="#20344e">H</text>
+<circle cx="215" cy="464" r="18" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="215" y="470" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e">C</text>
+<line data-dipole-arrow="net"  x1="340" y1="492" x2="340.0" y2="410.0" stroke="#23654f" stroke-width="2.3" marker-end="url(#net-arrow)"/>
+<line data-positive-tail="net" x1="336.0" y1="492.0" x2="344.0" y2="492.0" stroke="#23654f" stroke-width="2.3"/>
+</g>
+<text x="405" y="436" font-size="29" font-weight="bold" text-anchor="start" fill="#20344e">μ &gt; 0</text>
+<text x="405" y="483" font-size="21" font-weight="bold" text-anchor="start" fill="#23654f">Polar · Cl side</text>
+<text x="330" y="596" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273">Arrow magnitudes illustrate the model, not measured data.</text>
+<text x="330" y="625" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">C–H arrows point toward C; C–Cl arrows toward Cl.</text>
+</g></svg>

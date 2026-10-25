@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="420" viewBox="0 0 660 420" role="img" aria-labelledby="title desc">
+<title id="title">The chemical bond-dipole arrow in neutral hydrogen chloride</title><desc id="desc">Hydrogen has partial positive charge and chlorine partial negative charge. The crossed-tail chemical dipole arrow points from H toward Cl. Pauling EN values are H 2.20 and Cl 3.16, with difference 0.96. Both atoms have formal charge zero. The molecule has net charge zero but a nonzero dipole. Partial-charge signs are not full ionic charges.</desc>
+<rect width="660" height="420" fill="white"/>
+<defs><marker id="bond-arrow" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="#214f9e"/></marker><marker id="net-arrow" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="#23654f"/></marker></defs>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="25" font-weight="bold" text-anchor="start" fill="#20344e">HCl: polar bond, neutral molecule</text>
+<text x="26" y="64" font-size="17" font-weight="normal" text-anchor="start" fill="#536273">Chemical arrow: crossed positive tail → negative head</text>
+<g data-molecule="HCl" data-positive-end="H" data-negative-end="Cl" data-h-en="2.20" data-cl-en="3.16">
+<text x="160" y="132" font-size="28" font-weight="bold" text-anchor="middle" fill="#214f9e">δ+</text>
+<text x="500" y="132" font-size="28" font-weight="bold" text-anchor="middle" fill="#214f9e">δ−</text>
+<line data-dipole-arrow="bond" data-tail-atom="H" data-head-atom="Cl" x1="218" y1="178" x2="442" y2="178" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="218.0" y1="174.0" x2="218.0" y2="182.0" stroke="#214f9e" stroke-width="2.3"/>
+<text x="160" y="245" font-size="40" font-weight="bold" text-anchor="middle" fill="#20344e">H</text>
+<text x="500" y="245" font-size="40" font-weight="bold" text-anchor="middle" fill="#20344e">Cl</text>
+<line x1="194" y1="230" x2="465" y2="230" stroke="#20344e" stroke-width="3"/>
+<text x="160" y="284" font-size="20" font-weight="normal" text-anchor="middle" fill="#20344e">EN = 2.20</text>
+<text x="500" y="284" font-size="20" font-weight="normal" text-anchor="middle" fill="#20344e">EN = 3.16</text>
+<text x="160" y="322" font-size="20" font-weight="normal" text-anchor="middle" fill="#20344e">FC = 0</text>
+<text x="500" y="322" font-size="20" font-weight="normal" text-anchor="middle" fill="#20344e">FC = 0</text>
+</g>
+<text x="330" y="364" font-size="23" font-weight="bold" text-anchor="middle" fill="#20344e">ΔEN = 0.96 · net charge = 0</text>
+<text x="330" y="400" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">δ marks partial charge; FC is a different accounting value.</text>
+</g></svg>

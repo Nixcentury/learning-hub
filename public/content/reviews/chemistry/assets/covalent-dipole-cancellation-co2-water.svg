@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="590" viewBox="0 0 660 590" role="img" aria-labelledby="title desc">
+<title id="title">Polar bonds can cancel in carbon dioxide but not in bent water</title><desc id="desc">Carbon dioxide has two equal opposite C-to-O chemical dipole arrows, giving zero net dipole. Water has bent O-H bonds with H-to-O arrows; their transverse components cancel and their bisector components add toward O. A green arrow gives the nonzero resultant direction in water. Blue arrows use crossed positive tails. Magnitudes are illustrative, not measured dipole moments. Lone pairs are omitted to focus on vector addition.</desc>
+<rect width="660" height="590" fill="white"/>
+<defs><marker id="bond-arrow" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="#214f9e"/></marker><marker id="net-arrow" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="#23654f"/></marker></defs>
+<g font-family="Arial, sans-serif">
+<text x="26" y="35" font-size="24" font-weight="bold" text-anchor="start" fill="#20344e">Bond dipoles: cancel or leave a resultant</text>
+<text x="26" y="63" font-size="17" font-weight="normal" text-anchor="start" fill="#536273">Blue: bond arrows · green: nonzero net direction</text>
+<rect x="20" y="86" width="620" height="200" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="114" font-size="22" font-weight="bold" text-anchor="start" fill="#20344e">CO₂ · linear</text>
+<g data-molecule="CO2" data-center="C" data-center-en="2.55" data-center-x="215" data-center-y="196" data-scale="80" data-projection-x="0.65" data-projection-y="0.65" data-net-polar="false">
+<g data-bond="1" data-terminal="O" data-terminal-en="3.44" data-order="2" data-vx="-1" data-vy="0" data-vz="0" data-sign="1" data-weight="1" data-screen-x="135.000000" data-screen-y="196.000000">
+<line data-bond-depth="page" x1="215.0" y1="200.0" x2="135.0" y2="200.0" stroke="#aeb9c8" stroke-width="3"/>
+<line data-bond-depth="page" x1="215.0" y1="192.0" x2="135.0" y2="192.0" stroke="#aeb9c8" stroke-width="3"/>
+<line data-dipole-arrow="bond" data-positive-atom="C" data-negative-atom="O" x1="191.0" y1="184.0" x2="155.0" y2="184.0" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="191.0" y1="188.0" x2="191.0" y2="180.0" stroke="#214f9e" stroke-width="2.3"/>
+</g>
+<g data-bond="2" data-terminal="O" data-terminal-en="3.44" data-order="2" data-vx="1" data-vy="0" data-vz="0" data-sign="1" data-weight="1" data-screen-x="295.000000" data-screen-y="196.000000">
+<line data-bond-depth="page" x1="215.0" y1="192.0" x2="295.0" y2="192.0" stroke="#aeb9c8" stroke-width="3"/>
+<line data-bond-depth="page" x1="215.0" y1="200.0" x2="295.0" y2="200.0" stroke="#aeb9c8" stroke-width="3"/>
+<line data-dipole-arrow="bond" data-positive-atom="C" data-negative-atom="O" x1="239.0" y1="184.0" x2="275.0" y2="184.0" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="239.0" y1="180.0" x2="239.0" y2="188.0" stroke="#214f9e" stroke-width="2.3"/>
+</g>
+<circle cx="135.0" cy="196.0" r="15" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="135.0" y="201.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#20344e">O</text>
+<circle cx="295.0" cy="196.0" r="15" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="295.0" y="201.0" font-size="15" font-weight="bold" text-anchor="middle" fill="#20344e">O</text>
+<circle cx="215" cy="196" r="18" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="215" y="202" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e">C</text>
+</g>
+<text x="405" y="182" font-size="29" font-weight="bold" text-anchor="start" fill="#20344e">μ = 0</text>
+<text x="405" y="227" font-size="21" font-weight="bold" text-anchor="start" fill="#20344e">Nonpolar</text>
+<rect x="20" y="306" width="620" height="200" rx="12" fill="#f7f9fc" stroke="#d8e1ed"/>
+<text x="36" y="334" font-size="22" font-weight="bold" text-anchor="start" fill="#20344e">H₂O · bent</text>
+<g data-molecule="H2O" data-center="O" data-center-en="3.44" data-center-x="215" data-center-y="416" data-scale="80" data-projection-x="0.65" data-projection-y="0.65" data-net-polar="true">
+<g data-bond="1" data-terminal="H" data-terminal-en="2.2" data-order="1" data-vx="-0.790689573743843" data-vy="-0.612217280034449" data-vz="0" data-sign="-1" data-weight="1" data-screen-x="151.744834" data-screen-y="464.977382">
+<line data-bond-depth="page" x1="215.0" y1="416.0" x2="151.74483410049254" y2="464.97738240275595" stroke="#aeb9c8" stroke-width="3"/>
+<line data-dipole-arrow="bond" data-positive-atom="H" data-negative-atom="O" x1="160.212018214956" y1="443.24476191714086" x2="188.67684286973437" y2="421.2049398359007" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="157.7631490948182" y1="440.0820036221655" x2="162.6608873350938" y2="446.40752021211625" stroke="#214f9e" stroke-width="2.3"/>
+</g>
+<g data-bond="2" data-terminal="H" data-terminal-en="2.2" data-order="1" data-vx="0.790689573743843" data-vy="-0.612217280034449" data-vz="0" data-sign="-1" data-weight="1" data-screen-x="278.255166" data-screen-y="464.977382">
+<line data-bond-depth="page" x1="215.0" y1="416.0" x2="278.25516589950746" y2="464.97738240275595" stroke="#aeb9c8" stroke-width="3"/>
+<line data-dipole-arrow="bond" data-positive-atom="H" data-negative-atom="O" x1="255.09476706421717" y1="462.2213116869931" x2="226.62994240943883" y2="440.1814896057529" stroke="#214f9e" stroke-width="2.3" marker-end="url(#bond-arrow)"/>
+<line data-positive-tail="bond" x1="252.64589794407937" y1="465.3840699819685" x2="257.54363618435497" y2="459.0585533920177" stroke="#214f9e" stroke-width="2.3"/>
+</g>
+<circle cx="151.74483410049254" cy="464.97738240275595" r="15" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="151.74483410049254" y="469.97738240275595" font-size="15" font-weight="bold" text-anchor="middle" fill="#20344e">H</text>
+<circle cx="278.25516589950746" cy="464.97738240275595" r="15" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="278.25516589950746" y="469.97738240275595" font-size="15" font-weight="bold" text-anchor="middle" fill="#20344e">H</text>
+<circle cx="215" cy="416" r="18" fill="white" stroke="#20344e" stroke-width="1.7"/>
+<text x="215" y="422" font-size="18" font-weight="bold" text-anchor="middle" fill="#20344e">O</text>
+<line data-dipole-arrow="net"  x1="340" y1="444" x2="340.0" y2="362.0" stroke="#23654f" stroke-width="2.3" marker-end="url(#net-arrow)"/>
+<line data-positive-tail="net" x1="336.0" y1="444.0" x2="344.0" y2="444.0" stroke="#23654f" stroke-width="2.3"/>
+</g>
+<text x="405" y="402" font-size="29" font-weight="bold" text-anchor="start" fill="#20344e">μ &gt; 0</text>
+<text x="405" y="447" font-size="21" font-weight="bold" text-anchor="start" fill="#23654f">Polar · O side</text>
+<text x="330" y="557" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">Illustrative magnitudes · lone pairs omitted</text>
+<text x="330" y="581" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273">Chemical-arrow convention throughout</text>
+</g></svg>

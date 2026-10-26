@@ -8,7 +8,7 @@ import * as model from '../public/shared/pdf-content-model.js';
 // authentication, external downloads or live services are touched by these tests.
 const hub = 'https://school.test/learning-hub/';
 const code = readFileSync(new URL('../public/pages/tools/pdf-player.js', import.meta.url), 'utf8')
-  .replace(/^import .*;\n/m, '')
+  .replace(/^import .*;\r?\n/m, '')
   .replace("await import(new URL('legacy/build/pdf.min.mjs', vendor).href)", 'await loadPdfJs()');
 
 function deferred() {

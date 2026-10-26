@@ -30,6 +30,7 @@ import {
 import { createWorkspace } from "./workspace.js";
 import { createHubNavigation } from "./hub-navigation.js";
 import { openHubShare } from "./hub-sharing.js";
+import { createCompanion } from "./companion.js";
 import "./quiz-progress.js";
 
 const languageStorageKey = "learning-hub-language";
@@ -87,6 +88,7 @@ const workspaceCount = document.querySelector("#workspace-count");
 
 const fallbackAvatar = accountAvatar.src;
 let currentLanguage = readSavedLanguage();
+const companion = createCompanion({ language: currentLanguage });
 let subjectMenuCollapsed = readSubjectMenuCollapsed();
 let activeSession = { status: "loading", isGuest: false, user: null };
 let navigation = null;
@@ -461,6 +463,7 @@ function setLanguage(language) {
   renderSubjectMenu();
   postContextToPage();
   workspace.setLanguage(language);
+  companion.setLanguage(language);
   saveLanguage(language);
 }
 
@@ -547,6 +550,7 @@ function renderSession(session) {
     cancelRoleRequest.disabled = false;
   }
   activeSession = session;
+  companion.setSession(session);
   renderAccount(session);
   renderPresence(activePresence);
   renderRole(activeRole);

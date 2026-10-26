@@ -1,5 +1,42 @@
 # Physics 19.1 Sheet 1: blackbody radiation and Planck's hypothesis
 
+## Latest revision: 26 October 2026 — approved print and practice expansion
+
+The teacher confirmed this revision before file editing. The earlier dated sections below are historical results, not the page counts or slot counts for this revision. Tested against main `08e741b8cd33f40d71793272ad59ec6c84243a2c` in an isolated worktree.
+
+### Content and source checks
+
+- Preserved the original teaching sequence, nine sections, three worked examples and all 44 existing semantic slot keys in both languages. There are now **64 paired slots**, 28 separate response-item groups and five figures per language. Fifteen continuously numbered classroom questions sit alongside the original official IPST headings; official question numbers remain identifiable.
+- Split labelled parts/cases in the examples and exercises into individual writing spaces. Calculation areas allow for equations, substitution, units and extra handwriting; compact spacing comes from headings, paragraph margins, tables and figure dimensions. The shared print engine retains its existing body typography.
+- Added the Think question on p.55, the Fig.19.3 comparison, a definition of eV, and Understanding 19.1 Q1. **Correction to the earlier coverage proposal: the teacher guide p.52 assigns Q1 to Planck's hypothesis, not Bohr.**
+- Added photon energy to frequency (2.00 eV), wavelength and spectrum identification (3.50 eV), body infrared photon energy (9350 nm), an equal-total-energy photon-number comparison (400/800 nm), and the optional optical-power extension (3.00 mW, 600 nm, 2.00 s). The optional item fits and remains included.
+- Rechecked source pages, adaptations, attribution and calculation conventions in [SOURCES.md](public/content/physics/ipst/atomic-physics/assets/19-1-1/SOURCES.md). IPST end-of-chapter Problem 18 is an ordinary problem, not a challenge problem. All added answers are complete in TH/EN. Unrounded values are carried between subparts.
+- Independently recalculated the new numerical answers: `4.83e14 Hz`, `355 nm` (UV), `2.13e-20 J = 0.133 eV`, photon ratio 2, optical total energy `6.00e-3 J`, energy per photon `3.313e-19 J`, photon count `1.81e16`. The 650 nm laser count remains `3.27e15`.
+- The new comparison graph uses Planck and Rayleigh–Jeans wavelength spectra at 5000 K on one shared normalization. Solid/dashed lines and the caption distinguish trends from raw measurements. All image instances now reserve their actual width/height ratio.
+
+### Checks actually completed for this revision
+
+- Frozen dependency install, production build and TypeScript check passed. Content validation: 0 errors, 32 existing draft warnings; 59 content files. Pages build verified 512 public files identical to their sources. The pre-existing shared CSS build warning is unchanged.
+- Unit suite: **334 passed, 0 failed**. Route catalog passed: 10 sections, 80 chapters, 19 topics, 28 HTML-menu contents, 153 legacy tool placements. `git diff --check` passed.
+- Source structure: unique keys, TH/EN key order, all original keys retained, one direct answer per slot, no nested slots, continuous question labels, supplied image dimensions, and no authored script/form/iframe/button nodes passed.
+- Read the configured public physics catalog again at `2026-10-26T05:33:53Z`; the real bank key remains `b-0f490c3358e9212cee2e2a43`, titled Electromagnetic Radiation from a Blackbody, with 0 quiz questions. Neither the bank identity nor the content ID changed.
+- Chromium `151.0.7882.0`, production `dist` served under `/learning-hub/`: opened the actual bank deep link as a guest with the freshly captured catalog response. The iframe retained `sandbox="allow-same-origin"`. External account/database operations were stubbed or blocked; no score/account writes were performed.
+- Individual touch reveal preserved area height; TH/EN shared reveal state, reveal-all and hide-all passed for all 128 source slots. Both languages passed at a 390 px viewport with no horizontal document overflow.
+- All four central print previews retained only the selected language, all 64 slots, all 28 response groups and all five images. Blank editions had 0 answer nodes; answer editions had 64. Broken images, math errors, page overflow, split response areas and orphaned note headings were all 0. A note heading and its answer area are kept together, including the hot-metal explanation. Print preparation preserved the teaching DOM state.
+
+| Exported through the existing central print controller | Preview pages | Actual PDF pages |
+| --- | ---: | ---: |
+| Thai student / blank | 17 | 17 |
+| Thai answers | 17 | 17 |
+| English student / blank | 17 | 17 |
+| English answers | 17 | 17 |
+
+The four actual PDFs were reopened and checked as A4 with nonempty pages and no replacement characters. All 68 rendered pages were visually inspected using Poppler contact sheets, with enlarged checks of the comparison graph, Thai text, worked formulas and final pages. There is no references-only final page. Thai fonts are embedded. PDF filenames are `physics-19-1-sheet-1-{th,en}-{blank,answers}.pdf`; local evidence is under `qa-output/physics19-print/` (not committed).
+
+Limits: these checks do not establish native Safari/iPad/Apple Pencil behavior, physical-printer output, account/cloud behavior, or a live Pages release. This revision changes topic content, its menu description, assets and documentation; it does not change the shared language/reveal/math/print engines. Publication requires a subsequent reviewed merge and deployment.
+
+---
+
 Prepared 22 October 2026. The location is the Physics question bank topic **Electromagnetic Radiation from a Blackbody**, not the separate outer-curriculum Atomic Models menu.
 
 - Verified live bank key: `b-0f490c3358e9212cee2e2a43`.

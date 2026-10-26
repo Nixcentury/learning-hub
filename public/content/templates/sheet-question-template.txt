@@ -1,0 +1,25 @@
+<!-- HTML ตัวอย่างสำหรับคอลัมน์ C ใน Sheet; คัดลอกแต่ละ question-step แยกเซลล์ได้ -->
+<div class="question-step" data-ans="B">
+  <h3>ลูกศรในภาพชี้จากจุดใดไปจุดใด<br>From which point to which point does the arrow point?</h3>
+  <svg xmlns="http://www.w3.org/2000/svg" width="320" height="100" viewBox="0 0 320 100" role="img" aria-label="Arrow from A to B">
+    <rect x="1" y="1" width="318" height="98" rx="8" fill="#fafafa" stroke="#666" stroke-width="1"/>
+    <text x="35" y="57" font-family="Arial,sans-serif" font-size="20">A</text>
+    <line x1="70" y1="50" x2="235" y2="50" stroke="#174e70" stroke-width="3"/>
+    <polygon points="235,43 249,50 235,57" fill="#174e70"/>
+    <text x="270" y="57" font-family="Arial,sans-serif" font-size="20">B</text>
+  </svg>
+  <div class="options">
+    <label><input type="radio" name="example-choice" value="A">B → A</label>
+    <label><input type="radio" name="example-choice" value="B">A → B</label>
+    <label><input type="radio" name="example-choice" value="C">A → A</label>
+  </div>
+  <div class="hint-box"><p>ดูตำแหน่งหัวลูกศร</p><p>Look at the arrowhead.</p></div>
+  <div class="feedback-box"><p>ตอบ B: หัวลูกศรอยู่ใกล้จุด B จึงชี้จาก A ไป B</p><p>Answer B: the arrowhead is near B, so the arrow points from A to B.</p></div>
+</div>
+
+<div class="question-step" data-type="fill-in" data-ans="4" data-tolerance="0">
+  <h3>จงคำนวณ \(12\div3\)<br>Calculate \(12\div3\).</h3>
+  <div class="answer-section"><input type="number" class="num-answer"></div>
+  <div class="hint-box"><p>หาจำนวนที่คูณ 3 แล้วได้ 12</p><p>Find the number that gives 12 when multiplied by 3.</p></div>
+  <div class="feedback-box"><p>\(12\div3=4\) จึงตอบ 4</p><p>\(12\div3=4\), so the answer is 4.</p></div>
+</div>

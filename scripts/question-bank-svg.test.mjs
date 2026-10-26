@@ -43,6 +43,38 @@ test('plain dimensions, responsive viewBox and safe SVG presentation styles are 
   assert.match(decode(image('<svg viewBox="0 0 300 150" width="100%" height="100%"><circle cx="30" cy="30" r="10"/></svg>')), /width="300"/);
 });
 
+const diagramFrame = 'max-width:100%; width:420px; height:auto; background:#fafafa; border:1px solid #e0e0e0; border-radius:8px; padding:6px;';
+test('static root SVG frame styles used by Chemistry 2568 move onto a responsive image', () => {
+  const img = image(`<svg viewBox="0 0 460 155" style="${diagramFrame}font-size:18px;fill:#174e70"><text x="10" y="25">A → B</text></svg>`);
+  const result = decode(img);
+  assert.equal(img.style.width, '420px'); assert.equal(img.style.height, 'auto');
+  assert.equal(img.style.maxWidth, '100%'); assert.equal(img.style.boxSizing, 'border-box');
+  assert.equal(img.style.background, '#fafafa'); assert.equal(img.style.padding, '6px');
+  assert.equal(img.style.border, '1px solid #e0e0e0'); assert.equal(img.style.borderRadius, '8px');
+  assert.match(result, /viewBox="0 0 460 155"/);
+  assert.match(result, /font-size="18px"/); assert.match(result, /fill="#174e70"/);
+  assert.doesNotMatch(result, /style=|max-width|border|padding/);
+});
+
+test('framed diagrams retain all questions, answer keys and graphic positions through the adapter', () => {
+  const html = legacySvgQuestions.replaceAll(svg, svg.replace('<svg ', `<svg style="${diagramFrame}" `));
+  const original = readQuizContent(adapt(legacySvgQuestions)), framed = readQuizContent(adapt(html));
+  assert.deepEqual(framed.errors, []);
+  assert.deepEqual(framed.questions.map(q => [q.id, q.type, q.answer]), original.questions.map(q => [q.id, q.type, q.answer]));
+  for (const q of framed.questions) for (const img of q.element.querySelectorAll('img[data-bank-svg][src^="data:"]')) {
+    assert.equal(img.style.boxSizing, 'border-box'); assert.equal(img.style.width, '420px');
+  }
+});
+
+test('SVG root box styles do not admit external resources, active CSS, oversized lengths or positioning', () => {
+  for (const style of ['background:url(https://example.org/pixel)', 'border:1px solid url(https://example.org/pixel)',
+    'width:expression(alert(1))', 'padding:var(--space)', 'background:linear-gradient(red,blue)',
+    'width:100001px', 'padding:1px 2px 3px 4px 5px', 'position:fixed;top:0', 'width:420px!important']) {
+    assert.throws(() => image(`<svg viewBox="0 0 100 100" style="${style}"><path d="M0 0L10 10"/></svg>`), /Unsupported static SVG/);
+  }
+  assert.throws(() => image('<svg viewBox="0 0 100 100"><path style="width:20px"/></svg>'), /Unsupported static SVG/);
+});
+
 test('SVG also works inside numeric feedback without changing answers or tolerance', () => {
   const root = adapt(`<div class="question-step" data-type="fill-in" data-ans="6.70"><h3>หาค่า pKa</h3><div class="answer-section"><input type="number" class="num-answer"></div><div class="feedback-box">6.70 ${svg}</div></div>`);
   const {questions:[q],errors}=readQuizContent(root);

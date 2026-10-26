@@ -21,7 +21,7 @@ export function createBankTool({ subjectId, bankKey, toolKey = 'quiz' }, hubUrl)
   if (!['bank-quiz', 'notebook'].includes(entry.toolKind)) return null;
   const quiz = entry.toolKind === 'bank-quiz';
   const page = new URL(quiz ? 'pages/tools/quiz-player.html' : 'pages/tools/notebook-preview.html', hubUrl);
-  if (quiz) { page.searchParams.set('bankSubject', subjectId); page.searchParams.set('bankKey', bankKey); }
+  if (quiz) { page.searchParams.set('bankSubject', subjectId); page.searchParams.set('bankKey', bankKey); page.searchParams.set('v', 'bank-svg-2-20261026'); }
   return { id: `${contentId}-${toolKey}`, page: page.href, source: page.href, bankRoute,
     titleTh: `${entry.titleTh} · ${bankSubjects[subjectId].th}`, titleEn: `${entry.titleEn} · ${bankSubjects[subjectId].en}`,
     icon: quiz ? '✓' : '▱', accent: quiz ? 'blue' : 'violet',

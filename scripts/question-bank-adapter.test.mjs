@@ -21,6 +21,17 @@ function adapt(rows, subjectId = 'chemistry') {
     rows: rows.map((html, i) => ({ rowNumber: 32 + i, html })) }, { document, Parser: DOMParser });
 }
 
+test('legacy questions retain a second heading after a table without duplicating the prompt', () => {
+  const html = choice.replace('<h3>เลือกคำตอบ</h3>', '<h3>พิจารณาตาราง</h3><table><tr><td>ข้อมูลประกอบ</td></tr></table><h3>จากข้อมูล ข้อใดถูกต้อง</h3>');
+  const { errors, questions: [q] } = readQuizContent(adapt([html]));
+  assert.deepEqual(errors, []);
+  assert.equal(q.prompt.textContent, 'พิจารณาตาราง');
+  assert.match(q.context.textContent, /ข้อมูลประกอบ.*จากข้อมูล ข้อใดถูกต้อง/);
+  assert.equal(q.context.querySelectorAll('h3').length, 1);
+  assert.doesNotMatch(q.context.textContent, /พิจารณาตาราง|หนึ่ง|สอง/);
+  assert.equal(q.answer, 'b');
+});
+
 test('legacy numeric template becomes a shared number question without duplicate controls or labels', () => {
   const root = adapt([numeric('50', 'data-unit-th="ปี" data-unit-en="years"')]);
   const { errors, questions: [q] } = readQuizContent(root);

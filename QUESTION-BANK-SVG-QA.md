@@ -1,6 +1,45 @@
 # Static SVG from the Sheet question bank
 
-Status: prepared for review on 21 October 2026; not deployed by this change.
+Latest verification: 26 October 2026. The 21 October notes below are historical.
+
+## Chemistry A-Level 2568 — 26 October 2026
+
+- The live set `b-3c7f2eba947faf9c3054eef6` contains 35 questions: 30 choice and
+  5 numeric. Its eight SVGs are solution diagrams, not question/worksheet images.
+- The original reader rejected root SVG box styles (`width`, `max-width`,
+  `height:auto`, background, border, radius and padding), first at row 40/Q4.
+  The reader now validates that bounded static subset and transfers it to a
+  responsive image box. Existing restrictions on active/external SVG remain.
+- Nine questions also have an additional h3 containing the final instruction
+  after a table/context. Only the first h3 is now removed from the context when
+  constructing the prompt; subsequent headings and their text are retained.
+- With the user's authorization, only CHEMISTRY cells C40, C41, C45, C46, C47,
+  C52, C57 and C69 were normalized. The same frame/background/padding is drawn
+  using rect/g and numeric intrinsic dimensions, without root CSS. The original
+  diagram contents and all non-SVG bytes in those cells were retained. Connector
+  readback verified A/B IDs, validation and cell formatting were unchanged.
+- Original revision: `20e0a58ddd4af4496906856bbfd8a149496902c2e18b1b3a7d5eaa67ff942396`.
+  Normalized revision: `a722340d6967477fc2fbeaa814858a477bef71abb3088b67fa88950c2efca70f`.
+  The live service returned both, each with 35 rows. Old saved attempts can retain
+  their original question revision; no migration/reset of progress was performed.
+- All eight normalized SVGs also pass the previous reader. The central fix is
+  still required for archived originals and other sets using the same box styles.
+- Automated unit suite: 338 passed. Regression tests cover the frame style
+  subset, forbidden CSS/resources and the second-heading question structure.
+- Chromium checks used the actual production player/adapter/MathJax/MathLive
+  with isolated Guest contexts and the real snapshot substituted for the service.
+  Both original and normalized snapshots opened all 35 questions; all eight
+  solution images decoded/displayed; saved answers and revision survived reload.
+- Worksheet and answer PDF checks retained 35 questions. The worksheet excluded
+  solutions and their diagrams; the answer edition retained all eight diagrams.
+  Printing left source HTML and saved answers unchanged. Phone-width touch and
+  diagram bounds passed at 390 px. Physical iPad, Pencil and Cloud were not tested.
+- New reusable authoring contract/example: `public/content/templates/sheet-question-ai-rules.txt`
+  and `sheet-question-template.txt`. Offline validation uses
+  `node scripts/validate-bank-html.mjs draft.html --subject chemistry` or a real
+  snapshot JSON. The example and both real revisions pass this check.
+
+## Historical verification — 21 October 2026
 
 The Sheet adapter now reconstructs an allowed static SVG subset and embeds it as
 an SVG image. IDs, markers, gradients and clipping remain local to each image,

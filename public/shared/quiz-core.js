@@ -5,7 +5,7 @@ import { hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer } from "
 import { mountNumericAnswer, hideMathKeyboard } from "./quiz-math-input.js";
 import { mountDragAnswer } from "./quiz-drag-view.js";
 import { dragAnswerSummary } from "./quiz-drag-model.js";
-import { readBankSelection, loadBankQuiz } from "./question-bank-player.js?v=review-resume-20261023";
+import { readBankSelection, loadBankQuiz } from "./question-bank-player.js?v=bank-svg-2-20261026";
 import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
 import { warmQuizEngine } from "./quiz-refresh.js";
 import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023";

@@ -1,12 +1,12 @@
 import { bankContentId, bankQuestionId, bankKeyPattern } from './question-bank-model.js';
 import { readQuizContent } from './quiz-content-adapter.js';
 import { parseNumericAnswer } from './quiz-question-model.js';
-import { staticBankSvgImage } from './question-bank-svg.js?v=bank-svg-1';
+import { staticBankSvgImage } from './question-bank-svg.js?v=bank-svg-2-20261026';
 
 // Construct fresh nodes with an allowlist. Never attach the remote document,
 // execute its scripts, or copy its styles, event handlers or IDs. Only the
 // explicit question contract below may supply data attributes on fresh nodes.
-const safeTags = new Set('p div span b strong i em u s sub sup br hr ul ol li table thead tbody tfoot tr td th caption blockquote pre code h4 h5 h6 img'.split(' '));
+const safeTags = new Set('p div span b strong i em u s sub sup br hr ul ol li table thead tbody tfoot tr td th caption blockquote pre code h3 h4 h5 h6 img'.split(' '));
 const discard = new Set('script style iframe frame object embed link meta base form input button select textarea svg math audio video source template'.split(' '));
 function copyRich(source, target, doc) {
   for (const child of source.childNodes) {
@@ -76,7 +76,10 @@ export function adaptLegacyBank(snapshot, { document: doc = document, Parser = D
       // Images, tables or paragraphs placed between h3 and the option block are
       // part of the question too. Do not lose them by copying h3 alone.
       const contextSource = step.cloneNode(true);
-      contextSource.querySelectorAll('h3, .options, .hint-box, .feedback-box').forEach(node => node.remove());
+      // Only the first heading becomes the prompt. Legacy exam questions may
+      // put their final instruction in another h3 after a table or diagram.
+      contextSource.querySelector('h3')?.remove();
+      contextSource.querySelectorAll('.options, .hint-box, .feedback-box').forEach(node => node.remove());
       // Legacy controls are replaced by the shared MathLive field, not rendered
       // as a second input or an orphaned label in the question context.
       if (numeric) {

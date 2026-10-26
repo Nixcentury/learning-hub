@@ -1,6 +1,6 @@
 import { bankChapters, bankChapterKey, bankTitlePair } from './question-bank-menu.js';
 import { bankKeyPattern } from './question-bank-model.js';
-import { staticBankSvgImage } from './question-bank-svg.js?v=bank-svg-1';
+import { staticBankSvgImage } from './question-bank-svg.js?v=bank-svg-2-20261026';
 
 // Use the live published IDs; never derive a new ID from a heading or row number.
 export function reviewTopics(catalog, authored, subjectId) {

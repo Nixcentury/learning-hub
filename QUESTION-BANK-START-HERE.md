@@ -114,6 +114,8 @@ export const questionBankTools = Object.freeze({
 
 SVG ภาพนิ่งรองรับทั้ง `<img src="https://…/diagram.svg" alt="…">` และ `<svg>` ที่ฝังใน Sheet โดยใช้ได้ในโจทย์ บริบท ตัวเลือก คำใบ้ และเฉลย ตัวเลือกภาพต้องมีข้อความกำกับภายนอกภาพด้วย SVG ที่ฝังต้องมี `viewBox` หรือขนาด width/height ที่เป็นตัวเลข รองรับรูปทรง path/เส้น/วงกลม ข้อความ กลุ่ม สีไล่ระดับ ลูกศร marker, clipPath และ symbol/use ที่อ้างอิงภายในภาพ และ presentation style แบบจำกัด เช่น fill/stroke/font-size
 
+อัปเดต 26 ต.ค. 2026: SVG รากรองรับกรอบแบบคงที่ width/height/max-width, สีพื้น, border, border-radius และ padding ที่ตรวจค่าแล้ว โดยย้ายไปที่ img ซึ่งปรับตามจอได้ งานใหม่แนะนำวาดกรอบด้วย rect และจัดระยะด้วย g transform แทน CSS ตัวอ่านเก็บ h3 เพิ่มเติมหลังตาราง/รูปของงานเก่าครบแล้ว คู่มือ AI ฉบับเต็ม: `public/content/templates/sheet-question-ai-rules.txt`; แม่แบบ: `sheet-question-template.txt` ในโฟลเดอร์เดียวกัน; ตรวจออฟไลน์ด้วย `node scripts/validate-bank-html.mjs draft.html --subject chemistry` หรือส่ง snapshot.json
+
 ตัวแปลงสร้าง SVG ใหม่จากรายการที่อนุญาตแล้วแสดงเป็นภาพ SVG เพื่อให้ IDs/ลูกศร/สีของแต่ละภาพและสำเนาพิมพ์ไม่ชนกัน ไม่แปลงเป็นภาพ raster ไม่รับ script/event handlers, foreignObject, animation, style block/class, filter หรือทรัพยากรภายนอกภายใน SVG หากเกินขอบเขตจะแจ้งแถว/ข้อแทนการข้ามเงียบ ๆ ภาพซับซ้อนเกิน 2,000 nodes หรือ 250,000 อักขระหลังสร้างใหม่ต้องย่อหรือใช้ไฟล์ภาพ HTTPS แทน JavaScript/event handlers/styles ของ HTML จาก Sheet ยังไม่ถูกนำมารัน สื่อ canvas/iframe ต้องแปลงก่อน ส่วน Simulation ให้เปิดผ่านเครื่องมือที่ลงทะเบียน
 
 พิมพ์จากปุ่ม Quiz เดิม เลือกข้อได้ และเลือกระหว่างชุดเปล่ากับเฉลย โดยรอจัดสูตรคณิตก่อนเปิดพิมพ์ ชุดเปล่าตัดส่วนเฉลยออกจากสำเนาที่พิมพ์ การพิมพ์ไม่แก้คำตอบบนจอ

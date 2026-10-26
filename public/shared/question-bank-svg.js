@@ -8,11 +8,18 @@ const canonical = new Map([...attributes].map(name => [name.toLowerCase(), name]
 const idPattern = /^[a-zA-Z_][a-zA-Z0-9_.:-]{0,100}$/;
 const number = '[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?';
 const viewBoxPattern = new RegExp(`^\\s*(${number})[\\s,]+(${number})[\\s,]+(${number})[\\s,]+(${number})\\s*$`);
+const boxProperties = new Set('width height max-width background background-color border border-radius padding'.split(' '));
+const solidColor = /^(?:#[a-f\d]{3,4}|#[a-f\d]{6}|#[a-f\d]{8}|[a-z]+|(?:rgb|rgba|hsl|hsla)\([\d\s,.%+\/-]+\))$/i;
+const boxLength = text => {
+  const match = /^(\d+(?:\.\d*)?|\.\d+)(px|%|em|rem|pt)?$/.exec(text);
+  return Boolean(match && Number(match[1]) <= 100_000 && (match[2] || Number(match[1]) === 0));
+};
 const fail = () => { throw Error('SVG ต้องเป็นภาพนิ่ง มีขนาดหรือ viewBox และใช้รูปทรง/ข้อความ/การอ้างอิงภายในภาพเท่านั้น / Unsupported static SVG'); };
 
 export function staticBankSvgImage(source, doc) {
   let nodes = 0, characters = 0;
   const ids = new Set(), references = [];
+  const boxStyles = new Map();
   function value(name, raw) {
     const text = raw.trim();
     if (text.length > 50_000 || /[<>\\\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(text)) fail();
@@ -54,8 +61,25 @@ export function staticBankSvgImage(source, doc) {
       if (!declaration.trim()) continue;
       const colon = declaration.indexOf(':');
       const name = declaration.slice(0, colon).trim().toLowerCase();
-      if (colon < 0 || !presentation.has(name) || /!important/i.test(declaration)) fail();
-      target.setAttribute(name, value(name, declaration.slice(colon + 1)));
+      if (colon < 0 || /!important/i.test(declaration)) fail();
+      const text = value(name, declaration.slice(colon + 1));
+      if (presentation.has(name)) target.setAttribute(name, text);
+      else if (element === source && boxProperties.has(name)) {
+        // These declarations frame the whole diagram, rather than drawing SVG
+        // shapes. Move only validated, static box styles onto the generated img.
+        let allowed = false;
+        if (['width', 'height', 'max-width'].includes(name)) allowed = text === 'auto' || boxLength(text);
+        else if (['background', 'background-color'].includes(name)) allowed = solidColor.test(text);
+        else if (name === 'border') {
+          const parts = /^(\S+)\s+(solid|dashed|dotted|double)\s+(.+)$/.exec(text);
+          allowed = text === 'none' || Boolean(parts && boxLength(parts[1]) && solidColor.test(parts[3]));
+        } else {
+          const parts = text.split(/\s+/);
+          allowed = parts.length <= 4 && parts.every(boxLength);
+        }
+        if (!allowed) fail();
+        boxStyles.set(name, text);
+      } else fail();
     }
     for (const child of element.childNodes) {
       if (child.nodeType === 1) target.append(copy(child));
@@ -103,6 +127,12 @@ export function staticBankSvgImage(source, doc) {
   const image = doc.createElement('img');
   image.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(serialized);
   image.dataset.bankSvg = '';
+  if (boxStyles.size) {
+    for (const [name, text] of boxStyles) image.style.setProperty(name, text);
+    // Include the frame/padding in the responsive width on narrow screens.
+    image.style.maxWidth = '100%';
+    image.style.boxSizing = 'border-box';
+  }
   image.alt = source.getAttribute('aria-label') || source.querySelector('title')?.textContent.trim() || 'ภาพประกอบ SVG / SVG diagram';
   image.referrerPolicy = 'no-referrer';
   return image;

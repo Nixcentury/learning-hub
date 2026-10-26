@@ -51,6 +51,17 @@ test('phase 2 resolves aliases and preparing topics without rewriting their stab
   assert.deepEqual(resolveNavigation(catalog, '#physics/1'), { route: chapter, notice: '' });
   assert.deepEqual(resolveNavigation(catalog, '#physics/1/measurement'), { route: topic, notice: '' });
 });
+test('Physics and Chemistry enter their library while existing chapter links keep their IDs', async () => {
+  const value = await catalogFromRepository();
+  for (const subjectId of ['physics', 'chemistry']) {
+    assert.equal(resolveNavigation(value, `#${subjectId}`).route.hash, `#${subjectId}/bank`);
+    assert.equal(routeForSelection(value, { subjectId }).hash, `#${subjectId}/bank`);
+    const chapter = value.routes.find(route => route.kind === 'chapter' && route.subjectId === subjectId);
+    assert.equal(resolveNavigation(value, chapter.hash).route, chapter);
+    assert.equal(routeForSelection(value, { subjectId, chapterId: chapter.chapterId }), chapter);
+  }
+  assert.equal(resolveNavigation(value, '#biology').route.hash, '#biology');
+});
 test('invalid and missing locations use the closest known parent with an explicit notice', () => {
   assert.equal(resolveNavigation(catalog, '#physics/1/no-topic').route, chapter);
   assert.equal(resolveNavigation(catalog, '#physics/no-chapter').route, section);
@@ -101,6 +112,6 @@ test('every currently authored activity route opens with a valid descriptor and 
 test('navigation requests use stable context IDs, not HTML-supplied URLs or storage state', () => {
   assert.equal(routeForSelection(catalog, { subjectId: 'physics', chapterId: '1' }), chapter);
   assert.equal(routeForSelection(catalog, { subjectId: 'physics', chapterId: '1', topicId: 'measurement' }), topic);
-  assert.equal(routeForSelection(catalog, { subjectId: 'physics' }), section);
+  assert.equal(routeForSelection(catalog, { subjectId: 'physics' }).hash, '#physics/bank');
   for (const value of [null, {}, {subjectId:'physics',chapterId:'natural'}, {subjectId:'physics',topicId:'measurement'}, {subjectId:'admin'}, {subjectId:'physics',chapterId:'1',topicId:'other'}]) assert.equal(routeForSelection(catalog, value), null);
 });

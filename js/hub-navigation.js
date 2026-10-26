@@ -3,6 +3,11 @@ import { isMenuRoute as navigable, isActivityRoute, activityForRoute, menuForRou
 
 export function resolveNavigation(catalog, hash) {
   const result = resolveHubRoute(catalog, hash);
+  // Subject tabs have one public syllabus. Keep old chapter/content routes
+  // available for existing links without exposing the former outer syllabus.
+  if (result.route?.kind === 'section' && ['physics', 'chemistry'].includes(result.route.sectionId)) {
+    return { route: resolveHubRoute(catalog, `#${result.route.sectionId}/bank`).route, notice: '' };
+  }
   if (navigable(result.route) || isActivityRoute(result.route)) return { route: result.route, notice: '' };
   let ancestor = result.route;
   const visited = new Set();
@@ -37,9 +42,10 @@ export function routeForSelection(catalog, selection) {
   }
   const { subjectId, chapterId = null, topicId = null } = selection;
   if (topicId && !chapterId) return null;
-  return catalog.routes.find(route => navigable(route) &&
+  const route = catalog.routes.find(route => navigable(route) &&
     (chapterId ? route.subjectId === subjectId : route.sectionId === subjectId) &&
     (route.chapterId || null) === chapterId && (route.topicId || null) === topicId) || null;
+  return route && !chapterId ? resolveNavigation(catalog, route.hash).route : route;
 }
 
 export function createHubNavigation({ pageFrame, navButtons, showSection, noticeElement,
@@ -87,14 +93,15 @@ export function createHubNavigation({ pageFrame, navButtons, showSection, notice
     history[method](null, '', hash); // URL holds navigation only, never a UID or work state.
   }
   function applyToPage() {
-    if (!catalog || !readyPage || readyPage.subjectId !== currentMenu?.subjectId) return;
+    if (!readyPage || readyPage.subjectId !== currentMenu?.subjectId) return;
     const commandId = `${readyPage.pageId}:${revision}`;
     if (lastCommand === commandId) return;
     lastCommand = commandId;
     pageFrame.contentWindow?.postMessage({ type: 'learning-hub-navigate', pageId: readyPage.pageId,
       commandId, route: { subjectId: currentMenu.subjectId, chapterId: currentMenu.chapterId || null,
         topicId: currentMenu.topicId || null, status: currentMenu.status,
-        bank: currentMenu.kind === 'bank', bankKey: currentMenu.bankKey || null } }, location.origin);
+        bank: currentMenu.kind === 'bank', bankKey: currentMenu.bankKey || null,
+        localNavigation: !catalog } }, location.origin);
   }
   async function navigate(hash, mode = 'push', force = false, alreadyOpen = null) {
     const request = ++revision;
@@ -105,6 +112,7 @@ export function createHubNavigation({ pageFrame, navButtons, showSection, notice
       if (request !== revision) return;
       const sectionId = parseHubRoute(hash)?.segments[0];
       route = { kind: 'section', sectionId: sections.has(sectionId) ? sectionId : 'overview', subjectId: null };
+      if (['physics', 'chemistry'].includes(route.sectionId)) route.subjectId = route.sectionId;
       route.hash = '#' + route.sectionId;
       code = 'catalog-unavailable';
     }

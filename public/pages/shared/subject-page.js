@@ -8,7 +8,7 @@
 const subjectRoot = document.querySelector("[data-subject-page]");
 const chapterTemplate = document.querySelector("#subject-chapters");
 const contentNavigationUrl = new URL("subject-content-nav.js", document.currentScript.src).href;
-const bankNavigationUrl = new URL("subject-bank-nav.js?v=review-in-hub-20261023-1", document.currentScript.src).href;
+const bankNavigationUrl = new URL("subject-bank-nav.js?v=subject-library-20261026", document.currentScript.src).href;
 
 function setLocalizedText(element, thai, english) {
   element.dataset.th = thai;
@@ -185,6 +185,13 @@ function buildSubjectPage() {
   const backButton = subjectRoot.querySelector("#back-to-chapters");
   const stageItems = [...subjectRoot.querySelectorAll("[data-stage]")];
   const chapterDefinitions = [...chapterTemplate.content.querySelectorAll("[data-chapter]")];
+  const bankHome = subjectRoot.dataset.subjectHome === 'bank';
+  // Preserve the authored chapters and their deep links, but do not display the
+  // former syllabus while the primary library or its route is loading.
+  if (bankHome) {
+    chapterView.hidden = true;
+    subjectRoot.querySelector('.prototype-badge').hidden = true;
+  }
   let selectedChapter = chapterDefinitions[0]?.dataset.chapter || "1";
   const hasContentMenus = chapterDefinitions.some((entry) => entry.dataset.chapterSrc);
   let contentNavigation = null;
@@ -194,8 +201,9 @@ function buildSubjectPage() {
   let orbitControl = null;
   const pageId = crypto.randomUUID();
   let routeCommand = null;
+  let localNavigation = false;
   function requestSelection(selection) {
-    if (!routeCommand || parent === window) return false;
+    if (!routeCommand || parent === window || localNavigation) return false;
     parent.postMessage({ type: 'learning-hub-navigation-request', pageId, commandId: routeCommand,
       selection: { subjectId: subject.id, ...selection } }, location.origin);
     return true;
@@ -204,7 +212,18 @@ function buildSubjectPage() {
   const bankNavigationPromise = ['physics', 'chemistry'].includes(subject.id)
     ? import(bankNavigationUrl).then(({ createSubjectBankNavigation }) => {
       bankNavigation = createSubjectBankNavigation({ root: subjectRoot, subject, setStage,
-        requestNavigation: requestSelection, backToChapters: () => showChapters() });
+        requestNavigation(selection) {
+          if (requestSelection(selection)) return true;
+          // The library still supports browsing if the Hub route catalog is
+          // unavailable, and when this menu document is opened on its own.
+          if (selection.bank && !selection.toolKey) { void showBank(selection); return true; }
+          if (parent === window) {
+            const url = new URL('../../', location.href);
+            url.hash = [subject.id, selection.review ? 'review' : 'bank', selection.bankKey, selection.toolKey].filter(Boolean).join('/');
+            location.assign(url.href); return true;
+          }
+          return false;
+        }, backToChapters: () => showChapters() });
       return bankNavigation;
     }) : Promise.resolve(null);
 
@@ -318,7 +337,7 @@ function buildSubjectPage() {
       try {
         const navigation = await contentNavigationPromise;
         if (version !== navigationVersion) return false;
-        return await navigation.open(definition, route?.topicId, route?.status === 'preparing');
+        return await navigation.open(definition, route?.topicId, route?.status === 'preparing' && !route?.topicId);
       } catch {
         if (version !== navigationVersion) return false;
         showChapters(true);
@@ -341,6 +360,7 @@ function buildSubjectPage() {
 
   function showChapters(fromRoute = false) {
     if (!fromRoute && requestSelection({})) return true;
+    if (bankHome) return showBank({});
     ++navigationVersion;
     contentNavigation?.hide();
     bankNavigation?.hide();
@@ -356,15 +376,17 @@ function buildSubjectPage() {
   async function showBank(route) {
     const version = ++navigationVersion;
     contentNavigation?.hide(); chapterView.hidden = true; activityView.hidden = true;
-    setNavigationMode(true);
-    const labels = [['เลือกวิชา', 'Choose subject'], ['เลือกชุดข้อสอบ', 'Choose set'], ['เลือกเครื่องมือ', 'Choose tool'], ['เปิดใช้งาน', 'Open workspace']];
-    stageItems.forEach((stage, i) => setLocalizedText(stage.querySelector('span'), ...labels[i]));
+    setNavigationMode(!bankHome);
+    const labels = bankHome
+      ? [['เลือกบทและหัวข้อ', 'Choose chapter and topic'], ['เลือกเครื่องมือ', 'Choose tool'], ['เปิดใช้งาน', 'Open workspace']]
+      : [['เลือกวิชา', 'Choose subject'], ['เลือกชุดข้อสอบ', 'Choose set'], ['เลือกเครื่องมือ', 'Choose tool'], ['เปิดใช้งาน', 'Open workspace']];
+    stageItems.forEach((stage, i) => { if (labels[i]) setLocalizedText(stage.querySelector('span'), ...labels[i]); });
     const navigation = await bankNavigationPromise;
     if (version !== navigationVersion || !navigation) return false;
     return navigation.open(route.bankKey);
   }
 
-  if (window.LearningHubSubjectOrbit) {
+  if (!bankHome && window.LearningHubSubjectOrbit) {
     orbitControl = window.LearningHubSubjectOrbit.mount({ root: subjectRoot, grid: chapterGrid, subject, onOpen: showActivities });
   } else {
     chapterGrid.querySelectorAll("[data-chapter]").forEach((button) => {
@@ -391,15 +413,18 @@ function buildSubjectPage() {
         typeof data.commandId !== 'string' || data.commandId.length > 160 ||
         data.commandId === routeCommand || data.route?.subjectId !== subject.id) return;
     routeCommand = data.commandId;
+    localNavigation = data.route.localNavigation === true;
     subjectRoot.inert = true;
     let ok = false;
     try { ok = data.route.bank ? await showBank(data.route)
-      : data.route.chapterId ? await showActivities(data.route.chapterId, data.route) : showChapters(true); }
+      : data.route.chapterId ? await showActivities(data.route.chapterId, data.route) : await showChapters(true); }
     finally {
       if (routeCommand === data.commandId) {
         subjectRoot.inert = false;
         subjectRoot.dataset.navigationReady = ok ? 'ready' : 'error';
-        const focusTarget = data.route.chapterId
+        const focusTarget = bankHome && !data.route.chapterId
+          ? bankNavigation?.panel.querySelector('[data-bank-title]')
+          : data.route.chapterId
           ? subjectRoot.querySelector('.content-menu-view:not([hidden]) [data-menu-title], #activity-view:not([hidden]) h2')
           : chapterGrid.querySelector('.is-selected') || chapterGrid.querySelector('button');
         focusTarget?.focus({ preventScroll: true });
@@ -407,6 +432,7 @@ function buildSubjectPage() {
       }
     }
   });
+  if (bankHome && parent === window) void showBank({});
   if (parent !== window && location.origin !== 'null') parent.postMessage({ type: 'learning-hub-navigation-ready', pageId, subjectId: subject.id }, location.origin);
 }
 

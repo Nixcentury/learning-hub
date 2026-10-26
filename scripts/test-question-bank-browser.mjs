@@ -73,7 +73,7 @@ let browser;
 try {
   browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_BROWSER_CHANNEL || (process.platform === 'win32' ? 'msedge' : undefined), headless: true });
   async function makeContext(account = false) {
-    const context = await browser.newContext({ viewport: { width: 1360, height: 1000 } });
+    const context = await browser.newContext({ viewport: { width: 1360, height: 1000 }, hasTouch: true });
     await context.route('**/*', async route => {
       const url = new URL(route.request().url());
       if (account && url.pathname === prefix + 'js/auth.js') return route.fulfill({ contentType: 'text/javascript', body: auth });
@@ -85,7 +85,7 @@ try {
             { bankKey: key, legacyId: current.legacyId, title: current.title, path: ['ฟิสิกส์', 'Learning hub', mechanics, current.title], questionCount: current === first ? 2 : 3 },
             { bankKey: 'b-' + 'b'.repeat(24), legacyId: 'empty-mechanics', title: 'งานและพลังงาน(Work and Energy)', path: ['ฟิสิกส์', 'Learning hub', mechanics, 'งานและพลังงาน(Work and Energy)'], questionCount: 0 },
             { bankKey: 'b-' + 'c'.repeat(24), legacyId: 'empty-sound', title: 'แรงดันเสียง(Sound Pressure)', path: ['ฟิสิกส์', 'Learning hub', sound, 'แรงดันเสียง(Sound Pressure)'], questionCount: 0 },
-          ] : [] }
+          ] : [{ bankKey: key, legacyId: 'chemistry-qa', title: 'กรดและเบส(Acids and Bases)', path: ['เคมี', 'Learning hub', 'กรด–เบส(Acid–base)', 'กรดและเบส(Acids and Bases)'], questionCount: 0 }] }
           : url.searchParams.get('revision') ? archives.get(url.searchParams.get('revision')) : current;
         return route.fulfill({ contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify(value ? { ok: true, data: value } : { ok: false, code: 'snapshot-not-found' }) });
       }
@@ -100,14 +100,18 @@ try {
   page.on('pageerror', e => errors.push(e.message)); page.on('dialog', dialog => dialog.accept());
   await page.goto(origin + prefix + '#physics'); await page.locator('#guest-button').click();
   const subject = page.frameLocator('#hub-page-frame');
-  await subject.locator('.bank-entry').click(); await subject.locator('[data-bank-chapter] option').nth(3).waitFor({ state: 'attached' });
+  await page.waitForURL(url => url.hash === '#physics/bank');
+  await subject.locator('[data-bank-chapter] option').nth(3).waitFor({ state: 'attached' });
+  assert.equal(await subject.locator('#chapter-view').isVisible(), false);
+  assert.equal(await subject.locator('[data-bank-back]').isVisible(), false);
+  assert.equal(await subject.locator('.bank-entry').count(), 0);
   assert.equal(new URL(page.url()).hash, '#physics/bank');
   assert.equal(await subject.locator('[data-bank-cards] button').count(), 0);
   assert.equal(await subject.locator('[data-bank-search]').isDisabled(), true);
   await subject.locator('[data-bank-chapter]').selectOption('chapter:' + sound);
   assert.equal(await subject.locator('[data-bank-cards] button').count(), 1);
   await subject.locator('[data-bank-cards] button').click();
-  assert.equal(await subject.locator('[data-bank-cards] button').first().isDisabled(), true);
+  assert.equal(await subject.getByRole('button', {name:/แสดงข้อสอบ/}).isDisabled(), true);
   await subject.locator('[data-bank-back]').click();
   await subject.locator('[data-bank-chapter]').waitFor({ state: 'visible' });
   assert.equal(await subject.locator('[data-bank-chapter]').inputValue(), 'chapter:' + sound);
@@ -124,6 +128,7 @@ try {
   await page.waitForFunction(() => !document.querySelector('#hub-page-frame').contentDocument.querySelector('[data-bank-refresh]').disabled);
   assert.equal(await subject.locator('[data-bank-search]').inputValue(), 'ไม่เจอ');
   await subject.locator('[data-bank-search]').fill('แรง'); await subject.locator('[data-bank-cards] button').first().click();
+  await page.waitForURL(url => url.hash === `#physics/bank/${key}`);
   assert.equal(new URL(page.url()).hash, `#physics/bank/${key}`);
   await subject.locator('[data-bank-back]').click();
   await subject.locator('[data-bank-chapter]').waitFor({ state: 'visible' });
@@ -143,7 +148,41 @@ try {
   await page.waitForFunction(() => document.querySelector('#hub-page-frame').contentDocument.documentElement.lang === 'th');
   await subject.locator('[data-bank-cards] button').first().click();
   console.log('PASS chapter-first menu, scoped/global search, TH/EN, empty topics and remembered filters after back/refresh/reload');
-  await subject.locator('[data-bank-cards] button').first().click();
+  for (const width of [390, 820]) {
+    await page.setViewportSize({width, height:1000});
+    for (const subjectId of ['chemistry', 'physics']) {
+      await page.locator(`[data-section="${subjectId}"]`).tap();
+      await page.waitForURL(url => url.hash === `#${subjectId}/bank`);
+      await subject.locator('[data-bank-chapter] option').nth(2).waitFor({state:'attached'});
+      assert.equal(await subject.locator('#chapter-view').isVisible(), false);
+      assert.equal(await subject.locator('[data-bank-back]').isVisible(), false);
+      assert.equal(await subject.locator('.prototype-badge').isVisible(), false);
+      assert.equal(await subject.locator('body').evaluate(body => body.scrollWidth <= innerWidth + 2), true);
+      if (width === 390) await page.screenshot({path:resolve(output, `${subjectId}-library-home-mobile.png`)});
+      await subject.locator('[data-bank-chapter]').selectOption({index:2});
+      await subject.locator('[data-bank-cards] button').first().tap();
+      await subject.locator('[data-bank-back]').tap();
+      await page.waitForURL(url => url.hash === `#${subjectId}/bank`);
+      assert.equal(await subject.locator('#chapter-view').isVisible(), false);
+    }
+  }
+  await page.locator('[data-section="chemistry"]').tap();
+  await page.waitForURL(url => url.hash === '#chemistry/bank');
+  await page.route('https://bank.test/**', route => route.fulfill({status:503,body:'Unavailable'}));
+  await page.reload();
+  await subject.locator('[data-bank-notice].is-error').waitFor();
+  assert.equal(await subject.locator('[data-bank-back]').isVisible(), false);
+  assert.equal(await subject.locator('#chapter-view').isVisible(), false);
+  await page.unroute('https://bank.test/**');
+  await subject.locator('[data-bank-refresh]').tap();
+  await subject.locator('[data-bank-chapter] option').nth(2).waitFor({state:'attached'});
+  await page.locator('[data-section="physics"]').tap();
+  await page.waitForURL(url => url.hash === '#physics/bank');
+  await subject.locator('[data-bank-chapter] option').nth(2).waitFor({state:'attached'});
+  await subject.locator('[data-bank-cards] button').first().tap();
+  await page.setViewportSize({width:1360,height:1000});
+  console.log('PASS Physics/Chemistry library homes, phone/tablet taps, hidden legacy menus, back controls and service retry');
+  await subject.getByRole('button', {name:/แสดงข้อสอบ/}).click();
   let frame = page.frameLocator('.workspace-tool-frame');
   await frame.locator('[data-current-options] .quiz-option').first().waitFor();
   let child = await page.locator('.workspace-tool-frame').elementHandle().then(handle => handle.contentFrame());
@@ -163,8 +202,11 @@ try {
   await page.screenshot({ path: resolve(output, 'question-bank-tools.png') });
   await page.goForward();
   assert.equal(await page.locator('.workspace-tool-frame').count(), 1);
-  await frame.locator('[data-bank-version] button').click();
-  await child.waitForFunction(rev => LearningHubQuiz.getState().bankRevision === rev, second.revision);
+  await Promise.all([
+    child.waitForNavigation({waitUntil:'domcontentloaded'}),
+    frame.locator('[data-bank-version] button').click(),
+  ]);
+  await child.waitForFunction(rev => window.LearningHubQuiz?.getState().bankRevision === rev, second.revision);
   state = await child.evaluate(() => LearningHubQuiz.getState()); assert.deepEqual(state.answers, {});
   console.log('PASS latest set starts only on explicit reset; back/forward reuses the window');
   // Use a dedicated print tab with the real sanitized content and print engine,

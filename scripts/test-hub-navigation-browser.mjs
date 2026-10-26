@@ -42,6 +42,7 @@ async function source(name) {
   return data;
 }
 const catalog = await buildRouteCatalog({ read: source });
+const bankKey = 'b-' + 'a'.repeat(24);
 let failCatalog = false, failMenu = false, delayMenu = false;
 const stubs = {
   'firebase-app.js': 'export const getApps=()=>[];export const initializeApp=()=>({});',
@@ -60,6 +61,10 @@ const server = createServer(async (request, response) => {
     const path = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
     if (!path.startsWith(prefix)) throw Error('Outside prefix');
     const name = path.slice(prefix.length) || 'index.html';
+    if (name === 'shared/question-bank-config.js') {
+      response.setHeader('Content-Type', 'text/javascript');
+      response.end(`export const questionBankConfig={endpoint:'https://bank.test/exec',cacheMs:60000};export const questionBankTools={};`); return;
+    }
     const directory = built ? resolve(root, 'dist') : root;
     if (!resolve(directory, name).startsWith(directory.replace(/[\\/]$/, '') + sep)) throw Error('Outside root');
     if (name === 'route-catalog.v1.json') {
@@ -90,6 +95,12 @@ try {
   await context.route('**/*', route => {
     const url = new URL(route.request().url());
     if (url.origin === origin) return route.continue();
+    if (url.hostname === 'bank.test') {
+      const subjectId = url.searchParams.get('subject');
+      return route.fulfill({contentType:'application/json',body:JSON.stringify({ok:true,data:{schemaVersion:1,subjectId,sets:[
+        {bankKey,legacyId:'qa-library',title:'หัวข้อทดสอบ(Test topic)',path:[subjectId,'Learning hub','บททดสอบ(Test chapter)','หัวข้อทดสอบ(Test topic)'],questionCount:0}
+      ]}})});
+    }
     return route.fulfill({contentType:'text/javascript',body:url.hostname === 'www.gstatic.com' ? stubs[url.pathname.split('/').at(-1)] || '' : ''});
   });
   const page = await context.newPage();
@@ -99,8 +110,9 @@ try {
   if (process.env.QA_ROUTE_DEBUG === '1') page.on('console', message => console.log('BROWSER',message.type(),message.text()));
   const subject = page.frameLocator('#hub-page-frame');
   async function ready(hash) {
+    if (['#chemistry', '#physics'].includes(hash)) hash += '/bank';
     await page.waitForURL(url => url.hash === hash);
-    const route = catalog.routes.find(item => item.hash === hash);
+    const route = catalog.routes.find(item => item.hash === hash) || {subjectId:hash.slice(1).split('/')[0]};
     await subject.locator(`[data-subject-page][data-subject-id="${route.subjectId || route.sectionId}"][data-navigation-ready="ready"]:not([inert])`).waitFor();
   }
   async function chapter() { await ready('#chemistry/acid-base'); await subject.locator('[data-menu-entry="theories"]').waitFor(); }
@@ -109,7 +121,7 @@ try {
   await page.locator('#guest-button').click();
   await page.locator('#hub-view').waitFor({state:'visible'});
   await topic();
-  assert.equal(await subject.locator('.orbit-select').inputValue(), '9');
+  assert.equal(await subject.locator('#chapter-view').isVisible(), false);
   await page.reload(); await topic();
   console.log('PASS deep link survives login gate and refresh; aliases resolve to canonical route and original chapter ID');
 
@@ -122,11 +134,12 @@ try {
 
   await subject.locator('[data-menu-back]').click(); await chapter();
   await subject.locator('[data-menu-back]').click(); await ready('#chemistry');
-  assert.equal(await subject.locator('.orbit-select').inputValue(), '9');
+  assert.equal(await subject.locator('#chapter-view').isVisible(), false);
+  assert.equal(await subject.locator('[data-bank-back]').isVisible(), false);
   const historyBefore = await page.evaluate(() => history.length);
   await page.locator('[data-section="chemistry"]').click(); await ready('#chemistry');
   assert.equal(await page.evaluate(() => history.length), historyBefore);
-  await subject.locator('.orbit-open').click(); await chapter();
+  await page.evaluate(() => { location.hash = '#chemistry/10'; }); await chapter();
   await subject.locator('[data-menu-entry="theories"]').click(); await topic();
   await page.goBack(); await chapter();
   await page.goBack(); await ready('#chemistry');
@@ -135,8 +148,7 @@ try {
   console.log('PASS click, local back controls, Back/Forward and repeated tab clicks have no duplicate history entries');
 
   await page.locator('[data-section="physics"]').click(); await ready('#physics');
-  await subject.locator('.orbit-select').selectOption('2');
-  await subject.locator('.orbit-open').click(); await ready('#physics/3');
+  await page.evaluate(() => { location.hash = '#physics/3'; }); await ready('#physics/3');
   await subject.locator('#activity-view:not([hidden])').waitFor();
   await page.goBack(); await ready('#physics');
   await page.goBack(); await topic();
@@ -320,8 +332,9 @@ try {
   await page.waitForURL(url => url.hash === '#chemistry/acid-base/theory');
   await page.locator('[data-section="physics"]').click(); await ready('#physics');
   await page.waitForTimeout(600);
-  assert.equal(new URL(page.url()).hash, '#physics');
-  await subject.locator('#chapter-view:not([hidden])').waitFor();
+  assert.equal(new URL(page.url()).hash, '#physics/bank');
+  await subject.locator('.bank-view:not([hidden])').waitFor();
+  assert.equal(await subject.locator('#chapter-view').isVisible(), false);
   delayMenu = false;
   console.log('PASS rapid navigation cancels stale menu work and cannot bring an old subject back');
 
@@ -329,9 +342,11 @@ try {
   await page.goto(origin + prefix + '?qa=outage#chemistry/10/theories'); // New document, not a hash-only navigation.
   await page.locator('#hub-route-notice').filter({hasText:'โหลดสารบัญลิงก์ไม่ได้'}).waitFor();
   assert.equal(new URL(page.url()).hash, '#chemistry/10/theories');
-  await subject.locator('.orbit-select').selectOption('9');
-  await subject.locator('.orbit-open').click();
-  await subject.locator('[data-menu-entry="theories"]').waitFor();
+  await subject.locator('[data-bank-chapter] option').nth(2).waitFor({state:'attached'});
+  await subject.locator('[data-bank-chapter]').selectOption({index:2});
+  await subject.locator('[data-bank-cards] button').first().click();
+  await subject.locator('[data-bank-title]').filter({hasText:'หัวข้อทดสอบ'}).waitFor();
+  assert.equal(await subject.locator('#chapter-view').isVisible(), false);
   failCatalog = false;
   await page.locator('[data-route-retry]').click(); await topic();
   console.log('PASS catalog outage retains the requested URL, allows manual browsing, and recovers via retry');

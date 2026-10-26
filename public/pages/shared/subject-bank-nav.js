@@ -7,6 +7,10 @@ import { BANK_ALL_CHAPTERS, BANK_OTHER_CHAPTER, bankChapterKey, bankChapters, fi
 
 export function createSubjectBankNavigation({ root, subject, setStage, requestNavigation, backToChapters }) {
   if (!Object.hasOwn(bankSubjects, subject.id)) return null;
+  const bankHome = root.dataset.subjectHome === 'bank';
+  const libraryTitle = bankHome
+    ? [`คลังบทเรียน${subject.titleTh}`, `${subject.titleEn} learning library`]
+    : [`คลังข้อสอบ${subject.titleTh}`, `${subject.titleEn} question bank`];
   const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = new URL('subject-bank.css?v=topic-review-library-20261023-1', import.meta.url); document.head.append(css);
   const launch = document.createElement('button'); launch.type = 'button'; launch.className = 'bank-entry surface';
   launch.innerHTML = '<span class="bank-entry-icon" aria-hidden="true">▤</span><span><strong></strong><small></small></span><b aria-hidden="true">→</b>';
@@ -14,7 +18,7 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
     node.textContent = document.documentElement.lang === 'en' ? node.dataset.en : th; };
   localize(launch.querySelector('strong'), `คลังข้อสอบ${subject.titleTh}`, `${subject.titleEn} question bank`);
   localize(launch.querySelector('small'), 'เลือกบท ค้นหาหัวข้อ และเปิดเครื่องมือ', 'Choose a chapter, find a topic and open tools');
-  root.querySelector('#chapter-view .section-intro').after(launch);
+  if (!bankHome) root.querySelector('#chapter-view .section-intro').after(launch);
   launch.onclick = () => requestNavigation({ bank: true });
   const panel = document.createElement('section'); panel.className = 'bank-view activity-view'; panel.hidden = true;
   panel.innerHTML = `<nav class="content-breadcrumb" aria-label="เส้นทางคลังข้อสอบ / Bank path"></nav>
@@ -27,6 +31,21 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
     <div class="activity-grid" data-bank-cards></div><details data-bank-id hidden><summary></summary><p data-allow-selection></p></details>`;
   root.append(panel);
   const cards = panel.querySelector('[data-bank-cards]'), notice = panel.querySelector('[data-bank-notice]');
+  const back = panel.querySelector('[data-bank-back]');
+  const crumbs = panel.querySelector('.content-breadcrumb');
+  function updateHeading(set = null) {
+    const hasTopic = Boolean(currentKey);
+    back.hidden = bankHome && !hasTopic;
+    crumbs.hidden = bankHome && !hasTopic;
+    localize(back, hasTopic ? (bankHome ? '← กลับคลังบทเรียน' : '← กลับคลังข้อสอบ') : '← กลับหน้าวิชา', hasTopic ? '← Back to library' : '← Back to subject');
+    localize(panel.querySelector('[data-bank-title]'), ...(set ? bankTitlePair(set.title) : libraryTitle));
+    localize(panel.querySelector('[data-bank-layer]'), bankHome
+      ? (hasTopic ? 'ขั้นที่ 2 · เลือกเครื่องมือ' : 'ขั้นที่ 1 · เลือกบทและหัวข้อ')
+      : (hasTopic ? 'ชั้นที่ 3 · เครื่องมือ' : 'ชั้นที่ 2 · เลือกชุดข้อสอบ'), bankHome
+      ? (hasTopic ? 'Step 2 · Choose a tool' : 'Step 1 · Choose chapter and topic')
+      : (hasTopic ? 'Layer 3 · Tools' : 'Layer 2 · Question sets'));
+    setStage(bankHome ? (hasTopic ? 2 : 1) : (hasTopic ? 3 : 2));
+  }
   const search = panel.querySelector('[data-bank-search]'), refresh = panel.querySelector('[data-bank-refresh]');
   const review = document.createElement('a'); review.className = 'back-button bank-review-entry';
   panel.querySelector('.activity-heading').append(review);
@@ -52,6 +71,7 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
     try { sessionStorage.setItem(storageKey, JSON.stringify({ chapter: selectedChapter, query: search.value })); } catch { /* Optional session preference. */ }
   }
   let catalog = null, toolsCatalog = null, toolsState = 'idle', currentKey = null, request = 0;
+  updateHeading();
   updateReviewLink();
   localize(panel.querySelector('[data-bank-chapter-label]'), 'เลือกบท', 'Choose chapter');
   localize(refresh, 'รีเฟรชคลัง', 'Refresh bank');
@@ -85,15 +105,13 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
     cards.replaceChildren();
     if (!catalog) return;
     const set = currentKey && catalog.sets.find(entry => entry.bankKey === currentKey);
-    const crumbs = panel.querySelector('nav'); crumbs.replaceChildren();
+    crumbs.replaceChildren();
     const subjectButton = document.createElement('button'); subjectButton.type = 'button'; localize(subjectButton, subject.titleTh, subject.titleEn);
-    subjectButton.onclick = backToChapters; crumbs.append(subjectButton);
+    subjectButton.onclick = bankHome ? () => requestNavigation({ bank: true }) : backToChapters; crumbs.append(subjectButton);
     const bankButton = document.createElement('button'); bankButton.type = 'button'; localize(bankButton, 'คลังข้อสอบ', 'Question bank');
-    bankButton.onclick = () => requestNavigation({ bank: true }); crumbs.append(bankButton);
-    localize(panel.querySelector('[data-bank-back]'), currentKey ? '← กลับคลังข้อสอบ' : '← กลับหน้าวิชา', currentKey ? '← Back to bank' : '← Back to subject');
-    localize(panel.querySelector('[data-bank-layer]'), currentKey ? 'ชั้นที่ 3 · เครื่องมือ' : 'ชั้นที่ 2 · เลือกชุดข้อสอบ', currentKey ? 'Layer 3 · Tools' : 'Layer 2 · Question sets');
-    const title = set ? bankTitlePair(set.title) : [`คลังข้อสอบ${subject.titleTh}`, `${subject.titleEn} question bank`];
-    localize(panel.querySelector('[data-bank-title]'), ...title);
+    bankButton.onclick = () => requestNavigation({ bank: true });
+    if (!bankHome) crumbs.append(bankButton);
+    updateHeading(set);
     panel.querySelectorAll('.bank-controls label').forEach(node => { node.hidden = Boolean(currentKey); });
     const allChapters = selectedChapter === BANK_ALL_CHAPTERS;
     localize(panel.querySelector('[data-bank-search-label]'), allChapters ? 'ค้นหาทุกบท' : 'ค้นหาในบทนี้', allChapters ? 'Search all chapters' : 'Search this chapter');
@@ -102,7 +120,6 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
     panel.querySelector('[data-bank-id]').hidden = !set;
     if (set) panel.querySelector('[data-bank-id] p').replaceChildren(
       set.legacyId, document.createElement('br'), `bankKey: ${set.bankKey}`);
-    setStage(currentKey ? 3 : 2);
     if (currentKey && !set) {
       status('ไม่พบชุดนี้ หรือครูยังไม่ได้เปิดให้ใช้งาน', 'This set was not found or has not been published.', true); return;
     }
@@ -154,8 +171,13 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
   }
   async function open(bankKey = null, force = false) {
     const version = ++request; currentKey = bankKey; panel.hidden = false; cards.replaceChildren();
+    updateHeading();
+    updateReviewLink();
+    localize(panel.querySelector('[data-bank-description]'), '', '');
+    panel.querySelectorAll('.bank-controls label').forEach(node => { node.hidden = Boolean(currentKey); });
+    panel.querySelector('[data-bank-id]').hidden = true;
     refresh.disabled = true; search.disabled = true; chapter.disabled = true;
-    status('กำลังโหลดคลังข้อสอบ…', 'Loading question bank…');
+    status(bankHome ? 'กำลังโหลดคลังบทเรียน…' : 'กำลังโหลดคลังข้อสอบ…', bankHome ? 'Loading learning library…' : 'Loading question bank…');
     try {
       // Failure of the optional media catalog must not disable the Sheet bank.
       // Bound this request independently so extra tools cannot hang Open quiz.
@@ -182,12 +204,11 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
     } catch (error) {
       if (version !== request) return false;
       catalog = null;
-      localize(panel.querySelector('[data-bank-title]'), `คลังข้อสอบ${subject.titleTh}`, `${subject.titleEn} question bank`);
-      localize(panel.querySelector('[data-bank-back]'), '← กลับหน้าวิชา', '← Back to subject');
+      updateHeading();
       status(error.message, error.message, true); return true; // A useful retry page, not an unrelated chapter fallback.
     } finally { if (version === request) { refresh.disabled = false; chapter.disabled = !catalog; search.disabled = !catalog || !selectedChapter; } }
   }
-  panel.querySelector('[data-bank-back]').onclick = () => currentKey && catalog
+  back.onclick = () => currentKey
     ? requestNavigation({ bank: true }) : backToChapters();
   chapter.addEventListener('change', () => { selectedChapter = chapter.value; search.value = ''; rememberFilters(); render(); });
   search.addEventListener('input', () => { rememberFilters(); render(); });

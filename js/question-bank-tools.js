@@ -36,5 +36,5 @@ export function resolveBankRoute(segments) {
   return { hash, aliases: [], status: 'ready', kind: toolKey ? 'bank-tool' : 'bank',
     subjectId, sectionId: subjectId, bankKey: bankKey || null, toolKey: toolKey || null,
     parentHash: '#' + segments.slice(0, -1).join('/'),
-    titleTh: `คลังข้อสอบ${bankSubjects[subjectId].th}`, titleEn: `${bankSubjects[subjectId].en} question bank` };
+    titleTh: `คลังบทเรียน${bankSubjects[subjectId].th}`, titleEn: `${bankSubjects[subjectId].en} learning library` };
 }

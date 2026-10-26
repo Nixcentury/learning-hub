@@ -469,9 +469,11 @@ html[lang="en"] [data-quiz-language="th"] {
   line-height: 1.65;
 }
 
-.quiz-question-context svg,
-.quiz-summary-content svg,
-.quiz-solution svg {
+/* MathJax owns its SVG layout; diagram sizing must not turn inline formulas
+   into full-width blocks or change their baseline and intrinsic height. */
+.quiz-question-context svg:not(mjx-container svg),
+.quiz-summary-content svg:not(mjx-container svg),
+.quiz-solution svg:not(mjx-container svg) {
   display: block;
   max-width: 100%;
   height: auto;
@@ -1345,7 +1347,7 @@ svg [data-quiz-visual~="axis-label"] {
     font-size: 9pt;
   }
 
-  .quiz-print-content [data-question-context] svg {
+  .quiz-print-content [data-question-context] svg:not(mjx-container svg) {
     max-width: 100% !important;
     height: auto !important;
   }
@@ -1485,7 +1487,7 @@ svg [data-quiz-visual~="axis-label"] {
   }
   .quiz-print-content [data-question-context] p,
   .quiz-print-content [data-choice-id] p { margin: .6mm 0 !important; }
-  .quiz-print-content [data-question-context] svg {
+  .quiz-print-content [data-question-context] svg:not(mjx-container svg) {
     display: block;
     width: auto !important;
     max-width: 100% !important;

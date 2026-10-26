@@ -2,6 +2,10 @@
 
 Latest verification: 26 October 2026. The 21 October notes below are historical.
 
+Follow-up content/diagram audit and the inline-MathJax CSS correction:
+`CHEMISTRY-ALEVEL-2568-QA.md`. That checkpoint records the newer Sheet revision
+and separates already saved content fixes from repository deployment checks.
+
 ## Chemistry A-Level 2568 — 26 October 2026
 
 - The live set `b-3c7f2eba947faf9c3054eef6` contains 35 questions: 30 choice and

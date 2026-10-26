@@ -24,9 +24,10 @@
 ## 14-nist-line-positions
 
 - File: 14-nist-line-positions.png
-- Source: https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
-- Credit: กราฟจัดทำใหม่; ตัวเลขถอดจากตาราง NIST และแปลง Å→nm ด้วยการหาร 10
-- Notes: ต่ำกว่า 2000 Å ใช้ vacuum; สูงกว่าใช้ air ตามหมายเหตุแหล่งเดิม; ห้ามใช้กราฟนี้เป็นข้อมูลดิบจากห้องเรียนหรืออ้างความแม่นยำเกินแหล่งข้อมูล
+- Source: https://physics.nist.gov/PhysRefData/Handbook/Tables/hydrogentable2.htm
+- Credit: กราฟจัดทำใหม่จาก NIST Handbook of Basic Atomic Spectroscopic Data, “Strong Lines of Hydrogen”; แปลง Å→nm ด้วยการหาร 10
+- Notes: ใช้ vacuum/air ตามหัวตารางของ NIST แต่ละช่วง เลือกหนึ่งค่าจากตารางสำหรับแต่ละการเปลี่ยนระดับ กรณีที่ตารางแยกหลายองค์ประกอบไม่ได้เฉลี่ยรวม; ภาพระดับมัธยมนี้ไม่แสดงโครงสร้างละเอียดของเส้น ความสูงเส้นไม่แทนความเข้ม และแต่ละแผงใช้ช่วงแกนต่างกัน ห้ามใช้กราฟนี้เป็นข้อมูลดิบจากห้องเรียน
+- Review correction (26 October 2026): ลิงก์เดิมพาไปหน้า Atomic Lifetimes จึงเปลี่ยนเป็นตาราง H I ที่มีข้อมูลจริง ตรวจใหม่ครบ 13 ตำแหน่ง อัปเดต CSV/SVG/PNG ให้ใช้ค่าจากตารางเดียวกัน และขยายอักษรในกราฟ
 
 ## 15-electron-probability
 

@@ -1,5 +1,7 @@
 # Physics 19.1 — Sheets 2 and 3
 
+> Follow-up QA for PR47 (26 October 2026): wording, notation explanations and the NIST reference plot were revised after the original author verification below. The latest review is recorded at the end. The original exported PDFs belong to `af51cc67`; no new PDF export is claimed for the revised files.
+
 26 October 2026. Implements the teacher’s confirmed three-sheet plan, completing Sheet 2 before authoring Sheet 3. The page cap is about 32–33 per edition, not a target. Explanations and the radius, energy and series derivations are printed; only the five key formula summaries across these two sheets and question/problem responses are left blank. Response areas have no writing lines or dot grids.
 
 ## Files and routing
@@ -82,3 +84,47 @@ Examples 19.1–19.3, p.55’s question and Exercises 19.1 Q1–2 remain in Shee
 PDFs are A4 with embedded Thai font, no Unicode replacement characters and no empty pages. Rendered contact sheets and enlarged inspections cover the exported pages. Evidence is in `qa-output/physics19-sheet2/`, `qa-output/physics19-sheet3/` and `qa-output/sheets23-pdf-report.json` (not committed). Browser checks use Chromium headless with network Firebase stubs; no live student/account writes. Native iPad/Safari and a physical printer have not been tested.
 
 This is a reviewable branch/PR and exported file delivery, not a claim of merge or live deployment.
+
+
+## PR47 follow-up review — 26 October 2026
+
+Reviewed the PR from `af51cc67e996d02c7568e99dc34b023e2aa716ad` in an isolated worktree. Rechecked the two complete TH/EN sheets, the supplied student-book page images (printed 59–80 / PDF 72–93), relevant teacher-guide answers, figure captions, exercise coverage and numerical results. The three-sheet allocation and printed derivations are preserved.
+
+### Findings addressed
+
+- Explain K (kinetic energy), U (electric potential energy), the quantum number n, h-bar, UV and IR before students need them. Use simpler Thai for allowed orbits, bound electrons, emission and the short-wavelength series limit.
+- Replace the vague “Continuation” headings with Question 15(a), (b), (c), retaining separate writing areas and original semantic keys. Remove repeated subpart prefixes in Example 19.4 and a production-oriented paragraph about which formulas were left blank.
+- Explain the electron cloud and the radial-probability graph in short paragraphs. Preserve the distinction between probability in equally thick spherical shells and probability density at a point; remove the unexplained `dr` from the student explanation.
+- Correct the NIST source URL. The former link resolves to **Atomic Lifetimes**, not the quoted wavelength table. The replacement is [Strong Lines of Hydrogen](https://physics.nist.gov/PhysRefData/Handbook/Tables/hydrogentable2.htm). All 13 CSV entries were checked against that table, with the stated vacuum/air conventions. Where NIST lists components, one listed value is selected, rather than claiming an average. The SVG and PNG were regenerated from the same CSV values. Increase chart text and its displayed width to 175 mm, with separated labels for the close Balmer lines; equal line heights still do not represent intensity.
+
+### Independent content and structural checks
+
+- Recalculated the six activity wavelengths: about 655, 492, 432 nm (H) and 655, 631, 603 nm (Ne).
+- Recalculated the radius/energy/speed constants from the stated physical constants, K/U/E at n = 2, radius at n = 3, and radius/energy/ionization/speed at n = 4. Rechecked Example 19.4, direct/cascade energy conservation and wavelengths, the 7→2 question, Balmer limit, Exercise 5 and the inverse transition question. The existing main results are correct within the stated rounding.
+- Every original TeX expression is unchanged. Question order, semantic keys and writing-area heights are unchanged. Sheet 2 has 39 paired slots / 36 question containers per language; Sheet 3 has 22 paired slots / 20 question containers. Every question retains its own slot and every slot one direct answer child. Images remain 11 and 6 per language respectively, plus Sheet 3’s inline Exercise 5 diagram.
+- Production build/content validation: **pass**, 0 errors, 32 existing draft warnings; **546** public files verified. `pnpm test:unit`: **345 passed**, 0 failed. `git diff --check`: **pass**. Built route catalog retains the actual Bohr bank placement and both content IDs.
+
+### Revised browser and print verification
+
+Used the built Hub in Chromium through the managed preview, in Guest mode. Both content routes load; TH/EN, individual reveal/hide and reveal/hide all work. Measured slot heights stay unchanged on reveal in both languages. All pictures load, with no MathJax errors. Print return preserves the open answers.
+
+Also tested both full Hub instances in 390 px iframe fixtures (content viewport 371 px), in both languages with answers open. No document or table horizontal overflow. Sheet 2 has 11 long expressions per language in the shared, horizontally scrollable math wrappers; these remain readable by scrolling. This is a narrow iframe check, not native-device certification.
+
+All eight central A4 previews were regenerated from the revised build:
+
+| Sheet | Language | Edition | Pages | Slots | Answer elements | Images |
+| --- | --- | --- | ---: | ---: | ---: | ---: |
+| 2 | TH | Student | 20 | 39 | 0 | 11 |
+| 2 | TH | Answers | 20 | 39 | 39 | 11 |
+| 2 | EN | Student | 21 | 39 | 0 | 11 |
+| 2 | EN | Answers | 21 | 39 | 39 | 11 |
+| 3 | TH | Student | 14 | 22 | 0 | 6 |
+| 3 | TH | Answers | 14 | 22 | 22 | 6 |
+| 3 | EN | Student | 14 | 22 | 0 | 6 |
+| 3 | EN | Answers | 14 | 22 | 22 | 6 |
+
+No opposite-language content, broken images, math errors, missing slots or measured page-body overflow. Checked full-page contact views of all 138 preview pages across the eight editions, then enlarged selected radius/energy derivations, Example 19.4, the new NIST chart and probability figures. The question and its writing area stay together. The final NIST image reserves its actual 2242 × 1710 dimensions before loading.
+
+Review evidence is under ignored `qa-output/pr47-review/`: build/unit logs, `structure.json`, `numerical.json`, browser/individual/narrow reports, `print-report.json`, complete print HTML copies, 20 contact screenshots and five enlarged page views. Long screenshot capture was unavailable; compact contact views and individual page views were used instead. The brief preview connection interruption did not lose the source changes or recorded results.
+
+**Verification boundary:** this follow-up checked the revised central previews and rendered browser page copies. It did not re-export PDFs, test native iPad/Safari or use a physical printer. The original author’s PDF checks above apply to the pre-review files. No merge or live publication is part of this review.

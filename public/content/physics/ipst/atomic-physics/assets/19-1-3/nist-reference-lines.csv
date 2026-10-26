@@ -1,0 +1,14 @@
+series,lower_n,upper_n,wavelength_A,wavelength_nm,medium,source
+Lyman,1,2,1215.67,121.567,vacuum,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
+Lyman,1,3,1025.73,102.573,vacuum,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
+Lyman,1,4,972.537,97.2537,vacuum,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
+Lyman,1,5,949.743,94.9743,vacuum,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
+Balmer,2,3,6562.8,656.28,air,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
+Balmer,2,4,4861.32,486.132,air,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
+Balmer,2,5,4340.46,434.046,air,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
+Balmer,2,6,4101.73,410.173,air,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
+Balmer,2,7,3970.07,397.007,air,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
+Paschen,3,4,18751.0,1875.1,air,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
+Paschen,3,5,12818.1,1281.81,air,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
+Paschen,3,6,10938.1,1093.81,air,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic
+Paschen,3,7,10049.4,1004.94,air,https://www.nist.gov/pml/atomic-spectroscopy-compendium-basic-ideas-notation-data-and-formulas/atomic-spectroscopy-atomic

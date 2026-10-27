@@ -3,7 +3,7 @@ import { bankSubjects } from '../../shared/question-bank-model.js';
 import { questionBankTools } from '../../shared/question-bank-config.js';
 import { authoredBankTools } from '../../shared/question-bank-authored.js?v=bank-html-20261021';
 import { readMenuCatalog } from './menu-availability.js';
-import { BANK_ALL_CHAPTERS, BANK_OTHER_CHAPTER, bankChapterKey, bankChapters, filterBankSets, bankTitlePair } from '../../shared/question-bank-menu.js';
+import { BANK_ALL_CHAPTERS, BANK_OTHER_CHAPTER, bankChapterKey, bankChapterLinks, filterBankSets, bankTitlePair } from '../../shared/question-bank-menu.js?v=bank-chapter-links-20261027';
 
 export function createSubjectBankNavigation({ root, subject, setStage, requestNavigation, backToChapters }) {
   if (!Object.hasOwn(bankSubjects, subject.id)) return null;
@@ -70,14 +70,18 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
   function rememberFilters() {
     try { sessionStorage.setItem(storageKey, JSON.stringify({ chapter: selectedChapter, query: search.value })); } catch { /* Optional session preference. */ }
   }
-  let catalog = null, toolsCatalog = null, toolsState = 'idle', currentKey = null, request = 0;
+  let catalog = null, chapters = [], toolsCatalog = null, toolsState = 'idle', currentKey = null, request = 0;
+  let currentChapterId = null, missingChapter = false;
+  const chapterSelection = () => ({ bank: true, ...(selectedChapter === BANK_ALL_CHAPTERS
+    ? { bankChapterId: BANK_ALL_CHAPTERS }
+    : chapters.some(entry => entry.key === selectedChapter)
+      ? { bankChapterId: chapters.find(entry => entry.key === selectedChapter).routeId } : {}) });
   updateHeading();
   updateReviewLink();
   localize(panel.querySelector('[data-bank-chapter-label]'), 'เลือกบท', 'Choose chapter');
   localize(refresh, 'รีเฟรชคลัง', 'Refresh bank');
   panel.querySelector('[data-bank-id] summary').textContent = 'ID';
   function updateChapters() {
-    const chapters = bankChapters(catalog.sets);
     if (selectedChapter !== BANK_ALL_CHAPTERS && !chapters.some(entry => entry.key === selectedChapter)) selectedChapter = '';
     chapter.replaceChildren();
     const option = (value, th, en) => {
@@ -150,7 +154,10 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
           : toolsState === 'loading' ? 'Saved work resumes with its original question version. Loading extra tools…'
             : 'Saved work resumes with its original question version.');
     } else {
-      const chapters = bankChapters(catalog.sets);
+      if (missingChapter) {
+        status('ไม่พบบทในลิงก์นี้ กรุณาเลือกบทจากรายการ', 'The linked chapter was not found. Choose a chapter from the list.', true);
+        return;
+      }
       const selected = chapters.find(entry => entry.key === selectedChapter);
       const [chapterTh, chapterEn] = selected?.title ? bankTitlePair(selected.title) : ['หัวข้ออื่น ๆ', 'Other topics'];
       localize(panel.querySelector('[data-bank-description]'), selected ? chapterTh : 'เลือกบท แล้วเลือกหัวข้อเพื่อเปิดข้อสอบและเครื่องมือ', selected ? chapterEn : 'Choose a chapter, then a topic to open its quiz and tools');
@@ -169,8 +176,9 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
       else status(matches.length ? `พบ ${matches.length} หัวข้อ` : 'ไม่พบหัวข้อที่ค้นหา', matches.length ? `${matches.length} topics` : 'No matching topics.');
     }
   }
-  async function open(bankKey = null, force = false) {
+  async function open(bankKey = null, force = false, bankChapterId = null) {
     const version = ++request; currentKey = bankKey; panel.hidden = false; cards.replaceChildren();
+    currentChapterId = bankChapterId; missingChapter = false;
     updateHeading();
     updateReviewLink();
     localize(panel.querySelector('[data-bank-description]'), '', '');
@@ -195,12 +203,24 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
       // as soon as the live Sheet returns, even when media loading is offline.
       const value = await bankClient.catalog(subject.id, { force });
       if (version !== request) return false;
-      catalog = value; sheetReady = true;
-      if (currentKey && !selectedChapter) {
+      const chapterLinks = await bankChapterLinks(value.sets);
+      if (version !== request) return false;
+      catalog = value; chapters = chapterLinks; sheetReady = true;
+      if (currentKey) {
         const set = catalog.sets.find(entry => entry.bankKey === currentKey);
-        if (set) selectedChapter = bankChapterKey(set);
+        if (set && selectedChapter !== BANK_ALL_CHAPTERS && selectedChapter !== bankChapterKey(set)) { selectedChapter = bankChapterKey(set); search.value = ''; }
+      } else if (bankChapterId) {
+        const selected = chapters.find(entry => entry.routeId === bankChapterId);
+        const key = bankChapterId === BANK_ALL_CHAPTERS ? BANK_ALL_CHAPTERS : selected?.key || '';
+        missingChapter = !key;
+        if (selectedChapter !== key || missingChapter) search.value = '';
+        selectedChapter = key;
       }
-      updateChapters(); render(); panel.querySelector('[data-bank-title]').focus({ preventScroll: true }); return true;
+      updateChapters(); render();
+      // A restored filter is visible navigation too. Canonicalize it so the
+      // existing Hub Share button and the address bar describe the same chapter.
+      if (!currentKey && !bankChapterId && selectedChapter) requestNavigation(chapterSelection());
+      panel.querySelector('[data-bank-title]').focus({ preventScroll: true }); return true;
     } catch (error) {
       if (version !== request) return false;
       catalog = null;
@@ -209,10 +229,13 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
     } finally { if (version === request) { refresh.disabled = false; chapter.disabled = !catalog; search.disabled = !catalog || !selectedChapter; } }
   }
   back.onclick = () => currentKey
-    ? requestNavigation({ bank: true }) : backToChapters();
-  chapter.addEventListener('change', () => { selectedChapter = chapter.value; search.value = ''; rememberFilters(); render(); });
+    ? requestNavigation(chapterSelection()) : backToChapters();
+  chapter.addEventListener('change', () => {
+    selectedChapter = chapter.value; missingChapter = false; search.value = ''; rememberFilters(); render();
+    requestNavigation(chapterSelection());
+  });
   search.addEventListener('input', () => { rememberFilters(); render(); });
   document.addEventListener('hub-page-context', () => { if (catalog && !panel.hidden) render(); });
-  refresh.onclick = () => void open(currentKey, true);
+  refresh.onclick = () => void open(currentKey, true, currentChapterId);
   return { open, hide() { ++request; panel.hidden = true; }, panel };
 }

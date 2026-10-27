@@ -1,6 +1,7 @@
 import { bankContentId, bankSubjects, bankKeyPattern } from '../public/shared/question-bank-model.js';
 import { questionBankTools } from '../public/shared/question-bank-config.js';
 import { createContentTool } from './content-tool.js';
+import { bankChapterIdPattern } from '../public/shared/question-bank-menu.js';
 
 export function bankToolEntries(subjectId, bankKey) {
   if (!Object.hasOwn(bankSubjects, subjectId) || !bankKeyPattern.test(bankKey || '')) return [];
@@ -30,6 +31,13 @@ export function createBankTool({ subjectId, bankKey, toolKey = 'quiz' }, hubUrl)
 }
 export function resolveBankRoute(segments) {
   const [subjectId, area, bankKey, toolKey] = segments;
+  if (area === 'bank' && bankKey === 'chapter' && Object.hasOwn(bankSubjects, subjectId) &&
+      segments.length === 4 && bankChapterIdPattern.test(toolKey || '')) {
+    return { hash: '#' + segments.join('/'), aliases: [], status: 'ready', kind: 'bank',
+      subjectId, sectionId: subjectId, bankKey: null, bankChapterId: toolKey,
+      toolKey: null, parentHash: `#${subjectId}/bank`,
+      titleTh: `คลังบทเรียน${bankSubjects[subjectId].th}`, titleEn: `${bankSubjects[subjectId].en} learning library` };
+  }
   if (area !== 'bank' || !Object.hasOwn(bankSubjects, subjectId) || segments.length < 2 ||
       (bankKey && !bankKeyPattern.test(bankKey)) || (toolKey && !bankToolEntries(subjectId, bankKey).some(entry => entry.key === toolKey))) return null;
   const hash = '#' + segments.join('/');

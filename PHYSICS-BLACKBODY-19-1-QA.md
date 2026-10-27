@@ -1,6 +1,43 @@
 # Physics 19.1 Sheet 1: blackbody radiation and Planck's hypothesis
 
-## Latest revision: 26 October 2026 — approved print and practice expansion
+## Latest revision: 27 October 2026 — teacher review of Sheet 1
+
+Based on main `54d2370bd90fd162c55b0ec60f416eccd34f8013`, after PR47 was merged. Branch: `codex/physics-19-1-sheet1-review-20261027`. The teacher approved four bounded changes and then accepted displaying the complete four-flame photograph during QA. Earlier dated results below are historical.
+
+### Changes within the agreed scope
+
+1. Removed the book-page number from “ชวนคิด / Think”, retaining `ipst-think-55` and its existing scoped question/answer.
+2. Added the supplied original Bunsen-burner photograph, with source and CC BY-SA 3.0 attribution. The complete image is displayed at its original aspect ratio; the caption directs learners to **flame 2, blue below and orange above**. It is identified as a Bunsen-flame illustration, not a household-stove photo or a temperature measurement. No numerical temperature is assigned.
+3. Removed only the classical-comparison subsection, its displayed graph/caption and former Question 6/answer. A short bilingual bridge leads into Planck’s hypothesis. The temperature-dependent spectra, cavity diagram and all later problems remain. The now-unused comparison asset is retained for provenance.
+4. Added a note area reviewing `W = qV` with magnitudes for acceleration and definitions of `W`, `q`, `V`, and `e = 1.60e-19 C`. The existing `joule-ev` note now derives the conversion using an electron accelerated through 1 V and distinguishes eV from V. Two separate response areas practise eV → J and J → eV. Independent arithmetic: **2.00 eV = 3.20e-19 J; 4.80e-19 J = 3.00 eV**.
+
+TH/EN have **66 paired slots, five photographs/diagrams, nine sections and 16 continuously numbered classroom questions**. All surviving slots except the agreed `joule-ev` explanation are byte-for-byte unchanged. The removed comparison is the only deleted key; `electric-work-review`, `ev-to-joule` and `joule-to-ev` are added in matching order. All three worked examples are unchanged; later problem sections are identical after excluding visible classroom-question renumbering. Bank `b-0f490c3358e9212cee2e2a43`, content ID `physics-ipst-atomic-19-1-1-sheet` and tool key `learning-sheet` are retained. Sheets 2–3 and the shared engines are untouched.
+
+### Verification actually completed
+
+- `pnpm build`: passed content validation (0 errors, 32 pre-existing draft warnings; 62 content files), TypeScript, Vite and the Pages artifact comparison (**547 public files**).
+- `pnpm validate:routes`: passed; 10 sections, 80 chapters, 19 topics, 30 HTML-menu contents and 153 legacy tool placements.
+- `pnpm test:unit`: **345 passed, 0 failed**. Subsequent changes concern only the new photograph’s local presentation/caption and were rebuilt and checked in the browser. `git diff --check` passed.
+- Structural comparison: matching bilingual slot order, exactly one direct answer per slot, no nested slots, supplied images present, continuous numbering, unchanged worked examples and retained problems.
+- Actual production Hub in Chromium, guest mode: both direct content and bank-tool routes opened the existing worksheet. Individual reveal, reveal-all/hide-all and language switching were checked. Revealing all 66 slots preserved their on-screen heights. All five images loaded; no MathJax errors.
+- A 390 px Hub iframe fixture was checked in both languages with all 66 answers revealed. Inner content width/scroll width were both **357 px**; no horizontal document overflow. The four new/revised unit areas fit at 325 px. This is a fixture check, not a native mobile-device claim.
+- Final central A4 previews were regenerated after the teacher accepted the full photograph. Every edition retained five loaded images and 66 slots, only its selected language, zero MathJax errors and zero page-body overflows. Blank editions removed answer DOM; answers editions contained 66 answers. The exported preview HTML was checked independently for completeness.
+
+| Central print preview | Pages | Answer elements |
+| --- | ---: | ---: |
+| Thai blank | 18 | 0 |
+| Thai answers | 18 | 66 |
+| English blank | 18 | 0 |
+| English answers | 18 | 66 |
+
+All **72 preview pages** were visually inspected in twelve contact sheets; the new unit explanations, conversion questions and flame question were also inspected at larger size. The flame image and its caption are visible together. Local evidence: `qa-output/sheet1-review/` (ignored), including `structure.json`, `browser-report.json`, `narrow-report.json`, `print-report.json`, four complete preview HTML files, contact sheets and enlarged screenshots.
+
+Limits: no new PDF export, native iPad/Safari/Apple Pencil test, physical-printer test or account/cloud write was performed. The earlier PDF checks below belong to the 26 October revision. This work is prepared as a PR; it does not establish a live Pages release.
+
+---
+
+
+## Revision: 26 October 2026 — approved print and practice expansion
 
 The teacher confirmed this revision before file editing. The earlier dated sections below are historical results, not the page counts or slot counts for this revision. Tested against main `08e741b8cd33f40d71793272ad59ec6c84243a2c` in an isolated worktree.
 

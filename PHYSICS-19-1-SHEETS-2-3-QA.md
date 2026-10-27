@@ -128,3 +128,50 @@ No opposite-language content, broken images, math errors, missing slots or measu
 Review evidence is under ignored `qa-output/pr47-review/`: build/unit logs, `structure.json`, `numerical.json`, browser/individual/narrow reports, `print-report.json`, complete print HTML copies, 20 contact screenshots and five enlarged page views. Long screenshot capture was unavailable; compact contact views and individual page views were used instead. The brief preview connection interruption did not lose the source changes or recorded results.
 
 **Verification boundary:** this follow-up checked the revised central previews and rendered browser page copies. It did not re-export PDFs, test native iPad/Safari or use a physical printer. The original author’s PDF checks above apply to the pre-review files. No merge or live publication is part of this review.
+
+## Teacher-led revision of Sheet 2 — 27 October 2026
+
+This revision implements the teacher’s ten review points and subsequently approved four-step radius derivation. It is based on main `21c2fec2a0edd9778e7f55066494d2c4c180af7e` (PR48 merged), on `codex/physics-19-1-sheet2-review-20261027`. Only Sheet 2, its four new explanatory SVGs, this review note and its asset-source README change. Sheets 1 and 3, routing, shared engines and student data are untouched.
+
+### Teaching changes and source mapping
+
+| Review item | Implemented behavior |
+| --- | --- |
+| 1. Thomson | A short introduction and a separate `thomson-summary` writing area covering the study, electron finding and atomic model. |
+| 2. Classical-collapse digression | Removed the long collapse explanation and `classical-acceleration` question. A short bridge leads into spectra; the retained spectrum-purpose answer now focuses on photon energies. |
+| 3. Before Activity 19.1 | Short diffraction/interference notes, a new grating diagram and an angle-reading question. Theta is measured from the normal. |
+| 4. Evidence before Activity Q1 | A new lamp/gas-tube comparison and the retained original book spectra/explanation appear before the comparison questions. The complete original spectra image remains. |
+| 5. Activity Q3 | Six wavelength-summary cells collect the already-calculated H/Ne results before the hydrogen question. The question follows the source’s wavelength request, with the unrequested reference-value digression removed. |
+| 6. Emission/absorption | Simpler observing-arrangement diagram, separate writing areas and a same-energy-gap diagram beside the existing question. Absorption requires suitable initial states; no ground-state Balmer absorption claim is made. |
+| 7. Former Question 8 | Removed only `postulate-not-proof`; the Bohr postulate itself remains explicit. The angular-momentum condition uses h/(2π), with positive-integer examples, before any derivation. |
+| 8. K/U/E | Definitions and the zero-potential convention precede two illustrative tables: add K+U, then compare ratios. Three separate inference responses lead into the side-by-side K/U comparison and the U = −2K → E = −K → K = −E, U = 2E derivation. An actual n=1 hydrogen example precedes the n=2 E/K/U/sum problem, now split into four writing areas on one print page. The hydrogen level table stays complete on one page. |
+| 9. Higher levels | A writing area explains increasing n, increasing energy/less-negative E, and the distinction between an excited bound state and ionization. |
+| 10. Speed | General derivation from mvr = nh/(2π) and r_n = a0 n² appears before the numerical example. The n/n² cancellation and constant substitution are shown, followed by a speed table and comparison question. Existing official exercises remain. |
+| Approved radius proof | Four numbered steps: centripetal-force equation; solve Bohr’s condition for v; substitute and multiply by r²; solve for r_n and identify a0. All steps use h/(2π) directly and match in TH/EN. |
+
+The source apparatus/procedure and end-of-activity questions were checked in the supplied student book printed pp.63–64 (PDF pp.76–77), and teacher-guide pp.56–59 were read for sample data, answers and the derivation sequence. Teacher-guide Understanding 19.1 Q1 explicitly concerns the hydrogen quantum number; that existing Sheet 2 question remains. Original source figures and later exercises are retained. Asset provenance and the illustrative nature of all new diagrams/tables are recorded in `assets/19-1-2/README.md`.
+
+Both languages now contain **71 paired semantic slots, 14 images, ten sections and 16 ordinary numbered question groups**, with the final group retaining three labelled parts. All official activity/understanding/exercise labels remain identifiable. The only removed keys are `classical-acceleration` and `postulate-not-proof`. Thirty-four paired keys are added. Five retained slots have revised answers/labels: `spectrum-purpose`, `activity-question-3`, `formula-angular`, `energy-sign` (now n=2 part (a), total E) and `ipst-exercise-3`. Other retained slot contents remain unchanged. The ordinary-question mapping is recorded in local QA evidence.
+
+### Verification completed for this revision
+
+- Independent numerical checks verify the circular-force equation at n=1–4, the radius expression, and K+U=E, K=−E and U=2E. The stated constants give a0 ≈ 5.291×10⁻¹¹ m and v1 ≈ 2.188×10⁶ m/s, supporting the classroom constants 5.29×10⁻¹¹ m and 2.19×10⁶ m/s. Speed-table solutions consistently use the displayed rounded speed constant. The activity wavelengths recalculate to 654.806, 491.876, 431.685, 654.806, 631.286 and 603.422 nm, supporting the worksheet’s whole-nm results.
+- Structure checks pass: unique keys, identical bilingual key order, one direct answer per slot, no nested slots, matching displayed derivation TeX, continuous ordinary numbering, all image files present and no authored scripts/forms/iframes/buttons.
+- Final `pnpm build` passes: **0 content errors, 32 pre-existing draft warnings**, TypeScript/Vite and **551 public files** verified against the build output. `pnpm validate:routes` and `git diff --check` pass.
+- `pnpm test:unit`: **345 passed, 0 failed**. Later edits concern local wording/print grouping and were rebuilt and checked in the browser; no shared engine or dependency inputs changed.
+- Actual production Hub guest-mode checks pass for the direct content route and the existing bank tool route. All 14 images load, MathJax has no errors, individual reveal works, all 71 answers reveal/hide, and reveal state follows TH/EN. Revealing answers preserves all measured slot heights.
+- Both languages pass the 390 px Hub iframe fixture with all 71 answers revealed: inner document width and scroll width both **357 px**, images loaded, no MathJax errors. This is a content-in-Hub fixture check, not a native iPad/Safari claim.
+- Final central A4 preview results:
+
+| Edition | Pages | Slots | Answer DOM | Images | Page-body overflow / MathJax errors |
+| --- | ---: | ---: | ---: | ---: | --- |
+| TH blank | 28 | 71 | 0 | 14 | 0 / 0 |
+| TH answers | 28 | 71 | 71 | 14 | 0 / 0 |
+| EN blank | 28 | 71 | 0 | 14 | 0 / 0 |
+| EN answers | 28 | 71 | 71 | 14 | 0 / 0 |
+
+All 112 preview pages were visually reviewed using sixteen contact sheets, with enlarged checks of new diagrams, radius steps, both energy tables, K/U/E comparison proof and speed derivation in both languages. Local grouping was refined and the affected pages rechecked: the complete five-level hydrogen table is on p.22 and all four n=2 energy subparts are on p.23 in every edition. Blank copies remove answer DOM and retain only the selected language. Four complete preview HTML exports were independently parsed to verify counts and grouping.
+
+Local evidence: `qa-output/sheet2-review/` (ignored), including `structure.json`, `numerical.json`, `question-mapping.json`, `browser-report.json`, `narrow-report.json`, `print-report.json`, four preview HTML exports, contact sheets and enlarged screenshots. The source PDFs remain outside the repository.
+
+Limits: no new native PDF export, physical-printer output, native Safari/iPad/Apple Pencil test or account/cloud write was performed. Previous PDF claims in this document concern the earlier commits stated there. This revision is prepared for PR review, not a claim of a merged or deployed Pages release.

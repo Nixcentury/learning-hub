@@ -14,6 +14,8 @@ const output = resolve(root, 'qa-output'); await mkdir(output, { recursive: true
 const routeCatalog = await catalogFromRepository();
 const key = 'b-' + 'a'.repeat(24), contentId = bankContentId('physics', key);
 const mechanics = 'กลศาสตร์(Mechanics)', sound = 'เสียง(Sound)';
+const chapterHash = async (subjectId, title) => `#${subjectId}/bank/chapter/c-${(await sha256('chapter:' + title)).slice(0,24)}`;
+const mechanicsHash = await chapterHash('physics',mechanics), soundHash = await chapterHash('physics',sound);
 const question = (text, answer = 'A') => `<div class="question-step" data-ans="${answer}"><h3>${text} $F=ma$</h3>
 <table><tr><td>ข้อมูล</td><td>2</td></tr></table><div class="hint-box">Hint secret</div><div class="options">
 <label><input name="q1" type="radio" value="A">A. $2$ N</label><label><input name="q1" type="radio" value="B">B. $4$ N</label></div><div class="feedback-box">เฉลย SECRET-SOLUTION</div></div>`;
@@ -109,17 +111,21 @@ try {
   assert.equal(await subject.locator('[data-bank-cards] button').count(), 0);
   assert.equal(await subject.locator('[data-bank-search]').isDisabled(), true);
   await subject.locator('[data-bank-chapter]').selectOption('chapter:' + sound);
+  await page.waitForURL(url => url.hash === soundHash);
   assert.equal(await subject.locator('[data-bank-cards] button').count(), 1);
   await subject.locator('[data-bank-cards] button').click();
   assert.equal(await subject.getByRole('button', {name:/แสดงข้อสอบ/}).isDisabled(), true);
   await subject.locator('[data-bank-back]').click();
+  await page.waitForURL(url => url.hash === soundHash);
   await subject.locator('[data-bank-chapter]').waitFor({ state: 'visible' });
   assert.equal(await subject.locator('[data-bank-chapter]').inputValue(), 'chapter:' + sound);
   await subject.locator('[data-bank-chapter]').selectOption('all');
+  await page.waitForURL(url => url.hash === '#physics/bank/chapter/all');
   assert.equal(await subject.locator('[data-bank-cards] button').count(), 0);
   await subject.locator('[data-bank-search]').fill('แรง');
   assert.equal(await subject.locator('[data-bank-cards] button').count(), 2);
   await subject.locator('[data-bank-chapter]').selectOption('chapter:' + mechanics);
+  await page.waitForURL(url => url.hash === mechanicsHash);
   assert.equal(await subject.locator('[data-bank-cards] button').count(), 2);
   assert.equal(await subject.locator('[data-bank-search]').inputValue(), '');
   await subject.locator('[data-bank-search]').fill('ไม่เจอ'); assert.equal(await subject.locator('[data-bank-cards] button').count(), 0);
@@ -136,6 +142,7 @@ try {
   assert.equal(await subject.locator('[data-bank-search]').inputValue(), 'แรง');
   assert.equal(await subject.locator('[data-bank-cards] button').count(), 1);
   await page.reload();
+  await page.waitForURL(url => url.hash === mechanicsHash);
   await subject.locator('[data-bank-chapter]').waitFor({ state: 'visible' });
   assert.equal(await subject.locator('[data-bank-chapter]').inputValue(), 'chapter:' + mechanics);
   assert.equal(await subject.locator('[data-bank-search]').inputValue(), 'แรง');
@@ -146,13 +153,48 @@ try {
   assert.equal(await subject.locator('[data-bank-search]').getAttribute('placeholder'), 'Topic name or ID');
   await page.locator('[data-language="th"]:visible').click();
   await page.waitForFunction(() => document.querySelector('#hub-page-frame').contentDocument.documentElement.lang === 'th');
+  await subject.locator('[data-bank-chapter]').selectOption('chapter:' + sound);
+  await page.waitForURL(url => url.hash === soundHash);
+  await page.goBack(); await page.waitForURL(url => url.hash === mechanicsHash);
+  await page.waitForFunction(value => document.querySelector('#hub-page-frame').contentDocument.querySelector('[data-bank-chapter]').value === value, 'chapter:' + mechanics);
+  await page.goForward(); await page.waitForURL(url => url.hash === soundHash);
+  await page.waitForFunction(value => document.querySelector('#hub-page-frame').contentDocument.querySelector('[data-bank-chapter]').value === value, 'chapter:' + sound);
+  await page.goBack(); await page.waitForURL(url => url.hash === mechanicsHash);
+  await subject.locator('[data-bank-search]').fill('แรง');
+  for (const [subjectId,title] of [['physics',sound],['chemistry','กรด–เบส(Acid–base)']]) {
+    const receiverContext = await makeContext(), receiver = await receiverContext.newPage();
+    const hash = await chapterHash(subjectId,title);
+    await receiverContext.addInitScript(subjectId => sessionStorage.setItem(`learning-hub:bank-menu:${subjectId}`,
+      JSON.stringify({chapter:'chapter:wrong remembered chapter',query:'must clear old search'})),subjectId);
+    await receiver.goto(origin + prefix + hash); await receiver.locator('#guest-button').click();
+    const receiverSubject = receiver.frameLocator('#hub-page-frame');
+    await receiver.waitForFunction(value => document.querySelector('#hub-page-frame').contentDocument.querySelector('[data-bank-chapter]')?.value === value,'chapter:' + title);
+    assert.equal(await receiverSubject.locator('[data-bank-search]').inputValue(),'');
+    assert.equal(await receiverSubject.locator('[data-bank-cards] button').count(),1);
+    await receiver.locator('#hub-share-button').click();
+    await receiver.waitForFunction(() => document.querySelector('#hub-share-url')?.value);
+    assert.equal(await receiver.locator('#hub-share-url').inputValue(),origin + prefix + hash);
+    await receiver.locator('[data-share-close]').click();
+    await receiver.locator('[data-language="en"]:visible').click();
+    assert.equal(new URL(receiver.url()).hash,hash);
+    await receiver.goto(origin + prefix + `#${subjectId}/bank/chapter/c-${'0'.repeat(24)}`);
+    await receiverSubject.locator('[data-bank-notice].is-error').waitFor();
+    assert.equal(await receiverSubject.locator('[data-bank-cards] button').count(),0);
+    await receiverSubject.locator('[data-bank-chapter]').selectOption('chapter:' + title);
+    await receiver.waitForURL(url => url.hash === hash);
+    await receiver.goto(origin + prefix + `#${subjectId}/bank`);
+    await receiver.waitForURL(url => url.hash === hash);
+    assert.equal(await receiverSubject.locator('[data-bank-chapter]').inputValue(),'chapter:' + title);
+    await receiverContext.close();
+  }
+  console.log('PASS chapter share links, fresh recipients with conflicting filters, Guest, TH/EN, history and missing chapters');
   await subject.locator('[data-bank-cards] button').first().click();
   console.log('PASS chapter-first menu, scoped/global search, TH/EN, empty topics and remembered filters after back/refresh/reload');
   for (const width of [390, 820]) {
     await page.setViewportSize({width, height:1000});
     for (const subjectId of ['chemistry', 'physics']) {
       await page.locator(`[data-section="${subjectId}"]`).tap();
-      await page.waitForURL(url => url.hash === `#${subjectId}/bank`);
+      await page.waitForURL(url => url.hash.startsWith(`#${subjectId}/bank`));
       await subject.locator('[data-bank-chapter] option').nth(2).waitFor({state:'attached'});
       assert.equal(await subject.locator('#chapter-view').isVisible(), false);
       assert.equal(await subject.locator('[data-bank-back]').isVisible(), false);
@@ -160,14 +202,16 @@ try {
       assert.equal(await subject.locator('body').evaluate(body => body.scrollWidth <= innerWidth + 2), true);
       if (width === 390) await page.screenshot({path:resolve(output, `${subjectId}-library-home-mobile.png`)});
       await subject.locator('[data-bank-chapter]').selectOption({index:2});
+      await page.waitForURL(url => url.hash.startsWith(`#${subjectId}/bank/chapter/`));
+      const chapterUrl = page.url();
       await subject.locator('[data-bank-cards] button').first().tap();
       await subject.locator('[data-bank-back]').tap();
-      await page.waitForURL(url => url.hash === `#${subjectId}/bank`);
+      await page.waitForURL(chapterUrl);
       assert.equal(await subject.locator('#chapter-view').isVisible(), false);
     }
   }
   await page.locator('[data-section="chemistry"]').tap();
-  await page.waitForURL(url => url.hash === '#chemistry/bank');
+  await page.waitForURL(url => url.hash.startsWith('#chemistry/bank'));
   await page.route('https://bank.test/**', route => route.fulfill({status:503,body:'Unavailable'}));
   await page.reload();
   await subject.locator('[data-bank-notice].is-error').waitFor();
@@ -177,7 +221,7 @@ try {
   await subject.locator('[data-bank-refresh]').tap();
   await subject.locator('[data-bank-chapter] option').nth(2).waitFor({state:'attached'});
   await page.locator('[data-section="physics"]').tap();
-  await page.waitForURL(url => url.hash === '#physics/bank');
+  await page.waitForURL(url => url.hash.startsWith('#physics/bank'));
   await subject.locator('[data-bank-chapter] option').nth(2).waitFor({state:'attached'});
   await subject.locator('[data-bank-cards] button').first().tap();
   await page.setViewportSize({width:1360,height:1000});

@@ -1,7 +1,9 @@
 // Learning hub's published path is A (subject), B (Hub), C (chapter), D (topic).
 // Keep source order and exact titles; never derive an identity from the display label.
+import { sha256 } from './question-bank-model.js';
 export const BANK_ALL_CHAPTERS = 'all';
 export const BANK_OTHER_CHAPTER = 'other';
+export const bankChapterIdPattern = /^(?:c-[a-f0-9]{24}|all)$/;
 
 export function bankChapterKey(set) {
   return set.path.length >= 4 && set.path[2].trim()
@@ -18,6 +20,14 @@ export function bankChapters(sets) {
     chapters.get(key).count++;
   }
   return [...chapters.values()];
+}
+
+// Navigation identifiers only: these never replace a Sheet ID or saved-work key.
+// Hash the full source chapter key, not its index or translated display label.
+export async function bankChapterLinks(sets) {
+  return Promise.all(bankChapters(sets).map(async entry => ({ ...entry,
+    routeId: 'c-' + (await sha256(entry.key)).slice(0, 24),
+  })));
 }
 
 export function filterBankSets(sets, chapter, query = '') {

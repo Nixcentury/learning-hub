@@ -8,7 +8,7 @@
 const subjectRoot = document.querySelector("[data-subject-page]");
 const chapterTemplate = document.querySelector("#subject-chapters");
 const contentNavigationUrl = new URL("subject-content-nav.js", document.currentScript.src).href;
-const bankNavigationUrl = new URL("subject-bank-nav.js?v=subject-library-20261026", document.currentScript.src).href;
+const bankNavigationUrl = new URL("subject-bank-nav.js?v=bank-chapter-links-20261027", document.currentScript.src).href;
 
 function setLocalizedText(element, thai, english) {
   element.dataset.th = thai;
@@ -383,7 +383,7 @@ function buildSubjectPage() {
     stageItems.forEach((stage, i) => { if (labels[i]) setLocalizedText(stage.querySelector('span'), ...labels[i]); });
     const navigation = await bankNavigationPromise;
     if (version !== navigationVersion || !navigation) return false;
-    return navigation.open(route.bankKey);
+    return navigation.open(route.bankKey, false, route.bankChapterId);
   }
 
   if (!bankHome && window.LearningHubSubjectOrbit) {

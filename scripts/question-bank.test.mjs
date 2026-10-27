@@ -8,7 +8,44 @@ import { createBankClient } from '../public/shared/question-bank-client.js';
 import { resolveHubRoute, createHubShareUrl } from '../js/hub-routes.js';
 import { activityForRoute, menuForRoute, routeForTool } from '../js/hub-activity-routes.js';
 import { routeForSelection } from '../js/hub-navigation.js';
-import { BANK_ALL_CHAPTERS, BANK_OTHER_CHAPTER, bankChapterKey, bankChapters, filterBankSets, bankTitlePair } from '../public/shared/question-bank-menu.js';
+import { BANK_ALL_CHAPTERS, BANK_OTHER_CHAPTER, bankChapterKey, bankChapters, bankChapterLinks, filterBankSets, bankTitlePair } from '../public/shared/question-bank-menu.js';
+
+test('chapter links are stable across order, translation and added topics without changing bank IDs', async () => {
+  const make = (bankKey, chapter, title) => ({ bankKey, legacyId: bankKey, title, path: ['ฟิสิกส์','Learning hub',chapter,title] });
+  const sets = [make('first','เสียง(Sound)','A'),make('second','กลศาสตร์(Mechanics)','B')];
+  const original = structuredClone(sets), first = await bankChapterLinks(sets);
+  const changed = await bankChapterLinks([sets[1],make('third','เสียง(Sound)','Translated topic'),sets[0]]);
+  for (const chapter of first) {
+    assert.equal(chapter.routeId, 'c-' + createHash('sha256').update(chapter.key).digest('hex').slice(0,24));
+    assert.equal(changed.find(entry => entry.key === chapter.key).routeId, chapter.routeId);
+  }
+  assert.notEqual(first[0].routeId,first[1].routeId);
+  assert.deepEqual(sets,original);
+  assert.match((await bankChapterLinks([{path:['Old'],title:'Legacy'}]))[0].routeId,/^c-[a-f0-9]{24}$/);
+});
+
+test('chapter links round-trip through selection, sharing and parent navigation for both subjects', async () => {
+  const catalog = {schemaVersion:1,routes:[],contents:[]};
+  const [{routeId}] = await bankChapterLinks([{path:['Physics','Hub','เสียง(Sound)','Nature of Sound']}]);
+  for (const subjectId of ['physics','chemistry']) for(const bankChapterId of [routeId,'all']) {
+    const hash = `#${subjectId}/bank/chapter/${bankChapterId}`;
+    const selected = routeForSelection(catalog,{subjectId,bank:true,bankChapterId});
+    assert.equal(selected.hash,hash); assert.equal(selected.kind,'bank');
+    assert.equal(selected.bankKey,null); assert.equal(selected.bankChapterId,bankChapterId);
+    assert.equal(menuForRoute(catalog,selected).hash,hash);
+    assert.equal(selected.parentHash,`#${subjectId}/bank`);
+    assert.equal(createHubShareUrl(catalog,hash,'https://example.test/learning-hub/?uid=private#physics'),`https://example.test/learning-hub/${hash}`);
+  }
+});
+
+test('chapter routes reject malformed IDs, extra segments and mixed chapter/tool requests', () => {
+  const catalog = {schemaVersion:1,routes:[],contents:[]}, id='c-'+'a'.repeat(24);
+  for (const hash of ['#biology/bank/chapter/'+id,'#physics/bank/chapter/nope','#physics/bank/chapter/'+id+'/quiz','#physics/bank/chapter'])
+    assert.equal(resolveHubRoute(catalog,hash).route,undefined);
+  for (const selection of [{bankChapterId:123},{bankChapterId:'bad'},{bankChapterId:id,bankKey:'b-'+'a'.repeat(24)},
+    {bankChapterId:id,toolKey:'quiz'}])
+    assert.equal(routeForSelection(catalog,{subjectId:'physics',bank:true,...selection}),null);
+});
 
 test('chapter menu preserves Sheet order, scopes search, and keeps empty topics and exact IDs', () => {
   const make = (id, chapter, title) => ({ bankKey: id, legacyId: `ID-${id}`, title,

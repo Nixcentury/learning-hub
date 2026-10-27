@@ -33,11 +33,15 @@ export function routeForSelection(catalog, selection) {
   }
   if (selection.bank === true) {
     const parts = [selection.subjectId, 'bank'];
+    if (selection.bankChapterId != null) {
+      if (typeof selection.bankChapterId !== 'string' || selection.bankKey || selection.toolKey) return null;
+      parts.push('chapter', selection.bankChapterId);
+    }
     if (selection.bankKey) parts.push(selection.bankKey);
     if (selection.toolKey) { if (!selection.bankKey) return null; parts.push(selection.toolKey); }
     const route = resolveHubRoute(catalog, '#' + parts.join('/')).route;
     return ['bank', 'bank-tool'].includes(route?.kind) ||
-      (route?.bankKey === selection.bankKey && ['content', 'content-placeholder'].includes(route.kind))
+      (route && route.bankKey === selection.bankKey && ['content', 'content-placeholder'].includes(route.kind))
       ? route : null;
   }
   const { subjectId, chapterId = null, topicId = null } = selection;
@@ -101,6 +105,7 @@ export function createHubNavigation({ pageFrame, navButtons, showSection, notice
       commandId, route: { subjectId: currentMenu.subjectId, chapterId: currentMenu.chapterId || null,
         topicId: currentMenu.topicId || null, status: currentMenu.status,
         bank: currentMenu.kind === 'bank', bankKey: currentMenu.bankKey || null,
+        bankChapterId: currentMenu.bankChapterId || null,
         localNavigation: !catalog } }, location.origin);
   }
   async function navigate(hash, mode = 'push', force = false, alreadyOpen = null) {

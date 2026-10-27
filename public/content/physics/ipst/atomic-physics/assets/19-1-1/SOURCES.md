@@ -1,6 +1,6 @@
 # Physics 19.1.1 Sheet 1: source and adaptation record
 
-Revised 26 October 2026 after the teacher confirmed the print/practice plan. Page references below are **printed page numbers**, not PDF viewer indices. Source files remain in the teacher's Drive; copyrighted PDFs are not copied into this repository.
+Revised 27 October 2026 after the teacher finished reviewing Sheet 1. Only the four agreed changes were applied; Sheets 2–3 are outside this revision. Page references below are **printed page numbers**, not PDF viewer indices. Source files remain in the teacher's Drive; copyrighted PDFs are not copied into this repository.
 
 ## Sources actually inspected
 
@@ -13,10 +13,10 @@ Revised 26 October 2026 after the teacher confirmed the print/practice plan. Pag
 | Sheet item / semantic slot | Source and treatment |
 | --- | --- |
 | Infrared observation, blackbody definition, temperature/spectrum trends, cavity model | Existing teaching sequence retained; corresponds to IPST 19.1.1 pp.53–56. The graphs and cavity diagram are original explanatory assets, not scans. |
-| `ipst-think-55` | Think question p.55, paraphrased with the household gas-flame context retained. The answer is limited to this situation; colour alone is not presented as a universal flame thermometer. |
-| `classical-comparison` | Fig.19.3 p.55, redrawn as a comparison of spectral trends at one temperature. The question and bilingual reasoning are newly phrased. |
+| `ipst-think-55` | Think question p.55, paraphrased with the household gas-flame context retained. The student heading is now simply “ชวนคิด / Think”; its original slot key is retained. The complete four-flame Bunsen photograph is displayed, as accepted by the teacher during QA. Its caption directs students to flame number 2 and identifies it as an illustration, not a photograph of a stove or a temperature measurement. The answer remains limited to the stated gas-flame situation. |
+| Former `classical-comparison` | The teacher approved removing the classical-comparison subsection, Fig.19.3 comparison, and Question 6 with its answer. A short bridge introduces Planck’s hypothesis instead. The earlier Fig.19.2 temperature-dependent graph is retained. Later ordinary question numbers are updated without changing retained slot keys. |
 | Detector tables and inference questions | Existing explicitly simulated teaching activities. They illustrate whole energy units and proportionality, not historical experimental measurements. |
-| `joule-ev`, `wavelength-review` | Existing unit/review notes expanded to define eV and connect `epsilon = hf = hc/lambda`. These do not introduce an additional chapter. |
+| `electric-work-review`, `joule-ev`, `ev-to-joule`, `joule-to-ev`; retained `wavelength-review` | The unit review begins with `W = qV`, using magnitudes for acceleration, and defines `W`, `q`, `V`, and `e = 1.60e-19 C`. Accelerating an electron through 1 V derives `1 eV = 1.60e-19 J`. New Questions 8–9 practise 2.00 eV → J and 4.80e-19 J → eV with separate response spaces. The wavelength review and later calculations remain unchanged. |
 | `ipst-understanding-1` | Understanding 19.1 Q1, student p.80 and teacher p.52. Explained using the sheet's whole-unit detector model, including the distinction between zero detected energy and a fractional quantum. |
 | `example-1`, `example-1-ev`; `example-2`; `example-3`, `example-3-b` | Existing adaptations of Examples 19.1–19.3 pp.57–58, retained with separate spaces for each labelled part. |
 | `question-1`, `question-1-ev` | Exercise 19.1 Q1 p.80; same given frequency, split into J and eV working areas. |
@@ -28,11 +28,11 @@ Revised 26 October 2026 after the teacher confirmed the print/practice plan. Pag
 | `equal-total-energy` | Newly authored: 400/800 nm, equal total energy; checks the distinction between energy per photon and photon number. |
 | `power-total-energy`, `power-photon-energy`, `power-photon-count` | Newly authored optional extension accepted within the print budget: 3.00 mW, 600 nm, 2.00 s. Optical power is stated explicitly. Included within the final print budget; actual page counts are recorded in PHYSICS-BLACKBODY-19-1-QA.md. |
 
-All English questions and explanations are translations/adaptations authored for this bilingual sheet, not quotations from an official English edition. All additions have complete TH/EN answers in the original reveal slots. Existing slot keys, real bank key and content ID are retained.
+All English questions and explanations are translations/adaptations authored for this bilingual sheet, not quotations from an official English edition. All additions have complete TH/EN answers in the original reveal slots. All surviving slot keys, the real bank key and content ID are retained. The removed comparison slot is the only deleted key; three paired keys are added for the electrical-work review and the two unit questions.
 
-## New comparison graph
+## Retained comparison asset (not displayed in the revised sheet)
 
-`classical-comparison.svg` is an original plot of the Planck wavelength spectrum and the Rayleigh–Jeans prediction at **5000 K**. Both use one common normalization (the Planck maximum), over 200–2500 nm. The classical curve is clipped at the top of the plotting frame, rather than being assigned a finite short-wavelength limit. Line style distinguishes the curves when printed in greyscale. The solid curve matches the observed trend; it is **not raw measured data**. The caption states this explicitly. The Planck-law expression is used only to draw the illustration, not added to the student's required equations.
+The comparison section and its question were removed on 27 October at the teacher’s request. Its asset is retained for provenance only. `classical-comparison.svg` is an original plot of the Planck wavelength spectrum and the Rayleigh–Jeans prediction at **5000 K**. Both use one common normalization (the Planck maximum), over 200–2500 nm. The classical curve is clipped at the top of the plotting frame, rather than being assigned a finite short-wavelength limit. Line style distinguishes the curves when printed in greyscale. The solid curve matches the observed trend; it is **not raw measured data**. The caption states this explicitly. The Planck-law expression is used only to draw the illustration, not added to the student's required equations.
 
 ## Calculation convention
 

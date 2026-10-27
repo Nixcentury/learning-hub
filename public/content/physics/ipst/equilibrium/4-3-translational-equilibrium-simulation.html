@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="th" data-learning-simulation data-activity-id="physics-ipst-equilibrium-4-3-sim">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>4.3 สมดุลต่อการเลื่อนที่ · Translational equilibrium</title>
+<link rel="stylesheet" href="assets/4-3/style.css">
+</head>
+<body>
+<main class="screen">
+  <header class="topbar"><div><p class="eyebrow" data-th="ฟิสิกส์ · สมดุลกล · 4.3" data-en="PHYSICS · MECHANICAL EQUILIBRIUM · 4.3">ฟิสิกส์ · สมดุลกล · 4.3</p><h1 data-th="แรงสมดุล แล้ววัตถุทำอะไร?" data-en="Balanced forces. What happens next?">แรงสมดุล แล้ววัตถุทำอะไร?</h1></div><div class="toolbar"><button id="language" aria-label="Switch language">EN</button><button id="print" data-th="พิมพ์บันทึกผล" data-en="Print learning record">พิมพ์บันทึกผล</button></div></header>
+  <div class="progress-line"><p id="progress"></p><p id="saveStatus"></p></div>
+  <nav id="missionNav" aria-label="Mission navigation"></nav>
+  <section class="intro"><p class="eyebrow" id="stepLabel"></p><h2 id="missionTitle"></h2><p id="instruction"></p></section>
+  <div class="workspace">
+    <section class="experiment" aria-label="Experiment">
+      <div class="scene-heading"><h3 id="sceneTitle"></h3><span id="status" role="status"></span></div>
+      <svg id="scene" viewBox="0 0 640 380" role="img" aria-labelledby="sceneDescription"><title id="sceneDescription"></title></svg>
+      <div class="legend"><span class="force" data-th="→ แรงกระทำ" data-en="→ Applied forces">→ แรงกระทำ</span><span class="resultant" data-th="→ แรงลัพธ์" data-en="→ Resultant force">→ แรงลัพธ์</span><span class="velocity" data-th="→ ความเร็ว" data-en="→ Velocity">→ ความเร็ว</span></div>
+      <div id="readings" class="readings"></div>
+      <p id="modelNote" class="model-note"></p>
+      <div id="controls" class="controls"></div>
+      <div class="playbar"><button id="play" class="primary"></button><button id="restart" data-th="เริ่มการทดลองนี้ใหม่" data-en="Restart this experiment">เริ่มการทดลองนี้ใหม่</button><label><input type="checkbox" id="components"><span data-th="แสดงแรงตามแกน" data-en="Show components">แสดงแรงตามแกน</span></label></div>
+      <p id="runMessage" role="status"></p>
+    </section>
+    <aside class="learning"><section id="prediction" class="card"></section><section class="card"><h3 data-th="ลองให้ครบ แล้วเปรียบเทียบ" data-en="Try each case and compare">ลองให้ครบ แล้วเปรียบเทียบ</h3><div id="observations"></div></section><section id="evidence" class="card evidence"></section></aside>
+  </div>
+  <section class="questions-section"><div class="question-heading"><h2 data-th="อธิบายสิ่งที่เห็น" data-en="Explain what you observed">อธิบายสิ่งที่เห็น</h2><span id="questionProgress"></span></div><p id="questionsHint"></p><div id="questions"></div></section>
+  <section id="conclusion" class="conclusion" hidden></section>
+  <footer class="footer"><button id="next" class="primary" hidden></button><button id="reset" class="quiet" data-th="เริ่มทั้งชุดใหม่" data-en="Reset all missions">เริ่มทั้งชุดใหม่</button><p data-th="แบบจำลองใช้ g = 10 m/s² · ครูศตวรรษ บุตรคล้อ" data-en="Model uses g = 10 m/s² · Kru Sattawat Butklo">แบบจำลองใช้ g = 10 m/s² · ครูศตวรรษ บุตรคล้อ</p></footer>
+</main>
+<article id="record"></article>
+<script src="assets/4-3/model.js"></script>
+<script src="assets/4-3/missions.js"></script>
+<script src="assets/4-3/app.js"></script>
+</body></html>

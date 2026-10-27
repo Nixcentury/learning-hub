@@ -1,0 +1,18 @@
+# Physics 4.3 simulation: sources and model boundaries
+
+- Teacher-supplied student book: `715651630-ฟิสิกส-สสวท-เล-ม-2.pdf`, IPST Physics Book 2, section 4.3, printed pp. 11–24 / PDF pp. 24–37. [Original in Drive](https://drive.google.com/file/d/1uuLqtGLGlKg3mS82C_H32HzJZreBFcRb/view). The supplied copy is image-only; those pages were rendered and visually inspected. The source PDF is unchanged and is not included here.
+- The section motivates two/three forces, the three-force activity, closed force polygons, horizontal/vertical components, suspended loads and a rough incline. This simulation uses newly authored situations and questions to teach those ideas. It is not a replica of the apparatus or an inclusion of every textbook exercise.
+- All SVG diagrams are original code-native drawings in `app.js`. No book photograph, external image, generated illustration or measured experimental dataset is used.
+- All 19 choice prompts are authored here: five predictions and fourteen explanation/application questions. The two languages share the same answers and numerical assumptions.
+
+## Explicit model choices
+
+SI units throughout; illustrative `g = 10 m/s²` is displayed. Numerical choices below are practice conditions, not textbook measurements.
+
+1. Monitor: mass 2 kg, rigid supporting table, downward hand force 0 or 20 N. `N = mg + P`; the normal force is not an independent adjustable force. Collinear arrows refer to forces on the monitor only.
+2. Cart: mass 2 kg, no resistance, vertically balanced. Positive x is right. Exact constant-force updates use `x += v dt + a dt²/2; v += a dt`. Balancing forces never resets velocity. Guided cases give 0→2 m/s, 2→2 m/s and 2→1 m/s. Track markings move relative to a camera following the cart.
+3. Three forces: a 1 kg point-mass body viewed from above on a frictionless surface; gravity and normal force cancel. Prescribed planar forces, not deformable ropes or fixed-anchor dynamics. Forces `(3,0)`, `(0,4)`, `(-3,-4)` N close exactly; removing the last leaves a 5 N resultant. Every trial begins at rest. The rounded direction display is approximately 233.1° counterclockwise from +x; the preset uses the full angle.
+4. Ropes: a static 60 N load, light inextensible ropes, each angle measured from the horizontal. For left α and right β, `T₁ = W cos β / sin(α+β)` and `T₂ = W cos α / sin(α+β)`. Each new configuration is an equilibrium calculation, not a transient motion simulation. Dashed component arrows do not add forces.
+5. Incline: mass 2 kg, `μs = 0.50`, `μk = 0.30`, released from rest each trial. `N = mg cos θ`. Static friction equals the needed `mg sin θ` only while this is at most `μs N`. Otherwise sliding starts and kinetic friction is `μk N`, upslope. The simulation does not apply maximum static friction at every angle.
+
+Translational equilibrium concerns the vector sum of force. This tool does not simulate rigid-body rotation or assert that every individual force must pass through the centre of mass. The final explanation distinguishes that condition from torque equilibrium. Topic 4.2 and the shared Hub engines are unchanged.

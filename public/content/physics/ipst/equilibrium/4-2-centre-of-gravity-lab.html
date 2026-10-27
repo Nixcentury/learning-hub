@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="th" data-learning-simulation data-activity-id="physics-ipst-equilibrium-4-2-cg-lab">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>4.2 แล็บหาจุดศูนย์ถ่วง • Centre of Gravity Lab</title>
+<link rel="stylesheet" href="assets/4-2-cg/lab.css"></head>
+<body>
+<main>
+  <header class="intro"><div><p class="eyebrow" data-th="ฟิสิกส์ 4.2 · สมดุลกล" data-en="PHYSICS 4.2 · EQUILIBRIUM">ฟิสิกส์ 4.2 · สมดุลกล</p><h1 data-th="จุดไหนคือศูนย์ถ่วง?" data-en="Where is the centre of gravity?">จุดไหนคือศูนย์ถ่วง?</h1><p data-th="แขวน สังเกต และใช้แนวลูกดิ่งหาคำตอบด้วยตัวเอง" data-en="Suspend, observe and use plumb lines to find the answer.">แขวน สังเกต และใช้แนวลูกดิ่งหาคำตอบด้วยตัวเอง</p></div><button id="language" class="quiet">English</button></header>
+  <div class="lab-grid">
+    <section class="experiment" aria-labelledby="bench-title">
+      <div class="bench-top"><h2 id="bench-title" data-th="โต๊ะทดลอง" data-en="Experiment bench">โต๊ะทดลอง</h2><span id="status" role="status" aria-live="polite"></span></div>
+      <p id="instruction" class="instruction"></p>
+      <svg id="bench" viewBox="0 0 840 590" tabindex="0" role="group" aria-labelledby="bench-title" aria-describedby="bench-help">
+        <defs><pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#e1e9e5" stroke-width=".7"/></pattern><clipPath id="sheet-clip"><polygon id="clip-polygon"/></clipPath><marker id="weight-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#b43e43"/></marker></defs>
+        <rect width="840" height="590" fill="#f4f7f4"/><rect x="22" y="20" width="796" height="550" rx="14" fill="url(#grid)"/>
+        <g id="support"><path d="M275 94H565" stroke="#70887c" stroke-width="12" stroke-linecap="round"/><path d="M420 94V135" stroke="#70887c" stroke-width="7"/></g>
+        <g id="lamina"><polygon id="plate" fill="#b4d2bd" fill-opacity=".92" stroke="#466c59" stroke-width=".0025"/>
+          <g id="line-extensions"></g><g id="recorded-lines" clip-path="url(#sheet-clip)"></g><g id="holes"></g><g id="selection"></g><g id="solution"></g>
+        </g>
+        <g id="plumb"><path d="M420 135V510" stroke="#263e34" stroke-width="2" stroke-dasharray="6 4"/><path d="M420 507L408 529L420 538L432 529Z" fill="#334e43"/><circle cx="420" cy="135" r="6" fill="#263e34"/></g>
+        <g id="view-label"><text x="40" y="552" id="view-text" fill="#52695d" font-size="15"></text></g>
+      </svg>
+      <p id="bench-help" class="bench-help" data-th="แตะรู A–C หรือใช้ปุ่มด้านข้าง · ในท่าเริ่มต้น แตะเพื่อเลือกจุด หรือโฟกัสรูปแล้วใช้ปุ่มลูกศรเลื่อนจุด" data-en="Tap a hole A–C or use the controls. In the original view, tap to choose a point or focus the figure and move it with arrow keys.">แตะรู A–C หรือใช้ปุ่มด้านข้าง · ในท่าเริ่มต้น แตะเพื่อเลือกจุด หรือโฟกัสรูปแล้วใช้ปุ่มลูกศรเลื่อนจุด</p>
+      <div class="legend"><span class="swatch first">A</span><span class="swatch second">B</span><span class="swatch third">C</span><span data-th="เส้นประสี: แนวที่ต่อออกนอกเนื้อแผ่น" data-en="Coloured dashes: extensions beyond the material.">เส้นประสี: แนวที่ต่อออกนอกเนื้อแผ่น</span></div>
+    </section>
+    <aside class="controls" aria-label="Experiment controls">
+      <label for="shape" data-th="1 · เลือกแผ่นวัตถุ" data-en="1 · Choose a lamina">1 · เลือกแผ่นวัตถุ</label><select id="shape"></select>
+      <p class="small" data-th="แผ่นบางแข็ง เนื้อและความหนาสม่ำเสมอ กว้างประมาณ 30 ซม." data-en="Thin rigid plate of uniform density and thickness, about 30 cm wide.">แผ่นบางแข็ง เนื้อและความหนาสม่ำเสมอ กว้างประมาณ 30 ซม.</p>
+      <h3 data-th="2 · เลือกรูแขวน" data-en="2 · Choose a suspension hole">2 · เลือกรูแขวน</h3>
+      <div class="hole-buttons"><button data-hole="0">A</button><button data-hole="1">B</button><button data-hole="2">C</button></div>
+      <button id="release" class="primary"></button>
+      <button id="record" data-th="บันทึกแนวลูกดิ่ง" data-en="Mark plumb line">บันทึกแนวลูกดิ่ง</button><p id="record-help" class="small"></p>
+      <hr><h3 data-th="3 · ระบุตำแหน่งศูนย์ถ่วง" data-en="3 · Locate the centre of gravity">3 · ระบุตำแหน่งศูนย์ถ่วง</h3>
+      <button id="overview" data-th="กลับท่าเริ่มต้น / เลือกจุด" data-en="Original view / choose a point">กลับท่าเริ่มต้น / เลือกจุด</button>
+      <p class="small" data-th="คาดคะเนก่อนทดลองได้ แล้วแก้ตำแหน่งจากหลักฐาน เส้นและจุดที่เลือกติดอยู่กับแผ่น" data-en="Make an initial prediction, then revise it using evidence. Lines and your chosen point stay attached to the plate.">คาดคะเนก่อนทดลองได้ แล้วแก้ตำแหน่งจากหลักฐาน เส้นและจุดที่เลือกติดอยู่กับแผ่น</p>
+      <button id="check" data-th="ตรวจคำตอบและเปิดคำอธิบาย" data-en="Check and explain">ตรวจคำตอบและเปิดคำอธิบาย</button><p id="check-help" class="small"></p>
+      <button id="reset" class="quiet" data-th="เริ่มแผ่นนี้ใหม่" data-en="Restart this plate">เริ่มแผ่นนี้ใหม่</button>
+    </aside>
+  </div>
+  <section class="evidence" aria-labelledby="evidence-title"><div class="section-heading"><h2 id="evidence-title" data-th="หลักฐานจากการแขวน" data-en="Suspension evidence">หลักฐานจากการแขวน</h2><span id="progress"></span></div><div id="trials" class="trials"></div></section>
+  <section id="feedback" class="feedback" aria-live="polite" hidden></section>
+  <section class="reflection"><h2 data-th="ลองอธิบายจากสิ่งที่เห็น" data-en="Explain what you observed">ลองอธิบายจากสิ่งที่เห็น</h2>
+    <details><summary data-th="แขวนครั้งเดียว บอกตำแหน่งศูนย์ถ่วงเป็นจุดได้หรือยัง?" data-en="Can one suspension locate a unique centre of gravity?">แขวนครั้งเดียว บอกตำแหน่งศูนย์ถ่วงเป็นจุดได้หรือยัง?</summary><p data-th="ยังไม่ได้ รู้เพียงว่าศูนย์ถ่วงอยู่บนแนวดิ่งผ่านจุดแขวน ต้องมีแนวที่สองที่ต่างกันจึงหาจุดตัดได้" data-en="No. It lies somewhere on the vertical through the support. A second distinct line is needed to locate an intersection.">ยังไม่ได้ รู้เพียงว่าศูนย์ถ่วงอยู่บนแนวดิ่งผ่านจุดแขวน ต้องมีแนวที่สองที่ต่างกันจึงหาจุดตัดได้</p></details>
+    <details><summary data-th="แนวจากรูที่สามช่วยอะไร?" data-en="What does the third suspension add?">แนวจากรูที่สามช่วยอะไร?</summary><p data-th="ใช้ตรวจสอบว่าแนวที่สามผ่านจุดตัดเดิมหรือไม่ ในแล็บอุดมคตินี้เส้นตัดกันพอดี แต่การทดลองจริงอาจได้บริเวณจุดตัดเล็ก ๆ จากความคลาดเคลื่อน" data-en="It checks whether the third line passes through the same intersection. Ideal simulated lines meet exactly; real measurements may form a small intersection region.">ใช้ตรวจสอบว่าแนวที่สามผ่านจุดตัดเดิมหรือไม่ ในแล็บอุดมคตินี้เส้นตัดกันพอดี แต่การทดลองจริงอาจได้บริเวณจุดตัดเล็ก ๆ จากความคลาดเคลื่อน</p></details>
+    <details><summary data-th="เปลี่ยนรูแขวนแล้ว ศูนย์ถ่วงย้ายบนตัวแผ่นไหม?" data-en="Does changing the hole move CG relative to the plate?">เปลี่ยนรูแขวนแล้ว ศูนย์ถ่วงย้ายบนตัวแผ่นไหม?</summary><p data-th="ไม่ย้าย เมื่อรูปร่างและการกระจายมวลคงเดิม แผ่นเพียงหมุนให้ศูนย์ถ่วงอยู่ใต้จุดแขวน ในสนามโน้มถ่วงสม่ำเสมอ ศูนย์ถ่วงตรงกับศูนย์กลางมวล" data-en="No, provided shape and mass distribution stay unchanged. The plate turns to put CG below the support. In a uniform gravitational field, CG coincides with the centre of mass.">ไม่ย้าย เมื่อรูปร่างและการกระจายมวลคงเดิม แผ่นเพียงหมุนให้ศูนย์ถ่วงอยู่ใต้จุดแขวน ในสนามโน้มถ่วงสม่ำเสมอ ศูนย์ถ่วงตรงกับศูนย์กลางมวล</p></details>
+  </section>
+  <details class="model-note"><summary data-th="เงื่อนไขและขอบเขตแบบจำลอง" data-en="Model assumptions and scope">เงื่อนไขและขอบเขตแบบจำลอง</summary><p data-th="ใช้ g = 9.81 m/s² สม่ำเสมอ คำนวณศูนย์กลางมวลและโมเมนต์ความเฉื่อยจากพื้นที่รูปหลายเหลี่ยมจริง น้ำหนักทำให้แผ่นหมุนรอบรูแขวน มีแรงหน่วงการหมุนเพื่อให้หยุด ไม่จำลองการแกว่งของลูกดิ่งหรือการชนอุปกรณ์ รูแขวนถือเป็นจุดที่ไม่มีมวลเนื้อแผ่นถูกตัดออก" data-en="Uniform g = 9.81 m/s². Centroid and inertia are calculated from each polygon’s area. Weight drives rotation about the hole, with rotational damping. Plumb-bob oscillation and equipment collisions are not modelled. Holes are ideal massless suspension points; no material is removed.">ใช้ g = 9.81 m/s² สม่ำเสมอ คำนวณศูนย์กลางมวลและโมเมนต์ความเฉื่อยจากพื้นที่รูปหลายเหลี่ยมจริง น้ำหนักทำให้แผ่นหมุนรอบรูแขวน มีแรงหน่วงการหมุนเพื่อให้หยุด ไม่จำลองการแกว่งของลูกดิ่งหรือการชนอุปกรณ์ รูแขวนถือเป็นจุดที่ไม่มีมวลเนื้อแผ่นถูกตัดออก</p><p data-th="โมเมนต์รอบจุดแขวน: Iₚα = mg rₓ − bω โดย rₓ เป็นระยะในแนวระดับจากจุดแขวนถึงศูนย์ถ่วง ลูกดิ่งเป็นแนวดิ่งอ้างอิงที่หยุดนิ่งแล้ว เส้นบันทึกเมื่อแผ่นเข้าสู่สมดุลเท่านั้น" data-en="Torque about the support: Iₚα = mg rₓ − bω, where rₓ is CG’s horizontal displacement from the support (x right, y down). The plumb line is an already-settled vertical reference. Lines can be marked only after the plate settles.">โมเมนต์รอบจุดแขวน: Iₚα = mg rₓ − bω โดย rₓ เป็นระยะในแนวระดับจากจุดแขวนถึงศูนย์ถ่วง ลูกดิ่งเป็นแนวดิ่งอ้างอิงที่หยุดนิ่งแล้ว เส้นบันทึกเมื่อแผ่นเข้าสู่สมดุลเท่านั้น</p></details>
+  <footer><p data-th="กิจกรรมจำลองประกอบใบเรียนรู้ฟิสิกส์ 4.2 หัวข้อทดลองแขวนแผ่นวัตถุ หาศูนย์ถ่วง · รูปร่างและภาพทดลองจัดทำใหม่" data-en="Companion to Physics 4.2: finding CG by suspending a lamina. Shapes and experiment graphics are newly drawn.">กิจกรรมจำลองประกอบใบเรียนรู้ฟิสิกส์ 4.2 หัวข้อทดลองแขวนแผ่นวัตถุ หาศูนย์ถ่วง · รูปร่างและภาพทดลองจัดทำใหม่</p><p data-th="การทดลองคงอยู่ขณะเปิดหน้าต่างนี้ สลับภาษา/รูปร่างได้โดยไม่ล้างงาน ปิดหน้าต่างหรือรีโหลดจะเริ่มใหม่ ไม่มีคะแนนหรือการส่งข้อมูลขึ้นบัญชี" data-en="Work lasts while this window is open; switching language/shape preserves it. Closing or reloading starts fresh. No scores or account uploads.">การทดลองคงอยู่ขณะเปิดหน้าต่างนี้ สลับภาษา/รูปร่างได้โดยไม่ล้างงาน ปิดหน้าต่างหรือรีโหลดจะเริ่มใหม่ ไม่มีคะแนนหรือการส่งข้อมูลขึ้นบัญชี</p></footer>
+</main>
+<script src="assets/4-2-cg/model.js"></script><script src="assets/4-2-cg/lab.js"></script>
+</body></html>

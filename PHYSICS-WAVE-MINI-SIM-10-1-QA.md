@@ -1,5 +1,7 @@
 # Physics 10.1 — four-mode wave mini simulation
 
+> Historical implementation report. See [the wave visuals and missions upgrade](PHYSICS-WAVE-VISUAL-MISSIONS-QA.md) for current field/front rendering, guided 10.1 tasks, linked profiles and exact measurement.
+
 ## Scope and integration
 
 - Base: `main` at `a4784e6e7caf7297708a081dbf929c1f05ff0b2f`.

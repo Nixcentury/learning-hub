@@ -1,5 +1,7 @@
 # Physics 10.2 — double-slit measurement lab
 
+> Historical implementation report. See [the wave visuals and missions upgrade](PHYSICS-WAVE-VISUAL-MISSIONS-QA.md) for current field/front rendering, guided 10.1 tasks, linked profiles and exact measurement.
+
 The retained measurement model and its original checks are documented below. The current six-mission/water-wave extension and updated validation are in [PHYSICS-GUIDED-INTERFERENCE-10-2-QA.md](PHYSICS-GUIDED-INTERFERENCE-10-2-QA.md).
 
 ## Integration and scope

@@ -1,15 +1,15 @@
 (() => {
   'use strict';
-  const M=globalThis.WaveMiniModel,V=globalThis.WaveMiniView,$=id=>document.getElementById(id),modes=Object.keys(M.defaults);
+  const Q=globalThis.MiniWaveMissions,W=globalThis.InterferenceWater,M=globalThis.WaveMiniModel,V=globalThis.WaveMiniView,$=id=>document.getElementById(id),modes=Object.keys(M.defaults);
   let lang='th',mode='reflection',identity='guest',subscriber=null,running=!matchMedia('(prefers-reduced-motion: reduce)').matches,time=0,last=null,dirty=true;
-  const fresh=key=>({params:{...M.defaults[key]},formula:false,problem:false,solution:false});
+  const fresh=key=>({params:{...M.defaults[key]},formula:false,problem:false,solution:false,visual:M.visual(),mission:Q.initial()});
   let work=Object.fromEntries(modes.map(key=>[key,fresh(key)]));
   const s=()=>work[mode],p=()=>s().params,T=(th,en)=>lang==='th'?th:en,F=(n,d=1)=>Number(n).toFixed(d),publish=()=>subscriber?.();
   const names={reflection:['การสะท้อน','Reflection'],refraction:['การหักเห','Refraction'],interference:['การแทรกสอด','Interference'],diffraction:['การเลี้ยวเบน','Diffraction']};
   const descriptors={
     reflection:[['angle','มุมตกกระทบ θᵢ','Incidence angle θᵢ',0,75,1,'°']],
     refraction:[['angle','มุมตกกระทบ θ₁','Incidence angle θ₁',0,80,1,'°'],['n1','ตัวกลาง 1 · n₁','Medium 1 · n₁',[[1,'อากาศ · 1.00','Air · 1.00'],[1.33,'น้ำ · 1.33','Water · 1.33'],[1.5,'แก้ว · 1.50','Glass · 1.50']]],['n2','ตัวกลาง 2 · n₂','Medium 2 · n₂',[[1,'อากาศ · 1.00','Air · 1.00'],[1.33,'น้ำ · 1.33','Water · 1.33'],[1.5,'แก้ว · 1.50','Glass · 1.50']]],['wavelength','λ ในสุญญากาศ','Vacuum wavelength λ',400,700,10,'nm']],
-    interference:[['wavelength','ความยาวคลื่น λ','Wavelength λ',1,4,.1,'cm'],['separation','ระยะระหว่างแหล่ง d','Source separation d',4,12,.5,'cm'],['phase','เฟสของสองแหล่ง','Source phase',[[0,'ตรงกัน · 0°','In phase · 0°'],[180,'ตรงข้าม · 180°','Opposite · 180°']]],['probe','จุดสังเกต P','Observation point P',[['center','P บนแนวกลาง','P on centre line'],['side','P ด้านข้าง','P off centre']]]],
+    interference:[['wavelength','ความยาวคลื่น λ','Wavelength λ',1,4,.1,'cm'],['separation','ระยะระหว่างแหล่ง d','Source separation d',4,12,.5,'cm'],['phase','เฟสของสองแหล่ง','Source phase',[[0,'ตรงกัน · 0°','In phase · 0°'],[180,'ตรงข้าม · 180°','Opposite · 180°']]],['probe','จุดสังเกต P','Observation point P',[['center','P บนแนวกลาง','P on centre line'],['side','P ตัวอย่าง Δr=λ/2','Example P: Δr=λ/2'],['custom','เลื่อน P เอง','Custom P']]]],
     diffraction:[['compare','เลือกการเปรียบเทียบ','Choose a comparison',[['wavelength','เปลี่ยน λ · ตรึงช่องเปิด','Change λ · fix opening'],['opening','เปลี่ยนช่องเปิด · ตรึง λ','Change opening · fix λ']]],['wavelength','ความยาวคลื่น λ','Wavelength λ',400,700,10,'nm'],['opening','ความกว้างช่อง a','Opening width a',.8,4,.1,'μm']],
   };
   function controls(){
@@ -26,9 +26,10 @@
       }
       input.id='param-'+key;input.value=p()[key];input.addEventListener(Array.isArray(min)?'change':'input',()=>{
         const value=typeof M.defaults[mode][key]==='number'?Number(input.value):input.value,next={...p(),[key]:value};
-        if(!M.valid(mode,next))return;s().params=next;s().solution=false;V.invalidate();dirty=true;update();publish();
+        if(!M.valid(mode,next))return;s().params=next;if(mode==='interference'&&key==='probe'&&value==='side')s().visual.L=10;if(mode==='interference'&&key==='probe'&&value==='center')s().visual.x=0;changed();
       });group.append(label,input);$('controls').append(group);
     }
+    layerControls();
     if(mode==='diffraction'){const note=document.createElement('p');note.className='lock';note.id='lock-note';$('controls').append(note);}
   }
   function syncControls(){
@@ -38,10 +39,33 @@
       $('lock-note').textContent=T('สไลเดอร์สีจางคือค่าที่ตรึงไว้ เปลี่ยนกรณีเพื่อปรับอีกค่า','The dimmed slider is held fixed. Switch comparison to change it.');
     }
   }
+  function changed(observed=true){s().solution=false;if(observed){s().mission.answers[s().mission.index]={};s().mission.attempted[s().mission.index]=false;Q.observe(mode,s(),true);}V.invalidate();dirty=true;update();publish();}
+  function layerControls(){
+    $('layer-controls').replaceChildren();
+    const list=[['field','รอยคลื่น / ค่าสนาม','Ripple / wave field'],['fronts','เส้นสัน–ท้องคลื่น','Crest / trough lines'],['variables','เส้นตัวแปร','Variables']];
+    if(mode==='interference')list.push(['nodes','แนวบัพ N','Nodal lines N'],['antinodes','แนวปฏิบัพ A','Antinodal lines A'],['paths','เส้นทาง r₁ / r₂','Paths r₁ / r₂'],['graph','กราฟฉาก I(y)','Screen I(y)']);
+    for(const [key,th,en] of list){const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.id='layer-'+key;input.checked=s().visual[key];input.onchange=()=>{s().visual[key]=input.checked;changed(false);};label.append(input,document.createTextNode(T(th,en)));$('layer-controls').append(label);}
+    $('probe-controls').replaceChildren();$('probe-controls').hidden=mode!=='interference';
+    if(mode==='interference')for(const [key,min,max,step,th,en] of [['L',6,60,.5,'ระยะฉาก L','Screen distance L'],['x',-8,8,.1,'ตำแหน่ง P · x (หรือ y บนฉาก)','Probe x (screen y)']]){
+      const group=document.createElement('div');group.className='control';const label=document.createElement('label');label.htmlFor='probe-'+key;label.textContent=T(th,en);const out=document.createElement('output');out.id='probe-value-'+key;label.append(out);const input=document.createElement('input');Object.assign(input,{id:'probe-'+key,type:'range',min,max,step});input.oninput=()=>{const previous=M.water(p(),s().visual);s().visual[key]=Number(input.value);if(key==='L')s().visual.x=previous.x;s().params.probe='custom';changed();};group.append(label,input);$('probe-controls').append(group);
+    }
+    if(mode==='interference'){const help=document.createElement('p');help.className='lock';help.textContent=T('ลาก P หรือคลิกภาพเพื่อเลือกจุด ใช้ลูกศร ↑↓ ปรับ x และ ←→ ปรับ L ได้; สูตรประมาณใช้เมื่อ L ≫ d และ |x| ≪ L','Drag P or click the picture; ↑↓ changes x and ←→ changes L. Approximations need L ≫ d and |x| ≪ L.');$('probe-controls').append(help);}
+  }
+  function syncVisual(){
+    for(const input of $('layer-controls').querySelectorAll('input'))input.checked=s().visual[input.id.slice(6)];
+    $('mini-probe').hidden=mode!=='interference';$('mini-screen').hidden=mode!=='interference'||!s().visual.graph;
+    if(mode!=='interference')return;
+    const w=M.water(p(),s().visual),g=W.geometry(w),xy=W.screen(w.L,w.x),handle=$('mini-probe');
+    handle.style.left=xy.x/8+'%';handle.style.top=(xy.y+10)/4.4+'%';handle.setAttribute('aria-valuenow',w.x.toFixed(4));handle.setAttribute('aria-valuetext',`P: L=${F(w.L,1)} cm, x=${F(w.x,3)} cm`);
+    for(const key of ['L','x']){$('probe-'+key).value=w[key];$('probe-value-'+key).textContent=F(w[key],key==='x'?2:1)+' cm';}
+    const graph=InterferenceScreen.draw($('mini-screen-diagram'),{lambda:w.wavelength,d:w.separation,L:w.L,phase:w.phase,position:w.x,extent:16,unit:'cm'},lang);
+    const orderText=graph.orders.filter(q=>q.m===1||q.m===2).map(q=>`m=${q.m}: y=${F(q.y,3)} cm, θ=${F(q.theta,2)}°`).join(' · ');$('mini-screen-caption').textContent=T(`P: y=${F(w.x,3)} cm · θ=${F(g.theta,2)}° · I/I₀=${F(graph.intensity,3)} · เฟส ${w.phase}°`,`P: y=${F(w.x,3)} cm · θ=${F(g.theta,2)}° · I/I₀=${F(graph.intensity,3)} · phase ${w.phase}°`)+(w.phase===0?' · '+orderText:'');
+    $('mini-path-values').textContent=`r₁=${F(g.r1,4)} · r₂=${F(g.r2,4)} cm; Δr=${F(g.delta,4)} cm; d|sin θ|=${F(g.angular,4)} cm; d|x|/L=${F(g.small,4)} cm`;
+  }
   function formula(){
     if(mode==='reflection')return `<p class="equation">θᵢ = θᵣ</p><p>${T('มุมตกกระทบและมุมสะท้อนวัดจากเส้นปกติ ไม่ใช่ผิวสะท้อน มุมกับผิว + มุมกับเส้นปกติ = 90°','Measure incidence and reflection angles from the normal. An angle to the surface plus its angle to the normal is 90°.')}</p>`;
     if(mode==='refraction')return `<p class="equation">n₁ sin θ₁ = n₂ sin θ₂<br>v = c/n · λ = λ₀/n · f = c/λ₀</p><p>${T('n คือดัชนีหักเห ไม่มีหน่วย; c = 3.0 × 10⁸ m/s; λ₀ คือความยาวคลื่นในสุญญากาศ ความถี่ f คงเดิมเมื่อผ่านรอยต่อที่อยู่นิ่ง','n is dimensionless; c = 3.0 × 10⁸ m/s; λ₀ is vacuum wavelength. Frequency f stays constant at a stationary interface.')}</p><p>${T('ถ้า n₁ > n₂ จะมีมุมวิกฤต θc = sin⁻¹(n₂/n₁) เมื่อ θ₁ > θc เกิดการสะท้อนกลับหมด ไม่มีรังสีหักเหที่แผ่เข้าสู่ตัวกลาง 2','If n₁ > n₂, θc = sin⁻¹(n₂/n₁). For θ₁ > θc, total internal reflection occurs: no propagating refracted ray enters medium 2.')}</p>`;
-    if(mode==='interference')return `<p class="equation">y = y₁ + y₂ · Δr = |r₂ − r₁|</p><p>${T('แหล่งเฟสตรงกัน: เสริมเมื่อ Δr = mλ; หักล้างเมื่อ Δr = (m + ½)λ','In-phase sources: constructive at Δr = mλ; destructive at Δr = (m + ½)λ.')}</p><p>${T('แหล่งเฟสตรงข้าม 180°: สลับสองเงื่อนไขข้างบน; m = 0, 1, 2, …','Sources 180° apart: exchange the two conditions above; m = 0, 1, 2, …')}</p><p>${T('เมื่อคลื่นย่อยมีแอมพลิจูดเท่ากัน A: บัพมีแอมพลิจูดรวม 0 ปฏิบัพมีแอมพลิจูดรวม 2A บัพไม่ใช่เพียงจุดที่การกระจัดเป็นศูนย์ชั่วขณะ','With equal component amplitudes A, a node has resultant amplitude 0; an antinode has 2A. A momentary zero displacement alone is not a node.')}</p>`;
+    if(mode==='interference')return `<p>${T('ผลต่างทางเดินจริง Δr ใช้ได้ทุกระยะ ส่วน Δr ≈ d|sin θ| ใช้เมื่อ L ≫ d และ ≈ d|x|/L เพิ่มเงื่อนไข |x| ≪ L; ตัวเลขทั้งสามแสดงให้เทียบด้านล่างกราฟ','Exact path difference Δr applies at all distances. Δr ≈ d|sin θ| needs L ≫ d; ≈ d|x|/L also needs |x| ≪ L. Compare the three values below the profile.')}</p><p class="equation">u = u₁ + u₂ · Δr = |r₂ − r₁|</p><p>${T('แหล่งเฟสตรงกัน: เสริมเมื่อ Δr = mλ; หักล้างเมื่อ Δr = (m + ½)λ','In-phase sources: constructive at Δr = mλ; destructive at Δr = (m + ½)λ.')}</p><p>${T('แหล่งเฟสตรงข้าม 180°: สลับสองเงื่อนไขข้างบน; m = 0, 1, 2, …','Sources 180° apart: exchange the two conditions above; m = 0, 1, 2, …')}</p><p>${T('เมื่อคลื่นย่อยมีแอมพลิจูดเท่ากัน A: บัพมีแอมพลิจูดรวม 0 ปฏิบัพมีแอมพลิจูดรวม 2A บัพไม่ใช่เพียงจุดที่การกระจัดเป็นศูนย์ชั่วขณะ','With equal component amplitudes A, a node has resultant amplitude 0; an antinode has 2A. A momentary zero displacement alone is not a node.')}</p>`;
     return `<p class="equation">λ = c/f · 1 μm = 1,000 nm</p><p>${T('ตรึงช่องเปิด: λ มากขึ้น → มุม θ มากขึ้น','Fixed opening: larger λ → larger angle θ.')}</p><p>${T('ตรึง λ: ช่องเปิดแคบลง → มุม θ มากขึ้น','Fixed λ: narrower opening → larger angle θ.')}</p><p>${T('θ วัดที่กึ่งกลางช่อง จากแนวตรงไปข้างหน้าถึงทิศมืดแรก ตามภาพในใบเรียนรู้ 10.1 ส่วน 8 เส้นประไม่ใช่ขอบเขตที่แสงไปถึง','θ is measured at the slit centre, from the forward axis to the first dark direction, as in section 8 of the learning sheet. Dashed directions do not limit the reach of light.')}</p>`;
   }
   function problem(){
@@ -55,8 +79,8 @@
       return {question:T(`แสง λ₀ = ${a.wavelength} nm จาก n₁ = ${a.n1} ไป n₂ = ${a.n2} ด้วย θ₁ = ${a.angle}° จงหา θ₂ อัตราเร็ว และความยาวคลื่นในตัวกลาง 2`,`Light of vacuum wavelength ${a.wavelength} nm enters n₂ = ${a.n2} from n₁ = ${a.n1} at θ₁ = ${a.angle}°. Find θ₂, speed and wavelength in medium 2.`),answer:`<p class="equation">sin θ₂ = (${a.n1}/${a.n2}) sin ${a.angle}°<br>θ₂ = ${F(r.angle)}°<br>v₂ = (3.0 × 10⁸)/${a.n2} = ${F(r.v2/1e8,2)} × 10⁸ m/s<br>λ₂ = ${a.wavelength}/${a.n2} = ${F(r.lambda2)} nm</p><p>${T('ความถี่คงเดิมทั้งสองตัวกลาง','Frequency is unchanged across the interface.')} f ≈ ${F(r.frequency/1e12,2)} THz.</p>`};
     }
     if(mode==='interference'){
-      const q=M.probe(a),ratio=q.delta/a.wavelength,which=q.kind==='node'?T('บัพ — หักล้างสมบูรณ์','node — complete cancellation'):T('ปฏิบัพ — เสริมเต็มที่','antinode — full reinforcement');
-      return {question:T(`ที่ P มี r₁ ≈ ${F(q.r1,4)} cm และ r₂ ≈ ${F(q.r2,4)} cm เมื่อ λ = ${F(a.wavelength)} cm แหล่งกำเนิดเฟส${a.phase===0?'ตรงกัน':'ตรงข้าม 180°'} จงหา Δr และระบุว่า P เป็นบัพหรือปฏิบัพ`,`At P, r₁ ≈ ${F(q.r1,4)} cm and r₂ ≈ ${F(q.r2,4)} cm, with λ = ${F(a.wavelength)} cm and sources ${a.phase===0?'in phase':'180° apart'}. Calculate Δr and identify P as a node or antinode.`),answer:`<p class="equation">Δr = |${F(q.r2,4)} − ${F(q.r1,4)}| ≈ ${F(q.delta,2)} cm<br>Δr/λ = ${F(ratio,1)}</p><p>${T('เทียบกับเงื่อนไขของเฟสแหล่งกำเนิด จะได้','Using the condition for these source phases gives')} <strong>${which}</strong>.</p><p>${T('แอมพลิจูดรวมที่ P เท่ากับ','Resultant amplitude at P:')} ${q.kind==='node'?'0':'2A'}. ${T('คำนวณจากค่าระยะเต็มก่อนปัดตัวเลขแสดงผล','Distances are calculated before display rounding.')}</p>`};
+      const q=W.geometry(M.water(a,s().visual)),ratio=q.delta/a.wavelength,which=q.kind==='node'?T('บัพ — หักล้างสมบูรณ์','node — complete cancellation'):q.kind==='antinode'?T('ปฏิบัพ — เสริมเต็มที่','antinode — full reinforcement'):T('ระหว่างแนวบัพ–ปฏิบัพ','between nodal and antinodal loci');
+      return {question:T(`ที่ P มี r₁ ≈ ${F(q.r1,4)} cm และ r₂ ≈ ${F(q.r2,4)} cm เมื่อ λ = ${F(a.wavelength)} cm แหล่งกำเนิดเฟส${a.phase===0?'ตรงกัน':'ตรงข้าม 180°'} จงหา Δr และระบุว่า P เป็นบัพ ปฏิบัพ หรือระหว่างแนว`,`At P, r₁ ≈ ${F(q.r1,4)} cm and r₂ ≈ ${F(q.r2,4)} cm, with λ = ${F(a.wavelength)} cm and sources ${a.phase===0?'in phase':'180° apart'}. Calculate Δr and identify P as nodal, antinodal or between loci.`),answer:`<p class="equation">Δr = |${F(q.r2,4)} − ${F(q.r1,4)}| ≈ ${F(q.delta,2)} cm<br>Δr/λ = ${F(ratio,1)}</p><p>${T('เทียบกับเงื่อนไขของเฟสแหล่งกำเนิด จะได้','Using the condition for these source phases gives')} <strong>${which}</strong>.</p><p>${T('แอมพลิจูดรวมที่ P เท่ากับ','Resultant amplitude at P:')} ${F(q.amplitude,3)}A. ${T('คำนวณจากค่าระยะเต็มก่อนปัดตัวเลขแสดงผล','Distances are calculated before display rounding.')}</p>`};
     }
     const r=M.diffract(a),other=a.compare==='wavelength'?(a.wavelength<=600?a.wavelength+100:a.wavelength-100):Number((a.opening>=1.2?a.opening-.4:a.opening+.4).toFixed(1));
     const larger=a.compare==='wavelength'?other>a.wavelength:other<a.opening;
@@ -80,18 +104,18 @@
     }
   }
   function update(){
-    syncControls();const a=p(),r=mode==='refraction'?M.refract(a):mode==='interference'?M.probe(a):mode==='diffraction'?M.diffract(a):null;
+    syncControls();syncVisual();const a=p(),r=mode==='refraction'?M.refract(a):mode==='interference'?W.geometry(M.water(a,s().visual)):mode==='diffraction'?M.diffract(a):null;
     let values,note,observe;
     if(mode==='reflection'){
       values=[[T('มุมตกกระทบ θᵢ','Incidence θᵢ'),a.angle+'°'],[T('มุมสะท้อน θᵣ','Reflection θᵣ'),a.angle+'°'],[T('มุมตกกระทบกับผิว','Incident angle to surface'),(90-a.angle)+'°']];
-      note=T('เส้นฟ้า: หน้าคลื่นตกกระทบ · เส้นส้ม: หน้าคลื่นสะท้อน · เส้นประ: เส้นปกติ','Blue: incident wavefronts · orange: reflected wavefronts · dashed: normal.');observe=T('เมื่อเพิ่มมุมตกกระทบ มุมสะท้อนเปลี่ยนอย่างไร? ลองเทียบมุมกับเส้นปกติและกับผิว','How does the reflection angle change with incidence? Compare angles to the normal and to the surface.');
+      note=T('สีพื้น: ค่าสนามสเกลาร์บวก/ลบ · เส้นทึบ/ประ: สัน/ท้องคลื่น · ฟ้า: ตกกระทบ ส้ม: สะท้อน · N: เส้นปกติ','Background: signed scalar field · solid/dashed: crests/troughs · blue: incident, orange: reflected · N: normal.');observe=T('เมื่อเพิ่มมุมตกกระทบ มุมสะท้อนเปลี่ยนอย่างไร? ลองเทียบมุมกับเส้นปกติและกับผิว','How does the reflection angle change with incidence? Compare angles to the normal and to the surface.');
     }else if(mode==='refraction'){
       values=[[T('มุมหักเห θ₂','Refraction θ₂'),r.tir?T('สะท้อนกลับหมด','Total reflection'):F(r.angle)+'°'],[r.tir?T('มุมวิกฤต θc','Critical angle θc'):T('อัตราเร็ว v₂','Speed v₂'),r.tir?F(r.critical)+'°':F(r.v2/1e8,2)+' × 10⁸ m/s'],[r.tir?T('ความถี่ f','Frequency f'):T('ความยาวคลื่น λ₂','Wavelength λ₂'),r.tir?F(r.frequency/1e12,1)+' THz':F(r.lambda2)+' nm']];
-      note=T('ฟ้า: หน้าคลื่นตกกระทบ · เขียว: หน้าคลื่นหักเห · ระยะระหว่างหน้าคลื่นแทน λ ในตัวกลางนั้น','Blue: incident fronts · green: refracted fronts · wavefront spacing represents wavelength in each medium.');
+      note=T('สีพื้น: ค่าสนามสเกลาร์บวก/ลบ · เส้นทึบ/ประ: สัน/ท้องคลื่น · ฟ้า: ตกกระทบ เขียว: หักเห · ระยะเส้นแทน λ','Background: signed scalar field · solid/dashed: crests/troughs · blue: incident, green: refracted · spacing represents λ.');
       observe=r.tir?T('มุมตกกระทบเกินมุมวิกฤตแล้ว ลองลดมุมเพื่อให้รังสีหักเหกลับมา','Incidence exceeds the critical angle. Lower it to restore a refracted ray.'):T('สังเกตการเบนและระยะระหว่างหน้าคลื่น ความถี่คงเดิมแม้อัตราเร็วและ λ เปลี่ยน ถ้าตกกระทบตั้งฉาก รังสียังตรงได้','Observe bending and front spacing. Frequency stays the same when speed and λ change. At normal incidence, the ray remains straight.');
     }else if(mode==='interference'){
-      values=[['Δr',F(r.delta,2)+' cm'],['Δr/λ',F(r.delta/a.wavelength,2)],[T('จุด P','Point P'),r.kind==='node'?T('บัพ · 0','Node · 0'):T('ปฏิบัพ · 2A','Antinode · 2A')]];
-      note=T('สีพื้น: แอมพลิจูดรวม (ขาว 0 → เขียว 2A) · วงฟ้า/ส้ม: สันคลื่นจาก S₁/S₂ · A คือแอมพลิจูดของแต่ละแหล่ง','Background: resultant amplitude (white 0 → green 2A) · blue/orange rings: crests from S₁/S₂ · A is each source amplitude.');observe=T('สลับเฟส 0° กับ 180° แล้วดูว่า P และแนวกลางสลับเป็นบัพหรือปฏิบัพอย่างไร วงคลื่นไม่ใช่แนวบัพ','Switch 0°/180°. How do P and the centre line change between node and antinode? The rings are not nodal lines.');
+      values=[['Δr',F(r.delta,2)+' cm'],['Δr/λ',F(r.delta/a.wavelength,2)],[T('จุด P','Point P'),r.kind==='node'?T('บัพ · 0','Node · 0'):r.kind==='antinode'?T('ปฏิบัพ · 2A','Antinode · 2A'):T('ระหว่างแนว','Between loci')]];
+      note=T('สีพื้น: การกระจัดรวมขณะหนึ่ง · เส้นทึบ: สันคลื่น · เส้นประ: ท้องคลื่น · แนว N/A คือบัพ/ปฏิบัพ ไม่ใช่วงคลื่น','Background: instantaneous resultant displacement · solid: crests · dashed: troughs · N/A loci are nodal/antinodal lines, distinct from wavefront rings.');observe=T('สลับเฟส 0° กับ 180° แล้วดูว่า P และแนวกลางสลับเป็นบัพหรือปฏิบัพอย่างไร วงคลื่นไม่ใช่แนวบัพ','Switch 0°/180°. How do P and the centre line change between node and antinode? The rings are not nodal lines.');
     }else{
       values=[[T('มุมถึงทิศมืดแรก θ','First-dark angle θ'),F(r.angle)+'°'],['λ',a.wavelength+' nm'],['a/λ',F(r.ratio,2)]];
       note=T('ภาพมุมแผ่ระยะไกล ไม่ตามสเกล · เส้นประ: ทิศมืดแรก ยังมีแถบข้างนอกแนวนี้ · ฟ้า/ส้ม: ค่าสนามบวก/ลบ ไม่ใช้เทียบความเข้มระหว่างภาพ','Far-field angular schematic, not to scale · dashes: first-dark directions, with side bands beyond them · blue/orange: positive/negative field, not intensity comparisons.');
@@ -103,7 +127,7 @@
     $('readouts').replaceChildren();for(const [title,value] of values){const group=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=title;dd.textContent=value;group.append(dt,dd);$('readouts').append(group);}
     for(const key of modes){$('study-'+key).hidden=key!==mode;for(const kind of ['formula','problem','solution'])$(kind+'-'+key).open=work[key][kind];}
     const q=problem();$('formula-body-'+mode).innerHTML=formula();$('problem-body-'+mode).textContent=q.question;$('solution-body-'+mode).innerHTML=q.answer;
-    document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode===mode;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});dirty=true;
+    document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode===mode;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});globalThis.MiniWaveGuidance?.render();dirty=true;
   }
   function changeMode(next){if(!modes.includes(next))return;mode=next;controls();V.invalidate();update();publish();}
   document.querySelectorAll('[data-mode]').forEach(button=>{
@@ -113,11 +137,11 @@
   function language(next){lang=next==='en'?'en':'th';document.documentElement.lang=lang;document.querySelectorAll('[data-th][data-en]').forEach(n=>n.textContent=n.dataset[lang]);$('language').textContent=lang==='th'?'English':'ภาษาไทย';controls();update();}
   $('language').onclick=()=>language(lang==='th'?'en':'th');$('play').onclick=()=>{running=!running;last=null;update();publish();};
   $('reset').onclick=()=>{work[mode]=fresh(mode);time=0;controls();V.invalidate();update();publish();};
-  function getState(){return {version:1,identity,mode,running,time,work:structuredClone(work)};}
+  function getState(){return {version:2,identity,mode,running,time,work:structuredClone(work)};}
   function restoreState(snapshot){
-    if(!snapshot||snapshot.version!==1||snapshot.identity!==identity||!modes.includes(snapshot.mode)||!Number.isFinite(snapshot.time)||snapshot.time<0||snapshot.time>1e8||!snapshot.work||typeof snapshot.work!=='object')return false;
-    for(const key of modes){const v=snapshot.work[key];if(!v||!M.valid(key,v.params)||!['formula','problem','solution'].every(k=>typeof v[k]==='boolean'))return false;}
-    work=structuredClone(snapshot.work);mode=snapshot.mode;time=snapshot.time;running=false;last=null;controls();V.invalidate();update();publish();return true;
+    if(!snapshot||![1,2].includes(snapshot.version)||snapshot.identity!==identity||!modes.includes(snapshot.mode)||!Number.isFinite(snapshot.time)||snapshot.time<0||snapshot.time>1e8||!snapshot.work||typeof snapshot.work!=='object')return false;
+    for(const key of modes){const v=snapshot.work[key];if(!v||!M.valid(key,v.params)||!['formula','problem','solution'].every(k=>typeof v[k]==='boolean')||(snapshot.version===2&&(!M.visualValid(v.visual,key==='interference'?v.params:null)||!Q.valid(v.mission))))return false;}
+    work=Object.fromEntries(modes.map(k=>[k,{...fresh(k),...structuredClone(snapshot.work[k])}]));mode=snapshot.mode;time=snapshot.time;running=false;last=null;controls();V.invalidate();update();publish();return true;
   }
   window.LearningHubSimulation={getState,restoreState,subscribe:fn=>{subscriber=typeof fn==='function'?fn:null;return()=>{subscriber=null;};}};
   window.addEventListener('message',event=>{
@@ -125,7 +149,11 @@
     const next=event.data.identity?.uid||'guest';if(next!==identity){identity=next;work=Object.fromEntries(modes.map(k=>[k,fresh(k)]));mode='reflection';time=0;running=false;V.invalidate();}language(event.data.language||lang);
   });
   document.addEventListener('visibilitychange',()=>{last=null;});
-  function frame(now){const dt=last===null?0:Math.min(.05,(now-last)/1000);last=now;if(running&&!document.hidden){time+=dt*.65;dirty=true;}if(dirty){V.draw($('bench'),mode,p(),time,lang);dirty=false;}requestAnimationFrame(frame);}
-  initStudy();language('th');new ResizeObserver(()=>{dirty=true;}).observe($('bench'));requestAnimationFrame(frame);
+  function frame(now){const dt=last===null?0:Math.min(.05,(now-last)/1000);last=now;if(running&&!document.hidden){time+=dt*.65;dirty=true;}if(dirty){V.draw($('bench'),mode,p(),time,s().visual);dirty=false;}requestAnimationFrame(frame);}
+  globalThis.WaveMiniBridge={read:()=>({mode,work}),language:()=>lang,current:s,notify:publish,change:fn=>{fn(s(),mode);controls();changed(false);}};
+  const moveP=event=>{if(mode!=='interference')return;const rect=$('bench').getBoundingClientRect(),q=W.fromScreen((event.clientX-rect.left)/rect.width*800,(event.clientY-rect.top)/rect.height*440-10);s().visual.L=Math.max(6,Math.min(60,q.L));s().visual.x=Math.max(-8,Math.min(8,q.x));s().params.probe='custom';changed();};
+  let dragging=false;const probe=$('mini-probe');probe.onpointerdown=event=>{dragging=true;probe.setPointerCapture(event.pointerId);event.preventDefault();};probe.onpointermove=event=>{if(dragging)moveP(event);};probe.onpointerup=()=>dragging=false;probe.onpointercancel=()=>dragging=false;
+  $('bench').onclick=moveP;probe.onkeydown=event=>{if(mode!=='interference'||!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home'].includes(event.key))return;event.preventDefault();const w=M.water(p(),s().visual);s().visual.x=event.key==='Home'?0:Math.max(-8,Math.min(8,w.x+(event.key==='ArrowUp'?.1:event.key==='ArrowDown'?-.1:0)));s().visual.L=Math.max(6,Math.min(60,w.L+(event.key==='ArrowRight'?.5:event.key==='ArrowLeft'?-.5:0)));s().params.probe='custom';changed();};
+  initStudy();language('th');new ResizeObserver(()=>{dirty=true;if(mode==='interference')syncVisual();}).observe($('bench'));requestAnimationFrame(frame);
   if(parent!==window)parent.postMessage({type:'learning-hub-tool-ready'},location.origin);
 })();

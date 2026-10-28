@@ -1,5 +1,7 @@
 # Physics 10.2 — guided interference upgrade
 
+> Historical implementation report. See [the wave visuals and missions upgrade](PHYSICS-WAVE-VISUAL-MISSIONS-QA.md) for current field/front rendering, guided 10.1 tasks, linked profiles and exact measurement.
+
 ## Integration
 
 Base: `ef8c128135dd597221559d5d415d2e80cda37f77` (main). The existing activity ID `physics-ipst-wave-optics-10-2-double-slit-lab`, topic bank key `b-21460452889578f11c3a8bac`, menu tool key, deep links and measurement module are retained. The existing 10.1 simulation is unchanged. New water and mission modules belong to the authored 10.2 simulation; no Hub engines, account services, dependencies, Firebase or CI are changed.

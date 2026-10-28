@@ -54,7 +54,7 @@ try {
  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));page.setDefaultTimeout(20000);await mkdir(output,{recursive:true});
  await page.goto(origin+prefix+'#content/physics-ipst-wave-optics-10-2-double-slit-lab');await page.locator('#guest-button').click();
  const win=page.locator('[data-tool-id="content-simulation-physics-ipst-wave-optics-10-2-double-slit-lab"]');await win.waitFor();await win.locator('.is-maximize').click();
- const lab=page.frameLocator('[data-tool-id="content-simulation-physics-ipst-wave-optics-10-2-double-slit-lab"] iframe');await lab.locator('#handle-left').waitFor();
+ const lab=page.frameLocator('[data-tool-id="content-simulation-physics-ipst-wave-optics-10-2-double-slit-lab"] iframe');await lab.locator('#view-light').click();await lab.locator('#guided-toggle').click();await lab.locator('#handle-left').waitFor();
  const frame=page.frames().find(f=>f.url().includes('/10-2-double-slit-lab.html')),state=()=>frame.evaluate(()=>LearningHubSimulation.getState());
  const close=(a,b,t=.03)=>assert.ok(Math.abs(a-b)<t,`${a} != ${b}`);
  const shot=async name=>{await frame.evaluate(()=>window.scrollTo(0,0));await page.waitForTimeout(100);await page.screenshot({path:resolve(output,name+'.png')});};

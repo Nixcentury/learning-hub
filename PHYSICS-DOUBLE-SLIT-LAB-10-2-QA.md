@@ -1,5 +1,7 @@
 # Physics 10.2 — double-slit measurement lab
 
+The retained measurement model and its original checks are documented below. The current six-mission/water-wave extension and updated validation are in [PHYSICS-GUIDED-INTERFERENCE-10-2-QA.md](PHYSICS-GUIDED-INTERFERENCE-10-2-QA.md).
+
 ## Integration and scope
 
 - Base: `main` at `b0a9056c3771fddc42749e7537fc7d5888110f62`.

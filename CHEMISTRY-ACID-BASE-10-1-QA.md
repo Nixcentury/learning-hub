@@ -40,3 +40,15 @@ Publication must also pass the repository Pages build/deploy and live `deploymen
 - Retain each original recall ID on its first subitem and append stable suffixes for the remaining subitems. The worksheet has 158 paired slots after the revision. Existing theory notes, numbered IPST exercises, diagrams and bank/content IDs are unchanged.
 - Each subitem and its writing area form a small print-keep group; long recall groups can flow across pages. Short formulas/names use 9–12 mm spaces; reasoning and equations use 16–25 mm minimum spaces and can expand for answers.
 - New browser assertions check all 78 prompt/answer pairs at mobile width, independent answer DOM, all 158 slots in each print edition and unchanged on-screen reveal state after printing. Unit tests remain 325/325; build and the actual Guest bank route pass. The four PDFs are TH 43/43 and EN 44/44 pages. Every page was visually reviewed, with larger checks of the reported area.
+
+## ปรับเฉพาะตัวอย่างนำเข้าสู่เบรินสเตด–ลาวรี — 28 ตุลาคม 2026
+
+- ตามคำขอครู ใช้แอมโมเนียในน้ำแทนข้อความขอบเขตอาร์เรเนียสที่ยกแก๊ส HCl กับ NH3 เฉพาะ block `arrhenius-limitation` ใน TH/EN เปลี่ยนชื่อหัวข้อ/ป้ายช่องเป็นแอมโมเนียในน้ำ และเพิ่มพื้นที่พิมพ์ขั้นต่ำจาก 24 เป็น 44 mm
+- แสดง `NH3(aq) + H2O(l) ⇌ NH4+(aq) + OH−(aq)` แล้วอธิบายว่า NH3 รับ H+ จากน้ำ ทำให้เกิด OH− เพื่อเชื่อมกับหัวข้อถัดไป นิยามอาร์เรเนียสในใบนี้ใช้การเพิ่มความเข้มข้น OH− จึงไม่อ้างว่า NH3 อยู่นอกทฤษฎีเพียงเพราะไม่มี OH ในสูตร
+- ตรวจอะตอม N/H/O และประจุสมดุลทั้งสองข้าง เทียบ OpenStax Chemistry 2e §14.1 และ Chemistry §11.3: https://openstax.org/books/chemistry-2e/pages/14-1-bronsted-lowry-acids-and-bases และ https://openstax.org/books/chemistry/pages/11-3-solubility
+- เปรียบเทียบไฟล์ก่อน/หลังโดยปิดบังเฉพาะสอง block ที่แก้: bytes ส่วนอื่นเหมือนเดิมทั้งหมด; 158 slot keys ต่อภาษาตรงกันและ answer ลูกตรงช่องละหนึ่งตัว
+- `pnpm test:unit`: 374 ผ่าน 0 ไม่ผ่าน; `pnpm build`: content validation / TypeScript / Vite / Pages artifact 601 public files ผ่าน; `git diff --check` ผ่าน
+- Chromium Hub: เปิด/ปิดเฉพาะช่องนี้ได้ทั้ง TH/EN ความสูงคงเดิม 149.03125 px ไม่มี math error; กรอบ Hub 390 px มีพื้นที่ช่อง 327 px สมการกว้าง 326.953125 px และไม่ล้น
+- Central A4: ทั้ง TH/EN × ว่าง/เฉลย มี 43 หน้า 158 ช่อง; เป้าหมายอยู่หน้า 27 และกรอบสูง 167 px ทั้งสี่ฉบับ ฉบับว่างไม่มี answer DOM (0 ทั้งใบ) ฉบับเฉลยมี 158 (1 ใน block เป้าหมาย) ไม่มี math error หรือ page-body overflow
+- ตรวจภาพหน้าเป้าหมายทั้งสี่ฉบับแล้ว หัวข้อ–คำอธิบาย–สมการอยู่ด้วยกัน ไม่ได้ทำ visual QA ใหม่ทุกหน้าของทั้งใบ และไม่ได้ทดสอบ native PDF driver/iPad/Safari เพิ่ม
+- หลักฐานในเครื่อง: `qa-output/ammonia-bridge/` (logs, byte comparison source, browser checks, reading/target print screenshots) ไม่รวมใน PR

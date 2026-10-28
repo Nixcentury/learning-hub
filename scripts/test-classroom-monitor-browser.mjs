@@ -145,7 +145,7 @@ try {
   await teacher.page.evaluate(() => qaNetwork(true));
   await teacher.frame.locator('[data-monitor-lock]:not([disabled])').waitFor();
   const menuFrame = await student.page.locator('#hub-page-frame').elementHandle().then(handle => handle.contentFrame());
-  await menuFrame.evaluate(() => parent.postMessage({ type: 'learning-hub-open-tool', toolId: 'test-c2-quiz' }, location.origin));
+  await menuFrame.evaluate(() => parent.postMessage({ type: 'learning-hub-open-tool', toolId: 'test-c1-quiz' }, location.origin));
   const quiz = student.page.frameLocator('.workspace-tool-frame');
   await quiz.locator('.quiz-option').first().click();
   const quizFrame = await student.page.locator('.workspace-tool-frame').elementHandle().then(handle => handle.contentFrame());

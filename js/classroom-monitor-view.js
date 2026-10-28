@@ -48,7 +48,7 @@ export function createMonitorView({ getLanguage, command, onClassroom }) {
   function render() {
     const current = snapshot.lesson?.joined ? snapshot.lesson : null;
     const ownerRoom = snapshot.rooms?.find(room => room.id === snapshot.selectedRoomId && room.ownerUid === snapshot.uid);
-    const available = (snapshot.rooms || []).filter(room => room.session && room.ownerUid !== snapshot.uid);
+    const available = (snapshot.rooms || []).filter(room => room.session && room.ownerUid && room.ownerUid !== snapshot.uid);
     const teacherActive = Boolean(ownerRoom?.session);
     host.hidden = !snapshot.uid || (!current && !teacherActive && !available.length);
     let label = '';

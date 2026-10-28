@@ -96,13 +96,14 @@ export function createClassroomMonitor({ io, onChange = () => {}, now = Date.now
         if (!safe(version) || lessonKey !== key || connectionPath !== path) { await registration.cancel?.(); return; }
         disconnect = registration; connectionReady = true;
       }
+      if (changedAt < room.session.startedAt - 5000 || changedAt > now() + 5000) changedAt = now();
       await io.set(path, { connected: true, visible, changedAt, updatedAt: io.timestamp(), sequence: ++sequence, location });
       if (safe(version) && lessonKey === key) lastHeartbeat = now();
     } catch (failure) { if (lessonKey === key) fail(failure, version); }
     finally { if (writingToken === ticket) { writingToken = null; if (writeAgain) { writeAgain = false; void sendConnection(); } } }
   }
   function selectStudentLesson() {
-    const options = Object.values(rooms).filter(room => !isOwner(room) && liveLesson(room.session, now()));
+    const options = Object.values(rooms).filter(room => room.ownerUid && !isOwner(room) && liveLesson(room.session, now()));
     // Keep the chosen lesson; do not silently join another room when it closes.
     const current = options.find(value => `${value.id}/${value.session.id}` === lessonKey);
     const room = (selfParticipant?.joined ? current : options.find(value => value.id === selected)) || current || (options.length === 1 ? options[0] : null);
@@ -276,7 +277,7 @@ export function createClassroomMonitor({ io, onChange = () => {}, now = Date.now
     finally { if (safe(version)) { busy = ''; refreshLessons(); } }
   }
   return { setIdentity, command, getState: () => structuredClone(state()),
-    selectRoom(roomId) { if (roomId && !rooms[roomId]) return; selected = roomId || ''; refreshLessons(); },
+    selectRoom(roomId) { if (roomId && !roomPattern.test(roomId)) return; selected = roomId || ''; refreshLessons(); },
     setLocation(value) { const next = monitorLocation(value); if (JSON.stringify(next) === JSON.stringify(location)) return; location = next; void sendConnection(); },
     setVisible(value) { if (visible === Boolean(value)) return; visible = Boolean(value); changedAt = now(); void sendConnection(); },
     tick, dispose() { clear(); disposed = true; uid = ''; access = ''; },

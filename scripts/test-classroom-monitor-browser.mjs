@@ -28,18 +28,18 @@ export async function signInWithPopup(){window.qaSession('teacher');}export asyn
 // real emulator Rules execute unchanged. Transactions use REST ETag compare-and-set.
 const database = `
 export const getDatabase=()=>({});export const ref=(_,path)=>path;export const serverTimestamp=()=>({'.sv':'timestamp'});
-window.qaDbRequests=[];const registrations=new Map(),connectionWatchers=new Set();let online=true;
+window.qaDbRequests=[];window.qaDbFailures=[];const registrations=new Map(),connectionWatchers=new Set();let online=true;
 const snapshot=value=>({val:()=>value,exists:()=>value!==null});
 async function call(method,path,value,etag){window.qaDbRequests.push({method,path});if(!online)throw Object.assign(Error('offline'),{code:'monitor/offline'});
  const response=await fetch('${prefix}__qa-db?path='+encodeURIComponent(path),{method,headers:{'Content-Type':'application/json','X-QA-UID':window.qaUid||'',...(etag?{'If-Match':etag}:{})},body:value===undefined?undefined:JSON.stringify(value)});
- const result=await response.json();if(!response.ok&&response.status!==412)throw Object.assign(Error(result.error||'permission denied'),{code:'PERMISSION_DENIED'});return {value:result,etag:response.headers.get('etag'),conflict:response.status===412};}
+ const result=await response.json();if(!response.ok&&response.status!==412){window.qaDbFailures.push({method,path,status:response.status,error:result.error});throw Object.assign(Error(result.error||'permission denied'),{code:'PERMISSION_DENIED'});}return {value:result,etag:response.headers.get('etag'),conflict:response.status===412};}
 export const get=async path=>snapshot((await call('GET',path)).value);
 export const set=async(path,value)=>{await call('PUT',path,value);};export const update=async(path,value)=>{await call('PATCH',path,value);};export const remove=async path=>{await call('DELETE',path);};
 export async function runTransaction(path,fn){for(let i=0;i<8;i++){const prior=await call('GET',path),next=fn(prior.value);if(next===undefined)return {committed:false,snapshot:snapshot(prior.value)};const result=await call('PUT',path,next,prior.etag);if(!result.conflict)return {committed:true,snapshot:snapshot(result.value)};}throw Error('transaction retries');}
 export function onValue(path,fn,error=()=>{}){
  if(path==='.info/serverTimeOffset'){queueMicrotask(()=>fn(snapshot(0)));return ()=>{};}
  if(path==='.info/connected'){const callback=()=>fn(snapshot(online));connectionWatchers.add(callback);queueMicrotask(callback);return ()=>connectionWatchers.delete(callback);}
- let active=true,timer,previous;async function poll(){if(!active)return;try{const result=await call('GET',path),next=JSON.stringify(result.value);if(active&&next!==previous){previous=next;fn(snapshot(result.value));}}catch(e){if(active)error(e);return;}if(active)timer=setTimeout(poll,180);}void poll();return ()=>{active=false;clearTimeout(timer);};}
+ let active=true,timer,previous;async function poll(){if(!active)return;try{const result=await call('GET',path),next=JSON.stringify(result.value);if(active&&next!==previous){previous=next;fn(snapshot(result.value));}}catch(e){if(e.code!=='monitor/offline'){if(active)error(e);return;}}if(active)timer=setTimeout(poll,180);}void poll();return ()=>{active=false;clearTimeout(timer);};}
 export function onDisconnect(path){return {remove:async()=>registrations.set(path,null),update:async value=>registrations.set(path,value),cancel:async()=>registrations.delete(path)};}
 window.qaNetwork=async value=>{if(!value)for(const [path,data]of registrations)await call(data===null?'DELETE':'PATCH',path,data).catch(()=>{});online=value;connectionWatchers.forEach(fn=>fn());};
 `;
@@ -49,7 +49,7 @@ const server = createServer(async (req, res) => {
     if (url.pathname === prefix + '__qa-db') {
       const chunks = []; for await (const chunk of req) chunks.push(chunk);
       const uid = req.headers['x-qa-uid'], path = url.searchParams.get('path');
-      const headers = { 'Content-Type': 'application/json', 'X-Firebase-ETag': 'true', ...(req.headers['if-match'] ? { 'If-Match': req.headers['if-match'] } : {}) };
+      const headers = { 'Content-Type': 'application/json', ...(req.method === 'GET' ? { 'X-Firebase-ETag': 'true' } : {}), ...(req.headers['if-match'] ? { 'If-Match': req.headers['if-match'] } : {}) };
       const response = await fetch(emulatorOrigin + '/' + path + '.json?ns=' + emulatorProject + (uid ? '&auth=' + encodeURIComponent(mockToken(uid)) : ''), { method: req.method, headers, body: chunks.length ? Buffer.concat(chunks) : undefined });
       res.writeHead(response.status, { 'Content-Type': 'application/json', ...(response.headers.get('etag') ? { etag: response.headers.get('etag') } : {}) }); res.end(await response.text()); return;
     }
@@ -67,7 +67,7 @@ await new Promise(done => server.listen(0, '127.0.0.1', done));
 const origin = `http://127.0.0.1:${server.address().port}`, errors = [];
 let browser;
 try {
-  browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHANNEL } : {}) });
+  browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH } : process.env.PLAYWRIGHT_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHANNEL } : {}) });
   async function client(uid, mobile = false) {
     const context = await browser.newContext({ viewport: mobile ? { width: 390, height: 844 } : { width: 1360, height: 1000 }, hasTouch: mobile });
     await context.addInitScript(uid => {
@@ -139,6 +139,20 @@ try {
   await row.locator('.monitor-person-message').filter({ hasText: 'ข้อความ: รับทราบแล้ว' }).waitFor();
   await student.page.locator('[data-monitor-close]').click();
   console.log('PASS text is escaped, delivery differs from ack, and student replies reach teacher');
+  await teacher.page.evaluate(() => qaNetwork(false));
+  await teacher.frame.locator('[data-monitor-feedback]').filter({ hasText: 'การเชื่อมต่อขาด' }).waitFor();
+  assert.equal(await row.locator('.monitor-person-status').textContent(), 'หน้าเว็บแสดงอยู่');
+  await teacher.page.evaluate(() => qaNetwork(true));
+  await teacher.frame.locator('[data-monitor-lock]:not([disabled])').waitFor();
+  const menuFrame = await student.page.locator('#hub-page-frame').elementHandle().then(handle => handle.contentFrame());
+  await menuFrame.evaluate(() => parent.postMessage({ type: 'learning-hub-open-tool', toolId: 'test-c2-quiz' }, location.origin));
+  const quiz = student.page.frameLocator('.workspace-tool-frame');
+  await quiz.locator('.quiz-option').first().click();
+  const quizFrame = await student.page.locator('.workspace-tool-frame').elementHandle().then(handle => handle.contentFrame());
+  const answers = await quizFrame.evaluate(() => LearningHubQuiz.getState().answers);
+  await student.page.locator('[data-monitor-open]').click(); await student.page.locator('[data-monitor-close]').click();
+  assert.deepEqual(await quizFrame.evaluate(() => LearningHubQuiz.getState().answers), answers);
+  console.log('PASS teacher disconnect pauses status; monitoring messages preserve an authenticated quiz answer');
   const output = resolve(root, 'qa-output'); await mkdir(output, { recursive: true });
   await teacher.frame.locator('[data-classroom-monitor]').scrollIntoViewIfNeeded();
   await teacher.page.screenshot({ path: resolve(output, 'classroom-monitor-teacher.png'), fullPage: true });
@@ -165,4 +179,12 @@ try {
   await student.page.locator('.monitor-banner').waitFor({ state: 'hidden' });
   console.log('PASS account switch clears old messages; expiry returns to ordinary browsing');
   assert.deepEqual(errors, []);
+} catch (failure) {
+  const output = resolve(root, 'qa-output'); await mkdir(output, { recursive: true });
+  for (const [index, context] of (browser?.contexts() || []).entries()) for (const [pageIndex, page] of context.pages().entries()) {
+    console.error('BROWSER DEBUG', index, pageIndex, await page.evaluate(() => ({ text: document.querySelector('.monitor-dialog')?.textContent, failures: window.qaDbFailures?.slice(-10), requests: window.qaDbRequests?.slice(-20) })).catch(() => ({})));
+    await page.screenshot({ path: resolve(output, `classroom-monitor-failure-${index}-${pageIndex}.png`), fullPage: true }).catch(() => {});
+  }
+  console.error('INCIDENTS', await good('EMULATOR_ADMIN','GET',`classroomMonitorV1/incidents/${roomId}`));
+  console.error('PAGE ERRORS', errors); throw failure;
 } finally { await browser?.close(); await new Promise(done => server.close(done)); }

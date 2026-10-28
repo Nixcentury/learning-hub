@@ -771,7 +771,10 @@ window.addEventListener("message", (event) => {
       if (revision === classroomPageRevision && activeSectionId === 'classroom' && uid === activeSession.user?.uid)
         event.source.postMessage({ type: 'learning-hub-monitor-result', requestId, uid, ...result }, event.origin);
     };
-    if (action === 'compose') { monitorView.compose(payload.targetUid, payload.roomId); reply({ ok: true }); }
+    if (action === 'retry') {
+      classroomMonitor.setIdentity(null, null); classroomMonitor.setIdentity(activeSession, activeRole);
+      classroomMonitor.selectRoom(payload.roomId); reply({ ok: true });
+    } else if (action === 'compose') { monitorView.compose(payload.targetUid, payload.roomId); reply({ ok: true }); }
     else if (action === 'open-location') {
       const row = classroomMonitorState?.rows.find(value => value.uid === payload.targetUid);
       if (row?.location?.hash === payload.hash && /^#[a-zA-Z0-9/_-]{1,300}$/.test(payload.hash)) { location.hash = payload.hash; reply({ ok: true }); }

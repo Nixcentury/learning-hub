@@ -125,3 +125,19 @@ test('offline/denied actions do not report phantom success; other-room teachers 
   assert.equal(teacher.state.session, null); assert.equal(teacher.state.busy, ''); assert.equal(teacher.state.error, 'PERMISSION_DENIED');
   teacher.records.failWrites = false; await teacher.disconnect(); await assert.rejects(teacher.service.command('lock', { roomId }), /offline/);
 });
+test('an old account write waiting for acknowledgement cannot block or overwrite the new account reporter', async t => {
+  const f = fixture(); t.after(() => f.dispose()); const teacher = f.client('teacher', true), student = f.client('student'); await flush();
+  teacher.service.selectRoom(roomId); await teacher.service.command('lock', { roomId }); await flush(); await student.service.command('join', { roomId }); await flush();
+  let release;
+  const held = new Promise(done => { release = done; }); student.records.delayWrite = () => held;
+  student.service.setLocation({ hash: '#physics/bank', titleTh: 'Old pending' }); await flush();
+  student.records.delayWrite = async () => {};
+  student.service.setIdentity(auth('student-b'), role('student-b')); await flush();
+  await student.service.command('join', { roomId }); await flush();
+  student.service.setLocation({ hash: '#chemistry/bank', titleTh: 'New account' }); await flush();
+  assert.equal(teacher.state.rows.find(row => row.uid === 'student-b').location.titleTh, 'New account');
+  release(); await flush();
+  student.service.setLocation({ hash: '#chemistry/bank', titleTh: 'New account continues' }); await flush();
+  assert.equal(teacher.state.rows.find(row => row.uid === 'student-b').location.titleTh, 'New account continues');
+  assert.equal(student.state.uid, 'student-b');
+});

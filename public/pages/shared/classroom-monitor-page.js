@@ -25,12 +25,13 @@
       rows.clear(); root = el('section', '', 'classroom-monitor'); root.dataset.classroomMonitor = '';
       root.innerHTML = `<div class="classroom-monitor-heading"><h3></h3><span data-monitor-badge></span></div>
         <p data-monitor-description></p><div class="classroom-monitor-controls"><label><span data-monitor-duration-label></span><select data-monitor-duration><option value="30">30</option><option value="45">45</option><option value="60" selected>60</option><option value="90">90</option><option value="120">120</option><option value="180">180</option></select></label><button type="button" class="classroom-button is-primary" data-monitor-lock></button><button type="button" class="classroom-button" data-monitor-student></button></div>
-        <p data-monitor-feedback role="status" aria-live="polite"></p>
+        <p data-monitor-feedback role="status" aria-live="polite"></p><button type="button" class="classroom-button" data-monitor-retry hidden></button>
         <div class="classroom-monitor-filters"><input type="search" data-monitor-search data-allow-selection><select data-monitor-filter><option value="all"></option><option value="attention"></option><option value="visible"></option><option value="not-joined"></option></select></div>
         <div class="classroom-monitor-people" data-monitor-people></div>`;
       detail.append(root);
       root.querySelector('[data-monitor-lock]').addEventListener('click', () => send(root.dataset.locked === 'true' ? 'unlock' : 'lock', { roomId: context.classroomRooms.selected.id, minutes: Number(root.querySelector('[data-monitor-duration]').value) }));
       root.querySelector('[data-monitor-student]').addEventListener('click', () => send(context.classroomMonitor?.lesson?.joined && context.classroomMonitor.lesson.roomId === context.classroomRooms.selected.id ? 'leave' : 'join', { roomId: context.classroomRooms.selected.id }));
+      root.querySelector('[data-monitor-retry]').addEventListener('click', () => send('retry', { roomId: context.classroomRooms.selected.id }));
       root.querySelector('[data-monitor-search]').addEventListener('input', paint);
       root.querySelector('[data-monitor-filter]').addEventListener('change', paint);
       root.addEventListener('click', event => {
@@ -62,6 +63,8 @@
     else if (ready && !data.connected) message = t('การเชื่อมต่อขาด สถานะยังไม่อัปเดต', 'Connection lost. Status updates are paused.');
     root.querySelector('[data-monitor-feedback]').textContent = message;
     root.querySelector('[data-monitor-feedback]').classList.toggle('is-error', Boolean(data?.error || feedbackError));
+    const retry = root.querySelector('[data-monitor-retry]'); retry.hidden = !data?.error; retry.disabled = busy;
+    retry.textContent = t('ลองเชื่อมต่อการติดตามอีกครั้ง', 'Reconnect lesson monitoring');
     const filters = root.querySelector('.classroom-monitor-filters'); filters.hidden = !owner || !locked;
     const search = root.querySelector('[data-monitor-search]'); search.placeholder = t('ค้นหานักเรียน', 'Find a student'); search.setAttribute('aria-label', search.placeholder);
     const filter = root.querySelector('[data-monitor-filter]'); filter.setAttribute('aria-label', t('กรองสถานะ', 'Filter by status'));

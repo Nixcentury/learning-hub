@@ -164,7 +164,7 @@ try {
   const bounds = await page.locator('.quiz-variant-preview').boundingBox(); assert.ok(bounds.x >= 0 && bounds.x + bounds.width <= 391);
   const visiblePrompt = await page.frameLocator('.quiz-variant-preview iframe').locator('[data-current-prompt]').boundingBox();
   assert.ok(visiblePrompt.y + visiblePrompt.height < 650, 'Compact practice puts the question on screen');
-  const tableCell = await page.frameLocator('.quiz-variant-preview iframe').locator('td').last().boundingBox();
+  const tableCell = await page.frameLocator('.quiz-variant-preview iframe').locator('[data-current-context] td').last().boundingBox();
   assert.ok(tableCell.x + tableCell.width < 390, 'Simple tables fit the temporary mobile player');
   await mkdir(output, { recursive: true }); await page.screenshot({ path: resolve(output, 'quiz-variant-mobile.png') });
   await page.locator('.quiz-variant-preview > header button').click(); await panel.locator('.companion-close').click();

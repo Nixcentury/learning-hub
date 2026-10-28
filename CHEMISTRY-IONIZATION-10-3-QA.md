@@ -65,3 +65,20 @@ These checks concern the actual central print DOM and visible browser preview. N
 ## Delivery state
 
 The submitted branch/PR is ready for teacher review. No merge or public deployment is claimed. Merge and successful Pages deployment are still required for the new menu to appear on the public website.
+
+## Teacher review follow-up — 28 October 2026
+
+Scope: the three annotations in the teacher's uploaded Chemistry 10.3 review. Based on main `ec25f7c`; only sheets 1 and 2 and this QA record are edited.
+
+- Sheet 1, `prepare-solution`: replace the compressed variable/arrow chain with three numbered explanations: required moles of ions, moles of the compound from the balanced-equation ratio, then mass from that compound's molar mass. Each step identifies the quantity and units; the KOH and Ba(OH)2 comparison explains why the latter requires dividing hydroxide moles by two. Paired writing space increases from 27 to 65 mm.
+- Sheet 2, `acid-constant`: place an ICE table directly beside the derivation, retaining the earlier introductory ICE area. Define C and x, state the initial-ion/water assumptions, show the reaction, and substitute the equilibrium row to obtain (x)(x)/(C−x). The text explains both the squared numerator and the remaining-acid denominator. Paired writing space increases from 38 to 115 mm. The repeated reaction omits phase labels to fit the narrow view.
+- Sheet 2, authored Question 7: repeat the complete initial concentration (0.100 mol/L) and ionized concentration (0.002 mol/L), specify a monoprotic acid, and state the water approximation. The prompt is self-contained. Recalculation gives Ka = 4.08163265×10⁻⁵, consistent with its existing 4.1×10⁻⁵ answer.
+- Both language versions are updated. All original semantic area keys, question counts and source questions are retained: 27 areas / 18 question containers per language in sheet 1, and 53 areas / 43 question containers in sheet 2. Every slot retains one direct answer; every question retains its own space. Sheet 3, bank menus, shared engines and dependencies are unchanged.
+
+Verification for this follow-up:
+
+- The existing Learning Sheet, math, print and bank-menu unit tests pass: 33/33. The content build, TypeScript, Vite and Pages verification pass. `git diff --check` passes.
+- Browser QA uses the updated worksheet HTML in a preview-only parent fixture with the repository's unmodified Learning Sheet, MathJax and central-print modules. The content iframe keeps the scripts-disabled sandbox. This follow-up does not claim a fresh actual-Hub/catalog test.
+- In both languages and both sheets, a 390 px iframe (375 px content viewport after the scrollbar) has no document overflow. The new ICE formulas also have no internal horizontal overflow. All formulas render without errors. The updated mass steps and ICE derivation were visually inspected, including all four language/sheet answer previews.
+- Eight A4 central previews were checked: blank and answers in both languages for each changed sheet. Sheet 1 has 10 pages in either language/edition; sheet 2 has 23 Thai or 24 English pages in either edition. No page body overflows. Blank editions contain zero answer elements; answer editions contain exactly 27 or 53. Only the chosen language is present. The ICE table and derivation remain together on one page.
+- Local evidence includes the preview report and the screenshot of the complete ICE derivation and revised Question 7. Native PDF export, native iPad/Safari and physical printing were not tested. This update is prepared as a draft PR for review; no merge or public deployment is claimed.

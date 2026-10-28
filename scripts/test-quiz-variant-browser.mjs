@@ -166,6 +166,7 @@ try {
   await page.locator('.quiz-variant-preview > header button').click(); await panel.locator('.companion-close').click();
   await page.locator('#hub-view [data-language="en"]').click();
   await source.locator('[data-generate-variant]').click();
+  await panel.locator('.companion-variant').waitFor({ state: 'visible' });
   assert.match(await panel.locator('[data-variant-title]').textContent(), /Practice from question/);
   await input.fill('create'); await input.press('Enter'); await page.locator('.quiz-variant-preview[open]').waitFor();
   await page.frameLocator('.quiz-variant-preview iframe').locator('.quiz-option').first().waitFor();
@@ -175,6 +176,7 @@ try {
   await page.locator('.quiz-variant-preview > header button').click();
   await sourceFrame.evaluate(() => LearningHubQuiz.goToQuestion(1));
   await source.locator('[data-generate-variant]').click();
+  await page.waitForFunction(() => document.querySelector('[data-variant-title]').textContent.includes('question 2'));
   assert.match(await panel.locator('[data-variant-title]').textContent(), /question 2/);
   assert.doesNotMatch(await panel.locator('.companion-messages').textContent(), /discuss style/);
   await panel.locator('.companion-close').click();

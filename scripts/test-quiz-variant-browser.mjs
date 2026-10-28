@@ -162,6 +162,8 @@ try {
   await page.locator('.quiz-variant-preview[open]').waitFor();
   await page.frameLocator('.quiz-variant-preview iframe').locator('.quiz-option').first().waitFor();
   const bounds = await page.locator('.quiz-variant-preview').boundingBox(); assert.ok(bounds.x >= 0 && bounds.x + bounds.width <= 391);
+  const visiblePrompt = await page.frameLocator('.quiz-variant-preview iframe').locator('[data-current-prompt]').boundingBox();
+  assert.ok(visiblePrompt.y + visiblePrompt.height < 650, 'Compact practice puts the question on screen');
   await mkdir(output, { recursive: true }); await page.screenshot({ path: resolve(output, 'quiz-variant-mobile.png') });
   await page.locator('.quiz-variant-preview > header button').click(); await panel.locator('.companion-close').click();
   await page.locator('#hub-view [data-language="en"]').click();

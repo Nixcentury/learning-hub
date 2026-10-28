@@ -26,7 +26,14 @@ function setup(language = 'th') {
     alert(message) { alerts.push(message); },
     MathJax: { typesetPromise:async () => {}, typesetClear:() => {} },
   };
-  vm.runInNewContext(source, {window, document, Intl, Date});
+  window.document = document; window.parent = window;
+  Object.defineProperty(document, 'currentScript', { value: { src: 'https://school.test/learning-hub/shared/print-core.js' } });
+  const context = vm.createContext({ window, document, Intl, Date, URL, URLSearchParams, TextEncoder, AbortController, setTimeout, clearTimeout,
+    location: { href: 'https://school.test/learning-hub/pages/tools/quiz-player.html', search: '', origin: 'https://school.test' }, parent: window,
+    fetch: async () => ({ ok: true, json: async () => ({ routes: [] }) }) });
+  vm.runInContext(fs.readFileSync(new URL('../public/shared/print-names.js', import.meta.url), 'utf8'), context);
+  window.LearningHubPrintNames = context.LearningHubPrintNames;
+  vm.runInContext(source, context);
   const api = window.LearningHubPrint;
   api.configure({ getContent:() => document.querySelector('#quiz'), getTitle:() => 'Saved quiz' });
   return {api, window, document, printed, alerts};
@@ -109,6 +116,7 @@ test('closing the review during resource preparation cancels the deferred print'
   let finish;
   window.MathJax.typesetPromise = () => new Promise(resolve => { finish = resolve; });
   const pending = api.printReview({content});
+  for (let i = 0; !finish && i < 20; i++) await Promise.resolve();
   dialog.open = false;
   finish();
   assert.equal(await pending, false);

@@ -1155,8 +1155,12 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
     return startLatestQuiz();
   }
 
-  function bindExamActions() {
-    document.querySelector('[data-generate-variant]')?.addEventListener('click', () => {
+  // Delegate from the stable app root: question navigation and MathJax can
+  // remount card content without losing the per-question action.
+  app.addEventListener('click', event => {
+    if (event.target.closest('[data-generate-variant]')) requestVariant();
+  });
+  function requestVariant() {
       if (temporary || !contentReady || submissionBusy || closing) return;
       const status = document.querySelector('[data-variant-status]');
       const source = variantSources.get(`${language()}:${currentQuestion().id}`);
@@ -1167,7 +1171,9 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
         return;
       }
       parent.postMessage({ type: 'learning-hub-quiz-variant-request', source }, location.origin);
-    });
+  }
+
+  function bindExamActions() {
     document.querySelector("[data-topic-review-open]")?.addEventListener("click", openTopicReview);
     document.querySelector("[data-hint-button]")?.addEventListener("click", revealHint);
     document.querySelector("[data-giveup-button]")?.addEventListener("click", () => {

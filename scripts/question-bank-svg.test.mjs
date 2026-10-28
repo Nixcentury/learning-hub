@@ -94,7 +94,13 @@ test('real Print Core preserves SVG in worksheets and answer keys without changi
   printDocument.body.append(root);
   const source = root.outerHTML;
   const window = { addEventListener() {} };
-  vm.runInNewContext(fs.readFileSync(new URL('../public/shared/print-core.js', import.meta.url), 'utf8'), { window, document: printDocument, Intl, Date });
+  window.document = printDocument; window.parent = window;
+  Object.defineProperty(printDocument, 'currentScript', { value: { src: 'https://school.test/learning-hub/shared/print-core.js' } });
+  const context = vm.createContext({ window, document: printDocument, Intl, Date, URL, URLSearchParams, TextEncoder,
+    location: { href: 'https://school.test/learning-hub/pages/tools/quiz-player.html', search: '' }, parent: window });
+  vm.runInContext(fs.readFileSync(new URL('../public/shared/print-names.js', import.meta.url), 'utf8'), context);
+  window.LearningHubPrintNames = context.LearningHubPrintNames;
+  vm.runInContext(fs.readFileSync(new URL('../public/shared/print-core.js', import.meta.url), 'utf8'), context);
   const print = window.LearningHubPrint;
   print.configure({ getTitle: () => 'SVG print QA', getContent: () => root });
   const host = printDocument.querySelector('[data-print-host]');

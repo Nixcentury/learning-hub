@@ -22,7 +22,10 @@
   printHost.setAttribute("aria-hidden", "true");
   document.body.append(printHost);
 
-  let originalTitle = document.title;
+  const names = window.LearningHubPrintNames;
+  const hubBase = new URL('../', document.currentScript.src);
+  const titles = names.createPrintTitleSession(window);
+  let catalog = null, catalogRequest = null, hubContext = {}, bankMetadata = {}, bankMetadataKey = '';
   let configuredTitle = null;
   let configuredContent = null;
   let selectedQuestionIds = new Set();
@@ -47,6 +50,47 @@
   function resolveContent() {
     return typeof configuredContent === "function" ? configuredContent() : configuredContent;
   }
+
+  function printContext() {
+    const params = new URLSearchParams(location.search);
+    const bankSubject = params.get('bankSubject');
+    const context = bankSubject ? { subjectId: bankSubject, chapterId: 'bank', topicId: params.get('bankKey') } : {};
+    const source = params.get('content') || document.body.dataset.contentSrc;
+    return names.resolvePrintContext({ catalog, context: { ...context, ...hubContext },
+      source: source ? new URL(source, location.href).href : '', baseUrl: hubBase.href });
+  }
+  function getFilename({ mode = 'worksheet', metadata = {} } = {}) {
+    const context = printContext();
+    const root = resolveContent() || document.documentElement;
+    const authored = names.readPrintMetadata({ documentElement: root }, language());
+    const labels = names.resolvePrintMetadata({ catalog, context, title: resolveTitle(), language: language(),
+      authored: { ...bankMetadata, ...authored } });
+    return names.buildPrintFilename({ ...labels, subjectId: context.subjectId, ...metadata, mode, language: language() });
+  }
+  async function prepareMetadata() {
+    catalogRequest ||= names.loadPrintCatalog(hubBase).then(value => { catalog = value; });
+    await catalogRequest;
+    const context = printContext();
+    const key = JSON.stringify([context.subjectId, context.chapterId, context.topicId, language()]);
+    if (bankMetadataKey === key) return;
+    bankMetadataKey = key; bankMetadata = {};
+    if (context.chapterId === 'bank') {
+      try {
+        const { loadBankPrintMetadata } = await import(new URL('shared/print-bank-metadata.js', hubBase).href);
+        const value = await loadBankPrintMetadata(context, language());
+        if (bankMetadataKey === key) bankMetadata = value;
+      } catch { /* Labels are optional; never block a printable document. */ }
+    }
+  }
+  function receiveContext(context) {
+    const next = context?.content || {};
+    if (JSON.stringify(next) !== JSON.stringify(hubContext)) { bankMetadata = {}; bankMetadataKey = ''; }
+    hubContext = next;
+  }
+  window.addEventListener('message', event => {
+    if (event.source === parent && event.origin === location.origin && event.data?.type === 'learning-hub-context') receiveContext(event.data);
+  });
+  document.addEventListener('learning-hub-context-change', event => receiveContext(event.detail));
 
   function questions() {
     const content = resolveContent();
@@ -357,14 +401,13 @@
     document.body.dataset.printMode = mode;
     updatePrintTimestamp();
 
-    const title = resolveTitle();
-    if (title) document.title = `${title} · ${mode} · Learning Hub`;
+    titles.set(getFilename({ mode }));
     return true;
   }
 
   function restore() {
     window.MathJax?.typesetClear?.([printHost]);
-    document.title = originalTitle;
+    titles.restore();
     delete document.body.dataset.printMode;
     printHost.setAttribute("aria-hidden", "true");
     printHost.replaceChildren();
@@ -379,12 +422,10 @@
 
   async function print(mode = "worksheet") {
     if (preparingPrint) return;
-    if (!prepare(mode)) {
-      setSelectionPanel(true);
-      return;
-    }
     preparingPrint = true;
     try {
+      await prepareMetadata();
+      if (!prepare(mode)) { setSelectionPanel(true); return; }
       await typesetPrint();
       window.print();
     } catch {
@@ -394,7 +435,7 @@
   }
 
   // Print the review panel without reconfiguring the quiz or its selected questions.
-  async function printReview({ content, title } = {}) {
+  async function printReview({ content, title, metadata = {} } = {}) {
     if (preparingPrint || !content?.isConnected) return false;
     const dialog = content.closest('dialog');
     const isCurrent = () => content.isConnected && (!dialog || dialog.open);
@@ -417,7 +458,9 @@
       printHost.setAttribute('aria-hidden', 'false');
       activeMode = 'topic-review';
       document.body.dataset.printMode = activeMode;
-      document.title = `${heading.textContent} · Learning Hub`;
+      await prepareMetadata();
+      if (!isCurrent()) { restore(); return false; }
+      titles.set(getFilename({ mode: 'topic-review', metadata: { ...metadata, work: metadata.work || heading.textContent } }));
       await typesetPrint();
       await Promise.all([...printHost.querySelectorAll('img')].map(image => {
         image.loading = 'eager';
@@ -434,9 +477,10 @@
   }
 
   function configure({ getTitle, getContent } = {}) {
+    bankMetadata = {}; bankMetadataKey = '';
     if (getTitle) configuredTitle = getTitle;
     if (getContent) configuredContent = getContent;
-    originalTitle = document.title;
+
     renderQuestionSelector();
   }
 
@@ -461,6 +505,7 @@
 
   window.LearningHubPrint = Object.freeze({
     configure,
+    getFilename, prepareMetadata,
     getSelectedQuestionIds: () => [...selectedQuestionIds],
     prepare,
     typesetPrint,

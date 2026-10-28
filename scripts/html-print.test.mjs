@@ -1,7 +1,8 @@
+import { loadBankPrintMetadata } from '../public/shared/print-bank-metadata.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { safePrintUrl, htmlPrintCSS } from '../js/html-print.js';
-import { normalizePrintMetadata, resolvePrintMetadata } from '../js/print-metadata.js';
+import { normalizePrintMetadata, resolvePrintMetadata, buildPrintFilename, resolvePrintContext, createPrintTitleSession } from '../js/print-metadata.js';
 import { defaultPrintProfile, printPageCSS, tableRowGroups } from '../js/print-layout.js';
 
 test('device margins are automatic on iOS including desktop-mode iPad, not Android or Mac', () => {
@@ -66,4 +67,59 @@ test('print layout separates long sections but keeps equations and table rows to
   assert.match(htmlPrintCSS, /section[^\n]*break-inside:auto !important/);
   assert.match(htmlPrintCSS, /data-hub-math="display"[^\n]*break-inside:avoid/);
   assert.match(htmlPrintCSS, /thead[^\n]*table-header-group/);
+});
+
+
+test('default print names use course codes, Thai chapter/work labels and separate paper editions', () => {
+  const labels = { subjectId: 'physics', chapter: 'สมดุลกล', work: 'ใบงานที่ 1', extension: 'pdf' };
+  assert.equal(buildPrintFilename({ ...labels, mode: 'worksheet' }), 'PHY-สมดุลกล-ใบงานที่ 1-โจทย์.pdf');
+  assert.equal(buildPrintFilename({ ...labels, mode: 'answer' }), 'PHY-สมดุลกล-ใบงานที่ 1-เฉลย.pdf');
+  assert.equal(buildPrintFilename({ subject: 'เคมี', chapter: 'กรด–เบส', work: 'ใบเรียนรู้', mode: 'blank' }), 'CHEM-กรด–เบส-ใบเรียนรู้-ฉบับว่าง');
+  assert.equal(buildPrintFilename({ subjectId: 'chemistry', chapter: 'Acids', work: 'Sheet 1', mode: 'answer', language: 'en' }), 'CHEM-Acids-Sheet 1-Answers');
+});
+
+test('filenames keep Thai, remove path/control characters and reserve room for the edition suffix', () => {
+  const name = buildPrintFilename({ subjectId: 'physics', chapter: '../สมดุล/กล:?', work: 'ใบ\u0000งาน*ที่ 1', extension: 'pdf' });
+  assert.equal(name, 'PHY-สมดุล-กล-ใบงาน-ที่ 1.pdf');
+  assert.doesNotMatch(name, /[<>:"/\\|?*]/);
+  const long = buildPrintFilename({ subjectId: 'chemistry', chapter: 'ก'.repeat(240), work: 'ข'.repeat(240), mode: 'answer', extension: 'pdf' });
+  assert.ok(new TextEncoder().encode(long).length <= 219);
+  assert.ok(long.endsWith('-เฉลย.pdf'));
+});
+
+test('missing or repeated labels do not leak IDs or leave empty filename components', () => {
+  assert.equal(buildPrintFilename({ subjectId: 'unknown', chapter: '', work: '', language: 'en' }), 'HUB-Document');
+  assert.equal(buildPrintFilename({ subjectId: 'physics', chapter: 'Forces', work: 'Forces' }), 'PHY-Forces');
+  assert.equal(buildPrintFilename({ subjectId: 'biology', work: 'Cells' }), 'BIO-Cells');
+  assert.equal(buildPrintFilename({ subjectId: 'constructor', subject: '__proto__', work: 'Sheet' }), 'HUB-Sheet');
+});
+
+test('standalone content can recover a unique authored placement and subject folder without guessing a chapter', () => {
+  const catalog = { contents: [{ source: 'content/physics/forces/quiz.html', placements: [{ subjectId: 'physics', chapterId: '2', topicId: 'force' }] }] };
+  const baseUrl = 'https://school.test/learning-hub/';
+  assert.deepEqual(resolvePrintContext({ catalog, source: baseUrl + 'content/physics/forces/quiz.html', baseUrl }), { subjectId: 'physics', chapterId: '2', topicId: 'force' });
+  assert.deepEqual(resolvePrintContext({ source: baseUrl + 'content/chemistry/unknown.html', baseUrl }), { subjectId: 'chemistry' });
+});
+
+test('printing temporarily names the child and parent tabs, then restores their own titles', () => {
+  const top = { document: { title: 'Hub' } }; top.parent = top;
+  const child = { document: { title: 'Quiz' }, parent: top };
+  const session = createPrintTitleSession(child);
+  session.set('PHY-Forces-Questions'); assert.equal(top.document.title, 'PHY-Forces-Questions'); assert.equal(child.document.title, top.document.title);
+  session.set('PHY-Forces-Answers'); session.restore();
+  assert.equal(top.document.title, 'Hub'); assert.equal(child.document.title, 'Quiz');
+  session.set('PHY-Next'); top.document.title = 'A new page'; session.restore();
+  assert.equal(top.document.title, 'A new page'); assert.equal(child.document.title, 'Quiz');
+});
+
+test('bank print chapter labels use catalog paths without replacing the question snapshot', async () => {
+  const context = { subjectId: 'physics', chapterId: 'bank', topicId: 'b-' + 'a'.repeat(24) };
+  const catalog = { sets: [{ bankKey: context.topicId, path: ['ฟิสิกส์', 'Learning Hub', 'สมดุลกล(Equilibrium)', 'ใบงาน'] }] };
+  const before = JSON.stringify(catalog);
+  const client = { catalog: async () => catalog };
+  assert.deepEqual(await loadBankPrintMetadata(context, 'th', client), { chapter: 'สมดุลกล' });
+  assert.deepEqual(await loadBankPrintMetadata(context, 'en', client), { chapter: 'Equilibrium' });
+  assert.equal(JSON.stringify(catalog), before);
+  assert.deepEqual(await loadBankPrintMetadata(context, 'th', { catalog: async () => { throw Error('offline'); } }), {});
+  assert.deepEqual(await loadBankPrintMetadata({ ...context, topicId: 'not-a-bank-key' }, 'th', client), {});
 });

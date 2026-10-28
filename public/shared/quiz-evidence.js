@@ -1,3 +1,4 @@
+import './print-names.js';
 import { NotebookCore } from "../pages/tools/notebook-core.js";
 import { validateNotebookBackup, restoreNotebookRecords } from "./notebook-backup.js";
 import { dragAnswerText, dragQuestionText, createDragEvidenceBody } from "./quiz-drag-view.js";
@@ -1260,7 +1261,7 @@ export class QuizEvidenceManager {
     }
   }
 
-  async exportPdf({ title, results, onProgress = () => {} }) {
+  async exportPdf({ title, filename, results, onProgress = () => {} }) {
     const lifecycle = this.lifecycle;
     const checkSession = () => {
       if (lifecycle !== this.lifecycle) throw new Error("Quiz session changed.");
@@ -1309,11 +1310,9 @@ export class QuizEvidenceManager {
         completedPages += 1;
         onProgress({ current: completedPages, total: totalPages });
       }
-      const suffix = groups.length > 1 ? `_part-${groupIndex + 1}-of-${groups.length}` : "";
-      const fileName = `${this.contentId}_reasoning-evidence${suffix}.pdf`.replace(
-        /[^a-z0-9_.-]/gi,
-        "-",
-      );
+      const suffix = groups.length > 1 ? `-part-${groupIndex + 1}-of-${groups.length}` : '';
+      const stem = filename || globalThis.LearningHubPrintNames.buildPrintFilename({ work: title, mode: 'evidence', language: this.language() });
+      const fileName = `${stem}${suffix}.pdf`;
       pdf.save(fileName);
       fileNames.push(fileName);
     }

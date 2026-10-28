@@ -1,4 +1,4 @@
-import { createTopicReviewBrowser } from './topic-review.js?v=review-in-hub-20261023-1';
+import { createTopicReviewBrowser } from './topic-review.js?v=print-names-20261028';
 import { bankSubjects } from './question-bank-model.js';
 
 const params = new URLSearchParams(location.search);

@@ -176,9 +176,23 @@ try {
   assert.equal(errors.length, 0, errors.join('\n'));
   console.log('PASS mobile/tablet layout and TH/EN temporary practice');
   await page.locator('.quiz-variant-preview > header button').click();
-  await sourceFrame.evaluate(() => LearningHubQuiz.goToQuestion(1));
+  await page.evaluate(() => {
+    window.__switchMessages = [];
+    window.addEventListener('message', event => {
+      if (event.data?.type === 'learning-hub-quiz-variant-request') window.__switchMessages.push({ number: event.data.source?.number,
+        owned: event.source === document.querySelector('.workspace-tool-frame')?.contentWindow,
+        active: document.querySelector('.workspace-window')?.className });
+    });
+  });
+  console.log('SWITCH source state', await sourceFrame.evaluate(() => { LearningHubQuiz.goToQuestion(1); return LearningHubQuiz.getState().currentIndex; }));
   await source.locator('[data-generate-variant]').click();
-  await page.waitForFunction(() => document.querySelector('[data-variant-title]').textContent.includes('question 2'));
+  try { await page.waitForFunction(() => document.querySelector('[data-variant-title]').textContent.includes('question 2'), null, { timeout: 5000 }); }
+  catch (error) {
+    console.log('SWITCH diagnostics', await page.evaluate(() => ({ messages: window.__switchMessages,
+      title: document.querySelector('[data-variant-title]').textContent, language: document.documentElement.lang })),
+      await sourceFrame.evaluate(() => ({ index: LearningHubQuiz.getState().currentIndex, status: document.querySelector('[data-variant-status]')?.textContent })));
+    throw error;
+  }
   assert.match(await panel.locator('[data-variant-title]').textContent(), /question 2/);
   assert.doesNotMatch(await panel.locator('.companion-messages').textContent(), /discuss style/);
   await panel.locator('.companion-close').click();

@@ -30,3 +30,20 @@ Ignored evidence is under `qa-output/physics-4-3/`: the current public catalog s
 ## Limits
 
 No native iPad/Safari/Apple Pencil, browser PDF export, physical printer, signed-in account or Cloud-write test. The source is prepared as a separate review branch; no merge or deployment is implied by a local build. The simulation introduces the concepts but does not replace all IPST end-of-section problems.
+
+## 28 October 2026 — configurable cart trials
+
+Teacher-requested update to experiment 2, preserving the existing activity ID, bank route and progress structure:
+
+- The visible model note explicitly says friction and air resistance are neglected, in both languages.
+- The cart accepts a simulation interval of 1–60 whole seconds and a signed initial velocity from −20 to 20 m/s. Changing initial velocity or restarting applies that initial condition; changing the force sliders does not reset velocity. The inputs are disabled during a run and invalid/empty values cannot start it.
+- Both guided observations and “Run this setup” honor the chosen interval. A trial ends exactly at its configured duration. The view pauses while the velocity reading remains the computed physical velocity. Long braking trials can reach rest or reverse, as described in the existing explanation. The default 2-second braking observation now gives 2→0 m/s, replacing the original automatic 1-second brake cutoff.
+- The final comparison shows elapsed interval, before/after velocities and the resultant for a constant-force trial. Zero-resultant trials distinguish remaining at rest from keeping a non-zero velocity. If force is edited during a trial, the summary instead records that forces changed; it does not falsely claim zero resultant throughout.
+- Applied force labels `F_L` and `F_R` include values in N and a bilingual symbol key. The separate resultant row shows `ΣF` and its signed value, including zero; velocity retains its blue `v` arrow.
+- New control values and the latest completed cart comparison survive local reload and TH/EN switching. Existing snapshots without the new fields receive defaults; malformed new values are rejected. The latest comparison is included in the selected-language print record.
+- Targeted simulation tests: **14/14 pass**, including 15-second coasting from +3, 0 and −2 m/s, exact stopping of the simulation clock, acceleration, reversal, preserving velocity while changing force, restart, invalid inputs, old-state migration, latest-comparison reload/translation/print, and force changes during a trial. The complete six-stage exercise flow still passes.
+- Existing repository suite: **395/395 pass**. Production build, content validation and Pages artifact checks pass; 32 existing draft warnings remain. Source changes are confined to this simulation, its existing test and these source/QA notes; shared Hub timer/workspace code is unchanged.
+
+Browser evidence and device limits for this update are recorded with the final task evidence under ignored `qa-output/equilibrium-seconds/`.
+
+- Update browser check: the built simulation was exercised through the real prediction/observation/answer gates. A custom run entered through the numeric fields with 15 s, v₀ = 3 m/s and F_L = F_R = 2 N ended at 15.00 s, x = 45.00 m and v = 3.00 m/s. TH/EN switching and actual page reload retained both inputs and the result. The friction note and F_L/F_R/ΣF labels were present. A 390px iframe (375px content width) was checked in both languages with no horizontal overflow; the maximum-force label case had no clipped SVG text. This update was checked as the production simulation document and an iframe fixture; the existing Hub route/ID and central timing controls were retained. Native iPad/Safari and PDF export remain untested.

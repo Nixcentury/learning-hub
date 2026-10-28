@@ -47,6 +47,37 @@ function app(storage=new Map()){
   return {document,api:context.LearningHubSimulation,click,predict,answer,run,tick,events,context,storage};
 }
 function completeFirst(a){a.predict(0);a.run('two');a.run('press');a.answer(0,2);a.answer(1,0);}
+function cartSetup(a,duration,velocity,left=2,right=2){
+  for(const [id,value] of [['duration',duration],['initialVelocity',velocity]]){const input=a.document.getElementById(id);input.value=String(value);input.onchange();}
+  for(const [id,value] of [['left',left],['right',right]]){const input=a.document.getElementById(id);input.value=String(value);input.oninput();}
+}
+test('15-second balanced trials preserve moving, stationary and leftward initial velocities and stop exactly',()=>{
+  for(const velocity of [3,0,-2]){
+    const a=app();completeFirst(a);a.click('#next');a.predict(2);cartSetup(a,15,velocity);a.click('#play');a.tick(15.2);
+    const s=a.api.getState();close(s.time,15);close(s.body.vx,velocity);close(s.body.x,15*velocity);assert.equal(s.lastCartTrial.duration,15);close(s.lastCartTrial.initialVelocity,velocity);close(s.lastCartTrial.finalVelocity,velocity);close(s.lastCartTrial.resultantX,0);
+    assert.match(a.document.getElementById('cartSummary').textContent,velocity===0?/ยังอยู่นิ่ง/:/ความเร็วเดิม/);
+    a.tick(2);close(a.api.getState().time,15);close(a.api.getState().body.x,15*velocity);
+    a.click('#language');assert.match(a.document.getElementById('cartSummary').textContent,/15 s complete/);a.click('#print');assert.match(a.document.getElementById('record').textContent,/15 s complete/);
+    const reloaded=app(a.storage);close(reloaded.api.getState().controls.initialVelocity,velocity);assert.equal(reloaded.api.getState().controls.duration,15);close(reloaded.api.getState().lastCartTrial.finalVelocity,velocity);
+  }
+});
+test('configured interval supports acceleration, stopping and reversal without resetting speed when force changes',()=>{
+  const a=app();completeFirst(a);a.click('#next');a.predict(2);cartSetup(a,15,3,0,2);a.click('#play');a.tick(15.2);close(a.api.getState().body.vx,18);close(a.api.getState().body.x,157.5);
+  const left=a.document.getElementById('left');left.value='2';left.oninput();close(a.api.getState().body.vx,18);
+  a.click('#restart');close(a.api.getState().body.vx,3);close(a.api.getState().time,0);
+  cartSetup(a,15,3,4,2);a.click('#play');a.tick(15.2);close(a.api.getState().body.vx,-12);assert.equal(a.api.getState().lastCartTrial.resultantX,-2);
+});
+test('invalid numeric controls do not run; legacy snapshots gain defaults and corrupt trial metadata is rejected',()=>{
+  const a=app();completeFirst(a);a.click('#next');a.predict(2);
+  for(const bad of ['',0,61,1.5,'NaN']){a.document.getElementById('duration').value=String(bad);a.click('#play');a.tick(.2);close(a.api.getState().time,0);assert.equal(a.document.getElementById('duration').getAttribute('aria-invalid'),'true');}
+  a.document.getElementById('duration').value='15';a.document.getElementById('initialVelocity').value='21';a.click('#play');a.tick(.2);close(a.api.getState().time,0);
+  const legacy=a.api.getState();delete legacy.controls.duration;delete legacy.controls.initialVelocity;delete legacy.lastCartTrial;assert.equal(a.api.restoreState(legacy),true);assert.equal(a.api.getState().controls.duration,2);assert.equal(a.api.getState().controls.initialVelocity,0);
+  const valid=a.api.getState();for(const bad of [{...valid,controls:{...valid.controls,duration:0}},{...valid,controls:{...valid.controls,initialVelocity:Infinity}},{...valid,lastCartTrial:{duration:15,initialVelocity:3,finalVelocity:3,resultantX:99}}])assert.equal(a.api.restoreState(bad),false);
+});
+test('changing forces during a trial does not falsely claim zero resultant throughout',()=>{
+  const a=app();completeFirst(a);a.click('#next');a.predict(2);cartSetup(a,2,3);a.click('#play');a.tick(.6);const left=a.document.getElementById('left');left.value='0';left.oninput();a.tick(2);
+  assert.equal(a.api.getState().lastCartTrial.resultantX,null);assert.match(a.document.getElementById('cartSummary').textContent,/เปลี่ยนแรงระหว่าง/);assert.doesNotMatch(a.document.getElementById('cartSummary').textContent,/ความเร็วเดิม/);
+});
 test('prediction required; actual observations unlock questions; wrong answers can be corrected',()=>{
   const a=app();assert.equal(a.document.querySelector('[data-observation="two"]').disabled,true);assert.equal(a.document.querySelectorAll('[data-question]').length,0);
   a.predict(0);a.run('two');assert.equal(a.document.querySelectorAll('[data-question]').length,0);a.run('press');a.answer(0,0);a.answer(1,0);assert.equal(a.api.getState().completed[0],false);
@@ -56,7 +87,7 @@ test('prediction required; actual observations unlock questions; wrong answers c
 });
 test('all five experiments and final questions complete through the actual app handlers',()=>{
   const a=app();completeFirst(a);a.click('#next');a.predict(0);
-  a.run('accelerate');a.tick(2.2);close(a.api.getState().body.vx,2);a.run('coast');a.tick(2.2);close(a.api.getState().body.vx,2);a.run('brake');a.tick(1.2);close(a.api.getState().body.vx,1);
+  a.run('accelerate');a.tick(2.2);close(a.api.getState().body.vx,2);a.run('coast');a.tick(2.2);close(a.api.getState().body.vx,2);a.run('brake');a.tick(2.2);close(a.api.getState().body.vx,0);
   a.answer(0,0);a.answer(1,1);a.click('#next');a.predict(1);a.run('closed');a.tick(1.2);close(a.api.getState().body.vx,0);a.run('open');a.tick(1.2);close(Math.hypot(a.api.getState().body.vx,a.api.getState().body.vy),5);
   a.answer(0,2);a.answer(1,0);a.click('#next');a.predict(0);for(const k of ['shallow','steep','asymmetric'])a.run(k);a.answer(0,1);a.answer(1,2);
   a.click('#next');a.predict(1);a.run('stick');a.tick(1.2);close(a.api.getState().body.vx,0);a.run('slide');a.tick(1.2);assert.ok(a.api.getState().body.vx>0);a.answer(0,2);a.answer(1,0);

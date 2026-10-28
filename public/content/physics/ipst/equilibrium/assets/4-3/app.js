@@ -4,13 +4,13 @@
   const ID='physics-ipst-equilibrium-4-3-sim',colors={f:'#b86217',f2:'#8250a8',f3:'#63719b',r:'#087b61',v:'#2169bd',soft:'#9caac2'};
   let identity='guest',lang=new URLSearchParams(location.search).get('lang')==='en'?'en':'th';
   try{const preferred=new URLSearchParams(location.search).get('lang')||localStorage.getItem('simulation-language:'+ID);if(['th','en'].includes(preferred))lang=preferred;}catch{}
-  let running=false,pending=null,lastFrame=null,remaining=0,subscriber=null,saveFailed=false;
+  let running=false,pending=null,cartTrial=null,lastFrame=null,remaining=0,subscriber=null,saveFailed=false;
   const P=pair=>pair[lang==='th'?0:1],L=(th,en)=>P([th,en]);
   const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const fmt=(n,d=2)=>Math.abs(n)<1e-8?(0).toFixed(d):Math.abs(n)<.5*10**(-d)?n.toPrecision(2):n.toFixed(d);
   const zero=()=>({x:0,y:0,vx:0,vy:0});
-  const controlsDefault=()=>({press:0,left:0,right:2,third:5,angle:233.13010235415598,alpha:30,beta:30,slope:20,components:false});
-  function blank(){return {schemaVersion:1,contentId:ID,identityKey:identity,mission:0,completed:missions.map(()=>false),predictions:missions.map(()=>null),answers:missions.map(m=>m.questions.map(()=>null)),observations:missions.map(()=>({})),body:zero(),time:0,controls:controlsDefault()};}
+  const controlsDefault=()=>({press:0,left:0,right:2,duration:2,initialVelocity:0,third:5,angle:233.13010235415598,alpha:30,beta:30,slope:20,components:false});
+  function blank(){return {schemaVersion:1,contentId:ID,identityKey:identity,mission:0,completed:missions.map(()=>false),predictions:missions.map(()=>null),answers:missions.map(m=>m.questions.map(()=>null)),observations:missions.map(()=>({})),body:zero(),time:0,lastCartTrial:null,controls:controlsDefault()};}
   let s=blank();
   const key=()=>`learning-hub-simulation:v1:${identity}:${ID}`;
   const maxUnlocked=()=>{let i=0;while(i<missions.length-1&&s.completed[i])i++;return i;};
@@ -35,9 +35,13 @@
     const c=value.controls;if(!c||typeof c.components!=='boolean')return false;
     const ranges={press:[0,20],left:[0,6],right:[0,6],third:[0,8],angle:[180,270],alpha:[15,75],beta:[15,75],slope:[10,40]};
     if(Object.entries(ranges).some(([k,[lo,hi]])=>!Number.isFinite(c[k])||c[k]<lo||c[k]>hi))return false;
+    if(c.duration!==undefined&&(!Number.isInteger(c.duration)||c.duration<1||c.duration>60))return false;
+    if(c.initialVelocity!==undefined&&(!Number.isFinite(c.initialVelocity)||Math.abs(c.initialVelocity)>20))return false;
+    const trial=value.lastCartTrial;
+    if(trial!=null&&(!Number.isFinite(trial.initialVelocity)||!Number.isFinite(trial.finalVelocity)||Math.abs(trial.initialVelocity)>1e7||Math.abs(trial.finalVelocity)>1e7||!Number.isInteger(trial.duration)||trial.duration<1||trial.duration>60||(trial.resultantX!==null&&(!Number.isFinite(trial.resultantX)||Math.abs(trial.resultantX)>6))))return false;
     let allowed=0;while(allowed<missions.length-1&&value.completed[allowed])allowed++;
     if(value.mission>allowed)return false;
-    s=structuredClone(value);running=false;pending=null;remaining=0;return true;
+    s=structuredClone(value);s.controls.duration??=2;s.controls.initialVelocity??=0;s.lastCartTrial??=null;running=false;pending=null;cartTrial=null;remaining=0;return true;
   }
   function load(){try{const value=JSON.parse(localStorage.getItem(key())||'null');if(value)restore(value);}catch{saveFailed=true;}}
   function button(text,fn,className=''){const b=document.createElement('button');b.type='button';b.textContent=text;b.className=className;b.onclick=fn;return b;}
@@ -70,6 +74,28 @@
     $('status').classList.toggle('unbalanced',!balanced);
     $('play').textContent=running?L('หยุดภาพ','Pause'):L('ทดลองแรงที่ตั้ง','Run this setup');
     $('play').disabled=!predictionMade();$('play').hidden=s.mission===5;$('restart').hidden=s.mission===5;
+    $('cartSummary').hidden=s.mission!==1||!s.lastCartTrial;
+    if(s.lastCartTrial)$('cartSummary').textContent=cartSummaryText();
+  }
+  function cartSummaryText(){
+    const t=s.lastCartTrial;if(!t)return '';
+    const values=L(`ผลช่วงล่าสุด · ครบ ${t.duration} s · ความเร็วก่อน ${fmt(t.initialVelocity)} → หลัง ${fmt(t.finalVelocity)} m/s`,`Latest trial · ${t.duration} s complete · Velocity before ${fmt(t.initialVelocity)} → after ${fmt(t.finalVelocity)} m/s`);
+    if(t.resultantX===0)return values+L(t.initialVelocity===0?' · แรงลัพธ์เป็นศูนย์ รถยังอยู่นิ่ง':' · แรงลัพธ์เป็นศูนย์ รถยังเคลื่อนที่ด้วยความเร็วเดิม',t.initialVelocity===0?' · Zero resultant: the cart remains at rest.':' · Zero resultant: the cart keeps its original velocity.');
+    return values+(t.resultantX===null?L(' · มีการเปลี่ยนแรงระหว่างช่วงทดลอง',' · Forces changed during this interval.'):L(` · แรงลัพธ์ ${fmt(t.resultantX)} N ทำให้ความเร็วเปลี่ยน`,` · A ${fmt(t.resultantX)} N resultant changes the velocity.`));
+  }
+  function readCartInputs(){
+    const time=$('duration'),velocity=$('initialVelocity');
+    const duration=time.value.trim()===''?NaN:Number(time.value),v=velocity.value.trim()===''?NaN:Number(velocity.value);
+    const timeOK=Number.isInteger(duration)&&duration>=1&&duration<=60,velocityOK=Number.isFinite(v)&&Math.abs(v)<=20;
+    time.setAttribute('aria-invalid',String(!timeOK));velocity.setAttribute('aria-invalid',String(!velocityOK));
+    if(!timeOK||!velocityOK){message(L('กรอกเวลาเป็นจำนวนเต็ม 1–60 วินาที และความเร็วเริ่มต้น −20 ถึง 20 m/s','Enter a whole number of seconds from 1–60 and an initial velocity from −20 to 20 m/s.'));return false;}
+    if(s.controls.initialVelocity!==v){s.body={...zero(),vx:v};s.time=0;s.lastCartTrial=null;}
+    s.controls.duration=duration;s.controls.initialVelocity=v;return true;
+  }
+  function cartInput(id,label,min,max,step){
+    const box=document.createElement('label');box.className='cart-input';box.htmlFor=id;
+    const name=document.createElement('span');name.textContent=label;const input=document.createElement('input');input.id=id;input.type='number';input.min=min;input.max=max;input.step=step;input.value=s.controls[id];input.disabled=running;
+    input.onchange=()=>{if(running||!readCartInputs())return;s.lastCartTrial=null;renderReadings();draw();save();};box.append(name,input);return box;
   }
   function slider(id,label,min,max,step,value,unit,callback){
     const box=document.createElement('label');box.className='slider';box.htmlFor=id;
@@ -80,7 +106,9 @@
   function renderControls(){
     const node=$('controls'),c=s.controls;node.replaceChildren();
     if(s.mission===1){
-      for(const [k,label] of [['left',L('แรงไปซ้าย','Leftward force')],['right',L('แรงไปขวา','Rightward force')]])node.append(slider(k,label,0,6,.5,c[k],' N',v=>{c[k]=v;pending=null;}));
+      for(const [k,label] of [['left',L('แรงไปซ้าย','Leftward force')],['right',L('แรงไปขวา','Rightward force')]])node.append(slider(k,label,0,6,.5,c[k],' N',v=>{c[k]=v;pending=null;if(cartTrial)cartTrial.resultantX=null;}));
+      node.append(cartInput('duration',L('ระยะเวลาจำลองต่อช่วง (วินาที)','Simulation interval (seconds)'),1,60,1),cartInput('initialVelocity',L('ความเร็วเริ่มต้น v₀ (m/s) · ขวาเป็นบวก','Initial velocity v₀ (m/s) · right is positive'),-20,20,'any'));
+      const hint=document.createElement('p');hint.className='model-note';hint.textContent=L('เมื่อแก้ความเร็วเริ่มต้นหรือกดเริ่มการทดลองนี้ใหม่ รถจะเริ่มด้วยค่านั้น เมื่อครบเวลาจะหยุดภาพให้เทียบความเร็วก่อน–หลัง','Changing initial velocity or restarting the experiment starts the cart at that velocity. At the end of the interval, the view pauses to compare velocities.');node.append(hint);
     }else if(s.mission===2){
       node.append(slider('third',L('ขนาดแรงที่สาม','Third force magnitude'),0,8,.1,c.third,' N',v=>{c.third=v;running=false;pending=null;s.body=zero();s.time=0;}));
       node.append(slider('angle',L('ทิศแรงที่สาม: ทวนเข็มจากแกนขวา','Third-force angle: counterclockwise from right'),180,270,.1,c.angle,'°',v=>{c.angle=v;running=false;pending=null;s.body=zero();s.time=0;}));
@@ -143,28 +171,29 @@
   }
   function observe(key){
     if(!predictionMade()||running)return;
+    if(s.mission===1&&!readCartInputs())return;
     const c=s.controls,i=s.mission;s.time=i===1?s.time:0;
     if(i===0){c.press=key==='press'?20:0;snapshotObservation(key);draw();renderReadings();return;}
     if(i===3){const angles={shallow:[30,30],steep:[60,60],asymmetric:[20,50]}[key];c.alpha=angles[0];c.beta=angles[1];c.components=true;renderControls();snapshotObservation(key);draw();renderReadings();return;}
     if(i===1){
-      if(key==='accelerate'){s.body=zero();s.time=0;c.left=0;c.right=2;}
+      if(key==='accelerate'){s.body={...zero(),vx:c.initialVelocity};s.time=0;c.left=0;c.right=2;}
       else if(key==='coast'){if(!s.observations[i].accelerate||s.body.vx<=.1){message(L('เร่งรถไปขวาก่อน แล้วค่อยปรับแรงให้เท่ากัน','First accelerate right, then balance the forces.'));return;}c.left=2;c.right=2;}
       else{if(!s.observations[i].coast||s.body.vx<=.1){message(L('ทดลองช่วงแรงเท่ากันขณะรถวิ่งก่อน','First try balanced forces while the cart is moving.'));return;}c.left=4;c.right=2;}
-      startRun(key,key==='brake'?Math.min(1,s.body.vx*.5):2);
+      startRun(key,c.duration);
     }else if(i===2){s.body=zero();c.third=key==='closed'?5:0;c.angle=233.13010235415598;startRun(key,1);}
     else if(i===4){s.body=zero();c.slope=key==='stick'?20:30;startRun(key,1);}
     renderControls();renderReadings();draw();
   }
-  function startRun(key,duration){running=true;remaining=duration;pending=key?{key,startV:s.body.vx,duration}:null;lastFrame=null;message(L('กำลังทดลอง… ดูแรงลัพธ์เทียบกับความเร็ว','Experiment running… compare resultant force and velocity'));renderObservations();}
+  function startRun(key,duration){running=true;remaining=duration;pending=key?{key,startV:s.body.vx,duration}:null;cartTrial=s.mission===1?{initialVelocity:s.body.vx,duration,resultantX:s.controls.right-s.controls.left}:null;if(cartTrial)s.lastCartTrial=null;lastFrame=null;message(L('กำลังทดลอง… ดูแรงลัพธ์เทียบกับความเร็ว','Experiment running… compare resultant force and velocity'));renderControls();renderObservations();}
   function tick(dt){
     const i=s.mission,step=Math.min(dt,remaining);if(i===1)s.body=M.advance(s.body,M.sum(forces()),2,step);
     if(i===2)s.body=M.advance(s.body,M.sum(forces()),1,step);
     if(i===4){const p=M.incline(s.controls.slope);s.body=M.advance(s.body,{x:2*p.acceleration,y:0},2,step);}
     s.time+=step;remaining=Math.max(0,remaining-step);
-    if(remaining<=1e-8){running=false;if(pending)snapshotObservation(pending.key);else{renderObservations();save();}message(L('ทดลองครบช่วงแล้ว ภาพหยุดให้เปรียบเทียบค่า','Observation interval complete. The view is paused for comparison.'));}
+    if(remaining<=1e-8){running=false;if(cartTrial){s.lastCartTrial={...cartTrial,finalVelocity:s.body.vx};cartTrial=null;}if(pending)snapshotObservation(pending.key);else{renderObservations();save();}renderControls();message(L('ทดลองครบช่วงแล้ว ภาพหยุดให้เปรียบเทียบค่า','Observation interval complete. The view is paused for comparison.'));}
   }
   function frame(now){if(lastFrame===null)lastFrame=now;const dt=Math.min(Math.max(0,(now-lastFrame)/1000),.25);lastFrame=now;if(running&&document.visibilityState!=='hidden'){tick(dt);draw();renderReadings();}requestAnimationFrame(frame);}
-  function resetExperiment(){running=false;pending=null;s.body=zero();s.time=0;if(s.mission===5)s.body.vx=2;message(L('เริ่มจากหยุดนิ่งอีกครั้ง เก็บผลเดิมไว้ให้เปรียบเทียบ','Restarted from rest. Previous evidence is kept for comparison.'));renderReadings();renderObservations();draw();save();}
+  function resetExperiment(){if(s.mission===1&&!readCartInputs())return;running=false;pending=null;cartTrial=null;s.body=zero();s.time=0;if(s.mission===1){s.body.vx=s.controls.initialVelocity;s.lastCartTrial=null;}if(s.mission===5)s.body.vx=2;message(s.mission===1?L('เริ่มด้วยความเร็วเริ่มต้นที่ตั้งไว้ เก็บผลเดิมไว้ให้เปรียบเทียบ','Restarted at the configured initial velocity. Previous evidence is kept for comparison.'):L('เริ่มจากหยุดนิ่งอีกครั้ง เก็บผลเดิมไว้ให้เปรียบเทียบ','Restarted from rest. Previous evidence is kept for comparison.'));renderControls();renderReadings();renderObservations();draw();save();}
   function arrow(x,y,dx,dy,color,label='',dashed=false){
     if(Math.hypot(dx,dy)<.05)return '';
     const id=Object.keys(colors).find(k=>colors[k]===color)||'f',tx=x+dx,ty=y+dy;
@@ -182,9 +211,11 @@
       const offset=((s.body.x*55)%60+60)%60;svg+=line(20,262,620,262,'#a3b2ca',4);
       for(let j=-1;j<12;j++){const x=j*60-offset;svg+=line(x,264,x-18,279,'#c7d1e0');}
       svg+=`<rect x="260" y="177" width="120" height="57" rx="12" fill="#dae4fc" stroke="#7f96c0" stroke-width="3"/><circle cx="282" cy="243" r="15" fill="#62718c"/><circle cx="358" cy="243" r="15" fill="#62718c"/>`+text(320,165,'2 kg','strong','middle');
-      svg+=arrow(320,205,-c.left*19,0,colors.f,`${fmt(c.left,1)} N`)+arrow(320,205,c.right*19,0,colors.f2,`${fmt(c.right,1)} N`);
+      svg+=arrow(320,205,-c.left*19,0,colors.f,`F_L = ${fmt(c.left,1)} N`)+arrow(320,205,c.right*19,0,colors.f2,`F_R = ${fmt(c.right,1)} N`);
+      if(!c.left)svg+=text(150,196,'F_L = 0 N','small','middle');if(!c.right)svg+=text(490,196,'F_R = 0 N','small','middle');
       const vscale=Math.min(45,200/Math.max(.01,Math.abs(s.body.vx)));svg+=arrow(320,100,s.body.vx*vscale,0,colors.v)+text(320,77,`v = ${fmt(s.body.vx)} m/s`,'strong','middle');
-      const resultant=c.right-c.left;svg+=arrow(320,318,resultant*19,0,colors.r,'ΣF');if(!resultant)svg+=text(320,325,'ΣF = 0','strong','middle');
+      const resultant=c.right-c.left;svg+=arrow(320,318,resultant*19,0,colors.r,`ΣF = ${fmt(resultant,1)} N`);if(!resultant)svg+=text(320,325,'ΣF = 0 N','strong','middle');
+      svg+=text(320,365,L('F_L: แรงซ้าย · F_R: แรงขวา · ΣF: แรงลัพธ์','F_L: left force · F_R: right force · ΣF: resultant'),'small','middle');
     }else if(i===2){
       const f=forces(),net=M.sum(f),x=200+s.body.x*17,y=210-s.body.y*17;
       svg+=line(30,210,330,210,'#d9e1ef')+line(200,70,200,340,'#d9e1ef');svg+=`<circle cx="${x}" cy="${y}" r="18" fill="#dce6fa" stroke="#7f96c0" stroke-width="3"/>`;
@@ -214,6 +245,7 @@
   function record(){
     let html=`<p class="record-header">PHYSICS · 4.3 · ${esc(L('สมดุลต่อการเลื่อนที่','Translational equilibrium'))}</p><h1>${esc(L('บันทึกผลการทดลอง','Learning record'))}</h1><p>${esc(L('ชื่อ ____________________ ชั้น __________','Name ____________________ Class __________'))}</p>`;
     missions.forEach((m,i)=>{html+=`<section><h2>${esc(P(m.title))}</h2>`;
+      if(i===1&&s.lastCartTrial)html+=`<p class="record-observation">${esc(cartSummaryText())}</p>`;
       if(m.prediction)html+=`<div class="record-question"><p>${esc(P(m.prediction.text))}</p><p>${esc(L('คาดว่า: ','Prediction: '))}${s.predictions[i]===null?'____________________':esc(P(m.prediction.options[s.predictions[i]]))}</p></div>`;
       m.observations.forEach(o=>{const data=s.observations[i][o.key];html+=`<div class="record-observation"><p><strong>${esc(P(o.label))}</strong></p>`;
         html+=data?evidenceReadings(i,data.readings).map(([k,v,u])=>`<p>${esc(P(labels[k]))}: ${fmt(v)} ${esc(u)}</p>`).join(''):`<div class="record-answer"></div>`;html+='</div>';});
@@ -222,7 +254,7 @@
   }
   $('language').onclick=()=>{setLanguage(lang==='th'?'en':'th');if(parent!==window)parent.postMessage({type:'learning-hub-language-request',language:lang},location.origin);};
   $('components').onchange=()=>{s.controls.components=$('components').checked;draw();renderReadings();save();};
-  $('play').onclick=()=>{if(!predictionMade())return;if(running){running=false;pending=null;message(L('หยุดภาพแล้ว กดทดลองเพื่อดูต่อ','Paused. Run the setup to continue.'));renderObservations();save();}else if(s.mission===0){snapshotObservation(s.controls.press?'press':'two');}else if(s.mission===3){message(L('ชุดนี้คำนวณแรงตึงสำหรับสมดุลในแต่ละมุม ลองกรณีเปรียบเทียบด้านข้างเพื่อเก็บผล','This setup calculates equilibrium tensions at each angle. Try the comparison cases to record evidence.'));}else{if(s.mission===2||s.mission===4){s.body=zero();s.time=0;}startRun(null,[2,4].includes(s.mission)?1:2);}renderReadings();draw();};
+  $('play').onclick=()=>{if(!predictionMade())return;if(s.mission===1&&!running&&!readCartInputs())return;if(running){running=false;pending=null;cartTrial=null;renderControls();message(L('หยุดภาพแล้ว กดทดลองเพื่อดูต่อ','Paused. Run the setup to continue.'));renderObservations();save();}else if(s.mission===0){snapshotObservation(s.controls.press?'press':'two');}else if(s.mission===3){message(L('ชุดนี้คำนวณแรงตึงสำหรับสมดุลในแต่ละมุม ลองกรณีเปรียบเทียบด้านข้างเพื่อเก็บผล','This setup calculates equilibrium tensions at each angle. Try the comparison cases to record evidence.'));}else{if(s.mission===2||s.mission===4){s.body=zero();s.time=0;}startRun(null,s.mission===1?s.controls.duration:[2,4].includes(s.mission)?1:2);}renderReadings();draw();};
   $('restart').onclick=resetExperiment;$('next').onclick=()=>selectMission(s.mission+1);
   $('reset').onclick=()=>{if(!confirm(L('ล้างคำตอบและเริ่มทั้ง 6 ช่วงใหม่ในเครื่องนี้หรือไม่?','Clear this device’s answers and restart all six missions?')))return;running=false;pending=null;s=blank();message('');render();save();};
   $('print').onclick=()=>{running=false;pending=null;renderReadings();renderObservations();save();record();window.print();};

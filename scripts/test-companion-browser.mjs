@@ -47,7 +47,7 @@ await new Promise(done => server.listen(0, '127.0.0.1', done));
 const origin = `http://127.0.0.1:${server.address().port}`;
 let browser;
 try {
-  browser = await chromium.launch({ headless: true, channel: 'msedge' });
+  browser = await chromium.launch({ headless: true, channel: process.env.PLAYWRIGHT_CHANNEL || 'msedge' });
   const context = await browser.newContext({ viewport: { width: 1360, height: 900 }, hasTouch: true });
   const requests = [], errors = [];
   let heldReply, live = false, failed = false;

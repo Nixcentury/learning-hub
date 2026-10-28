@@ -1,5 +1,5 @@
 // Lives in the Hub, so lesson messages survive subject/iframe navigation.
-export function createMonitorView({ getLanguage, command, onClassroom }) {
+export function createMonitorView({ getLanguage, command, onClassroom, getOpenRoom = () => '' }) {
   const host = document.createElement('aside'); host.className = 'monitor-banner'; host.hidden = true;
   host.innerHTML = '<span class="monitor-banner-text" role="status"></span><button type="button" data-monitor-open></button>';
   document.body.append(host);
@@ -50,7 +50,7 @@ export function createMonitorView({ getLanguage, command, onClassroom }) {
     const ownerRoom = snapshot.rooms?.find(room => room.id === snapshot.selectedRoomId && room.ownerUid === snapshot.uid);
     const available = (snapshot.rooms || []).filter(room => room.session && room.ownerUid && room.ownerUid !== snapshot.uid);
     const teacherActive = Boolean(ownerRoom?.session);
-    host.hidden = !snapshot.uid || (!current && !teacherActive && !available.length);
+    host.hidden = !snapshot.uid || (!current && !teacherActive && !available.length) || (!current && teacherActive && getOpenRoom() === ownerRoom.id);
     let label = '';
     if (current) {
       const waiting = Boolean(snapshot.selfIncident && !snapshot.selfIncident.ackAt) || (snapshot.selfNotices || []).some(item => !item.ackAt);

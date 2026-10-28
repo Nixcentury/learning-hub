@@ -42,8 +42,9 @@
     const owner = room.membership === 'owner' && context.classroom?.state === 'teacher';
     const liveRoom = data?.rooms?.find(value => value.id === room.id), session = liveRoom?.session;
     const ready = data?.uid === uid, locked = Boolean(session), busy = Boolean(pending || data?.busy);
+    detail.classList.toggle('has-monitoring-session', owner && locked);
     root.dataset.locked = String(locked);
-    root.querySelector('h3').textContent = t('ติดตามคาบเรียน', 'Lesson monitoring');
+    root.querySelector('h3').textContent = t('ติดตามคาบเรียน', 'Lesson monitoring') + (owner && locked ? t(` · ${data?.rows?.length || 0} คน`, ` · ${data?.rows?.length || 0} students`) : '');
     root.querySelector('[data-monitor-badge]').textContent = locked ? t('🔒 เปิดติดตาม', '🔒 Monitoring on') : t('🔓 ปลดล็อก · เว็บปกติ', '🔓 Unlocked · ordinary browsing');
     root.querySelector('[data-monitor-description]').textContent = locked
       ? t('ติดตามเฉพาะคาบนี้ · หน้าเว็บถูกซ่อนเกิน 15 วินาทีจึงเตือน · หมดเวลา ', 'This lesson only · hidden for 15 seconds before a reminder · ends ') + new Date(session.endsAt).toLocaleTimeString(context.language === 'en' ? 'en-GB' : 'th-TH', { hour: '2-digit', minute: '2-digit' })

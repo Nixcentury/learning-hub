@@ -124,6 +124,7 @@ const classroomMonitor = createFirebaseClassroomMonitor(snapshot => {
 const classrooms = createFirebaseClassrooms(snapshot => {
   classroomRooms = snapshot;
   if (snapshot.selected?.id) classroomMonitor.selectRoom(snapshot.selected.id);
+  monitorView?.refresh();
   postContextToPage();
 });
 
@@ -169,6 +170,7 @@ const workspace = createWorkspace({
 monitorView = createMonitorView({ getLanguage: () => currentLanguage,
   command: (action, payload, uid) => classroomMonitor.command(action, payload, uid),
   onClassroom: () => { location.hash = '#classroom'; },
+  getOpenRoom: () => activeSectionId === 'classroom' ? classroomRooms?.selected?.id || '' : '',
 });
 classroomMonitor.setVisible(document.visibilityState !== 'hidden');
 document.addEventListener('visibilitychange', () => classroomMonitor.setVisible(document.visibilityState !== 'hidden'));

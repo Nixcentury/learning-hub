@@ -1,5 +1,5 @@
 import { captureVariantSource, receiveTemporaryQuiz } from './quiz-variant-model.js?v=practice-20261028';
-import { QuizEvidenceManager } from "./quiz-evidence.js?v=drag-1";
+import { QuizEvidenceManager } from "./quiz-evidence.js?v=print-names-20261028";
 import { createNotebookBackupUi } from "./notebook-backup-ui.js?v=6c-backup-2";
 import { readQuizContent } from "./quiz-content-adapter.js";
 import { hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer } from "./quiz-question-model.js";
@@ -9,7 +9,7 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
 import { readBankSelection, loadBankQuiz } from "./question-bank-player.js?v=bank-svg-2-20261026";
 import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
 import { warmQuizEngine } from "./quiz-refresh.js";
-import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023";
+import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-20261028";
 
 /* ==============================================================
    Quiz Engine กลางของ Learning Hub

@@ -45,8 +45,8 @@ async function loadPrintCatalog(baseUrl) {
   finally { clearTimeout(timeout); }
 }
 
-const subjectCodes = { physics: 'PHY', chemistry: 'CHEM', biology: 'BIO', math: 'MATH', mathematics: 'MATH', science: 'SCI', computing: 'CS', english: 'ENG' };
-const subjectAliases = { 'ฟิสิกส์': 'physics', 'เคมี': 'chemistry', 'ชีววิทยา': 'biology', 'คณิตศาสตร์': 'math', 'วิทยาศาสตร์': 'science' };
+const subjectCodes = Object.assign(Object.create(null), { physics: 'PHY', chemistry: 'CHEM', biology: 'BIO', math: 'MATH', mathematics: 'MATH', science: 'SCI', computing: 'CS', english: 'ENG' });
+const subjectAliases = Object.assign(Object.create(null), { 'ฟิสิกส์': 'physics', 'เคมี': 'chemistry', 'ชีววิทยา': 'biology', 'คณิตศาสตร์': 'math', 'วิทยาศาสตร์': 'science' });
 const encoder = new TextEncoder();
 function bounded(value, bytes) {
   let out = '';

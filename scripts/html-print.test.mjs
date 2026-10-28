@@ -91,6 +91,7 @@ test('missing or repeated labels do not leak IDs or leave empty filename compone
   assert.equal(buildPrintFilename({ subjectId: 'unknown', chapter: '', work: '', language: 'en' }), 'HUB-Document');
   assert.equal(buildPrintFilename({ subjectId: 'physics', chapter: 'Forces', work: 'Forces' }), 'PHY-Forces');
   assert.equal(buildPrintFilename({ subjectId: 'biology', work: 'Cells' }), 'BIO-Cells');
+  assert.equal(buildPrintFilename({ subjectId: 'constructor', subject: '__proto__', work: 'Sheet' }), 'HUB-Sheet');
 });
 
 test('standalone content can recover a unique authored placement and subject folder without guessing a chapter', () => {

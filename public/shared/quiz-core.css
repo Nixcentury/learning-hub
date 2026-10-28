@@ -1584,6 +1584,10 @@ body { --keyboard-zindex: 1900; --keycap-height: 46px; --keyboard-accent-color: 
   [data-temporary-quiz] .quiz-title-row h1 { font-size: 20px; }
   [data-temporary-quiz] .quiz-meta-row { margin: 6px 0 0; padding: 0; }
   [data-temporary-quiz] .quiz-question-card { padding: 18px 16px; }
+  [data-temporary-quiz] .quiz-question-context table,
+  [data-temporary-quiz] .quiz-solution table { min-width: 0; }
+  [data-temporary-quiz] .quiz-question-context td,
+  [data-temporary-quiz] .quiz-question-context th { overflow-wrap: anywhere; }
   [data-temporary-quiz] .quiz-action-dock { position: static; }
   [data-temporary-quiz] .quiz-action-grid { grid-template-columns: 1fr 1fr; }
   [data-temporary-quiz] .quiz-action-grid > button { grid-column: auto; }

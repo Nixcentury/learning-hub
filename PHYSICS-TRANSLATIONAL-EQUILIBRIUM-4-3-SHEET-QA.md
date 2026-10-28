@@ -1,6 +1,6 @@
 # QA — ใบเรียนรู้ 4.3 สมดุลต่อการเลื่อนที่
 
-ตรวจ 27 ตุลาคม 2026 บน branch `codex/physics-4-3-learning-sheet-20261027` จาก main `b0a9056` โดยใช้คู่มือรับงาน `docs/learning-sheet/README.md` และรายการตรวจ QA ปัจจุบัน
+ตรวจเนื้อหาและ browser 27 ตุลาคม 2026 บน branch `codex/physics-4-3-learning-sheet-20261027` จาก main `b0a9056` โดยใช้คู่มือรับงาน `docs/learning-sheet/README.md` และรายการตรวจ QA ปัจจุบัน
 
 ## งานที่เพิ่ม
 
@@ -26,9 +26,9 @@
 
 | ตรวจ | ผลจริง |
 | --- | --- |
-| `pnpm test:unit` | 365 ผ่าน, 0 ไม่ผ่าน |
-| `pnpm validate:routes` | ผ่าน: 10 sections, 80 chapters, 19 topics, 34 HTML-menu contents, 153 legacy tool placements |
-| `pnpm build` | ผ่าน รวม content validation 67 files, TypeScript และตรวจ Pages artifact 596 public files |
+| `pnpm test:unit` | 374 ผ่าน, 0 ไม่ผ่าน (ตรวจซ้ำ 28 ตุลาคม หลังรวม main ล่าสุด) |
+| `pnpm validate:routes` | ผ่าน: 10 sections, 80 chapters, 19 topics, 35 HTML-menu contents, 153 legacy tool placements |
+| `pnpm build` | ผ่าน รวม content validation 68 files, TypeScript และตรวจ Pages artifact 601 public files |
 | Content warnings | 32 คำเตือนจากรายการ draft/placeholder เดิม ไม่มีคำเตือนของไฟล์งานนี้ |
 | Build CSS notices | เส้นทาง shared CSS ของ Hub เดิมคงไว้ให้ resolve ตอน runtime; preview โหลดสำเร็จ |
 | `git diff --check` | ผ่าน |
@@ -62,6 +62,10 @@
 หลักฐานในเครื่องอยู่ใต้ `qa-output/physics-4-3-sheet/`: logs, content-map, independent numerical results, final print exports, screenshots ทุก contact sheet และ `worksheet-bridge-proof.jpg` โฟลเดอร์หลักฐานไม่รวมใน PR
 
 ยังไม่ได้ทดสอบ native PDF driver, เครื่องพิมพ์จริง หรือ native iPad/Safari จึงไม่รับรองส่วนเหล่านั้นจากผล Chromium preview
+
+## ตรวจซ้ำหลังกลับมาทำงาน 28 ตุลาคม 2026
+
+รวม main `67a04a1` (งาน double-slit lab) โดยไม่มี conflict แล้วรัน unit, routes และ production build ซ้ำ ผลผ่านตามตารางด้านบน ใบเรียนรู้ เมนู ภาพและ shared engines ที่เกี่ยวกับการเปิดเฉลย/พิมพ์เหมือนชุดที่ตรวจ browser ครบสี่ฉบับ จึงคงหลักฐาน browser เดิมไว้ ไม่มีการอ้างว่าได้ทดสอบ native PDF/iPad เพิ่ม
 
 ## ขอบเขตส่งตรวจ
 

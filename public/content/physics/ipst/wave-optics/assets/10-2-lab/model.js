@@ -16,15 +16,16 @@
     return {spacing:lambda*L/d*1000,firstDark,widthExact:2*firstDark,lambdaNm:wavelengths[c.color]};
   }
   function inferLambda(c,widthMm){return physical(c).d*(widthMm*.001)/c.distance*1e9;}
+  function exactBounds(c,phase=0){const {lambda,d,L}=physical(c),at=q=>L*Math.tan(Math.asin(q*lambda/d))*1000;return phase===180?{left:0,right:at(1)}:{left:at(-.5),right:at(.5)};}
   function measurement(cursors){return cursors.right-cursors.left;}
   function positionToScreen(xMm,zoom){return 400+xMm*9*zoom;}
   function screenToPosition(x,zoom){return (x-400)/(9*zoom);}
   function canRecord(s){return s.moved.left&&s.moved.right&&measurement(s.cursors)>0&&s.records.length<30;}
   function validSnapshot(s,identity){
-    if(!s||![1,2].includes(s.version)||s.identity!==identity||!validConfig(s.config)||(s.lightPhase!==undefined&&![0,180].includes(s.lightPhase))||![1,2,4].includes(s.zoom)||!validCursors(s.cursors)||!s.moved||!['left','right'].every(k=>typeof s.moved[k]==='boolean')||!['formula','analysis','exercise','solution'].every(k=>typeof s[k]==='boolean')||!Array.isArray(s.records)||s.records.length>30)return false;
+    if(!s||![1,2].includes(s.version)||s.identity!==identity||!validConfig(s.config)||(s.lightPhase!==undefined&&![0,180].includes(s.lightPhase))||(s.autoMeasured!==undefined&&typeof s.autoMeasured!=='boolean')||![1,2,4].includes(s.zoom)||!validCursors(s.cursors)||!s.moved||!['left','right'].every(k=>typeof s.moved[k]==='boolean')||!['formula','analysis','exercise','solution'].every(k=>typeof s[k]==='boolean')||!Array.isArray(s.records)||s.records.length>30)return false;
     const ids=new Set();
-    for(const r of s.records){if(!r||!Number.isInteger(r.id)||r.id<1||r.id>1e9||ids.has(r.id)||!validConfig(r.config)||(r.phase!==undefined&&![0,180].includes(r.phase))||!validCursors(r.cursors)||measurement(r.cursors)<=0)return false;ids.add(r.id);}
+    for(const r of s.records){if(!r||!Number.isInteger(r.id)||r.id<1||r.id>1e9||ids.has(r.id)||!validConfig(r.config)||(r.phase!==undefined&&![0,180].includes(r.phase))||(r.source!==undefined&&!['manual','model'].includes(r.source))||!validCursors(r.cursors)||measurement(r.cursors)<=0)return false;ids.add(r.id);}
     return true;
   }
-  globalThis.DoubleSlitLabModel=Object.freeze({presets,wavelengths,aperture,validConfig,validCursors,preset,physical,sinc,intensity,theory,inferLambda,measurement,positionToScreen,screenToPosition,canRecord,validSnapshot});
+  globalThis.DoubleSlitLabModel=Object.freeze({presets,wavelengths,aperture,validConfig,validCursors,preset,physical,sinc,intensity,theory,inferLambda,exactBounds,measurement,positionToScreen,screenToPosition,canRecord,validSnapshot});
 })();

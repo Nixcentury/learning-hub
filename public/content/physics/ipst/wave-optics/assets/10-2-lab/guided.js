@@ -26,7 +26,7 @@
     $('water-readouts').replaceChildren();for(const [name,value] of [['r₁',F(g.r1)+' cm'],['r₂',F(g.r2)+' cm'],['Δr',F(g.delta)+' cm'],['Δr/λ',F(g.ratio)]]){const card=document.createElement('div'),label=document.createElement('span'),v=document.createElement('strong');label.textContent=name;v.textContent=value;card.append(label,v);$('water-readouts').append(card);}
     $('water-formulas').hidden=!p.layers.formulas;
     $('water-formulas').innerHTML=`<p class="equation">Δr = |r₂ − r₁| = ${F(g.delta)} cm</p><p class="equation">d|sin θ| = ${F(g.angular)} cm · ${T('ต่างจากค่าจริง','absolute error')} ${F(Math.abs(g.angular-g.delta))} cm</p><p class="equation">d|x|/L = ${F(g.small)} cm · ${T('ต่างจากค่าจริง','absolute error')} ${F(Math.abs(g.small-g.delta))} cm</p><p>θ = ${F(g.theta,2)}° · L/d = ${F(p.L/p.separation,2)}</p><p>${T('ใช้ d|sin θ| เมื่อฉากไกลเมื่อเทียบกับ d; ใช้ d|x|/L เมื่อเพิ่มเงื่อนไขมุมเล็ก θ ในภาพวัดจากแนวกลางถึงเส้นจากจุดกึ่งกลางสองแหล่งไป P','d|sin θ| assumes a screen far away compared with d. d|x|/L additionally needs a small angle. θ is measured from the central axis to the midpoint-to-P line.')}</p><p>${T('x คือตำแหน่ง P จากแนวกลาง ส่วน Δx ในสูตร λL/d คือระยะแถบ เป็นคนละปริมาณ','x is P’s offset from the centre line. Δx in λL/d is fringe spacing; these are different quantities.')}</p><p>${T('เฟส 0°: เสริมที่ Δr = mλ หักล้างที่ (m+½)λ; เฟส 180° สลับเงื่อนไข m = 0,1,2,… ใช้แอมพลิจูดที่ได้รับเท่ากัน','At 0°: constructive at Δr = mλ, destructive at (m+½)λ. At 180° exchange them; m = 0,1,2,…, assuming equal received amplitudes.')}</p>`;
-    if(s().view==='water')V.draw($('water-canvas'),p,time);
+    if(s().view==='water')V.draw($('water-canvas'),p,time);const screenGraph=InterferenceScreen.draw($('water-screen-diagram'),{lambda:p.wavelength,d:p.separation,L:p.L,phase:p.phase,position:p.x,extent:32,unit:'cm'},B.language());$('water-screen-caption').textContent=T('เส้นแดงแสดงความเข้มเฉลี่ยจากคลื่นสองแหล่งเดียวกับภาพด้านบน ช่วง y ±32 cm · P และค่าตัวแปรเปลี่ยนตามกัน · เรขาคณิตไม่ตามสเกล · I₀: ความเข้มกลางเมื่อเฟส 0°','Red: mean intensity from the same two sources above, over y ±32 cm. P and variables stay linked. Geometry is schematic; I₀ is the in-phase axial intensity.')+(p.phase===0?' · '+screenGraph.orders.filter(q=>q.m===1||q.m===2).map(q=>`m=${q.m}: y=${F(q.y,3)} cm, θ=${F(q.theta,2)}°`).join(' · '):'');
   }
   function renderMission(){
     const state=s(),m=state.missions,id=m.current,req=Q.requirements(state),qs=Q.questions(id,state),ready=req.every(r=>r[0]);
@@ -74,7 +74,7 @@
   for(const name of ['pointerup','pointercancel','lostpointercapture'])probe.addEventListener(name,()=>drag=null);
   probe.onkeydown=e=>{if(!['ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();waterChange(p=>p.x=Math.max(-8,Math.min(8,p.x+(e.key==='ArrowUp' ? .1 : -.1))));};
   globalThis.GuidedInterference={render,event};
-  new ResizeObserver(()=>{if(s().view==='water')V.draw($('water-canvas'),s().water,time);}).observe($('water-stage'));
+  new ResizeObserver(()=>{if(s().view==='water')renderWater();}).observe($('water-stage'));
   document.addEventListener('visibilitychange',()=>last=null);
   function frame(now){const dt=last===null?0:Math.min(.05,(now-last)/1000);last=now;if(s().view==='water'&&s().water.running&&!document.hidden){time+=dt*.7;V.draw($('water-canvas'),s().water,time);}requestAnimationFrame(frame);}requestAnimationFrame(frame);render();
 })();

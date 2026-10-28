@@ -13,7 +13,7 @@
     if(Object.keys(p).length!==Object.keys(defaults[mode]).length)return false;
     for(const key of Object.keys(defaults[mode])){
       if(ranges[mode][key]){const [lo,hi]=ranges[mode][key];if(!Number.isFinite(p[key])||p[key]<lo||p[key]>hi)return false;}
-      else if(mode==='interference'&&!['center','side'].includes(p[key]))return false;
+      else if(mode==='interference'&&!['center','side','custom'].includes(p[key]))return false;
       else if(mode==='diffraction'&&!['wavelength','opening'].includes(p[key]))return false;
     }
     if(mode==='refraction'&&![p.n1,p.n2].every(n=>[1,1.33,1.5].includes(n)))return false;
@@ -42,5 +42,17 @@
   // Scalar Fraunhofer single-slit amplitude, normalised to the axial value.
   // The drawing is a far-field angular schematic, never a near-field solution.
   function diffractionAmplitude(p,theta){return sinc(Math.PI*p.opening*1000/p.wavelength*Math.sin(rad(theta)));}
-  globalThis.WaveMiniModel=Object.freeze({c,rad,deg,defaults,ranges,valid,refract,interference,probe,sinc,diffract,diffractionAmplitude});
+
+  function visual(){return {field:true,fronts:true,variables:true,nodes:false,antinodes:false,paths:true,graph:true,L:10,x:0};}
+  function visualValid(v,p){return !!v&&['field','fronts','variables','nodes','antinodes','paths','graph'].every(k=>typeof v[k]==='boolean')&&Number.isFinite(v.L)&&v.L>=6&&v.L<=60&&Number.isFinite(v.x)&&Math.abs(v.x)<=8&&(!p||p.probe!=='side'||water(p,v).x<=8);}
+  function water(p,v){const delta=p.wavelength/2,x=p.probe==='center'?0:p.probe==='side'?delta/2*Math.sqrt(1+4*v.L*v.L/(p.separation*p.separation-delta*delta)):v.x;return {wavelength:p.wavelength,separation:p.separation,phase:p.phase,L:v.L,x,running:false,layers:{fronts:v.fronts,nodes:v.nodes,antinodes:v.antinodes,paths:v.paths,variables:v.variables,formulas:false}};}
+  // Nondispersive scalar-wave picture: equal transmission amplitude and a +1
+  // reflected coefficient illustrate geometry, not optical Fresnel coefficients.
+  function scalar(mode,p,x,y){
+    const dx=x-400,dy=y-245,a=rad(p.angle),r=mode==='refraction'?refract(p):null,spacing=mode==='refraction'?50*p.wavelength/600/p.n1:50;
+    const f=2*Math.PI*(Math.sin(a)*dx+Math.cos(a)*dy)/spacing;
+    if(y<245){if(mode==='reflection'||r.tir){const b=2*Math.PI*(Math.sin(a)*dx-Math.cos(a)*dy)/spacing;return {re:(Math.cos(f)+Math.cos(b))/2,im:(Math.sin(f)+Math.sin(b))/2};}return {re:Math.cos(f),im:Math.sin(f)};}
+    if(mode==='reflection'||r.tir)return null;const b=rad(r.angle),t=2*Math.PI*(Math.sin(b)*dx+Math.cos(b)*dy)/(50*p.wavelength/600/p.n2);return {re:Math.cos(t),im:Math.sin(t)};
+  }
+  globalThis.WaveMiniModel=Object.freeze({c,rad,deg,visual,visualValid,water,scalar,defaults,ranges,valid,refract,interference,probe,sinc,diffract,diffractionAmplitude});
 })();

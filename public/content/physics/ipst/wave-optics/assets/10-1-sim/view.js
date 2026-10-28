@@ -1,91 +1,54 @@
 (() => {
-  'use strict';
-  const M=globalThis.WaveMiniModel,blue='#2586ad',orange='#b67439',green='#397c65';
-  const raster=document.createElement('canvas');raster.width=400;raster.height=220;
-  const rc=raster.getContext('2d'),pixels=rc.createImageData(400,220);let field=null;
-  function invalidate(){field=null;}
-  function line(ctx,x1,y1,x2,y2,color,width=2,dash=[]){ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=width;ctx.setLineDash(dash);ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);}
-  function arrow(ctx,x1,y1,x2,y2,color){line(ctx,x1,y1,x2,y2,color,3);const a=Math.atan2(y2-y1,x2-x1);ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-12*Math.cos(a-.4),y2-12*Math.sin(a-.4));ctx.lineTo(x2-12*Math.cos(a+.4),y2-12*Math.sin(a+.4));ctx.closePath();ctx.fill();}
-  function label(ctx,value,x,y,size){ctx.font=`600 ${size}px Tahoma, Arial, sans-serif`;ctx.textBaseline='middle';const w=ctx.measureText(value).width;ctx.fillStyle='#f9fcfae8';ctx.fillRect(x-4,y-size*.65,w+8,size*1.3);ctx.fillStyle='#294d46';ctx.fillText(value,x,y);}
-  function fronts(ctx,dir,spacing,time,color,clip){
-    ctx.save();ctx.beginPath();ctx.rect(...clip);ctx.clip();ctx.translate(400,245);ctx.rotate(Math.atan2(dir.y,dir.x));
-    ctx.strokeStyle=color;ctx.globalAlpha=.48;ctx.lineWidth=1.6;
-    for(let u=-1200+(time%1)*spacing;u<1200;u+=spacing){ctx.beginPath();ctx.moveTo(u,-1200);ctx.lineTo(u,1200);ctx.stroke();}ctx.restore();
+ 'use strict';
+ const M=globalThis.WaveMiniModel,blue='#257ba1',orange='#b27531',green='#34745f';
+ const off=document.createElement('canvas');off.width=400;off.height=220;const oc=off.getContext('2d'),pixels=oc.createImageData(400,220);let field=null;
+ const invalidate=()=>field=null;
+ function line(c,x1,y1,x2,y2,color,width=2,dash=[]){c.beginPath();c.strokeStyle=color;c.lineWidth=width;c.setLineDash(dash);c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();c.setLineDash([]);}
+ function arrow(c,x1,y1,x2,y2,color){line(c,x1,y1,x2,y2,color,3);const a=Math.atan2(y2-y1,x2-x1);c.fillStyle=color;c.beginPath();c.moveTo(x2,y2);c.lineTo(x2-12*Math.cos(a-.4),y2-12*Math.sin(a-.4));c.lineTo(x2-12*Math.cos(a+.4),y2-12*Math.sin(a+.4));c.closePath();c.fill();}
+ function label(c,t,x,y,font){c.font=`600 ${font}px Tahoma,Arial,sans-serif`;c.textBaseline='middle';c.fillStyle='#f5faf5e8';c.fillRect(x-3,y-font*.65,c.measureText(t).width+6,font*1.3);c.fillStyle='#294d40';c.fillText(t,x,y);}
+ function fronts(c,dir,spacing,time,color,clip){
+  c.save();c.beginPath();c.rect(...clip);c.clip();c.translate(400,245);c.rotate(Math.atan2(dir.y,dir.x));c.strokeStyle=color;c.globalAlpha=.65;c.lineWidth=1.2;
+  for(const trough of [false,true]){c.setLineDash(trough?[4,5]:[]);for(let u=-1200+((time+(trough ? .5 : 0))%1)*spacing;u<1200;u+=spacing){c.beginPath();c.moveTo(u,-1200);c.lineTo(u,1200);c.stroke();}}c.restore();
+ }
+ function build(mode,p){const re=new Float32Array(88000),im=new Float32Array(88000),solid=new Uint8Array(88000);
+  for(let y=0;y<220;y++)for(let x=0;x<400;x++){const i=y*400+x;let q;
+   if(mode==='reflection'||mode==='refraction')q=M.scalar(mode,p,x*2,y*2);
+   else{const X=x*2-190,Y=y*2-220,phase=2*Math.PI*(X<=0?X:Math.hypot(X,Y))/(p.wavelength/12),amp=X<=0?1:M.diffractionAmplitude(p,M.deg(Math.atan2(Y,X)));q={re:amp*Math.cos(phase),im:amp*Math.sin(phase)};}
+   if(q){re[i]=q.re;im[i]=q.im;}else solid[i]=1;
+  }field={re,im,solid};
+ }
+ function heat(c,mode,p,time){if(!field)build(mode,p);const co=Math.cos(2*Math.PI*time),si=Math.sin(2*Math.PI*time),out=pixels.data,bg=[244,249,246],wall=[220,229,223],positive=[58,139,172],negative=[190,122,64];
+  for(let i=0;i<88000;i++){const v=field.re[i]*co+field.im[i]*si,w=Math.abs(v),rgb=v>=0?positive:negative;for(let k=0;k<3;k++)out[4*i+k]=field.solid[i]?wall[k]:bg[k]+(rgb[k]-bg[k])*w;out[4*i+3]=255;}oc.putImageData(pixels,0,0);c.drawImage(off,0,0,800,440);
+ }
+ function rays(c,mode,p,time,font,v){const a=M.rad(p.angle),inc={x:Math.sin(a),y:Math.cos(a)},refl={x:Math.sin(a),y:-Math.cos(a)},r=mode==='refraction'?M.refract(p):null,spacing=mode==='refraction'?50*p.wavelength/600/p.n1:50;
+  if(v.field)heat(c,mode,p,time);else{c.fillStyle='#f4f8f5';c.fillRect(0,0,800,440);c.fillStyle='#dce9de';c.fillRect(0,245,800,195);}
+  if(v.fronts){fronts(c,inc,spacing,time,blue,[0,0,800,245]);if(mode==='reflection'||r.tir)fronts(c,refl,spacing,time,orange,[0,0,800,245]);else{const b=M.rad(r.angle);fronts(c,{x:Math.sin(b),y:Math.cos(b)},50*p.wavelength/600/p.n2,time,green,[0,245,800,195]);}}
+  line(c,0,245,800,245,'#70897b',3);if(!v.variables)return;
+  line(c,400,28,400,420,'#4b6a58',1.5,[7,6]);arrow(c,400-210*inc.x,245-210*inc.y,400,245,blue);
+  if(mode==='reflection'||r.tir){arrow(c,400,245,400+210*refl.x,245+210*refl.y,orange);c.beginPath();c.strokeStyle=orange;c.arc(400,245,91,-Math.PI/2,-Math.PI/2+a);c.stroke();label(c,'θᵣ',452,177,font);}else{const b=M.rad(r.angle);arrow(c,400,245,400+170*Math.sin(b),245+170*Math.cos(b),green);c.beginPath();c.strokeStyle=green;c.arc(400,245,62,Math.PI/2-b,Math.PI/2);c.stroke();label(c,'θ₂',452,300,font);}
+  c.beginPath();c.strokeStyle=blue;c.arc(400,245,70,-Math.PI/2-a,-Math.PI/2);c.stroke();label(c,mode==='reflection'?'θᵢ':'θ₁',321,190,font);label(c,'N',412,43,font);
+  if(mode==='refraction'){label(c,`n₁ = ${p.n1.toFixed(2)}`,22,30,font);label(c,`n₂ = ${p.n2.toFixed(2)}`,22,408,font);}
+ }
+ function diffraction(c,p,time,font,v){
+  if(v.field)heat(c,'diffraction',p,time);else{c.fillStyle='#f4f8f5';c.fillRect(0,0,800,440);}
+  const half=p.opening*1000/24,spacing=p.wavelength/12;
+  if(v.fronts){for(const trough of [false,true]){for(let n=-25;n<=0;n++){const x=190+(n+(time+(trough ? .5 : 0))%1)*spacing;if(x<=190)line(c,x,0,x,440,blue,1.3,trough?[4,5]:[]);}}
+   for(let n=-1;n<35;n++)for(const trough of [false,true])for(const negative of [false,true]){
+    const radius=(n+(time%1)+(negative ? .5 : 0)+(trough ? .5 : 0))*spacing;if(radius<=0)continue;c.beginPath();c.strokeStyle=trough?'#946a3a':'#377c82';c.lineWidth=1;c.setLineDash(trough?[4,5]:[]);let drawing=false;
+    for(let angle=-Math.PI/2;angle<=Math.PI/2;angle+=.015){const amp=M.diffractionAmplitude(p,M.deg(angle)),show=Math.abs(amp)>.04&&(amp<0)===negative;if(!show){drawing=false;continue;}const x=190+radius*Math.cos(angle),y=220+radius*Math.sin(angle);if(drawing)c.lineTo(x,y);else c.moveTo(x,y);drawing=true;}c.stroke();c.setLineDash([]);
+   }
   }
-  function rays(ctx,mode,p,time,font){
-    const theta=M.rad(p.angle),incident={x:Math.sin(theta),y:Math.cos(theta)},reflection={x:Math.sin(theta),y:-Math.cos(theta)},r=mode==='refraction'?M.refract(p):null;
-    ctx.fillStyle='#f4f8f6';ctx.fillRect(0,0,800,245);ctx.fillStyle=mode==='reflection'?'#dce5df':'#e3f0ea';ctx.fillRect(0,245,800,195);
-    const spacing=mode==='refraction'?50*p.wavelength/600/p.n1:50;
-    fronts(ctx,incident,spacing,time,blue,[0,0,800,245]);
-    if(mode==='reflection'||r.tir)fronts(ctx,reflection,spacing,time,orange,[0,0,800,245]);
-    else{const a=M.rad(r.angle);fronts(ctx,{x:Math.sin(a),y:Math.cos(a)},50*p.wavelength/600/p.n2,time,green,[0,245,800,195]);arrow(ctx,400,245,400+170*Math.sin(a),245+170*Math.cos(a),green);ctx.beginPath();ctx.strokeStyle=green;ctx.arc(400,245,62,Math.PI/2-a,Math.PI/2);ctx.stroke();label(ctx,'θ₂',452,300,font);}
-    line(ctx,0,245,800,245,'#70897b',3);line(ctx,400,28,400,420,'#6e8278',1.5,[7,6]);
-    arrow(ctx,400-210*incident.x,245-210*incident.y,400,245,blue);
-    if(mode==='reflection'||r.tir)arrow(ctx,400,245,400+210*reflection.x,245+210*reflection.y,orange);
-    ctx.lineWidth=2;ctx.strokeStyle=blue;ctx.beginPath();ctx.arc(400,245,70,-Math.PI/2-theta,-Math.PI/2);ctx.stroke();label(ctx,mode==='reflection'?'θᵢ':'θ₁',321,190,font);
-    if(mode==='reflection'||r.tir){ctx.strokeStyle=orange;ctx.beginPath();ctx.arc(400,245,91,-Math.PI/2,-Math.PI/2+theta);ctx.stroke();label(ctx,'θᵣ',452,177,font);}
-    label(ctx,'N',412,43,font);
-    if(mode==='refraction'){label(ctx,`n₁ = ${p.n1.toFixed(2)}`,22,30,font);label(ctx,`n₂ = ${p.n2.toFixed(2)}`,22,408,font);}
-    if(mode==='reflection'){for(let x=12;x<800;x+=22)line(ctx,x,245,x-12,263,'#94a79b',1.3);}
-  }
-  function buildField(mode,p){
-    const amp=new Float32Array(400*220),re=new Float32Array(400*220),im=new Float32Array(400*220);
-    for(let row=0;row<220;row++)for(let col=0;col<400;col++){
-      const i=row*400+col;
-      if(mode==='interference')amp[i]=M.interference(p,col/400*24-4,(row/220-.5)*13.2).amplitude/2;
-      else{
-        const x=col*2-190,y=row*2-220;if(x<=0)continue;
-        const a=M.diffractionAmplitude(p,M.deg(Math.atan2(y,x))),phase=2*Math.PI*Math.hypot(x,y)/(p.wavelength/12);
-        amp[i]=Math.abs(a);re[i]=a*Math.cos(phase);im[i]=a*Math.sin(phase);
-      }
-    }
-    field={mode,amp,re,im};
-  }
-  function heatmap(ctx,mode,p,time){
-    if(!field||field.mode!==mode)buildField(mode,p);
-    const c=Math.cos(2*Math.PI*time),s=Math.sin(2*Math.PI*time),out=pixels.data,amplitudeColor=[65,136,107],positive=[58,139,172],negative=[190,122,64];
-    for(let i=0;i<field.amp.length;i++){
-      const value=mode==='interference'?field.amp[i]:field.re[i]*c+field.im[i]*s,weight=Math.abs(value),target=mode==='interference'?amplitudeColor:value>=0?positive:negative;
-      out[4*i]=244+(target[0]-244)*weight;out[4*i+1]=249+(target[1]-249)*weight;out[4*i+2]=246+(target[2]-246)*weight;out[4*i+3]=255;
-    }
-    rc.putImageData(pixels,0,0);ctx.drawImage(raster,0,0,800,440);
-  }
-  function interference(ctx,p,time,font){
-    heatmap(ctx,'interference',p,time);
-    const sx=800/24*4,cy=220,scale=800/24,ys=[cy-p.separation/2*scale,cy+p.separation/2*scale];
-    for(let j=0;j<2;j++){
-      ctx.save();ctx.beginPath();ctx.rect(0,0,800,440);ctx.clip();ctx.strokeStyle=j?orange:blue;ctx.lineWidth=1.3;ctx.globalAlpha=.6;
-      const fraction=(time-j*p.phase/360)%1;
-      for(let n=0;n<40;n++){const radius=(n+fraction)*p.wavelength;if(radius<=0)continue;ctx.beginPath();ctx.arc(sx,ys[j],radius*scale,0,2*Math.PI);ctx.stroke();}ctx.restore();
-      ctx.beginPath();ctx.fillStyle=j?orange:blue;ctx.arc(sx,ys[j],6,0,Math.PI*2);ctx.fill();label(ctx,j?'S₂':'S₁',sx+13,Math.max(font,ys[j]-15),font);
-    }
-    const q=M.probe(p),px=(q.x+4)/24*800,py=220+q.y*scale;
-    line(ctx,sx,ys[0],px,py,'#315d57',1.3,[6,5]);line(ctx,sx,ys[1],px,py,'#315d57',1.3,[6,5]);
-    ctx.beginPath();ctx.fillStyle='#fff';ctx.strokeStyle='#284d43';ctx.lineWidth=3;ctx.arc(px,py,7,0,Math.PI*2);ctx.fill();ctx.stroke();label(ctx,'P',px+15,py-15,font);
-  }
-  function diffraction(ctx,p,time,font){
-    heatmap(ctx,'diffraction',p,time);
-    const gap=p.opening*1000/12,half=gap/2,spacing=p.wavelength/12;
-    ctx.fillStyle='#eef4f0';ctx.fillRect(0,0,190,440);ctx.save();ctx.beginPath();ctx.rect(0,0,190,440);ctx.clip();
-    for(let x=-spacing+(time%1)*spacing;x<190;x+=spacing)line(ctx,x,0,x,440,blue,2);ctx.restore();
-    line(ctx,190,0,190,220-half,'#627e70',8);line(ctx,190,220+half,190,440,'#627e70',8);
-    line(ctx,160,220-half,160,220+half,'#3d6152',1.5);line(ctx,152,220-half,168,220-half,'#3d6152');line(ctx,152,220+half,168,220+half,'#3d6152');label(ctx,'a',132,220,font);
-    line(ctx,190,220,790,220,'#3b6458',1.5,[5,5]);
-    const theta=M.rad(M.diffract(p).angle);
-    for(const sign of [-1,1])line(ctx,190,220,190+1100*Math.cos(theta),220+sign*1100*Math.sin(theta),'#6b537e',2,[8,6]);
-    ctx.beginPath();ctx.strokeStyle='#6b537e';ctx.lineWidth=2;ctx.arc(190,220,80,-theta,0);ctx.stroke();label(ctx,'θ',277,193,font);
-    arrow(ctx,42,412,112,412,blue);
-  }
-  function draw(canvas,mode,p,time){
-    const ctx=canvas.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2),width=Math.max(1,canvas.clientWidth),height=width*440/800;
-    if(canvas.width!==Math.round(width*dpr)||canvas.height!==Math.round(height*dpr)){canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);}
-    ctx.setTransform(canvas.width/800,0,0,canvas.height/440,0,0);ctx.clearRect(0,0,800,440);
-    const font=16*Math.max(1,800/Math.max(width,360));
-    // A fixed time scale within each model: changing lambda changes frequency,
-    // not the visible propagation speed in an unchanged medium.
-    const phase=time*(mode==='reflection'?1:mode==='interference'?3/p.wavelength:600/p.wavelength);
-    if(mode==='reflection'||mode==='refraction')rays(ctx,mode,p,phase,font);
-    else if(mode==='interference')interference(ctx,p,phase,font);else diffraction(ctx,p,phase,font);
-  }
-  globalThis.WaveMiniView=Object.freeze({draw,invalidate});
+  line(c,190,0,190,220-half,'#627e70',8);line(c,190,220+half,190,440,'#627e70',8);if(!v.variables)return;
+  line(c,160,220-half,160,220+half,'#3d6152',1.5);line(c,152,220-half,168,220-half,'#3d6152');line(c,152,220+half,168,220+half,'#3d6152');label(c,'a',132,220,font);
+  line(c,190,220,790,220,'#3b6458',1.5,[5,5]);const theta=M.rad(M.diffract(p).angle);
+  for(const sign of [-1,1])line(c,190,220,190+1100*Math.cos(theta),220+sign*1100*Math.sin(theta),'#6b537e',2,[8,6]);c.beginPath();c.strokeStyle='#6b537e';c.arc(190,220,80,-theta,0);c.stroke();label(c,'θ',277,193,font);line(c,40,398,40+spacing,398,blue,1.5);label(c,'λ',50,416,font);arrow(c,42,40,112,40,blue);
+ }
+ function draw(canvas,mode,p,time,v=M.visual()){
+  const c=canvas.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2),width=Math.max(1,canvas.clientWidth),height=width*440/800;
+  if(canvas.width!==Math.round(width*dpr)||canvas.height!==Math.round(height*dpr)){canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);}
+  c.setTransform(canvas.width/800,0,0,canvas.height/440,0,0);c.clearRect(0,0,800,440);const font=16*Math.max(1,800/Math.max(width,360)),phase=time*(mode==='reflection'?1:mode==='interference'?3/p.wavelength:600/p.wavelength);
+  if(mode==='interference'){const w=M.water(p,v);c.save();c.translate(0,10);InterferenceWaterView.draw(canvas,w,time,{handle:null,field:v.field});c.restore();}
+  else if(mode==='diffraction')diffraction(c,p,phase,font,v);else rays(c,mode,p,phase,font,v);
+ }
+ globalThis.WaveMiniView=Object.freeze({draw,invalidate});
 })();

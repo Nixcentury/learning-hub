@@ -1,0 +1,45 @@
+name: Default print filenames
+
+on:
+  pull_request:
+    paths:
+      - 'js/*print*.js'
+      - 'public/shared/print-*.js'
+      - 'public/shared/quiz-core.js'
+      - 'public/shared/quiz-evidence.js'
+      - 'public/shared/topic-review*.js'
+      - 'public/pages/tools/*player.html'
+      - 'public/pages/tools/activity-preview.html'
+      - 'scripts/*print*.mjs'
+      - 'scripts/question-bank-svg.test.mjs'
+      - '.github/workflows/print-names.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:unit && pnpm build
+      - name: Install isolated browser tools
+        run: |
+          npm install --prefix work/qa-tools --no-save --package-lock=false playwright@1.62.1
+          node work/qa-tools/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Verify production names and quiz print regressions
+        env:
+          QA_BUILT: '1'
+        run: |
+          export PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/work/qa-tools/node_modules/playwright"
+          pnpm test:print-names:browser
+          pnpm test:quiz-print:browser

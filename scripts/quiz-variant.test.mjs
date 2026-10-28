@@ -61,6 +61,15 @@ test('capture retains full context tables, raw TeX and SVG while excluding stude
   assert.match(variantReference(source), /learning-hub-practice:start/);
 });
 
+test('localized source capture keeps all paragraphs and sibling tables', () => {
+  const root = parseVariantHtml(choice, options), question = readQuizContent(root).questions[0];
+  question.context = document.createElement('div');
+  question.context.innerHTML = '<p data-quiz-language="th">FIRST-TH</p><p data-quiz-language="en">FIRST-EN</p><table><tr><td>SHARED-TABLE</td></tr></table><p data-quiz-language="th">SECOND-TH</p><p data-quiz-language="en">SECOND-EN</p>';
+  const source = captureVariantSource(question, { language: 'en' });
+  assert.match(source.content, /FIRST-EN/); assert.match(source.content, /SECOND-EN/); assert.match(source.content, /SHARED-TABLE/);
+  assert.doesNotMatch(source.content, /FIRST-TH|SECOND-TH/);
+});
+
 test('image-only references are identified honestly and oversized sources are never truncated', () => {
   const root = parseVariantHtml(choice, options), question = readQuizContent(root).questions[0];
   question.context = document.createElement('div'); question.context.innerHTML = '<img src="https://example.test/diagram.png" alt="unseen graph">';

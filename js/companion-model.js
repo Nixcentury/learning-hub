@@ -51,7 +51,7 @@ export function chatError(code, status) {
 export function createCompanionClient({ endpoint = '', fetcher = (...args) => fetch(...args), timeoutMs = 45000 } = {}) {
   return {
     ready: Boolean(endpoint),
-    async ask({ message, history = [], language = 'th', signal }) {
+    async ask({ message, history = [], language = 'th', signal, reference = '' }) {
       if (!endpoint) throw chatError('not-configured');
       const url = new URL(endpoint);
       if (url.username || url.password || url.hash ||
@@ -60,9 +60,11 @@ export function createCompanionClient({ endpoint = '', fetcher = (...args) => fe
       }
       const text = typeof message === 'string' ? message.trim() : '';
       if (!text || text.length > maxChatMessage) throw chatError('invalid-message');
+      if (typeof reference !== 'string' || reference.length > 16000) throw chatError('invalid-reference');
       const turns = history.filter(item => ['user', 'assistant'].includes(item?.role) && typeof item.content === 'string')
         .slice(-12).map(item => ({ role: item.role, content: item.content.slice(0, 6000) }));
-      while (turns.reduce((size, item) => size + item.content.length, 0) > 18000) turns.shift();
+      while (turns.reduce((size, item) => size + item.content.length, 0) + reference.length > 18000) turns.shift();
+      if (reference) turns.unshift({ role: 'user', content: reference });
       const controller = new AbortController();
       const abort = () => controller.abort(signal?.reason);
       if (signal?.aborted) abort(); else signal?.addEventListener('abort', abort, { once: true });

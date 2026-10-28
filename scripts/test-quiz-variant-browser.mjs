@@ -122,6 +122,12 @@ try {
   await practice.locator('[data-current-solution]').waitFor({ state: 'visible' });
   assert.match(await practice.locator('[data-current-solution]').textContent(), /2 \+ 3 = 5/);
   assert.deepEqual(await child.evaluate(() => window.__temporaryStorageCalls), []);
+  await page.evaluate(() => document.querySelector('.quiz-variant-preview iframe').contentWindow.postMessage({
+    type: 'learning-hub-context', language: 'th', identity: { status: 'signed-in', uid: 'must-not-save-this-user' },
+  }, location.origin));
+  assert.equal(await child.evaluate(() => LearningHubQuiz.getState().identityKey), 'guest');
+  await child.evaluate(() => LearningHubQuiz.save());
+  assert.deepEqual(await child.evaluate(() => window.__temporaryStorageCalls), []);
   assert.equal(await child.evaluate(() => LearningHubQuiz.flushLocal()), true);
   assert.equal(await child.evaluate(() => LearningHubQuiz.prepareClose()), true);
   await page.locator('.quiz-variant-preview > header button').click();
@@ -137,8 +143,8 @@ try {
   await panel.locator('.companion-close').click(); await source.locator('[data-generate-variant]').click();
   await input.fill('unsafe'); await input.press('Enter'); await panel.locator('.is-error button').waitFor();
   assert.equal(await page.locator('.quiz-variant-preview').count(), 0, 'Unsafe AI HTML never opens a quiz');
-  await input.fill('retry'); await input.press('Enter'); await panel.locator('.is-error').last().locator('button').waitFor();
-  await panel.locator('.is-error').last().locator('button').click();
+  await input.fill('retry'); await input.press('Enter'); await panel.locator('.is-error').nth(1).locator('button').waitFor();
+  await panel.locator('.is-error').nth(1).locator('button').click();
   await page.locator('.quiz-variant-preview[open]').waitFor();
   await page.locator('.quiz-variant-preview > header button').click();
   await input.fill('slow'); await input.press('Enter'); await panel.locator('.companion-stop').waitFor({ state: 'visible' });
@@ -166,6 +172,17 @@ try {
   assert.match(await page.frameLocator('.quiz-variant-preview iframe').locator('[data-quiz-storage-status]').textContent(), /Temporary practice/);
   assert.equal(errors.length, 0, errors.join('\n'));
   console.log('PASS mobile/tablet layout and TH/EN temporary practice');
+  await page.locator('.quiz-variant-preview > header button').click();
+  await sourceFrame.evaluate(() => LearningHubQuiz.goToQuestion(1));
+  await source.locator('[data-generate-variant]').click();
+  assert.match(await panel.locator('[data-variant-title]').textContent(), /question 2/);
+  assert.doesNotMatch(await panel.locator('.companion-messages').textContent(), /discuss style/);
+  await panel.locator('.companion-close').click();
+  await source.locator('[data-generate-variant]').click();
+  await page.locator('.workspace-window .is-close').click();
+  await page.locator('.workspace-tool-frame').waitFor({ state: 'detached' });
+  assert.equal(await panel.locator('.companion-variant').isVisible(), false);
+  console.log('PASS source switching starts a fresh context and closing its tool discards generation context');
   await context.close();
 } finally {
   await browser?.close(); await new Promise(done => server.close(done));

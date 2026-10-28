@@ -1,0 +1,60 @@
+name: Classroom monitoring checks
+
+on:
+  pull_request:
+    paths:
+      - 'js/classroom*'
+      - 'js/app.js'
+      - 'js/hub-navigation.js'
+      - 'index.html'
+      - 'css/classroom-monitor.css'
+      - 'public/pages/classroom.html'
+      - 'public/pages/shared/classroom*'
+      - 'firebase/classroom*'
+      - 'scripts/*classroom*'
+      - 'scripts/fixtures/classroom*'
+      - '.github/workflows/classroom-monitor.yml'
+permissions:
+  contents: read
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:unit && pnpm build
+      - name: Download local database emulator
+        run: |
+          mkdir -p work/monitor-qa
+          curl --fail --location --output work/monitor-qa/firebase-database-emulator.jar https://storage.googleapis.com/firebase-preview-drop/emulator/firebase-database-emulator-v4.11.2.jar
+      - name: Verify monitoring and existing classroom Rules
+        run: pnpm test:monitor:rules
+      - name: Install isolated browser tools
+        run: |
+          npm install --prefix work/qa-tools --no-save --package-lock=false playwright@1.62.1
+          node work/qa-tools/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Test production Hub against database Rules
+        env:
+          QA_BUILT: '1'
+          PLAYWRIGHT_CHANNEL: chromium
+        run: |
+          export PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/work/qa-tools/node_modules/playwright"
+          pnpm test:monitor:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: classroom-monitor-browser
+          path: qa-output/classroom-monitor-*.png
+          if-no-files-found: ignore

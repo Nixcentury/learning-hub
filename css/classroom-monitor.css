@@ -1,0 +1,20 @@
+.monitor-banner[hidden],.monitor-dialog [hidden]{display:none!important}
+.monitor-banner{position:fixed;z-index:160;bottom:88px;left:16px;display:flex;align-items:center;gap:12px;max-width:min(580px,calc(100vw - 100px));padding:12px 14px;border:1px solid #b9d5e6;border-radius:16px;background:rgba(245,251,255,.97);box-shadow:0 8px 30px #173c611f;color:#23445e;font-size:13px;line-height:1.5}
+.monitor-banner.has-unread{border-color:#d8a950;background:#fffbef}
+.monitor-banner button,.monitor-dialog button{border:1px solid #bdd4e2;border-radius:10px;padding:8px 12px;background:#fff;color:#244965;font:inherit;cursor:pointer;flex-shrink:0}
+.monitor-banner button:focus-visible,.monitor-dialog :focus-visible{outline:3px solid #69a7d2;outline-offset:2px}
+.monitor-dialog{width:min(540px,calc(100vw - 24px));max-height:min(80dvh,800px);overflow:auto;border:1px solid #cadce9;border-radius:22px;padding:22px;background:#f7fbff;color:#233d54;box-shadow:0 20px 70px #0e294f33;font:inherit}
+.monitor-dialog::backdrop{background:#19344a55}
+.monitor-dialog header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.monitor-dialog h2{margin:0;font-size:20px}
+.monitor-dialog header button{font-size:24px;padding:0 10px}
+.monitor-dialog p{line-height:1.7;overflow-wrap:anywhere}
+.monitor-message{margin:14px 0;padding:16px;border:1px solid #d3e2ec;border-radius:14px;background:white}
+.monitor-message.is-reminder{background:#fff8e8;border-color:#ecd39a}
+.monitor-dialog form{display:grid;gap:10px;margin-top:12px}
+.monitor-dialog input,.monitor-dialog textarea{box-sizing:border-box;width:100%;min-width:0;padding:10px;border:1px solid #b9cedd;border-radius:10px;background:white;color:inherit;font:inherit}
+.monitor-dialog textarea{resize:vertical}
+.monitor-dialog button:disabled{opacity:.5;cursor:wait}
+.monitor-feedback{font-size:13px;color:#785a29;min-height:1.5em}
+@media(max-width:600px){.monitor-banner{left:10px;bottom:82px;max-width:calc(100vw - 84px);padding:9px;gap:8px;font-size:11px}.monitor-banner button{padding:7px 8px}.monitor-dialog{padding:16px}}
+@media print{.monitor-banner,.monitor-dialog{display:none!important}}

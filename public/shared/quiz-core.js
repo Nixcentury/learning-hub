@@ -1081,8 +1081,11 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
     const original = button.textContent;
     button.disabled = true;
     try {
+      await window.LearningHubPrint.prepareMetadata();
+      if (epoch !== identityEpoch) return;
       const files = await evidenceManager.exportPdf({
         title,
+        filename: window.LearningHubPrint.getFilename({ mode: 'evidence' }),
         results,
         onProgress: ({ current, total }) => {
           if (epoch !== identityEpoch) return;
@@ -1501,6 +1504,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
       await window.LearningHubPrint.printReview({
         content: topicReviewDialog.querySelector("[data-topic-review-content]"),
         title: topicReviewDialog.querySelector("#quiz-topic-review-title")?.textContent,
+        metadata: topicReviewBrowser.getPrintMetadata(),
       });
     } finally {
       topicReviewBrowser?.setPrinting(false);

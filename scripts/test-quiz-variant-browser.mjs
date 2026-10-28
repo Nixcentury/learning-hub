@@ -56,6 +56,9 @@ try {
 <div class="options"><label><input type="radio" value="A">4</label><label><input type="radio" value="B">5</label></div>
 <div class="hint-box">Count forwards three times.</div><div class="feedback-box">2 + 3 = 5, so B is correct.</div></div>
 <!-- learning-hub-practice:end -->`;
+  const numericAnswer = `<!-- learning-hub-practice:start -->
+<div class="question-step" data-type="fill-in" data-ans="0.5" data-tolerance="0"><h3>Calculate one divided by two.</h3><div class="answer-section"><input class="num-answer" type="number"></div><div class="feedback-box">1 / 2 = 0.5.</div></div>
+<!-- learning-hub-practice:end -->`;
   await context.addInitScript(() => {
     if (new URLSearchParams(location.search).get('temporary') !== '1') return;
     window.__temporaryStorageCalls = [];
@@ -73,7 +76,8 @@ try {
       if (payload.userMessage.includes('slow')) await new Promise(done => { heldReply = done; });
       if (payload.userMessage.includes('retry') && !fail) { fail = true; return route.fulfill({ status: 429, headers, body: '{}' }); }
       const reply = payload.userMessage.includes('unsafe') ? answer.replace('<h3>', '<img src="https://example.test/tracker"><h3>')
-        : payload.userMessage.includes('discuss') ? 'Would you like a numeric question or choices?' : answer;
+        : payload.userMessage.includes('discuss') ? 'Would you like a numeric question or choices?'
+        : payload.userMessage.includes('numeric') ? numericAnswer : answer;
       return route.fulfill({ headers, body: JSON.stringify({ reply }) }).catch(() => {});
     }
     return route.abort();
@@ -139,6 +143,20 @@ try {
   assert.match(await panel.locator('.companion-messages').textContent(), /discuss general/);
   assert.doesNotMatch(await panel.locator('.companion-messages').textContent(), /discuss style/);
   console.log('PASS real Hub source button, pinned raw context, shared AI, central engine grading, zero temporary storage, close destroys iframe, original attempt and general conversation preserved');
+
+  await panel.locator('.companion-close').click(); await source.locator('[data-generate-variant]').click();
+  await input.fill('numeric'); await input.press('Enter'); await page.locator('.quiz-variant-preview[open]').waitFor();
+  const numericPractice = page.frameLocator('.quiz-variant-preview iframe');
+  const mathField = numericPractice.locator('math-field[data-numeric-answer]'); await mathField.waitFor();
+  const numericChild = await page.locator('.quiz-variant-preview iframe').elementHandle().then(handle => handle.contentFrame());
+  assert.deepEqual(await numericChild.evaluate(() => LearningHubQuiz.getState().answers), {}, 'New practice starts with no previous answers');
+  await mathField.evaluate(field => { field.value = '1/2'; field.dispatchEvent(new Event('input', { bubbles: true })); });
+  await numericPractice.locator('[data-submit-all]').click(); await numericPractice.locator('.quiz-results').waitFor();
+  assert.equal(await numericChild.evaluate(() => LearningHubQuiz.getState().latestScore.score), 1);
+  assert.deepEqual(await numericChild.evaluate(() => window.__temporaryStorageCalls), []);
+  await page.locator('.quiz-variant-preview > header button').click();
+  await panel.locator('.companion-close').click(); await page.locator('.companion-trigger').press('Enter');
+  console.log('PASS temporary numeric practice with fraction input, fresh answer state and no storage writes');
 
   await panel.locator('.companion-close').click(); await source.locator('[data-generate-variant]').click();
   await input.fill('unsafe'); await input.press('Enter'); await panel.locator('.is-error button').waitFor();

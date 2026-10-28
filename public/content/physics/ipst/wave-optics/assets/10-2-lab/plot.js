@@ -2,9 +2,9 @@
   'use strict';
   const M=globalThis.DoubleSlitLabModel,$=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';
   function el(tag,attrs,parent){const n=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);parent.append(n);return n;}
-  function draw(config,zoom,lang){
+  function draw(config,zoom,lang,phase=0){
     const canvas=$('pattern'),ctx=canvas.getContext('2d'),pixels=ctx.createImageData(800,360),data=pixels.data;
-    const rgb=config.color==='green'?[75,245,118]:[255,66,58],background=[10,19,17],paper=[237,244,238],horizontal=Array.from({length:800},(_,x)=>x>=40&&x<=760?M.intensity(config,M.screenToPosition(x,zoom)):0);
+    const rgb=config.color==='green'?[75,245,118]:[255,66,58],background=[10,19,17],paper=[237,244,238],horizontal=Array.from({length:800},(_,x)=>x>=40&&x<=760?M.intensity(config,M.screenToPosition(x,zoom),phase):0);
     for(let y=0;y<360;y++){
       const vertical=Math.exp(-.5*((y-120)/18)**2);
       for(let x=0;x<800;x++){
@@ -25,6 +25,7 @@
     el('path',{d:'M400 70V238',stroke:'#cde4d5','stroke-opacity':.35,'stroke-dasharray':'3 6','stroke-width':1},ruler);
     const unit=el('text',{x:748,y:326,'text-anchor':'end',fill:'#607968','font-size':font,'font-family':'Tahoma, Arial, sans-serif'},ruler);unit.textContent='mm';
     $('laser-dot').setAttribute('fill',config.color==='green'?'#45b76c':'#d95749');$('beam').setAttribute('stroke',config.color==='green'?'#45b76c':'#d95749');$('beam-tip').setAttribute('fill',config.color==='green'?'#45b76c':'#d95749');
+    $('phase-plate').style.display=phase===180?'':'none';$('phase-plate').removeAttribute('hidden');
     $('label-laser').textContent=lang==='th'?'เลเซอร์':'Laser';$('label-slit').textContent=lang==='th'?'สลิตคู่':'Double slit';$('label-screen').textContent=lang==='th'?'ฉาก':'Screen';$('label-distance').textContent=`L = ${config.distance.toFixed(1)} m`;
     const apparatusFont=14*Math.max(1,800/Math.max($('stage').clientWidth,300));
     for(const id of ['label-laser','label-slit','label-screen','label-distance']){$(id).style.fontSize=apparatusFont+'px';$(id).setAttribute('y',id==='label-distance'?118+apparatusFont:Math.max(25,apparatusFont+2));}

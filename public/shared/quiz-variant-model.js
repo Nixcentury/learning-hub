@@ -20,10 +20,17 @@ ${variantEnd}`;
 
 function richSource(node, language) {
   if (!node) return '';
-  const localized = node.querySelector(`[data-quiz-language="${language}"]`);
   const copy = node.cloneNode(true);
-  if (localized) copy.innerHTML = localized.innerHTML;
-  else if (node.dataset?.[language]) copy.innerHTML = node.dataset[language];
+  // Preserve siblings outside language wrappers (tables and diagrams often sit
+  // between translated paragraphs), not only the first localized descendant.
+  if (copy.querySelector(`[data-quiz-language="${language}"]`)) {
+    copy.querySelectorAll('[data-quiz-language]').forEach(el => {
+      if (el.dataset.quizLanguage !== language) el.remove();
+    });
+  } else if (node.dataset?.[language]) copy.innerHTML = node.dataset[language];
+  copy.querySelectorAll('[data-th][data-en]').forEach(el => {
+    if (!el.querySelector('[data-quiz-language]')) el.innerHTML = el.dataset[language];
+  });
   for (const svg of copy.querySelectorAll('svg')) {
     const code = copy.ownerDocument.createElement('pre'); code.textContent = svg.outerHTML; svg.replaceWith(code);
   }

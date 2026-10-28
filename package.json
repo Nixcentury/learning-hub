@@ -40,7 +40,8 @@
     "test:pdf": "node --test scripts/pdf-viewer.test.mjs scripts/pdf-player.test.mjs",
     "test:monitor": "node --test scripts/classroom-monitor.test.mjs",
     "test:monitor:rules": "node scripts/run-classroom-monitor-qa.mjs",
-    "test:monitor:browser": "node scripts/run-classroom-monitor-qa.mjs --browser"
+    "test:monitor:browser": "node scripts/run-classroom-monitor-qa.mjs --browser",
+    "test:monitor:sdk": "node scripts/run-classroom-monitor-qa.mjs --sdk"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

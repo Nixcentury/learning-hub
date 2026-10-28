@@ -18,7 +18,9 @@ try {
     await new Promise(done => setTimeout(done, 200));
   }
   if (!ready) throw Error('Emulator startup timed out: ' + log);
-  const scripts = process.argv.includes('--browser') ? [['scripts/test-classroom-monitor-browser.mjs']] : [['--test','scripts/classroom-monitor-rules.test.mjs'], ['--test','scripts/classroom-rules.test.mjs']];
+  const scripts = process.argv.includes('--browser') ? [['scripts/test-classroom-monitor-browser.mjs']]
+    : process.argv.includes('--sdk') ? [['scripts/test-classroom-monitor-sdk.mjs']]
+    : [['--test','scripts/classroom-monitor-rules.test.mjs'], ['--test','scripts/classroom-rules.test.mjs']];
   for (const args of scripts) {
     const child = spawn(process.execPath, args, { stdio: 'inherit', env: process.env });
     const code = await new Promise((done, reject) => { child.on('error', reject); child.on('exit', done); });

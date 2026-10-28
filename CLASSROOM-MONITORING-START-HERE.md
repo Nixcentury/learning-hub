@@ -92,14 +92,21 @@ Rules และ browser ใช้ emulator ที่รันเป็น subpro
 mkdir -p work/monitor-qa
 curl --fail --location --output work/monitor-qa/firebase-database-emulator.jar https://storage.googleapis.com/firebase-preview-drop/emulator/firebase-database-emulator-v4.11.2.jar
 pnpm test:monitor:rules
+FIREBASE_MODULE=/absolute/path/to/firebase pnpm test:monitor:sdk
 QA_BUILT=1 PLAYWRIGHT_MODULE=/absolute/path/to/playwright pnpm test:monitor:browser
 ```
 
 workflow `classroom-monitor.yml` ใช้ Chromium ทดสอบ production build พร้อม Rules จริงใน emulator
-OAuth และ SDK transport ถูกแทนด้วย test adapter และ transaction แบบ REST ETag
-จึงยังต้อง smoke test บัญชีจริงและ iPad Safari จริงก่อนใช้ทั้งห้อง
+ชุด browser แทน OAuth และ SDK transport ด้วย test adapter และ transaction แบบ REST ETag
+มีอีกชุดใช้ Firebase SDK รุ่นเดียวกับเว็บจริง ตรวจการเชื่อมต่อครั้งแรก การรับทราบ
+server onDisconnect และ reconnect กับ Rules ใน emulator โดยตรง
+ยังต้อง smoke test Google OAuth ของบัญชีจริงและ iPad Safari จริงก่อนใช้ทั้งห้อง
 การทดสอบ visibility บน desktop จำลองสถานะเพื่อทดสอบตรรกะ ไม่ยืนยันพฤติกรรมของ multiwindow บน iPad
 
 จุดเริ่มแก้โค้ด: `js/classroom-monitor-model.js`, `js/classroom-monitor-service.js`,
 `js/classroom-monitor-firebase.js`, `js/classroom-monitor-view.js` และ
 `public/pages/shared/classroom-monitor-page.js`
+
+การเริ่มรายงานแต่ละ connection เตรียม record ครบชุดในสถานะ offline ก่อน
+จึงลงทะเบียน onDisconnect แล้วเปลี่ยนเป็น online เพื่อให้การตรวจ Rules ตอนลงทะเบียนผ่าน
+และไม่แสดงว่า online ก่อนมีทางจัดการเมื่อ socket หลุด

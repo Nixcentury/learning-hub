@@ -92,6 +92,10 @@ export function createClassroomMonitor({ io, onChange = () => {}, now = Date.now
           if (id !== connectionId && record.connected === false) await io.remove(`${sessionPath('connections', room)}/${user}/${id}`);
         }
         if (!safe(version) || lessonKey !== key || !connected) return;
+        // A partial onDisconnect update must validate against an existing full
+        // record. Prepare it offline, register cleanup, then mark it online.
+        await io.set(path, { connected: false, visible, changedAt, updatedAt: io.timestamp(), sequence: ++sequence, location });
+        if (!safe(version) || lessonKey !== key || !connected) return;
         const registration = await io.disconnect(path, { connected: false, updatedAt: io.timestamp() });
         if (!safe(version) || lessonKey !== key || connectionPath !== path) { await registration.cancel?.(); return; }
         disconnect = registration; connectionReady = true;

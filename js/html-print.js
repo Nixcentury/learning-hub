@@ -1,6 +1,7 @@
+import { loadBankPrintMetadata } from '../public/shared/print-bank-metadata.js';
 import { renderHtmlMath } from './html-math.js';
 import { defaultPrintProfile, paginatePrintDocument, PrintLayoutError } from './print-layout.js';
-import { loadPrintCatalog, readPrintMetadata, resolvePrintMetadata } from './print-metadata.js';
+import { loadPrintCatalog, readPrintMetadata, resolvePrintMetadata, buildPrintFilename, createPrintTitleSession } from './print-metadata.js';
 import { learningSheetPrintCSS, resetLearningSheetSnapshot, prepareLearningSheetPrint } from './learning-sheet-print.js';
 
 let activePreview = null;
@@ -146,6 +147,10 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
   const rebuildButton = dialog.querySelector('[data-print-rebuild]');
   const inputs = {};
   let snapshot = '', revision = 0;
+  const titleSession = createPrintTitleSession(window);
+  let defaultFilename = '';
+  const filenameHint = document.createElement('p'); filenameHint.dataset.printFilename = '';
+  dialog.querySelector('.html-print-help').after(filenameHint);
   const isSheet = frame.contentDocument?.documentElement.hasAttribute('data-learning-sheet');
   let editionSelect = null;
   if (isSheet) {
@@ -200,7 +205,7 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
   };
   const observer = new ResizeObserver(fitPreview); observer.observe(preview);
   dialog.addEventListener('close', () => {
-    observer.disconnect(); revision++;
+    observer.disconnect(); revision++; titleSession.restore();
     dialog.remove(); if (activePreview === dialog) activePreview = null;
     if (opener?.isConnected) opener.focus({ preventScroll:true });
   }, { once:true });
@@ -209,8 +214,11 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
     if (dialog.dataset.printState !== 'ready') return;
     try {
       // Deliberately synchronous with the user's click, including on touch devices.
+      titleSession.set(defaultFilename);
+      preview.contentWindow.addEventListener('afterprint', () => titleSession.restore(), { once: true });
       preview.contentWindow.focus(); preview.contentWindow.print();
     } catch {
+      titleSession.restore();
       status.textContent = label('เปิดหน้าต่างพิมพ์ไม่ได้ กรุณาลองในเบราว์เซอร์หลักของอุปกรณ์', 'Unable to open printing. Try your device’s main browser.');
     }
   });
@@ -245,7 +253,11 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
       await waitForPrintResources(preview.contentDocument);
       if (!alive() || token !== revision) return;
       if (isSheet) prepareLearningSheetPrint(preview.contentDocument, editionSelect.value);
-      const result = paginatePrintDocument(preview.contentDocument, Object.fromEntries(Object.entries(inputs).map(([key, input]) => [key, input.value])), language, { profile:profileSelect.value });
+      const labels = Object.fromEntries(Object.entries(inputs).map(([key, input]) => [key, input.value]));
+      const result = paginatePrintDocument(preview.contentDocument, labels, language, { profile:profileSelect.value });
+      defaultFilename = buildPrintFilename({ ...labels, subjectId: context.subjectId, language, mode: isSheet ? editionSelect.value : '' });
+      preview.contentDocument.title = defaultFilename;
+      filenameHint.textContent = label('ชื่อไฟล์เริ่มต้น: ', 'Suggested filename: ') + defaultFilename + '.pdf';
       await waitForPrintResources(preview.contentDocument);
       if (!alive() || token !== revision) return;
       preview.contentDocument.addEventListener('click', event => { if (event.target.closest?.('a')) event.preventDefault(); });
@@ -277,7 +289,9 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
       }
       const catalog = await loadPrintCatalog(document.baseURI);
       if (!alive()) return;
-      const metadata = resolvePrintMetadata({ catalog, context, title, language, authored:readPrintMetadata(source, language) });
+      const bankLabels = await loadBankPrintMetadata(context, language);
+      if (!alive()) return;
+      const metadata = resolvePrintMetadata({ catalog, context, title, language, authored: { ...bankLabels, ...readPrintMetadata(source, language) } });
       Object.entries(metadata).forEach(([key, value]) => { inputs[key].value = value; });
       snapshot = buildHtmlPrintSnapshot(source, title);
       await buildPages();

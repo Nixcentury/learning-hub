@@ -208,6 +208,11 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
     },
     refreshLanguage() { if (opened) { controls(); void showTopic(); } },
     getSelection() { return { subjectId, bankKey: selected || null }; },
+    getPrintMetadata() {
+      const item = selectedTopic();
+      const chapterTitle = item?.path?.length >= 4 ? item.path[2] : '';
+      return { subjectId, chapter: bankTitlePair(chapterTitle)[language() === 'en' ? 1 : 0], work: item ? localizedTitle(item) : '' };
+    },
     setPrinting(value) { printing = value; controls(); answerControls(); setPrint(Boolean(selectedTopic())); },
     close() { ++version; controller?.abort(); },
   };

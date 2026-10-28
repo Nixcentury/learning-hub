@@ -23,6 +23,8 @@ import {
 } from "./roles.js";
 import { createClassroomAccess } from "./classroom-access.js";
 import { createFirebaseClassrooms } from "./classroom-firebase.js";
+import { createFirebaseClassroomMonitor } from './classroom-monitor-firebase.js';
+import { createMonitorView } from './classroom-monitor-view.js';
 import {
   createHubContextMessage,
   createIdentityContext,
@@ -112,13 +114,23 @@ let roleReturnFocus = null;
 let activeSectionId = "overview";
 let classroomPageRevision = 0;
 let classroomRooms = null;
+let classroomMonitorState = null;
+let monitorView = null;
+const classroomMonitor = createFirebaseClassroomMonitor(snapshot => {
+  classroomMonitorState = snapshot;
+  monitorView?.update(snapshot);
+  postContextToPage();
+});
 const classrooms = createFirebaseClassrooms(snapshot => {
   classroomRooms = snapshot;
+  if (snapshot.selected?.id) classroomMonitor.selectRoom(snapshot.selected.id);
+  monitorView?.refresh();
   postContextToPage();
 });
 
 function syncClassrooms() {
   classrooms.setContext(activeSession, activeRole, activeSectionId === "classroom");
+  classroomMonitor.setIdentity(activeSession, activeRole);
 }
 
 function getWorkspaceIdentity() {
@@ -138,7 +150,10 @@ const workspace = createWorkspace({
   getLanguage: () => currentLanguage,
   getIdentity: getWorkspaceIdentity,
   getRole: getWorkspaceRole,
-  onToolActivated: tool => navigation?.toolActivated(tool),
+  onToolActivated: tool => {
+    classroomMonitor.setLocation({ hash: location.hash, titleTh: tool.titleTh, titleEn: tool.titleEn, subjectId: tool.context?.subjectId });
+    navigation?.toolActivated(tool);
+  },
   onWorkspaceIdle: () => navigation?.workspaceIdle(),
   onLanguageChange: language => setLanguage(language),
   onQuizVariant: (source, owner) => companion.startVariant(source, owner),
@@ -151,6 +166,14 @@ const workspace = createWorkspace({
     pageFrame.contentWindow?.postMessage({ type: 'learning-hub-tool-closed', toolId }, location.origin);
   },
 });
+
+monitorView = createMonitorView({ getLanguage: () => currentLanguage,
+  command: (action, payload, uid) => classroomMonitor.command(action, payload, uid),
+  onClassroom: () => { location.hash = '#classroom'; },
+  getOpenRoom: () => activeSectionId === 'classroom' ? classroomRooms?.selected?.id || '' : '',
+});
+classroomMonitor.setVisible(document.visibilityState !== 'hidden');
+document.addEventListener('visibilitychange', () => classroomMonitor.setVisible(document.visibilityState !== 'hidden'));
 
 function readSavedLanguage() {
   try {
@@ -179,6 +202,7 @@ function postContextToPage() {
       }),
       classroom: createClassroomAccess(activeSession, activeRole),
       classroomRooms: activeSectionId === "classroom" && classroomRooms?.uid === activeSession.user?.uid ? classroomRooms : null,
+      classroomMonitor: activeSectionId === 'classroom' && classroomMonitorState?.uid === activeSession.user?.uid ? classroomMonitorState : null,
     },
     targetOrigin,
   );
@@ -466,6 +490,7 @@ function setLanguage(language) {
   postContextToPage();
   workspace.setLanguage(language);
   companion.setLanguage(language);
+  monitorView?.refresh();
   saveLanguage(language);
 }
 
@@ -607,7 +632,7 @@ function showSection(sectionId, force = false) {
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
   // Keep cached menu documents and their shared subject palette in sync.
-  pageUrl.searchParams.set("v", "bank-chapter-links-20261027");
+  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-monitor-20261028' : 'bank-chapter-links-20261027');
   pageFrameLoading.hidden = false;
   // Child-frame navigations must not add extra entries to the Hub's Back history.
   pageFrame.contentWindow.location.replace(pageUrl.href);
@@ -698,6 +723,7 @@ navigation = createHubNavigation({
     : activity.bank ? workspace.openBank(activity.bank)
     : activity.entry ? workspace.openContent(activity.entry) : workspace.open(activity.toolId),
   showMenu: () => workspace.showMenu(),
+  onLocationChanged: value => classroomMonitor.setLocation(value),
 });
 
 document.querySelector('#hub-share-button').addEventListener('click', event => void openHubShare({
@@ -737,6 +763,25 @@ window.addEventListener("message", (event) => {
       result => reply({ ok: true, result }),
       error => reply({ ok: false, error: String(error?.code || error?.message || "classroom/unavailable") }),
     );
+    return;
+  }
+  if (event.data?.type === 'learning-hub-monitor-command' && activeSectionId === 'classroom') {
+    const { action, payload = {}, uid, requestId } = event.data;
+    if (typeof requestId !== 'string' || requestId.length > 100 || uid !== activeSession.user?.uid || payload.roomId !== classroomRooms?.selected?.id) return;
+    const revision = classroomPageRevision;
+    const reply = result => {
+      if (revision === classroomPageRevision && activeSectionId === 'classroom' && uid === activeSession.user?.uid)
+        event.source.postMessage({ type: 'learning-hub-monitor-result', requestId, uid, ...result }, event.origin);
+    };
+    if (action === 'retry') {
+      classroomMonitor.setIdentity(null, null); classroomMonitor.setIdentity(activeSession, activeRole);
+      classroomMonitor.selectRoom(payload.roomId); reply({ ok: true });
+    } else if (action === 'compose') { monitorView.compose(payload.targetUid, payload.roomId); reply({ ok: true }); }
+    else if (action === 'open-location') {
+      const row = classroomMonitorState?.rows.find(value => value.uid === payload.targetUid);
+      if (row?.location?.hash === payload.hash && /^#[a-zA-Z0-9/_-]{1,300}$/.test(payload.hash)) { location.hash = payload.hash; reply({ ok: true }); }
+      else reply({ ok: false });
+    } else void classroomMonitor.command(action, payload, uid).then(() => reply({ ok: true }), failure => reply({ ok: false, error: String(failure?.code || failure?.message || 'monitor/unavailable') }));
     return;
   }
   if (event.data?.type === "learning-hub-open-content") {

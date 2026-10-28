@@ -53,7 +53,7 @@ export function routeForSelection(catalog, selection) {
 }
 
 export function createHubNavigation({ pageFrame, navButtons, showSection, noticeElement,
-  canOpenWorkspace = () => false, openActivity = () => false, showMenu = () => {} }) {
+  canOpenWorkspace = () => false, openActivity = () => false, showMenu = () => {}, onLocationChanged = () => {} }) {
   const sections = new Set([...navButtons].map(button => button.dataset.section));
   let catalogPromise = null, catalog = null, revision = 0, current = null;
   let readyPage = null, lastCommand = '', requestedHash = null, notice = '';
@@ -146,6 +146,8 @@ export function createHubNavigation({ pageFrame, navButtons, showSection, notice
         }
       } else showMenu(); // Keep frames/answers alive when Back returns to a menu.
     } finally { applyingWorkspace = false; }
+    onLocationChanged({ hash: route.hash || location.hash, subjectId: route.subjectId || sectionId,
+      titleTh: activeTool?.titleTh || route.titleTh || sectionId, titleEn: activeTool?.titleEn || route.titleEn || sectionId });
   }
   function handleMessage(event) {
     if (event.origin !== location.origin || event.source !== pageFrame.contentWindow) return false;

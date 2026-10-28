@@ -57,3 +57,24 @@
   .classroom-phase { margin-left: 0; }
   [data-classroom-page] .classroom-welcome { padding: 22px; }
 }
+/* Lesson monitoring stays separate from the ordinary roster. */
+.classroom-monitor{margin-top:24px;padding-top:22px;border-top:1px solid #d6e3ed}
+.classroom-room-detail.has-monitoring-session>.classroom-roster,.classroom-room-detail.has-monitoring-session>h3{display:none}
+.classroom-monitor-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.classroom-monitor-heading h3{margin:0}
+.classroom-monitor-heading span{font-size:12px;padding:6px 10px;border-radius:20px;background:#eaf3fb;color:#305b7a}
+.classroom-monitor-controls,.classroom-monitor-filters{display:flex;align-items:end;gap:10px;flex-wrap:wrap;margin:14px 0}
+.classroom-monitor-controls label{display:grid;gap:6px;font-size:13px}
+.classroom-monitor select,.classroom-monitor input{max-width:100%;min-width:0;border:1px solid #c3d7e6;border-radius:10px;padding:10px;background:#fff;color:inherit;font:inherit}
+.classroom-monitor-filters input{flex:1;min-width:150px}
+.classroom-monitor-people{display:grid;gap:12px}
+.classroom-monitor-person{display:grid;gap:8px;border:1px solid #d4e2ed;border-radius:14px;padding:16px;background:#fbfdff;min-width:0}
+.classroom-monitor-person>div{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.monitor-person-status,.monitor-person-time{font-size:12px;color:#5c7185}
+.classroom-monitor-person[data-status="hidden"],.classroom-monitor-person[data-status="stale"]{border-color:#e1c689;background:#fffaf0}
+.monitor-person-location{text-align:left;border:0;padding:0;background:none;font:inherit;color:#356e9d;cursor:pointer;overflow-wrap:anywhere}
+.monitor-person-location:disabled{color:#718494;cursor:default}
+.monitor-person-message{font-size:13px;line-height:1.6;margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.classroom-monitor-person>.classroom-button{justify-self:start}
+.classroom-monitor [hidden]{display:none!important}
+@media(min-width:900px){.classroom-monitor-people{grid-template-columns:repeat(2,minmax(0,1fr))}}

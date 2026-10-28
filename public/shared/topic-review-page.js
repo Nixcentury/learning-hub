@@ -37,7 +37,7 @@ document.querySelector('[data-review-back]').addEventListener('click', event => 
 printButton.addEventListener('click', async () => {
   if (printing || printButton.disabled) return;
   printing = true; browser.setPrinting(true);
-  try { await window.LearningHubPrint.printReview({ content, title: document.documentElement.lang === 'en' ? 'Topic review' : 'ทวนเนื้อหา' }); }
+  try { await window.LearningHubPrint.printReview({ content, metadata: browser.getPrintMetadata(), title: document.documentElement.lang === 'en' ? 'Topic review' : 'ทวนเนื้อหา' }); }
   finally { printing = false; browser.setPrinting(false); }
 });
 if (embedded) {

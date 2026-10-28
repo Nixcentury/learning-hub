@@ -235,15 +235,19 @@ export function createCompanion({ mount = document.body, language = 'th', client
     history = restore ? normalChat?.history || [] : [];
     input.value = restore ? normalChat?.input || '' : '';
     if (restore && normalChat) messages.replaceChildren(...normalChat.nodes); else welcome();
-    normalChat = null; variantLabels();
+    normalChat = null; variantLabels(); setBusy(false);
   }
   function startVariant(source, owner = null) {
     if (!active || !validVariantSource(source)) return false;
     const reference = variantReference(source);
+    if (busy && !variant) {
+      const pending = messages.querySelector('.companion-message.is-assistant:last-child p');
+      if (pending) pending.textContent = text('stopped');
+    }
     generation++; request?.abort(); request = null; preview.close(); setBusy(false);
     if (!variant) normalChat = { history, input: input.value, nodes: [...messages.childNodes] };
     variant = { source: { title: source.title, number: source.number, hasImages: source.hasImages }, reference, owner };
-    history = []; input.value = ''; welcome(); variantLabels(); openChat(); return true;
+    history = []; input.value = ''; welcome(); variantLabels(); setBusy(false); openChat(); return true;
   }
   function cancelGesture(restore = false) {
     if (!gesture) return;

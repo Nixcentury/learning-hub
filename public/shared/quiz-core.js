@@ -1,3 +1,4 @@
+import { captureVariantSource, receiveTemporaryQuiz } from './quiz-variant-model.js?v=practice-20261028';
 import { QuizEvidenceManager } from "./quiz-evidence.js?v=drag-1";
 import { createNotebookBackupUi } from "./notebook-backup-ui.js?v=6c-backup-2";
 import { readQuizContent } from "./quiz-content-adapter.js";
@@ -30,6 +31,12 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   const printPanel = document.querySelector("[data-print-selection-panel]");
   const printToggle = document.querySelector("[data-print-selection-toggle]");
   const pendingStorageRequests = new Map();
+  const temporary = new URLSearchParams(location.search).get('temporary') === '1';
+  let variantSources = new Map();
+  if (temporary) {
+    document.body.dataset.temporaryQuiz = '';
+    document.querySelectorAll('[data-restart-latest], [data-notebook-backup-open], [data-summary-open]').forEach(node => { node.hidden = true; });
+  }
 
   if (!shell || !app || !loading || !printSource) return;
 
@@ -74,7 +81,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   let dragAnswerUi = null;
   let bankSelection = null, bankReplacementBase;
   let bankContextWaiter = null, contentLoadVersion = 0, bankReloadBusy = false;
-  try { bankSelection = readBankSelection(location.search); }
+  try { bankSelection = temporary ? null : readBankSelection(location.search); }
   catch (error) { loading.hidden = true; errorBox.hidden = false; errorBox.textContent = error.message; return; }
 
   const topicReviewBrowser = topicReviewDialog && createTopicReviewBrowser({
@@ -272,6 +279,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   }
 
   function loadLocal() {
+    if (temporary) return false;
     try {
       return applySnapshot(JSON.parse(localStorage.getItem(storageKey()) || "null"), {
         localEvidence: true,
@@ -282,6 +290,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   }
 
   function saveLocalNow() {
+    if (temporary) return true;
     if (!contentReady) return false;
     try {
       localStorage.setItem(
@@ -299,6 +308,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   }
 
   function requestCloud(type, value) {
+    if (temporary) return null;
     if (parent === window || state.identityKey === "guest") return Promise.resolve(null);
     const requestId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
     const targetOrigin = location.origin === "null" ? "*" : location.origin;
@@ -322,6 +332,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   }
 
   async function loadCloud() {
+    if (temporary) return undefined;
     if (!contentReady || state.identityKey === "guest" || parent === window || cloudLoadPending) return;
     const epoch = identityEpoch;
     const navigationAtStart = navigationRevision;
@@ -405,6 +416,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   }
 
   async function saveCloudNow() {
+    if (temporary) return undefined;
     if (!contentReady || !cloudReady || cloudLoadPending || state.identityKey === "guest") return null;
     const epoch = identityEpoch;
     const revision = changeRevision;
@@ -433,6 +445,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   }
 
   function persist() {
+    if (temporary) return undefined;
     markEdited();
     clearTimeout(localSaveHandle);
     clearTimeout(cloudSaveHandle);
@@ -446,11 +459,13 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   }
 
   function persistLocalOnly() {
+    if (temporary) return undefined;
     clearTimeout(localSaveHandle);
     localSaveHandle = setTimeout(saveLocalNow, 120);
   }
 
   function persistNavigation() {
+    if (temporary) return undefined;
     navigationRevision += 1;
     persistLocalOnly();
     // Once the answer snapshot is known, navigation can accompany it safely.
@@ -469,6 +484,11 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   function renderStorageStatus() {
     const status = document.querySelector("[data-quiz-storage-status]");
     if (!status) return;
+    if (temporary) {
+      status.dataset.tone = 'temporary';
+      status.textContent = label('ข้อฝึกชั่วคราว · ปิดแล้วหาย', 'Temporary practice · discarded on close');
+      return;
+    }
     const effectiveStatus = localSaveFailed ? "memory" : evidenceManager?.storageFailed ? "notebook-error" : state.storageStatus;
     const copy = {
       cloud: ["บันทึกบน Cloud แล้ว", "Saved to cloud"],
@@ -735,6 +755,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
         </footer>
       </section>`;
 
+    if (temporary) document.querySelector("[data-evidence-gate]")?.remove();
     const list = document.querySelector("[data-result-items]");
     results.forEach((result, index) => {
       const item = document.createElement("button");
@@ -807,6 +828,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
         </details>
 
         <article class="quiz-question-card" data-question-card>
+          ${!temporary ? `<button type="button" class="quiz-quiet-button quiz-variant-button" data-generate-variant>✨ ${label('สร้างแนวข้อสอบจากข้อนี้', 'Create practice from this question')}</button><p role="status" data-variant-status hidden></p>` : ''}
           <div class="quiz-question-heading">
             <span class="quiz-question-number">${state.currentIndex + 1}</span>
             <div data-current-prompt></div>
@@ -1041,6 +1063,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
     state.elapsedBeforeMs = elapsedMs();
     state.startedAt = Date.now();
     state.view = "results";
+    if (temporary) state.latestScore.status = state.latestScore.scoreStatus;
     markEdited();
     saveLocalNow();
     void saveCloudNow();
@@ -1114,6 +1137,12 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   }
 
   function restart() {
+    if (temporary) {
+      if (submissionBusy) return;
+      Object.assign(state, { answers: {}, giveUps: {}, hintLevels: {}, masteredIds: [], currentIndex: 0,
+        attempt: 1, view: 'exam', startedAt: Date.now(), elapsedBeforeMs: 0, latestScore: null });
+      render(); return;
+    }
     if (!contentReady || submissionBusy || closing || bankReloadBusy || notebookBackupUi.busy) return;
     if (cloudLoadPending || pendingRemote) {
       window.alert(label("กรุณารอซิงก์หรือเลือกงานที่ต้องการเก็บก่อนเริ่มใหม่", "Finish syncing or resolve the saved-work conflict before restarting."));
@@ -1124,6 +1153,24 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
       "Restart and load the latest version? Answers, hints, score and timer will reset. A copy of this attempt will be kept on this device; notebook work is retained.",
     ))) return;
     return startLatestQuiz();
+  }
+
+  // Delegate from the stable app root: question navigation and MathJax can
+  // remount card content without losing the per-question action.
+  app.addEventListener('click', event => {
+    if (event.target.closest('[data-generate-variant]')) requestVariant();
+  });
+  function requestVariant() {
+      if (temporary || !contentReady || submissionBusy || closing) return;
+      const status = document.querySelector('[data-variant-status]');
+      const source = variantSources.get(`${language()}:${currentQuestion().id}`);
+      if (!source || parent === window) {
+        status.hidden = false;
+        status.textContent = !source ? label('ข้อนี้ยาวเกินขอบเขตการส่ง AI กรุณาเลือกข้ออื่น', 'This question exceeds the AI context limit. Please choose another question.')
+          : label('เปิดชุดนี้ผ่าน Learning Hub เพื่อคุยกับ AI', 'Open this quiz through Learning Hub to chat with AI.');
+        return;
+      }
+      parent.postMessage({ type: 'learning-hub-quiz-variant-request', source }, location.origin);
   }
 
   function bindExamActions() {
@@ -1177,6 +1224,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   }
 
   function initializeEvidenceManager() {
+    if (temporary) return;
     evidenceManager?.dispose();
     const epoch = identityEpoch;
     evidenceManager = new QuizEvidenceManager({
@@ -1250,7 +1298,10 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
     const epoch = identityEpoch;
     try {
       let root, bankResult;
-      if (bankSelection) {
+      if (temporary) {
+        const received = await receiveTemporaryQuiz(); root = received.root;
+        document.documentElement.lang = received.language;
+      } else if (bankSelection) {
         const context = await waitForBankContext();
         if (!['signed-in', 'guest'].includes(context.identity?.status)) throw Error('Please sign in or choose Guest');
         state.identityKey = context.identity.uid || 'guest';
@@ -1297,6 +1348,12 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
       }
       if (bankResult) { state.bankRevision = bankResult.revision; bankReplacementBase = bankResult.replacementBase; }
 
+      variantSources = new Map();
+      if (!temporary) for (const lang of ['th', 'en']) for (const question of validation.questions) {
+        try { variantSources.set(`${lang}:${question.id}`, captureVariantSource(question, {
+          title: root.querySelector('[data-activity-title]')?.dataset[lang] || '', language: lang,
+        })); } catch { /* Show a source-size error at the button, never truncate the question. */ }
+      }
       contentRoot = root;
       state.contentId = root.dataset.activityId;
       state.questions = validation.questions;
@@ -1362,6 +1419,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   }
 
   function applyHubContext(context) {
+    if (temporary) { if (context?.language) setLanguage(context.language); return; }
     latestHubContext = context;
     bankContextWaiter?.(context);
     const nextIdentity = context?.identity?.uid || "guest";
@@ -1477,6 +1535,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
     if (state.identityKey !== "guest" && !closing) void retrySync();
   });
   window.addEventListener("beforeunload", (event) => {
+    if (temporary) return;
     flushLocal();
     if (localSaveFailed || evidenceManager?.hasUnsavedNotebook() || (state.identityKey !== "guest" && unsyncedChanges) || (state.latestScore && evidenceManager?.needsExport())) {
       event.preventDefault();
@@ -1485,12 +1544,14 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=column-b-20261023"
   });
 
   function flushLocal() {
+    if (temporary) return true;
     clearTimeout(localSaveHandle);
     evidenceManager?.flushCurrent();
     return saveLocalNow();
   }
 
   async function prepareClose() {
+    if (temporary) return true;
     if (closing || notebookBackupUi.busy) return false;
     if (!contentReady) return true;
     closing = true;

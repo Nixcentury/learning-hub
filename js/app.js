@@ -141,13 +141,15 @@ const workspace = createWorkspace({
   onToolActivated: tool => navigation?.toolActivated(tool),
   onWorkspaceIdle: () => navigation?.workspaceIdle(),
   onLanguageChange: language => setLanguage(language),
+  onQuizVariant: (source, owner) => companion.startVariant(source, owner),
   onReviewBack: selection => void navigation?.select({ ...selection, bank: true }),
   onShare: (tool, opener) => void openHubShare({
     getTarget: () => navigation.shareTarget(tool), getLanguage: () => currentLanguage, opener,
   }),
-  onToolClosed: (toolId) => pageFrame.contentWindow?.postMessage(
-    { type: "learning-hub-tool-closed", toolId }, location.origin,
-  ),
+  onToolClosed: (toolId) => {
+    companion.closeVariantFor(toolId);
+    pageFrame.contentWindow?.postMessage({ type: 'learning-hub-tool-closed', toolId }, location.origin);
+  },
 });
 
 function readSavedLanguage() {

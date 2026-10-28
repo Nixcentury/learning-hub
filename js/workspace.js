@@ -92,6 +92,7 @@ export function createWorkspace({
   onShare = () => {},
   onLanguageChange = () => {},
   onReviewBack = () => {},
+  onQuizVariant = () => {},
 }) {
   const records = new Map();
   let highestZIndex = 30;
@@ -864,6 +865,12 @@ export function createWorkspace({
   }
 
   window.addEventListener("message", (event) => {
+    if (event.data?.type === 'learning-hub-quiz-variant-request') {
+      if (event.origin !== location.origin || !isWorkspaceQuizSource(event.source)) return;
+      const record = [...records.values()].find(item => item.frame.contentWindow === event.source);
+      if (!record || record.minimized || !record.element.classList.contains('is-active')) return;
+      onQuizVariant(event.data.source, record.tool.id); return;
+    }
     if (typeof event.data?.type === 'string' && event.data.type.startsWith('learning-hub-review-')) {
       if (event.origin !== location.origin) return;
       const record = [...records.values()].find(candidate => candidate.frame.isConnected &&

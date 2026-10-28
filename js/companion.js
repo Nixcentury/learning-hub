@@ -1,3 +1,5 @@
+import { validVariantSource, variantReference, extractVariantHtml } from '../public/shared/quiz-variant-model.js';
+import { createVariantPreview } from './quiz-variant-preview.js';
 import { companionConfig } from './companion-config.js';
 import { armGesture, beginGesture, clampPoint, createCompanionClient, gestureOutcome,
   maxChatMessage, moveGesture, normalizePoint, readCompanionPreferences, restorePoint } from './companion-model.js';
@@ -36,6 +38,8 @@ export function createCompanion({ mount = document.body, language = 'th', client
   let history = [], point = { x: 0, y: 0 }, panelPoint = { x: 0, y: 0 }, gesture = null;
   let greetingTimer, poseTimer, holdTimer, lastGreeting = -Infinity, ignoreClickUntil = 0;
   let busy = false, requestedPose = 'idle';
+  let variant = null, normalChat = null;
+  const preview = createVariantPreview({ language: () => lang });
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const root = document.createElement('div'); root.className = 'hub-companion'; root.hidden = true;
   root.innerHTML = `
@@ -54,6 +58,11 @@ export function createCompanion({ mount = document.body, language = 'th', client
         <button type="button" class="companion-motion" data-label="motion" aria-pressed="true">◌</button>
         <button type="button" class="companion-close" data-label="close">×</button>
       </header>
+      <section class="companion-variant" hidden>
+        <strong data-variant-title></strong>
+        <p data-variant-image-note hidden></p>
+        <div class="companion-variant-styles"></div>
+      </section>
       <p class="companion-notice" data-copy="notice"></p>
       <div class="companion-messages" role="log" aria-live="polite" aria-relevant="additions text"></div>
       <p class="companion-availability" role="status" hidden></p>
@@ -138,6 +147,10 @@ export function createCompanion({ mount = document.body, language = 'th', client
   }
   function welcome() {
     messages.replaceChildren();
+    if (variant) {
+      messageNode('assistant', lang === 'en' ? 'What would you like to practise? Change the numbers, recall the formula, or try a new situation. You can also type your own request.' : 'อยากฝึกแบบไหนครับ? เปลี่ยนตัวเลข ทวนสูตร หรือเปลี่ยนสถานการณ์ เลือกปุ่มด้านบนหรือพิมพ์บอกได้เลย');
+      return;
+    }
     const node = document.createElement('p'); node.className = 'companion-welcome'; node.dataset.copy = 'welcome'; node.textContent = text('welcome');
     messages.append(node);
   }
@@ -146,6 +159,7 @@ export function createCompanion({ mount = document.body, language = 'th', client
     if (error.code === 'rate-limit') return text('rate');
     if (error.code === 'timeout') return text('timeout');
     if (error.code === 'cancelled') return text('stopped');
+    if (['invalid-quiz', 'unsafe-quiz'].includes(error.code || error.message)) return lang === 'en' ? 'The practice format was incomplete or unsupported. Try again or request a simpler question.' : 'รูปแบบข้อฝึกยังไม่ครบหรือไม่รองรับ ลองอีกครั้งหรือขอเป็นโจทย์ข้อความได้ครับ';
     return text('network');
   }
   function messageNode(role, content) {
@@ -168,10 +182,18 @@ export function createCompanion({ mount = document.body, language = 'th', client
     input.value = ''; setBusy(true);
     const controller = new AbortController(); request = controller;
     try {
-      const reply = await client.ask({ message, history, language: lang, signal: controller.signal });
+      const reply = await client.ask({ message, history, language: lang, signal: controller.signal, reference: variant?.reference || '' });
       if (generation !== revision || controller.signal.aborted) return;
-      entry.querySelector('p').textContent = reply;
-      history.push({ role: 'user', content: message }, { role: 'assistant', content: reply }); history = history.slice(-12);
+      let rememberedReply = reply;
+      if (variant) {
+        const html = extractVariantHtml(reply);
+        if (html) {
+          preview.open(html);
+          rememberedReply = lang === 'en' ? 'A temporary practice question was created. The student can request another variant.' : 'สร้างข้อฝึกชั่วคราวแล้ว นักเรียนขอปรับหรือสร้างข้อใหม่ต่อได้';
+        }
+      }
+      entry.querySelector('p').textContent = rememberedReply;
+      history.push({ role: 'user', content: message }, { role: 'assistant', content: rememberedReply }); history = history.slice(-12);
       pose('happy', 1800);
     } catch (error) {
       if (generation !== revision) return;
@@ -191,8 +213,41 @@ export function createCompanion({ mount = document.body, language = 'th', client
     positionPanel(); input.focus({ preventScroll: true });
   }
   function closeChat(focus = true) {
+    endVariant();
     panelOpen = false; panel.hidden = true; trigger.setAttribute('aria-expanded', 'false');
     if (focus && active) (preferences.hidden ? recall : trigger).focus({ preventScroll: true });
+  }
+  function variantLabels() {
+    const section = find('.companion-variant'); section.hidden = !variant;
+    if (!variant) return;
+    find('[data-variant-title]').textContent = `${lang === 'en' ? 'Practice from question' : 'สร้างแนวจากข้อ'} ${variant.source.number} · ${variant.source.title}`;
+    const note = find('[data-variant-image-note]'); note.hidden = !variant.source.hasImages;
+    note.textContent = lang === 'en' ? 'This source has an image. Describe any essential visual details when asked.' : 'ต้นฉบับมีภาพ หาก AI ถามข้อมูลในภาพ ช่วยอธิบายจุดสำคัญเพิ่มเติมได้ครับ';
+    const styles = find('.companion-variant-styles'); styles.replaceChildren();
+    for (const [th, en] of [['เปลี่ยนตัวเลข', 'Change numbers'], ['ทวนสูตร', 'Recall the formula'], ['เปลี่ยนสถานการณ์', 'New situation'], ['ยากขึ้น', 'Make it harder']]) {
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = lang === 'en' ? en : th;
+      button.addEventListener('click', () => void ask(lang === 'en' ? `Create one practice question: ${en}` : `สร้างข้อฝึกหนึ่งข้อ: ${th}`)); styles.append(button);
+    }
+  }
+  function endVariant(restore = true) {
+    if (!variant) return;
+    generation++; request?.abort(); request = null; preview.close(); variant = null; setBusy(false);
+    history = restore ? normalChat?.history || [] : [];
+    input.value = restore ? normalChat?.input || '' : '';
+    if (restore && normalChat) messages.replaceChildren(...normalChat.nodes); else welcome();
+    normalChat = null; variantLabels(); setBusy(false);
+  }
+  function startVariant(source, owner = null) {
+    if (!active || !validVariantSource(source)) return false;
+    const reference = variantReference(source);
+    if (busy && !variant) {
+      const pending = messages.querySelector('.companion-message.is-assistant:last-child p');
+      if (pending) pending.textContent = text('stopped');
+    }
+    generation++; request?.abort(); request = null; preview.close(); setBusy(false);
+    if (!variant) normalChat = { history, input: input.value, nodes: [...messages.childNodes] };
+    variant = { source: { title: source.title, number: source.number, hasImages: source.hasImages }, reference, owner };
+    history = []; input.value = ''; welcome(); variantLabels(); setBusy(false); openChat(); return true;
   }
   function cancelGesture(restore = false) {
     if (!gesture) return;
@@ -288,15 +343,17 @@ export function createCompanion({ mount = document.body, language = 'th', client
     lang = value === 'en' ? 'en' : 'th';
     root.querySelectorAll('[data-copy]').forEach(node => { node.textContent = text(node.dataset.copy); });
     root.querySelectorAll('[data-label]').forEach(node => { node.setAttribute('aria-label', text(node.dataset.label)); node.title = text(node.dataset.label); });
-    input.placeholder = text('placeholder'); availability.textContent = text('unavailable');
+    input.placeholder = text('placeholder'); availability.textContent = text('unavailable'); variantLabels();
   }
   welcome(); setLanguage(lang); applyMotion();
   return {
-    setLanguage,
+    setLanguage, startVariant,
+    closeVariantFor(owner) { if (variant?.owner === owner) endVariant(); },
     setSession(session) {
       const nextActive = ['signed-in', 'guest'].includes(session?.status);
       const nextIdentity = nextActive ? `${session.status}:${session.user?.uid || ''}` : '';
       if (nextIdentity !== identity) {
+        endVariant(false); preview.close();
         generation++; request?.abort(); request = null; history = []; input.value = ''; setBusy(false); welcome(); closeChat(false);
       }
       identity = nextIdentity; active = nextActive; root.hidden = !active;

@@ -1,0 +1,13 @@
+<!-- learning-hub-practice:start -->
+<div class="question-step" data-ans="B">
+  <h3>Write one NEW self-contained question here. Use \(LaTeX\) for formulas.</h3>
+  <div class="options">
+    <label><input type="radio" value="A">First choice</label>
+    <label><input type="radio" value="B">Correct choice</label>
+    <label><input type="radio" value="C">Third choice</label>
+    <label><input type="radio" value="D">Fourth choice</label>
+  </div>
+  <div class="hint-box"><p>A useful hint without the answer.</p></div>
+  <div class="feedback-box"><p>Explain the concept, formula, substitution and correct answer.</p></div>
+</div>
+<!-- learning-hub-practice:end -->

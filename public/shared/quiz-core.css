@@ -1567,3 +1567,24 @@ body { --keyboard-zindex: 1900; --keycap-height: 46px; --keyboard-accent-color: 
 [data-variant-status] { color: #8c3825; font-size: 14px; }
 [data-temporary-quiz] [data-evidence-panel], [data-temporary-quiz] [data-topic-review-open],
 [data-temporary-quiz] [data-summary-open], [data-temporary-quiz] [data-print-mode="summary"] { display: none !important; }
+
+/* A one-question temporary window needs room for the actual question. */
+@media screen {
+  [data-temporary-quiz] .quiz-shell { padding: 10px 0 20px; }
+  [data-temporary-quiz] .quiz-stage { margin-top: 0; gap: 12px; }
+  [data-temporary-quiz] .quiz-topbar,
+  [data-temporary-quiz] .quiz-navigator,
+  [data-temporary-quiz] .quiz-title-row small,
+  [data-temporary-quiz] .quiz-progress-track,
+  [data-temporary-quiz] .quiz-meta-row > :not([data-quiz-storage-status]),
+  [data-temporary-quiz] .quiz-live-stats,
+  [data-temporary-quiz] [data-previous-button],
+  [data-temporary-quiz] [data-next-button] { display: none !important; }
+  [data-temporary-quiz] .quiz-identity-card { padding: 12px 16px; }
+  [data-temporary-quiz] .quiz-title-row h1 { font-size: 20px; }
+  [data-temporary-quiz] .quiz-meta-row { margin: 6px 0 0; padding: 0; }
+  [data-temporary-quiz] .quiz-question-card { padding: 18px 16px; }
+  [data-temporary-quiz] .quiz-action-dock { position: static; }
+  [data-temporary-quiz] .quiz-action-grid { grid-template-columns: 1fr 1fr; }
+  [data-temporary-quiz] .quiz-action-grid > button { grid-column: auto; }
+}

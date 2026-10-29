@@ -28,6 +28,7 @@
     "test:resume:browser": "node scripts/test-quiz-resume-browser.mjs",
     "test:print-names:browser": "node scripts/test-print-names-browser.mjs",
     "test:quiz-print:browser": "node scripts/test-quiz-print-refresh-browser.mjs",
+    "test:quiz-print-rich-text:browser": "node scripts/test-quiz-print-rich-text-browser.mjs",
     "test:number": "node --test scripts/quiz-number.test.mjs",
     "test:navigation": "node --test scripts/content-tool.test.mjs",
     "test:navigation:browser": "node scripts/test-content-navigation-browser.mjs",

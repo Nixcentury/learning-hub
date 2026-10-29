@@ -304,13 +304,22 @@
     else question.append(result);
   }
 
+  function prependPaperLabel(element, className, text) {
+    const label = document.createElement('span');
+    label.className = className;
+    label.textContent = text;
+    // A paragraph can contain text nodes, inline MathJax and rich markup.
+    // Keep them in one flow container rather than making each a flex item.
+    const content = document.createElement('span');
+    content.className = 'quiz-paper-text';
+    content.append(...element.childNodes);
+    element.replaceChildren(label, content);
+  }
+
   function decorateQuizPaper(question, mode) {
     const prompt = question.querySelector('[data-question-prompt]');
     if (prompt) {
-      const number = document.createElement('span');
-      number.className = 'quiz-paper-number';
-      number.textContent = `${question.dataset.printIndex}.`;
-      prompt.prepend(number);
+      prependPaperLabel(prompt, 'quiz-paper-number', `${question.dataset.printIndex}.`);
     }
     const options = [...question.querySelectorAll('[data-choice-id]')];
     let longest = 0;
@@ -318,10 +327,7 @@
       const active = option.querySelector(`[data-quiz-language="${language()}"]`) || option;
       longest = Math.max(longest, active.textContent.trim().length);
       if (active.querySelector('img, svg, table')) longest = Infinity;
-      const letter = document.createElement('span');
-      letter.className = 'quiz-paper-letter';
-      letter.textContent = `${String.fromCharCode(65 + index)}.`;
-      option.prepend(letter);
+      prependPaperLabel(option, 'quiz-paper-letter', `${String.fromCharCode(65 + index)}.`);
     });
     const authored = Number(question.dataset.printColumns);
     const columns = authored >= 1 && authored <= 5 && Number.isInteger(authored) ? authored : longest <= 24 ? 5 : longest <= 65 ? 2 : 1;

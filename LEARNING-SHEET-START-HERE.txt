@@ -4,6 +4,8 @@ Learning Sheet V1 — HTML/ตาราง + พิมพ์สองฉบั�
 เริ่มที่ docs/learning-sheet/README.md
 ส่ง docs/learning-sheet/STARTER-PROMPT-TH.txt พร้อม TASK-BRIEF-TEMPLATE.md
 และใช้ docs/learning-sheet/QA-CHECKLIST.md รับงาน
+ใบใหม่ต้องส่งไกด์ประจำใบตาม docs/learning-sheet/LEARNING-GUIDE.md ด้วย
+ทุกช่วงมีสรุปสั้น 2–4 บรรทัดและปุ่มไปยังข้อจริง ผ่านปุ่มกลางไกด์ใบนี้ของ Hub
 ตัวอย่างสไตล์หลักคือใบ 10.2 สลิตคู่ฉบับล่าสุด; ดู 4.2 สำหรับส่วนการทดลอง
 สถานะ/จำนวน tests ในบันทึกเก่าด้านล่างเป็นประวัติ ต้องตรวจงานและ main ปัจจุบันใหม่
 

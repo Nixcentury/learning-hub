@@ -1,3 +1,5 @@
+@import "./learning-guide.css";
+
 /* ==============================================================
    สีหลักของเว็บ — แก้สีที่นี่ก่อน จุดอื่นจะเปลี่ยนตาม
    สีพื้นกลางใช้โทนเย็น สีประจำวิชาอยู่ใน public/shared/hub-ui.css
@@ -2427,6 +2429,11 @@ body.has-maximized-workspace .hub-taskbar {
   .window-leading-tools { grid-column: 1 / -1; }
   .window-identity { grid-column: 1; padding-left: 12px; }
   .window-trailing-tools { grid-column: 2; }
+  /* Keep every worksheet action reachable when the shared guide is present. */
+  .workspace-window.is-learning-sheet .workspace-window-bar { grid-template-columns:auto minmax(0,1fr); }
+  .workspace-window.is-learning-sheet .window-leading-tools { grid-column:1; grid-row:1; }
+  .workspace-window.is-learning-sheet .window-identity { grid-column:2; grid-row:1; justify-content:flex-start; padding-right:12px; }
+  .workspace-window.is-learning-sheet .window-trailing-tools { grid-column:1 / -1; grid-row:2; justify-content:flex-end; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -98,3 +98,6 @@ data-th="ชื่อไทย" data-en="English title" href="ชื่อไฟ
 แยกประเด็นวิชาการที่ไม่แน่ใจไว้ให้ผู้ใช้ตรวจ ไม่แต่งการอ้างอิงหรืออ้างว่าทดสอบระบบแล้ว
 ผู้พัฒนาจะตรวจ pnpm validate:content, pnpm validate:routes, pnpm build
 และเปิด Hub ตรวจ PDF ทั้งฉบับว่าง/เฉลยจริงอีกครั้ง
+
+ไกด์ประจำใบ (มาตรฐาน 29 ตุลาคม 2026):
+อ่าน docs/learning-sheet/LEARNING-GUIDE.md ส่งไฟล์ .guide.json TH/EN คู่กับ HTML ผ่านปุ่มกลางของ Hub ทุกช่วงมีสรุปสาระจริง 2–4 บรรทัด แนวเล่า งานขั้นต่ำ ปุ่มไป semantic target และคำถามพร้อมแนวคำตอบ ไม่ยกเนื้อหาเต็มซ้ำหรือสั่งทุกข้อเป็นการบ้าน ตรวจ contentId/revision/source hash และ targets ทั้งสองภาษา พร้อม pnpm validate:guides คงเนื้อหา ช่องตอบ เฉลย และหน้าพิมพ์เดิม ห้ามสร้าง toolbar/script ในไฟล์เนื้อหา

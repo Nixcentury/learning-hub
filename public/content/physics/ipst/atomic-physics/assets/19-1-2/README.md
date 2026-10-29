@@ -78,3 +78,18 @@
 - Notes: จัดทำใหม่เพื่อใช้ n=1 ให้ถูกต้อง ไม่คัดป้าย n=0 จากรูป 19.11; ตำแหน่งแนวนอนของลูกศรเป็นการจัดหน้า
 
 The n=1 ground-state label is corrected in the new energy-level diagram; the original p.72 diagram had n=0. Figures with Thai source labels retain those labels in both editions; English captions/body explain the notation.
+
+## Teacher review, 27 October 2026
+
+The teacher's ten review points and the approved radius derivation are implemented in Sheet 2 only. The short grating review precedes Activity 19.1. The original `06-continuous-and-line-spectra.png` and its explanation now appear before Activity Q1; it is retained, not replaced. The original `07-absorption-emission-observation` files are retained as prior source assets but are no longer displayed; the simpler generic observing arrangements below replace them in the student sheet.
+
+New original explanatory SVGs (English image labels shared by TH/EN):
+
+- `12-grating-review.svg`: undeviated white central direction and representative blue/red first-order rays. The normal is perpendicular to the grating plane; theta is measured between that normal and the red ray. The ray geometry is calculated from `sin(theta) = lambda/d` with an illustrative d = 2000 nm and wavelengths 450/650 nm. The picture illustrates diffraction/interference, not an experimental measurement or all spectral colours.
+- `13-lamp-spectrum-comparison.svg`: schematic incandescent lamp and excited hydrogen discharge tube, each followed by a grating and its illustrative spectrum. The filament produces a continuous visible band; hydrogen shows selected visible lines. The four line positions are mapped on a common 400–700 nm scale at approximately 410.2, 434.0, 486.1 and 656.3 nm, consistent with the existing IPST/NIST reference material. Brightness and source colours are illustrative. This is a scientific diagram, not a photograph.
+- `14-emission-absorption.svg`: simplified observing arrangements, showing emission first and absorption second. The matching line positions use the same illustrative scale as the lamp comparison; absorption explicitly requires suitable initial atomic states. No ground-state visible-hydrogen absorption claim is made.
+- `15-same-energy-gap.svg`: two copies of the same pair of energy levels, with upward absorption and downward emission photon arrows. Heights and gaps agree between panels. There are no numerical energies or spatial-orbit claims.
+
+These diagrams are newly authored from the physics in the supplied sources, not scans or raw experimental results. Source apparatus and results were checked against student pp.63–64 (PDF pp.76–77) and teacher pp.56–58. The end-of-activity questions remain in their original order. The summary table repeats the worksheet's six calculated wavelengths (655, 492, 432; 655, 631, 603 nm), rather than replacing them with reference wavelengths. The sample data and classroom rounding remain explicitly labelled.
+
+The K/U/E tables are deliberately illustrative arithmetic values, not allowed hydrogen energy levels or measurements. They explore the circular-Coulomb-orbit relationship, followed by a derivation and then actual hydrogen examples. The existing `energy-sign` slot now holds part (a), total E at n = 2; K, U and the sum check have their own new response slots. Only the agreed `classical-acceleration` and `postulate-not-proof` response keys were removed. All other old keys remain. The five modified retained answers are documented in the review QA note.

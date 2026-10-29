@@ -1,5 +1,7 @@
 # Physics 19.1 — Sheets 2 and 3
 
+> 29 October 2026: Sheet 2 is divided into two print parts of 13 and 12 A4 pages, preserving its approved learning content. The current verification is recorded under “Two print parts” at the end; earlier page counts refer to their stated revisions.
+
 > Follow-up QA for PR47 (26 October 2026): wording, notation explanations and the NIST reference plot were revised after the original author verification below. The latest review is recorded at the end. The original exported PDFs belong to `af51cc67`; no new PDF export is claimed for the revised files.
 
 26 October 2026. Implements the teacher’s confirmed three-sheet plan, completing Sheet 2 before authoring Sheet 3. The page cap is about 32–33 per edition, not a target. Explanations and the radius, energy and series derivations are printed; only the five key formula summaries across these two sheets and question/problem responses are left blank. Response areas have no writing lines or dot grids.
@@ -175,3 +177,49 @@ All 112 preview pages were visually reviewed using sixteen contact sheets, with 
 Local evidence: `qa-output/sheet2-review/` (ignored), including `structure.json`, `numerical.json`, `question-mapping.json`, `browser-report.json`, `narrow-report.json`, `print-report.json`, four preview HTML exports, contact sheets and enlarged screenshots. The source PDFs remain outside the repository.
 
 Limits: no new native PDF export, physical-printer output, native Safari/iPad/Apple Pencil test or account/cloud write was performed. Previous PDF claims in this document concern the earlier commits stated there. This revision is prepared for PR review, not a claim of a merged or deployed Pages release.
+
+
+## Two print parts — 29 October 2026
+
+Based on main `b4d24f924b0bf0b9f65a744ca004a400fdf10b40`, after the teacher explicitly requested merging PR #49. That merge completed and its Learning Hub Pages run `40830040894` succeeded. The print-parts update below is a separate reviewable change.
+
+### Scope and preservation
+
+- The existing Sheet 2 file/content ID/tool key now opens Part 1, “Atomic evidence and spectra”, covering sections 1–5. A new `19-1-2b-bohr-radius-energy-learning-sheet.html`, content ID `physics-ipst-atomic-19-1-2b-sheet`, tool key `learning-sheet-2b`, opens Part 2, “Orbits and energy in Bohr’s model”, covering sections 6–10.
+- The tools menu belongs to the teacher-supplied bank key `b-d65860a41c400f77ee276a35`. A fresh read-only call through the repository’s configured bank client confirmed this Bohr topic among 221 Physics sets. Both new part cards were opened from the actual built Hub menu; the existing Sheet 3 card remained visible.
+- All 71 paired response keys, their order across the two parts, and every writing-height preset are retained. Part 1 has 32 areas, 22 question containers and 10 figures per language; Part 2 has 39 areas, 15 question containers and four figures. General question numbers continue between parts.
+- An independent comparison with the merged PR #49 source verifies every answer, every numerical substitution, all 14 images in order and all 34 explanatory paragraphs outside question/answer/header/footer containers. The six long wavelength substitutions are wrapped as two math expressions without changing their content. Formula derivations, both K/U/E tables, worked examples and all original IPST question coverage are retained.
+- The three magnet-path responses and six wavelength calculations use comparison/work tables. Four n=2 energy subparts form a two-by-two table, each with its original writing area. Three n=4 subparts share an initial-state statement and a three-row table. Tables stack for narrow-screen reading while retaining their paper columns during print measurement.
+- Only authored layout changes: remove this worksheet wrapper’s duplicated inset during central print measurement, remove extra margins inside exercise tables, and move the original learning roadmap plus a short bibliography to Part 2’s opening. This avoids a nearly empty final page. Body font size, figures, original writing heights, shared engines and global print margins are unchanged.
+- Sheet 1, Sheet 3, other lessons, student data, dependencies and shared engines are unchanged. The existing Sheet 3 menu anchor is identical to main. Full source/figure credits and original question allocation remain in the asset README; this update does not claim a new reading of the textbook PDFs.
+
+### Checks
+
+- `pnpm test:unit`: 421 passed, 0 failed. No tests mirroring static layout implementation were added.
+- `pnpm validate:routes`: pass; 40 HTML-menu contents, including both Sheet 2 parts. Original Sheet 2 identity is retained.
+- `pnpm build`: pass, including content validation, TypeScript, Vite and Pages verification; 636 public files match their sources. The final two HTML files were also compared byte-for-byte with the built copies.
+- `git diff --check`: pass. Contract audit finds one direct answer per slot, no nested response areas, no scripts/handlers and exactly matching TH/EN keys.
+- Independently recalculated the six activity wavelengths (655, 492, 432, 655, 631, 603 nm), the n=2 K/U/E values (+3.40/−6.80/−3.40 eV), and n=4 radius, energy, minimum ionization energy and speed. These agree with the retained solutions.
+
+### Browser and print verification
+
+Used Chromium through the managed preview, with the current built Hub in Guest mode, the actual Bohr topic menu, and a separate fixture using the unmodified shared Learning Sheet, math and print modules.
+
+The HTTP-only preview lacks secure-context randomUUID/SubtleCrypto. Its local copies of the main/Physics pages received UUID compatibility and 22 exact SHA-256 chapter digests precomputed from the unmodified live catalog; unknown digest inputs still throw. These preview-only changes are absent from the submitted repository tree. No Google sign-in, scores or Cloud/student writes were exercised.
+
+- Both parts open from the actual topic menu. TH/EN, individual reveal, reveal-all/hide-all and mirrored language state work; all formulas and images load. A same-language reveal retained the measured 134.578125 px area height. Returning from print retained all 39 revealed Part 2 areas (78 mirrored language elements).
+- Both parts and both languages were checked in a 390 px iframe, with an actual 375 px content viewport. Scroll width equals client width, images are complete, all 32/39 areas remain, all answers reveal, and there are no math errors. The four energy subparts stack on the narrow screen. This is an iframe/Chromium check, not native iPad/Safari.
+- The current original Sheet 2 was also printed through the same central engine for comparison: 28 A4 pages in each language. The new pair totals 25 pages, a reduction of three pages, while each independently printable part meets the requested 12–20 page range.
+
+| Part | Language | Blank pages | Answer pages | Areas | Images |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 1 | TH | 13 | 13 | 32 | 10 |
+| 1 | EN | 13 | 13 | 32 | 10 |
+| 2 | TH | 12 | 12 | 39 | 4 |
+| 2 | EN | 12 | 12 | 39 | 4 |
+
+All eight final central previews have no measured page-body overflow or math errors. Blank editions contain zero answer elements; answer editions contain exactly 32/39, and only the chosen language is present. All 100 preview pages were inspected in 16 contact views, with enlarged inspection of the changed layouts. The four n=2 subparts remain on one page. Table continuations retain their headers and split between rows. The final Part 2 preview from the actual Hub also reports 12 pages/39 areas/zero blank-edition answer elements. The device-margins profile was rebuilt for Part 2 Thai in the actual Hub: 13 pages, no overflow.
+
+Evidence is under ignored `qa-output/physics19-packs/`: build/unit/routes logs, independent content/numerical audit, live catalog snapshot, full per-page preview HTML, final print/responsive/Hub reports, 16 contact screenshots and `print-proof.jpg`. Per-page serialization was length-checked to avoid silently truncated HTML captures.
+
+**Boundary:** central previews and the device-margins profile were tested; native PDF export, native iPad/Safari and a physical printer were not. PR #49 is merged; the separate print-parts change is submitted for review and is not claimed as publicly deployed.

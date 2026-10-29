@@ -1,0 +1,401 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "physics-ipst-atomic-19-1-2b-sheet",
+    "revision": "2026-10-29-2",
+    "sha256": "3c71e30d50aac48774130f25f387cea18f139bd3dc2cc5db41d3425f06b18f3b"
+  },
+  "title": {
+    "th": "วงโคจรและพลังงานในแบบจำลองโบร์",
+    "en": "Orbits and energy in Bohr’s model"
+  },
+  "prerequisites": {
+    "th": "ทวนแรงสู่ศูนย์กลาง แรงคูลอมบ์ และ E = K + U จากชุดที่ 1 ให้จำว่าโบร์อนุญาตเฉพาะบางวงโคจร",
+    "en": "Review centripetal force, Coulomb force and E = K + U. Recall from Part 1 that Bohr allows only certain orbits."
+  },
+  "goal": {
+    "th": "เชื่อม n กับรัศมี อัตราเร็ว และพลังงานของไฮโดรเจน พร้อมแยกสถานะกระตุ้นออกจากการหลุดเป็นอิสระ",
+    "en": "Connect n to hydrogen’s radius, speed and energy, and distinguish an excited bound state from ionization."
+  },
+  "steps": [
+    {
+      "id": "radius",
+      "title": {
+        "th": "เริ่มจากวงโคจรที่อนุญาต",
+        "en": "Start with allowed orbits"
+      },
+      "summary": {
+        "th": "ในแบบจำลองโบร์ n = 1, 2, 3, … และ mvr = nh/(2π)\nสำหรับไฮโดรเจน rₙ = a₀n² โดย a₀ = 5.29 × 10⁻¹¹ m รัศมีจึงเพิ่มตาม n²",
+        "en": "In Bohr’s model n = 1, 2, 3, … and mvr = nh/(2π).\nFor hydrogen rₙ = a₀n², where a₀ = 5.29 × 10⁻¹¹ m. Radius grows with n²."
+      },
+      "story": {
+        "th": "เปิดหัวข้อ 6 แล้วถามว่า “ถ้าเลขวงโคจรเพิ่มเป็นสองเท่า รัศมีเพิ่มสองเท่าด้วยไหม?” ใช้หัวข้อ 7 เชื่อมแรงไฟฟ้าที่ทำหน้าที่เป็นแรงสู่ศูนย์กลางกับเงื่อนไขของโบร์",
+        "en": "Start at section 6: “If the orbit number doubles, does the radius double?” In section 7, connect electric force as centripetal force to Bohr’s condition."
+      },
+      "action": {
+        "th": "อ่านสูตรรัศมี แล้วทำคำถาม 8 โดยใช้อัตราส่วนก่อนแทนค่าคงตัว",
+        "en": "Read the radius formula, then solve Question 8 using a ratio before substituting constants."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "สูตรรัศมี · หัวข้อ 7",
+            "en": "Radius formula · section 7"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "formula-radius"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 8",
+            "en": "Question 8"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "radius-ratio"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "จาก n = 2 ไป n = 4 รัศมีเป็นกี่เท่าของเดิม?",
+          "en": "From n = 2 to n = 4, what is the radius ratio?"
+        },
+        "answer": {
+          "th": "4 เท่า เพราะ r₄/r₂ = 4²/2² = 4",
+          "en": "4 times: r₄/r₂ = 4²/2² = 4."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "เงื่อนไขโมเมนตัมเชิงมุม · หัวข้อ 6",
+            "en": "Angular momentum · section 6"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "formula-angular"
+          }
+        }
+      ],
+      "after": {
+        "th": "ถ้าทำได้ ลองคำถาม 9 กลับด้านเพื่อหา n ส่วนที่มาของสูตรอ่านตามสี่ขั้นในหัวข้อ 7 ได้",
+        "en": "If ready, try Question 9 to work backward for n. Read the four derivation steps in section 7 when needed."
+      }
+    },
+    {
+      "id": "energy-meaning",
+      "title": {
+        "th": "แยก K, U และ E ให้เห็นก่อน",
+        "en": "Distinguish K, U and E"
+      },
+      "summary": {
+        "th": "K คือพลังงานจลน์, U คือพลังงานศักย์ไฟฟ้า และ E = K + U\nเมื่อกำหนด U = 0 ที่ระยะอนันต์ วงโคจรวงกลมภายใต้แรงคูลอมบ์ให้ U = −2K จึงได้ E = −K, K = −E และ U = 2E",
+        "en": "K is kinetic energy, U is electric potential energy and E = K + U.\nWith U = 0 at infinity, a circular Coulomb orbit has U = −2K. Thus E = −K, K = −E and U = 2E."
+      },
+      "story": {
+        "th": "เริ่มที่ความหมายในหัวข้อ 8 แล้วใช้ตารางที่ 1 หา E จาก K + U จากนั้นดูตารางที่ 2 เทียบ U/K, E/K และ U/E ตัวเลขในตารางเป็นค่าจำลองเพื่อดูความสัมพันธ์ ไม่ใช่ทุกค่าจะเป็นระดับพลังงานจริงของไฮโดรเจน",
+        "en": "Begin with the definitions in section 8. Use table 1 to calculate E = K + U, then table 2 to compare U/K, E/K and U/E. These are illustrative values; not every value is an actual hydrogen energy level."
+      },
+      "action": {
+        "th": "ทำแถว B ของตารางที่ 1 แล้วใช้แถวเดียวกันในตารางที่ 2 หาความสัมพันธ์ ก่อนอ่านพิสูจน์ที่ตามมา",
+        "en": "Complete row B in table 1, then its corresponding ratios in table 2. Read the following derivation after spotting the pattern."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ความหมาย K, U, E",
+            "en": "Meanings of K, U, E"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "energy-meanings"
+          }
+        },
+        {
+          "label": {
+            "th": "ตารางที่ 1 · แถว B",
+            "en": "Table 1 · row B"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "energy-total-b"
+          }
+        },
+        {
+          "label": {
+            "th": "ตารางที่ 2 · แถว B",
+            "en": "Table 2 · row B"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "energy-ratio-b-0"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้า K = 5 eV และ U = −10 eV แล้ว E เท่าไร? ทำไม E ติดลบได้ทั้งที่ K เป็นบวก?",
+          "en": "If K = 5 eV and U = −10 eV, what is E? Why can E be negative while K is positive?"
+        },
+        "answer": {
+          "th": "E = −5 eV เพราะ E = 5 − 10 พลังงานศักย์ที่ติดลบมีขนาดมากกว่า K เครื่องหมายลบของ E จึงไม่ได้แปลว่าอิเล็กตรอนหยุดเคลื่อนที่",
+          "en": "E = −5 eV because E = 5 − 10. The negative potential energy has greater magnitude than K. Negative E does not mean the electron is stationary."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ความสัมพันธ์ U กับ K และพิสูจน์ถัดลงไป",
+            "en": "U–K relation and the derivation below"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "energy-relation-uk"
+          }
+        }
+      ],
+      "after": {
+        "th": "ถ้ายังสับสน ลองอีกแถวในตารางที่ 1 และ 2 แล้วตรวจ E = K + U ทุกครั้ง ความสัมพันธ์นี้ใช้กับแบบจำลองวงโคจรที่กำลังศึกษา ไม่ใช่พลังงานทุกระบบ",
+        "en": "If unsure, try another row in tables 1 and 2 and check E = K + U. These relations apply to the orbit model being studied, not to every physical system."
+      }
+    },
+    {
+      "id": "energy-calculate",
+      "title": {
+        "th": "ใช้พลังงานรวมให้ถูกเครื่องหมาย",
+        "en": "Calculate with the correct signs"
+      },
+      "summary": {
+        "th": "สำหรับไฮโดรเจน Eₙ = −13.6/n² eV\nหา E ก่อน แล้วใช้ K = −E และ U = 2E ตรวจด้วย K + U = E พลังงานรวมที่ติดลบยังสอดคล้องกับ K ที่เป็นบวก",
+        "en": "For hydrogen Eₙ = −13.6/n² eV.\nFind E first, then use K = −E and U = 2E. Check K + U = E. A negative total energy is consistent with positive kinetic energy."
+      },
+      "story": {
+        "th": "ชี้สูตรพลังงานแล้วถามว่า “เครื่องหมายลบอยู่ที่ E หรือทุกพลังงาน?” พาทำคำถาม 11 ก จากนั้นให้ลอง ข–ง เอง โดยแทนค่า E ที่หาได้จริงพร้อมเครื่องหมาย",
+        "en": "Point to the energy formula: “Does the minus sign belong to E or to every energy?” Work through Question 11(a), then try (b)–(d), retaining the sign of E."
+      },
+      "action": {
+        "th": "ทำคำถาม 11 ให้ครบสี่ช่อง ใช้สมการตรวจในช่อง ง เพื่อจับข้อผิดพลาดเรื่องเครื่องหมาย",
+        "en": "Complete all four parts of Question 11. Use part (d) to catch sign errors."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "สูตรพลังงาน · หัวข้อ 8",
+            "en": "Energy formula · section 8"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "formula-energy"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 11 ก–ง",
+            "en": "Question 11(a)–(d)"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "energy-sign"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ที่ n = 2 ค่า E, K และ U เท่าไร?",
+          "en": "At n = 2, what are E, K and U?"
+        },
+        "answer": {
+          "th": "E = −3.40 eV, K = +3.40 eV, U = −6.80 eV และ 3.40 − 6.80 = −3.40 eV",
+          "en": "E = −3.40 eV, K = +3.40 eV and U = −6.80 eV; 3.40 − 6.80 = −3.40 eV."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "กลับไปแยกความหมายของพลังงาน",
+            "en": "Revisit the energy definitions"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "energy-meanings"
+          }
+        }
+      ],
+      "after": {
+        "th": "ถ้าคำนวณได้แล้ว ใช้คำถาม 12 เปรียบเทียบว่า “พลังงานสูงกว่า” กับ “ถูกยึดแน่นกว่า” ต่างกันอย่างไร",
+        "en": "Once the calculation is secure, use Question 12 to distinguish higher energy from stronger binding."
+      }
+    },
+    {
+      "id": "ionization",
+      "title": {
+        "th": "กระตุ้นกับหลุดออกจากอะตอม",
+        "en": "Excitation versus ionization"
+      },
+      "summary": {
+        "th": "n = 1 คือสถานะพื้น; n > 1 ที่ E < 0 ยังเป็นสถานะกระตุ้นที่ถูกยึดไว้\nใช้เกณฑ์อิเล็กตรอนอิสระที่หยุดนิ่ง ณ ระยะอนันต์มี E = 0 พลังงานไอออไนซ์ต่ำสุดจากระดับเดิมจึงเป็น 0 − Eₙ",
+        "en": "n = 1 is the ground state. A level with n > 1 and E < 0 is still an excited bound state.\nA free electron at rest at infinity defines E = 0. The minimum ionization energy from the initial level is therefore 0 − Eₙ."
+      },
+      "story": {
+        "th": "เปิดแผนภาพในหัวข้อ 9 ชี้ระดับที่สูงขึ้นแต่ยังต่ำกว่า 0 แล้วถามว่า “สูงขึ้นแปลว่าหลุดแล้วหรือยัง?” ใช้คำถาม 14 เทียบการให้พลังงานจากสถานะพื้น",
+        "en": "Use the level diagram in section 9. Point to a higher level still below zero: “Does a higher level mean the electron is free?” Use Question 14 to compare energy inputs from the ground state."
+      },
+      "action": {
+        "th": "ตอบคำถาม 14 แล้วทำแบบฝึกหัด 19.1 ข้อ 4 โดยดูระดับเริ่มต้นก่อนเสมอ",
+        "en": "Answer Question 14, then Exercise 19.1 Q4. Always identify the initial level first."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "แผนภาพระดับพลังงาน · หัวข้อ 9",
+            "en": "Energy-level diagram · section 9"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "hydrogen-energy-diagram"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 14",
+            "en": "Question 14"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "excite-or-ionize"
+          }
+        },
+        {
+          "label": {
+            "th": "แบบฝึกหัด 19.1 · ข้อ 4",
+            "en": "Exercise 19.1 · Q4"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ipst-exercise-4"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ที่ n = 2 ต้องให้พลังงานต่ำสุดเท่าไรจึงหลุด? ใช้ 13.6 eV ทุกครั้งได้ไหม?",
+          "en": "What minimum input ionizes n = 2? Is 13.6 eV always the answer?"
+        },
+        "answer": {
+          "th": "3.40 eV จาก 0 − (−3.40) ส่วน 13.6 eV ใช้เมื่อเริ่มจากสถานะพื้น n = 1",
+          "en": "3.40 eV, from 0 − (−3.40). The value 13.6 eV applies when starting at the ground state, n = 1."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ความหมายของ E ติดลบ",
+            "en": "Meaning of negative E"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "bound-energy-meaning"
+          }
+        }
+      ],
+      "after": {
+        "th": "ถ้ายังติด ให้วาดแค่ระดับเริ่มต้นกับเส้น E = 0 แล้วหาผลต่าง ไม่ต้องจำค่าพลังงานไอออไนซ์แยกทุกระดับ",
+        "en": "If unsure, sketch just the initial level and E = 0, then take the difference. There is no need to memorize each ionization energy separately."
+      }
+    },
+    {
+      "id": "speed-connect",
+      "title": {
+        "th": "รวมรัศมี พลังงาน และอัตราเร็ว",
+        "en": "Connect radius, energy and speed"
+      },
+      "summary": {
+        "th": "สำหรับไฮโดรเจน vₙ ≈ (2.19 × 10⁶)/n m/s\nเมื่อ n เพิ่ม รัศมีเพิ่มตาม n² อัตราเร็วลดตาม 1/n และ E เพิ่มเข้าใกล้ 0 โดยยังติดลบสำหรับระดับที่ถูกยึดไว้",
+        "en": "For hydrogen vₙ ≈ (2.19 × 10⁶)/n m/s.\nAs n increases, radius grows with n², speed falls with 1/n, and E rises toward zero while remaining negative for a bound level."
+      },
+      "story": {
+        "th": "เริ่มจากสูตรทั่วไปในหัวข้อ 10 ใช้ mvr = nh/(2π) ร่วมกับ rₙ = a₀n² เพื่อให้เห็นว่าตัด n เหลือ 1/n แล้วค่อยแทนค่าคงตัว",
+        "en": "Start with the general equations in section 10. Combine mvr = nh/(2π) with rₙ = a₀n² to see n/n² become 1/n before substituting constants."
+      },
+      "action": {
+        "th": "ทำคำถาม 15 เปรียบเทียบอัตราส่วน แล้วทำคำถาม 16 ก–ค ที่ใช้ n = 4 ร่วมกัน",
+        "en": "Use Question 15 to compare ratios, then complete Question 16(a)–(c) for the same n = 4 state."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "สูตรอัตราเร็ว · หัวข้อ 10",
+            "en": "Speed formula · section 10"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "formula-speed"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 15",
+            "en": "Question 15"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "speed-radius-comparison"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 16 ก–ค",
+            "en": "Question 16(a)–(c)"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "integrated-n4"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "จาก n = 1 ไป n = 4 รัศมีและอัตราเร็วเป็นกี่เท่า?",
+          "en": "From n = 1 to n = 4, what are the radius and speed ratios?"
+        },
+        "answer": {
+          "th": "รัศมีเป็น 16 เท่า แต่อัตราเร็วเหลือ 1/4 เท่า ต้องแยกการแปรผันของแต่ละปริมาณ",
+          "en": "Radius becomes 16 times as large, while speed becomes 1/4 as large. Each quantity has its own dependence on n."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "แบบฝึกหัด 19.1 · ข้อ 3: ที่มาของสูตร vₙ",
+            "en": "Exercise 19.1 · Q3: derive vₙ"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ipst-exercise-3"
+          }
+        }
+      ],
+      "after": {
+        "th": "ถ้าทำคำถาม 16 ได้พร้อมหน่วยและเครื่องหมาย ถือว่าผ่านเส้นทางขั้นต่ำของชุดนี้ เลือกทำข้อที่เหลือเพื่อทบทวนส่วนที่ยังไม่คล่อง",
+        "en": "Completing Question 16 with correct units and signs finishes the minimum route for this part. Choose remaining questions to practise areas that still need work."
+      }
+    }
+  ],
+  "finish": {
+    "th": "เชื่อมให้ได้ว่า n กำหนดวงโคจรและระดับพลังงาน ใช้ E = K + U ตรวจเครื่องหมาย และดูระดับเริ่มต้นก่อนหาพลังงานที่ต้องเพิ่ม รายละเอียดพิสูจน์และข้อที่เหลือยังอยู่ในใบเต็มสำหรับกลับมาอ่านต่อ",
+    "en": "Connect n to the orbit and energy level. Use E = K + U to check signs, and identify the initial level before finding the required energy input. Full derivations and the remaining questions are available in the worksheet."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "ไฮโดรเจนที่ n = 4 มี E เท่าไร ต้องเติมพลังงานต่ำสุดเท่าไรจึงหลุด และ K เป็นบวกหรือลบ?",
+      "en": "For hydrogen at n = 4, what is E, what is the minimum ionization energy, and is K positive or negative?"
+    },
+    "answer": {
+      "th": "E = −0.850 eV ต้องเติม 0.850 eV และ K = +0.850 eV เพราะ K = −E",
+      "en": "E = −0.850 eV; the minimum input is 0.850 eV; K = +0.850 eV because K = −E."
+    }
+  }
+}

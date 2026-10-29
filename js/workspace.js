@@ -19,6 +19,7 @@ import { openHtmlPrint } from "./html-print.js";
 import { toolCatalog } from "./legacy-tool-catalog.js";
 import { applyContentLanguage } from "./content-language.js";
 import { attachLearningSheet } from "./learning-sheet.js";
+import { createLearningGuide } from "./learning-guide.js";
 
 // Only live Quiz windows created by this workspace may use its storage bridge.
 const quizStorageFrames = new Set();
@@ -253,6 +254,7 @@ export function createWorkspace({
       record.printButton.setAttribute("aria-label", record.printButton.title);
       record.printButton.querySelector('.window-print-label').textContent = label("พิมพ์ / PDF", "Print / PDF");
     }
+    record.guide?.setLanguage(language());
     record.taskTitle.textContent = title;
     record.closeButton.setAttribute("aria-label", label("ปิดงาน", "Close tool"));
     record.closeButton.title = label("ปิด", "Close");
@@ -476,6 +478,7 @@ export function createWorkspace({
 
   function removeRecord(record) {
     record.sheet?.dispose();
+    record.guide?.dispose();
     quizStorageFrames.delete(record.frame);
     const taskButton = record.taskButton;
     record.element.remove();
@@ -614,12 +617,13 @@ export function createWorkspace({
         </div>
         <div class="window-trailing-tools">
           <div class="window-language" role="group" aria-label="ภาษา / Language"><button type="button" data-window-language="th" lang="th">TH</button><button type="button" data-window-language="en" lang="en">EN</button></div>
+          ${tool.context.toolKind === "html" ? '<button class="window-sheet-guide" type="button" hidden><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4zm16 0h-4a3 3 0 0 0-3 3v14a4 4 0 0 1 4-2h3z"/></svg><span></span></button>' : ''}
           <button class="window-share" type="button"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m10 13 4-4M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m2 1 1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/></svg><span></span></button>
           ${tool.context.toolKind === "html" ? '<button class="window-html-print" type="button" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V3h12v6M6 18H3V9h18v9h-3M6 14h12v7H6z"/></svg><span class="window-print-label"></span></button>' : ''}
           <span class="window-drag-hint" aria-hidden="true">•••</span>
         </div>
       </header>
-      <iframe class="workspace-tool-frame" src="${tool.page}" loading="eager"></iframe>
+      ${tool.context.toolKind === "html" ? '<div class="sheet-reading-stage">' : ''}<iframe class="workspace-tool-frame" src="${tool.page}" loading="eager"></iframe>${tool.context.toolKind === "html" ? '</div>' : ''}
     `;
 
     if (tool.context.toolKind === "video") element.querySelector("iframe").setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
@@ -681,6 +685,13 @@ export function createWorkspace({
       minimized: false,
     };
 
+    if (tool.context.toolKind === "html") {
+      record.guide = createLearningGuide({
+        frame: record.frame, stage: element.querySelector('.sheet-reading-stage'),
+        button: element.querySelector('.window-sheet-guide'),
+        contentId: tool.context.contentId, language: language(),
+      });
+    }
     record.closeButton.addEventListener("click", () => close(record));
     record.minimizeButton.addEventListener("click", () => minimize(record));
     record.maximizeButton.addEventListener("click", () => toggleMaximize(record));
@@ -723,6 +734,7 @@ export function createWorkspace({
         const doc = record.frame.contentDocument;
         record.isLearningSheet = Boolean(doc?.documentElement.hasAttribute('data-learning-sheet'));
         record.element.classList.toggle('is-learning-sheet', record.isLearningSheet);
+        record.guide.setDocument(doc);
         record.printButton.disabled = !doc?.documentElement.hasAttribute('data-learning-html');
         updateRecordText(record);
         void attachLearningSheet(doc, {
@@ -859,6 +871,7 @@ export function createWorkspace({
     records.forEach((record) => {
       flushLocalBeforeRemoval(record);
       record.sheet?.dispose();
+      record.guide?.dispose();
       quizStorageFrames.delete(record.frame);
       record.element.remove();
       record.taskButton.remove();

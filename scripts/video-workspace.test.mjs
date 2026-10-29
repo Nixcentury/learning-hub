@@ -9,6 +9,7 @@ import { videoLinkEntry } from '../js/video-link.js';
 import { htmlLinkEntry } from '../js/html-link.js';
 import { pdfLinkEntry } from '../js/pdf-link.js';
 import { applyContentLanguage } from '../js/content-language.js';
+import { createLearningGuide } from '../js/learning-guide.js';
 
 // Execute the real Workspace and its DOM handlers, with iframe transport replaced.
 // This checks integration and state transitions, not browser layout or live YouTube.
@@ -35,7 +36,7 @@ function harness() {
   const window = { addEventListener: (name, fn) => { events[name] = fn; }, setInterval() {} };
   const location = new URL(document.URL);
   const vmContext = vm.createContext({ document, window, location, URL, Intl, Date, console,
-    createContentTool, createHubContextMessage, videoLinkEntry, htmlLinkEntry, pdfLinkEntry, applyContentLanguage,
+    createContentTool, createHubContextMessage, videoLinkEntry, htmlLinkEntry, pdfLinkEntry, applyContentLanguage, createLearningGuide,
     toolCatalog: {}, requestAnimationFrame: fn => fn(),
     renderHtmlMath: async () => {}, attachLearningSheet: async () => null,
     createBankTool() {}, createTopicReviewTool() {}, openHtmlPrint() {} });

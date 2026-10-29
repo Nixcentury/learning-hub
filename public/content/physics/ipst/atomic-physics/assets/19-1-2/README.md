@@ -1,5 +1,16 @@
 # Physics 19.1 Sheet 2 visual sources
 
+## Two print parts — 29 October 2026
+
+The approved Sheet 2 content from PR #49 is now divided without deleting its scientific explanations, figures, worked solutions or response keys:
+
+- Part 1 (`19-1-2-evidence-bohr-learning-sheet.html`): sections 1–5; Thomson/Rutherford, the three magnet paths, grating review, Activity 19.1 and its six H/Ne calculations and three end questions, and emission/absorption. Includes Understanding 19.1 Q2 and Q3. Uses 10 original figures and 32 paired response areas.
+- Part 2 (`19-1-2b-bohr-radius-energy-learning-sheet.html`): sections 6–10; Bohr postulates, radius derivation, both K/U/E tables and the energy proof, ionization and speed. Includes Understanding Q1 and Exercise 19.1 Q3, Q4 and Q6(a). Uses the remaining four figures and 39 paired response areas.
+- All 71 original response keys and their writing-height presets are retained across the pair. General question numbers continue from Part 1 to Part 2. The original content ID/URL opens Part 1; a new `learning-sheet-2b` menu entry opens Part 2. The existing Sheet 3 entry and its allocation remain unchanged.
+- The three magnet responses and six repeated wavelength calculations use comparison/work tables. The four n=2 energy subparts use two paired rows; the three n=4 subparts share an initial-state statement and a table. Every original numeric substitution and answer remains, with the six wavelength expressions wrapped onto two math lines for column fit.
+- The original closing learning roadmap is used as Part 2's opening. Its short bibliography is also at the opening, avoiding a separate last page for source metadata; the full figure provenance remains below. No image bytes or original figure credits are changed.
+- No textbook questions are added or removed in this layout update. The previously documented original-book and teacher-guide coverage still applies; this update does not claim a new reading of those PDFs.
+
 ## 01-atomic-models
 
 - File: 01-atomic-models.png

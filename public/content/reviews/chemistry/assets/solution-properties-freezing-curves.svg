@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="594pt" height="396pt" viewBox="0 0 594 396" version="1.1" role="img" aria-label="Pure solvent and solution freezing curves" data-hypothetical="true" data-model="{&quot;kind&quot;:&quot;cooling-curves&quot;,&quot;pureFreezingC&quot;:5,&quot;aFreezingC&quot;:4,&quot;purePoints&quot;:[[0,8],[3,5],[6.8,5],[8.2,2.8]],&quot;aPoints&quot;:[[0,8],[4,4],[8.2,2.4]],&quot;horizontalScale&quot;:&quot;qualitative progress, not time&quot;,&quot;supercooling&quot;:false}">
+ <title>Pure solvent and solution freezing curves</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>Pure solvent and solution freezing curves</dc:title>
+    <dc:date>2026-10-29T08:51:20.618326</dc:date>
+    <dc:description>Hypothetical gradual cooling without supercooling. Pure solvent begins freezing at 5.0 degrees Celsius and has a plateau while solid and liquid coexist. Solution A begins at 4.0, then continues cooling while solvent crystals form and the remaining liquid becomes more concentrated. The solution curve endpoint is not its initial freezing point. The horizontal axis is qualitative progress, not measured time or a claim of equal cooling rates.</dc:description>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 396  L 594 396  L 594 0  L 0 0  z " style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 71.28 304.92  L 570.24 304.92  L 570.24 87.12  L 71.28 87.12  z " style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="text_1">
+     <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20344e" x="320.76" y="325.038125" transform="rotate(-0 320.76 325.038125)">Cooling progresses →</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="mdb5c4b2a77" d="M 0 0  L -3.5 0  " style="stroke: #536273; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mdb5c4b2a77" x="71.28" y="273.805714" style="fill: #536273; stroke: #536273; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #536273" x="64.28" y="278.364777" transform="rotate(-0 64.28 278.364777)">3</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#mdb5c4b2a77" x="71.28" y="242.691429" style="fill: #536273; stroke: #536273; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #536273" x="64.28" y="247.250491" transform="rotate(-0 64.28 247.250491)">4</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#mdb5c4b2a77" x="71.28" y="211.577143" style="fill: #536273; stroke: #536273; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #536273" x="64.28" y="216.136205" transform="rotate(-0 64.28 216.136205)">5</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#mdb5c4b2a77" x="71.28" y="118.234286" style="fill: #536273; stroke: #536273; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #536273" x="64.28" y="122.793348" transform="rotate(-0 64.28 122.793348)">8</text>
+     </g>
+    </g>
+    <g id="text_6">
+     <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20344e" x="45.149375" y="196.02" transform="rotate(-90 45.149375 196.02)">Temperature (°C)</text>
+    </g>
+   </g>
+   <g id="pure-cooling-curve">
+    <path d="M 71.28 118.234286  L 249.48 211.577143  L 475.2 211.577143  L 558.36 280.028571  " clip-path="url(#pcc2609a151)" style="fill: none; stroke: #214f9e; stroke-width: 2.5; stroke-linecap: square"/>
+   </g>
+   <g id="solution-a-cooling-curve">
+    <path d="M 71.28 118.234286  L 308.88 242.691429  L 558.36 292.474286  " clip-path="url(#pcc2609a151)" style="fill: none; stroke-dasharray: 12.5,7.5; stroke-dashoffset: 0; stroke: #23654f; stroke-width: 2.5"/>
+   </g>
+   <g id="pure-freezing-start">
+    <defs>
+     <path id="maddb5621a9" d="M 0 2.5  C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767  C 2.236584 1.29895 2.5 0.663008 2.5 0  C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767  C 1.29895 -2.236584 0.663008 -2.5 0 -2.5  C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767  C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0  C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767  C -1.29895 2.236584 -0.663008 2.5 0 2.5  z " style="stroke: #214f9e"/>
+    </defs>
+    <g clip-path="url(#pcc2609a151)">
+     <use xlink:href="#maddb5621a9" x="249.48" y="211.577143" style="fill: #214f9e; stroke: #214f9e"/>
+    </g>
+   </g>
+   <g id="a-freezing-start">
+    <defs>
+     <path id="ma7dc92ae64" d="M 0 2.5  C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767  C 2.236584 1.29895 2.5 0.663008 2.5 0  C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767  C 1.29895 -2.236584 0.663008 -2.5 0 -2.5  C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767  C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0  C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767  C -1.29895 2.236584 -0.663008 2.5 0 2.5  z " style="stroke: #23654f"/>
+    </defs>
+    <g clip-path="url(#pcc2609a151)">
+     <use xlink:href="#ma7dc92ae64" x="308.88" y="242.691429" style="fill: #23654f; stroke: #23654f"/>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 71.28 304.92  L 71.28 87.12  " style="fill: none; stroke: #536273; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 71.28 304.92  L 570.24 304.92  " style="fill: none; stroke: #536273; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 352.778377 173.208999  Q 302.067033 192.044727 251.355688 210.880456  " style="fill: none; stroke: #214f9e; stroke-width: 0.9; stroke-linecap: round"/>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #214f9e" x="320.76" y="168.017143" transform="rotate(-0 320.76 168.017143)">Pure starts: 5.0 °C</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 358.357461 236.380265  Q 334.610756 239.409308 310.864051 242.43835  " style="fill: none; stroke: #23654f; stroke-width: 0.9; stroke-linecap: round"/>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #23654f" x="362.34" y="233.357143" transform="rotate(-0 362.34 233.357143)">A starts: 4.0 °C</text>
+   </g>
+   <g id="legend_1">
+    <g id="line2d_5">
+     <path d="M 451.625625 102.838125  L 463.625625 102.838125  L 475.625625 102.838125  " style="fill: none; stroke: #214f9e; stroke-width: 2.5; stroke-linecap: square"/>
+    </g>
+    <g id="text_9">
+     <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #20344e" x="485.225625" y="107.038125" transform="rotate(-0 485.225625 107.038125)">Pure solvent</text>
+    </g>
+    <g id="line2d_6">
+     <path d="M 451.625625 120.451875  L 463.625625 120.451875  L 475.625625 120.451875  " style="fill: none; stroke-dasharray: 12.5,7.5; stroke-dashoffset: 0; stroke: #23654f; stroke-width: 2.5"/>
+    </g>
+    <g id="text_10">
+     <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #20344e" x="485.225625" y="124.651875" transform="rotate(-0 485.225625 124.651875)">Solution A</text>
+    </g>
+   </g>
+  </g>
+  <g id="text_11">
+   <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #20344e" x="23.76" y="23.76" transform="rotate(-0 23.76 23.76)">Freezing starts below the pure solvent</text>
+  </g>
+  <g id="text_12">
+   <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536273" x="23.76" y="49.5" transform="rotate(-0 23.76 49.5)">Hypothetical solvent · same external pressure</text>
+  </g>
+  <g id="text_13">
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536273" x="297" y="360.36" transform="rotate(-0 297 360.36)">A still contains liquid as more solvent crystals form.</text>
+  </g>
+  <g id="text_14">
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536273" x="297" y="382.14" transform="rotate(-0 297 382.14)">Schematic cooling; no time scale or supercooling.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pcc2609a151">
+   <rect x="71.28" y="87.12" width="498.96" height="217.8"/>
+  </clipPath>
+ </defs>
+</svg>

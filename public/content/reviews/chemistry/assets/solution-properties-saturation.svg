@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="500" viewBox="0 0 660 500" role="img" aria-labelledby="title desc">
+<title id="title">Saturation and undissolved excess solid</title>
+<desc id="desc">Hypothetical equilibrium data at 25 degrees Celsius: at most 6 grams of model solute dissolve per 100 grams of water. Three beakers have equal water mass. Four grams dissolved is unsaturated; six grams dissolved is saturated without leftover solid; adding eight grams leaves six grams dissolved and two grams undissolved. Each symbol stands for one gram, not one molecule. Water particles are omitted. The right beaker contains saturated liquid and separate undissolved solid.</desc>
+<rect width="660" height="500" fill="white"/>
+<g font-family="Arial, sans-serif">
+<text x="330" y="35" font-size="23" font-weight="bold" text-anchor="middle" fill="#20344e">Saturation depends on the amount dissolved</text>
+<text x="330" y="66" font-size="18" font-weight="normal" text-anchor="middle" fill="#536273">Same temperature (25 °C) · 100 g water in every beaker</text>
+<text x="330" y="97" font-size="19" font-weight="bold" text-anchor="middle" fill="#20344e">Model solubility: 6 g per 100 g water</text>
+<g data-added-grams="4" data-dissolved-grams="4" data-solid-grams="0" data-water-grams="100" data-temperature-c="25" data-solubility-g-per-100g="6">
+<text x="115" y="133" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e">Unsaturated</text>
+<path d="M20 151 V355 Q20 370 35 370 H195 Q210 370 210 355 V151" fill="#f7f9fc" stroke="#8b9aad" stroke-width="2"/>
+<path d="M21 185 H209 V355 Q209 369 195 369 H35 Q21 369 21 355 Z" fill="#e6eef7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="90.000,232.000 85.000,240.660 75.000,240.660 70.000,232.000 75.000,223.340 85.000,223.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="160.000,232.000 155.000,240.660 145.000,240.660 140.000,232.000 145.000,223.340 155.000,223.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="90.000,290.000 85.000,298.660 75.000,298.660 70.000,290.000 75.000,281.340 85.000,281.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="160.000,290.000 155.000,298.660 145.000,298.660 140.000,290.000 145.000,281.340 155.000,281.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<text x="115" y="402" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e">4 g dissolved</text>
+<text x="115" y="429" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">(no solid left over)</text>
+</g>
+<g data-added-grams="6" data-dissolved-grams="6" data-solid-grams="0" data-water-grams="100" data-temperature-c="25" data-solubility-g-per-100g="6">
+<text x="330" y="133" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e">Saturated</text>
+<path d="M235 151 V355 Q235 370 250 370 H410 Q425 370 425 355 V151" fill="#f7f9fc" stroke="#8b9aad" stroke-width="2"/>
+<path d="M236 185 H424 V355 Q424 369 410 369 H250 Q236 369 236 355 Z" fill="#e6eef7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="290.000,232.000 285.000,240.660 275.000,240.660 270.000,232.000 275.000,223.340 285.000,223.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="340.000,232.000 335.000,240.660 325.000,240.660 320.000,232.000 325.000,223.340 335.000,223.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="390.000,232.000 385.000,240.660 375.000,240.660 370.000,232.000 375.000,223.340 385.000,223.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="290.000,290.000 285.000,298.660 275.000,298.660 270.000,290.000 275.000,281.340 285.000,281.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="340.000,290.000 335.000,298.660 325.000,298.660 320.000,290.000 325.000,281.340 335.000,281.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="390.000,290.000 385.000,298.660 375.000,298.660 370.000,290.000 375.000,281.340 385.000,281.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<text x="330" y="402" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e">6 g dissolved</text>
+<text x="330" y="429" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">(no solid left over)</text>
+</g>
+<g data-added-grams="8" data-dissolved-grams="6" data-solid-grams="2" data-water-grams="100" data-temperature-c="25" data-solubility-g-per-100g="6">
+<text x="545" y="133" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e">Saturated liquid</text>
+<path d="M450 151 V355 Q450 370 465 370 H625 Q640 370 640 355 V151" fill="#f7f9fc" stroke="#8b9aad" stroke-width="2"/>
+<path d="M451 185 H639 V355 Q639 369 625 369 H465 Q451 369 451 355 Z" fill="#e6eef7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="505.000,232.000 500.000,240.660 490.000,240.660 485.000,232.000 490.000,223.340 500.000,223.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="555.000,232.000 550.000,240.660 540.000,240.660 535.000,232.000 540.000,223.340 550.000,223.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="605.000,232.000 600.000,240.660 590.000,240.660 585.000,232.000 590.000,223.340 600.000,223.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="505.000,290.000 500.000,298.660 490.000,298.660 485.000,290.000 490.000,281.340 500.000,281.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="555.000,290.000 550.000,298.660 540.000,298.660 535.000,290.000 540.000,281.340 550.000,281.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="dissolved" points="605.000,290.000 600.000,298.660 590.000,298.660 585.000,290.000 590.000,281.340 600.000,281.340" fill="#fae7df" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="solid" points="539.000,357.000 534.000,365.660 524.000,365.660 519.000,357.000 524.000,348.340 534.000,348.340" fill="#a94e16" stroke="#7b3a10" stroke-width="1.7"/>
+<polygon data-solute-grams="1" data-state="solid" points="571.000,357.000 566.000,365.660 556.000,365.660 551.000,357.000 556.000,348.340 566.000,348.340" fill="#a94e16" stroke="#7b3a10" stroke-width="1.7"/>
+<text x="545" y="402" font-size="20" font-weight="bold" text-anchor="middle" fill="#20344e">6 g dissolved</text>
+<text x="545" y="429" font-size="17" font-weight="normal" text-anchor="middle" fill="#536273">+ 2 g solid</text>
+</g>
+<text x="330" y="465" font-size="18" font-weight="normal" text-anchor="middle" fill="#20344e">One symbol = 1 g of model solute, not one molecule.</text>
+<text x="330" y="491" font-size="16" font-weight="normal" text-anchor="middle" fill="#536273">Hypothetical data; symbol positions are schematic.</text>
+</g></svg>

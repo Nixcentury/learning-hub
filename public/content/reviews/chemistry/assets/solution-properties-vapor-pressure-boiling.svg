@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="594pt" height="396pt" viewBox="0 0 594 396" version="1.1" role="img" aria-label="Vapor pressure and boiling point with a nonvolatile solute" data-hypothetical="true" data-model="{&quot;kind&quot;:&quot;vapor-pressure&quot;,&quot;pureBoilingC&quot;:80,&quot;aBoilingC&quot;:81,&quot;curveSlopePerC&quot;:0.18,&quot;pressureRatioAtBoiling&quot;:1,&quot;pressureScale&quot;:&quot;schematic&quot;}">
+ <title>Vapor pressure and boiling point with a nonvolatile solute</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>Vapor pressure and boiling point with a nonvolatile solute</dc:title>
+    <dc:date>2026-10-29T08:51:20.426691</dc:date>
+    <dc:description>Original schematic curves at fixed initial composition. Pure solvent reaches the common external pressure at 80.0 degrees Celsius and solution A at 81.0. At the same temperature solution A has lower vapor pressure. Heights have no measured pressure scale. Data are hypothetical, not water measurements.</dc:description>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 396  L 594 396  L 594 0  L 0 0  z " style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 71.28 308.88  L 570.24 308.88  L 570.24 87.12  L 71.28 87.12  z " style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m9254291354" d="M 0 0  L 0 3.5  " style="stroke: #536273; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m9254291354" x="301.569231" y="308.88" style="fill: #536273; stroke: #536273; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536273" x="301.569231" y="324.998125" transform="rotate(-0 301.569231 324.998125)">80.0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m9254291354" x="378.332308" y="308.88" style="fill: #536273; stroke: #536273; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536273" x="378.332308" y="324.998125" transform="rotate(-0 378.332308 324.998125)">81.0</text>
+     </g>
+    </g>
+    <g id="text_3">
+     <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20344e" x="320.76" y="345.611875" transform="rotate(-0 320.76 345.611875)">Temperature (°C)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="text_4">
+     <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #20344e" x="58.784375" y="198" transform="rotate(-90 58.784375 198)">Vapor pressure (schematic)</text>
+    </g>
+   </g>
+   <g id="pure-vapor-curve">
+    <path d="M 71.28 296.224653  L 92.389846 291.701987  L 113.499692 286.949816  L 134.609538 281.956493  L 153.800308 277.197559  L 172.991077 272.219581  L 192.181846 267.012478  L 211.372615 261.565702  L 230.563385 255.868224  L 247.835077 250.516615  L 265.106769 244.943817  L 282.378462 239.140689  L 299.650154 233.097709  L 316.921846 226.804965  L 334.193538 220.252134  L 349.546154 214.20037  L 364.898769 207.926773  L 380.251385 201.423213  L 395.604 194.681258  L 410.956615 187.692172  L 426.309231 180.446895  L 441.661846 172.936036  L 457.014462 165.149861  L 470.448 158.103186  L 483.881538 150.831009  L 497.315077 143.326112  L 510.748615 135.581047  L 524.182154 127.58813  L 537.615692 119.339429  L 551.049231 110.826758  L 564.482769 102.04167  L 570.24 98.191088  L 570.24 98.191088  " clip-path="url(#p94aec25eaa)" style="fill: none; stroke: #214f9e; stroke-width: 2.5; stroke-linecap: square"/>
+   </g>
+   <g id="solution-a-vapor-curve">
+    <path d="M 71.28 310.906083  L 94.308923 306.775649  L 117.337846 302.41604  L 140.366769 297.814539  L 161.476615 293.372553  L 182.586462 288.705155  L 203.696308 283.800908  L 222.887077 279.126868  L 242.077846 274.237692  L 261.268615 269.123478  L 280.459385 263.773868  L 299.650154 258.178026  L 316.921846 252.921885  L 334.193538 247.4485  L 351.465231 241.748893  L 368.736923 235.813714  L 386.008615 229.633226  L 403.280308 223.197291  L 418.632923 217.253484  L 433.985538 211.091802  L 449.338154 204.704258  L 464.690769 198.082573  L 480.043385 191.218165  L 495.396 184.102137  L 510.748615 176.725264  L 526.101231 169.077985  L 541.453846 161.150389  L 554.887385 153.975727  L 568.320923 146.571465  L 570.24 145.494545  L 570.24 145.494545  " clip-path="url(#p94aec25eaa)" style="fill: none; stroke-dasharray: 12.5,7.5; stroke-dashoffset: 0; stroke: #23654f; stroke-width: 2.5"/>
+   </g>
+   <g id="external-pressure-line">
+    <path d="M 71.28 232.411034  L 570.24 232.411034  " clip-path="url(#p94aec25eaa)" style="fill: none; stroke-dasharray: 1.2,1.98; stroke-dashoffset: 0; stroke: #536273; stroke-width: 1.2"/>
+   </g>
+   <g id="pure-boiling-point">
+    <defs>
+     <path id="ma096ea88c8" d="M 0 2.5  C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767  C 2.236584 1.29895 2.5 0.663008 2.5 0  C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767  C 1.29895 -2.236584 0.663008 -2.5 0 -2.5  C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767  C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0  C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767  C -1.29895 2.236584 -0.663008 2.5 0 2.5  z " style="stroke: #214f9e"/>
+    </defs>
+    <g clip-path="url(#p94aec25eaa)">
+     <use xlink:href="#ma096ea88c8" x="301.569231" y="232.411034" style="fill: #214f9e; stroke: #214f9e"/>
+    </g>
+   </g>
+   <g id="pure-boiling-guide">
+    <path d="M 301.569231 308.88  L 301.569231 232.411034  " clip-path="url(#p94aec25eaa)" style="fill: none; stroke-dasharray: 1,1.65; stroke-dashoffset: 0; stroke: #214f9e"/>
+   </g>
+   <g id="a-boiling-point">
+    <defs>
+     <path id="m86629b1bf0" d="M 0 2.5  C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767  C 2.236584 1.29895 2.5 0.663008 2.5 0  C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767  C 1.29895 -2.236584 0.663008 -2.5 0 -2.5  C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767  C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0  C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767  C -1.29895 2.236584 -0.663008 2.5 0 2.5  z " style="stroke: #23654f"/>
+    </defs>
+    <g clip-path="url(#p94aec25eaa)">
+     <use xlink:href="#m86629b1bf0" x="378.332308" y="232.411034" style="fill: #23654f; stroke: #23654f"/>
+    </g>
+   </g>
+   <g id="a-boiling-guide">
+    <path d="M 378.332308 308.88  L 378.332308 232.411034  " clip-path="url(#p94aec25eaa)" style="fill: none; stroke-dasharray: 1,1.65; stroke-dashoffset: 0; stroke: #23654f"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 71.28 308.88  L 71.28 87.12  " style="fill: none; stroke: #536273; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 71.28 308.88  L 570.24 308.88  " style="fill: none; stroke: #536273; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536273" x="80.491569" y="226.293517" transform="rotate(-0 80.491569 226.293517)">Same external pressure</text>
+   </g>
+   <g id="patch_5">
+    <path d="M 237.850752 204.072463  Q 268.798005 217.836146 299.745258 231.599829  " style="fill: none; stroke: #214f9e; stroke-width: 0.9; stroke-linecap: round"/>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #214f9e" x="178.748308" y="198.76469" transform="rotate(-0 178.748308 198.76469)">Pure: 80.0 °C</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 413.691938 277.831549  Q 396.626125 255.909996 379.560312 233.988444  " style="fill: none; stroke: #23654f; stroke-width: 0.9; stroke-linecap: round"/>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #23654f" x="390.6144" y="290.527448" transform="rotate(-0 390.6144 290.527448)">A: 81.0 °C</text>
+   </g>
+   <g id="legend_1">
+    <g id="line2d_3">
+     <path d="M 82.08 102.838125  L 94.08 102.838125  L 106.08 102.838125  " style="fill: none; stroke: #214f9e; stroke-width: 2.5; stroke-linecap: square"/>
+    </g>
+    <g id="text_8">
+     <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #20344e" x="115.68" y="107.038125" transform="rotate(-0 115.68 107.038125)">Pure solvent</text>
+    </g>
+    <g id="line2d_4">
+     <path d="M 82.08 120.451875  L 94.08 120.451875  L 106.08 120.451875  " style="fill: none; stroke-dasharray: 12.5,7.5; stroke-dashoffset: 0; stroke: #23654f; stroke-width: 2.5"/>
+    </g>
+    <g id="text_9">
+     <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #20344e" x="115.68" y="124.651875" transform="rotate(-0 115.68 124.651875)">Solution A</text>
+    </g>
+   </g>
+  </g>
+  <g id="text_10">
+   <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #20344e" x="23.76" y="23.76" transform="rotate(-0 23.76 23.76)">Nonvolatile solute: a higher boiling point</text>
+  </g>
+  <g id="text_11">
+   <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536273" x="23.76" y="49.5" transform="rotate(-0 23.76 49.5)">Hypothetical solvent · each curve has fixed composition</text>
+  </g>
+  <g id="text_12">
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536273" x="297" y="374.22" transform="rotate(-0 297 374.22)">Curve heights are schematic; temperatures match the table.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p94aec25eaa">
+   <rect x="71.28" y="87.12" width="498.96" height="221.76"/>
+  </clipPath>
+ </defs>
+</svg>

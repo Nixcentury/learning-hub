@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="510" viewBox="0 0 660 510" role="img" aria-labelledby="title desc">
+<title id="title">From molality to boiling and freezing temperatures</title>
+<desc id="desc">Hypothetical solvent: 0.0500 mol solute in 0.100 kg solvent gives molality 0.500 mol per kg. Both constants are 2.00 degrees Celsius kg per mol, giving a positive change of 1.00 degree. Add to the pure boiling point 80.00 to get 81.00 degrees Celsius. Subtract from the pure freezing point 5.00 to get 4.00 degrees Celsius.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#536b8c"/></marker></defs>
+<rect width="660" height="510" rx="14" fill="#f7f9fc"/>
+<g font-family="Arial, sans-serif" fill="#20344e" text-anchor="middle">
+<text x="330" y="31" font-size="22" font-weight="700">Find molality, then the temperature change</text>
+<rect x="115" y="50" width="430" height="92" rx="12" fill="#edf3fa" stroke="#8ba1bd"/>
+<text x="330" y="77" font-size="18">0.0500 mol solute ÷ 0.100 kg solvent</text>
+<text x="330" y="112" font-size="23" font-weight="700">m = 0.500 mol/kg</text>
+<path d="M330 142 V163" stroke="#536b8c" stroke-width="2"/>
+<path d="M330 163 H169 V186" fill="none" stroke="#536b8c" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M330 163 H491 V186" fill="none" stroke="#536b8c" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="190" width="298" height="256" rx="12" fill="#fff5e8" stroke="#bb7628"/>
+<rect x="342" y="190" width="298" height="256" rx="12" fill="#edf6ff" stroke="#427ba3"/>
+<text x="169" y="221" font-size="21" font-weight="700">Boiling: ADD</text>
+<text x="491" y="221" font-size="21" font-weight="700">Freezing: SUBTRACT</text>
+<text x="169" y="251" font-size="18">Kb = 2.00 °C·kg/mol</text>
+<text x="491" y="251" font-size="18">Kf = 2.00 °C·kg/mol</text>
+<text x="169" y="282" font-size="18">ΔTb = 2.00 × 0.500</text>
+<text x="491" y="282" font-size="18">ΔTf = 2.00 × 0.500</text>
+<text x="169" y="309" font-size="20" font-weight="700">Increase = 1.00 °C</text>
+<text x="491" y="309" font-size="20" font-weight="700">Decrease = 1.00 °C</text>
+<path d="M169 321 V343" stroke="#536b8c" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M491 321 V343" stroke="#536b8c" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="169" y="373" font-size="20">80.00 + 1.00</text>
+<text x="491" y="373" font-size="20">5.00 − 1.00</text>
+<text x="169" y="412" font-size="28" font-weight="700">81.00 °C</text>
+<text x="491" y="412" font-size="28" font-weight="700">4.00 °C</text>
+<text x="330" y="476" font-size="17">Hypothetical solvent and constants — not water data</text>
+<text x="330" y="499" font-size="16">The positive change is not the final temperature.</text>
+</g>
+</svg>

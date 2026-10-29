@@ -1,7 +1,8 @@
 // Shared authoring contract. Build metadata and browser DOM use the same tree shape.
 const stableId = /^[a-z][a-z0-9-]{0,63}$/;
 const allowed = new Set(['data-sheet-slot', 'data-sheet-answer', 'data-sheet-placeholder',
-  'data-sheet-size', 'data-sheet-layout', 'data-sheet-label-th', 'data-sheet-label-en', 'data-sheet-standalone-note']);
+  'data-sheet-size', 'data-sheet-layout', 'data-sheet-label-th', 'data-sheet-label-en', 'data-sheet-standalone-note',
+  'data-sheet-guide', 'data-sheet-revision']);
 const has = (node, name) => Object.hasOwn(node.attrs, name);
 
 export function learningSheetTree(element) {
@@ -18,6 +19,9 @@ export function validateLearningSheet(root) {
   if (root.tag !== 'html' || !has(root, 'data-learning-html') || root.attrs['data-learning-sheet'] !== '1') {
     fail('', 'use <html data-learning-html data-learning-sheet="1">.');
   }
+  if (has(root, 'data-sheet-guide') !== has(root, 'data-sheet-revision')) fail('', 'data-sheet-guide and data-sheet-revision must be declared together.');
+  if (has(root, 'data-sheet-guide') && !root.attrs['data-sheet-guide'].trim()) fail('', 'data-sheet-guide cannot be empty.');
+  if (has(root, 'data-sheet-revision') && !/^[a-z0-9][a-z0-9.-]{0,63}$/i.test(root.attrs['data-sheet-revision'])) fail('', 'invalid data-sheet-revision.');
   function walk(node, language = '*', owner = null, inSvg = false) {
     const a = node.attrs;
     if (has(node, 'data-content-lang')) {
@@ -36,6 +40,7 @@ export function validateLearningSheet(root) {
         fail(a['data-sheet-slot'] || owner, `${name} is not supported in this HTML/table phase (groups and SVG controls come later).`);
       }
       if (name === 'data-learning-sheet' && node !== root) fail(owner, 'the sheet marker belongs only on html.');
+      if (['data-sheet-guide', 'data-sheet-revision'].includes(name) && node !== root) fail(owner, `${name} belongs only on html.`);
     }
     if (has(node, 'data-sheet-slot')) {
       const id = a['data-sheet-slot'];

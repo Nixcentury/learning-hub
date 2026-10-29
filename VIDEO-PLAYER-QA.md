@@ -34,8 +34,8 @@ This change is prepared on a review branch. It does not merge itself or publish 
 
 ## 10.1 topic-menu example and integration with current main
 
-- The teacher supplied `SSlTJw2VYgE`, `F6Fb105Smw4`, `DTaAp16glNw`, `UZZeptOBOrk`, `XEKHDc4wrg8` and `hFR44n9joFY` and explicitly selected `#physics/bank/b-08c93bb5cd14a7bc7de0a8e0` as the placement. Six video cards are added to that menu only, after the original learning-sheet and Simulation entries. The 10.1 learning-sheet file is unchanged.
-- Real repository catalog checks resolve all six menu tool keys (`video-01` through `video-06`) to the shared player with exactly the supplied URLs. The original learning-sheet and Simulation entries remain present.
+- The teacher supplied `SSlTJw2VYgE`, `F6Fb105Smw4`, `DTaAp16glNw`, `UZZeptOBOrk`, `XEKHDc4wrg8`, `hFR44n9joFY` and `7bkZbqcXRIA` (the replacement Superposition clip, starting at the beginning) and explicitly selected `#physics/bank/b-08c93bb5cd14a7bc7de0a8e0` as the placement. Seven video cards are added to that menu only, after the original learning-sheet and Simulation entries. The 10.1 learning-sheet file is unchanged.
+- Real repository catalog checks resolve all seven menu tool keys (`video-01` through `video-07`) to the shared player with exactly the supplied URLs. The original learning-sheet and Simulation entries remain present.
 - Integrated main `03cad8c45f3c9efcde4b4124f7cdc37238c19faf`, including the learning-sheet guides from `00a966f0e1906e6d32b42287d0c23e1137ac4eca` and their latest Bohr-guide QA. Kept its guide controls and validators, combined both test lists, and supplied the real guide controller to the existing Workspace test harness.
 - Integrated full unit suite: **445 passed, 0 failed**. Production build/TypeScript/content and guide validation pass; all **647** public files match the artifact. `git diff --check` passes.
 - This integration updates the review branch. Live playback through the updated Hub remains to be checked after merge/deployment.

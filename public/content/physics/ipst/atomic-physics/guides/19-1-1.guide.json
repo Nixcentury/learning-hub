@@ -1,0 +1,565 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "physics-ipst-atomic-19-1-1-sheet",
+    "revision": "2026-10-29-1",
+    "sha256": "20092e8cf3858c7409db54170f999253b81dd9f78d13f9e8127d3ac3358012db"
+  },
+  "title": {
+    "th": "จากวัตถุร้อนไปสู่พลังงานเป็นหน่วย ๆ",
+    "en": "From hot objects to energy quanta"
+  },
+  "prerequisites": {
+    "th": "ทวนคลื่นแม่เหล็กไฟฟ้า ความถี่กับความยาวคลื่น และเลขยกกำลังสิบ หน่วย eV จะเริ่มทวนจาก W = qV ในใบนี้",
+    "en": "Review electromagnetic waves, frequency and wavelength, and powers of ten. The sheet reviews eV starting from W = qV."
+  },
+  "goal": {
+    "th": "อ่านกราฟการแผ่รังสีได้ และแยกพลังงานหนึ่งควอนตัม ε ออกจากพลังงานรวม E เพื่อนำไปเลือกสูตรและแก้โจทย์",
+    "en": "Read thermal-radiation spectra and distinguish energy per quantum ε from total energy E when choosing equations and solving problems."
+  },
+  "steps": [
+    {
+      "id": "observe-radiation",
+      "title": {
+        "th": "ไม่เรืองแสง ก็แผ่รังสีได้",
+        "en": "Radiation without a visible glow"
+      },
+      "summary": {
+        "th": "วัตถุที่อุณหภูมิสูงกว่า 0 K แผ่รังสีความร้อนเป็นคลื่นแม่เหล็กไฟฟ้า\nอินฟราเรดมองไม่เห็นด้วยตา ส่วนโลหะที่ร้อนมากอาจเรืองแสงที่มองเห็นได้",
+        "en": "Objects above 0 K emit thermal radiation as electromagnetic waves.\nInfrared is invisible to our eyes, while sufficiently hot metal can also glow visibly."
+      },
+      "story": {
+        "th": "ชี้ภาพเครื่องชงกาแฟแล้วถามว่า “ตาเราไม่เห็นแสงออกมา แปลว่าไม่มีรังสีออกมาเลยหรือ?” ให้เทียบภาพกล้องอินฟราเรดกับภาพปกติ แล้วชี้ภาพเหล็กร้อนว่า การเรืองแสงเป็นอีกกรณีหนึ่งของการแผ่รังสี",
+        "en": "Point to the coffee maker: “If our eyes see no glow, does that mean no radiation is emitted?” Compare the infrared and visible images, then use the hot metal to connect invisible radiation with visible glowing."
+      },
+      "action": {
+        "th": "ตอบคำถาม 1 สั้น ๆ แล้วเติมความหมายของการแผ่รังสีความร้อนใต้หัวข้อในส่วนที่ 1",
+        "en": "Answer Question 1 briefly, then complete the thermal-radiation definition in section 1."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ภาพอินฟราเรด · หัวข้อ 1",
+            "en": "Infrared images · section 1"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "infrared-evidence"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 1",
+            "en": "Question 1"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ir-observation"
+          }
+        },
+        {
+          "label": {
+            "th": "การแผ่รังสีความร้อน",
+            "en": "Thermal radiation"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "thermal-definition"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เหล็กที่ยังไม่เรืองแสงอาจแผ่รังสีได้หรือไม่?",
+          "en": "Can metal emit radiation before it glows visibly?"
+        },
+        "answer": {
+          "th": "ได้ ถ้าอุณหภูมิสูงกว่า 0 K การไม่เห็นแสงไม่ได้แปลว่าไม่มีการแผ่รังสี",
+          "en": "Yes, if its temperature is above 0 K. No visible glow does not mean no radiation."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "รังสีอินฟราเรด",
+            "en": "Infrared radiation"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ir-radiation"
+          }
+        }
+      ],
+      "after": {
+        "th": "ใช้ภาพเหล็กร้อนอ่านต่อเรื่องสีของแสง ยังไม่ต้องเดาอุณหภูมิเป็นตัวเลขจากภาพ",
+        "en": "Use the hot-metal image to discuss the colour of its glow. A numerical temperature need not be inferred from the photograph."
+      }
+    },
+    {
+      "id": "read-spectrum",
+      "title": {
+        "th": "อ่านยอดกราฟและพื้นที่ใต้กราฟ",
+        "en": "Read the peak and the area"
+      },
+      "summary": {
+        "th": "กราฟนี้เป็นสเปกตรัมต่อเนื่อง ยอดกราฟไม่ใช่ความยาวคลื่นเดียวที่แผ่ออกมา\nเมื่อวัตถุดำร้อนขึ้น ยอดเลื่อนไปทางคลื่นสั้น และพลังงานที่แผ่ต่อหน่วยพื้นที่ต่อเวลาเพิ่มขึ้น ดูจากพื้นที่ใต้สเปกตรัมตลอดทุกความยาวคลื่น",
+        "en": "This is a continuous spectrum. Its peak is not the only emitted wavelength.\nAs a blackbody gets hotter, the peak shifts to shorter wavelengths and emitted power per unit area increases, represented by the area over the entire wavelength spectrum."
+      },
+      "story": {
+        "th": "เริ่มจากแกนนอนและแกนตั้ง แล้วถามว่า “เส้น 6000 K มียอดอยู่ซ้ายหรือขวาของเส้น 3000 K?” จากนั้นชี้ส่วนของเส้นที่อยู่นอกยอด เพื่อให้เห็นว่าวัตถุยังแผ่รังสีช่วงอื่นด้วย",
+        "en": "Read both axes first: “Is the 6000 K peak to the left or right of the 3000 K peak?” Then point away from the peak to show that other wavelengths are emitted too."
+      },
+      "action": {
+        "th": "อ่านคำถาม 2 ร่วมกัน แล้วทำคำถาม 3 ก–ข เปรียบเทียบยอดกราฟ และตอบคำถาม 4 ว่าเหล็กสีส้มแผ่เฉพาะสีส้มหรือไม่",
+        "en": "Read Question 2 together, complete Question 3(a)–(b), then answer Question 4 about whether orange-glowing iron emits only orange light."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "กราฟอุณหภูมิต่างกัน · หัวข้อ 2",
+            "en": "Temperature spectra · section 2"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "blackbody-spectrum"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 3 ก–ข",
+            "en": "Question 3(a)–(b)"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "graph-peak"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 4",
+            "en": "Question 4"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "hot-iron-colour"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ยอดกราฟที่ 3000 K และ 6000 K อยู่ประมาณเท่าไร? ที่ยอดสูงสุดแปลว่าแผ่แค่คลื่นนั้นหรือไม่?",
+          "en": "Approximately where are the 3000 K and 6000 K peaks? Does a peak mean only that wavelength is emitted?"
+        },
+        "answer": {
+          "th": "ประมาณ 970 nm และ 480 nm ตามลำดับ ไม่ใช่คลื่นเดียวที่แผ่ แต่เป็นตำแหน่งที่ความเข้มต่อช่วงความยาวคลื่นสูงสุด",
+          "en": "About 970 nm and 480 nm, respectively. Other wavelengths are emitted; the peak marks the largest intensity per wavelength interval."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "สเปกตรัมต่อเนื่อง",
+            "en": "Continuous spectrum"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "graph-continuous"
+          }
+        }
+      ],
+      "after": {
+        "th": "คำถามชวนคิดเรื่องเปลวไฟเป็นกรณีตามสถานการณ์ที่ระบุ ภาพไม่ได้วัดอุณหภูมิ และสีอย่างเดียวไม่ใช่เกณฑ์วัดอุณหภูมิทั่วไป",
+        "en": "The flame question concerns its stated situation. The photograph is not a temperature measurement, and colour alone is not a universal thermometer."
+      }
+    },
+    {
+      "id": "blackbody-to-planck",
+      "title": {
+        "th": "วัตถุดำหมายถึงอะไร แล้วพลังค์เสนออะไร",
+        "en": "What is a blackbody, and what did Planck propose?"
+      },
+      "summary": {
+        "th": "วัตถุดำเป็นแบบจำลองที่ดูดกลืนรังสีตกกระทบทุกความยาวคลื่นทั้งหมด ไม่ได้แปลว่าต้องเห็นเป็นสีดำเสมอ\nพลังค์เสนอว่าตัวสั่นในวัตถุรับหรือปล่อยพลังงานเป็นหน่วย ๆ แนวคิดนี้ช่วยอธิบายสเปกตรัมที่วัดได้",
+        "en": "A blackbody ideally absorbs all incident radiation at every wavelength; it need not always look black.\nPlanck proposed that oscillators in matter exchange energy in discrete units, allowing the measured spectrum to be explained."
+      },
+      "story": {
+        "th": "ใช้รูปโพรงถามว่า “ถ้าแสงเข้าแล้วสะท้อนอยู่ข้างในหลายครั้ง โอกาสถูกดูดกลืนจะเป็นอย่างไร?” แล้วเชื่อมว่า เราใช้วัตถุดำเป็นแบบจำลองศึกษาสเปกตรัม จากนั้นชวนตั้งคำถามใหม่ว่า พลังงานที่แลกเปลี่ยนกันอาจมาเป็นหน่วย ๆ ได้ไหม",
+        "en": "Use the cavity: “If incoming light reflects inside repeatedly, what happens to its chance of being absorbed?” Connect this model to studying spectra, then ask whether exchanged energy might come in discrete units."
+      },
+      "action": {
+        "th": "เติมสมบัติวัตถุดำ ตอบคำถาม 5 แล้วอ่านสมมติฐานของพลังค์ก่อนเข้าสู่กิจกรรม",
+        "en": "Complete the blackbody properties and Question 5, then read Planck’s hypothesis before the activities."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "รูปโพรง · หัวข้อ 3",
+            "en": "Cavity diagram · section 3"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "cavity-model"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 5",
+            "en": "Question 5"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "blackbody-colour"
+          }
+        },
+        {
+          "label": {
+            "th": "สมมติฐานของพลังค์",
+            "en": "Planck’s hypothesis"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "planck-contribution"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "วัตถุดำที่ร้อนจนเรืองแสงยังเป็นวัตถุดำได้ไหม? ชื่อนี้กำหนดด้วยอะไร?",
+          "en": "Can a glowing hot object still be a blackbody? What does the name describe?"
+        },
+        "answer": {
+          "th": "ได้ ชื่อกำหนดด้วยสมบัติดูดกลืนรังสี ไม่ใช่สีที่ตาเห็นเมื่อวัตถุแผ่แสงออกมา",
+          "en": "Yes. The name describes absorption, not the colour of its emitted glow."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "สมบัติของวัตถุดำ",
+            "en": "Blackbody properties"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "blackbody-definition"
+          }
+        }
+      ],
+      "after": {
+        "th": "ต่อไปใช้ข้อมูลจำลองทำความเข้าใจสมมติฐาน ไม่เล่าว่าพลังค์เคยวัดค่าทีละครั้งตามตารางนี้",
+        "en": "Next use simulated data to understand the hypothesis. Do not present the table as Planck’s actual sequence of measurements."
+      }
+    },
+    {
+      "id": "count-quanta",
+      "title": {
+        "th": "คงความถี่ แล้วมองหาหน่วยที่นับได้",
+        "en": "Fix frequency and count whole units"
+      },
+      "summary": {
+        "th": "ในกิจกรรมที่ 1 หนึ่งหน่วย ε = 3.3 × 10⁻¹⁹ J และพลังงานรวม E = nε\nที่ความถี่เดียวกัน n นับหน่วยเต็ม: 0, 1, 2, … ค่าหน่วยนี้เป็นของกรณีจำลองนี้ ไม่ใช่พลังงานต่ำสุดร่วมของแสงทุกความถี่",
+        "en": "In Activity 1, one unit is ε = 3.3 × 10⁻¹⁹ J and total energy is E = nε.\nAt a fixed frequency, n counts whole units: 0, 1, 2, … This unit belongs to this model case, not a universal minimum for all light frequencies."
+      },
+      "story": {
+        "th": "บอกก่อนว่า “ตารางนี้เป็นข้อมูลจำลอง เราจะดูรูปแบบ ไม่ใช่พิสูจน์ธรรมชาติจากตัวเลขที่แต่งไว้” ให้ลองหาร 6.6 ด้วย 3.3 แล้วถามว่า แถวอื่นนับเป็นกี่หน่วยเหมือนกันได้ไหม จึงค่อยตั้งชื่อหนึ่งหน่วยว่า ε",
+        "en": "Begin: “These are simulated data for finding a pattern, not independent experimental proof.” Divide 6.6 by 3.3, then count the units in the other rows before naming one unit ε."
+      },
+      "action": {
+        "th": "เติมจำนวนหน่วยในตารางกิจกรรมที่ 1 ให้ครบ ตอบคำถาม 6 แล้วเขียนความสัมพันธ์ E = nε",
+        "en": "Complete the unit counts in Activity 1, answer Question 6 and write E = nε."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "กิจกรรมที่ 1 · หัวข้อ 4",
+            "en": "Activity 1 · section 4"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "fixed-frequency-activity"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 6",
+            "en": "Question 6"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "quantum-unit"
+          }
+        },
+        {
+          "label": {
+            "th": "พลังงานรวมจากหลายควอนตัม",
+            "en": "Total energy of several quanta"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "energy-counting"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ที่ความถี่นี้ ถ้าหนึ่งหน่วยมีพลังงาน 3.3 × 10⁻¹⁹ J แล้ว 9.9 × 10⁻¹⁹ J เป็นกี่หน่วย? n = 1.5 ใช้นับได้ไหม?",
+          "en": "At this frequency, if one unit is 3.3 × 10⁻¹⁹ J, how many units are in 9.9 × 10⁻¹⁹ J? Can n = 1.5 count whole units?"
+        },
+        "answer": {
+          "th": "3 หน่วย ส่วน n = 1.5 ใช้ไม่ได้กับการนับควอนตัมเต็มหน่วยในแบบจำลองนี้",
+          "en": "3 units. n = 1.5 does not count whole quanta in this model."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ความหมายของควอนตัม",
+            "en": "Meaning of a quantum"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "quantum-definition"
+          }
+        }
+      ],
+      "after": {
+        "th": "ใช้คำถาม 11 ก–ข เป็นงานต่อเอง เพื่อตรวจว่าเด็กคำนวณ n แล้วดูต่อว่าเป็นจำนวนเต็มหรือไม่",
+        "en": "Use Question 11(a)–(b) as independent follow-up: calculate n, then check whether it is an integer."
+      }
+    },
+    {
+      "id": "quantum-frequency",
+      "title": {
+        "th": "หน่วยพลังงานเปลี่ยนตามความถี่อย่างไร",
+        "en": "How does one unit depend on frequency?"
+      },
+      "summary": {
+        "th": "กิจกรรมที่ 2 ให้ ε/f เท่ากันทุกแถว จึงเขียน ε = hf โดย h เป็นค่าคงตัวของพลังค์\nความถี่สูงขึ้น พลังงานต่อควอนตัมสูงขึ้น ส่วน E = nhf ใช้รวม n ควอนตัมที่ความถี่เดียวกัน",
+        "en": "In Activity 2, ε/f is the same in every row, giving ε = hf, where h is Planck’s constant.\nHigher frequency gives more energy per quantum. E = nhf totals n quanta at that same frequency."
+      },
+      "story": {
+        "th": "ถามว่า “หนึ่งหน่วยในกิจกรรมแรกมีขนาดเท่ากันสำหรับทุกความถี่ไหม?” ให้คำนวณ ε/f แถวแรกและแถวสุดท้าย แล้วค่อยใช้ค่าอัตราส่วนคงที่เชื่อมเป็น ε = hf อย่าเล่าว่าข้อมูลจำลองเป็นหลักฐานวัดค่า h จริง",
+        "en": "Ask: “Does one unit have the same energy at every frequency?” Calculate ε/f for the first and last rows, then express the constant ratio as ε = hf. Simulated values do not constitute a measurement of h."
+      },
+      "action": {
+        "th": "คำนวณแถวแรกและแถวสุดท้ายของกิจกรรมที่ 2 ตอบคำถาม 7 แล้วเชื่อม ε = hf กับ E = nε",
+        "en": "Calculate the first and last ratios in Activity 2, answer Question 7 and connect ε = hf with E = nε."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "กิจกรรมที่ 2 · หัวข้อ 5",
+            "en": "Activity 2 · section 5"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "frequency-activity"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 7",
+            "en": "Question 7"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "frequency-trend"
+          }
+        },
+        {
+          "label": {
+            "th": "พลังงานหนึ่งควอนตัมกับความถี่",
+            "en": "Energy per quantum and frequency"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "planck-relation"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้า f เพิ่มสองเท่า แต่จำนวนโฟตอนเท่าเดิม ε และ E เปลี่ยนอย่างไร?",
+          "en": "If f doubles while photon count stays the same, what happens to ε and E?"
+        },
+        "answer": {
+          "th": "ε เพิ่มสองเท่า และ E เพิ่มสองเท่า เพราะ E = nε โดย n เท่าเดิม",
+          "en": "Both ε and E double, since E = nε and n stays the same."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "สรุปสามสูตร · หัวข้อ 6",
+            "en": "The three equations · section 6"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "formula-combined"
+          }
+        }
+      ],
+      "after": {
+        "th": "กิจกรรมใช้ h ปัดเป็น 6.6 × 10⁻³⁴ J·s เพื่อดูรูปแบบ แต่โจทย์คำนวณใช้ h = 6.626 × 10⁻³⁴ J·s ตามที่ใบกำหนด",
+        "en": "The activities round h to 6.6 × 10⁻³⁴ J·s to show the pattern. Calculations use the sheet’s stated h = 6.626 × 10⁻³⁴ J·s."
+      }
+    },
+    {
+      "id": "units-and-wavelength",
+      "title": {
+        "th": "เชื่อมหน่วยก่อนแทนสูตร",
+        "en": "Connect units before substituting"
+      },
+      "summary": {
+        "th": "ทวน W = qV โดยใช้ขนาดประจุและความต่างศักย์สำหรับการเร่งในกรณีนี้ จึงได้ 1 eV = 1.60 × 10⁻¹⁹ J\neV → J ใช้คูณ; J → eV ใช้หาร และในสุญญากาศ ε = hc/λ โดยแปลง λ เป็นเมตรก่อน",
+        "en": "For this acceleration case, use charge and potential-difference magnitudes in W = qV to obtain 1 eV = 1.60 × 10⁻¹⁹ J.\nMultiply for eV → J and divide for J → eV. In vacuum ε = hc/λ; convert λ to metres first."
+      },
+      "story": {
+        "th": "ถามว่า “ถ้าเร่งอิเล็กตรอนผ่าน 1 V จะได้รับพลังงานเท่าไรจาก W = qV?” ให้เห็นที่มาของ eV ก่อนทวนว่า eV เป็นหน่วยพลังงาน ส่วน V เป็นหน่วยความต่างศักย์ แล้วจึงเชื่อม c = fλ เข้ากับ ε = hf",
+        "en": "Ask: “How much energy does an electron gain across 1 V using W = qV?” Establish eV as an energy unit and V as a potential-difference unit, then connect c = fλ with ε = hf."
+      },
+      "action": {
+        "th": "ทำคำถาม 8 และ 9 อย่างละทิศทาง แล้วอ่านความสัมพันธ์ความยาวคลื่นกับความถี่ก่อนใช้โจทย์ที่ให้ λ",
+        "en": "Solve Questions 8 and 9 in opposite conversion directions, then review wavelength and frequency before attempting a problem that gives λ."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ทวน W = qV · หัวข้อ 6",
+            "en": "Review W = qV · section 6"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "electric-work-review"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 8–9",
+            "en": "Questions 8–9"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ev-to-joule"
+          }
+        },
+        {
+          "label": {
+            "th": "ความยาวคลื่นกับความถี่",
+            "en": "Wavelength and frequency"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "wavelength-review"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "2.00 eV เท่ากับกี่ J? ถ้า λ เพิ่มสองเท่า พลังงานต่อโฟตอนเป็นอย่างไร?",
+          "en": "How many joules are in 2.00 eV? If λ doubles, what happens to photon energy?"
+        },
+        "answer": {
+          "th": "3.20 × 10⁻¹⁹ J และพลังงานต่อโฟตอนเหลือครึ่งหนึ่ง เพราะ ε = hc/λ",
+          "en": "3.20 × 10⁻¹⁹ J; photon energy halves because ε = hc/λ."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "นิยาม eV และทิศทางการแปลง",
+            "en": "Definition of eV and conversion directions"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "joule-ev"
+          }
+        }
+      ],
+      "after": {
+        "th": "ถ้ากลับทิศคูณ–หารยังไม่คล่อง ใช้โจทย์ 8–9 ตรวจหน่วยซ้ำก่อนอ่านตัวอย่าง",
+        "en": "If conversion directions are not secure, revisit Questions 8–9 and check units before the examples."
+      }
+    },
+    {
+      "id": "solve-photon-problems",
+      "title": {
+        "th": "เลือกสูตรจากสิ่งที่โจทย์ถาม",
+        "en": "Choose equations from the required quantity"
+      },
+      "summary": {
+        "th": "หาพลังงานต่อโฟตอนด้วย ε = hf หรือ hc/λ แล้วจึงหาจำนวนโฟตอนจาก n = E/ε\nถ้าให้กำลังแสงกับเวลา ใช้ E = Pt ก่อน อย่านำพลังงานรวม E ไปแทนเป็นพลังงานของโฟตอนหนึ่งตัว",
+        "en": "Find photon energy with ε = hf or hc/λ, then count photons with n = E/ε.\nIf optical power and time are given, first use E = Pt. Do not substitute total energy E as the energy of one photon."
+      },
+      "story": {
+        "th": "พาดูตัวอย่าง 1 แล้วถามทุกครั้งว่า “โจทย์กำลังถามพลังงานหนึ่งตัว หรือพลังงานทั้งชุด?” จากนั้นให้ลองแบบฝึกหัด 19.1 ข้อ 2 โดยเรียง λ → f → ε → n และให้เด็กอธิบายเองว่าแต่ละขั้นหาอะไร",
+        "en": "Use Example 1 and ask: “Does the problem ask about one photon or the whole set?” Then try Exercise 19.1 Q2 using λ → f → ε → n, explaining the quantity found at each step."
+      },
+      "action": {
+        "th": "พาทำตัวอย่าง 1 ก–ข เป็นแนว แล้วให้ลองแบบฝึกหัด 19.1 ข้อ 2 ก–ค ตรวจหน่วยและเก็บค่าทศนิยมระหว่างข้อย่อยไว้ก่อนปัดคำตอบสุดท้าย",
+        "en": "Work through Example 1(a)–(b), then try Exercise 19.1 Q2(a)–(c). Check units and retain unrounded values between parts before rounding final answers."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ตัวอย่าง 1 ก–ข",
+            "en": "Example 1(a)–(b)"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "example-1"
+          }
+        },
+        {
+          "label": {
+            "th": "แบบฝึกหัด 19.1 · ข้อ 2 ก–ค",
+            "en": "Exercise 19.1 · Q2(a)–(c)"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "question-2"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เลเซอร์ 650 nm มีพลังงานรวม 1.00 × 10⁻³ J ต้องใช้พลังงานนี้เป็น ε โดยตรงหรือไม่? หาจำนวนโฟตอนอย่างไร?",
+          "en": "For 650 nm laser light with total energy 1.00 × 10⁻³ J, is that total directly ε? How do you find photon count?"
+        },
+        "answer": {
+          "th": "ไม่ใช่ ต้องหา ε = hc/λ ≈ 3.06 × 10⁻¹⁹ J ก่อน แล้ว n = E/ε ≈ 3.27 × 10¹⁵ โฟตอน",
+          "en": "No. First find ε = hc/λ ≈ 3.06 × 10⁻¹⁹ J, then n = E/ε ≈ 3.27 × 10¹⁵ photons."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "แยกพลังงานต่อหน่วยกับพลังงานรวม",
+            "en": "Separate energy per unit from total energy"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "formula-quantum"
+          }
+        }
+      ],
+      "after": {
+        "th": "งานต่อเองเลือกตามที่ยังติด: แบบฝึกหัดข้อ 1 สำหรับ J/eV, คำถาม 11 สำหรับหน่วยเต็ม, ข้อ 12–14 สำหรับกลับสูตรและช่วงคลื่น, ข้อ 15 สำหรับพลังงานรวมเท่ากัน และข้อ 16 สำหรับ E = Pt ไม่จำเป็นต้องสั่งทุกข้อในคาบเดียว",
+        "en": "Choose follow-up by need: Exercise Q1 for J/eV; Question 11 for whole units; Questions 12–14 for rearranging equations and spectral bands; Question 15 for equal total energy; Question 16 for E = Pt. They need not all be assigned in one lesson."
+      }
+    }
+  ],
+  "finish": {
+    "th": "เชื่อมให้ได้ว่าอุณหภูมิเปลี่ยนสเปกตรัม ส่วนความถี่กำหนดพลังงานต่อควอนตัม และจำนวนควอนตัมกำหนดพลังงานรวม ก่อนจบให้สรุปหัวข้อ 9 ด้วยคำของตัวเอง รายละเอียดและโจทย์ที่เหลือเลือกกลับไปทบทวนได้",
+    "en": "Connect temperature to the spectrum, frequency to energy per quantum, and quantum count to total energy. Summarize section 9 in your own words; use the remaining explanations and problems for targeted review."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "แสง A และ B มีความยาวคลื่น 400 และ 800 nm ตามลำดับ ถ้าพลังงานรวมเท่ากัน โฟตอนชนิดใดมีพลังงานมากกว่า และแสงชุดใดมีโฟตอนมากกว่า?",
+      "en": "Light A and B have wavelengths of 400 and 800 nm. With equal total energy, which photons have more energy, and which set has more photons?"
+    },
+    "answer": {
+      "th": "โฟตอน A มีพลังงานเป็นสองเท่าของ B แต่ชุด B มีโฟตอนเป็นสองเท่าของ A เพราะเมื่อ E เท่ากัน n = E/ε",
+      "en": "An A photon has twice the energy of a B photon, but set B contains twice as many photons because n = E/ε at equal total energy."
+    }
+  }
+}

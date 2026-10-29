@@ -1,0 +1,10 @@
+body.tool-video { min-height: 0; height: 100dvh; }
+.video-shell { min-height: 100%; display: flex; flex-direction: column; }
+.video-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 12px 16px; border-bottom: 2px solid var(--hub-line); background: var(--hub-surface); }
+.video-toolbar h1 { flex: 1 1 180px; margin: 0; font-size: 16px; overflow-wrap: anywhere; }
+.video-toolbar a { display: inline-flex; align-items: center; min-height: 44px; padding: 9px 12px; font: inherit; font-size: 13px; text-decoration: none; }
+#video-status { margin: 12px 16px 0; padding: 10px 12px; border: 1px solid var(--hub-line); border-radius: var(--hub-radius-group); background: var(--hub-soft); color: var(--hub-muted); font-size: 14px; }
+#video-status.is-error { border-color: var(--hub-error); color: var(--hub-error); background: var(--hub-error-soft); }
+.video-stage { width: 100%; max-width: 1280px; margin: auto; padding: 16px; }
+#video-frame { display: block; width: 100%; min-height: 200px; aspect-ratio: 16 / 9; border: 0; background: #000; }
+@media (max-width: 540px) { .video-toolbar { padding: 10px; } .video-stage { padding: 8px; } #video-status { margin: 10px; } }

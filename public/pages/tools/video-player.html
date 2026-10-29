@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="th" class="hub-engine">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Video · Learning Hub</title>
+  <link rel="stylesheet" href="tool.css">
+  <link rel="stylesheet" href="video-player.css">
+  <link rel="stylesheet" href="../../shared/hub-ui.css?v=hub-2">
+  <link rel="stylesheet" href="../../shared/hub-engine.css?v=video-1">
+</head>
+<body class="tool-video">
+  <main class="video-shell">
+    <header class="video-toolbar">
+      <h1 id="video-title" data-th="วิดีโอประกอบบทเรียน" data-en="Lesson video">วิดีโอประกอบบทเรียน</h1>
+      <a id="video-original" target="_blank" rel="noopener noreferrer" hidden data-th="เปิดใน YouTube ↗" data-en="Open in YouTube ↗">เปิดใน YouTube ↗</a>
+    </header>
+    <p id="video-status" role="status" aria-live="polite" data-th="กำลังเปิดวิดีโอ…" data-en="Opening video…">กำลังเปิดวิดีโอ…</p>
+    <section class="video-stage" aria-label="YouTube video">
+      <iframe id="video-frame" title="YouTube video" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
+    </section>
+    <noscript>เปิดวิดีโอต้องใช้ JavaScript / JavaScript is required to open this video.</noscript>
+  </main>
+  <script type="module" src="video-player.js"></script>
+</body>
+</html>

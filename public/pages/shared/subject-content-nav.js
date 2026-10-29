@@ -1,4 +1,5 @@
 // Menu HTML is data only: copy text/links into shared cards, never execute its markup.
+import { createVideoManifest } from '../../shared/video-content-model.js';
 import { readMenuCatalog, availableMenuSource } from './menu-availability.js';
 import { inlinePdfSources, createInlinePdfManifest } from '../../shared/pdf-content-model.js';
 export function createSubjectContentNavigation({ root, subject, setStage, backToChapters, requestNavigation = () => false }) {
@@ -70,11 +71,11 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
     const seen = new Set();
     const entries = [...menu.querySelectorAll("a")].map(link => {
       const d = link.dataset;
-      const isHtml = ["html", "pdf"].includes(d.toolKind);
+      const isHtml = ["html", "pdf", "video"].includes(d.toolKind);
       const key = kind === "topics" && !isHtml ? d.topicId : d.contentId;
       const href = (link.getAttribute("href") || "").trim();
       if (!idPattern.test(key || "") || seen.has(key) || !d.th || !d.en ||
-          ((kind === "tools" || isHtml) && !["quiz", "simulation", "html", "pdf"].includes(d.toolKind)) ||
+          ((kind === "tools" || isHtml) && !["quiz", "simulation", "html", "pdf", "video"].includes(d.toolKind)) ||
           (d.status && !['draft', 'ready'].includes(d.status)) ||
           (isHtml && !/^[a-z]/.test(key))) {
         throw new Error("Invalid menu entry");
@@ -82,11 +83,13 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
       seen.add(key);
       const pdfSources = d.toolKind === 'pdf' ? inlinePdfSources(Object.fromEntries([...link.attributes].map(a => [a.name, a.value])))
         ?? (!href ? {} : undefined) : undefined;
+      const video = d.toolKind === 'video' ? createVideoManifest(link.getAttribute('data-video-src') ?? href, key) : null;
       const pdfManifest = pdfSources !== undefined ? createInlinePdfManifest(pdfSources, key, url, new URL('../', location.href).href) : null;
       return { id: key, th: d.th, en: d.en, descriptionTh: d.descriptionTh || "",
         descriptionEn: d.descriptionEn || "", toolKind: d.toolKind,
         status: d.status, topicId: isHtml ? (topicId || "chapter-reference") : undefined,
-        source: pdfManifest ? (pdfManifest.ready ? url : null) : href ? urlFor(href, url) : null,
+        source: video ? (video.ready ? url : null) : pdfManifest ? (pdfManifest.ready ? url : null) : href ? urlFor(href, url) : null,
+        ...(video ? { videoSource: video.source?.url || "" } : {}),
         ...(pdfManifest ? { pdfSources: Object.fromEntries(Object.entries(pdfManifest.sources).map(([key, item]) => [key, item.originalUrl])) } : {}) };
     });
     let overview = null;
@@ -103,7 +106,7 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
     try {
       const catalog = await readMenuCatalog(new URL('../route-catalog.v1.json', location.href), { signal: requestController.signal });
       await Promise.all([...entries, ...(overview ? [overview] : [])].map(async entry => {
-        const isTopic = kind === 'topics' && !['html', 'pdf'].includes(entry.toolKind);
+        const isTopic = kind === 'topics' && !['html', 'pdf', 'video'].includes(entry.toolKind);
         entry.source = await availableMenuSource({ ...entry, kind: isTopic ? 'topic' : 'content', subjectId: subject.id, chapterId: chapter.id,
           topicId: isTopic ? entry.id : entry.topicId || topicId, contentId: entry.id }, { catalog, signal: requestController.signal });
       }));
@@ -156,8 +159,8 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
       const button = document.createElement("button"); button.type = "button"; button.className = "activity-card";
       button.dataset.menuEntry = entry.id;
       button.innerHTML = `<span class="activity-icon" aria-hidden="true"></span><span class="activity-copy"><small></small><strong></strong><span></span></span><b aria-hidden="true">↗</b>`;
-      button.querySelector(".activity-icon").textContent = mode === "topics" || ["html", "pdf"].includes(entry.toolKind) ? "▤" : entry.toolKind === "quiz" ? "✓" : "◉";
-      localized(button.querySelector("small"), entry.toolKind === "pdf" ? "สไลด์ · PDF" : entry.toolKind === "html" ? "เนื้อหา · HTML" : mode === "topics" ? "เรื่องย่อย" : entry.toolKind === "quiz" ? "แบบฝึกหัด · Quiz" : "Simulation", entry.toolKind === "pdf" ? "Slides · PDF" : entry.toolKind === "html" ? "Reading · HTML" : mode === "topics" ? "Topic" : entry.toolKind === "quiz" ? "Quiz" : "Simulation");
+      button.querySelector(".activity-icon").textContent = entry.toolKind === "video" ? "▶" : mode === "topics" || ["html", "pdf"].includes(entry.toolKind) ? "▤" : entry.toolKind === "quiz" ? "✓" : "◉";
+      localized(button.querySelector("small"), entry.toolKind === "video" ? "วิดีโอ · YouTube" : entry.toolKind === "pdf" ? "สไลด์ · PDF" : entry.toolKind === "html" ? "เนื้อหา · HTML" : mode === "topics" ? "เรื่องย่อย" : entry.toolKind === "quiz" ? "แบบฝึกหัด · Quiz" : "Simulation", entry.toolKind === "video" ? "Video · YouTube" : entry.toolKind === "pdf" ? "Slides · PDF" : entry.toolKind === "html" ? "Reading · HTML" : mode === "topics" ? "Topic" : entry.toolKind === "quiz" ? "Quiz" : "Simulation");
       localized(button.querySelector("strong"), entry.th, entry.en);
       localized(button.querySelector(".activity-copy > span"), entry.descriptionTh, entry.descriptionEn);
       if (!entry.source) {
@@ -165,7 +168,7 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
         button.dataset.contentStatus = "preparing";
         localized(button.querySelector("small"), "กำลังเตรียมเนื้อหา", "Content in preparation");
         button.querySelector("b").textContent = "…";
-      } else button.addEventListener("click", () => menu.kind === "topics" && !["html", "pdf"].includes(entry.toolKind) ? showTools(entry) : openTool(entry, button));
+      } else button.addEventListener("click", () => menu.kind === "topics" && !["html", "pdf", "video"].includes(entry.toolKind) ? showTools(entry) : openTool(entry, button));
       cards.append(button);
     });
     panel.querySelector("[data-menu-title]").focus({ preventScroll: true });
@@ -209,6 +212,7 @@ export function createSubjectContentNavigation({ root, subject, setStage, backTo
       subjectId: subject.id, chapterId: chapter.id, topicId: entry.topicId || topicMenu?.topicId,
       contentId: entry.id, toolKind: entry.toolKind, source: entry.source,
       ...(entry.pdfSources ? { pdfSources: entry.pdfSources } : {}),
+      ...(entry.toolKind === "video" ? { videoSource: entry.videoSource } : {}),
       titleTh: entry.th, titleEn: entry.en,
     } }, location.origin);
   }

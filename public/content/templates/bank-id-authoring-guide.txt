@@ -165,6 +165,9 @@ Learning sheet ใช้ learning-sheet-template.html / learning-sheet-ai-prompt
 ปรับ relative path ของ learning-sheet.css ให้ตรงความลึกโฟลเดอร์จริง
 การเปิดไฟล์ standalone อาจเห็นเฉลย ไม่ใช่มาตรการรักษาความลับ
 
+วิดีโอใช้ data-tool-kind="video" ในเมนู หรือ data-hub-video บนปุ่ม/anchor
+อ่าน VIDEO-PLAYER-START-HERE.md และใช้ video-button-template.html ไม่สร้าง iframe เอง
+
 Simulation และ Quiz เสริม
 --------------------------
 Simulation ใช้ html data-learning-simulation และ activity-id ตรง contentId

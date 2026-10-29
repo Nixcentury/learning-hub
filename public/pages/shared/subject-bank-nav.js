@@ -142,7 +142,7 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
         card({ title: [tool.titleTh || tool.key, tool.titleEn || tool.titleTh || tool.key],
           detail: preparing ? ['กำลังเตรียมเนื้อหา', 'Content in preparation'] :
             [tool.descriptionTh || 'เปิดเครื่องมือ', tool.descriptionEn || tool.descriptionTh || 'Open tool'],
-          icon: tool.toolKind === 'quiz' ? '✓' : tool.toolKind === 'simulation' ? '◉' : '▤',
+          icon: tool.toolKind === 'video' ? '▶' : tool.toolKind === 'quiz' ? '✓' : tool.toolKind === 'simulation' ? '◉' : '▤',
           disabled: preparing, action: () => open(tool.key) });
       }
       status(toolsState === 'unavailable'

@@ -74,6 +74,7 @@
   .notebook-backup-dialog a[data-backup-download],
   .review-answer-toggle,
   .review-page-heading > a,
+  .video-toolbar a,
   .pdf-toolbar button,
   .pdf-toolbar a,
   .pdf-resources a,
@@ -201,7 +202,7 @@
   .notebook-core .notebook-tool-button.is-active:disabled {
     border-color: #93a0b2; border-style: dashed; background: #e4e9f0; color: #59677b; box-shadow: none;
   }
-  :is(.quiz-shell, .quiz-dialog, .review-page, .tool-shell, .pdf-shell, .notebook-backup-dialog) :is(button, a, input, textarea, select, summary, math-field):focus-visible {
+  :is(.quiz-shell, .quiz-dialog, .review-page, .tool-shell, .pdf-shell, .video-shell, .notebook-backup-dialog) :is(button, a, input, textarea, select, summary, math-field):focus-visible {
     outline: 3px solid var(--hub-focus);
     outline-offset: 3px;
   }
@@ -212,7 +213,7 @@
     .quiz-export-evidence-button, .quiz-evidence-warning-actions button, .quiz-drag-remove, .quiz-drag-piece, .notebook-core button,
     .notebook-backup-dialog button, .notebook-backup-dialog a[data-backup-download],
     .review-answer-toggle, .review-page-heading > a, .pdf-toolbar button, .pdf-toolbar a,
-    .pdf-resources a, .activity-print-button):active:not(:disabled):not([aria-disabled="true"]) {
+    .video-toolbar a, .pdf-resources a, .activity-print-button):active:not(:disabled):not([aria-disabled="true"]) {
     box-shadow: var(--hub-pressed);
     transform: translateY(2px);
   }
@@ -243,6 +244,7 @@
   .quiz-secondary-button:hover:not(:disabled),
   .review-answer-toggle:not([aria-pressed="true"]):hover:not(:disabled),
   .pdf-toolbar button:hover:not(:disabled),
+  .video-toolbar a:hover,
   .pdf-toolbar a:hover { border-color: var(--hub-navy); background: var(--hub-soft); color: var(--hub-navy); transform: none; }
   .quiz-primary-button:hover:not(:disabled),
   .quiz-submit-button:hover:not(:disabled) { background: var(--hub-navy-hover); }

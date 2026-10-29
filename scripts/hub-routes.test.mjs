@@ -134,7 +134,7 @@ test('unfinished activity menu diagnostics name the file, content ID, and missin
   change(records, 'content/p/topic.html', 'href="quiz.html"', '');
   assert.equal(resolveHubRoute(await make(records), '#content/quiz-one').status, 'preparing');
   change(records, 'content/p/topic.html', 'data-tool-kind="quiz"', 'data-tool-kind="practice"');
-  await assert.rejects(make(records), /Content quiz-one: data-tool-kind must be quiz, simulation, html, or pdf/);
+  await assert.rejects(make(records), /Content quiz-one: data-tool-kind must be quiz, simulation, html, pdf, or video/);
 });
 
 test('a new chapter without a menu or registered legacy tools remains a preparing heading', async () => {

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="450" viewBox="0 0 660 450" role="img" aria-labelledby="title desc">
+<title id="title">Solute particle counts after dissolution</title>
+<desc id="desc">Equal water amounts are omitted. Start with two glucose molecules or two formula units of each salt. Glucose remains as two molecules, i equals one. Completely dissociated sodium chloride gives two sodium cations and two chloride anions, four ions, i equals two. Calcium chloride gives two calcium cations and four chloride anions, six ions, i equals three. A doubly charged calcium ion counts as one particle.</desc>
+<rect width="660" height="450" rx="14" fill="#f7f9fc"/>
+<g font-family="Arial, sans-serif" fill="#20344e" text-anchor="middle">
+<text x="330" y="30" font-size="22" font-weight="700">After dissolving: count solute particles</text>
+<text x="330" y="57" font-size="17">Start with 2 molecules or formula units; same water amount</text>
+<rect x="16" y="75" width="628" height="99" rx="12" fill="#edf7ef" stroke="#65976f"/>
+<rect x="16" y="188" width="628" height="99" rx="12" fill="#edf3fa" stroke="#7894b5"/>
+<rect x="16" y="301" width="628" height="99" rx="12" fill="#fff5e8" stroke="#bb8a4a"/>
+<text x="91" y="112" font-size="22" font-weight="700">Glucose</text>
+<text x="91" y="144" font-size="20">i = 1</text>
+<rect x="253" y="94" width="106" height="40" rx="20" fill="#d3eacb" stroke="#65976f"/>
+<rect x="443" y="94" width="106" height="40" rx="20" fill="#d3eacb" stroke="#65976f"/>
+<text x="306" y="120" font-size="18">glucose</text><text x="496" y="120" font-size="18">glucose</text>
+<text x="401" y="157" font-size="18">2 dissolved particles</text>
+<text x="91" y="225" font-size="22" font-weight="700">NaCl</text>
+<text x="91" y="257" font-size="20">i = 2</text>
+<g data-particle="Na+"><circle cx="246" cy="226" r="23" fill="#d9e6ff" stroke="#497cb1"/><text x="246" y="232" font-size="18">Na⁺</text></g>
+<g data-particle="Cl-"><circle cx="346" cy="226" r="23" fill="#f0e0f7" stroke="#9868a6"/><text x="346" y="232" font-size="18">Cl⁻</text></g>
+<g data-particle="Na+"><circle cx="446" cy="226" r="23" fill="#d9e6ff" stroke="#497cb1"/><text x="446" y="232" font-size="18">Na⁺</text></g>
+<g data-particle="Cl-"><circle cx="546" cy="226" r="23" fill="#f0e0f7" stroke="#9868a6"/><text x="546" y="232" font-size="18">Cl⁻</text></g>
+<text x="396" y="270" font-size="18">4 dissolved ions</text>
+<text x="91" y="338" font-size="22" font-weight="700">CaCl₂</text>
+<text x="91" y="370" font-size="20">i = 3</text>
+<g data-particle="Ca2+"><circle cx="224" cy="339" r="23" fill="#d9e6ff" stroke="#497cb1"/><text x="224" y="345" font-size="16">Ca²⁺</text></g>
+<g data-particle="Cl-"><circle cx="294" cy="339" r="23" fill="#f0e0f7" stroke="#9868a6"/><text x="294" y="345" font-size="18">Cl⁻</text></g>
+<g data-particle="Cl-"><circle cx="364" cy="339" r="23" fill="#f0e0f7" stroke="#9868a6"/><text x="364" y="345" font-size="18">Cl⁻</text></g>
+<g data-particle="Ca2+"><circle cx="434" cy="339" r="23" fill="#d9e6ff" stroke="#497cb1"/><text x="434" y="345" font-size="16">Ca²⁺</text></g>
+<g data-particle="Cl-"><circle cx="504" cy="339" r="23" fill="#f0e0f7" stroke="#9868a6"/><text x="504" y="345" font-size="18">Cl⁻</text></g>
+<g data-particle="Cl-"><circle cx="574" cy="339" r="23" fill="#f0e0f7" stroke="#9868a6"/><text x="574" y="345" font-size="18">Cl⁻</text></g>
+<text x="399" y="383" font-size="18">6 dissolved ions</text>
+<text x="330" y="427" font-size="17">Complete dissociation model; water is not drawn.</text>
+<text x="330" y="447" font-size="15">Particle sizes and distances are not to scale.</text>
+</g>
+</svg>

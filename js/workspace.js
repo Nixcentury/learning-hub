@@ -12,6 +12,7 @@ import { createContentTool } from "./content-tool.js";
 import { createBankTool } from "./question-bank-tools.js";
 import { createTopicReviewTool } from "./topic-review-tools.js";
 import { pdfLinkEntry } from "./pdf-link.js";
+import { videoLinkEntry } from "./video-link.js";
 import { htmlLinkEntry } from "./html-link.js";
 import { renderHtmlMath } from "./html-math.js";
 import { openHtmlPrint } from "./html-print.js";
@@ -335,7 +336,7 @@ export function createWorkspace({
       return;
     }
     // Read-only HTML does not need the learner's identity or privileged bridges.
-    if (["html", "pdf"].includes(record.tool.context.toolKind)) return;
+    if (["html", "pdf", "video"].includes(record.tool.context.toolKind)) return;
     const targetOrigin = location.origin === "null" ? "*" : location.origin;
     record.frame.contentWindow?.postMessage(
       createHubContextMessage({
@@ -384,6 +385,7 @@ export function createWorkspace({
     if (!record) return;
     record.minimized = false;
     record.element.hidden = false;
+    postVideoVisibility(record, true);
     record.taskButton.classList.remove("is-minimized");
     updateRecordText(record);
     syncMaximizedState();
@@ -391,8 +393,15 @@ export function createWorkspace({
     requestAnimationFrame(() => record.element.focus());
   }
 
+  function postVideoVisibility(record, visible) {
+    if (record.tool.context.toolKind === "video") record.frame.contentWindow?.postMessage({
+      type: "learning-hub-tool-visibility", visible,
+    }, location.origin);
+  }
+
   function minimize(record) {
     if (!record) return;
+    postVideoVisibility(record, false);
     record.minimized = true;
     record.element.hidden = true;
     record.element.classList.remove("is-active");
@@ -427,6 +436,7 @@ export function createWorkspace({
   // Back to a menu must not destroy frames, answers, or notebook strokes.
   function showMenu() {
     records.forEach(record => {
+      postVideoVisibility(record, false);
       record.minimized = true;
       record.element.hidden = true;
       record.element.classList.remove("is-active");
@@ -506,7 +516,7 @@ export function createWorkspace({
   }
 
   function flushLocalBeforeRemoval(record) {
-    if (["html", "pdf"].includes(record.tool.context.toolKind)) return;
+    if (["html", "pdf", "video"].includes(record.tool.context.toolKind)) return;
     try {
       // Synchronous: removing an iframe cancels its pending debounce timers.
       return record.frame.contentWindow?.LearningHubQuiz?.flushLocal?.();
@@ -616,6 +626,8 @@ export function createWorkspace({
       ${tool.context.toolKind === "html" ? '<div class="sheet-reading-stage">' : ''}<iframe class="workspace-tool-frame" src="${tool.page}" loading="eager"></iframe>${tool.context.toolKind === "html" ? '</div>' : ''}
     `;
 
+    if (tool.context.toolKind === "video") element.querySelector("iframe").setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
+
     const taskButton = document.createElement("button");
     taskButton.className = `taskbar-item accent-${tool.accent}`;
     taskButton.type = "button";
@@ -712,6 +724,7 @@ export function createWorkspace({
       record.sheet = null;
       applyFrameLanguage(record);
       postContext(record);
+      postVideoVisibility(record, !record.minimized);
       // Scripts remain disabled in read-only HTML; only the parent installs this handler.
       try {
         bindHtmlLinks(record.frame.contentDocument, record);
@@ -778,7 +791,7 @@ export function createWorkspace({
 
   function openContent(entry) {
     const tool = createContentTool(entry, location.href);
-    if (!tool) return false;
+    if (!tool || tool.preparing) return false;
     // A copied quiz must receive a new ID; do not silently reuse another file's window.
     const previous = toolCatalog[tool.id];
     if (previous && previous.source !== tool.source) return false;
@@ -815,12 +828,13 @@ export function createWorkspace({
     if (!doc || htmlLinkDocuments.has(doc)) return;
     htmlLinkDocuments.add(doc);
     doc.addEventListener("click", event => {
-      const node = event.target?.closest?.("a[data-hub-html], button[data-hub-html], a[data-hub-pdf], button[data-hub-pdf]");
+      const node = event.target?.closest?.("a[data-hub-html], button[data-hub-html], a[data-hub-pdf], button[data-hub-pdf], a[data-hub-video], button[data-hub-video]");
       if (!node || node.disabled || event.defaultPrevented || event.button > 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
       const subject = doc.querySelector("[data-subject-id]")?.dataset.subjectId;
       const isPdf = node.hasAttribute("data-hub-pdf");
-      const entry = (isPdf ? pdfLinkEntry : htmlLinkEntry)(node, doc.URL, ownerRecord?.tool.context || { subjectId: subject });
+      const isVideo = node.hasAttribute("data-hub-video");
+      const entry = (isVideo ? videoLinkEntry : isPdf ? pdfLinkEntry : htmlLinkEntry)(node, doc.URL, ownerRecord?.tool.context || { subjectId: subject });
       const tool = createContentTool(entry, location.href);
       if (!tool || tool.preparing || !openContent(entry)) {
         let notice = doc.querySelector("[data-html-link-error]");
@@ -828,10 +842,10 @@ export function createWorkspace({
           notice = doc.createElement("p"); notice.dataset.htmlLinkError = "";
           notice.setAttribute("role", "alert"); node.after(notice);
         }
-        notice.textContent = tool?.preparing ? (language() === "en" ? "Document in preparation." : "กำลังเตรียมเอกสาร")
+        notice.textContent = tool?.preparing ? (language() === "en" ? (isVideo ? "Video in preparation." : "Document in preparation.") : (isVideo ? "กำลังเตรียมวิดีโอ" : "กำลังเตรียมเอกสาร"))
           : language() === "en"
-            ? (isPdf ? "Cannot open PDF. Check its content ID and PDF links." : "Cannot open HTML. Check the content ID and local HTML file path.")
-            : (isPdf ? "เปิด PDF ไม่ได้ กรุณาตรวจรหัสเนื้อหาและลิงก์ PDF" : "เปิด HTML ไม่ได้ กรุณาตรวจรหัสเนื้อหาและลิงก์ไฟล์ HTML ภายในเว็บ");
+            ? (isVideo ? "Cannot open video. Check its content ID and YouTube link." : isPdf ? "Cannot open PDF. Check its content ID and PDF links." : "Cannot open HTML. Check the content ID and local HTML file path.")
+            : (isVideo ? "เปิดวิดีโอไม่ได้ กรุณาตรวจรหัสเนื้อหาและลิงก์ YouTube" : isPdf ? "เปิด PDF ไม่ได้ กรุณาตรวจรหัสเนื้อหาและลิงก์ PDF" : "เปิด HTML ไม่ได้ กรุณาตรวจรหัสเนื้อหาและลิงก์ไฟล์ HTML ภายในเว็บ");
         return;
       }
       doc.querySelector("[data-html-link-error]")?.remove();

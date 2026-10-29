@@ -30,6 +30,7 @@ export function activityForRoute(catalog, route, hubUrl) {
   const entry = {
     subjectId: route.subjectId, chapterId: route.chapterId, topicId: route.topicId,
     contentId: content.id, source: content.source, toolKind: content.toolKind,
+    ...(content.toolKind === "video" ? { videoSource: content.videoSource } : {}),
     ...(content.pdfSources ? { pdfSources: Object.fromEntries(Object.entries(content.pdfSources)
       .map(([key, value]) => [key, new URL(value, hubUrl).href])) } : {}),
     titleTh: route.titleTh || content.titleTh, titleEn: route.titleEn || content.titleEn,

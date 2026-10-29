@@ -5,6 +5,7 @@ import { parseNumericAnswer } from "../public/shared/quiz-question-model.js";
 import { createPdfManifest, createInlinePdfManifest, inlinePdfSources } from "../public/shared/pdf-content-model.js";
 import { readMetadata, metadataNodes } from "./route-html-metadata.mjs";
 import { validateLearningSheet } from "../js/learning-sheet-model.js";
+import { createVideoManifest } from "../public/shared/video-content-model.js";
 import { lineAt, withoutComments, reportContentDiagnostics } from './content-diagnostics.mjs';
 
 export function createContentValidator({ root = fileURLToPath(new URL('../', import.meta.url)), read = readFile } = {}) {
@@ -74,14 +75,18 @@ async function validateMenu(file, source) {
     offsets.set(file, match.index);
     const entry = readAttributes(match[0]);
     const isPdf = entry.get("data-tool-kind") === "pdf";
-    const isHtml = ["html", "pdf"].includes(entry.get("data-tool-kind"));
+    const isHtml = ["html", "pdf", "video"].includes(entry.get("data-tool-kind"));
     const id = entry.get(kind === "topics" && !isHtml ? "data-topic-id" : "data-content-id");
     if (!stableMenuId.test(id || "") || seen.has(id)) addError(file, `Missing, invalid or duplicate menu entry ID: ${id}`);
     seen.add(id);
     if (!hasBilingualText(match[0])) addError(file, `${id} needs data-th and data-en.`);
     if (entry.get('data-status') && !['draft', 'ready'].includes(entry.get('data-status'))) addError(file, `${id}: data-status ใช้ draft หรือ ready เท่านั้น`);
-    if (kind === 'tools' && !['quiz', 'simulation', 'html', 'pdf'].includes(entry.get('data-tool-kind'))) addError(file, `${id}: data-tool-kind ต้องเป็น quiz, simulation, html หรือ pdf`);
+    if (kind === 'tools' && !['quiz', 'simulation', 'html', 'pdf', 'video'].includes(entry.get('data-tool-kind'))) addError(file, `${id}: data-tool-kind ต้องเป็น quiz, simulation, html, pdf หรือ video`);
     if ((kind === 'tools' || isHtml) && !/^[a-z]/.test(id || '')) addError(file, `${id}: data-content-id ต้องขึ้นต้นด้วยตัวอักษร`);
+    if (entry.get('data-tool-kind') === 'video') {
+      validateVideo(file, entry.get('data-video-src') ?? entry.get('href') ?? '', id);
+      continue;
+    }
     if (isPdf) {
       try {
         const pdfSources = inlinePdfSources(Object.fromEntries(entry)) ?? (!entry.get('href')?.trim() ? {} : undefined);
@@ -158,14 +163,24 @@ function addDiagnostic(level, file, message, line) {
 function addError(file, message, line) { addDiagnostic('error', file, message, line); }
 function addWarning(file, message) { addDiagnostic('warning', file, message); }
 
+function validateVideo(file, value, id, line) {
+  try {
+    if (!createVideoManifest(value, id).ready) addWarning(file, 'วิดีโอยังไม่มีลิงก์: กำลังเตรียมวิดีโอ', line);
+  } catch (error) { addError(file, error.message, line); }
+}
+
 async function validateHtmlLinks(file, source) {
   const tree = readMetadata(source);
   for (const node of metadataNodes(tree, node => ['a', 'button'].includes(node.tag) &&
-      (Object.hasOwn(node.attrs, 'data-hub-html') || Object.hasOwn(node.attrs, 'data-hub-pdf')))) {
+      (Object.hasOwn(node.attrs, 'data-hub-html') || Object.hasOwn(node.attrs, 'data-hub-pdf') || Object.hasOwn(node.attrs, 'data-hub-video')))) {
     const attributes = node.attrs, isPdf = Object.hasOwn(attributes, 'data-hub-pdf');
     const id = attributes['data-content-id'];
-    if (isPdf && Object.hasOwn(attributes, 'data-hub-html')) addError(file, 'A link cannot be both data-hub-html and data-hub-pdf.', node.line);
+    if (['data-hub-html', 'data-hub-pdf', 'data-hub-video'].filter(key => Object.hasOwn(attributes, key)).length > 1) addError(file, 'A link must have exactly one Hub tool marker.', node.line);
     if (!/^[a-z][a-z0-9-]{0,127}$/.test(id || '')) addError(file, 'Content link needs a stable data-content-id starting with a letter.', node.line);
+    if (Object.hasOwn(attributes, 'data-hub-video')) {
+      validateVideo(file, attributes['data-video-src'] ?? attributes.href ?? '', id, node.line);
+      continue;
+    }
     if (isPdf) {
       try {
         const pdfSources = inlinePdfSources(attributes) ?? (!(attributes['data-pdf-src'] || attributes.href)?.trim() ? {} : undefined);

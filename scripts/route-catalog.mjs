@@ -5,6 +5,8 @@ import { bankSubjects, bankKeyPattern } from '../public/shared/question-bank-mod
 import { questionBankTools } from '../public/shared/question-bank-config.js';
 import { inlinePdfSources, createInlinePdfManifest, createPdfManifest } from '../public/shared/pdf-content-model.js';
 
+import { createVideoManifest } from '../public/shared/video-content-model.js';
+
 const site = new URL('https://catalog.invalid/learning-hub/');
 const has = (node, attr) => Object.hasOwn(node.attrs, attr);
 const nodesWith = (node, attr, templates = false) => metadataNodes(node, item => has(item, attr), templates);
@@ -87,12 +89,17 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog, ban
   function contextOf(route) {
     return { subjectId: route.subjectId || route.sectionId || 'general', chapterId: route.chapterId || '1', topicId: route.topicId || 'html-reference' };
   }
-  async function registerContent({ contentId, toolKind, source, pdfSources, parent, title, placement, file }) {
+  async function registerContent({ contentId, toolKind, source, pdfSources, videoSource, parent, title, placement, file }) {
     id(contentId, file, 'content ID');
-    if (!/^[a-z]/.test(contentId) || !['quiz', 'simulation', 'html', 'pdf'].includes(toolKind)) fail(file, 'Invalid content kind or ID');
+    if (!/^[a-z]/.test(contentId) || !['quiz', 'simulation', 'html', 'pdf', 'video'].includes(toolKind)) fail(file, 'Invalid content kind or ID');
+    const isVideo = toolKind === 'video';
     const inline = toolKind === 'pdf' && pdfSources !== undefined;
     let doc;
-    if (inline) {
+    if (isVideo) {
+      const manifest = createVideoManifest(videoSource, contentId);
+      if (!manifest.ready) { preparingContent({ contentId, parent, title, placement, file }); return; }
+      videoSource = manifest.source.url;
+    } else if (inline) {
       const manifest = createInlinePdfManifest(pdfSources, contentId, new URL(file, site).href, site.href);
       if (!manifest.ready) { preparingContent({ contentId, parent, title, placement, file }); return; }
       pdfSources = Object.fromEntries(Object.entries(manifest.sources).map(([key, value]) => {
@@ -111,34 +118,35 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog, ban
       }
     }
     const previous = contentById.get(contentId);
-    if (previous && (previous.toolKind !== toolKind || (inline
+    if (previous && (previous.toolKind !== toolKind || (isVideo ? previous.videoSource !== videoSource : inline
         ? JSON.stringify(previous.pdfSources) !== JSON.stringify(pdfSources)
         : previous.pdfSources || previous.source !== source))) fail(file, `Content ID conflict: ${contentId} already points to ${previous.source}`);
-    const otherId = !inline && contentFiles.get(source);
+    const otherId = !inline && !isVideo && contentFiles.get(source);
     if (otherId && otherId !== contentId) fail(file, `Content file ${source} has two IDs: ${otherId}, ${contentId}`);
-    const content = previous || { id: contentId, toolKind, source, ...(inline ? { pdfSources } : {}), ...title, canonicalHash: `#content/${contentId}`, placements: [] };
+    const content = previous || { id: contentId, toolKind, source, ...(isVideo ? { videoSource } : {}), ...(inline ? { pdfSources } : {}), ...title, canonicalHash: `#content/${contentId}`, placements: [] };
     contentById.set(contentId, content);
-    if (!inline) contentFiles.set(source, contentId);
+    if (!inline && !isVideo) contentFiles.set(source, contentId);
     const where = { parentHash: parent.hash, ...contextOf(parent) };
     if (!content.placements.some(item => JSON.stringify(item) === JSON.stringify(where))) content.placements.push(where);
     if (placement) addRoute({ ...placement, kind: 'content', status: 'ready', contentId, ...where, ...title }, file);
     // Shared HTML buttons may also appear inside an authored Quiz or simulation.
-    if (!inline) pendingReadings.push({ doc, source, parent: { ...where, hash: content.canonicalHash, aliases: [] } });
+    if (!inline && !isVideo) pendingReadings.push({ doc, source, parent: { ...where, hash: content.canonicalHash, aliases: [] } });
   }
   async function htmlLinks(doc, file, parent) {
-    for (const node of metadataNodes(doc, node => has(node, 'data-hub-html') || has(node, 'data-hub-pdf'))) {
+    for (const node of metadataNodes(doc, node => has(node, 'data-hub-html') || has(node, 'data-hub-pdf') || has(node, 'data-hub-video'))) {
       if (!['a', 'button'].includes(node.tag)) continue;
       const a = node.attrs;
-      const isPdf = has(node, 'data-hub-pdf');
+      const isPdf = has(node, 'data-hub-pdf'), isVideo = has(node, 'data-hub-video');
+      const videoSource = isVideo ? createVideoManifest(a['data-video-src'] ?? a.href ?? '', a['data-content-id']).source?.url || '' : undefined;
       const pdfSources = isPdf ? inlinePdfSources(a) ?? (!(a['data-pdf-src'] || a.href)?.trim() ? {} : undefined) : undefined;
       const where = { ...parent, subjectId: a['data-subject-id'] || contextOf(parent).subjectId,
         chapterId: a['data-chapter-id'] || contextOf(parent).chapterId, topicId: a['data-topic-id'] || contextOf(parent).topicId };
       for (const field of ['subjectId', 'chapterId', 'topicId']) id(where[field], file, field);
-      const values = { contentId: a['data-content-id'], toolKind: isPdf ? 'pdf' : 'html', parent: where,
+      const values = { contentId: a['data-content-id'], toolKind: isVideo ? 'video' : isPdf ? 'pdf' : 'html', parent: where,
         title: labels(node, 'data-', metadataText(node)), file };
-      const source = pdfSources !== undefined ? file : await menuSource(a[isPdf ? 'data-pdf-src' : 'data-html-src'] || a.href, file, node);
-      if (isPdf && a['data-status'] === 'draft') preparingContent(values);
-      else if (source) await registerContent({ ...values, source, ...(pdfSources !== undefined ? { pdfSources } : {}) });
+      const source = isVideo || pdfSources !== undefined ? file : await menuSource(a[isPdf ? 'data-pdf-src' : 'data-html-src'] || a.href, file, node);
+      if ((isPdf || isVideo) && a['data-status'] === 'draft') preparingContent(values);
+      else if (source) await registerContent({ ...values, source, ...(isVideo ? { videoSource } : {}), ...(pdfSources !== undefined ? { pdfSources } : {}) });
       else if (isPdf) preparingContent(values);
       else fail(file, 'HTML link destination is unavailable', node);
     }
@@ -152,7 +160,7 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog, ban
     let bankOrder = 0;
     for (const node of metadataNodes(root, item => item.tag === 'a')) {
       const entry = node.attrs;
-      const isContent = kind === 'tools' || ['html', 'pdf'].includes(entry['data-tool-kind']);
+      const isContent = kind === 'tools' || ['html', 'pdf', 'video'].includes(entry['data-tool-kind']);
       const key = id(entry[isContent ? 'data-content-id' : 'data-topic-id'], file);
       const title = labels(node, 'data-', key);
       const bank = Boolean(parent.bankKey);
@@ -171,11 +179,13 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog, ban
         if (source) await menu(source, topic, 'tools');
       } else {
         const toolKind = entry['data-tool-kind'];
-        if (!['quiz', 'simulation', 'html', 'pdf'].includes(toolKind)) fail(file, `Content ${key}: data-tool-kind must be quiz, simulation, html, or pdf (received ${toolKind || '(empty)'})`, node);
+        if (!['quiz', 'simulation', 'html', 'pdf', 'video'].includes(toolKind)) fail(file, `Content ${key}: data-tool-kind must be quiz, simulation, html, pdf, or video (received ${toolKind || '(empty)'})`, node);
         const pdfSources = toolKind === 'pdf' ? inlinePdfSources(entry) ?? (!href ? {} : undefined) : undefined;
-        const source = pdfSources !== undefined ? file : await menuSource(href, file, node);
+        const isVideo = toolKind === 'video';
+        const videoSource = isVideo ? createVideoManifest(entry['data-video-src'] ?? href ?? '', key).source?.url || '' : undefined;
+        const source = isVideo || pdfSources !== undefined ? file : await menuSource(href, file, node);
         const values = { contentId: key, toolKind, source, parent: kind === 'topics' ? { ...parent, topicId: 'chapter-reference' } : parent, placement, title, file };
-        if (source && entry['data-status'] !== 'draft') await registerContent({ ...values, ...(pdfSources !== undefined ? { pdfSources } : {}) });
+        if (source && entry['data-status'] !== 'draft') await registerContent({ ...values, ...(isVideo ? { videoSource } : {}), ...(pdfSources !== undefined ? { pdfSources } : {}) });
         else preparingContent(values);
       }
     }

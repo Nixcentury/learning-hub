@@ -18,7 +18,7 @@ Authoring instructions: [LEARNING-GUIDE.md](LEARNING-GUIDE.md). Guide summaries 
 | Guide validation | 1 worksheet, 0 errors |
 | Pages artifact | 642 public files match their source; resource paths stay under `/learning-hub/` |
 | `git diff --check` | Passed |
-| Source preservation | Worksheet HTML matches the base byte for byte after removing only the two new root guide/revision attributes |
+| Source preservation | Worksheet HTML matches the base byte for byte after removing only the root guide/revision attributes and the two semantic figure anchors |
 
 Guide tests cover required bilingual summaries, unsafe/malformed links, stale revisions, real targets, lazy fetching, safe text rendering, language/check state, closing, drawer jumps, empty/error/retry behavior, replacement-document isolation, separate windows and detection of source edits even when semantic targets still exist.
 
@@ -49,3 +49,23 @@ Print preview was generated with the guide open, for all four combinations:
 Counts match the accepted worksheet. No guide panel or highlight stylesheet entered the print snapshot, and no horizontal page overflow was observed. A source answer opened before printing remained open after the preview closed. These checks inspect Hub print previews; no physical printer test was performed.
 
 Browser screenshots were retained in ignored `qa-output/learning-guides/desktop.jpg` and `mobile.jpg` in the development workspace. They are QA artifacts, not published site assets.
+
+## Follow-up: complete QA of 19.1 Sheet 2 Part 2
+
+Reviewed all five sections (6–10), all 39 paired answers, both K/U/E tables, worked examples, Questions 8–16, Understanding 19.1 Q1, Exercises 19.1 Q3/Q4/Q6(a), and all four figures. Recomputed the constants and each numerical result, retaining the existing three-significant-figure rounding. The physics was also cross-checked against [OpenStax University Physics 3, section 6.4](https://openstax.org/books/university-physics-volume-3/pages/6-4-bohrs-model-of-the-hydrogen-atom). This was not a new reading of the original IPST/teacher-guide PDFs; their existing question allocation is unchanged.
+
+| Reviewed part | Result |
+| --- | --- |
+| Bohr condition and radius proof | Force equation and angular-momentum substitution yield rₙ = a₀n²; positive-integer n is distinguished from photon count |
+| Radius exercises | Q8: factor 4; Q9: n = 5; Exercise 6(a): 4.76 × 10⁻¹⁰ m |
+| Energy tables and proof | Table totals −2, −5, −10 eV; ratios U/K = −2, E/K = −1, U/E = 2; K = −E and U = 2E follow for the circular Coulomb orbit with zero potential at infinity |
+| Q11 and energy ordering | E₂ = −3.40, K = +3.40, U = −6.80 eV; n = 3 has higher energy while n = 2 is more tightly bound |
+| Excitation/ionization | 10.2 eV excites 1 → 2; minimum ionization is 13.6 eV from n = 1, 3.40 eV from n = 2 and 0.850 eV from n = 4 |
+| Speed and Q16 | vₙ ≈ 2.19 × 10⁶/n m/s; at n = 4, r = 8.46 × 10⁻¹⁰ m and v = 5.48 × 10⁵ m/s |
+| Figures | Force points inward, velocity is tangential, radius labels show 1:4:9, energy-level values/order and opposite transition arrows agree |
+
+Two guide fixes were made: corrected a remaining Thai “table 1 and B” to “tables 1 and 2”; changed the section 9 diagram link to target the actual energy-level figure through paired semantic anchors. Worksheet revision is now `2026-10-29-2`, and the guide source hash was reviewed and updated. No visible worksheet text, question, answer, image, response key or height changed; this was checked byte for byte after removing guide metadata/anchor attributes. No shared engine or other worksheet was edited.
+
+Clicked all **18 guide buttons in Thai and all 18 in English** in the real Hub. All 36 jumps reached the intended active-language target within the viewport and left all source answers closed. The diagram link now shows the figure directly. Rebuilt and repeated all four print-preview combinations: still 12 pages, 39 response slots and four images each; blank has zero answers, answers has 39; zero guide elements, MathJax errors or horizontal page overflow. Targeted guide tests: 9 passed; current production build and guide validation passed. Earlier 430-test full suite and GitHub browser CI passed for the unchanged shared engine.
+
+Additional local evidence: `qa-output/learning-guides/bohr-qa-results.json` (all jump/print metrics) and `bohr-qa-diagram.jpg` (current guide and the actual diagram side by side).

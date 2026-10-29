@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="th" data-learning-html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ความสัมพันธ์ระหว่างปริมาตร ความดัน อุณหภูมิ และจำนวนโมลของแก๊ส · Quick Review</title><style>
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #20344e; background: #f7f9fc; font: 16px/1.75 Tahoma, Arial, sans-serif; }
+    .page-heading, main { max-width: 960px; margin: auto; padding: 24px; }
+    .page-heading { padding-bottom: 0; }
+    .page-heading small { color: #536b8c; font-weight: 700; letter-spacing: .08em; }
+    h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.4; margin: 10px 0; }
+    h2 { font-size: 22px; line-height: 1.5; margin: 0 0 12px; }
+    h3 { font-size: 18px; margin: 18px 0 8px; }
+    p { margin: 10px 0; }
+    .block { padding: 22px; margin: 0 0 18px; background: white; border: 1px solid #d8e1ed; border-radius: 16px; }
+    .aim { padding: 16px 20px; margin: 0 0 18px; border-left: 4px solid #536b8c; background: #edf3fa; }
+    table { border-collapse: collapse; width: 100%; margin: 14px 0; }
+    th, td { border: 1px solid #adb9c7; padding: 10px 12px; text-align: start; vertical-align: top; overflow-wrap: anywhere; }
+    th { background: #edf2f8; }
+    .recall td { height: 46px; }
+    ul { padding-left: 22px; }
+    li + li { margin-top: 6px; }
+    figure { margin: 16px 0; }
+    img { display: block; width: 100%; max-width: 660px; height: auto; margin: auto; }
+    figcaption, .small { font-size: 14px; color: #536273; }
+    .review-writing-space { min-height: 64px; margin: 12px 0 20px; border-bottom: 1px solid #8896a5; }
+    .sources { font-size: 14px; }
+    a { color: #214f9e; overflow-wrap: anywhere; }
+    html[lang="th"] [data-content-lang="en"], html[lang="en"] [data-content-lang="th"] { display: none; }
+    @media (max-width: 520px) { .page-heading, main { padding: 18px 14px; } .block { padding: 18px 14px; } th, td { padding: 8px; } }
+    @media print {
+      @page { size: A4; margin: 15mm; }
+      body { color: #111; background: white; font-size: 11pt; }
+      .page-heading, main { padding: 0; max-width: none; }
+      .page-heading { margin-bottom: 6mm; }
+      .block { border: 0; border-radius: 0; padding: 0; margin-bottom: 6mm; }
+      .aim, th { background: white; }
+      h1 { font-size: 21pt; } h2 { font-size: 15pt; } h3 { font-size: 12pt; }
+      h2, h3 { break-after: avoid; }
+      tr, figure { break-inside: avoid; }
+      thead { display: table-header-group; }
+      .review-writing-space { min-height: 18mm; }
+    }
+  </style></head>
+<body>
+<header class="page-heading"><small>CHEMISTRY · QUICK REVIEW</small><h1 data-th="ความสัมพันธ์ระหว่างปริมาตร ความดัน อุณหภูมิ และจำนวนโมลของแก๊ส" data-en="Relationships among Gas Volume, Pressure, Temperature, and Number of Moles">ความสัมพันธ์ระหว่างปริมาตร ความดัน อุณหภูมิ และจำนวนโมลของแก๊ส</h1></header>
+<main data-topic-review-document>
+<section data-content-lang="th" lang="th"><p>เริ่มจากหน่วยและสิ่งที่คงที่ อ่านสรุปทีละช่วง แล้วลองตอบก่อนเปิดเฉลย การอ่านกราฟต้องดูทั้งป้ายแกน หน่วย และเงื่อนไข</p>
+<!-- gas-relationships-section-1-th:start -->
+<section>
+<h2>1. รู้จักตัวแปรและหน่วยก่อนใช้สูตร</h2>
+<p><strong>P</strong> คือความดันแก๊ส โดยสูตรใช้ความดันสัมบูรณ์ที่วัดเทียบกับสุญญากาศ; <strong>V</strong> คือปริมาตรส่วนที่แก๊สอยู่; <strong>T</strong> คืออุณหภูมิหน่วยเคลวิน (K); <strong>n</strong> คือจำนวนโมลของแก๊ส หน่วย mol เลขห้อย <strong>1 และ 2</strong> หมายถึงสภาวะก่อนและหลัง ต้องรู้ว่าตัวใดเปลี่ยนและตัวใดคงที่ก่อนเลือกสูตร</p>
+<p><strong>อุณหภูมิในกฎแก๊สต้องเป็นเคลวิน:</strong> เคลวิน = องศาเซลเซียส + 273.15 บางโจทย์กำหนดให้ใช้ 273 เพื่อคำนวณง่าย ให้ทำตามที่โจทย์ระบุ การเพิ่มจาก 20 เป็น 40 °C ไม่ใช่อุณหภูมิเคลวินเพิ่มเป็นสองเท่า ความสัมพันธ์ในบทนี้ใช้แบบจำลองแก๊สอุดมคติ และต้องตรวจว่ามีแก๊สรั่วหรือเปลี่ยนสถานะหรือไม่</p>
+<table><thead><tr><th>สิ่งที่ต้องตรวจ</th><th>หน่วยและตัวอย่าง</th></tr></thead><tbody>
+<tr><td>ปริมาตร</td><td>1 L = 1000 mL = 1000 cm<sup>3</sup> ใช้หน่วยเดียวกันเมื่อเทียบสองสภาวะ</td></tr>
+<tr><td>ความดัน</td><td>1 atm = 101.325 kPa = 760 torr ≈ 760 mmHg และ 1 kPa = 1000 Pa</td></tr>
+<tr><td>อุณหภูมิ</td><td>27 °C = 300 K เมื่อกำหนดให้บวก 273; เขียน K โดยไม่ใส่เครื่องหมายองศา</td></tr>
+</tbody></table>
+<section data-review-question><h3>คำถาม 1 — แปลงหน่วยและระบุสิ่งที่คงที่</h3>
+<p><strong>ก.</strong> ระบุความหมายของ P, V, T และ n พร้อมบอกว่าเลขห้อย 1 และ 2 ใช้ทำอะไร</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ข.</strong> แปลง 500 mL เป็น L, 1520 torr เป็น atm และ 27 °C เป็น K โดยข้อนี้ให้บวก 273</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ค.</strong> เมื่อมีคนบอกว่า “เพิ่มจาก 20 เป็น 40 °C แสดงว่าอุณหภูมิเพิ่มเป็นสองเท่า” จงตรวจด้วยเคลวิน โดยให้บวก 273</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>ก.</strong> P คือความดัน, V คือปริมาตร, T คืออุณหภูมิเคลวิน และ n คือจำนวนโมล เลขห้อย 1 และ 2 ใช้แยกค่าก่อนและหลัง ไม่ใช่ยกกำลัง</p>
+<p><strong>ข.</strong> 500 ÷ 1000 = <strong>0.500 L</strong>; 1520 ÷ 760 = <strong>2.00 atm</strong>; 27 + 273 = <strong>300 K</strong></p>
+<p><strong>ค.</strong> ได้ 293 K และ 313 K ซึ่ง 313 ไม่ใช่ 2 × 293 จึงไม่ใช่สองเท่า ต้องใช้เคลวินในการเทียบสัดส่วนอุณหภูมิ</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-1-th:end -->
+<!-- gas-relationships-section-2-th:start -->
+<section>
+<h2>2. ความดันและการอ่านระดับปรอท</h2>
+<p><strong>ความดัน</strong> คือแรงตั้งฉากต่อหนึ่งหน่วยพื้นที่ แก๊สทำให้เกิดความดันเมื่ออนุภาคชนผนัง <strong>บารอมิเตอร์</strong> วัดความดันบรรยากาศ ส่วน <strong>มาโนมิเตอร์</strong> วัดความดันแก๊สโดยเทียบกับอีกด้าน ด้านที่ความดันมากกว่าจะกดของเหลวให้ต่ำกว่า เมื่อของเหลวอยู่นิ่ง ความดันที่ระดับแนวนอนเดียวกันในของเหลวชนิดเดียวกันเท่ากัน ค่าความดันบรรยากาศจริงให้ใช้ตามโจทย์ ไม่สมมติว่าเท่ากับ 1 atm เสมอ</p>
+<p><strong>กรณีใช้ปรอท (Hg):</strong> ความต่างระดับ 40 mm ของปรอทเทียบได้กับความดันต่าง 40 mmHg ตามแบบจำลองการอ่านนี้ ถ้าปลายปิดเป็นสุญญากาศ ความดันแก๊สเท่ากับความดันของส่วนต่างระดับ; ถ้าปลายเปิดสู่บรรยากาศ ให้บวกส่วนต่างเมื่อแก๊สดันปรอทฝั่งตนต่ำกว่า และลบเมื่อฝั่งแก๊สสูงกว่า ต้องดูทั้งชนิดของเหลวและหน่วยความสูง</p>
+<table><thead><tr><th>ตัวอย่างต่างระดับ 40 mm ของปรอท</th><th>ความดันแก๊ส</th></tr></thead><tbody>
+<tr><td>ปลายปิดเป็นสุญญากาศ</td><td>40 mmHg</td></tr>
+<tr><td>ปลายเปิด บรรยากาศ 760 mmHg; ฝั่งแก๊สต่ำกว่า</td><td>760 + 40 = 800 mmHg</td></tr>
+<tr><td>ปลายเปิด บรรยากาศ 760 mmHg; ฝั่งแก๊สสูงกว่า</td><td>760 − 40 = 720 mmHg</td></tr>
+</tbody></table>
+<figure><img src="assets/gas-relationships-manometers.svg" alt="มาโนมิเตอร์ปรอทสามกรณี ต่างระดับ 40 มิลลิเมตร ปลายปิดสุญญากาศได้ความดันแก๊ส 40 มิลลิเมตรปรอท ปลายเปิดที่บรรยากาศ 760 ถ้าฝั่งแก๊สต่ำกว่าได้ 800 ถ้าฝั่งแก๊สสูงกว่าได้ 720"><figcaption>ภาพตัวอย่างสำหรับฝึกอ่าน ไม่ใช่มาตราส่วนความยาวจริง ปลายปิดในภาพเป็นสุญญากาศ ไม่ใช่อากาศที่ติดอยู่ในหลอด ส่วนปลายเปิดกำหนดบรรยากาศ 760 mmHg</figcaption></figure>
+<section data-review-question><h3>คำถาม 2 — ดูระดับก่อนเลือกบวกหรือลบ</h3>
+<p><strong>ก.</strong> บารอมิเตอร์กับมาโนมิเตอร์ใช้วัดอะไรต่างกัน และทำไมฝั่งที่ความดันมากกว่าจึงมีระดับปรอทต่ำกว่า?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ข.</strong> มาโนมิเตอร์ปลายเปิดใช้ปรอท บรรยากาศ 760 mmHg ฝั่งแก๊สต่ำกว่าอีกฝั่ง 25 mm จงหาความดันแก๊ส</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ค.</strong> มาโนมิเตอร์ปลายปิดที่อีกด้านเป็นสุญญากาศใช้ปรอท ต่างระดับ 32.0 cm จงหาความดันแก๊สเป็น mmHg และประมาณเป็น atm โดยใช้ 760 mmHg ต่อ 1 atm</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>ก.</strong> บารอมิเตอร์วัดความดันบรรยากาศ มาโนมิเตอร์วัดความดันแก๊สเทียบกับอีกด้าน ฝั่งที่กดแรงต่อพื้นที่มากกว่าจะดันปรอทลงจนความดันที่ระดับแนวนอนเดียวกันในปรอทสมดุลกัน</p>
+<p><strong>ข.</strong> ฝั่งแก๊สต่ำกว่าแสดงว่าแก๊สมีความดันมากกว่าบรรยากาศ จึงได้ 760 + 25 = <strong>785 mmHg</strong></p>
+<p><strong>ค.</strong> 32.0 cm = 320 mm จึงได้ <strong>320 mmHg</strong> และ 320 ÷ 760 ≈ <strong>0.421 atm</strong> ไม่ต้องบวกบรรยากาศ เพราะอีกด้านเป็นสุญญากาศ</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-2-th:end -->
+<!-- gas-relationships-section-3-th:start -->
+<section>
+<h2>3. กฎของบอยล์: กดให้ความดันเพิ่ม ปริมาตรลด</h2>
+<p>เมื่อ <strong>T และ n คงที่</strong> ปริมาตรแปรผกผันกับความดัน หมายถึงถ้าความดันเพิ่มเป็นสองเท่า ปริมาตรจะเหลือครึ่งหนึ่ง ผลคูณ <strong>P × V คงที่</strong> จึงใช้ <strong>P<sub>1</sub>V<sub>1</sub> = P<sub>2</sub>V<sub>2</sub></strong> ต้องรอให้อุณหภูมิเป็นไปตามเงื่อนไข ไม่ถือว่าการกดแก๊สเร็ว ๆ ทำให้อุณหภูมิคงที่เสมอ</p>
+<p><strong>ตัวอย่าง:</strong> แก๊ส 6.00 L ที่ 1.00 atm ถูกอัดเป็น 3.00 atm โดยอุณหภูมิและจำนวนโมลเดิม จะมีปริมาตร 1.00 × 6.00 ÷ 3.00 = 2.00 L กราฟ V กับ P เป็นเส้นโค้งลดลง ส่วนกราฟ V กับ 1/P เป็นเส้นตรงผ่านจุดกำเนิดตามแบบจำลอง</p>
+<table><thead><tr><th>เปลี่ยนความดันที่ T และ n เดิม</th><th>ผลต่อปริมาตร</th></tr></thead><tbody>
+<tr><td>เพิ่มเป็น 2 เท่า</td><td>เหลือ 1/2 ของเดิม</td></tr>
+<tr><td>ลดเหลือ 1/3</td><td>เพิ่มเป็น 3 เท่า</td></tr>
+</tbody></table>
+<section data-review-question><h3>คำถาม 3 — ใช้ความสัมพันธ์แบบผกผัน</h3>
+<p><strong>ก.</strong> แก๊ส 0.500 L ที่ 1.20 atm ถูกอัดเหลือ 0.200 L โดย T และ n คงที่ จงหาความดันสุดท้าย</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ข.</strong> ที่ T และ n คงที่ กราฟ V กับ P และกราฟ V กับ 1/P มีรูปร่างอย่างไร?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ค.</strong> ถ้าระหว่างอัดมีแก๊สรั่วออก หรืออุณหภูมิยังสูงขึ้น จะใช้กฎบอยล์โดยไม่ตรวจเงื่อนไขได้หรือไม่?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>ก.</strong> P<sub>2</sub> = 1.20 × 0.500 ÷ 0.200 = <strong>3.00 atm</strong> ปริมาตรลดลงจึงคาดว่าความดันเพิ่มขึ้น สอดคล้องกับคำตอบ</p>
+<p><strong>ข.</strong> V กับ P เป็นเส้นโค้งลดลง ส่วน V กับ 1/P เป็นเส้นตรงผ่านจุดกำเนิด เพราะ V แปรผันตรงกับส่วนกลับของ P</p>
+<p><strong>ค.</strong> ไม่ได้ แก๊สรั่วทำให้ n เปลี่ยน ส่วนการร้อนขึ้นทำให้ T เปลี่ยน ต้องใช้ความสัมพันธ์ที่รวมตัวแปรที่เปลี่ยน หรือรอจนได้เงื่อนไขที่ต้องการ</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-3-th:end -->
+<!-- gas-relationships-section-4-th:start -->
+<section>
+<h2>4. กฎของชาร์ล: อุ่นแล้วขยายเมื่อความดันคงที่</h2>
+<p>เมื่อ <strong>P และ n คงที่</strong> ปริมาตรแปรผันตรงกับอุณหภูมิเคลวิน จึงมี <strong>V/T คงที่</strong> และใช้ <strong>V<sub>1</sub>/T<sub>1</sub> = V<sub>2</sub>/T<sub>2</sub></strong> ถ้าเคลวินเพิ่มเป็นสองเท่า ปริมาตรเพิ่มเป็นสองเท่าตามแบบจำลอง ต้องให้แก๊สขยายหรือหดได้เพื่อรักษาความดัน</p>
+<p><strong>ตัวอย่าง:</strong> แก๊ส 2.00 L ที่ 300 K ถูกอุ่นเป็น 450 K โดยความดันและจำนวนโมลเดิม ปริมาตรใหม่ = 2.00 × 450 ÷ 300 = 3.00 L กราฟ V กับ T หน่วย K เป็นเส้นตรงผ่านจุดกำเนิดตามแบบจำลอง การอุ่นแก๊สในภาชนะแข็งปิดสนิทไม่ได้มีเงื่อนไขเหมือนกรณีนี้ เพราะปริมาตรถูกบังคับให้คงที่</p>
+<table><thead><tr><th>สิ่งที่ต้องทำ</th><th>เหตุผล</th></tr></thead><tbody>
+<tr><td>แปลง °C เป็น K ก่อนเทียบ</td><td>อัตราส่วน V เท่ากับอัตราส่วนอุณหภูมิเคลวิน ไม่ใช่องศาเซลเซียส</td></tr>
+<tr><td>ตรวจว่าความดันและจำนวนโมลเดิม</td><td>การเพิ่มอุณหภูมิอย่างเดียวไม่ได้รับรองว่าจะใช้กฎชาร์ลได้</td></tr>
+</tbody></table>
+<section data-review-question><h3>คำถาม 4 — แปลงเคลวินก่อนหาสัดส่วน</h3>
+<p><strong>ก.</strong> แก๊ส 3.00 L ที่ 27 °C ถูกอุ่นเป็น 127 °C โดย P และ n คงที่ ให้บวก 273 จงหาปริมาตรใหม่</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ข.</strong> อุ่นจาก 20 เป็น 40 °C ที่ P และ n เดิม ปริมาตรเพิ่มเป็นสองเท่าหรือไม่? ให้บวก 273 แล้วเทียบอัตราส่วน</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ค.</strong> อุ่นแก๊สในถังแข็งปิดสนิทที่ปริมาตรคงเดิม ควรใช้กฎชาร์ลเพื่อบอกว่าปริมาตรเพิ่มหรือไม่?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>ก.</strong> T<sub>1</sub> = 300 K และ T<sub>2</sub> = 400 K; V<sub>2</sub> = 3.00 × 400 ÷ 300 = <strong>4.00 L</strong></p>
+<p><strong>ข.</strong> ไม่ใช่สองเท่า อุณหภูมิเปลี่ยนจาก 293 เป็น 313 K ดังนั้นปริมาตรใหม่ต่อเดิม = 313/293 ≈ <strong>1.068</strong> หรือเพิ่มประมาณ 6.8%</p>
+<p><strong>ค.</strong> ไม่ควร เพราะถังแข็งบังคับ V ให้คงเดิม จึงไม่ตรงเงื่อนไขการขยายที่ P คงที่ ต้องพิจารณาว่าความดันเปลี่ยนอย่างไรแทน</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-4-th:end -->
+<!-- gas-relationships-section-5-th:start -->
+<section>
+<h2>5. กฎของเกย์–ลูสแซก: อุ่นในถังแข็งแล้วความดันเพิ่ม</h2>
+<p>เมื่อ <strong>V และ n คงที่</strong> ความดันแปรผันตรงกับอุณหภูมิเคลวิน จึงมี <strong>P/T คงที่</strong> และใช้ <strong>P<sub>1</sub>/T<sub>1</sub> = P<sub>2</sub>/T<sub>2</sub></strong> อุ่นแก๊สในถังแข็งที่ไม่รั่วและไม่เปลี่ยนจำนวนโมล จะทำให้ความดันเพิ่มขึ้น</p>
+<p><strong>ตัวอย่าง:</strong> ความดันเริ่ม 1.00 atm ที่ 300 K เมื่ออุ่นเป็น 450 K ที่ปริมาตรและจำนวนโมลเดิม จะได้ความดัน 1.00 × 450 ÷ 300 = 1.50 atm กราฟ P กับ T หน่วย K เป็นเส้นตรงผ่านจุดกำเนิดตามแบบจำลอง ต้องใช้ความดันสัมบูรณ์ ไม่แทนค่าความดันเกจที่วัดเทียบกับบรรยากาศโดยตรง</p>
+<table><thead><tr><th>สิ่งที่คงที่ต่างกัน</th><th>ผลเมื่ออุ่น</th></tr></thead><tbody>
+<tr><td>P และ n คงที่: กฎชาร์ล</td><td>V เพิ่ม</td></tr>
+<tr><td>V และ n คงที่: กฎเกย์–ลูสแซก</td><td>P เพิ่ม</td></tr>
+</tbody></table>
+<section data-review-question><h3>คำถาม 5 — ดูว่าถังคงปริมาตรหรือคงความดัน</h3>
+<p><strong>ก.</strong> แก๊สในถังแข็งไม่รั่วมีความดัน 0.900 atm ที่ 300 K เมื่อเพิ่มเป็น 500 K โดย n เดิม ความดันเป็นเท่าไร?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ข.</strong> ที่ V และ n คงที่ ถ้าความดันสัมบูรณ์เพิ่มเป็นสองเท่า อุณหภูมิเคลวินและองศาเซลเซียสต้องเพิ่มเป็นสองเท่าทั้งคู่หรือไม่?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ค.</strong> เกจแสดงความดันสูงกว่าบรรยากาศ 0.50 atm ถ้าบรรยากาศเป็น 1.00 atm ค่าความดันสัมบูรณ์ที่ใช้ในสูตรคือเท่าไร?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>ก.</strong> P<sub>2</sub> = 0.900 × 500 ÷ 300 = <strong>1.50 atm</strong></p>
+<p><strong>ข.</strong> อุณหภูมิเคลวินเพิ่มเป็นสองเท่าตามแบบจำลอง แต่ค่าองศาเซลเซียสไม่จำเป็นต้องสองเท่า เพราะจุดศูนย์ต่างกัน</p>
+<p><strong>ค.</strong> ความดันสัมบูรณ์ = ความดันเกจ + บรรยากาศ = 0.50 + 1.00 = <strong>1.50 atm</strong> ไม่ใช้ 0.50 atm โดยตรง</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-5-th:end -->
+<!-- gas-relationships-section-6-th:start -->
+<section>
+<h2>6. กฎของอาโวกาโดร: เพิ่มโมลแล้วปริมาตรเพิ่ม</h2>
+<p>เมื่อ <strong>P และ T คงที่</strong> ปริมาตรแปรผันตรงกับจำนวนโมล จึงมี <strong>V/n คงที่</strong> และใช้ <strong>V<sub>1</sub>/n<sub>1</sub> = V<sub>2</sub>/n<sub>2</sub></strong> แก๊สอุดมคติต่างชนิดที่มีปริมาตรเท่ากัน ณ ความดันและอุณหภูมิเดียวกัน มีจำนวนโมลเท่ากัน แต่มวลอาจต่างกัน</p>
+<p><strong>ตัวอย่าง:</strong> แก๊ส 0.200 mol มีปริมาตร 6.00 L เมื่อเพิ่มจนเป็น 0.300 mol โดยคงความดันและอุณหภูมิ ปริมาตรใหม่ = 6.00 × 0.300 ÷ 0.200 = 9.00 L กราฟ V กับ n เป็นเส้นตรงผ่านจุดกำเนิดตามแบบจำลอง ต้องนับโมลแก๊สที่มีอยู่จริงหลังการเติม รั่ว หรือเกิดปฏิกิริยา</p>
+<table><thead><tr><th>ข้อมูลที่ให้</th><th>ใช้เทียบโมลได้หรือไม่</th></tr></thead><tbody>
+<tr><td>ปริมาตรเท่ากัน และ P, T เท่ากัน</td><td>ได้: n เท่ากันตามแบบจำลอง</td></tr>
+<tr><td>มวลแก๊สต่างชนิดเท่ากันอย่างเดียว</td><td>ยังไม่ได้: ใช้ n = มวล (g) ÷ มวลต่อโมล (g/mol) ของแต่ละสาร แล้วจึงเทียบโมล</td></tr>
+</tbody></table>
+<section data-review-question><h3>คำถาม 6 — แยกจำนวนโมลออกจากมวล</h3>
+<p><strong>ก.</strong> แก๊ส 0.100 mol มีปริมาตร 4.00 L เติมอีก 0.0500 mol โดยคง P และ T จงหาปริมาตรใหม่</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ข.</strong> แก๊สสองชนิดมี V, P และ T เท่ากัน จะมีจำนวนโมลเท่ากันหรือไม่ และจำเป็นต้องมีมวลเท่ากันหรือไม่?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ค.</strong> ถ้าเติมแก๊สลงในถังแข็งโดยคงอุณหภูมิ จะใช้กฎอาโวกาโดรสรุปว่าปริมาตรต้องเพิ่มได้หรือไม่?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>ก.</strong> n สุดท้าย = 0.100 + 0.0500 = 0.150 mol; V<sub>2</sub> = 4.00 × 0.150 ÷ 0.100 = <strong>6.00 L</strong> ไม่ใช้เฉพาะโมลที่เติมเป็นโมลสุดท้าย</p>
+<p><strong>ข.</strong> มีจำนวนโมลเท่ากันตามแบบจำลอง แต่มวลไม่จำเป็นต้องเท่ากัน เพราะมวลต่อโมลอาจต่างกัน</p>
+<p><strong>ค.</strong> ไม่ได้ ถังแข็งบังคับ V ให้คงเดิม จึงไม่ใช่เงื่อนไข P คงที่ ความดันอาจเพิ่มแทน ไม่เลือกสูตรจากคำว่า “เติมแก๊ส” อย่างเดียว</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-6-th:end -->
+<!-- gas-relationships-section-7-th:start -->
+<section>
+<h2>7. กฎรวมแก๊ส: หลายตัวแปรเปลี่ยนพร้อมกัน</h2>
+<p>เมื่อ <strong>n คงที่</strong> แต่ P, V และ T เปลี่ยน ให้ใช้ <strong>(P<sub>1</sub> × V<sub>1</sub>)/T<sub>1</sub> = (P<sub>2</sub> × V<sub>2</sub>)/T<sub>2</sub></strong> โดย T เป็นเคลวิน ใช้หน่วย P ตรงกันทั้งสองฝั่ง และหน่วย V ตรงกัน แยกค่าก่อน–หลังให้ครบ แล้วตรวจทิศทางว่าความดันและอุณหภูมิดึงปริมาตรไปทางเดียวกันหรือตรงข้ามกัน</p>
+<p><strong>ตัวอย่าง:</strong> แก๊ส 2.00 L ที่ 1.00 atm และ 300 K เปลี่ยนเป็น 2.00 atm และ 450 K โดย n เดิม จะได้ปริมาตรใหม่ = 2.00 × (1.00/2.00) × (450/300) = 1.50 L ถ้า n เปลี่ยนด้วย ต้องรวมจำนวนโมล: <strong>(P<sub>1</sub> × V<sub>1</sub>)/(n<sub>1</sub> × T<sub>1</sub>) = (P<sub>2</sub> × V<sub>2</sub>)/(n<sub>2</sub> × T<sub>2</sub>)</strong> สำหรับแบบจำลองแก๊สอุดมคติ</p>
+<table><thead><tr><th>ขั้นเลือกสูตร</th><th>ตรวจอะไร</th></tr></thead><tbody>
+<tr><td>1. ตรวจโมลของแก๊ส</td><td>ภาชนะปิดอย่างเดียวไม่พอ ถ้ามีปฏิกิริยาหรือการควบแน่น จำนวนโมลแก๊สอาจเปลี่ยน</td></tr>
+<tr><td>2. แยกสภาวะและแปลงหน่วย</td><td>อย่าสลับค่าก่อน–หลัง และอย่าใช้องศาเซลเซียสในอัตราส่วน</td></tr>
+</tbody></table>
+<section data-review-question><h3>คำถาม 7 — รวมผลของความดัน อุณหภูมิ และโมล</h3>
+<p><strong>ก.</strong> แก๊ส 3.00 L ที่ 1.00 atm และ 300 K เปลี่ยนเป็น 1.50 atm และ 450 K โดย n คงที่ จงหาปริมาตรใหม่</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ข.</strong> ทำไมแก๊สในภาชนะปิดที่มีบางส่วนควบแน่นเป็นของเหลว จึงไม่รับรองว่าจะใช้กฎรวมแบบ n คงที่ได้?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ค.</strong> แก๊สเริ่ม 0.200 mol ปริมาตร 4.00 L หลังรั่วเหลือ 0.100 mol แล้วปรับให้ P และ T เท่ากับก่อนรั่ว จงหาปริมาตรใหม่ตามแบบจำลอง</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>ก.</strong> V<sub>2</sub> = 3.00 × (1.00/1.50) × (450/300) = <strong>3.00 L</strong> ผลของการเพิ่มความดันกับการเพิ่มอุณหภูมิหักล้างกันพอดีในตัวอย่างนี้</p>
+<p><strong>ข.</strong> จำนวนโมลรวมของสารในภาชนะอาจเดิม แต่จำนวนโมลที่ยังเป็นแก๊สลดลง ต้องใช้ n ของส่วนแก๊ส ไม่รวมโมลที่เป็นของเหลวใน n ของสูตรแก๊ส</p>
+<p><strong>ค.</strong> P และ T ก่อน–หลังเท่ากัน จึงใช้ V<sub>2</sub> = 4.00 × (0.100/0.200) = <strong>2.00 L</strong> ไม่ถือว่า n เดิมเพียงเพราะเป็นแก๊สชนิดเดิม</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-7-th:end -->
+<!-- gas-relationships-section-8-th:start -->
+<section>
+<h2>8. อ่านแกนและเงื่อนไขของกราฟ</h2>
+<p><strong>ดูว่าแกนตั้ง–แกนนอนเป็นอะไร ก่อนบอกรูปร่าง:</strong> เมื่อ T และ n คงที่ กราฟ V กับ P เป็นเส้นโค้งผกผัน แต่ V กับ 1/P เป็นเส้นตรง ส่วนกราฟ V กับ T, P กับ T และ V กับ n เป็นเส้นตรงผ่านจุดกำเนิดตามแบบจำลอง เมื่อใช้เคลวินและคุมตัวแปรที่เหลือตามกฎของแต่ละคู่</p>
+<p><strong>หน่วยอุณหภูมิเปลี่ยนจุดตัด:</strong> เส้น V กับอุณหภูมิเซลเซียสไม่ผ่านจุดกำเนิด การต่อเส้นตามแบบจำลองจะตัดแกนอุณหภูมิที่ −273.15 °C ซึ่งเท่ากับ 0 K ไม่ใช่หลักฐานว่าลดอุณหภูมิแก๊สจริงแล้วจะวัดปริมาตรศูนย์ได้ เพราะอาจควบแน่นหรือไม่เป็นไปตามแบบจำลองก่อนถึงจุดนั้น และการอ่านความชันต้องใช้แกนกับมาตราส่วนเดียวกัน</p>
+<table><thead><tr><th>กราฟที่เป็นเส้นตรงตามแบบจำลอง</th><th>เงื่อนไข</th></tr></thead><tbody>
+<tr><td>V กับ 1/P</td><td>T และ n คงที่</td></tr>
+<tr><td>V กับ T หน่วย K</td><td>P และ n คงที่</td></tr>
+<tr><td>P กับ T หน่วย K</td><td>V และ n คงที่</td></tr>
+<tr><td>V กับ n</td><td>P และ T คงที่</td></tr>
+</tbody></table>
+<figure><img src="assets/gas-relationships-law-graphs.svg" alt="กราฟจำลองสี่ช่อง V กับ P เป็นเส้นโค้งลดลง ส่วน V กับหนึ่งส่วน P, V กับอุณหภูมิเคลวิน และ P กับอุณหภูมิเคลวิน เป็นเส้นตรงผ่านจุดกำเนิด เมื่อคุมตัวแปรตามป้ายแต่ละช่อง"><figcaption>กราฟจำลองแสดงรูปร่างตามกฎ ไม่ใช่ข้อมูลวัดจริง แกนที่ไม่ใช่อุณหภูมิใช้หน่วยสัมพัทธ์ แต่ละช่องกำหนดสิ่งที่คงที่แยกกัน การต่อกราฟอุณหภูมิถึง 0 K เป็นผลของแบบจำลอง ไม่ใช่การวัดจริง</figcaption></figure>
+<section data-review-question><h3>คำถาม 8 — อย่าดูเส้นโดยข้ามป้ายแกน</h3>
+<p><strong>ก.</strong> ที่ T และ n คงที่ นักเรียนวาดกราฟ V กับ P เป็นเส้นตรงลาดลงผ่านจุดกำเนิด ถูกหรือไม่ และถ้าต้องการเส้นตรงควรเปลี่ยนแกนนอนเป็นอะไร?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ข.</strong> เส้น V กับอุณหภูมิเซลเซียสที่ต่อไปถึง −273.15 °C บอกว่าแก๊สจริงต้องมีปริมาตรศูนย์ที่อุณหภูมินั้นหรือไม่?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ค.</strong> กราฟ V กับ n ของแก๊สอุดมคติสองชนิดที่ P และ T เดียวกัน ควรทับกันหรือไม่ แม้มวลต่อโมลต่างกัน?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>ก.</strong> ไม่ถูก V กับ P เป็นเส้นโค้งผกผันและไม่ผ่านจุดกำเนิด เปลี่ยนแกนนอนเป็น <strong>1/P</strong> จะได้เส้นตรงผ่านจุดกำเนิดตามแบบจำลอง</p>
+<p><strong>ข.</strong> ไม่บอกเช่นนั้น จุดตัดเป็นผลจากการต่อเส้นในแบบจำลอง แก๊สจริงอาจเปลี่ยนสถานะหรือเบี่ยงเบนจากแบบจำลองก่อน ไม่ถือว่าเป็นค่าปริมาตรที่วัดจริง ณ 0 K</p>
+<p><strong>ค.</strong> ควรทับกันตามแบบจำลอง เพราะที่ P และ T เดียวกัน อัตราส่วน V/n เดียวกัน มวลต่อโมลต่างกันไม่ได้เปลี่ยนความสัมพันธ์นี้</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-8-th:end -->
+<!-- gas-relationships-section-9-th:start -->
+<section>
+<h2>9. กราฟ V–T หลายเส้น: เทียบจำนวนโมลต่อความดัน</h2>
+<p>ให้ <strong>R</strong> เป็นค่าคงที่ของแก๊ส เมื่อ P ใช้ atm, V ใช้ L, n ใช้ mol และ T ใช้ K จะใช้ R ≈ 0.08206 L·atm/(mol·K) จากสมการแก๊สอุดมคติ <strong>PV = nRT</strong> จัดรูปเป็น <strong>V = (nR/P) × T</strong> ในแต่ละเส้นที่ n และ P คงที่ ความชันจึงเท่ากับ nR/P เมื่อใช้แกนและหน่วยเดียวกัน เส้นที่ชันกว่ามี <strong>n/P มากกว่า</strong> ไม่ตัดสินจาก n หรือ P เพียงตัวเดียว</p>
+<p><strong>เปลี่ยนเคลวินเป็นเซลเซียส:</strong> ช่วงอุณหภูมิที่เพิ่ม 1 °C เท่ากับเพิ่ม 1 K ค่าความชันจึงเท่าเดิม แต่จุดตัดแกนเปลี่ยน ถ้าสองเส้นทับกัน บอกได้ว่า n/P เท่ากันในแบบจำลอง ไม่จำเป็นต้องมี n เท่ากันและ P เท่ากันทีละตัว ตารางและภาพต่อไปใช้สองสภาวะตัวอย่าง A และ B:</p>
+<table><thead><tr><th>สภาวะที่คงที่ในแต่ละเส้น</th><th>อัตราส่วนและความชัน</th></tr></thead><tbody>
+<tr><td>A: n = 0.020 mol, P = 0.50 atm</td><td>n/P = 0.020/0.50 = 0.040 mol/atm</td></tr>
+<tr><td>B: n = 0.040 mol, P = 2.0 atm</td><td>n/P = 0.040/2.0 = 0.020 mol/atm ความชันจึงเป็น 1/2 ของ A</td></tr>
+</tbody></table>
+<figure><img src="assets/gas-relationships-temperature-slopes.svg" alt="กราฟ V กับอุณหภูมิเคลวินและเซลเซียสของ A และ B เส้น A ชันสองเท่าของ B กราฟเคลวินผ่านจุดกำเนิด ส่วนกราฟเซลเซียสต่อเส้นกลับไปตัดที่ลบ 273.15 องศา ค่าความชันของแต่ละสภาวะเท่าเดิมทั้งสองหน่วย"><figcaption>กราฟคำนวณจากแบบจำลองของ A และ B โดยใช้ R = 0.08206 L·atm/(mol·K) แกนปริมาตรเป็น L เส้นประแสดงการต่อเส้น ไม่ใช่ข้อมูลทดลองอุณหภูมิต่ำ การเลื่อนแกนอุณหภูมิไม่เปลี่ยนความชัน</figcaption></figure>
+<section data-review-question><h3>คำถาม 9 — อ่านอัตราส่วนและรู้ขอบเขตของข้อสรุป</h3>
+<p><strong>ก.</strong> หา n/P ของ A และ B แล้วบอกว่าความชันของ B เป็นกี่เท่าของ A แม้ B มีจำนวนโมลมากกว่า</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ข.</strong> เส้น C มี n = 0.010 mol, P = 0.25 atm ส่วนเส้น D มี n = 0.010 mol, P = 0.10 atm เส้นใดทับ A และเส้นใดชันกว่า A ตามแบบจำลอง?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>ค.</strong> ถ้าเส้นหนึ่งทับ A จะสรุปว่า n และ P ต้องเท่า A ทีละตัวได้หรือไม่? ยกตัวอย่างอีกชุดที่ n และ P ต่างจาก A แต่ให้เส้นทับกัน</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>ก.</strong> A: 0.020/0.50 = <strong>0.040 mol/atm</strong>; B: 0.040/2.0 = <strong>0.020 mol/atm</strong> ความชัน B ต่อ A = 0.020/0.040 = <strong>0.50</strong> หรือครึ่งหนึ่ง n เพิ่มเป็นสองเท่า แต่ P เพิ่มเป็นสี่เท่า</p>
+<p><strong>ข.</strong> C: 0.010/0.25 = 0.040 mol/atm จึงทับ A; D: 0.010/0.10 = 0.100 mol/atm จึงชันกว่า A เพราะอัตราส่วน n/P มากกว่า ไม่ดูจำนวนโมลอย่างเดียว</p>
+<p><strong>ค.</strong> สรุปไม่ได้ เช่น <strong>n = 0.040 mol และ P = 1.0 atm</strong> ให้ n/P = 0.040 mol/atm เท่า A จึงทับกัน แม้ค่าทั้งสองเพิ่มขึ้น ความชันบอกได้เพียงอัตราส่วน จึงยังหา n และ P แยกกันไม่ได้</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-9-th:end -->
+<section class="sources"><h2>แหล่งศึกษาต่อและตรวจสอบ</h2><ul><li><a href="https://proj14.ipst.ac.th/m4-6-chem/m5-chem-book3/">สสวท. Project 14 — เคมี ม.5 เล่ม 3 บทแก๊ส / Chemistry Grade 11 Book 3, Gases</a></li>
+<li><a href="https://openstax.org/books/chemistry-2e/pages/9-1-gas-pressure">OpenStax Chemistry 2e 9.1 — Gas pressure and manometers</a></li>
+<li><a href="https://openstax.org/books/chemistry-2e/pages/9-2-relating-pressure-volume-amount-and-temperature-the-ideal-gas-law">OpenStax Chemistry 2e 9.2 — Gas laws, conditions, units and graphs</a></li></ul></section>
+</section>
+<section data-content-lang="en" lang="en"><p>Start with units and controlled variables. Read one section and try its questions before opening answers. For graphs, check axes, units and conditions.</p>
+<!-- gas-relationships-section-1-en:start -->
+<section>
+<h2>1. Know the variables and units before choosing a formula</h2>
+<p><strong>P</strong> is gas pressure; formulas use absolute pressure measured relative to a vacuum. <strong>V</strong> is the volume occupied by the gas; <strong>T</strong> is temperature in kelvin (K); <strong>n</strong> is the amount of gas in mol. Subscripts <strong>1 and 2</strong> mean the initial and final states. Identify what changes and what stays constant before choosing a formula.</p>
+<p><strong>Gas-law temperatures must be in kelvin:</strong> kelvin = degrees Celsius + 273.15. Some exercises specify adding 273 for simpler arithmetic; follow the stated approximation. Changing from 20 to 40 °C does not double the kelvin temperature. This review uses the ideal-gas model; check for gas loss and phase changes.</p>
+<table><thead><tr><th>What to check</th><th>Units and examples</th></tr></thead><tbody>
+<tr><td>Volume</td><td>1 L = 1000 mL = 1000 cm<sup>3</sup>. Use matching units when comparing states.</td></tr>
+<tr><td>Pressure</td><td>1 atm = 101.325 kPa = 760 torr ≈ 760 mmHg; 1 kPa = 1000 Pa.</td></tr>
+<tr><td>Temperature</td><td>27 °C = 300 K when instructed to add 273. Write K without a degree sign.</td></tr>
+</tbody></table>
+<section data-review-question><h3>Question 1 — Convert units and identify controlled variables</h3>
+<p><strong>a.</strong> State what P, V, T and n mean, and explain the purpose of subscripts 1 and 2.</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>b.</strong> Convert 500 mL to L, 1520 torr to atm and 27 °C to K. For this exercise, add 273.</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>c.</strong> Someone says, “Going from 20 to 40 °C doubles temperature.” Check this using kelvin, adding 273.</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>a.</strong> P is pressure, V volume, T kelvin temperature and n amount in moles. Subscripts 1 and 2 distinguish initial and final values; they are not powers.</p>
+<p><strong>b.</strong> 500 ÷ 1000 = <strong>0.500 L</strong>; 1520 ÷ 760 = <strong>2.00 atm</strong>; 27 + 273 = <strong>300 K</strong>.</p>
+<p><strong>c.</strong> The temperatures are 293 K and 313 K. Since 313 is not 2 × 293, the temperature has not doubled. Use kelvin for temperature ratios.</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-1-en:end -->
+<!-- gas-relationships-section-2-en:start -->
+<section>
+<h2>2. Pressure and reading mercury levels</h2>
+<p><strong>Pressure</strong> is perpendicular force per unit area. Gas produces pressure as particles collide with walls. A <strong>barometer</strong> measures atmospheric pressure; a <strong>manometer</strong> compares gas pressure with the other side. The higher-pressure side pushes the liquid lower. In a stationary liquid, pressures at the same horizontal level in the same liquid are equal. Use the stated atmospheric pressure rather than assuming it is always 1 atm.</p>
+<p><strong>For mercury (Hg):</strong> a level difference of 40 mm mercury corresponds to a pressure difference of 40 mmHg under this reading model. With a closed end containing vacuum, gas pressure equals the pressure of the level difference. With an open end exposed to atmosphere, add the difference when the gas-side mercury is lower; subtract it when the gas side is higher. Check the liquid and the height units.</p>
+<table><thead><tr><th>Examples with a 40 mm mercury level difference</th><th>Gas pressure</th></tr></thead><tbody>
+<tr><td>Closed end containing vacuum</td><td>40 mmHg</td></tr>
+<tr><td>Open end; atmosphere 760 mmHg; gas side lower</td><td>760 + 40 = 800 mmHg</td></tr>
+<tr><td>Open end; atmosphere 760 mmHg; gas side higher</td><td>760 − 40 = 720 mmHg</td></tr>
+</tbody></table>
+<figure><img src="assets/gas-relationships-manometers.svg" alt="Three mercury manometer cases with a 40 millimeter level difference. A closed vacuum end gives gas pressure 40 millimeters of mercury. With an open end at atmosphere 760, a lower gas-side level gives 800 and a higher gas-side level gives 720"><figcaption>Practice examples, not a true length scale. The closed end contains vacuum, not trapped air. Atmospheric pressure for the open-end examples is specified as 760 mmHg.</figcaption></figure>
+<section data-review-question><h3>Question 2 — Read the levels before adding or subtracting</h3>
+<p><strong>a.</strong> What do barometers and manometers measure? Why does the higher-pressure side have a lower mercury level?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>b.</strong> An open-end mercury manometer has atmospheric pressure 760 mmHg and a gas-side level 25 mm lower than the other side. Find the gas pressure.</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>c.</strong> A closed-end mercury manometer has vacuum at the other end and a level difference of 32.0 cm. Find gas pressure in mmHg and approximately in atm, using 760 mmHg per 1 atm.</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>a.</strong> A barometer measures atmospheric pressure. A manometer compares gas pressure with the other side. The greater force per area pushes mercury down until pressures at the same horizontal mercury level balance.</p>
+<p><strong>b.</strong> A lower gas-side level means gas pressure exceeds atmospheric pressure: 760 + 25 = <strong>785 mmHg</strong>.</p>
+<p><strong>c.</strong> 32.0 cm = 320 mm, giving <strong>320 mmHg</strong>, or 320 ÷ 760 ≈ <strong>0.421 atm</strong>. Do not add atmospheric pressure because the other end is vacuum.</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-2-en:end -->
+<!-- gas-relationships-section-3-en:start -->
+<section>
+<h2>3. Boyle’s law: higher pressure, smaller volume</h2>
+<p>At <strong>constant T and n</strong>, volume is inversely proportional to pressure: doubling pressure halves volume. The product <strong>P × V is constant</strong>, so use <strong>P<sub>1</sub>V<sub>1</sub> = P<sub>2</sub>V<sub>2</sub></strong>. Temperature must satisfy the condition; rapid compression does not automatically keep temperature constant.</p>
+<p><strong>Example:</strong> compress 6.00 L gas at 1.00 atm to 3.00 atm with unchanged temperature and moles. Its volume becomes 1.00 × 6.00 ÷ 3.00 = 2.00 L. A V-versus-P graph is a decreasing curve; V versus 1/P is a straight line through the origin under the model.</p>
+<table><thead><tr><th>Change pressure at unchanged T and n</th><th>Effect on volume</th></tr></thead><tbody>
+<tr><td>Increase to 2 times its value</td><td>Becomes 1/2 of its initial value</td></tr>
+<tr><td>Decrease to 1/3 of its value</td><td>Becomes 3 times its initial value</td></tr>
+</tbody></table>
+<section data-review-question><h3>Question 3 — Use the inverse relationship</h3>
+<p><strong>a.</strong> Compress 0.500 L gas at 1.20 atm to 0.200 L at constant T and n. Find the final pressure.</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>b.</strong> At constant T and n, what shapes do V-versus-P and V-versus-1/P graphs have?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>c.</strong> If gas leaks out during compression or temperature is still rising, can you apply Boyle’s law without checking conditions?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>a.</strong> P<sub>2</sub> = 1.20 × 0.500 ÷ 0.200 = <strong>3.00 atm</strong>. A smaller volume should give higher pressure, consistent with this result.</p>
+<p><strong>b.</strong> V versus P is a decreasing curve. V versus 1/P is a straight line through the origin because V is proportional to the reciprocal of P.</p>
+<p><strong>c.</strong> No. Leakage changes n and heating changes T. Use a relationship accounting for the changing variables, or wait until the required conditions hold.</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-3-en:end -->
+<!-- gas-relationships-section-4-en:start -->
+<section>
+<h2>4. Charles’s law: warming allows expansion at constant pressure</h2>
+<p>At <strong>constant P and n</strong>, volume is directly proportional to kelvin temperature: <strong>V/T is constant</strong>, so use <strong>V<sub>1</sub>/T<sub>1</sub> = V<sub>2</sub>/T<sub>2</sub></strong>. Doubling kelvin temperature doubles volume under the model. The gas must be able to expand or contract to maintain pressure.</p>
+<p><strong>Example:</strong> warm 2.00 L gas from 300 K to 450 K at unchanged pressure and moles. New volume = 2.00 × 450 ÷ 300 = 3.00 L. V versus T in K is a straight line through the origin under the model. Heating gas in a sealed rigid vessel does not meet the same conditions because its volume is fixed.</p>
+<table><thead><tr><th>What to do</th><th>Reason</th></tr></thead><tbody>
+<tr><td>Convert °C to K before comparing</td><td>The volume ratio equals the kelvin-temperature ratio, not the Celsius ratio.</td></tr>
+<tr><td>Check unchanged pressure and moles</td><td>Heating alone does not establish Charles’s-law conditions.</td></tr>
+</tbody></table>
+<section data-review-question><h3>Question 4 — Convert to kelvin before finding the ratio</h3>
+<p><strong>a.</strong> Warm 3.00 L gas from 27 °C to 127 °C at constant P and n. Add 273 and find its new volume.</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>b.</strong> At unchanged P and n, does warming from 20 to 40 °C double volume? Add 273 and compare the ratio.</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>c.</strong> When gas is heated in a sealed rigid tank of fixed volume, should Charles’s law be used to claim that its volume increases?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>a.</strong> T<sub>1</sub> = 300 K and T<sub>2</sub> = 400 K; V<sub>2</sub> = 3.00 × 400 ÷ 300 = <strong>4.00 L</strong>.</p>
+<p><strong>b.</strong> No. Temperature changes from 293 to 313 K, so new volume divided by initial volume = 313/293 ≈ <strong>1.068</strong>, an increase of about 6.8%.</p>
+<p><strong>c.</strong> No. A rigid tank keeps V fixed, so it does not provide expansion at constant P. Consider how pressure changes instead.</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-4-en:end -->
+<!-- gas-relationships-section-5-en:start -->
+<section>
+<h2>5. Gay–Lussac’s law: warming a rigid tank increases pressure</h2>
+<p>At <strong>constant V and n</strong>, pressure is directly proportional to kelvin temperature: <strong>P/T is constant</strong>, so use <strong>P<sub>1</sub>/T<sub>1</sub> = P<sub>2</sub>/T<sub>2</sub></strong>. Heating gas in a rigid, leak-free tank without changing gas moles raises its pressure.</p>
+<p><strong>Example:</strong> starting at 1.00 atm and 300 K, warm the gas to 450 K at unchanged volume and moles. Pressure becomes 1.00 × 450 ÷ 300 = 1.50 atm. P versus T in K is a straight line through the origin under the model. Use absolute pressure; do not directly substitute gauge pressure measured relative to atmosphere.</p>
+<table><thead><tr><th>Different controlled variables</th><th>Result on warming</th></tr></thead><tbody>
+<tr><td>Constant P and n: Charles’s law</td><td>V increases</td></tr>
+<tr><td>Constant V and n: Gay–Lussac’s law</td><td>P increases</td></tr>
+</tbody></table>
+<section data-review-question><h3>Question 5 — Check whether volume or pressure stays fixed</h3>
+<p><strong>a.</strong> A leak-free rigid tank has gas pressure 0.900 atm at 300 K. At 500 K with unchanged n, what is its pressure?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>b.</strong> At constant V and n, absolute pressure doubles. Must both kelvin and Celsius temperatures double?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>c.</strong> A gauge reads 0.50 atm above atmospheric pressure. If atmosphere is 1.00 atm, what absolute pressure should be used?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>a.</strong> P<sub>2</sub> = 0.900 × 500 ÷ 300 = <strong>1.50 atm</strong>.</p>
+<p><strong>b.</strong> Kelvin temperature doubles under the model; the Celsius value need not double because the scales have different zero points.</p>
+<p><strong>c.</strong> Absolute pressure = gauge pressure + atmospheric pressure = 0.50 + 1.00 = <strong>1.50 atm</strong>. Do not directly use 0.50 atm.</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-5-en:end -->
+<!-- gas-relationships-section-6-en:start -->
+<section>
+<h2>6. Avogadro’s law: more moles, more volume</h2>
+<p>At <strong>constant P and T</strong>, volume is directly proportional to moles: <strong>V/n is constant</strong>, so use <strong>V<sub>1</sub>/n<sub>1</sub> = V<sub>2</sub>/n<sub>2</sub></strong>. Different ideal gases with equal volumes at the same pressure and temperature have equal moles, but their masses can differ.</p>
+<p><strong>Example:</strong> 0.200 mol gas occupies 6.00 L. Increase to 0.300 mol while maintaining pressure and temperature. New volume = 6.00 × 0.300 ÷ 0.200 = 9.00 L. V versus n is a straight line through the origin under the model. Count gas moles actually present after addition, leakage or reaction.</p>
+<table><thead><tr><th>Information given</th><th>Can moles be compared?</th></tr></thead><tbody>
+<tr><td>Equal volumes and equal P, T</td><td>Yes: equal n under the model.</td></tr>
+<tr><td>Only equal masses of different gases</td><td>Not yet: use n = mass (g) ÷ molar mass (g/mol) for each gas, then compare moles.</td></tr>
+</tbody></table>
+<section data-review-question><h3>Question 6 — Distinguish moles from mass</h3>
+<p><strong>a.</strong> 0.100 mol gas occupies 4.00 L. Add 0.0500 mol at constant P and T. Find the new volume.</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>b.</strong> Two gases have equal V, P and T. Are their moles equal, and must their masses also be equal?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>c.</strong> If gas is added to a rigid tank at constant temperature, can Avogadro’s law be used to claim that volume must increase?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>a.</strong> Final n = 0.100 + 0.0500 = 0.150 mol; V<sub>2</sub> = 4.00 × 0.150 ÷ 0.100 = <strong>6.00 L</strong>. The added moles alone are not the final moles.</p>
+<p><strong>b.</strong> Moles are equal under the model, but masses need not be equal because molar masses may differ.</p>
+<p><strong>c.</strong> No. A rigid tank keeps V fixed rather than P. Pressure may rise instead. Do not choose a formula solely from the words “add gas.”</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-6-en:end -->
+<!-- gas-relationships-section-7-en:start -->
+<section>
+<h2>7. The combined gas law: several variables change together</h2>
+<p>At <strong>constant n</strong> with changing P, V and T, use <strong>(P<sub>1</sub> × V<sub>1</sub>)/T<sub>1</sub> = (P<sub>2</sub> × V<sub>2</sub>)/T<sub>2</sub></strong>, with T in kelvin, matching P units and matching V units. Separate initial and final data. Check whether pressure and temperature affect volume in the same or opposite directions.</p>
+<p><strong>Example:</strong> 2.00 L gas at 1.00 atm and 300 K changes to 2.00 atm and 450 K with unchanged n. New volume = 2.00 × (1.00/2.00) × (450/300) = 1.50 L. If n also changes, include moles: <strong>(P<sub>1</sub> × V<sub>1</sub>)/(n<sub>1</sub> × T<sub>1</sub>) = (P<sub>2</sub> × V<sub>2</sub>)/(n<sub>2</sub> × T<sub>2</sub>)</strong> for the ideal-gas model.</p>
+<table><thead><tr><th>Formula-selection step</th><th>What to check</th></tr></thead><tbody>
+<tr><td>1. Check gas moles</td><td>A closed container alone is insufficient: reaction or condensation can change gas moles.</td></tr>
+<tr><td>2. Separate states and convert units</td><td>Do not mix initial and final values or use Celsius in temperature ratios.</td></tr>
+</tbody></table>
+<section data-review-question><h3>Question 7 — Combine pressure, temperature and mole effects</h3>
+<p><strong>a.</strong> 3.00 L gas at 1.00 atm and 300 K changes to 1.50 atm and 450 K at constant n. Find its new volume.</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>b.</strong> Why does a closed container with some gas condensing into liquid not guarantee that the constant-n combined law applies?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>c.</strong> Gas starts at 0.200 mol and 4.00 L. After leakage, 0.100 mol remains. Adjust it back to the original P and T. Find its new volume under the model.</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>a.</strong> V<sub>2</sub> = 3.00 × (1.00/1.50) × (450/300) = <strong>3.00 L</strong>. The pressure and temperature effects exactly cancel in this example.</p>
+<p><strong>b.</strong> Total substance moles in the container may be unchanged, but moles still in the gas phase decrease. Use gas-phase n; do not include liquid moles in the gas-law n.</p>
+<p><strong>c.</strong> Initial and final P and T are equal, so V<sub>2</sub> = 4.00 × (0.100/0.200) = <strong>2.00 L</strong>. Being the same gas does not mean n is unchanged.</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-7-en:end -->
+<!-- gas-relationships-section-8-en:start -->
+<section>
+<h2>8. Read graph axes and conditions</h2>
+<p><strong>Identify both axes before naming the shape.</strong> At constant T and n, V versus P is an inverse curve but V versus 1/P is straight. V versus T, P versus T and V versus n pass through the origin under the model when temperature is in kelvin and the remaining variables are controlled as required for each pair.</p>
+<p><strong>The temperature unit changes the intercept.</strong> V versus Celsius temperature does not pass through the origin. Model extrapolation meets the temperature axis at −273.15 °C, or 0 K. This does not establish that a real gas can be cooled until its measured volume is zero: condensation or departures from the model may occur first. Compare slopes only with the same axes and scales.</p>
+<table><thead><tr><th>Straight-line graph under the model</th><th>Conditions</th></tr></thead><tbody>
+<tr><td>V versus 1/P</td><td>Constant T and n</td></tr>
+<tr><td>V versus T in K</td><td>Constant P and n</td></tr>
+<tr><td>P versus T in K</td><td>Constant V and n</td></tr>
+<tr><td>V versus n</td><td>Constant P and T</td></tr>
+</tbody></table>
+<figure><img src="assets/gas-relationships-law-graphs.svg" alt="Four model graphs. V versus P is a decreasing curve; V versus reciprocal P, V versus kelvin temperature, and P versus kelvin temperature are straight through the origin under the labeled controlled conditions"><figcaption>Model shapes, not measured data. Non-temperature axes use relative units. Each panel states its controlled variables. Temperature graphs extrapolate to 0 K under the model; these are not measurements.</figcaption></figure>
+<section data-review-question><h3>Question 8 — Do not skip the axis labels</h3>
+<p><strong>a.</strong> At constant T and n, a student draws V versus P as a downward straight line through the origin. Is this correct? What horizontal axis would give a straight line?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>b.</strong> Does a V-versus-Celsius line extrapolated to −273.15 °C show that a real gas must have zero volume there?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>c.</strong> Should V-versus-n graphs for two ideal gases at equal P and T overlap even if their molar masses differ?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>a.</strong> No. V versus P is an inverse curve that does not pass through the origin. Change the horizontal axis to <strong>1/P</strong> for a straight line through the origin under the model.</p>
+<p><strong>b.</strong> No. The intercept comes from model extrapolation. Real gas may change phase or depart from the model beforehand; this is not a measured volume at 0 K.</p>
+<p><strong>c.</strong> Yes, under the model. At equal P and T, V/n is the same; different molar masses do not alter this relationship.</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-8-en:end -->
+<!-- gas-relationships-section-9-en:start -->
+<section>
+<h2>9. Several V–T lines: compare moles divided by pressure</h2>
+<p>Let <strong>R</strong> be the gas constant. For P in atm, V in L, n in mol and T in K, use R ≈ 0.08206 L·atm/(mol·K). Rearrange the ideal-gas equation <strong>PV = nRT</strong> to <strong>V = (nR/P) × T</strong>. Each line at constant n and P has slope nR/P. With matching axes and units, a steeper line has <strong>greater n/P</strong>. Comparing n or P alone is insufficient.</p>
+<p><strong>Changing kelvin to Celsius:</strong> an increase of 1 °C equals an increase of 1 K, so the numerical slope stays the same while the intercept changes. Overlapping lines imply equal n/P under the model, not necessarily equal n and equal P individually. The table and graph use example states A and B:</p>
+<table><thead><tr><th>Conditions fixed along each line</th><th>Ratio and slope</th></tr></thead><tbody>
+<tr><td>A: n = 0.020 mol, P = 0.50 atm</td><td>n/P = 0.020/0.50 = 0.040 mol/atm</td></tr>
+<tr><td>B: n = 0.040 mol, P = 2.0 atm</td><td>n/P = 0.040/2.0 = 0.020 mol/atm; slope is 1/2 of A’s</td></tr>
+</tbody></table>
+<figure><img src="assets/gas-relationships-temperature-slopes.svg" alt="V versus kelvin and Celsius temperature for A and B. A has twice B’s slope. The kelvin graph passes through the origin, while Celsius extrapolation meets the axis at minus 273.15 degrees. Each state keeps the same slope in both temperature units"><figcaption>Calculated model curves for A and B with R = 0.08206 L·atm/(mol·K); volume is in L. Dashed segments show extrapolation rather than low-temperature measurements. Shifting the temperature axis does not change slope.</figcaption></figure>
+<section data-review-question><h3>Question 9 — Compare ratios and respect the limits of the conclusion</h3>
+<p><strong>a.</strong> Find n/P for A and B. What is B’s slope divided by A’s even though B has more moles?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>b.</strong> Line C has n = 0.010 mol, P = 0.25 atm; line D has n = 0.010 mol, P = 0.10 atm. Which overlaps A and which is steeper than A under the model?</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<p><strong>c.</strong> If a line overlaps A, must its n and P each equal A’s values? Give another pair with different n and P but the same line.</p>
+<div data-review-blank><div class="review-writing-space" data-review-writing-space></div><div class="review-writing-space" data-review-writing-space></div></div>
+<div data-review-answer hidden>
+<p><strong>a.</strong> A: 0.020/0.50 = <strong>0.040 mol/atm</strong>; B: 0.040/2.0 = <strong>0.020 mol/atm</strong>. B’s slope divided by A’s = 0.020/0.040 = <strong>0.50</strong>, or half. n doubles while P quadruples.</p>
+<p><strong>b.</strong> C: 0.010/0.25 = 0.040 mol/atm, so it overlaps A. D: 0.010/0.10 = 0.100 mol/atm, so it is steeper than A. Compare n/P, not moles alone.</p>
+<p><strong>c.</strong> No. For example, <strong>n = 0.040 mol and P = 1.0 atm</strong> give n/P = 0.040 mol/atm, the same as A, so the lines overlap although both values have increased. Slope determines the ratio, not n and P separately.</p>
+</div></section>
+</section>
+<!-- gas-relationships-section-9-en:end -->
+<section class="sources"><h2>Sources and further study</h2><ul><li><a href="https://proj14.ipst.ac.th/m4-6-chem/m5-chem-book3/">สสวท. Project 14 — เคมี ม.5 เล่ม 3 บทแก๊ส / Chemistry Grade 11 Book 3, Gases</a></li>
+<li><a href="https://openstax.org/books/chemistry-2e/pages/9-1-gas-pressure">OpenStax Chemistry 2e 9.1 — Gas pressure and manometers</a></li>
+<li><a href="https://openstax.org/books/chemistry-2e/pages/9-2-relating-pressure-volume-amount-and-temperature-the-ideal-gas-law">OpenStax Chemistry 2e 9.2 — Gas laws, conditions, units and graphs</a></li></ul></section>
+</section>
+</main></body></html>

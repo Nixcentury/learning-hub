@@ -39,3 +39,14 @@ This change is prepared on a review branch. It does not merge itself or publish 
 - Integrated main `03cad8c45f3c9efcde4b4124f7cdc37238c19faf`, including the learning-sheet guides from `00a966f0e1906e6d32b42287d0c23e1137ac4eca` and their latest Bohr-guide QA. Kept its guide controls and validators, combined both test lists, and supplied the real guide controller to the existing Workspace test harness.
 - Integrated full unit suite: **445 passed, 0 failed**. Production build/TypeScript/content and guide validation pass; all **647** public files match the artifact. `git diff --check` passes.
 - This integration updates the review branch. Live playback through the updated Hub remains to be checked after merge/deployment.
+
+## 19.1 atomic-physics menu clips — 30 October 2026
+
+The teacher selected the second and third proposed demonstrations: Harvard's **Tower of Spectra** (`c6m6pCROEf8`) and **Sodium Absorption Lines** (`7u3rRy97m9Y`). Add two video buttons to the existing Bohr-topic menu, `#physics/bank/b-d65860a41c400f77ee276a35`, with TH/EN names and short descriptions. Both clips start at the beginning and use the shared player.
+
+- Sources: [Tower of Spectra](https://sciencedemonstrations.fas.harvard.edu/presentations/tower-spectra) and [Sodium Absorption](https://sciencedemonstrations.fas.harvard.edu/presentations/sodium-absorption). The first compares discharge-tube and white-light spectra with a diffraction grating; the second demonstrates a sodium absorption line in the yellow part of a continuous spectrum.
+- New tool keys: `video-01` and `video-02`. New content IDs: `physics-ipst-atomic-19-1-video-gas-spectra` and `physics-ipst-atomic-19-1-video-sodium-absorption`. Actual generated routes resolve to the shared player with the selected clip IDs and start = 0.
+- Programmatic comparison confirms that all three original worksheet cards are unchanged. No worksheet, guide, shared engine, account data or dependency changes.
+- Full existing unit suite: **445 passed, 0 failed**. Production build, TypeScript, content/guide validation and Pages artifact verification passed; **648** public files match source. `git diff --check` passed.
+- In managed cloud Chrome as Guest, both new menu buttons open their own shared-player windows. YouTube initializes with the expected original titles/channel and the correct fallback links. Thai/English menu names, descriptions and player titles were checked. Local screenshot: `qa-output/atomic-videos/menu-two-clips.jpg`.
+- Playback was attempted for Tower of Spectra, but its media time did not advance from 0 in this cloud preview. Successful continuous playback is therefore not claimed. Real iPad/Safari playback and the deployed menu remain to be checked after merge. No player changes were made in response to this preview limitation.

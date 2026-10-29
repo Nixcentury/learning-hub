@@ -1479,6 +1479,7 @@ svg [data-quiz-visual~="axis-label"] {
     color: #111 !important;
   }
   .quiz-paper-number, .quiz-paper-letter { flex: 0 0 auto; font-weight: 700; }
+  .quiz-paper-text { display: block; flex: 1 1 0; min-width: 0; }
   .quiz-print-content [data-question-context] {
     margin: 1.5mm 0 !important;
     font-size: 10.5pt !important;
@@ -1515,7 +1516,6 @@ svg [data-quiz-visual~="axis-label"] {
     font-size: 10.5pt !important;
     line-height: 1.5 !important;
   }
-  .quiz-print-content [data-choice-id] > [data-quiz-language] { min-width: 0; }
   .quiz-paper-workspace {
     min-height: var(--quiz-paper-space, 40mm);
     margin-top: 2mm;

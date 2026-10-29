@@ -6,6 +6,7 @@ on:
       - 'js/*print*.js'
       - 'public/shared/print-*.js'
       - 'public/shared/quiz-core.js'
+      - 'public/shared/quiz-core.css'
       - 'public/shared/quiz-evidence.js'
       - 'public/shared/topic-review*.js'
       - 'public/pages/tools/*player.html'
@@ -43,3 +44,4 @@ jobs:
           export PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/work/qa-tools/node_modules/playwright"
           pnpm test:print-names:browser
           pnpm test:quiz-print:browser
+          pnpm test:quiz-print-rich-text:browser

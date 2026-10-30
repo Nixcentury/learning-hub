@@ -69,3 +69,25 @@ test('homework notice uses private assignment link, survives language refresh an
     assert.equal(document.querySelector('.assignment-badge').hidden, true);
   } finally { globalThis.document = original; }
 });
+
+test('teacher gradebook shows all members, submitted scores and empty scores for non-submitters', async()=>{
+  const f=await fixture(), value=context();
+  value.classroomSubmissions={uid:'teacher',roomId:rid,connected:true,ready:true,grades:{[aid]:{ready:true,loaded:true,rows:[
+    {uid:'student',name:'<img src=x onerror=alert(1)> Student',submitted:true,grade:{score:2,maxScore:3,percent:66.67,submittedAt:1700000000000,late:true}},
+    {uid:'student-b',name:'Student B',submitted:false,grade:null},
+  ]}}};
+  f.update(value);const results=f.document.querySelector('[data-homework-results]');
+  assert.equal(results.querySelectorAll('tbody tr').length,2);assert.ok(results.textContent.includes('ส่งแล้ว 1/2 คน'));
+  assert.ok(results.querySelector('[data-result-uid="student"]').textContent.includes('2/3'));
+  assert.ok(results.querySelector('[data-result-uid="student-b"]').textContent.includes('ยังไม่ส่ง'));
+  assert.equal(results.querySelectorAll('img').length,0);
+});
+test('student sees only own result; unprepared work offers a teacher recovery action, not a false zero score',async()=>{
+  const f=await fixture(), value=context(false);
+  value.classroomSubmissions={uid:'student',roomId:rid,connected:true,ready:true,grades:{[aid]:{ready:true,loaded:true,rows:[{uid:'student',submitted:true,grade:{score:1,maxScore:3,submittedAt:1700000000000}}]}}};
+  f.update(value);assert.ok(f.document.querySelector('[data-homework-results]').textContent.includes('คะแนนคำตอบ 1/3'));
+  assert.equal(f.document.querySelectorAll('.homework-results-table').length,0);
+  const teacher=context();teacher.classroomSubmissions={uid:'teacher',roomId:rid,ready:true,grades:{[aid]:{ready:false,loaded:true,rows:[]}}};
+  f.update(teacher);assert.ok(f.document.querySelector('[data-homework-action="prepare"]'));
+  assert.equal(f.document.querySelectorAll('[data-homework-action="launch"]').length,0);
+});

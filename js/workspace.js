@@ -23,6 +23,11 @@ import { createLearningGuide } from "./learning-guide.js";
 
 // Only live Quiz windows created by this workspace may use its storage bridge.
 const quizStorageFrames = new Set();
+const homeworkFrames = new Map();
+export function getWorkspaceHomework(source) {
+  for (const [frame, homework] of homeworkFrames) if (frame.isConnected && frame.contentWindow === source) return homework;
+  return null;
+}
 
 export function isWorkspaceQuizSource(source) {
   if (!source) return false;
@@ -480,12 +485,12 @@ export function createWorkspace({
     if (["html", "pdf", "video"].includes(record.tool.context.toolKind)) return;
     const targetOrigin = location.origin === "null" ? "*" : location.origin;
     record.frame.contentWindow?.postMessage(
-      createHubContextMessage({
+      { ...createHubContextMessage({
         language: language(),
         role: getRole(),
         identity: getIdentity(),
         content: record.tool.context,
-      }),
+      }), ...(record.tool.homework ? { homework: record.tool.homework } : {}) },
       targetOrigin,
     );
   }
@@ -630,6 +635,7 @@ export function createWorkspace({
     record.sheet?.dispose();
     record.guide?.dispose();
     quizStorageFrames.delete(record.frame);
+    homeworkFrames.delete(record.frame);
     const taskButton = record.taskButton;
     record.element.remove();
     record.taskButton.remove();
@@ -999,6 +1005,7 @@ export function createWorkspace({
     records.set(toolId, record);
     windowLayer.append(record.element);
     if (tool.context.toolKind === "quiz") quizStorageFrames.add(record.frame);
+    if (tool.homework) homeworkFrames.set(record.frame, tool.homework);
     taskbarItems.append(record.taskButton);
     positionNewWindow(record);
     setTaskbarVisibility();
@@ -1022,6 +1029,16 @@ export function createWorkspace({
     if (!tool) return false;
     const previous = toolCatalog[tool.id];
     if (previous && previous.source !== tool.source) return false;
+    toolCatalog[tool.id] = tool;
+    return open(tool.id);
+  }
+
+  function openHomework(homework) {
+    const page = new URL('pages/tools/quiz-player.html', location.href);
+    page.searchParams.set('homework', '1'); page.searchParams.set('v', 'homework-submissions-20261030');
+    const tool = { id: `homework-${homework.roomId}-${homework.id}-${homework.uid}`, page: page.href,
+      source: page.href, homework, icon: '✓', accent: 'blue', titleTh: homework.title, titleEn: homework.title,
+      context: { subjectId: 'classroom', chapterId: 'homework', contentId: homework.contentId, toolKind: 'quiz', itemId: 'main', pageId: 'page-001' } };
     toolCatalog[tool.id] = tool;
     return open(tool.id);
   }
@@ -1095,6 +1112,7 @@ export function createWorkspace({
       record.sheet?.dispose();
       record.guide?.dispose();
       quizStorageFrames.delete(record.frame);
+    homeworkFrames.delete(record.frame);
       record.element.remove();
       record.taskButton.remove();
     });
@@ -1171,5 +1189,5 @@ export function createWorkspace({
   window.addEventListener("resize", constrainWindows);
   if (typeof ResizeObserver === "function") new ResizeObserver(constrainWindows).observe(windowLayer);
 
-  return { open, openContent, openBank, openReview, bindHtmlLinks, showMenu, setLanguage, setContext, clear, prepareAllForClose };
+  return { open, openContent, openBank, openHomework, openReview, bindHtmlLinks, showMenu, setLanguage, setContext, clear, prepareAllForClose };
 }

@@ -41,6 +41,7 @@ function bridgeHarness() {
     getAuthSession: () => session,
     subscribeAuth: (fn) => { subscriber = fn; fn(session); },
     isWorkspaceQuizSource: (candidate) => sources.has(candidate),
+    getWorkspaceHomework: (candidate) => candidate.homework || null,
     window: { addEventListener: (_, fn) => { receive = fn; } },
   });
   vm.runInContext(readModule("../js/quiz-progress.js"), context);
@@ -347,4 +348,10 @@ test("a failed prepare-close blocks voluntary sign-out preparation", async () =>
   frame.contentWindow.LearningHubQuiz = { prepareClose: async () => false };
   assert.equal(await h.workspace.prepareAllForClose(), false);
   assert.equal(frame.isConnected, true);
+});
+
+test('ordinary practice bridge never reads or writes for an assignment-bound quiz frame', async()=>{
+  const h=bridgeHarness();h.source.homework={roomId:'room',id:'assignment'};
+  await h.send();await h.send({type:'learning-hub-quiz-load'});
+  assert.equal(h.writes.length,0);assert.equal(h.replies.length,0);
 });

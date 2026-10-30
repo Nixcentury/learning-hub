@@ -16,7 +16,7 @@ try {
     await new Promise(done => setTimeout(done, 200));
   }
   if (!ready) throw Error('Emulator startup timed out: ' + log);
-  for (const script of ['scripts/classroom-assignment-rules.test.mjs', 'scripts/classroom-rules.test.mjs']) {
+  for (const script of ['scripts/classroom-submission-rules.test.mjs', 'scripts/classroom-assignment-rules.test.mjs', 'scripts/classroom-rules.test.mjs']) {
     const child = spawn(process.execPath, ['--test', script], { stdio: 'inherit', env: { ...process.env, CLASSROOM_EMULATOR_ORIGIN: origin } });
     const code = await new Promise((done, reject) => { child.on('error', reject); child.on('exit', done); });
     if (code) throw Error('QA failed: ' + script);

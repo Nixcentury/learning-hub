@@ -13,7 +13,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
 import { firebaseApp } from "./firebase-config.js";
 import { getAuthSession, subscribeAuth } from "./auth.js";
-import { isWorkspaceQuizSource } from "./workspace.js";
+import { isWorkspaceQuizSource, getWorkspaceHomework } from "./workspace.js";
 
 const database = getDatabase(firebaseApp);
 const safeIdPattern = /^[a-z0-9][a-z0-9_-]{0,127}$/;
@@ -51,7 +51,7 @@ function cleanRecord(value) {
 window.addEventListener("message", async (event) => {
   const trustedOrigin = location.origin === "null" || event.origin === location.origin;
   const message = event.data;
-  if (!trustedOrigin || !messageTypes.has(message?.type) || !isWorkspaceQuizSource(event.source)) return;
+  if (!trustedOrigin || !messageTypes.has(message?.type) || !isWorkspaceQuizSource(event.source) || getWorkspaceHomework(event.source)) return;
 
   const requestId = String(message.requestId || "");
   const contentId = String(message.contentId || "").trim().toLowerCase();

@@ -1,3 +1,4 @@
+import { gradeHomework, homeworkStorageKey } from '../public/shared/classroom-submission-model.js';
 import { requiresReasoning } from "../public/shared/quiz-question-model.js";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
@@ -40,6 +41,7 @@ function node(dataset = {}, selectors = {}) {
     classList: { add() {}, remove() {}, toggle() {} },
     querySelector(selector) { return selectors[selector] || null; },
     querySelectorAll(selector) { return selectors[selector] || []; },
+    before() {},
     replaceChildren() {},
     append() {},
     setAttribute() {},
@@ -48,7 +50,7 @@ function node(dataset = {}, selectors = {}) {
   };
 }
 
-function makeHarness() {
+function makeHarness({ homeworkBinding = null } = {}) {
   let now = 1_700_000_000_000;
   let serial = 0;
   let storageFails = false;
@@ -126,7 +128,7 @@ function makeHarness() {
   };
   const context = vm.createContext({
     window, document, parent,
-    location: { search: "", origin: "https://example.test", href: "https://example.test/quiz-player.html" },
+    location: { search: homeworkBinding ? "?homework=1" : "", origin: "https://example.test", href: "https://example.test/quiz-player.html" },
     URL, URLSearchParams, console,
     Date: class extends Date { static now() { return now; } },
     crypto: { randomUUID: () => `request-${++serial}` },
@@ -135,6 +137,7 @@ function makeHarness() {
     fetch: async () => ({ ok: true, text: async () => "<test-content>" }),
     QuizEvidenceManager: EvidenceStub,
     createNotebookBackupUi: () => ({ busy: false, open() {}, invalidate() {} }),
+    gradeHomework, homeworkStorageKey, readHomeworkQuiz: () => ({ root }),
     requiresReasoning, readQuizContent, hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, MAX_ANSWER_LENGTH, dragAnswerSummary, readBankSelection, resolveAuthoredPdfLinks,
     warmQuizEngine: async () => 'https://example.test/quiz-player.html?quizRefresh=test',
     hideMathKeyboard() {}, mountNumericAnswer() {},
@@ -164,7 +167,8 @@ function makeHarness() {
       renderNavigation = () => {};
       renderStats = () => {};
       globalThis.__quizTest = {
-        state, loadContent, applyHubContext, applySnapshot, snapshot, loadLocal,
+        state, loadContent, applyHubContext, submitHomework,
+        homeworkState: () => ({ result: homeworkResult, grade: homeworkGrade, sending: homeworkSending, storageRevision: homeworkStorageRevision }), applySnapshot, snapshot, loadLocal,
         saveLocalNow, loadCloud, saveCloudNow, persist, persistLocalOnly,
         storageKey, pendingStorageRequests, renderStorageStatus,
         persistNavigation, retrySync, resolveCloudConflict,
@@ -638,4 +642,43 @@ test("opt-in drag reading confirms current work once, cancels navigation and rec
   h.goTo(0); delete h.state.answers.q1; h.goTo(1); assert.equal(prompts.length, 3);
   h.goTo(0); h.state.answers.q1 = { word: "another" }; delete h.root.dataset.dragReadConfirm;
   h.goTo(1); assert.equal(prompts.length, 3); assert.equal(h.state.latestScore, null);
+});
+
+const homeworkBinding={uid:'student',roomId:'r_'+'a'.repeat(32),id:'a_'+'b'.repeat(32),quizRevision:'c'.repeat(64),contentId:'sample-quiz',title:'Homework'};
+async function loadHomework(h, result = null) {
+  h.applyHubContext({identity:{status:'signed-in',uid:'student'},homework:homeworkBinding});
+  const loading=h.loadContent();await h.settle();const request=h.messages.findLast(message=>message.type==='learning-hub-homework-load');
+  assert.ok(request);h.response(request,{ok:true,action:'load',quiz:{contentId:'sample-quiz'},value:null,storageRevision:0,result,grade:result?{score:1,maxScore:2,rows:[{id:'q1',correct:true},{id:'q2',correct:false}]}:null,closed:false});
+  await loading;await h.settle();
+}
+test('homework starts separately from old practice and autosaves only under its assignment binding',async()=>{
+  const h=makeHarness({homeworkBinding});h.seed('student',baseline({answers:{q1:'A',q2:'B'},masteredIds:['q1','q2']}));
+  await loadHomework(h);assert.deepEqual(plain(h.state.answers),{});
+  assert.equal(h.storageKey(),homeworkStorageKey('student',homeworkBinding));
+  h.selectAnswer('q1','A');await h.advance(700);
+  const save=h.messages.findLast(message=>message.type==='learning-hub-homework-save');assert.ok(save);assert.equal(save.storageRevision,0);
+  assert.ok(!h.messages.some(message=>message.type==='learning-hub-quiz-save'));
+  assert.equal(h.read('student').masteredIds.length,2);
+});
+test('checking answers does not send homework; final submit needs the result view and server confirmation',async()=>{
+  const h=makeHarness({homeworkBinding});await loadHomework(h);
+  await h.submitHomework();assert.ok(!h.messages.some(message=>message.type==='learning-hub-homework-submit'));
+  h.selectAnswer('q1','A');await h.submitAll();assert.equal(h.state.view,'results');assert.ok(!h.messages.some(message=>message.type==='learning-hub-homework-submit'));
+  const submitting=h.submitHomework();await h.settle();const request=h.messages.findLast(message=>message.type==='learning-hub-homework-submit');assert.ok(request);
+  assert.equal(h.homeworkState().result,null);assert.equal(h.homeworkState().sending,true);
+  const result={answersJson:'{"q1":"A"}',giveUpsJson:'{}',submittedAt:h.time()};
+  h.response(request,{ok:true,action:'submit',result,grade:{score:1,maxScore:2,rows:[{id:'q1',correct:true},{id:'q2',correct:false}]}});await submitting;
+  assert.equal(h.homeworkState().result.submittedAt,result.submittedAt);assert.equal(h.state.latestScore.score,1);
+  const before=h.messages.length;h.selectAnswer('q1','B');await h.submitHomework();assert.equal(h.messages.length,before);assert.equal(h.state.answers.q1,'A');
+});
+test('a failed homework submission keeps a retryable result and never claims success',async()=>{
+  const h=makeHarness({homeworkBinding});await loadHomework(h);h.selectAnswer('q1','A');await h.submitAll();
+  const submitting=h.submitHomework();await h.settle();const request=h.messages.findLast(message=>message.type==='learning-hub-homework-submit');
+  h.response(request,{ok:false,code:'PERMISSION_DENIED'});await submitting;assert.equal(h.homeworkState().result,null);assert.equal(h.homeworkState().sending,false);assert.equal(h.state.answers.q1,'A');
+});
+test('a submitted homework reload uses the immutable server answers instead of a stale local practice-like result',async()=>{
+  const h=makeHarness({homeworkBinding});h.storage.set(homeworkStorageKey('student',homeworkBinding),JSON.stringify(baseline({answers:{q1:'B',q2:'B'},masteredIds:['q1','q2'],localSync:{dirty:true}})));
+  await loadHomework(h,{answersJson:'{"q1":"A"}',giveUpsJson:'{}',submittedAt:h.time()});
+  assert.deepEqual(plain(h.state.answers),{q1:'A'});assert.equal(h.state.latestScore.score,1);assert.equal(h.state.view,'results');
+  assert.ok(!h.messages.some(message=>message.type==='learning-hub-homework-save'));
 });

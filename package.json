@@ -17,6 +17,7 @@
     "test:bank:browser": "node scripts/test-question-bank-browser.mjs",
     "test:review:browser": "node scripts/test-topic-review-hub-browser.mjs",
     "test:sheet:browser": "node scripts/test-learning-sheet-browser.mjs",
+    "test:workspace:browser": "node scripts/test-workspace-layout-browser.mjs",
     "test:sharing:browser": "node scripts/test-hub-navigation-browser.mjs",
     "test:overview:browser": "node scripts/test-chapter-overview-browser.mjs",
     "test:pages": "node scripts/test-pages-migration-browser.mjs",

@@ -37,6 +37,8 @@ Repository: https://github.com/Nixcentury/learning-hub
 คู่มือออนไลน์: https://nixcentury.github.io/learning-hub/content/chemistry/START-HERE.txt
 
 โครงเมนู: วิชา/บท > เรื่องย่อย > รายการ Quiz/เครื่องมือ > เปิดทำงาน
+หน้าต่างงาน: เปิดหลายงานค้างไว้ได้ ปุ่มแบ่งจอเลือกงานมาใช้คู่กัน ปรับขนาดหน้าต่างลอยที่มุมล่างขวา
+วิธีใช้และตรวจหน้าต่าง: WORKSPACE-WINDOWS-START-HERE.md
 อัปเดต 26 ต.ค. 2026: แท็บฟิสิกส์และเคมีเปิดคลังบทเรียนเป็นหน้าแรกโดยตรง
 #physics และ #chemistry นำไป #physics/bank และ #chemistry/bank ตามลำดับ
 สารบัญบทด้านนอกเดิมซ่อนจากหน้าแรก ไม่มีปุ่มบทเรียนเดิม แต่เก็บ template และไฟล์เนื้อหาทั้งหมดไว้

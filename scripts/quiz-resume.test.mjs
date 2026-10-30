@@ -172,7 +172,7 @@ function makeHarness({ homeworkBinding = null } = {}) {
         saveLocalNow, loadCloud, saveCloudNow, persist, persistLocalOnly,
         storageKey, pendingStorageRequests, renderStorageStatus,
         persistNavigation, retrySync, resolveCloudConflict,
-        giveUp, retryGivenUp, editAnswers, selectAnswer, submitAll, resultFor, goTo,
+        giveUp, retryGivenUp, editAnswers, startRetry, restart, selectAnswer, submitAll, resultFor, goTo,
         evidence: () => evidenceManager,
         setContentReady: (ready) => { contentRoot = ready ? {} : null; },
       };
@@ -645,10 +645,10 @@ test("opt-in drag reading confirms current work once, cancels navigation and rec
 });
 
 const homeworkBinding={uid:'student',roomId:'r_'+'a'.repeat(32),id:'a_'+'b'.repeat(32),quizRevision:'c'.repeat(64),contentId:'sample-quiz',title:'Homework'};
-async function loadHomework(h, result = null) {
+async function loadHomework(h, result = null, extra = {}) {
   h.applyHubContext({identity:{status:'signed-in',uid:'student'},homework:homeworkBinding});
   const loading=h.loadContent();await h.settle();const request=h.messages.findLast(message=>message.type==='learning-hub-homework-load');
-  assert.ok(request);h.response(request,{ok:true,action:'load',quiz:{contentId:'sample-quiz'},value:null,storageRevision:0,result,grade:result?{score:1,maxScore:2,rows:[{id:'q1',correct:true},{id:'q2',correct:false}]}:null,closed:false});
+  assert.ok(request);h.response(request,{ok:true,action:'load',quiz:{contentId:'sample-quiz'},value:null,storageRevision:0,result:result?{submissionId:'a'.repeat(32),...result}:null,grade:result?{score:1,maxScore:2,submissionRevision:1,rows:[{id:'q1',correct:true},{id:'q2',correct:false}]}:null,closed:false,...extra});
   await loading;await h.settle();
 }
 test('homework starts separately from old practice and autosaves only under its assignment binding',async()=>{
@@ -681,4 +681,27 @@ test('a submitted homework reload uses the immutable server answers instead of a
   await loadHomework(h,{answersJson:'{"q1":"A"}',giveUpsJson:'{}',submittedAt:h.time()});
   assert.deepEqual(plain(h.state.answers),{q1:'A'});assert.equal(h.state.latestScore.score,1);assert.equal(h.state.view,'results');
   assert.ok(!h.messages.some(message=>message.type==='learning-hub-homework-save'));
+});
+
+test('submitted homework can retry wrong questions and resubmit a cumulative total without changing the last submitted score while editing',async()=>{
+  const h=makeHarness({homeworkBinding});await loadHomework(h,{answersJson:'{"q1":"A","q2":"A"}',giveUpsJson:'{}',submittedAt:h.time()});
+  h.startRetry();assert.deepEqual(plain(h.state.answers),{q1:'A'});assert.deepEqual(plain(h.state.masteredIds),['q1']);
+  h.selectAnswer('q2','B');assert.equal(h.state.answers.q2,'B');assert.equal(h.homeworkState().grade.score,1);
+  await h.submitAll();assert.equal(h.state.latestScore.score,2);assert.equal(h.homeworkState().grade.score,1);
+  const submitting=h.submitHomework();await h.settle();const request=h.messages.findLast(message=>message.type==='learning-hub-homework-submit');
+  assert.equal(request.previousSubmissionId,'a'.repeat(32));assert.deepEqual(plain(request.value.answers),{q1:'A',q2:'B'});
+  h.response(request,{ok:true,action:'submit',result:{answersJson:'{"q1":"A","q2":"B"}',giveUpsJson:'{}',submissionId:request.submissionId,submittedAt:h.time(),submissionRevision:2},grade:{score:2,maxScore:2,submissionRevision:2,rows:[{id:'q1',correct:true},{id:'q2',correct:true}]}});await submitting;
+  assert.equal(h.homeworkState().grade.score,2);assert.equal(h.homeworkState().grade.submissionRevision,2);
+  h.restart();assert.deepEqual(plain(h.state.answers),{});assert.equal(h.homeworkState().grade.score,2,'Restart keeps the submitted score');
+});
+test('homework reload resumes a post-submission draft instead of replacing corrections with the old submitted answers',async()=>{
+  const h=makeHarness({homeworkBinding});const result={answersJson:'{"q1":"A"}',giveUpsJson:'{}',submittedAt:h.time()};
+  await loadHomework(h,result,{value:baseline({identityKey:'student',answers:{q1:'A',q2:'B'},masteredIds:['q1'],view:'exam',homeworkBaseSubmissionId:'a'.repeat(32)}),storageRevision:4});
+  assert.deepEqual(plain(h.state.answers),{q1:'A',q2:'B'});assert.equal(h.state.view,'exam');assert.equal(h.homeworkState().grade.score,1);
+  assert.equal(h.homeworkState().storageRevision,4);
+});
+test('a closed assignment restores the last submitted score and refuses edits, retries, restarts and resubmission',async()=>{
+  const h=makeHarness({homeworkBinding});await loadHomework(h,{answersJson:'{"q1":"A"}',giveUpsJson:'{}',submittedAt:h.time()},{closed:true});
+  const before=h.messages.length;h.startRetry();h.editAnswers();h.restart();h.selectAnswer('q2','B');await h.submitHomework();
+  assert.deepEqual(plain(h.state.answers),{q1:'A'});assert.equal(h.state.view,'results');assert.equal(h.messages.length,before);
 });

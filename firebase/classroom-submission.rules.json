@@ -41,8 +41,8 @@
           "$assignmentId": {
             "$uid": {
               ".read": "((auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists()) && auth.uid === $uid) && root.child('classroomAssignmentsV1/items').child($roomId).child($assignmentId).exists()",
-              ".write": "((auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists()) && auth.uid === $uid) && root.child('classroomAssignmentsV1/items').child($roomId).child($assignmentId).child('status').val() === 'published' && root.child('classroomSubmissionsV1/quizzes').child($roomId).child($assignmentId).exists() && !root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).exists() && newData.exists()",
-              ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && $assignmentId.matches(/^a_[a-f0-9]{32}$/) && newData.hasChildren(['version','contentId','quizRevision','progressJson','createdAt','updatedAt','revision']) && (data.exists() ? newData.child('createdAt').val() === data.child('createdAt').val() && newData.child('revision').val() === data.child('revision').val() + 1 : newData.child('createdAt').val() === now && newData.child('revision').val() === 1)",
+              ".write": "((auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists()) && auth.uid === $uid) && root.child('classroomAssignmentsV1/items').child($roomId).child($assignmentId).child('status').val() === 'published' && root.child('classroomSubmissionsV1/quizzes').child($roomId).child($assignmentId).exists() && newData.exists()",
+              ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && $assignmentId.matches(/^a_[a-f0-9]{32}$/) && newData.hasChildren(['version','contentId','quizRevision','progressJson','createdAt','updatedAt','revision']) && (root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).exists() ? newData.child('baseSubmissionId').val() === root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('submissionId').val() : !newData.child('baseSubmissionId').exists() || newData.child('baseSubmissionId').val() === '') && (data.exists() ? newData.child('createdAt').val() === data.child('createdAt').val() && newData.child('revision').val() === data.child('revision').val() + 1 : newData.child('createdAt').val() === now && newData.child('revision').val() === 1)",
               "version": {
                 ".validate": "newData.val() === 1"
               },
@@ -61,6 +61,9 @@
               "updatedAt": {
                 ".validate": "newData.val() === now"
               },
+              "baseSubmissionId": {
+                ".validate": "newData.isString() && (newData.val() === '' || newData.val().matches(/^[a-f0-9]{32}$/))"
+              },
               "revision": {
                 ".validate": "newData.isNumber() && newData.val() > 0 && newData.val() <= 1000000000 && newData.val() % 1 === 0"
               },
@@ -77,8 +80,8 @@
           "$assignmentId": {
             "$uid": {
               ".read": "((auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists()) && auth.uid === $uid) && root.child('classroomAssignmentsV1/items').child($roomId).child($assignmentId).exists()",
-              ".write": "((auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists()) && auth.uid === $uid) && root.child('classroomAssignmentsV1/items').child($roomId).child($assignmentId).child('status').val() === 'published' && root.child('classroomSubmissionsV1/quizzes').child($roomId).child($assignmentId).exists() && !data.exists() && newData.exists()",
-              ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && $assignmentId.matches(/^a_[a-f0-9]{32}$/) && newData.hasChildren(['version','contentId','quizRevision','answersJson','giveUpsJson','elapsedMs','dueAt','submissionId','submittedAt'])",
+              ".write": "((auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists()) && auth.uid === $uid) && root.child('classroomAssignmentsV1/items').child($roomId).child($assignmentId).child('status').val() === 'published' && root.child('classroomSubmissionsV1/quizzes').child($roomId).child($assignmentId).exists() && newData.exists()",
+              ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && $assignmentId.matches(/^a_[a-f0-9]{32}$/) && newData.hasChildren(['version','contentId','quizRevision','answersJson','giveUpsJson','elapsedMs','dueAt','submissionId','submittedAt']) && (data.exists() ? newData.child('submissionRevision').val() === (data.child('submissionRevision').exists() ? data.child('submissionRevision').val() : 1) + 1 && newData.child('submissionId').val() !== data.child('submissionId').val() && !root.child('classroomSubmissionsV1/history').child($roomId).child($assignmentId).child($uid).child(newData.child('submissionId').val()).exists() && newData.parent().parent().parent().parent().child('history').child($roomId).child($assignmentId).child($uid).child(data.child('submissionId').val()).exists() && newData.parent().parent().parent().parent().child('history').child($roomId).child($assignmentId).child($uid).child(data.child('submissionId').val()).child('version').val() === data.child('version').val() && newData.parent().parent().parent().parent().child('history').child($roomId).child($assignmentId).child($uid).child(data.child('submissionId').val()).child('contentId').val() === data.child('contentId').val() && newData.parent().parent().parent().parent().child('history').child($roomId).child($assignmentId).child($uid).child(data.child('submissionId').val()).child('quizRevision').val() === data.child('quizRevision').val() && newData.parent().parent().parent().parent().child('history').child($roomId).child($assignmentId).child($uid).child(data.child('submissionId').val()).child('answersJson').val() === data.child('answersJson').val() && newData.parent().parent().parent().parent().child('history').child($roomId).child($assignmentId).child($uid).child(data.child('submissionId').val()).child('giveUpsJson').val() === data.child('giveUpsJson').val() && newData.parent().parent().parent().parent().child('history').child($roomId).child($assignmentId).child($uid).child(data.child('submissionId').val()).child('elapsedMs').val() === data.child('elapsedMs').val() && newData.parent().parent().parent().parent().child('history').child($roomId).child($assignmentId).child($uid).child(data.child('submissionId').val()).child('dueAt').val() === data.child('dueAt').val() && newData.parent().parent().parent().parent().child('history').child($roomId).child($assignmentId).child($uid).child(data.child('submissionId').val()).child('submissionId').val() === data.child('submissionId').val() && newData.parent().parent().parent().parent().child('history').child($roomId).child($assignmentId).child($uid).child(data.child('submissionId').val()).child('submittedAt').val() === data.child('submittedAt').val() && newData.parent().parent().parent().parent().child('history').child($roomId).child($assignmentId).child($uid).child(data.child('submissionId').val()).child('submissionRevision').val() === data.child('submissionRevision').val() : !newData.child('submissionRevision').exists() || newData.child('submissionRevision').val() === 1)",
               "version": {
                 ".validate": "newData.val() === 1"
               },
@@ -103,11 +106,60 @@
               "submissionId": {
                 ".validate": "newData.isString() && newData.val().matches(/^[a-f0-9]{32}$/)"
               },
+              "submissionRevision": {
+                ".validate": "newData.isNumber() && newData.val() > 0 && newData.val() <= 1000000000 && newData.val() % 1 === 0"
+              },
               "submittedAt": {
                 ".validate": "newData.val() === now"
               },
               "$other": {
                 ".validate": false
+              }
+            }
+          }
+        }
+      },
+      "history": {
+        "$roomId": {
+          "$assignmentId": {
+            "$uid": {
+              ".read": "(auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && root.child('classroomV1/rooms').child($roomId).child('ownerUid').val() === auth.uid) || (((auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists()) && auth.uid === $uid) && root.child('classroomAssignmentsV1/items').child($roomId).child($assignmentId).exists())",
+              "$submissionId": {
+                ".write": "((auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists()) && auth.uid === $uid) && root.child('classroomAssignmentsV1/items').child($roomId).child($assignmentId).child('status').val() === 'published' && !data.exists() && newData.exists()",
+                ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && $assignmentId.matches(/^a_[a-f0-9]{32}$/) && $submissionId === root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('submissionId').val() && newData.parent().parent().parent().parent().parent().child('results').child($roomId).child($assignmentId).child($uid).child('submissionRevision').val() === (root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('submissionRevision').exists() ? root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('submissionRevision').val() : 1) + 1 && newData.parent().parent().parent().parent().parent().child('results').child($roomId).child($assignmentId).child($uid).child('submissionId').val() !== $submissionId && newData.child('version').val() === root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('version').val() && newData.child('contentId').val() === root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('contentId').val() && newData.child('quizRevision').val() === root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('quizRevision').val() && newData.child('answersJson').val() === root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('answersJson').val() && newData.child('giveUpsJson').val() === root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('giveUpsJson').val() && newData.child('elapsedMs').val() === root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('elapsedMs').val() && newData.child('dueAt').val() === root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('dueAt').val() && newData.child('submissionId').val() === root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('submissionId').val() && newData.child('submittedAt').val() === root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('submittedAt').val() && newData.child('submissionRevision').val() === root.child('classroomSubmissionsV1/results').child($roomId).child($assignmentId).child($uid).child('submissionRevision').val()",
+                "version": {
+                  ".validate": true
+                },
+                "contentId": {
+                  ".validate": true
+                },
+                "quizRevision": {
+                  ".validate": true
+                },
+                "answersJson": {
+                  ".validate": true
+                },
+                "giveUpsJson": {
+                  ".validate": true
+                },
+                "elapsedMs": {
+                  ".validate": true
+                },
+                "dueAt": {
+                  ".validate": true
+                },
+                "submissionId": {
+                  ".validate": true
+                },
+                "submittedAt": {
+                  ".validate": true
+                },
+                "submissionRevision": {
+                  ".validate": true
+                },
+                "$other": {
+                  ".validate": false
+                }
               }
             }
           }

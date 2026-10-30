@@ -677,7 +677,7 @@ function showSection(sectionId, force = false) {
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
   // Keep cached menu documents and their shared subject palette in sync.
-  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-submissions-20261030' : 'bank-chapter-links-20261027');
+  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-resubmissions-20261030' : 'bank-chapter-links-20261027');
   pageFrameLoading.hidden = false;
   // Child-frame navigations must not add extra entries to the Hub's Back history.
   pageFrame.contentWindow.location.replace(pageUrl.href);
@@ -828,6 +828,7 @@ window.addEventListener("message", (event) => {
     }
     const operation = async () => {
       if (action === 'prepare') { await submissions.prepare(payload.id, uid); return {}; }
+      if (action === 'history') return submissions.history(payload.id, payload.studentUid);
       if (action === 'launch') {
         const binding = await submissions.open(payload.id, uid);
         if (current()) workspace.openHomework(binding);

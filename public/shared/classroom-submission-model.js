@@ -33,7 +33,8 @@ export function submissionPayload(progress, questions, { draft = false } = {}) {
 export function gradeSubmission(record, quiz, questions) {
   try {
     if (!record || record.version !== 1 || record.quizRevision !== quiz.revision || record.contentId !== quiz.contentId || !Number.isFinite(record.submittedAt)) throw Error();
+    if (record.submissionRevision != null && (!Number.isSafeInteger(record.submissionRevision) || record.submissionRevision < 1)) throw Error();
     return { ...gradeHomework(questions, JSON.parse(record.answersJson), JSON.parse(record.giveUpsJson)),
-      submittedAt: record.submittedAt, late: record.dueAt > 0 && record.submittedAt > record.dueAt };
+      submittedAt: record.submittedAt, submissionRevision: record.submissionRevision || 1, late: record.dueAt > 0 && record.submittedAt > record.dueAt };
   } catch { return { error: 'homework/invalid-result' }; }
 }

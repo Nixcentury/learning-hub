@@ -4,6 +4,7 @@ import { bankClient } from '../public/shared/question-bank-client.js';
 import { adaptLegacyBank } from '../public/shared/question-bank-adapter.js';
 import { readQuizContent } from '../public/shared/quiz-content-adapter.js';
 import { sanitizeHomeworkRoot } from '../public/shared/classroom-submission-quiz.js';
+import { resolveAuthoredPdfLinks } from '../public/shared/pdf-content-model.js';
 import { failSubmission } from '../public/shared/classroom-submission-model.js';
 
 export async function freezeHomeworkQuiz(item, catalog, hubUrl, fetcher = fetch) {
@@ -18,11 +19,15 @@ export async function freezeHomeworkQuiz(item, catalog, hubUrl, fetcher = fetch)
   } else {
     source = new URL(page.searchParams.get('content'), page);
     if (!page.searchParams.has('content') || source.origin !== new URL(hubUrl).origin) throw failSubmission('homework/invalid-quiz');
-    const response = await fetcher(source.href, { cache: 'no-cache' });
-    if (!response.ok) throw failSubmission('homework/quiz-unavailable');
-    root = new DOMParser().parseFromString(await response.text(), 'text/html').querySelector('[data-learning-activity-content]');
+    const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 30000);
+    try {
+      const response = await fetcher(source.href, { cache: 'no-cache', signal: controller.signal });
+      if (!response.ok) throw failSubmission('homework/quiz-unavailable');
+      root = new DOMParser().parseFromString(await response.text(), 'text/html').querySelector('[data-learning-activity-content]');
+    } finally { clearTimeout(timeout); }
   }
   if (!root) throw failSubmission('homework/invalid-quiz');
+  resolveAuthoredPdfLinks(root, source);
   root = sanitizeHomeworkRoot(root, source);
   // Legacy demo routes intentionally have distinct storage IDs.
   root.dataset.activityId = item.contentId;

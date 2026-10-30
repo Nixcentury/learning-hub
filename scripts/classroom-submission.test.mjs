@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseHTML } from 'linkedom';
+import { DOMParser, parseHTML } from 'linkedom';
+import { freezeHomeworkQuiz } from '../js/classroom-submission-quiz.js';
 import { createClassroomSubmissions } from '../js/classroom-submission-service.js';
 import { gradeHomework, gradeSubmission, submissionPayload, homeworkStorageKey } from '../public/shared/classroom-submission-model.js';
 import { readHomeworkQuiz, sanitizeHomeworkRoot } from '../public/shared/classroom-submission-quiz.js';
@@ -137,4 +138,25 @@ test('simultaneous final-submit commands share the same pending server acknowled
   const second=f.service.quizCommand('submit',binding,{value:progress({number:'5/6'}),submissionId:'f'.repeat(32)});
   await tick();assert.equal(f.writes.length,0);finish();const results=await Promise.all([first,second]);
   assert.equal(f.writes.length,1);assert.equal(results[0].result.submissionId,results[1].result.submissionId);assert.equal(results[1].grade.score,1);
+});
+
+test('teacher pins authored and legacy quiz IDs with stable revisions and source-relative PDF/image links',async()=>{
+  const previous=globalThis.DOMParser;globalThis.DOMParser=DOMParser;
+  try {
+    const root='<article data-learning-activity-content data-activity-kind="quiz" data-activity-id="source-quiz"><p data-activity-title data-th="คลื่น" data-en="Waves">Waves</p><a data-hub-pdf="reading" data-pdf-th="assets/read.pdf">Read</a><img src="assets/diagram.png"><article data-question data-question-id="one" data-answer="a"><p data-question-prompt data-th="หนึ่ง" data-en="One">One</p><div data-choice-id="a">A</div><div data-choice-id="b">B</div><p data-question-solution>Solution</p></article></article>';
+    const route={kind:'content',status:'ready',hash:'#physics/1/waves/quiz',aliases:[],subjectId:'physics',chapterId:'1',topicId:'waves',contentId:'waves-quiz'};
+    const catalog={schemaVersion:1,routes:[route],contents:[{id:'waves-quiz',source:'content/test/waves.html',toolKind:'quiz',titleTh:'คลื่น',titleEn:'Waves'}]};
+    const item={contentId:'waves-quiz',targetHash:route.hash};const fetcher=async()=>({ok:true,text:async()=>root});
+    const pinned=await freezeHomeworkQuiz(item,catalog,'https://example.test/learning-hub/',fetcher);
+    assert.equal(pinned.contentId,'waves-quiz');assert.equal(pinned.questionCount,1);assert.match(pinned.revision,/^[a-f0-9]{64}$/);
+    assert.ok(pinned.html.includes('https://example.test/learning-hub/content/test/assets/read.pdf'));
+    assert.ok(pinned.html.includes('https://example.test/learning-hub/content/test/assets/diagram.png'));
+    assert.equal((await freezeHomeworkQuiz(item,catalog,'https://example.test/learning-hub/',fetcher)).revision,pinned.revision);
+    const changed=await freezeHomeworkQuiz(item,catalog,'https://example.test/learning-hub/',async()=>({ok:true,text:async()=>root.replace('>One<','>Changed<')}));
+    assert.notEqual(changed.revision,pinned.revision);
+    const legacy={kind:'legacy-tool',status:'ready',hash:'#physics/1/quiz',aliases:[],toolId:'physics-c1-quiz',storageContentId:'physics-c1-quiz'};
+    const legacyPinned=await freezeHomeworkQuiz({targetHash:legacy.hash,contentId:legacy.storageContentId},{...catalog,routes:[...catalog.routes,legacy]},'https://example.test/learning-hub/',fetcher);
+    assert.equal(legacyPinned.contentId,'physics-c1-quiz');assert.ok(legacyPinned.html.includes('data-activity-id="physics-c1-quiz"'));
+    await assert.rejects(freezeHomeworkQuiz({...item,contentId:'wrong'},catalog,'https://example.test/learning-hub/',fetcher),{code:'homework/quiz-changed'});
+  } finally {globalThis.DOMParser=previous;}
 });

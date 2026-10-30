@@ -1,0 +1,488 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "physics-ipst-atomic-19-1-3-sheet",
+    "revision": "2026-10-29-1",
+    "sha256": "94bf495fe1e85d673ad94da2e8d6574705bf2b9a1266a7f86112599addd3c4ab"
+  },
+  "title": {
+    "th": "จากช่องว่างพลังงานไปสู่เส้นสเปกตรัม",
+    "en": "From energy gaps to spectral lines"
+  },
+  "prerequisites": {
+    "th": "ทวน Eₙ = −13.6/n² eV ของไฮโดรเจนจากใบที่ 2 และพลังงานโฟตอน hf = hc/λ จากใบที่ 1 เลข n มากขึ้นทำให้พลังงานสูงขึ้นและติดลบน้อยลง",
+    "en": "Review hydrogen’s Eₙ = −13.6/n² eV from Sheet 2 and photon energy hf = hc/λ from Sheet 1. A larger n has higher, less negative energy."
+  },
+  "goal": {
+    "th": "อ่านระดับเริ่มต้นและปลายทางเพื่อหาพลังงานโฟตอน ความยาวคลื่น และอนุกรม แยกจำนวนโฟตอนจากอะตอมเดียวออกจากเส้นสเปกตรัมที่พบจากอะตอมจำนวนมาก",
+    "en": "Use initial and final levels to find photon energy, wavelength and series. Distinguish photons from one atom along one path from spectral lines observed across many atoms."
+  },
+  "steps": [
+    {
+      "id": "energy-gap",
+      "title": {
+        "th": "อะตอมเสียพลังงาน แต่โฟตอนได้พลังงานบวก",
+        "en": "The atom loses energy; the photon carries positive energy"
+      },
+      "summary": {
+        "th": "ΔEอะตอม = Ef − Ei: ขึ้นระดับรับพลังงาน ลงระดับปล่อยพลังงาน\nพลังงานโฟตอนเป็นบวก Eγ = |Ef − Ei| = hf = hc/λ คู่ระดับเดิมกลับทิศจะใช้พลังงานโฟตอนขนาดเท่าเดิม",
+        "en": "ΔEatom = Ef − Ei: upward transitions absorb energy; downward transitions release it.\nPhoton energy is positive: Eγ = |Ef − Ei| = hf = hc/λ. Reversing the same pair of levels uses the same photon-energy magnitude."
+      },
+      "story": {
+        "th": "ชี้รูปแล้วถามว่า “จาก 3 ลงมา 2 อะตอมเสียพลังงาน แล้วโฟตอนต้องติดลบด้วยไหม?” เขียน Ei และ Ef ก่อนหาผลต่าง แล้วกลับลูกศรเพื่อเทียบการดูดกลืนกับการเปล่งออก",
+        "en": "Point to the diagram: “From 3 down to 2 the atom loses energy. Must the photon energy be negative too?” Write Ei and Ef before subtracting, then reverse the arrow to compare absorption with emission."
+      },
+      "action": {
+        "th": "ทำคำถาม 1–2 ต่อกัน แล้วตอบคำถาม 3 สั้น ๆ ว่ากลับทิศแล้วอะไรเปลี่ยนและอะไรเท่าเดิม",
+        "en": "Complete Questions 1–2 in sequence, then answer Question 3 briefly: what changes on reversing the transition, and what stays the same?"
+      },
+      "links": [
+        {
+          "label": {
+            "th": "รูปคู่ระดับ · หัวข้อ 1",
+            "en": "Level-pair diagram · section 1"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "transition-energy"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 1–2",
+            "en": "Questions 1–2"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "sign-32"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 3",
+            "en": "Question 3"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "absorb-23"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "3 → 2 มี ΔEอะตอม และ Eγ เท่าไร?",
+          "en": "For 3 → 2, what are ΔEatom and Eγ?"
+        },
+        "answer": {
+          "th": "ΔEอะตอม ≈ −1.89 eV แต่ Eγ ≈ +1.89 eV และ λ ≈ 656 nm เป็นการเปล่งแสง",
+          "en": "ΔEatom ≈ −1.89 eV, Eγ ≈ +1.89 eV and λ ≈ 656 nm: emission."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "พลังงานโฟตอนกับผลต่างระดับ",
+            "en": "Photon energy and the level difference"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "formula-photon"
+          }
+        }
+      ],
+      "after": {
+        "th": "ถ้าเครื่องหมายยังสับสน ให้เขียน ΔEอะตอม แยกจาก Eγ คนละบรรทัด ก่อนใช้สูตรความยาวคลื่น",
+        "en": "If signs are unclear, write ΔEatom and Eγ on separate lines before using the wavelength equation."
+      }
+    },
+    {
+      "id": "paths-and-lines",
+      "title": {
+        "th": "หนึ่งอะตอมมีกี่โฟตอน แล้วหลายอะตอมมีกี่เส้น",
+        "en": "Photons from one atom versus lines from many atoms"
+      },
+      "summary": {
+        "th": "ทางตรง 3 → 1 ให้หนึ่งโฟตอน; ทางผ่าน 3 → 2 → 1 ให้สองโฟตอน แต่พลังงานรวมเท่ากัน\nอะตอมจำนวนมากที่เกิดได้ทั้งสองเส้นทางให้เส้นต่างกันสามเส้น อย่าสับสนจำนวนเส้นกับจำนวนโฟตอนในเหตุการณ์เดียว",
+        "en": "Direct 3 → 1 gives one photon; cascade 3 → 2 → 1 gives two, with the same total released energy.\nAcross many atoms following both paths, three distinct lines can occur. A line count is not the photon count in one decay event."
+      },
+      "story": {
+        "th": "ให้เลือกเดินทีละเส้นทางในรูป แล้วนับลูกศรว่าแต่ละอะตอมปล่อยกี่ครั้ง จากนั้นค่อยถามว่า “ถ้ามีอะตอมหลายตัวเดินคนละทาง เครื่องตรวจรวมจะเห็นเส้นใดบ้าง?”",
+        "en": "Follow one path at a time and count its arrows. Then ask: “If many atoms take different paths, which lines can the combined detector observe?”"
+      },
+      "action": {
+        "th": "ตอบคำถาม 4 แล้วใช้คำถาม 5 ตรวจพลังงานรวม ก่อนตอบคำถาม 6 สำหรับกรณีอะตอมจำนวนมาก",
+        "en": "Answer Question 4, check total energy in Question 5, then answer Question 6 for many atoms."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "รูปทางตรงและหลายขั้น · หัวข้อ 2",
+            "en": "Direct/cascade diagram · section 2"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "transition-paths"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 4–5",
+            "en": "Questions 4–5"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "cascade-count"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 6",
+            "en": "Question 6"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ensemble-lines"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "อะตอมเดียวเดิน 3 → 2 → 1 ปล่อยกี่โฟตอน? พลังงานรวมต่างจากทางตรงหรือไม่?",
+          "en": "How many photons does one atom emit on 3 → 2 → 1? Does total energy differ from the direct route?"
+        },
+        "answer": {
+          "th": "สองโฟตอน พลังงานรวม 1.889 + 10.200 = 12.089 eV เท่าทางตรง ต้องรวมพลังงาน ไม่ใช่รวมความยาวคลื่น",
+          "en": "Two photons. Their energies sum to 1.889 + 10.200 = 12.089 eV, equal to the direct route. Add energies, not wavelengths."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "สมการตรวจพลังงานรวม · คำถาม 5",
+            "en": "Energy-sum check · Question 5"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "cascade-conservation"
+          }
+        }
+      ],
+      "after": {
+        "th": "เมื่อผ่านแล้วค่อยเชื่อมไปว่า เส้นหนึ่งเส้นสัมพันธ์กับช่องว่างพลังงานคู่หนึ่ง ไม่ได้แปลว่าอะตอมหนึ่งตัวปล่อยทุกเส้นพร้อมกัน",
+        "en": "Then connect one spectral line with one level gap. One atom does not emit every possible line simultaneously."
+      }
+    },
+    {
+      "id": "series-rydberg",
+      "title": {
+        "th": "ดูระดับต่ำ แล้วจัดอนุกรมและเลือกสมการ",
+        "en": "Identify the lower level, then the series and equation"
+      },
+      "summary": {
+        "th": "การเปล่งออกที่ลงสู่ระดับปลายทางเดียวกันอยู่ในอนุกรมเดียวกัน: n = 1 ไลมาน, 2 บัลเมอร์, 3 พาเชน\n1/λ = R_H(1/nℓ² − 1/nᵤ²) โดย nᵤ > nℓ; nℓ คือระดับต่ำ และ nᵤ คือระดับสูง ใช้ λ เป็นเมตรเมื่อ R_H มีหน่วย m⁻¹",
+        "en": "Emission transitions ending at the same lower level belong to one series: n = 1 Lyman, 2 Balmer, 3 Paschen.\n1/λ = R_H(1/nℓ² − 1/nᵤ²), with nᵤ > nℓ; nℓ is lower and nᵤ is upper. Use metres when R_H is in m⁻¹."
+      },
+      "story": {
+        "th": "ใช้รูปเส้นสเปกตรัมถามว่า “หลายเส้นต่างกัน แต่ทำไมจึงเรียกอนุกรมเดียวกัน?” ให้ดูระดับปลายทาง แล้วเชื่อมที่มาของริดเบิร์กจากผลต่างพลังงานในหัวข้อ 4 ก่อนดูว่าลำดับในวงเล็บทำให้คำตอบเป็นบวก",
+        "en": "Use the spectrum: “Why are different lines grouped into one series?” Identify their final level, then connect the energy-gap derivation in section 4 to the Rydberg equation and the positive order of its terms."
+      },
+      "action": {
+        "th": "ทำคำถาม 7 เพื่อเลือกอนุกรม แล้วอ่านพิสูจน์ในหัวข้อ 4 และแก้คำถาม 8 เรื่องการสลับระดับต่ำ–สูง",
+        "en": "Use Question 7 to identify series, read the derivation in section 4, then correct the lower/upper-level order in Question 8."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ตำแหน่งเส้นสเปกตรัม · หัวข้อ 3",
+            "en": "Spectral-line positions · section 3"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "spectral-lines"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 7",
+            "en": "Question 7"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "name-series"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 8",
+            "en": "Question 8"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "rydberg-sign"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "5 → 2 อยู่อนุกรมใด? ในสูตรต้องใช้ 1/2² − 1/5² หรือกลับกัน?",
+          "en": "Which series contains 5 → 2? Is the bracket 1/2² − 1/5² or the reverse?"
+        },
+        "answer": {
+          "th": "บัลเมอร์ ใช้ 1/2² − 1/5² ซึ่งเป็นบวก สำหรับการเปล่งออก 2 คือระดับปลายทางที่ต่ำกว่า",
+          "en": "Balmer. Use 1/2² − 1/5², a positive quantity. For this emission, 2 is the lower final level."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "สูตรริดเบิร์กและพิสูจน์ก่อนหน้า · หัวข้อ 4",
+            "en": "Rydberg equation and preceding derivation · section 4"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "formula-rydberg"
+          }
+        }
+      ],
+      "after": {
+        "th": "ใช้ค่าคงตัวตามโจทย์แต่ละข้อให้สอดคล้องกัน และระบุอนุกรมก่อนสรุปช่วงรังสี บัลเมอร์ไม่ได้มีเฉพาะเส้นที่ตามองเห็น",
+        "en": "Use each problem’s constants consistently. Identify the series before the spectral region: not every Balmer line is visible."
+      }
+    },
+    {
+      "id": "example-and-limit",
+      "title": {
+        "th": "จากเส้นหนึ่งเส้นไปถึงขอบเขตของอนุกรม",
+        "en": "From one line to the limits of a series"
+      },
+      "summary": {
+        "th": "เมื่อระดับต่ำคงที่ ระดับสูงมากขึ้นทำให้ช่องว่างพลังงานมากขึ้นและ λ สั้นลง\nเส้นยาวที่สุดมาจากระดับสูงที่ติดกัน ส่วนขีดจำกัดคลื่นสั้นเกิดเมื่อระดับสูงเข้าใกล้อนันต์ ไม่ใช่ค่าของทุกเส้นในอนุกรม",
+        "en": "With the lower level fixed, a higher upper level gives a larger energy gap and shorter λ.\nThe longest wavelength comes from the next level above it; the short-wavelength limit occurs as the upper level tends to infinity. Individual lines do not all have this limiting wavelength."
+      },
+      "story": {
+        "th": "พาทำตัวอย่าง 19.4 จาก 4 ลง 2 แล้วถามว่า “ถ้าเริ่มสูงขึ้นอีกแต่ยังลง 2 เหมือนเดิม λ จะยาวขึ้นหรือสั้นลง?” ให้เทียบเส้นแรกกับเส้นที่ชิดกันใกล้ขีดจำกัดในรูป",
+        "en": "Work through Example 19.4 for 4 → 2: “If the initial level rises but the final level remains 2, does λ become longer or shorter?” Compare the first line with the converging lines near the limit."
+      },
+      "action": {
+        "th": "ทำตัวอย่าง 19.4 ก–ข แล้วลองคำถาม 9 หาขีดจำกัดของบัลเมอร์ พร้อมเปรียบเทียบกับ 3 → 2",
+        "en": "Complete Example 19.4(a)–(b), then use Question 9 to find the Balmer limit and compare it with 3 → 2."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ตัวอย่าง 19.4 ก–ข",
+            "en": "Example 19.4(a)–(b)"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ipst-example-19-4a"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 9",
+            "en": "Question 9"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "balmer-limit"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ขีดจำกัดคลื่นสั้นของบัลเมอร์ประมาณเท่าไร? เส้น 3 → 2 ยาวกว่าหรือสั้นกว่า?",
+          "en": "Approximately what is the Balmer short-wavelength limit? Is 3 → 2 longer or shorter?"
+        },
+        "answer": {
+          "th": "ประมาณ 364.5 nm ส่วน 3 → 2 ประมาณ 656 nm จึงยาวกว่า ตามช่วง 400–700 nm ที่ใบใช้ ขีดจำกัดนี้อยู่นอกแสงมองเห็น",
+          "en": "About 364.5 nm. The 3 → 2 line is about 656 nm and is longer. With the sheet’s approximate 400–700 nm visible band, the limit is outside the visible range."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ชวนคิด: 7 → 2",
+            "en": "Think: 7 → 2"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ipst-think-77"
+          }
+        }
+      ],
+      "after": {
+        "th": "ใช้ชวนคิด 7 → 2 ประมาณ 397 nm ตรวจว่าเด็กไม่เหมารวมว่าบัลเมอร์ทุกเส้นอยู่ช่วง 400–700 nm การเปรียบเทียบนี้ใช้ขอบเขตโดยประมาณที่ระบุในใบ",
+        "en": "Use the 7 → 2 line near 397 nm to check that Balmer is not equated with the 400–700 nm band. This comparison uses the sheet’s stated approximate limits."
+      }
+    },
+    {
+      "id": "initial-state",
+      "title": {
+        "th": "อ่านชนิดอะตอมและระดับเริ่มต้นก่อนคำนวณ",
+        "en": "Read the atom and initial state first"
+      },
+      "summary": {
+        "th": "อะตอมสมมติให้ใช้ค่าระดับจากแผนภาพ ส่วนสูตร −13.6/n² eV ในใบนี้เป็นของไฮโดรเจน\nเริ่มที่ระดับใดต้องพิจารณาเส้นทางจากระดับนั้น การดูดกลืนโฟตอนเดี่ยวในแบบจำลองอุดมคติต้องมีพลังงานตรงช่องว่างที่อนุญาต",
+        "en": "For a hypothetical atom, use its diagram’s level values. The sheet’s −13.6/n² eV formula is for hydrogen.\nConsider paths from the stated initial level. Ideal single-photon line absorption requires the matching allowed energy gap."
+      },
+      "story": {
+        "th": "ก่อนแทนสูตรให้ถามว่า “ข้อนี้เป็นไฮโดรเจนหรืออะตอมสมมติ และเริ่มอยู่ชั้นไหน?” ในข้อ 5 ให้ขีดเฉพาะลูกศรที่เริ่มจาก 2 แล้วกลับไปใช้ไฮโดรเจนในข้อ 6 ข เปรียบเทียบสามการเปลี่ยนระดับในตาราง",
+        "en": "Before substituting, ask: “Is this hydrogen or a hypothetical atom, and where does it start?” In Q5 mark only the downward path from 2; return to hydrogen in Q6(b) and compare the three table rows."
+      },
+      "action": {
+        "th": "ทำแบบฝึกหัด 19.1 ข้อ 5 และตารางข้อ 6 ข ให้ครบแต่ละแถว แล้วลองคำถาม 10 ด้วยเหตุผลสั้น ๆ",
+        "en": "Complete Exercise 19.1 Q5 and every row of Q6(b), then give a brief reason for Question 10."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "แบบฝึกหัด 19.1 · ข้อ 5",
+            "en": "Exercise 19.1 · Q5"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ipst-exercise-5"
+          }
+        },
+        {
+          "label": {
+            "th": "แบบฝึกหัด 19.1 · ข้อ 6 ข",
+            "en": "Exercise 19.1 · Q6(b)"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "exercise-six"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 10",
+            "en": "Question 10"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "absorption-match"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "อะตอมสมมติเริ่ม n = 2 ที่ −3 eV และระดับล่างเป็น −7 eV จะปล่อยโฟตอนกี่ eV?",
+          "en": "A hypothetical atom starts at n = 2 with −3 eV; the lower level is −7 eV. What photon energy can it emit?"
+        },
+        "answer": {
+          "th": "4 eV จาก −3 − (−7) ใช้ค่าจากรูป ไม่ใช้สูตรไฮโดรเจน และไม่นับการเปลี่ยนระดับที่เริ่มจาก n = 3",
+          "en": "4 eV from −3 − (−7). Use the diagram, not hydrogen’s formula, and do not count transitions starting from n = 3."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "คำถาม 11: ย้อนหาระดับเริ่มต้น",
+            "en": "Question 11: infer the initial level"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "infer-level"
+          }
+        }
+      ],
+      "after": {
+        "th": "ถ้าทำตารางได้แล้ว ใช้คำถาม 11 ฝึกย้อนจากพลังงานโฟตอนกลับไปหาระดับเริ่มต้น ส่วนคนที่ยังติดให้แยกหา Eγ ก่อนหา λ",
+        "en": "Once the table is secure, use Question 11 to work backward from photon energy. If still unsure, separate finding Eγ from finding λ."
+      }
+    },
+    {
+      "id": "cloud-model",
+      "title": {
+        "th": "เก็บแนวคิดพลังงานไว้ เปลี่ยนภาพของอิเล็กตรอน",
+        "en": "Keep the energy idea; revise the electron picture"
+      },
+      "summary": {
+        "th": "กลุ่มหมอกแทนความน่าจะเป็นของการตรวจพบ ไม่ใช่เนื้อหมอกหรือรอยทางโคจร\nยอดกราฟความน่าจะเป็นตามระยะใกล้ a₀ ไม่ได้แปลว่าพบแน่นอนที่ระยะนั้น แบบจำลองควอนตัมยังมีระดับพลังงานไม่ต่อเนื่องโดยไม่ต้องมีวงกลมแน่นอน",
+        "en": "An electron cloud represents detection probability, not a fog substance or an orbital trail.\nA radial-probability peak near a₀ does not give certainty at that radius. Quantum states can have discrete energies without definite circular trajectories."
+      },
+      "story": {
+        "th": "ชี้ภาพจุดแล้วถามว่า “จุดหลายจุดแปลว่ามีอิเล็กตรอนหลายตัวหรือเป็นผลแทนการตรวจพบซ้ำ?” จากนั้นให้เทียบกับวงกลมแบบโบร์ และแยกสิ่งที่ยังใช้ได้คือระดับพลังงานกับโฟตอน ออกจากภาพเส้นทางที่ไม่ควรยึดเป็นจริง",
+        "en": "Point to the dots: “Do many dots mean many electrons, or repeated detection possibilities?” Compare the cloud with Bohr’s circle, retaining energy levels and photon gaps while revising the trajectory picture."
+      },
+      "action": {
+        "th": "อ่านภาพและคำอธิบายในหัวข้อ 7 แล้วตอบคำถาม 12–13 เป็นประโยคสั้นที่แก้ความเข้าใจผิดให้ตรงจุด",
+        "en": "Read the figures and explanations in section 7, then answer Questions 12–13 with short statements correcting the misconceptions."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ภาพความน่าจะเป็น · หัวข้อ 7",
+            "en": "Probability diagram · section 7"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "electron-cloud"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 12",
+            "en": "Question 12"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "cloud-meaning"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 13",
+            "en": "Question 13"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "bohr-vs-quantum"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "พบจุดหนาแน่นใกล้บริเวณหนึ่ง แปลว่าต้องพบอิเล็กตรอนที่จุดนั้นแน่นอนหรือไม่?",
+          "en": "Does a dense region of dots mean an electron must be found at a particular point there?"
+        },
+        "answer": {
+          "th": "ไม่ใช่ เป็นการแทนโอกาสพบสูงกว่า ไม่ใช่ความแน่นอน 100% และไม่ใช่เส้นทางการวิ่งของอิเล็กตรอน",
+          "en": "No. It represents greater detection probability, not 100% certainty or a trajectory."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "กลับไปเชื่อมระดับพลังงานกับโฟตอน",
+            "en": "Revisit the connection between levels and photons"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "formula-photon"
+          }
+        }
+      ],
+      "after": {
+        "th": "รายละเอียดรูปแบบ 2s/2p และฟังก์ชันคลื่นอ่านต่อจากใบเต็มได้ เป้าหมายช่วงนี้คือแยกความน่าจะเป็นออกจากวงโคจรแน่นอน",
+        "en": "Read the full sheet for further 2s/2p and wavefunction detail. The immediate goal is distinguishing probability from a definite orbit."
+      }
+    }
+  ],
+  "finish": {
+    "th": "ก่อนคำนวณให้ไล่: อะตอมชนิดใด → เริ่มระดับใด → ดูดกลืนหรือเปล่งออก → ช่องว่างพลังงาน → ความยาวคลื่น → อนุกรม แล้วตรวจว่าคำตอบกำลังนับโฟตอนของหนึ่งเหตุการณ์หรือเส้นจากหลายอะตอม",
+    "en": "Before calculating, identify the atom, initial level, absorption/emission, energy gap, wavelength and series. Check whether the question counts photons in one event or spectral lines from many atoms."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "ไฮโดรเจนหลายอะตอมเริ่ม n = 3 และเกิดได้ทั้งทางตรงและทางผ่าน จะพบได้กี่เส้น? อะตอมเดียวทาง 3 → 2 → 1 ปล่อยกี่โฟตอน?",
+      "en": "Many hydrogen atoms start at n = 3 and follow direct or cascade paths. How many distinct lines can appear? How many photons come from one atom on 3 → 2 → 1?"
+    },
+    "answer": {
+      "th": "พบได้สามเส้นจาก 3 → 1, 3 → 2 และ 2 → 1 แต่อะตอมเดียวที่เดินทางผ่านปล่อยสองโฟตอน ต้องแยกสิ่งที่กำลังนับ",
+      "en": "Three lines can appear: 3 → 1, 3 → 2 and 2 → 1. One atom on the cascade emits two photons. Distinguish the quantities being counted."
+    }
+  }
+}

@@ -6,9 +6,13 @@
  function line(c,x1,y1,x2,y2,color,width=2,dash=[]){c.beginPath();c.strokeStyle=color;c.lineWidth=width;c.setLineDash(dash);c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();c.setLineDash([]);}
  function arrow(c,x1,y1,x2,y2,color){line(c,x1,y1,x2,y2,color,3);const a=Math.atan2(y2-y1,x2-x1);c.fillStyle=color;c.beginPath();c.moveTo(x2,y2);c.lineTo(x2-12*Math.cos(a-.4),y2-12*Math.sin(a-.4));c.lineTo(x2-12*Math.cos(a+.4),y2-12*Math.sin(a+.4));c.closePath();c.fill();}
  function label(c,t,x,y,font){c.font=`600 ${font}px Tahoma,Arial,sans-serif`;c.textBaseline='middle';c.fillStyle='#f5faf5e8';c.fillRect(x-3,y-font*.65,c.measureText(t).width+6,font*1.3);c.fillStyle='#294d40';c.fillText(t,x,y);}
- function fronts(c,dir,spacing,time,color,clip){
+ function fronts(c,dir,spacing,time,color,clip,ripples=false){
   c.save();c.beginPath();c.rect(...clip);c.clip();c.translate(400,245);c.rotate(Math.atan2(dir.y,dir.x));c.strokeStyle=color;c.globalAlpha=.65;c.lineWidth=1.2;
-  for(const trough of [false,true]){c.setLineDash(trough?[4,5]:[]);for(let u=-1200+((time+(trough ? .5 : 0))%1)*spacing;u<1200;u+=spacing){c.beginPath();c.moveTo(u,-1200);c.lineTo(u,1200);c.stroke();}}c.restore();
+  // Reflection uses crest-only ripples: a soft grey edge and a narrow water highlight.
+  for(const trough of ripples?[false]:[false,true]){c.setLineDash(trough?[4,5]:[]);for(let u=-1200+((time+(trough ? .5 : 0))%1)*spacing;u<1200;u+=spacing){
+   if(ripples){line(c,u,-1200,u,1200,'#82949b',2.4);line(c,u-1.8,-1200,u-1.8,1200,'#ffffff',1.2);}
+   else{c.beginPath();c.moveTo(u,-1200);c.lineTo(u,1200);c.stroke();}
+  }}c.restore();
  }
  function build(mode,p){const re=new Float32Array(88000),im=new Float32Array(88000),solid=new Uint8Array(88000);
   for(let y=0;y<220;y++)for(let x=0;x<400;x++){const i=y*400+x;let q;
@@ -21,8 +25,9 @@
   for(let i=0;i<88000;i++){const v=field.re[i]*co+field.im[i]*si,w=Math.abs(v),rgb=v>=0?positive:negative;for(let k=0;k<3;k++)out[4*i+k]=field.solid[i]?wall[k]:bg[k]+(rgb[k]-bg[k])*w;out[4*i+3]=255;}oc.putImageData(pixels,0,0);c.drawImage(off,0,0,800,440);
  }
  function rays(c,mode,p,time,font,v){const a=M.rad(p.angle),inc={x:Math.sin(a),y:Math.cos(a)},refl={x:Math.sin(a),y:-Math.cos(a)},r=mode==='refraction'?M.refract(p):null,spacing=mode==='refraction'?50*p.wavelength/600/p.n1:50;
-  if(v.field)heat(c,mode,p,time);else{c.fillStyle='#f4f8f5';c.fillRect(0,0,800,440);c.fillStyle='#dce9de';c.fillRect(0,245,800,195);}
-  if(v.fronts){fronts(c,inc,spacing,time,blue,[0,0,800,245]);if(mode==='reflection'||r.tir)fronts(c,refl,spacing,time,orange,[0,0,800,245]);else{const b=M.rad(r.angle);fronts(c,{x:Math.sin(b),y:Math.cos(b)},50*p.wavelength/600/p.n2,time,green,[0,245,800,195]);}}
+  const ripples=mode==='reflection';
+  if(v.field&&!ripples)heat(c,mode,p,time);else{c.fillStyle=ripples?'#eef3f4':'#f4f8f5';c.fillRect(0,0,800,440);c.fillStyle='#dce9de';c.fillRect(0,245,800,195);}
+  if(v.fronts){fronts(c,inc,spacing,time,blue,[0,0,800,245],ripples);if(ripples||r.tir)fronts(c,refl,spacing,time,orange,[0,0,800,245],ripples);else{const b=M.rad(r.angle);fronts(c,{x:Math.sin(b),y:Math.cos(b)},50*p.wavelength/600/p.n2,time,green,[0,245,800,195]);}}
   line(c,0,245,800,245,'#70897b',3);if(!v.variables)return;
   line(c,400,28,400,420,'#4b6a58',1.5,[7,6]);arrow(c,400-210*inc.x,245-210*inc.y,400,245,blue);
   if(mode==='reflection'||r.tir){arrow(c,400,245,400+210*refl.x,245+210*refl.y,orange);c.beginPath();c.strokeStyle=orange;c.arc(400,245,91,-Math.PI/2,-Math.PI/2+a);c.stroke();label(c,'θᵣ',452,177,font);}else{const b=M.rad(r.angle);arrow(c,400,245,400+170*Math.sin(b),245+170*Math.cos(b),green);c.beginPath();c.strokeStyle=green;c.arc(400,245,62,Math.PI/2-b,Math.PI/2);c.stroke();label(c,'θ₂',452,300,font);}

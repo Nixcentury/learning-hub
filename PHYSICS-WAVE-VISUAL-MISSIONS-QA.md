@@ -7,7 +7,11 @@ Base main: `c45830917c76b002f53edc4fdc894721fcdcd4b5` (PR #58). Existing learnin
 
 ## Visible changes
 
-10.1 defaults to a wave field **and** solid crest / dashed trough fronts in all four modes. Reflection and refraction now have signed scalar fields alongside their rays, normal and angle labels. Diffraction pairs its existing Fraunhofer field with planar incoming and circular outgoing front lines, including the phase reversal in side lobes. Layers can be hidden separately. Animation front positions wrap by cycle, so fronts remain present after long playback.
+**Reflection readability update, 2026-10-30:** reflection now has a plain background and monochrome crest-only ripples, with a soft grey edge and a narrow white highlight. The blue/orange field and extra dashed trough fronts are removed from this mode. Coloured incident/reflected arrows, the normal and angle markers remain. The reflection controls show ripples and variables, without a field toggle that no longer applies. The legend and model-scope text are updated in TH/EN; changed script URLs are versioned for cached browsers. Other modes retain their existing fields/fronts.
+
+Checks for this small visual update: `node --test scripts/wave-mini-sim.test.mjs scripts/wave-visual-missions.test.mjs` passed **17/17**. `pnpm build` passed content validation, TypeScript, Vite and the Pages copy check (**650** public files). `git diff --check` passed. Chrome preview of the authored simulation covered 0°/35°/75° readouts, paused reflection rendering, ripple visibility, reset, TH/EN and mode switching. Refraction retained its coloured field and controls. A screenshot of the default 35° reflection was inspected and saved under ignored `qa-output/reflection-ripples/`. No physical iPad/Safari or post-merge live deployment was tested for this update.
+
+The earlier upgrade added signed scalar fields alongside the rays, normal and angle labels. Refraction retains that field. Diffraction pairs its existing Fraunhofer field with planar incoming and circular outgoing front lines, including the phase reversal in side lobes. Layers can be hidden separately. Animation front positions wrap by cycle, so fronts remain present after long playback.
 
 Interference reuses the existing two-source water renderer and exact geometry. Controls include phase 0°/180°, nodal/antinodal hyperbolas, paths, variables, L and a freely movable P. Click the field, drag the 44px P handle, use arrow keys or use the position sliders. The exact half-wavelength side example remains available. Arbitrary P may be between loci; neither the readout nor grading silently rounds it to an exact node.
 
@@ -40,7 +44,7 @@ Formula/problem/solution disclosures and free exploration remain. Per-mode setti
 
 ## Physics limits
 
-Reflection/refraction fields illustrate scalar wave geometry with equal transmitted amplitude and a +1 reflected coefficient. They are not a Fresnel amplitude/phase calculation; media are stationary with fixed nondispersive indices. Tangential phase follows Snell’s law and frequency is unchanged. TIR shows no propagating transmitted ray; evanescent fields are omitted.
+Reflection ripples show incident/reflected wavefront geometry rather than the combined displacement. The refraction field illustrates scalar wave geometry with equal transmitted amplitude and a +1 reflected coefficient for TIR. It is not a Fresnel amplitude/phase calculation; media are stationary with fixed nondispersive indices. Tangential phase follows Snell’s law and frequency is unchanged. TIR shows no propagating transmitted ray; evanescent fields are omitted.
 
 Water uses two coherent sources with equal received amplitudes and no spreading loss. Exact path difference is `|r₂−r₁|`. `d|sin θ|` requires L ≫ d; `d|x|/L` additionally requires |x| ≪ L. All three values are displayed together. Scope and approximation conditions are visible in both languages.
 

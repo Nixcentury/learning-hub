@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
 import { reset, good, emulatorOrigin, emulatorProject, mockToken } from './fixtures/classroom-emulator.mjs';
+import { buildSubmissionRules } from './build-classroom-submission-rules.mjs';
+import { buildAssignmentRules } from './build-classroom-assignment-rules.mjs';
+import { createClassroomSubmissions } from '../js/classroom-submission-service.js';
 import { buildMonitorRules } from './build-classroom-monitor-rules.mjs';
 import { createRoomUpdates, joinRoomUpdates } from '../js/classroom-model.js';
 import { createClassroomMonitor } from '../js/classroom-monitor-service.js';
@@ -13,7 +16,8 @@ const require = createRequire(import.meta.url), moduleRoot = process.env.FIREBAS
 const { initializeApp, deleteApp } = require(moduleRoot + '/app');
 const sdk = require(moduleRoot + '/database');
 const rules = JSON.parse(await readFile(new URL('../firebase/classroom-phase1.merged-draft.json', import.meta.url), 'utf8'));
-rules.rules.classroomMonitorV1 = buildMonitorRules(); await reset(rules);
+rules.rules.classroomMonitorV1 = buildMonitorRules();
+rules.rules.classroomAssignmentsV1 = buildAssignmentRules(); rules.rules.classroomSubmissionsV1 = buildSubmissionRules(); await reset(rules);
 const roomId = 'r_' + 'a'.repeat(32), stamp = { '.sv': 'timestamp' };
 await good('teacher','PATCH','classroomV1',createRoomUpdates('teacher','SDK lesson',{roomId,code:'ABCD2345'},stamp));
 await good('student','PATCH','classroomV1',joinRoomUpdates('student',roomId,'ABCD2345','SDK Student',stamp));
@@ -45,6 +49,32 @@ async function until(predicate, label) {
 try {
   const teacher = client('teacher',true), student = client('student',false);
   await until(()=>teacher.state.connected && student.state.connected && teacher.state.rooms[0]?.ownerUid && student.state.rooms[0]?.ownerUid,'room discovery');
+  const assignmentId='a_'+'b'.repeat(32), revision='c'.repeat(64);
+  const item={version:1,ownerUid:'teacher',title:'SDK homework',instructions:'',dueAt:0,targetHash:'#content/sdk-quiz',contentId:'sdk-quiz',quizTitleTh:'ทดสอบ',quizTitleEn:'Test',status:'published',createdAt:stamp,updatedAt:stamp,publishedAt:stamp,revision:1};
+  await good('teacher','PUT',`classroomAssignmentsV1/items/${roomId}/${assignmentId}`,item);
+  const homeworkServices=[];
+  function homeworkClient(client,uid,isTeacher) {
+    const target=path=>sdk.ref(client.db,path.startsWith('@classroom/')?'classroomV1/'+path.slice(11):path.startsWith('@assignments/')?'classroomAssignmentsV1/'+path.slice(13):'classroomSubmissionsV1/'+path);
+    const service=createClassroomSubmissions({readQuiz:()=>({questions:[{id:'one',type:'choice',answer:'a',choices:[{id:'a'},{id:'b'}]}]}),freezeQuiz:async()=>({version:1,contentId:'sdk-quiz',targetHash:'#content/sdk-quiz',revision,html:'<quiz>',questionCount:1}),io:{
+      watch:(path,fn,fail)=>sdk.onValue(target(path),snapshot=>fn(snapshot.val()),fail),connected:fn=>sdk.onValue(sdk.ref(client.db,'.info/connected'),snapshot=>fn(snapshot.val()===true)),get:async path=>(await sdk.get(target(path))).val(),timestamp:sdk.serverTimestamp,
+      transaction:async(path,change)=>{const result=await sdk.runTransaction(target(path),change,{applyLocally:false});return{committed:result.committed};},
+    }});
+    service.setContext({status:'signed-in',user:{uid}},{uid,status:'ready',isTeacher,systemRole:isTeacher?'teacher':'student'}, {uid,rooms:[{id:roomId,status:'ready',ownerUid:'teacher',membership:isTeacher?'owner':'student',items:[{id:assignmentId,...item}]}]},roomId);
+    homeworkServices.push(service);return service;
+  }
+  try {
+    const teacherWork=homeworkClient(teacher,'teacher',true),studentWork=homeworkClient(student,'student',false);
+    await until(()=>teacherWork.getState().connected&&studentWork.getState().connected,'homework connection');
+    await teacherWork.prepare(assignmentId);const binding=await studentWork.open(assignmentId);
+    const progress={version:2,identityKey:'student',contentId:'sdk-quiz',answers:{one:'a'},giveUps:{},masteredIds:[],elapsedMs:1234};
+    await studentWork.quizCommand('save',binding,{value:progress,storageRevision:0});
+    await studentWork.quizCommand('save',binding,{value:progress,storageRevision:1});
+    const outcomes=await Promise.all([studentWork.quizCommand('submit',binding,{value:progress,submissionId:'d'.repeat(32)}),studentWork.quizCommand('submit',binding,{value:progress,submissionId:'e'.repeat(32)})]);
+    assert.equal(outcomes[0].grade.score,1);assert.equal(outcomes[0].result.submittedAt,outcomes[1].result.submittedAt);
+    await until(()=>teacherWork.getState().grades[assignmentId]?.rows[0]?.grade?.score===1,'teacher homework score');
+    assert.equal(await good('EMULATOR_ADMIN','GET','quizProgress'),null);
+    console.log('PASS real SDK homework snapshot, revisioned autosave and concurrent final-submit retries retain one immutable result');
+  } finally {for(const service of homeworkServices)service.dispose();}
   teacher.service.selectRoom(roomId); await teacher.service.command('lock',{roomId});
   await until(()=>student.state.lesson,'lesson available'); await student.service.command('join',{roomId});
   await until(()=>teacher.state.rows[0]?.status === 'visible','first online connection');

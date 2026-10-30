@@ -97,3 +97,13 @@
 .homework-detail{margin:18px 0;padding:22px;border:1px solid #a9c5e8;border-radius:16px;background:#f5f9ff;min-width:0}
 .homework-detail p{line-height:1.8;font-size:13px;overflow-wrap:anywhere}.homework-instructions{white-space:pre-wrap}.homework-share{margin:18px 0 10px}
 @media(max-width:600px){.classroom-assignments{padding:18px}.homework-editor,.homework-detail{padding:16px}.homework-heading>.classroom-button{width:100%}}
+
+.homework-results { margin-top: 1rem; padding-top: .8rem; border-top: 1px solid #d9e5ee; }
+.homework-results h4 { margin: 0 0 .6rem; font-size: 1.05rem; }
+.homework-results-scroll { overflow-x: auto; max-width: 100%; }
+.homework-results-table { width: 100%; border-collapse: collapse; text-align: left; font-size: .92rem; }
+.homework-results-table caption { text-align: left; padding: .4rem 0; font-weight: 600; }
+.homework-results-table th, .homework-results-table td { padding: .7rem .6rem; border-bottom: 1px solid #d9e5ee; vertical-align: top; }
+.homework-results-table th { background: #f1f6fb; }
+.homework-results-table th:first-child { min-width: 10rem; }
+.homework-submission-status { font-weight: 700; }

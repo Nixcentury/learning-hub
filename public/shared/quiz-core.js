@@ -1,3 +1,5 @@
+import { gradeHomework, homeworkStorageKey } from './classroom-submission-model.js';
+import { readHomeworkQuiz } from './classroom-submission-quiz.js';
 import { captureVariantSource, receiveTemporaryQuiz } from './quiz-variant-model.js?v=practice-20261028';
 import { QuizEvidenceManager } from "./quiz-evidence.js?v=mixed-reasoning-20261030";
 import { createNotebookBackupUi } from "./notebook-backup-ui.js?v=6c-backup-2";
@@ -32,6 +34,16 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   const printToggle = document.querySelector("[data-print-selection-toggle]");
   const pendingStorageRequests = new Map();
   const temporary = new URLSearchParams(location.search).get('temporary') === '1';
+  const homeworkMode = !temporary && new URLSearchParams(location.search).get('homework') === '1';
+  let homework = null, homeworkResult = null, homeworkGrade = null, homeworkClosed = false;
+  let homeworkStorageRevision = 0, homeworkInitialLoad = null, homeworkSending = false, homeworkFeedback = '';
+  const homeworkSubmissionId = homeworkMode ? crypto.randomUUID().replaceAll('-', '') : '';
+  let homeworkBanner = null;
+  if (homeworkMode) {
+    homeworkBanner = document.createElement('aside'); homeworkBanner.className = 'quiz-homework-banner'; homeworkBanner.dataset.homeworkBanner = '';
+    homeworkBanner.setAttribute('aria-label', 'Homework'); loading?.before(homeworkBanner);
+    document.querySelectorAll('[data-restart-latest]').forEach(node => { node.hidden = true; });
+  }
   let variantSources = new Map();
   if (temporary) {
     document.body.dataset.temporaryQuiz = '';
@@ -165,7 +177,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   }
 
   function storageKey() {
-    return `learning-hub-quiz:v1:${state.identityKey}:${state.contentId}`;
+    return homeworkMode && homework ? homeworkStorageKey(state.identityKey, homework) : `learning-hub-quiz:v1:${state.identityKey}:${state.contentId}`;
   }
 
   function snapshot({ includeLocalEvidence = false } = {}) {
@@ -309,6 +321,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   }
 
   function requestCloud(type, value) {
+    if (homeworkMode && type === "learning-hub-quiz-load" && homeworkInitialLoad) { const initial = homeworkInitialLoad; homeworkInitialLoad = null; return Promise.resolve(initial); }
     if (temporary) return null;
     if (parent === window || state.identityKey === "guest") return Promise.resolve(null);
     const requestId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
@@ -327,7 +340,8 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
           resolve(result);
         },
       });
-      parent.postMessage({ type, requestId, uid, contentId, value,
+      parent.postMessage({ type: homeworkMode ? ({ 'learning-hub-quiz-load': 'learning-hub-homework-load', 'learning-hub-quiz-save': 'learning-hub-homework-save' })[type] || type : type, requestId, uid, contentId, value,
+        ...(homeworkMode ? { storageRevision: homeworkStorageRevision, submissionId: homeworkSubmissionId } : {}),
         ...(bankSelection && type === 'learning-hub-quiz-save' ? { bankExpectedRevision: bankReplacementBase ?? state.bankRevision } : {}) }, targetOrigin);
     });
   }
@@ -348,6 +362,10 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       state.storageStatus = localSaveFailed ? "memory" : "cloud-error";
       renderStorageStatus();
       return;
+    }
+    if (homeworkMode && homeworkResult) {
+      pendingRemote = null; cloudReady = true; unsyncedChanges = false;
+      state.storageStatus = 'cloud'; applyHomeworkResult(); render(); return;
     }
     const remote = result.value;
     if (bankSelection && bankReplacementBase !== undefined) {
@@ -389,6 +407,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       saveLocalNow();
       state.storageStatus = localSaveFailed ? "memory" : "cloud";
     }
+    if (homeworkMode) applyHomeworkResult();
     render();
   }
 
@@ -417,6 +436,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   }
 
   async function saveCloudNow() {
+    if (homeworkMode && (homeworkResult || homeworkClosed)) return null;
     if (temporary) return undefined;
     if (!contentReady || !cloudReady || cloudLoadPending || state.identityKey === "guest") return null;
     const epoch = identityEpoch;
@@ -427,6 +447,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     renderStorageStatus();
     const result = await requestCloud("learning-hub-quiz-save", value);
     if (epoch !== identityEpoch || sequence !== writeSequence) return result;
+    if (homeworkMode && homeworkResult) { state.storageStatus = 'cloud'; renderStorageStatus(); return result; }
     if (result?.ok) {
       bankReplacementBase = undefined;
       syncBase = progressSignature(value);
@@ -436,6 +457,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     state.storageStatus = localSaveFailed ? "memory" : result?.ok
       ? (revision === changeRevision ? "cloud" : "syncing") : "cloud-error";
     renderStorageStatus();
+    renderHomeworkBanner();
     return result;
   }
 
@@ -446,6 +468,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   }
 
   function persist() {
+    if (homeworkMode && (homeworkResult || homeworkClosed)) return undefined;
     if (temporary) return undefined;
     markEdited();
     clearTimeout(localSaveHandle);
@@ -554,6 +577,62 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       window.MathJax.typesetClear?.([target]);
       window.MathJax.typesetPromise([target]).catch(() => {});
     }
+  }
+
+  function lockHomeworkControls() {
+    if (!homeworkMode || (!homeworkResult && !homeworkClosed)) return;
+    app.querySelectorAll('input,textarea,.quiz-option,[data-submit-all],[data-edit-results],[data-retry],[data-restart],[data-giveup-button],[data-hint-button],[data-try-again],[data-generate-variant],[data-retry-giveup]').forEach(node => { node.disabled = true; });
+  }
+  function applyHomeworkResult() {
+    if (!homeworkResult || homeworkGrade?.error) return;
+    state.answers = JSON.parse(homeworkResult.answersJson); state.giveUps = JSON.parse(homeworkResult.giveUpsJson);
+    state.masteredIds = homeworkGrade.rows.filter(row => row.correct).map(row => row.id);
+    state.view = 'results'; state.latestScore = { score: homeworkGrade.score, maxScore: homeworkGrade.maxScore, submittedAt: homeworkResult.submittedAt, status: 'homework-submitted' };
+    unsyncedChanges = false; syncBase = progressSignature(snapshot());
+    saveLocalNow();
+  }
+  function renderHomeworkBanner() {
+    if (!homeworkBanner) return;
+    const make = (tag, text) => { const node = document.createElement(tag); node.textContent = text; return node; };
+    homeworkBanner.replaceChildren(make('strong', homework?.title || label('การบ้าน', 'Homework')));
+    const status = homeworkResult ? homeworkGrade?.error ? label('ได้รับงานแล้ว แต่ยังตรวจคะแนนไม่ได้ ให้ติดต่อครู', 'Submission received. Ask your teacher to check the result.')
+      : label(`ส่งงานสำเร็จ · คะแนนคำตอบ ${homeworkGrade.score}/${homeworkGrade.maxScore}`, `Submitted · Answer score ${homeworkGrade.score}/${homeworkGrade.maxScore}`)
+      : homework?.preview ? label('ตัวอย่างชุดคำถามสำหรับครู · ไม่บันทึกคำตอบหรือส่งงาน', 'Teacher preview · Answers and submissions are not saved')
+      : homeworkClosed ? label('ครูปิดงานแล้ว ยังไม่ได้ส่งงาน', 'Assignment closed. No submission received.')
+      : homeworkSending ? label('กำลังรอระบบยืนยันการส่งงาน…', 'Waiting for submission confirmation…')
+      : label('ตรวจคำตอบและดูคะแนนก่อน แล้วกดส่งงานให้ครู ส่งได้หนึ่งครั้งต่อการบ้าน', 'Check your answers and review the score, then submit to your teacher. One final submission per assignment.');
+    const message = make('p', status); message.dataset.homeworkStatus = ''; message.setAttribute('role','status'); homeworkBanner.append(message);
+    if (homeworkResult) homeworkBanner.append(make('small', new Date(homeworkResult.submittedAt).toLocaleString(language() === 'en' ? 'en-GB' : 'th-TH', { timeZone: 'Asia/Bangkok' }) + label(' น. (เวลาไทย)', ' (Thailand time)')));
+    if (homeworkFeedback) {
+      const feedback = make('p', label('ยังไม่ยืนยันการส่งงาน ตรวจการเชื่อมต่อและลองอีกครั้ง หากงานปิดแล้วให้ติดต่อครู', 'Submission is not confirmed. Check your connection and retry. Contact your teacher if the assignment is closed.'));
+      feedback.setAttribute('role','alert'); homeworkBanner.append(feedback);
+    }
+    if (contentReady && !homeworkResult && !homeworkClosed && state.view === 'results' && state.latestScore) {
+      const send = make('button', label('ส่งงานให้ครู', 'Submit to teacher')); send.type = 'button'; send.className = 'quiz-submit-button'; send.dataset.homeworkSubmit = '';
+      send.disabled = homeworkSending || submissionBusy || cloudLoadPending || Boolean(pendingRemote) || !cloudReady;
+      send.addEventListener('click', () => void submitHomework()); homeworkBanner.append(send);
+    }
+    const back = make('button', label('กลับไปดูการบ้าน', 'Back to assignment')); back.type = 'button'; back.className = 'quiz-quiet-button'; back.dataset.homeworkBack = '';
+    back.addEventListener('click', () => parent.postMessage({ type: 'learning-hub-homework-back', uid: state.identityKey }, location.origin)); homeworkBanner.append(back);
+  }
+  async function submitHomework() {
+    if (!homeworkMode || homeworkResult || homeworkClosed || homeworkSending || submissionBusy || !cloudReady || pendingRemote || state.view !== 'results' || !state.latestScore) return;
+    const epoch = identityEpoch;
+    let grade;
+    try { grade = gradeHomework(state.questions, state.answers, state.giveUps); }
+    catch { homeworkFeedback = 'homework/invalid-answers'; renderHomeworkBanner(); return; }
+    if (!window.confirm(label(`ส่งงาน “${homework.title}” ให้ครูด้วยคะแนนคำตอบ ${grade.score}/${grade.maxScore} หรือไม่? ส่งแล้วแก้คำตอบไม่ได้`, `Submit “${homework.title}” with an answer score of ${grade.score}/${grade.maxScore} to your teacher? Answers cannot be changed after submission.`))) return;
+    homeworkSending = true; clearTimeout(cloudSaveHandle); homeworkFeedback = ''; app.inert = true; renderHomeworkBanner();
+    try {
+      flushLocal();
+      if (evidenceManager && !await evidenceManager.flushAll()) throw Error('homework/local-save-failed');
+      if (epoch !== identityEpoch) return;
+      const result = await requestCloud('learning-hub-homework-submit', snapshot());
+      if (epoch !== identityEpoch) return;
+      if (!result?.ok || !result.result) throw Error(result?.code || 'homework/unconfirmed');
+      applyHomeworkResult(); render();
+    } catch (failure) { if (epoch === identityEpoch) homeworkFeedback = failure.message; }
+    finally { if (epoch === identityEpoch) { homeworkSending = false; app.inert = false; renderHomeworkBanner(); lockHomeworkControls(); } }
   }
 
   function renderNavigation() {
@@ -685,6 +764,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       document.querySelector("[data-evidence-panel]"),
       question,
     );
+    lockHomeworkControls();
   }
 
   function renderStats() {
@@ -800,6 +880,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     });
     renderStorageStatus();
     typeset(app);
+    lockHomeworkControls();
   }
 
   function renderExam() {
@@ -874,10 +955,12 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     if (!contentRoot) return;
     if (state.view === "results") renderResults();
     else renderExam();
+    renderHomeworkBanner();
+    lockHomeworkControls();
   }
 
   function selectAnswer(questionId, optionId) {
-    if (state.masteredIds.includes(questionId) || state.giveUps[questionId]) return;
+    if ((homeworkMode && (homeworkResult || homeworkClosed)) || state.masteredIds.includes(questionId) || state.giveUps[questionId]) return;
     if (state.answers[questionId] !== optionId) {
       evidenceManager?.markContextChanged(questionId);
     }
@@ -1028,6 +1111,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     }
     const epoch = identityEpoch;
     submissionBusy = true;
+    if (homeworkMode) app.inert = true;
     const results = state.questions.map(resultFor);
     evidenceManager?.flushCurrent();
     const missing = evidenceManager?.missingForAnswered(results) || [];
@@ -1035,6 +1119,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     if (epoch !== identityEpoch) return;
     if (!accepted) {
       submissionBusy = false;
+      if (homeworkMode) app.inert = false;
       if (missing[0]) goTo(missing[0].index);
       return;
     }
@@ -1063,7 +1148,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       // AI availability never changes the deterministic answer score.
       evidenceManager?.reviewFailed?.(reviewableQuestions, error);
     } finally {
-      if (epoch === identityEpoch) submissionBusy = false;
+      if (epoch === identityEpoch) { submissionBusy = false; if (homeworkMode) app.inert = false; }
     }
 
     if (epoch !== identityEpoch) return;
@@ -1071,6 +1156,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     state.masteredIds = [
       ...new Set([...state.masteredIds, ...results.filter((result) => result.correct).map((result) => result.question.id)]),
     ];
+    if (homeworkMode) state.masteredIds = gradeHomework(state.questions, state.answers, state.giveUps).rows.filter(row => row.correct).map(row => row.id);
     const score = state.masteredIds.length;
     state.latestScore = {
       score,
@@ -1159,6 +1245,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   }
 
   function restart() {
+    if (homeworkMode) return;
     if (temporary) {
       if (submissionBusy) return;
       Object.assign(state, { answers: {}, giveUps: {}, hintLevels: {}, masteredIds: [], currentIndex: 0,
@@ -1250,7 +1337,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     evidenceManager?.dispose();
     const epoch = identityEpoch;
     evidenceManager = new QuizEvidenceManager({
-      contentId: state.bankRevision ? `${state.contentId}-r${state.bankRevision}` : state.contentId,
+      contentId: homeworkMode ? `homework-${homework.id}-r${homework.quizRevision}` : state.bankRevision ? `${state.contentId}-r${state.bankRevision}` : state.contentId,
       identityKey: state.identityKey,
       questions: state.questions,
       language,
@@ -1320,7 +1407,16 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     const epoch = identityEpoch;
     try {
       let root, bankResult;
-      if (temporary) {
+      if (homeworkMode) {
+        const context = await waitForBankContext();
+        homework = context.homework;
+        if (!homework || context.identity?.uid !== homework.uid || context.identity?.status !== 'signed-in') throw Error('Homework account changed');
+        state.identityKey = homework.uid; state.contentId = homework.contentId;
+        const initial = await requestCloud('learning-hub-quiz-load');
+        if (!initial?.ok) throw Error(initial?.code || 'Homework could not be loaded');
+        homeworkInitialLoad = initial;
+        root = readHomeworkQuiz(initial.quiz).root;
+      } else if (temporary) {
         const received = await receiveTemporaryQuiz(); root = received.root;
         document.documentElement.lang = received.language;
       } else if (bankSelection) {
@@ -1389,6 +1485,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
         markEdited(); saveLocalNow();
       }
       if (latestHubContext) applyHubContext(latestHubContext);
+      if (homeworkMode) { await loadCloud(); applyHomeworkResult(); }
       if (bankSelection) {
         document.querySelector('[data-summary-open]').hidden = true;
         document.querySelector('[data-print-mode="summary"]').hidden = true;
@@ -1444,6 +1541,12 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     if (temporary) { if (context?.language) setLanguage(context.language); return; }
     latestHubContext = context;
     bankContextWaiter?.(context);
+    if (homeworkMode && contentReady && context.identity?.uid !== homework?.uid) {
+      identityEpoch++; clearTimeout(cloudSaveHandle); cloudReady = false;
+      pendingStorageRequests.forEach(request => request.resolve({ ok: false, code: "homework/session-changed" })); pendingStorageRequests.clear();
+      app.inert = true; homeworkFeedback = "homework/session-changed";
+      renderHomeworkBanner(); return;
+    }
     const nextIdentity = context?.identity?.uid || "guest";
     if (context?.language && context.language !== language()) setLanguage(context.language);
     if (!contentReady || nextIdentity === state.identityKey) return;
@@ -1493,6 +1596,13 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     const request = pendingStorageRequests.get(event.data.requestId);
     if (!request || event.data.uid !== request.uid || event.data.contentId !== request.contentId) return;
     pendingStorageRequests.delete(event.data.requestId);
+    if (homeworkMode && event.data.ok) {
+      if (Number.isSafeInteger(event.data.storageRevision)) homeworkStorageRevision = event.data.storageRevision;
+      if (event.data.action === 'load' || event.data.action === 'submit') {
+        homeworkResult = event.data.result || null; homeworkGrade = event.data.grade || null;
+        if (event.data.action === 'load') homeworkClosed = event.data.closed === true;
+      }
+    }
     request.resolve(event.data);
   });
 

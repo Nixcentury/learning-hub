@@ -27,6 +27,10 @@ import { createFirebaseClassroomMonitor } from './classroom-monitor-firebase.js'
 import { createMonitorView } from './classroom-monitor-view.js';
 import { createFirebaseClassroomAssignments } from './classroom-assignment-firebase.js';
 import { createAssignmentNotice } from './classroom-assignment-view.js';
+import { createFirebaseClassroomSubmissions } from './classroom-submission-firebase.js';
+import { freezeHomeworkQuiz } from './classroom-submission-quiz.js';
+import { readHomeworkQuiz } from '../public/shared/classroom-submission-quiz.js';
+import { installHomeworkBridge } from './classroom-submission-bridge.js';
 import { assignmentHash } from './classroom-assignment-model.js';
 import {
   createHubContextMessage,
@@ -119,11 +123,20 @@ let classroomPageRevision = 0;
 let classroomRooms = null;
 let classroomMonitorState = null;
 let monitorView = null;
+let submissionState = null;
+const submissions = createFirebaseClassroomSubmissions({
+  freezeQuiz: async item => freezeHomeworkQuiz(item, await navigation.loadCatalog(), new URL('./', location.href).href),
+  readQuiz: readHomeworkQuiz,
+  onChange: snapshot => { submissionState = snapshot; postContextToPage(); },
+});
+function syncSubmissions() {
+  submissions.setContext(activeSession, activeRole, assignmentState, classroomRooms?.selected?.id || '');
+}
 let assignmentState = null, assignmentRoute = null, assignmentOpening = '', assignmentNotice = null;
 const assignments = createFirebaseClassroomAssignments({
   hubUrl: new URL('./', location.href).href,
   loadCatalog: () => navigation.loadCatalog(),
-  onChange: snapshot => { assignmentState = snapshot; assignmentNotice?.update(snapshot); postContextToPage(); },
+  onChange: snapshot => { assignmentState = snapshot; assignmentNotice?.update(snapshot); syncSubmissions(); postContextToPage(); },
 });
 const classroomMonitor = createFirebaseClassroomMonitor(snapshot => {
   classroomMonitorState = snapshot;
@@ -134,6 +147,7 @@ const classrooms = createFirebaseClassrooms(snapshot => {
   classroomRooms = snapshot;
   if (snapshot.selected?.id) classroomMonitor.selectRoom(snapshot.selected.id);
   monitorView?.refresh();
+  syncSubmissions();
   postContextToPage();
   syncAssignmentRoute();
 });
@@ -142,6 +156,7 @@ function syncClassrooms() {
   classrooms.setContext(activeSession, activeRole, activeSectionId === "classroom");
   classroomMonitor.setIdentity(activeSession, activeRole);
   assignments.setIdentity(activeSession, activeRole);
+  syncSubmissions();
 }
 
 function syncAssignmentRoute() {
@@ -173,7 +188,7 @@ const workspace = createWorkspace({
   getRole: getWorkspaceRole,
   onToolActivated: tool => {
     classroomMonitor.setLocation({ hash: location.hash, titleTh: tool.titleTh, titleEn: tool.titleEn, subjectId: tool.context?.subjectId });
-    navigation?.toolActivated(tool);
+    if (!tool.homework) navigation?.toolActivated(tool);
   },
   onWorkspaceIdle: () => navigation?.workspaceIdle(),
   onLanguageChange: language => setLanguage(language),
@@ -186,6 +201,10 @@ const workspace = createWorkspace({
     companion.closeVariantFor(toolId);
     pageFrame.contentWindow?.postMessage({ type: 'learning-hub-tool-closed', toolId }, location.origin);
   },
+});
+
+installHomeworkBridge({ submissions, getSession: () => activeSession,
+  onBack: binding => void navigation.openHash(assignmentHash(binding.roomId, binding.id)),
 });
 
 monitorView = createMonitorView({ getLanguage: () => currentLanguage,
@@ -226,6 +245,7 @@ function postContextToPage() {
       classroomRooms: activeSectionId === "classroom" && classroomRooms?.uid === activeSession.user?.uid ? classroomRooms : null,
       classroomMonitor: activeSectionId === 'classroom' && classroomMonitorState?.uid === activeSession.user?.uid ? classroomMonitorState : null,
       classroomAssignments: activeSectionId === 'classroom' && assignmentState?.uid === activeSession.user?.uid ? assignmentState : null,
+      classroomSubmissions: activeSectionId === 'classroom' && submissionState?.uid === activeSession.user?.uid ? submissionState : null,
       classroomAssignmentRoute: activeSectionId === 'classroom' ? assignmentRoute : null,
     },
     targetOrigin,
@@ -657,7 +677,7 @@ function showSection(sectionId, force = false) {
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
   // Keep cached menu documents and their shared subject palette in sync.
-  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-homework-20261030' : 'bank-chapter-links-20261027');
+  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-submissions-20261030' : 'bank-chapter-links-20261027');
   pageFrameLoading.hidden = false;
   // Child-frame navigations must not add extra entries to the Hub's Back history.
   pageFrame.contentWindow.location.replace(pageUrl.href);
@@ -803,12 +823,28 @@ window.addEventListener("message", (event) => {
     const current = () => revision === classroomPageRevision && activeSectionId === 'classroom' && uid === activeSession.user?.uid && payload.roomId === classroomRooms?.selected?.id;
     const reply = result => { if (current()) event.source.postMessage({ type: 'learning-hub-assignment-result', requestId, uid, ...result }, event.origin); };
     if (action === 'retry') {
-      assignments.setIdentity(null, null); assignments.setIdentity(activeSession, activeRole); reply({ ok: true }); return;
+      assignments.setIdentity(null, null); assignments.setIdentity(activeSession, activeRole);
+      submissions.setContext(null, null, null, ''); syncSubmissions(); reply({ ok: true }); return;
     }
-    void assignments.command(action, payload, uid).then(result => {
+    const operation = async () => {
+      if (action === 'prepare') { await submissions.prepare(payload.id, uid); return {}; }
+      if (action === 'launch') {
+        const binding = await submissions.open(payload.id, uid);
+        if (current()) workspace.openHomework(binding);
+        return { homework: true };
+      }
+      const result = await assignments.command(action, payload, uid);
+      // Pin the teacher's questions before any student attempt can be launched.
+      // If preparation fails, the published card remains recoverable via Prepare.
+      if (['save','publish'].includes(action) && result.status === 'published' && current()) {
+        try { await submissions.prepare(result.id, uid); } catch { /* Recovery is shown with the published assignment. */ }
+      }
+      return result;
+    };
+    void operation().then(result => {
       if (!current()) return;
       reply({ ok: true, result });
-      if (action === 'launch') void navigation.openHash(result.targetHash);
+      if (action === 'launch' && !result.homework) void navigation.openHash(result.targetHash);
       else if (['view','save','publish'].includes(action)) void navigation.openHash(assignmentHash(payload.roomId, result.id));
     }, failure => reply({ ok: false, error: String(failure?.code || failure?.message || 'assignment/unavailable') }));
     return;

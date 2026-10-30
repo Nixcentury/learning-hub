@@ -1607,3 +1607,9 @@ body { --keyboard-zindex: 1900; --keycap-height: 46px; --keyboard-accent-color: 
   [data-temporary-quiz] .quiz-action-grid { grid-template-columns: 1fr 1fr; }
   [data-temporary-quiz] .quiz-action-grid > button { grid-column: auto; }
 }
+
+.quiz-homework-banner { margin: 1rem auto; padding: 1rem 1.2rem; max-width: 1180px; border: 1px solid #b8cfec; border-radius: 16px; background: #f2f7ff; color: #17385c; }
+.quiz-homework-banner p { margin: .45rem 0; }
+.quiz-homework-banner button { margin: .6rem .6rem 0 0; }
+.quiz-homework-banner small { display: block; }
+@media print { .quiz-homework-banner { display: none !important; } }

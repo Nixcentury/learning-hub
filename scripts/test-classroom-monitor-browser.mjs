@@ -6,6 +6,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { reset, good, emulatorOrigin, emulatorProject, mockToken } from './fixtures/classroom-emulator.mjs';
 import { buildMonitorRules } from './build-classroom-monitor-rules.mjs';
+import { buildSubmissionRules } from './build-classroom-submission-rules.mjs';
 import { buildAssignmentRules } from './build-classroom-assignment-rules.mjs';
 import { createRoomUpdates, joinRoomUpdates } from '../js/classroom-model.js';
 import { catalogFromRepository } from './build-route-catalog.mjs';
@@ -13,7 +14,8 @@ const root = fileURLToPath(new URL('../', import.meta.url)), prefix = '/learning
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const rules = JSON.parse(await readFile(resolve(root, 'firebase/classroom-phase1.merged-draft.json'), 'utf8'));
 rules.rules.classroomMonitorV1 = buildMonitorRules();
-rules.rules.classroomAssignmentsV1 = buildAssignmentRules(); await reset(rules);
+rules.rules.classroomAssignmentsV1 = buildAssignmentRules();
+rules.rules.classroomSubmissionsV1 = buildSubmissionRules(); await reset(rules);
 const roomId = 'r_' + 'a'.repeat(32), stamp = { '.sv': 'timestamp' };
 await good('teacher', 'PATCH', 'classroomV1', createRoomUpdates('teacher', 'ฟิสิกส์ ม.5/1', { roomId, code: 'ABCD2345' }, stamp));
 for (const uid of ['student','student-b']) await good(uid, 'PATCH', 'classroomV1', joinRoomUpdates(uid, roomId, 'ABCD2345', uid === 'student' ? 'นักเรียนทดลอง' : 'นักเรียนอีกคน', stamp));
@@ -93,7 +95,7 @@ try {
   // Homework uses the production Hub bundle, UI and real emulator Rules.
   // It remains independent of lesson lock/unlock and quiz submission/grades.
   const homeworkQuizRoute = catalog.routes.find(route => route.kind === 'content' && route.status === 'ready' &&
-    catalog.contents.find(item => item.id === route.contentId)?.toolKind === 'quiz');
+    catalog.contents.find(item => item.id === route.contentId)?.source.endsWith('equilibrium/4-1-equilibrium-quiz.html'));
   assert.ok(homeworkQuizRoute, 'An authored, available quiz is needed for assignment integration');
   await teacher.frame.locator('[data-hw-new]').click();
   await teacher.frame.locator('[data-hw-editor] [name="title"]').fill('ทวนคลื่น — การบ้านทดลอง');
@@ -117,11 +119,39 @@ try {
   await student.page.reload();
   await student.frame.locator('[data-hw-detail] h3').filter({ hasText: 'ทวนคลื่น' }).waitFor();
   assert.equal(await student.page.locator('.assignment-notice').isVisible(), false, 'Read state persists after reload');
+  // An old practice result must not become a homework result.
+  await student.page.evaluate(id => localStorage.setItem(`learning-hub-quiz:v1:student:${id}`, JSON.stringify({version:2,identityKey:'student',contentId:id,answers:{},masteredIds:[],latestScore:{score:999,maxScore:999},savedAt:Date.now()})), homeworkQuizRoute.contentId);
+  await teacher.frame.locator('[data-homework-results] tbody tr').filter({hasText:'นักเรียนทดลอง'}).waitFor();
   await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').click();
-  await student.page.locator('#workspace-window-layer iframe[src*="quiz-player.html"]').waitFor();
-  assert.equal(await good('EMULATOR_ADMIN', 'GET', 'quizProgress'), null, 'Launching homework is not submission or a grade write');
-  await student.page.goBack();
-  await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').waitFor();
+  const homeworkFrame=student.page.frameLocator('#workspace-window-layer iframe[src*="homework=1"]');
+  await homeworkFrame.locator('[data-quiz-app]').waitFor({state:'visible'});
+  await homeworkFrame.locator('[data-quiz-storage-status]').filter({hasText:'บันทึกบน Cloud แล้ว'}).waitFor();
+  assert.deepEqual(await homeworkFrame.locator('body').evaluate(()=>window.LearningHubQuiz.getState().answers),{});
+  assert.equal(await homeworkFrame.locator('[data-homework-submit]').count(),0,'No final submit button before checking answers');
+  assert.equal(await good('EMULATOR_ADMIN','GET','quizProgress'),null,'Opening homework does not touch ordinary practice');
+  const correctIndex=await homeworkFrame.locator('[data-quiz-print-source] [data-question]').first().evaluate(question=>[...question.querySelectorAll('[data-choice-id]')].findIndex(choice=>choice.dataset.choiceId===question.dataset.answer));
+  assert.ok(correctIndex>=0);await homeworkFrame.locator('.quiz-option').nth(correctIndex).click();
+  await homeworkFrame.locator('[data-submit-all]').click();
+  await homeworkFrame.locator('[data-evidence-warning-continue]').click();
+  await homeworkFrame.locator('[data-homework-submit]').waitFor();
+  assert.equal(await good('EMULATOR_ADMIN','GET',`classroomSubmissionsV1/results/${roomId}`),null,'Checking answers is not final submission');
+  const notSubmitted=teacher.frame.locator('[data-result-uid="student"]');
+  assert.ok((await notSubmitted.textContent()).includes('ยังไม่ส่ง'));
+  student.page.once('dialog',dialog=>dialog.accept());await homeworkFrame.locator('[data-homework-submit]').click();
+  await homeworkFrame.locator('[data-homework-status]').filter({hasText:'ส่งงานสำเร็จ'}).waitFor();
+  await teacher.frame.locator('[data-result-uid="student"]').filter({hasText:'ส่งแล้ว'}).waitFor();
+  assert.ok((await teacher.frame.locator('[data-result-uid="student"]').textContent()).includes('1/'));
+  assert.ok((await teacher.frame.locator('[data-result-uid="student-b"]').textContent()).includes('ยังไม่ส่ง'));
+  const sent=await good('EMULATOR_ADMIN','GET',`classroomSubmissionsV1/results/${roomId}`), assignmentId=Object.keys(sent)[0];
+  assert.equal(Object.keys(sent[assignmentId]).length,1);assert.equal(typeof sent[assignmentId].student.submittedAt,'number');
+  assert.equal(await good('EMULATOR_ADMIN','GET','quizProgress'),null);
+  assert.equal(await homeworkFrame.locator('[data-homework-submit]').count(),0);
+  await homeworkFrame.locator('[data-homework-back]').click();
+  await student.frame.locator('[data-homework-results]').filter({hasText:'คะแนนคำตอบ 1/'}).waitFor();
+  await student.page.reload();
+  await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').click();
+  await student.page.frameLocator('iframe[src*="homework=1"]').locator('[data-homework-status]').filter({hasText:'ส่งงานสำเร็จ'}).waitFor();
+  console.log('PASS homework submission: practice isolated → answer check → explicit submit → teacher roster/score → immutable result after reload');
   // Reset the retained homework iframe before the following independent
   // monitoring regression opens its own quiz. Read receipts remain persisted.
   await student.page.reload();
@@ -129,8 +159,8 @@ try {
   teacher.page.once('dialog', dialog => dialog.accept());
   await teacher.frame.locator('[data-hw-detail] [data-homework-action="close"]').click();
   await student.frame.locator('[data-hw-detail] .homework-tag').filter({ hasText: 'ปิดงาน' }).waitFor();
-  assert.equal(await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').count(), 0);
-  console.log('PASS homework: private draft → publish → unread notice → deep link → read persistence → existing quiz → close');
+  assert.equal(await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').textContent(), 'ดูงานที่ส่ง');
+  console.log('PASS homework: private draft → publish → unread notice → deep link → read persistence → frozen homework quiz → final submission → close');
   const people = teacher.frame.locator('[data-monitor-people]');
   await student.page.evaluate(() => { qaVisible(false); location.hash = '#chemistry/bank'; });
   assert.equal(await student.page.locator('.monitor-banner').isVisible(), false);
@@ -225,7 +255,7 @@ try {
 } catch (failure) {
   const output = resolve(root, 'qa-output'); await mkdir(output, { recursive: true });
   for (const [index, context] of (browser?.contexts() || []).entries()) for (const [pageIndex, page] of context.pages().entries()) {
-    console.error('BROWSER DEBUG', index, pageIndex, await page.evaluate(() => ({ text: document.querySelector('.monitor-dialog')?.textContent, failures: window.qaDbFailures?.slice(-10), requests: window.qaDbRequests?.slice(-20) })).catch(() => ({})));
+    console.error('BROWSER DEBUG', index, pageIndex, await page.evaluate(() => ({ text: document.querySelector('.monitor-dialog')?.textContent, homework: [...document.querySelectorAll('iframe')].map(frame => { try { return frame.contentDocument?.body?.textContent?.slice(-2000); } catch { return ''; } }), failures: window.qaDbFailures?.slice(-10), requests: window.qaDbRequests?.slice(-20) })).catch(() => ({})));
     await page.screenshot({ path: resolve(output, `classroom-monitor-failure-${index}-${pageIndex}.png`), fullPage: true }).catch(() => {});
   }
   console.error('INCIDENTS', await good('EMULATOR_ADMIN','GET',`classroomMonitorV1/incidents/${roomId}`));

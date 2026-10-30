@@ -172,7 +172,7 @@ function makeHarness({ homeworkBinding = null } = {}) {
         saveLocalNow, loadCloud, saveCloudNow, persist, persistLocalOnly,
         storageKey, pendingStorageRequests, renderStorageStatus,
         persistNavigation, retrySync, resolveCloudConflict,
-        giveUp, retryGivenUp, editAnswers, selectAnswer, submitAll, resultFor, goTo,
+        giveUp, retryGivenUp, editAnswers, selectAnswer, submitAll, resultFor, goTo, cloneInto,
         evidence: () => evidenceManager,
         setContentReady: (ready) => { contentRoot = ready ? {} : null; },
       };
@@ -226,6 +226,25 @@ function makeHarness({ homeworkBinding = null } = {}) {
     },
   };
 }
+
+test("unlocking a hidden solution reveals only its clone and preserves bilingual text", () => {
+  const h = makeHarness();
+  const nested = { hidden: true };
+  const source = {
+    hidden: true, children: [], dataset: { th: "คำตอบ 50 ปี", en: "Answer: 50 years" },
+    querySelector: () => null,
+    cloneNode() {
+      return { hidden: this.hidden, children: [], nested: { ...nested }, textContent: "คำตอบ 50 ปี",
+        removeAttribute(name) { if (name === "hidden") this.hidden = false; } };
+    },
+  };
+  const target = { replaceChildren() { this.child = null; }, append(child) { this.child = child; } };
+  h.cloneInto(target, source, true);
+  assert.equal(target.child.hidden, false);
+  assert.equal(target.child.textContent, "Answer: 50 years");
+  assert.equal(source.hidden, true, "the source/print tree stays hidden");
+  assert.equal(target.child.nested.hidden, true, "hidden descendants are not indiscriminately revealed");
+});
 
 test("give-up questions can be retried immediately and earn credit only after a correct resubmission", async () => {
   const h = makeHarness();

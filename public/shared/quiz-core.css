@@ -731,6 +731,7 @@ svg [data-quiz-visual~="axis-label"] {
 
 .quiz-solution {
   margin-top: 18px;
+  scroll-margin-top: 100px;
   padding: 18px;
   border: 1px solid #9fd5bd;
   border-radius: 16px;

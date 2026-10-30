@@ -567,6 +567,9 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     const selected = useLanguage ? activeLanguageNode(source) : source;
     if (selected) {
       const copy = selected.cloneNode(true);
+      // Reveal the unlocked presentation clone, keeping the source and any
+      // deliberately hidden descendants unchanged.
+      copy.removeAttribute("hidden");
       if (useLanguage && !copy.children.length && selected.dataset?.[language()]) copy.textContent = selected.dataset[language()];
       target.append(copy);
     }
@@ -731,7 +734,16 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       heading.textContent = label("เฉลยและวิธีคิด", "Solution and reasoning");
       const copy = document.createElement("div");
       cloneInto(copy, question.solution, true);
-      solutionTarget.append(heading, copy);
+      solutionTarget.append(heading);
+      if (question.type === "drag-drop") {
+        // Show every correct placement as a readable passage. Do not write this
+        // answer key into the student's answers, evidence or score.
+        const correct = Object.fromEntries(question.slots.map(slot => [slot.id, slot.answer]));
+        const completed = createDragEvidenceBody(question, correct, language(), { labels: false });
+        completed.dataset.completedSolution = "";
+        solutionTarget.append(completed);
+      }
+      solutionTarget.append(copy);
       if (isGivenUp) {
         const retryNote = document.createElement("p");
         retryNote.textContent = label(
@@ -1014,6 +1026,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     renderNavigation();
     renderQuestion();
     renderStats();
+    document.querySelector("[data-current-solution]")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function reopenGivenUp(questionId) {

@@ -58,6 +58,7 @@ try {
     const service=createClassroomSubmissions({readQuiz:()=>({questions:[{id:'one',type:'choice',answer:'a',choices:[{id:'a'},{id:'b'}]}]}),freezeQuiz:async()=>({version:1,contentId:'sdk-quiz',targetHash:'#content/sdk-quiz',revision,html:'<quiz>',questionCount:1}),io:{
       watch:(path,fn,fail)=>sdk.onValue(target(path),snapshot=>fn(snapshot.val()),fail),connected:fn=>sdk.onValue(sdk.ref(client.db,'.info/connected'),snapshot=>fn(snapshot.val()===true)),get:async path=>(await sdk.get(target(path))).val(),timestamp:sdk.serverTimestamp,
       transaction:async(path,change)=>{const result=await sdk.runTransaction(target(path),change,{applyLocally:false});return{committed:result.committed};},
+      update:values=>sdk.update(sdk.ref(client.db,'classroomSubmissionsV1'),values),
     }});
     service.setContext({status:'signed-in',user:{uid}},{uid,status:'ready',isTeacher,systemRole:isTeacher?'teacher':'student'}, {uid,rooms:[{id:roomId,status:'ready',ownerUid:'teacher',membership:isTeacher?'owner':'student',items:[{id:assignmentId,...item}]}]},roomId);
     homeworkServices.push(service);return service;
@@ -73,11 +74,26 @@ try {
     const raceDb=sdk.getDatabase(raceApp),endpoint=new URL(emulatorOrigin);sdk.connectDatabaseEmulator(raceDb,endpoint.hostname,Number(endpoint.port),{mockUserToken:mockToken('student')});
     clients.push({app:raceApp,db:raceDb,service:{dispose(){}}});const otherStudentWork=homeworkClient({db:raceDb},'student',false);
     await until(()=>otherStudentWork.getState().connected,'second homework tab');
-    const outcomes=await Promise.all([studentWork.quizCommand('submit',binding,{value:progress,submissionId:'d'.repeat(32)}),studentWork.quizCommand('submit',binding,{value:progress,submissionId:'e'.repeat(32)}),otherStudentWork.quizCommand('submit',binding,{value:progress,submissionId:'f'.repeat(32)})]);
+    const outcomes=await Promise.all([studentWork.quizCommand('submit',binding,{value:progress,submissionId:'d'.repeat(32)}),studentWork.quizCommand('submit',binding,{value:progress,submissionId:'d'.repeat(32)}),otherStudentWork.quizCommand('submit',binding,{value:progress,submissionId:'d'.repeat(32)})]);
     assert.equal(outcomes[0].grade.score,1);for(const outcome of outcomes)assert.equal(outcomes[0].result.submittedAt,outcome.result.submittedAt);
     await until(()=>teacherWork.getState().grades[assignmentId]?.rows[0]?.grade?.score===1,'teacher homework score');
     assert.equal(await good('EMULATOR_ADMIN','GET','quizProgress'),null);
-    console.log('PASS real SDK homework snapshot, revisioned autosave and concurrent final-submit retries retain one immutable result');
+    const first=outcomes[0].result;
+    await studentWork.quizCommand('save',binding,{value:{...progress,answers:{one:'b'}},storageRevision:2,previousSubmissionId:first.submissionId});
+    assert.equal((await studentWork.quizCommand('load',binding)).value.answers.one,'b');
+    assert.equal((await good('student','GET',`classroomSubmissionsV1/results/${roomId}/${assignmentId}/student`)).submissionRevision,1);
+    const competing=await Promise.allSettled([
+      studentWork.quizCommand('submit',binding,{value:progress,submissionId:'e'.repeat(32),previousSubmissionId:first.submissionId}),
+      otherStudentWork.quizCommand('submit',binding,{value:{...progress,answers:{one:'b'}},submissionId:'f'.repeat(32),previousSubmissionId:first.submissionId}),
+    ]);
+    assert.equal(competing.filter(outcome=>outcome.status==='fulfilled').length,1,'Only one competing revision can commit');
+    const second=competing.find(outcome=>outcome.status==='fulfilled').value.result;
+    const third=await studentWork.quizCommand('submit',binding,{value:progress,submissionId:'1'.repeat(32),previousSubmissionId:second.submissionId});
+    assert.equal(third.grade.submissionRevision,3);assert.equal(third.grade.score,1);
+    await until(()=>teacherWork.getState().grades[assignmentId]?.rows[0]?.grade?.submissionRevision===3,'teacher latest submission revision');
+    assert.equal((await teacherWork.history(assignmentId,'student')).rows.length,3);
+    await assert.rejects(otherStudentWork.quizCommand('save',binding,{value:progress,storageRevision:3,previousSubmissionId:first.submissionId}),{code:'homework/conflict'});
+    console.log('PASS real SDK homework: retry acknowledgement, post-submission autosave, atomic competing submissions, immutable history and latest teacher score');
   } finally {for(const service of homeworkServices)service.dispose();}
   teacher.service.selectRoom(roomId); await teacher.service.command('lock',{roomId});
   await until(()=>student.state.lesson,'lesson available'); await student.service.command('join',{roomId});

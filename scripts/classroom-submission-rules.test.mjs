@@ -43,17 +43,45 @@ test('homework submission Rules — real RTDB emulator and isolated synthetic id
     for(const change of [{quizRevision:'x'},{contentId:'other'},{dueAt:100},{submittedAt:1},{score:100},{elapsedMs:-1},{elapsedMs:1.5},{answersJson:'x'.repeat(60001)},{submissionId:'bad'}])await denied('student','PUT',r,{...result(),...change});
     await good('student','PUT',r,result());assert.equal((await good('student','GET',r)).contentId,'waves-quiz');
   });
-  await t.test('submitted work is immutable and freezes its draft; teacher can read results but not private drafts',async()=>{
+  await t.test('submitted scores stay unchanged while a student edits a revisioned draft; drafts remain private',async()=>{
     for(const uid of ['student','teacher','student-b']){await denied(uid,'PUT',r,result());await denied(uid,'DELETE',r);}
     const saved=await good('student','GET',d);await denied('student','PUT',d,{...saved,revision:3,updatedAt:stamp});
+    await good('student','PUT',d,{...saved,revision:3,updatedAt:stamp,baseSubmissionId:'f'.repeat(32)});
+    assert.equal((await good('student','GET',r)).submissionId,'f'.repeat(32));
     assert.ok((await good('teacher','GET',`${path}/results/${room}`))[aid].student);
     await denied('teacher','GET',d);await denied('student-b','GET',r);await denied('student','GET',`${path}/results/${room}/${aid}`);
     assert.equal(await good('student-b','GET',`${path}/results/${room}/${aid}/student-b`),null);
+  });
+  await t.test('resubmitting archives the exact previous result atomically and accepts legacy first submissions',async()=>{
+    const old=await good('student','GET',r), h=`history/${room}/${aid}/student/${old.submissionId}`;
+    const next={...result(),answersJson:'{"one":"b"}',submissionId:'1'.repeat(32),submissionRevision:2};
+    await denied('student','PUT',r,next);
+    await denied('student','PUT',`${path}/${h}`,old);
+    for(const change of [{answersJson:'forged'},{submittedAt:1},{extra:true}])await denied('student','PATCH',path,{[`results/${room}/${aid}/student`]:next,[h]:{...old,...change}});
+    await good('student','PATCH',path,{[`results/${room}/${aid}/student`]:next,[h]:old});
+    assert.equal((await good('teacher','GET',r)).submissionRevision,2);
+    assert.deepEqual(await good('student','GET',`${path}/${h}`),old);
+    assert.deepEqual(await good('teacher','GET',`${path}/${h}`),old);
+    for(const uid of ['student','teacher','student-b']){await denied(uid,'PUT',`${path}/${h}`,old);await denied(uid,'DELETE',`${path}/${h}`);}
+    await denied('student-b','GET',`${path}/${h}`);await denied('student','GET',`${path}/history/${room}/${aid}`);
+    const oldDraft=await good('student','GET',d);await denied('student','PUT',d,{...oldDraft,revision:4,updatedAt:stamp});
+    await good('student','PUT',d,{...oldDraft,revision:4,baseSubmissionId:next.submissionId,updatedAt:stamp});
+  });
+  await t.test('later submissions require the next revision, a fresh operation ID and unmodified history',async()=>{
+    const old=await good('student','GET',r), h=`history/${room}/${aid}/student/${old.submissionId}`;
+    const next={...result(),submissionId:'2'.repeat(32),submissionRevision:3};
+    for(const change of [{submissionRevision:2},{submissionRevision:4},{submissionId:'f'.repeat(32)},{submissionId:old.submissionId}])await denied('student','PATCH',path,{[`results/${room}/${aid}/student`]:{...next,...change},[h]:old});
+    await good('student','PATCH',path,{[`results/${room}/${aid}/student`]:next,[h]:old});
+    const archive=await good('teacher','GET',`${path}/history/${room}/${aid}/student`);assert.equal(Object.keys(archive).length,2);
+    await denied('student','PATCH',path,{[`results/${room}/${aid}/student`]:next,[h]:old});
   });
   await t.test('closing rejects new submissions while prior results remain readable',async()=>{
     const item=await good('teacher','GET',`classroomAssignmentsV1/items/${room}/${aid}`);
     await good('teacher','PUT',`classroomAssignmentsV1/items/${room}/${aid}`,{...item,status:'closed',updatedAt:stamp,revision:2});
     await denied('student-b','PUT',`${path}/results/${room}/${aid}/student-b`,result());
+    const saved=await good('student','GET',r);
+    await denied('student','PATCH',path,{[`results/${room}/${aid}/student`]:{...result(),submissionId:'3'.repeat(32),submissionRevision:4},[`history/${room}/${aid}/student/${saved.submissionId}`]:saved});
+    const savedDraft=await good('student','GET',d);await denied('student','PUT',d,{...savedDraft,revision:5,baseSubmissionId:saved.submissionId,updatedAt:stamp});
     assert.ok(await good('student','GET',r));assert.ok(await good('teacher','GET',r));
   });
   await t.test('membership removal and teacher revocation withdraw read and write access',async()=>{

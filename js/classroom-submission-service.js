@@ -135,23 +135,24 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     let result = await read(finalPath); guard(user, version, false, selected);
     if (action === 'load') {
       const draft = await read(draftPath); guard(user, version, false, selected);
-      return { quiz, value: draft && !result ? JSON.parse(draft.progressJson) : null, storageRevision: draft?.revision || 0,
+      const currentDraft = draft && (draft.baseSubmissionId || '') === (result?.submissionId || '') && !(result && item.status === 'closed');
+      return { quiz, value: currentDraft ? JSON.parse(draft.progressJson) : null, storageRevision: draft?.revision || 0,
         result: result || null, grade: result ? gradeSubmission(result, quiz, questionSet(quiz)) : null, closed: item.status === 'closed' };
     }
-    if (action === 'submit' && result) return { result, grade: gradeSubmission(result, quiz, questionSet(quiz)) };
+    if (action === 'submit' && result && result.submissionId === payload.submissionId) return { result, grade: gradeSubmission(result, quiz, questionSet(quiz)) };
     if (item.status !== 'published') throw failSubmission('homework/closed');
-    if (result) throw failSubmission('homework/already-submitted');
+    if ((payload.previousSubmissionId || '') !== (result?.submissionId || '')) throw failSubmission('homework/conflict');
     const questions = questionSet(quiz), cleaned = submissionPayload(payload.value, questions, { draft: action === 'save' });
     guard(user, version, false, selected);
     if (action === 'save') {
       if (!Number.isSafeInteger(payload.storageRevision) || payload.storageRevision < 0) throw failSubmission('homework/conflict');
-      const progressJson = JSON.stringify(payload.value);
+      const progressJson = JSON.stringify({ ...payload.value, homeworkBaseSubmissionId: result?.submissionId || '' });
       if (progressJson.length > 80000 || payload.value.contentId !== quiz.contentId || payload.value.identityKey !== user) throw failSubmission('homework/invalid-answers');
       const previous = await read(draftPath); guard(user, version, false, selected);
       if ((previous?.revision || 0) !== payload.storageRevision) throw failSubmission('homework/conflict');
       const transaction = await io.transaction(draftPath, current => {
         if (!live(version, user) || ((current || previous)?.revision || 0) !== payload.storageRevision) return;
-        return { version: 1, contentId: quiz.contentId, quizRevision: quiz.revision, progressJson,
+        return { version: 1, contentId: quiz.contentId, quizRevision: quiz.revision, progressJson, baseSubmissionId: result?.submissionId || '',
           createdAt: (current || previous)?.createdAt || io.timestamp(), updatedAt: io.timestamp(), revision: payload.storageRevision + 1 };
       });
       guard(user, version, false, selected);
@@ -159,34 +160,57 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
       return { storageRevision: payload.storageRevision + 1 };
     }
     if (action !== 'submit' || !/^[a-f0-9]{32}$/.test(payload.submissionId || '')) throw failSubmission('homework/invalid-request');
+    if (await read(`history/${selected}/${id}/${user}/${payload.submissionId}`)) throw failSubmission('homework/conflict');
+    guard(user, version, false, selected);
     const record = { ...cleaned, version: 1, contentId: quiz.contentId, quizRevision: quiz.revision,
-      dueAt: item.dueAt || 0, submissionId: payload.submissionId, submittedAt: io.timestamp() };
+      dueAt: item.dueAt || 0, submissionId: payload.submissionId, submittedAt: io.timestamp(), submissionRevision: (result?.submissionRevision || (result ? 1 : 0)) + 1 };
+    const updates = { [finalPath]: record };
+    if (result) updates[`history/${selected}/${id}/${user}/${result.submissionId}`] = result;
     try {
-      await io.transaction(finalPath, current => live(version, user) && !current ? record : undefined);
+      // Rules check the next revision and require an exact immutable archive of
+      // the previous result in this same atomic write. A stale tab cannot win.
+      await io.update(updates);
     } catch (failure) {
-      // The first write may have succeeded while its acknowledgement was lost.
-      // Recover the immutable server record before deciding whether to retry.
+      // A committed write may lose its acknowledgement. Only this operation's
+      // ID proves success; another tab's result must not masquerade as ours.
       result = await read(finalPath); guard(user, version, false, selected);
-      if (!result) throw failure;
+      if (result?.submissionId !== payload.submissionId) {
+        if ((result?.submissionId || '') !== (payload.previousSubmissionId || '')) throw failSubmission('homework/conflict');
+        throw failure;
+      }
     }
     guard(user, version, false, selected); result = await read(finalPath); guard(user, version, false, selected);
-    if (!result) throw failSubmission('homework/unconfirmed');
+    if (result?.submissionId !== payload.submissionId) throw failSubmission('homework/conflict');
     return { result, grade: gradeSubmission(result, quiz, questions) };
+  }
+  async function history(id, studentUid = uid) {
+    const user = uid, version = epoch, selected = roomId;
+    guard(user, version);
+    if (!assignmentIdPattern.test(id) || typeof studentUid !== 'string' || !studentUid || studentUid.length > 128 || Array.from(studentUid).some(char => '/.#$[]'.includes(char)) || (!isOwner() && studentUid !== uid)) throw failSubmission('homework/invalid-request');
+    const quiz = await read(`quizzes/${selected}/${id}`);
+    guard(user, version, false, selected);
+    if (!quiz) throw failSubmission('homework/not-ready');
+    const archived = await read(`history/${selected}/${id}/${studentUid}`);
+    guard(user, version, false, selected);
+    const latest = await read(`results/${selected}/${id}/${studentUid}`);
+    guard(user, version, false, selected);
+    const records = new Map(Object.values(archived || {}).map(record => [record.submissionId, record]));
+    if (latest) records.set(latest.submissionId, latest);
+    return { id, studentUid, rows: [...records.values()].map(record => gradeSubmission(record, quiz, questionSet(quiz))).sort((a,b) => (b.submissionRevision || 0) - (a.submissionRevision || 0)) };
   }
   function command(action, binding, payload) {
     if (action !== 'submit') return quizCommand(action, binding, payload);
-    // Multiple clicks/windows sharing this SDK must wait for the same confirmed
-    // write. An aborted overlapping transaction can otherwise read a cold cache
-    // before the first transaction has committed and incorrectly report failure.
+    // Repeated delivery of one operation waits for the same acknowledgement.
+    // Different operations remain distinct and Rules reject a stale revision.
     try { guard(binding?.uid, epoch, false, binding?.roomId); }
     catch (failure) { return Promise.reject(failure); }
-    const key = `${binding.uid}/${binding.roomId}/${binding.id}`;
+    const key = `${binding.uid}/${binding.roomId}/${binding.id}/${payload?.submissionId}`;
     if (submissionsInFlight.has(key)) return submissionsInFlight.get(key);
     const operation = quizCommand(action, binding, payload).finally(() => {
       if (submissionsInFlight.get(key) === operation) submissionsInFlight.delete(key);
     });
     submissionsInFlight.set(key, operation); return operation;
   }
-  return { setContext, prepare, open, quizCommand: command, getState: () => structuredClone(state()),
+  return { setContext, prepare, open, history, quizCommand: command, getState: () => structuredClone(state()),
     dispose() { clear(); uid = roomId = ''; } };
 }

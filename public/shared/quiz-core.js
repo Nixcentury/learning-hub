@@ -1,8 +1,8 @@
 import { captureVariantSource, receiveTemporaryQuiz } from './quiz-variant-model.js?v=practice-20261028';
-import { QuizEvidenceManager } from "./quiz-evidence.js?v=print-names-20261028";
+import { QuizEvidenceManager } from "./quiz-evidence.js?v=mixed-reasoning-20261030";
 import { createNotebookBackupUi } from "./notebook-backup-ui.js?v=6c-backup-2";
-import { readQuizContent } from "./quiz-content-adapter.js";
-import { hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer } from "./quiz-question-model.js";
+import { readQuizContent } from "./quiz-content-adapter.js?v=mixed-reasoning-20261030";
+import { hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, requiresReasoning } from "./quiz-question-model.js?v=mixed-reasoning-20261030";
 import { mountNumericAnswer, hideMathKeyboard } from "./quiz-math-input.js";
 import { mountDragAnswer } from "./quiz-drag-view.js";
 import { dragAnswerSummary } from "./quiz-drag-model.js";
@@ -745,7 +745,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
         <section class="quiz-evidence-gate" data-evidence-gate data-complete="${String(!evidenceManager?.needsExport())}">
           <div>
             <h2>${evidenceManager?.needsExport() ? label("ส่งออกหลักฐานเพื่อจบรอบ", "Export evidence to finish this attempt") : label("ส่งออกหลักฐานแล้ว", "Evidence export completed")}</h2>
-            <p>${evidenceManager?.needsExport() ? label("PDF จะรวมเหตุผล สมุดทด ผลตรวจคำตอบ และตราประทับ AI ส่วนข้อที่ไม่มีวิธีทำจะถูกระบุไว้ในหน้าสรุป", "The PDF includes typed reasoning, notebook work, answer results, and AI stamps. Questions without reasoning are listed on the cover.") : label("หากกลับไปแก้คำตอบ เหตุผล หรือลายมือ ระบบจะขอให้ตรวจและส่งออกใหม่", "Editing an answer, reasoning, or notebook page will require a new check and export.")}</p>
+            <p>${evidenceManager?.needsExport() ? label("PDF รวมโจทย์ คำตอบ เหตุผล สมุดทด และผลตรวจ AI ของข้อกา/ตัวเลข ส่วนลากวางแสดงผลตรวจคำตอบตามปกติ", "The PDF includes questions, answers, working and AI review stamps for choice/numeric questions. Drag-fill questions show automatic answer results.") : label("หากกลับไปแก้คำตอบ เหตุผล หรือลายมือ ระบบจะขอให้ตรวจและส่งออกใหม่", "Editing an answer, reasoning, or notebook page will require a new check and export.")}</p>
           </div>
           <button type="button" class="quiz-export-evidence-button" data-export-evidence>${evidenceManager?.needsExport() ? label("ดาวน์โหลดหลักฐาน PDF", "Download evidence PDF") : label("ดาวน์โหลด PDF อีกครั้ง", "Download PDF again")}</button>
         </section>
@@ -969,8 +969,8 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       "Some questions have no reasoning evidence",
     );
     copy.textContent = label(
-      "AI จะตรวจวิธีคิดไม่ได้ และ PDF จะประทับว่าไม่มีหลักฐานในข้อเหล่านี้ คุณสามารถกลับไปเพิ่มวิธีทำ หรือดำเนินการตรวจคำตอบสุดท้ายต่อได้",
-      "AI cannot verify the method, and the PDF will mark these questions as having no reasoning. You can go back and add evidence or continue grading the final answers.",
+      "คะแนนยังตรวจจากคำตอบตามปกติได้ แต่ AI ยังไม่มีวิธีทำให้ตรวจ และ PDF จะระบุว่าไม่มีหลักฐานในข้อเหล่านี้ คุณกลับไปเพิ่มวิธีทำหรือดำเนินการตรวจคำตอบต่อได้",
+      "Answer scoring is unchanged. AI has no working to review, and the PDF will mark these questions as having no evidence. Add working or continue grading the final answers.",
     );
     list.textContent = questions.map((question) => `Q${question.index + 1}`).join(" · ");
     back.textContent = label("กลับไปเพิ่มวิธีทำ", "Go back and add reasoning");
@@ -1030,10 +1030,10 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     if (batchStatus) batchStatus.hidden = false;
     evidenceManager?.noteSubmission(results);
 
+    const reviewableQuestions = results
+      .filter((result) => result.status !== "unanswered" && result.status !== "giveup" && requiresReasoning(result.question))
+      .map((result) => result.question);
     try {
-      const reviewableQuestions = results
-        .filter((result) => result.status !== "unanswered")
-        .map((result) => result.question);
       await evidenceManager?.reviewPending(reviewableQuestions, ({ current, total, done }) => {
         if (epoch !== identityEpoch || !batchStatus) return;
         batchStatus.textContent = done
@@ -1043,6 +1043,9 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
               `AI is checking reasoning ${current}/${total}`,
             );
       });
+    } catch (error) {
+      // AI availability never changes the deterministic answer score.
+      evidenceManager?.reviewFailed?.(reviewableQuestions, error);
     } finally {
       if (epoch === identityEpoch) submissionBusy = false;
     }

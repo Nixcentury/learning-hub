@@ -1,3 +1,4 @@
+import { requiresReasoning } from "../public/shared/quiz-question-model.js";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
@@ -134,7 +135,7 @@ function makeHarness() {
     fetch: async () => ({ ok: true, text: async () => "<test-content>" }),
     QuizEvidenceManager: EvidenceStub,
     createNotebookBackupUi: () => ({ busy: false, open() {}, invalidate() {} }),
-    readQuizContent, hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, MAX_ANSWER_LENGTH, dragAnswerSummary, readBankSelection, resolveAuthoredPdfLinks,
+    requiresReasoning, readQuizContent, hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, MAX_ANSWER_LENGTH, dragAnswerSummary, readBankSelection, resolveAuthoredPdfLinks,
     warmQuizEngine: async () => 'https://example.test/quiz-player.html?quizRefresh=test',
     hideMathKeyboard() {}, mountNumericAnswer() {},
     localStorage: {
@@ -242,6 +243,19 @@ test("give-up questions can be retried immediately and earn credit only after a 
   await h.submitAll();
   assert.equal(h.state.latestScore.score, 1);
   assert.deepEqual(plain(h.state.masteredIds), ["q1"]);
+});
+
+test("AI outcome and missing working never change ordinary quiz scoring", async () => {
+  for (const outcome of ["verified", "revision", "unavailable", "throw"]) {
+    const h = makeHarness(); await h.load();
+    h.selectAnswer("q1", "A");
+    h.evidence().missingForAnswered = () => [h.state.questions[0]];
+    h.evidence().reviewPending = async () => { if (outcome === "throw") throw new Error("AI offline"); };
+    await h.submitAll();
+    assert.equal(h.state.latestScore.score, 1, outcome);
+    assert.deepEqual(plain(h.state.masteredIds), ["q1"]);
+    assert.equal(h.state.view, "results");
+  }
 });
 
 test("Edit answers reopens give-ups, preserves mastered work and reasoning, and survives reload", async () => {

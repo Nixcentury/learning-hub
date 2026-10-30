@@ -1,6 +1,7 @@
 import './print-names.js';
 import { NotebookCore } from "../pages/tools/notebook-core.js";
 import { validateNotebookBackup, restoreNotebookRecords } from "./notebook-backup.js";
+import { requiresReasoning } from "./quiz-question-model.js?v=mixed-reasoning-20261030";
 import { dragAnswerText, dragQuestionText, createDragEvidenceBody } from "./quiz-drag-view.js";
 
 const EVIDENCE_SCHEMA = "HUB_QUIZ_EVIDENCE_V1";
@@ -9,6 +10,7 @@ const NOTEBOOK_STORE = "notebookPages";
 const AI_WORKER_FALLBACK =
   "https://student-work-ai-checker.micksattawatbutklo.workers.dev/";
 const PDF_PAGE_LIMIT = 20;
+const REVIEW_POLICY_VERSION = 2;
 
 let notebookDatabasePromise = null;
 
@@ -88,8 +90,12 @@ function activeLanguageNode(source, language) {
 
 function selectedOptionText(question, answer, language = "th") {
   if (question.type === "drag-drop") return dragAnswerText(question, answer, language);
-  if (question.type === "number" && answer) return `\\(${answer}\\)`;
-  const option = question.options.find((item) => item.dataset.choiceId === answer);
+  if (question.type === "number" && answer) {
+    const scientific = /^([+-]?(?:\d+(?:\.\d*)?|\.\d+))[eE]([+-]?\d+)$/.exec(String(answer).replace(/\s/g, ""));
+    const expression = scientific ? `${scientific[1]}\\times10^{${Number(scientific[2])}}` : answer;
+    return `\\(${expression}\\)${question.unit?.[language] ? ` ${question.unit[language]}` : ""}`;
+  }
+  const option = (question.options || []).find((item) => item.dataset.choiceId === answer);
   return safeText(option?.textContent || answer || "");
 }
 
@@ -122,22 +128,22 @@ function normalizeWorkerReview(data) {
   const statusText = safeText(feedback.status).toLowerCase();
   const correctTh = safeText(feedback.correct_so_far_th);
   const correctEn = safeText(feedback.correct_so_far_en);
-  const issueTh = safeText(feedback.issue_th);
-  const issueEn = safeText(feedback.issue_en);
+  const noIssue = new Set(["", "none", "no issues", "no issues.", "no errors", "no errors.", "no mistakes", "n/a", "-", "ไม่มี", "ไม่มีข้อผิดพลาด", "ไม่พบข้อผิดพลาด", "ไม่มีจุดที่ต้องแก้ไข"]);
+  const issue = value => noIssue.has(safeText(value).toLowerCase()) ? "" : safeText(value);
+  const issueTh = issue(feedback.issue_th);
+  const issueEn = issue(feedback.issue_en);
   const hintTh = safeText(feedback.hint_th);
   const hintEn = safeText(feedback.hint_en);
   const fallback = parseWorkerText(data);
   const negative =
-    /incorrect|wrong|revise|revision|partial|incomplete|needs?[_ -]?work|error|ผิด|แก้/.test(
+    /incorrect|not[_ -]?correct|wrong|revise|revision|partial|incomplete|needs?[_ -]?work|error|ไม่ถูก|ไม่ผ่าน|ผิด|แก้/.test(
       statusText,
     ) || Boolean(issueTh || issueEn);
-  const positive =
-    /(^|[_ -])(correct|verified|pass|passed|valid|complete|ok)($|[_ -])|ถูก/.test(
-      statusText,
-    ) || Boolean(correctTh || correctEn);
+  // A compliment about one step is not an explicit verdict on the whole method.
+  const positive = ["correct", "verified", "pass", "passed", "valid", "complete", "ok", "ถูกต้อง", "ผ่าน"].includes(statusText);
 
   return {
-    status: negative ? "revision" : positive ? "verified" : "revision",
+    status: negative ? "revision" : positive ? "verified" : "unavailable",
     rawStatus: statusText,
     confidence: Number.isFinite(Number(feedback.confidence))
       ? Number(feedback.confidence)
@@ -149,6 +155,31 @@ function normalizeWorkerReview(data) {
       .filter(Boolean)
       .join("\n\n") || fallback,
   };
+}
+
+// Preserve line/image boundaries when the evidence continues onto another A4 page.
+function evidencePageSlices(total, height, repeat, protectedRanges = []) {
+  const slices = [];
+  let offset = 0;
+  while (offset < total) {
+    const top = offset ? repeat : 0;
+    let end = Math.min(total, offset + height - top);
+    if (end < total) {
+      let moved;
+      do {
+        moved = false;
+        for (const [start, bottom] of protectedRanges) {
+          if (start > offset + 1 && start < end && bottom > end) {
+            end = Math.floor(start); moved = true;
+          }
+        }
+      } while (moved);
+    }
+    if (end <= offset) throw new Error("Cannot paginate this evidence page.");
+    slices.push({ offset, top, height: end - offset });
+    offset = end;
+  }
+  return slices;
 }
 
 function drawNotebookSnapshot(snapshot, targetCanvas = document.createElement("canvas")) {
@@ -385,6 +416,8 @@ export class QuizEvidenceManager {
           checkedAt: entry.review.checkedAt || 0,
           verificationId: entry.review.verificationId || "",
           evidenceRevision: entry.review.evidenceRevision || 0,
+          policyVersion: entry.review.policyVersion || 0,
+          contextSignature: entry.review.contextSignature || "",
         },
       };
     });
@@ -425,7 +458,7 @@ export class QuizEvidenceManager {
 
   missingForAnswered(results) {
     return results
-      .filter((result) => result.status !== "unanswered" && !this.hasEvidence(result.question.id))
+      .filter((result) => result.status !== "unanswered" && result.status !== "giveup" && requiresReasoning(result.question) && !this.hasEvidence(result.question.id))
       .map((result) => result.question);
   }
 
@@ -612,6 +645,8 @@ export class QuizEvidenceManager {
   mount(container, question) {
     if (!container || !question) return;
     this.unmount();
+    container.hidden = !requiresReasoning(question);
+    if (container.hidden) { container.replaceChildren(); return; }
     const entry = this.entry(question.id);
     container.innerHTML = `
       <section class="quiz-reasoning-card">
@@ -745,7 +780,7 @@ export class QuizEvidenceManager {
         ? "No writing"
         : "ยังไม่มีลายมือ";
 
-    const review = entry.review;
+    const review = this.effectiveReview(current.questionId);
     const statusCopy = {
       awaiting: ["AI กำลังตรวจ…", "AI is checking…"],
       verified: ["AI ยืนยันวิธีคิดแล้ว", "Reasoning verified by AI"],
@@ -793,9 +828,65 @@ export class QuizEvidenceManager {
     return this.readNotebook(questionId);
   }
 
+  questionContent(question) {
+    const prompt = document.createElement("section");
+    prompt.className = "quiz-evidence-export-prompt";
+    const promptCopy = activeLanguageNode(question.prompt, this.language())?.cloneNode(true);
+    if (promptCopy && !promptCopy.children.length && question.prompt?.dataset?.[this.language()]) promptCopy.textContent = question.prompt.dataset[this.language()];
+    if (promptCopy) prompt.append(promptCopy);
+    if (question.context) {
+      const context = activeLanguageNode(question.context, this.language())?.cloneNode(true);
+      if (context) prompt.append(context);
+    }
+    if (question.type === "choice") {
+      const options = document.createElement("ol");
+      options.type = "A";
+      (question.options || []).forEach(option => {
+        const item = document.createElement("li");
+        const copy = activeLanguageNode(option, this.language())?.cloneNode(true);
+        if (copy) {
+          if (!copy.children.length && option.dataset?.[this.language()]) copy.textContent = option.dataset[this.language()];
+          item.append(...copy.childNodes);
+        }
+        options.append(item);
+      });
+      prompt.append(options);
+    }
+    prompt.querySelectorAll("[data-th][data-en]").forEach(node => {
+      if (!node.children.length) node.textContent = node.dataset[this.language()];
+    });
+    if (question.type === "drag-drop") {
+      prompt.append(createDragEvidenceBody(question, this.getAnswer?.(question.id), this.language()));
+    }
+    return prompt;
+  }
+
+  async questionDiagramImage(question) {
+    const sources = [question.prompt, question.context, ...(question.options || [])];
+    if (!sources.some(node => node?.querySelector?.("img,svg"))) return null;
+    if (!window.html2canvas) throw new Error("Question-image tools are still loading. Please try again.");
+    const copy = this.questionContent(question);
+    Object.assign(copy.style, { position: "absolute", left: "-100000px", top: "0", width: "1120px", background: "white", color: "#172554", padding: "24px", font: '20px/1.6 Tahoma, Arial, sans-serif' });
+    document.body.append(copy);
+    try {
+      if (window.MathJax?.typesetPromise) await window.MathJax.typesetPromise([copy]);
+      await Promise.all([...copy.querySelectorAll("img")].map(image => new Promise((resolve, reject) => {
+        const fail = () => reject(new Error("A question image could not be loaded; AI review was not sent."));
+        if (image.complete) { if (image.naturalWidth) resolve(); else fail(); return; }
+        const timer = setTimeout(fail, 15000);
+        image.onload = () => { clearTimeout(timer); if (image.naturalWidth) resolve(); else fail(); };
+        image.onerror = () => { clearTimeout(timer); fail(); };
+      })));
+      return await window.html2canvas(copy, { scale: 1, backgroundColor: "#ffffff", useCORS: true, logging: false });
+    } finally {
+      window.MathJax?.typesetClear?.([copy]); copy.remove();
+    }
+  }
+
   async evidenceImage(question) {
     const entry = this.entry(question.id);
     const snapshot = await this.evidenceSnapshot(question.id);
+    const diagram = await this.questionDiagramImage(question);
     const reason = entry.reasoning?.trim() || "";
     const canvas = document.createElement("canvas");
     const width = 1400;
@@ -819,12 +910,22 @@ export class QuizEvidenceManager {
       const notebookCanvas = drawNotebookSnapshot(snapshot);
       draw.drawImage(notebookCanvas, 0, reasonHeight, width, 900);
     }
+    if (diagram) {
+      const questionHeight = Math.ceil(diagram.height * width / diagram.width);
+      const combined = document.createElement("canvas");
+      combined.width = width; combined.height = questionHeight + canvas.height;
+      const output = combined.getContext("2d", { alpha: false });
+      output.fillStyle = "#ffffff"; output.fillRect(0, 0, combined.width, combined.height);
+      output.drawImage(diagram, 0, 0, width, questionHeight);
+      output.drawImage(canvas, 0, questionHeight);
+      return combined.toDataURL("image/jpeg", 0.9).replace(/^data:image\/jpeg;base64,/, "");
+    }
     return canvas.toDataURL("image/jpeg", 0.9).replace(/^data:image\/jpeg;base64,/, "");
   }
 
   questionPayload(question) {
     const answer = this.getAnswer?.(question.id) || "";
-    const optionLines = question.options
+    const optionLines = (question.options || [])
       .map((option) => `${option.dataset.choiceId}: ${safeText(option.textContent)}`)
       .join("\n");
     const prompt = safeText(question.prompt?.dataset?.[this.language()] || activeLanguageNode(question.prompt, this.language())?.textContent);
@@ -832,10 +933,13 @@ export class QuizEvidenceManager {
     const drag = question.type === "drag-drop";
     const referenceSolution = safeText(question.solution?.textContent);
     const policy =
-      "Review the student's reasoning directly and concisely. Do not change the deterministic final-answer score. Return whether the reasoning is correct or needs revision, plus specific feedback in Thai and English. Before Give Up, do not reveal the final correct option or exact final answer.";
+      "Review the submitted reasoning, not only the final answer. For a calculation, check the formula, substitution, algebra/arithmetic and units; accept valid alternative methods. For a conceptual choice, check the stated explanation. A correct option or number alone is not sufficient. Return feedback.status = correct only when the visible method supports the answer; use needs_revision for errors or incomplete work and unavailable if the evidence is unreadable or insufficient to judge. Include specific feedback in correct_so_far_th/en and issue_th/en. Do not change the deterministic answer score. Before Give Up, do not disclose the final correct option or exact answer.";
     return {
       mode: "image_check",
       question: `${prompt}\n${drag ? dragQuestionText(question, this.language()) : question.type === "number" ? "Numeric response" : `Choices:\n${optionLines}`}\nStudent answer: ${drag ? selected : answer}${!drag && selected ? ` — ${selected}` : ""}`,
+      expectedAnswer: question.answer,
+      questionType: question.type || "choice",
+      context: safeText(activeLanguageNode(question.context, this.language())?.textContent),
       referenceSolution: drag ? `${referenceSolution}\n${dragAnswerText(question, Object.fromEntries(question.slots.map(slot => [slot.id, slot.answer])), this.language())}` : referenceSolution,
       selectedAnswer: drag ? selected : answer,
       hintLevel: Number(this.getHintLevel?.(question.id) || 0),
@@ -853,6 +957,7 @@ export class QuizEvidenceManager {
   }
 
   async checkQuestion(question, { notifyMissing = false } = {}) {
+    if (!requiresReasoning(question)) return { ok: true, notRequired: true };
     const lifecycle = this.lifecycle;
     this.flushCurrent();
     const entry = this.entry(question.id);
@@ -874,7 +979,10 @@ export class QuizEvidenceManager {
       return { ok: false, noEvidence: true };
     }
 
+    if (this.state.exportMeta) this.state.exportMeta.stale = true;
     const sentRevision = entry.revision;
+    const sentSignature = this.contextSignature(question.id);
+    const payload = this.questionPayload(question);
     entry.review = {
       status: "awaiting",
       checkedAt: 0,
@@ -885,15 +993,17 @@ export class QuizEvidenceManager {
 
     const controller = new AbortController();
     this.requests.add(controller);
+    let requestTimer;
     try {
       const imageBase64 = await this.evidenceImage(question);
       if (lifecycle !== this.lifecycle) return { cancelled: true };
+      requestTimer = setTimeout(() => controller.abort(), 45000);
       const response = await fetch(this.workerUrl, {
         method: "POST",
         signal: controller.signal,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...this.questionPayload(question),
+          ...payload,
           imageBase64,
         }),
       });
@@ -911,12 +1021,16 @@ export class QuizEvidenceManager {
         entry.revision === sentRevision
           ? {
               ...normalized,
+              policyVersion: REVIEW_POLICY_VERSION,
+              contextSignature: sentSignature,
               checkedAt: Date.now(),
               evidenceRevision: sentRevision,
               verificationId: createVerificationId(),
             }
           : {
               ...normalized,
+              policyVersion: REVIEW_POLICY_VERSION,
+              contextSignature: sentSignature,
               previousStatus: normalized.status,
               status: "recheck",
               checkedAt: Date.now(),
@@ -948,25 +1062,28 @@ export class QuizEvidenceManager {
           Number(error?.status) === 429 || /limit|quota|too many/i.test(message),
       };
     } finally {
+      clearTimeout(requestTimer);
       this.requests.delete(controller);
     }
   }
 
   needsReview(questionId) {
-    if (!this.hasEvidence(questionId)) return false;
+    const question = this.questions.find(question => question.id === questionId);
+    if (!requiresReasoning(question) || !this.hasEvidence(questionId)) return false;
     const entry = this.entry(questionId);
     return (
       !entry.review ||
+      (entry.review.status === "verified" && (entry.review.policyVersion !== REVIEW_POLICY_VERSION || entry.review.contextSignature !== this.contextSignature(questionId))) ||
       entry.review.status === "awaiting" ||
       entry.review.status === "recheck" ||
       entry.review.status === "unavailable" ||
-      Number(entry.review.evidenceRevision || -1) !== Number(entry.revision)
+      Number(entry.review.evidenceRevision ?? -1) !== Number(entry.revision)
     );
   }
 
   async reviewPending(questions, onProgress = () => {}) {
     const lifecycle = this.lifecycle;
-    const pending = questions.filter((question) => this.needsReview(question.id));
+    const pending = questions.filter((question) => requiresReasoning(question) && this.needsReview(question.id));
     for (let index = 0; index < pending.length; index += 1) {
       const question = pending[index];
       onProgress({ current: index + 1, total: pending.length, question });
@@ -991,6 +1108,16 @@ export class QuizEvidenceManager {
       }
     }
     onProgress({ current: pending.length, total: pending.length, done: true });
+  }
+
+  reviewFailed(questions, error) {
+    for (const question of questions) {
+      if (!requiresReasoning(question) || !this.hasEvidence(question.id) || !this.needsReview(question.id)) continue;
+      const entry = this.entry(question.id);
+      entry.review = { status: "unavailable", checkedAt: Date.now(), evidenceRevision: entry.revision,
+        error: this.language() === "en" ? "AI review could not finish; answer scoring is unchanged." : "AI ตรวจไม่สำเร็จ คะแนนคำตอบยังตรวจตามปกติ" };
+    }
+    this.onChange({ type: "review-failed" });
   }
 
   noteSubmission(results) {
@@ -1020,29 +1147,65 @@ export class QuizEvidenceManager {
     );
   }
 
+  contextSignature(questionId) {
+    const question = this.questions.find(question => question.id === questionId) || {};
+    const entry = this.entry(questionId);
+    const content = node => {
+      if (!node?.cloneNode) return JSON.stringify(node?.dataset || {});
+      const copy = node.cloneNode(true);
+      for (const leaf of [copy, ...copy.querySelectorAll("*")]) {
+        leaf.removeAttribute("hidden"); leaf.removeAttribute("aria-hidden");
+        if (!leaf.children.length && leaf.dataset?.th != null && leaf.dataset?.en != null) {
+          leaf.textContent = JSON.stringify([leaf.dataset.th, leaf.dataset.en]);
+        }
+      }
+      return copy.outerHTML;
+    };
+    const text = JSON.stringify([question.type || "choice", question.answer, content(question.prompt),
+      content(question.context), (question.options || []).map(option => [option.dataset?.choiceId, content(option)]),
+      content(question.solution), this.getAnswer?.(questionId) || "", Boolean(this.getGiveUp?.(questionId)),
+      Number(this.getHintLevel?.(questionId) || 0), entry.reasoning, entry.notebook]);
+    let hash = 2166136261;
+    for (let i = 0; i < text.length; i++) { hash ^= text.charCodeAt(i); hash = Math.imul(hash, 16777619); }
+    return (hash >>> 0).toString(16);
+  }
+
+  effectiveReview(questionId) {
+    const entry = this.entry(questionId);
+    const review = entry.review;
+    if (review && review.status !== "awaiting" &&
+        (Number(review.evidenceRevision) !== entry.revision ||
+         (review.status === "verified" && (review.policyVersion !== REVIEW_POLICY_VERSION || review.contextSignature !== this.contextSignature(questionId))))) {
+      return { ...review, status: "recheck" };
+    }
+    return review;
+  }
+
   statusFor(questionId, objectiveStatus) {
+    const question = this.questions.find(question => question.id === questionId);
+    if (!requiresReasoning(question)) return { kind: "answer-only", symbol: "—", th: "ตรวจคำตอบอัตโนมัติ · ไม่ต้องตรวจวิธีทำด้วย AI", en: "AUTOMATIC ANSWER CHECK · AI REVIEW NOT REQUIRED" };
     const entry = this.entry(questionId);
     const reviewStatus = this.hasEvidence(questionId)
-      ? entry.review?.status || "awaiting"
+      ? this.effectiveReview(questionId)?.status || "awaiting"
       : "no-reasoning";
     const correct = objectiveStatus === "correct";
     const configs = {
       "no-reasoning": {
         kind: "no-reasoning",
         symbol: "—",
-        th: "ไม่มีเหตุผลหรือกระดาษทด",
-        en: "NO REASONING PROVIDED",
+        th: "AI ยังไม่ได้ตรวจ · ไม่มีเหตุผลหรือวิธีทำ",
+        en: "AI NOT CHECKED · NO WORKING PROVIDED",
       },
       awaiting: {
         kind: "awaiting",
         symbol: "…",
-        th: "รอ AI ตรวจ",
+        th: "AI ยังไม่ได้ตรวจ · รอการตรวจ",
         en: "AWAITING AI CHECK",
       },
       recheck: {
         kind: "recheck",
         symbol: "↻",
-        th: "แก้ไขแล้ว ต้องตรวจใหม่",
+        th: "แก้ไขแล้ว · ต้องให้ AI ตรวจใหม่",
         en: "RECHECK REQUIRED",
       },
       unavailable: {
@@ -1054,7 +1217,7 @@ export class QuizEvidenceManager {
       revision: {
         kind: "revision",
         symbol: "△",
-        th: correct ? "คำตอบถูก · วิธีคิดควรแก้" : "คำตอบผิด · มีคำแนะนำจาก AI",
+        th: correct ? "AI ตรวจแล้ว · วิธีคิดควรแก้ (คำตอบถูก)" : "AI ตรวจแล้ว · คำตอบผิด มีคำแนะนำ",
         en: correct
           ? "ANSWER CORRECT · REASONING NEEDS REVISION"
           : "ANSWER WRONG · AI FEEDBACK",
@@ -1062,7 +1225,7 @@ export class QuizEvidenceManager {
       verified: {
         kind: correct ? "verified" : "revision",
         symbol: correct ? "✓" : "△",
-        th: correct ? "คำตอบถูก · AI ยืนยันวิธีคิด" : "คำตอบผิด · มีคำแนะนำจาก AI",
+        th: correct ? "AI ตรวจแล้ว · คำตอบถูกและวิธีทำผ่าน" : "AI ตรวจแล้ว · คำตอบผิด มีคำแนะนำ",
         en: correct ? "ANSWER CORRECT · AI VERIFIED" : "ANSWER WRONG · AI FEEDBACK",
       },
     };
@@ -1081,7 +1244,7 @@ export class QuizEvidenceManager {
     const answered = results.filter((result) => result.status !== "unanswered");
     const missing = this.missingForAnswered(results);
     const verified = results.filter(
-      (result) => this.entry(result.question.id).review?.status === "verified",
+      (result) => requiresReasoning(result.question) && result.status === "correct" && this.effectiveReview(result.question.id)?.status === "verified",
     );
     const heading = document.createElement("div");
     heading.className = "quiz-evidence-export-cover-heading";
@@ -1093,6 +1256,10 @@ export class QuizEvidenceManager {
         : this.language() === "en"
           ? "Quiz evidence report"
           : "รายงานหลักฐานการทำ Quiz";
+    const score = document.createElement("p");
+    const correctAnswers = results.filter(result => result.status === "correct").length;
+    score.textContent = this.language() === "en" ? `Answer score: ${correctAnswers}/${results.length} · independent of AI review` : `คะแนนคำตอบ ${correctAnswers}/${results.length} · แยกจากผลตรวจ AI`;
+    heading.append(score);
     const stats = document.createElement("div");
     stats.className = "quiz-evidence-export-stats";
     [
@@ -1120,8 +1287,8 @@ export class QuizEvidenceManager {
     note.querySelector("p").textContent = missing.length
       ? `${missingNumbers.slice(0, 60).join(", ")}${missingNumbers.length > 60 ? ` +${missingNumbers.length - 60}` : ""}`
       : this.language() === "en"
-        ? "Every answered question includes typed reasoning or notebook writing."
-        : "ทุกข้อที่ตอบมีข้อความเหตุผลหรือลายมือในสมุดทด";
+        ? "Answered choice/numeric questions include working. Drag-fill questions do not require AI review."
+        : "ข้อกาและตัวเลขที่ตอบมีเหตุผลหรือวิธีทำ ส่วนลากวางไม่ต้องตรวจด้วย AI";
     const meta = document.createElement("footer");
     meta.textContent = `${new Date().toLocaleString(this.language() === "en" ? "en-GB" : "th-TH")} · ${this.contentId}`;
     page.append(heading, stats, note, meta);
@@ -1134,6 +1301,7 @@ export class QuizEvidenceManager {
     const stamp = this.statusFor(question.id, result.status);
     const page = document.createElement("section");
     page.className = "quiz-evidence-export-page";
+    if (question.type === "drag-drop") page.classList.add("is-drag-evidence");
     const header = document.createElement("header");
     header.innerHTML = `<div><small>LEARNING HUB · ${this.contentId}</small><h1></h1></div><span>Q${question.index + 1}</span>`;
     header.querySelector("h1").textContent = title;
@@ -1143,8 +1311,8 @@ export class QuizEvidenceManager {
     stampBox.querySelector("strong").textContent =
       this.language() === "en" ? stamp.en : stamp.th;
     stampBox.querySelector("span").textContent = [
-      entry.review?.verificationId,
-      entry.review?.checkedAt
+      requiresReasoning(question) ? entry.review?.verificationId : "",
+      requiresReasoning(question) && entry.review?.checkedAt
         ? new Date(entry.review.checkedAt).toLocaleString(
             this.language() === "en" ? "en-GB" : "th-TH",
           )
@@ -1155,27 +1323,25 @@ export class QuizEvidenceManager {
     const prompt = document.createElement("section");
     prompt.className = "quiz-evidence-export-prompt";
     prompt.innerHTML = `<small>${this.language() === "en" ? "QUESTION" : "โจทย์"}</small>`;
-    const promptCopy = activeLanguageNode(question.prompt, this.language())?.cloneNode(true);
-    if (promptCopy && !promptCopy.children.length && question.prompt?.dataset?.[this.language()]) promptCopy.textContent = question.prompt.dataset[this.language()];
-    if (promptCopy) prompt.append(promptCopy);
-    if (question.type === "drag-drop") {
-      page.classList.add("is-drag-evidence");
-      prompt.append(createDragEvidenceBody(question, this.getAnswer?.(question.id), this.language()));
-    }
+    prompt.append(...this.questionContent(question).childNodes);
     const answer = document.createElement("p");
     answer.className = "quiz-evidence-export-answer";
     answer.textContent = `${this.language() === "en" ? "Selected answer" : "คำตอบที่เลือก"}: ${selectedOptionText(question, this.getAnswer?.(question.id), this.language()) || "—"}`;
+    const objective = document.createElement("p");
+    const resultText = { correct: ["ถูก", "Correct"], incorrect: ["ผิด", "Incorrect"], giveup: ["ยอมแพ้", "Gave up"], unanswered: ["ยังไม่ตอบ", "Unanswered"] }[result.status] || ["ยังไม่ตอบ", "Unanswered"];
+    objective.textContent = this.language() === "en" ? `Answer result: ${resultText[1]}` : `ผลตรวจคำตอบ: ${resultText[0]}`;
     const reason = document.createElement("section");
     reason.className = "quiz-evidence-export-reason";
     reason.innerHTML = `<small>${this.language() === "en" ? "TYPED REASONING" : "เหตุผลที่พิมพ์"}</small><p></p>`;
     reason.querySelector("p").textContent =
       entry.reasoning?.trim() ||
       (this.language() === "en" ? "No typed reasoning provided." : "ไม่ได้พิมพ์เหตุผล");
-    const notebookUrl = await this.snapshotImageUrl(question.id);
+    const notebookUrl = Number(entry.notebook?.strokeCount || 0) > 0 ? await this.snapshotImageUrl(question.id) : "";
     const notebook = document.createElement("section");
     notebook.className = "quiz-evidence-export-notebook";
     notebook.innerHTML = `<small>${this.language() === "en" ? "WORKING NOTEBOOK" : "สมุดทด"}</small>`;
     if (notebookUrl) {
+      notebook.classList.add("has-ink");
       const image = document.createElement("img");
       image.src = notebookUrl;
       image.alt = `Notebook Q${question.index + 1}`;
@@ -1192,7 +1358,9 @@ export class QuizEvidenceManager {
       (this.language() === "en" ? entry.review?.feedbackEn : entry.review?.feedbackTh) ||
       entry.review?.error ||
       (this.language() === "en" ? "Reasoning was not verified." : "วิธีคิดยังไม่ได้รับการยืนยัน");
-    page.append(header, stampBox, prompt, answer, reason, notebook, feedback);
+    page.append(header, stampBox, prompt, answer, objective);
+    if (requiresReasoning(question) || this.hasEvidence(question.id)) page.append(reason, notebook);
+    if (requiresReasoning(question)) page.append(feedback);
     return page;
   }
 
@@ -1230,17 +1398,25 @@ export class QuizEvidenceManager {
         context.fillRect(x, y, headerShot.width, headerShot.height);
         context.drawImage(headerShot, x, y);
       }
-      if (page.classList.contains("is-drag-evidence")) {
-        // Long passages must not disappear below the old fixed-height PDF page.
+      if (!page.classList.contains("is-cover")) {
+        // Every question type can continue; preserve the entire working and question.
         // Continue at the same scale and repeat the question header + AI stamp.
         const height = Math.round(shot.width * 297 / 210);
         const stampRect = page.querySelector(".quiz-evidence-export-stamp")?.getBoundingClientRect();
         const repeat = Math.min(Math.round(height / 3), Math.round(((stampRect?.bottom || pageRect.top) - pageRect.top + 12) * shot.width / pageRect.width));
-        let offset = 0;
-        while (offset < shot.height) {
+        const scale = shot.width / pageRect.width;
+        const protectedRanges = [];
+        const protect = rect => protectedRanges.push([(rect.top - pageRect.top) * scale, (rect.bottom - pageRect.top) * scale]);
+        page.querySelectorAll("img,svg").forEach(node => protect(node.getBoundingClientRect()));
+        const walker = document.createTreeWalker(page, NodeFilter.SHOW_TEXT);
+        for (let node; (node = walker.nextNode());) {
+          if (!node.textContent.trim()) continue;
+          const range = document.createRange(); range.selectNodeContents(node);
+          [...range.getClientRects()].forEach(protect);
+        }
+        const slices = evidencePageSlices(shot.height, height, repeat, protectedRanges);
+        for (const { offset, top, height: slice } of slices) {
           const continued = offset > 0;
-          const top = continued ? repeat : 0;
-          const slice = Math.min(height - top, shot.height - offset);
           const sheet = document.createElement("canvas");
           sheet.width = shot.width; sheet.height = height;
           const context = sheet.getContext("2d");
@@ -1249,7 +1425,6 @@ export class QuizEvidenceManager {
           context.drawImage(shot, 0, offset, shot.width, slice, 0, top, shot.width, slice);
           if (addPage || continued) pdf.addPage("a4", "portrait");
           pdf.addImage(sheet.toDataURL("image/jpeg", 0.86), "JPEG", 0, 0, 210, 297, undefined, "FAST");
-          offset += slice;
         }
         return;
       }
@@ -1274,7 +1449,7 @@ export class QuizEvidenceManager {
           : "เครื่องมือ PDF ยังโหลดไม่เสร็จ กรุณาลองอีกครั้ง",
       );
     }
-    const evidenceResults = results.filter((result) => this.hasEvidence(result.question.id));
+    const evidenceResults = results.filter((result) => result.status !== "unanswered" || this.hasEvidence(result.question.id));
     const groups = [];
     if (!evidenceResults.length) groups.push([]);
     for (let index = 0; index < evidenceResults.length; index += PDF_PAGE_LIMIT) {

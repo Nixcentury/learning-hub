@@ -5,7 +5,7 @@
 
 ข้อกำหนด:
 1. HTML fragment เท่านั้น ไม่ต้องมี head/body, CSS, JavaScript หรือปุ่ม
-2. root ใช้ data-quiz-mode="drag-drop" และ data-activity-kind="quiz" ทุกข้อใช้ data-question-type="drag-drop" ห้ามผสม choice/number ในชุดนี้
+2. ชุดลากวางล้วน: root ใช้ data-quiz-mode="drag-drop" และ data-activity-kind="quiz" ทุกข้อใช้ data-question-type="drag-drop" หากต้องผสม choice/number ในชุดเดียวกัน ให้ใช้ data-quiz-mode="mixed" และ quiz-mixed-template.html แทน
 3. เปลี่ยน data-activity-id และ data-question-id ให้ไม่ซ้ำ คงรหัสเดิมเมื่อเพียงแก้ข้อความหรือย้ายข้อ
 4. โจทย์ประกอบด้วย data-question-prompt และ data-question-body ใส่บทความ รูป figure หรือสูตร MathJax ได้
 5. ช่องวางอยู่ใน body ใช้ span data-drop-slot="รหัสช่อง" data-answer="รหัสชิ้นที่ถูก" data-label-th/data-label-en

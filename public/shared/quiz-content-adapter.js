@@ -1,4 +1,4 @@
-import { normalizeQuestion } from "./quiz-question-model.js";
+import { normalizeQuestion } from "./quiz-question-model.js?v=mixed-reasoning-20261030";
 
 function richText(node) {
   if (!node) return null;
@@ -13,7 +13,7 @@ export function readQuizContent(root) {
   if (!root) return { errors: ["Missing data-learning-activity-content."], questions: [] };
   if (root.dataset.activityKind !== "quiz") errors.push("Content is not a quiz.");
   const mode = root.dataset.quizMode || "standard";
-  if (!["standard", "drag-drop"].includes(mode)) errors.push("Quiz mode must be standard or drag-drop.");
+  if (!["standard", "drag-drop", "mixed"].includes(mode)) errors.push("Quiz mode must be standard, drag-drop or mixed.");
   if (!/^[a-z][a-z0-9-]*$/.test(root.dataset.activityId || "")) errors.push("Missing stable quiz id.");
   const seen = new Set();
   const questions = [...root.querySelectorAll("[data-question]")].map((element, index) => {
@@ -24,7 +24,7 @@ export function readQuizContent(root) {
     const solution = element.querySelector("[data-question-solution]");
     const body = element.querySelector("[data-question-body]");
     const isDrag = element.dataset.questionType === "drag-drop";
-    if ((mode === "drag-drop") !== isDrag) errors.push(`Question ${index + 1}: drag-drop questions need a separate data-quiz-mode=drag-drop set.`);
+    if (mode !== "mixed" && (mode === "drag-drop") !== isDrag) errors.push(`Question ${index + 1}: drag-drop questions need a separate data-quiz-mode=drag-drop set.`);
     const items = isDrag ? [...element.querySelectorAll("[data-item-id]")].map(item => ({ id: item.dataset.itemId, text: richText(item) })) : [];
     const slotNodes = isDrag && body ? [...body.querySelectorAll("[data-drop-slot]")] : [];
     const slots = slotNodes.map(slot => ({

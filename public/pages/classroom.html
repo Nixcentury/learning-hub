@@ -12,7 +12,7 @@
       <header class="page-heading">
         <span class="page-icon" aria-hidden="true">◎</span>
         <div><small  data-th="พื้นที่ห้องเรียน" data-en="Classroom workspace">พื้นที่ห้องเรียน</small><h1  data-th="ห้องเรียน" data-en="Classroom">ห้องเรียน</h1></div>
-        <span class="classroom-phase" data-th="เฟส 1 · ห้องและสมาชิก" data-en="Phase 1 · Rooms and members">เฟส 1 · ห้องและสมาชิก</span>
+        <span class="classroom-phase" data-th="ห้องเรียนและการบ้าน" data-en="Rooms and homework">ห้องเรียนและการบ้าน</span>
       </header>
       <div class="classroom-account" data-classroom-account hidden>
         <span aria-hidden="true">●</span>
@@ -73,7 +73,8 @@
         <p data-room-list-status role="status"></p>
         <div class="classroom-room-list" data-room-list></div>
         <section class="surface classroom-room-detail" data-room-detail hidden aria-label="Room details"></section>
-        <p class="classroom-footnote" data-th="เฟสนี้เปิดใช้ห้องและสมาชิกก่อน ส่วนมอบหมายงานและคะแนนจะเชื่อมในเฟสถัดไป ไม่ต้องเชื่อม Google Classroom" data-en="Rooms and membership are available first. Assignments and grades come in a later phase. Google Classroom is not required.">เฟสนี้เปิดใช้ห้องและสมาชิกก่อน ส่วนมอบหมายงานและคะแนนจะเชื่อมในเฟสถัดไป ไม่ต้องเชื่อม Google Classroom</p>
+        <section class="surface classroom-assignments" data-classroom-assignments hidden aria-label="Homework"></section>
+        <p class="classroom-footnote" data-th="ครูมอบหมายลิงก์ Quiz ให้สมาชิกในห้องได้ การเปิดอ่านหรือเปิด Quiz ยังไม่นับเป็นการส่งงาน ส่วนคะแนนและ Google Classroom จะเชื่อมในเฟสถัดไป" data-en="Teachers can assign Hub quiz links to their classrooms. Reading or opening a quiz does not submit homework. Assignment results and Google Classroom will follow later.">ครูมอบหมายลิงก์ Quiz ให้สมาชิกในห้องได้ การเปิดอ่านหรือเปิด Quiz ยังไม่นับเป็นการส่งงาน ส่วนคะแนนและ Google Classroom จะเชื่อมในเฟสถัดไป</p>
       </section>
       <noscript>กรุณาเปิด JavaScript เพื่อให้ตรวจสอบบัญชีและสิทธิ์ได้ / Enable JavaScript to check your account.</noscript>
     </main>
@@ -81,6 +82,7 @@
     <script src="shared/classroom-page.js"></script>
     <script src="shared/classroom-rooms.js"></script>
     <script src="shared/classroom-monitor-page.js?v=monitor-20261028"></script>
+    <script type="module" src="shared/classroom-assignments-page.js?v=homework-20261030"></script>
     <script src="shared/page.js"></script>
   </body>
 </html>

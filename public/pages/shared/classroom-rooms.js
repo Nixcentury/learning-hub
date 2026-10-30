@@ -96,7 +96,7 @@
           }
           detail.append(roster);
         }
-      } else if (room.membership === 'student') detail.append(element('p', t('คุณเข้าร่วมห้องนี้แล้ว เมื่อครูมอบหมายงานในเฟสถัดไป งานของคุณจะแสดงที่นี่', 'You have joined this classroom. Your assignments will appear here in a later phase.')));
+      } else if (room.membership === 'student') detail.append(element('p', t('คุณเข้าร่วมห้องนี้แล้ว ดูการบ้านที่ครูมอบหมายได้ด้านล่าง', 'You have joined this classroom. Your assigned homework appears below.')));
     }
     area.querySelectorAll('button,input').forEach(node => { node.disabled = saving; });
   }

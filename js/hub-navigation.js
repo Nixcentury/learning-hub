@@ -1,5 +1,6 @@
 import { parseHubRoute, resolveHubRoute, createHubShareUrl, routeCatalogFile, routeCatalogVersion } from './hub-routes.js';
 import { isMenuRoute as navigable, isActivityRoute, activityForRoute, menuForRoute, routeForTool } from './hub-activity-routes.js';
+import { classroomAssignmentRoute } from './classroom-assignment-routes.js';
 
 export function resolveNavigation(catalog, hash) {
   const result = resolveHubRoute(catalog, hash);
@@ -53,7 +54,7 @@ export function routeForSelection(catalog, selection) {
 }
 
 export function createHubNavigation({ pageFrame, navButtons, showSection, noticeElement,
-  canOpenWorkspace = () => false, openActivity = () => false, showMenu = () => {}, onLocationChanged = () => {} }) {
+  canOpenWorkspace = () => false, openActivity = () => false, showMenu = () => {}, onLocationChanged = () => {}, onClassroomRoute = () => {} }) {
   const sections = new Set([...navButtons].map(button => button.dataset.section));
   let catalogPromise = null, catalog = null, revision = 0, current = null;
   let readyPage = null, lastCommand = '', requestedHash = null, notice = '';
@@ -112,7 +113,10 @@ export function createHubNavigation({ pageFrame, navButtons, showSection, notice
     const request = ++revision;
     requestedHash = hash;
     let route, code = '';
-    try { ({ route, notice: code } = resolveNavigation(await loadCatalog(), hash)); }
+    try {
+      const classroom = classroomAssignmentRoute(hash);
+      ({ route, notice: code } = classroom ? { route: classroom, notice: '' } : resolveNavigation(await loadCatalog(), hash));
+    }
     catch {
       if (request !== revision) return;
       const sectionId = parseHubRoute(hash)?.segments[0];
@@ -134,6 +138,7 @@ export function createHubNavigation({ pageFrame, navButtons, showSection, notice
     requestedHash = location.hash;
     showNotice(code);
     showSection(sectionId, force);
+    onClassroomRoute(route.kind === 'classroom-assignment' ? route : null);
     applyToPage();
     applyingWorkspace = true;
     try {
@@ -174,6 +179,8 @@ export function createHubNavigation({ pageFrame, navButtons, showSection, notice
   }
   return {
     handleMessage,
+    openHash(hash) { return navigate(hash); },
+    loadCatalog,
     async select(selection) {
       try {
         const route = routeForSelection(await loadCatalog(), selection);

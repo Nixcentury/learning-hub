@@ -1,11 +1,14 @@
 // Phase 1 contract only: no navigation, history, authentication or storage effects.
 import { resolveBankRoute } from './question-bank-tools.js';
 import { resolveReviewRoute } from './topic-review-tools.js';
+import { classroomAssignmentRoute } from './classroom-assignment-routes.js';
 export const routeCatalogVersion = 1;
 export const routeCatalogFile = 'route-catalog.v1.json';
 export const routeSegmentPattern = /^[a-z0-9][a-z0-9-]{0,127}$/;
 
 export function parseHubRoute(hash) {
+  const classroom = classroomAssignmentRoute(hash);
+  if (classroom) return { hash, segments: hash.slice(1).split('/') };
   if (hash === '' || hash === '#') hash = '#overview';
   if (typeof hash !== 'string' || !hash.startsWith('#') || hash.length > 520) return null;
   const path = hash.slice(1).replace(/\/$/, '');
@@ -16,6 +19,8 @@ export function parseHubRoute(hash) {
 }
 
 export function resolveHubRoute(catalog, hash) {
+  const classroom = classroomAssignmentRoute(hash);
+  if (classroom) return { status: 'ready', canonicalHash: hash, route: classroom, content: null };
   const parsed = parseHubRoute(hash);
   if (!parsed || catalog?.schemaVersion !== routeCatalogVersion || !Array.isArray(catalog.routes) || !Array.isArray(catalog.contents)) return { status: 'invalid' };
   const route = catalog.routes.find(entry => entry?.hash === parsed.hash || entry?.aliases?.includes(parsed.hash)) || resolveBankRoute(parsed.segments) || resolveReviewRoute(parsed.segments);

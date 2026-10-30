@@ -6,12 +6,14 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { reset, good, emulatorOrigin, emulatorProject, mockToken } from './fixtures/classroom-emulator.mjs';
 import { buildMonitorRules } from './build-classroom-monitor-rules.mjs';
+import { buildAssignmentRules } from './build-classroom-assignment-rules.mjs';
 import { createRoomUpdates, joinRoomUpdates } from '../js/classroom-model.js';
 import { catalogFromRepository } from './build-route-catalog.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url)), prefix = '/learning-hub/', built = process.env.QA_BUILT === '1';
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const rules = JSON.parse(await readFile(resolve(root, 'firebase/classroom-phase1.merged-draft.json'), 'utf8'));
-rules.rules.classroomMonitorV1 = buildMonitorRules(); await reset(rules);
+rules.rules.classroomMonitorV1 = buildMonitorRules();
+rules.rules.classroomAssignmentsV1 = buildAssignmentRules(); await reset(rules);
 const roomId = 'r_' + 'a'.repeat(32), stamp = { '.sv': 'timestamp' };
 await good('teacher', 'PATCH', 'classroomV1', createRoomUpdates('teacher', 'ฟิสิกส์ ม.5/1', { roomId, code: 'ABCD2345' }, stamp));
 for (const uid of ['student','student-b']) await good(uid, 'PATCH', 'classroomV1', joinRoomUpdates(uid, roomId, 'ABCD2345', uid === 'student' ? 'นักเรียนทดลอง' : 'นักเรียนอีกคน', stamp));
@@ -88,6 +90,47 @@ try {
     await frame.locator('[data-classroom-monitor]').waitFor(); return { context, page, frame };
   }
   const teacher = await client('teacher'), student = await client('student', true);
+  // Homework uses the production Hub bundle, UI and real emulator Rules.
+  // It remains independent of lesson lock/unlock and quiz submission/grades.
+  const homeworkQuizRoute = catalog.routes.find(route => route.kind === 'content' && route.status === 'ready' &&
+    catalog.contents.find(item => item.id === route.contentId)?.toolKind === 'quiz');
+  assert.ok(homeworkQuizRoute, 'An authored, available quiz is needed for assignment integration');
+  await teacher.frame.locator('[data-hw-new]').click();
+  await teacher.frame.locator('[data-hw-editor] [name="title"]').fill('ทวนคลื่น — การบ้านทดลอง');
+  await teacher.frame.locator('[data-hw-editor] [name="url"]').fill(origin + prefix + homeworkQuizRoute.hash);
+  await teacher.frame.locator('[data-hw-editor] [name="instructions"]').fill('อ่านคำชี้แจงแล้วเปิด Quiz');
+  await teacher.frame.locator('[data-hw-preview]').click();
+  await teacher.frame.locator('[data-hw-preview-result]').filter({ hasText: 'Quiz ที่เลือก' }).waitFor();
+  await teacher.frame.locator('[data-hw-save]').click();
+  await teacher.frame.locator('.homework-card [data-homework-action="edit"]').waitFor();
+  assert.equal(await student.frame.locator('.homework-card').count(), 0, 'A student cannot see a private draft');
+  assert.ok(!(await student.page.evaluate(() => qaDbRequests)).some(row => row.path.startsWith('classroomAssignmentsV1/drafts/')));
+  await teacher.frame.locator('.homework-card [data-homework-action="edit"]').click();
+  await teacher.frame.locator('[data-hw-publish]').click();
+  await student.page.locator('.assignment-notice button').waitFor();
+  await student.page.locator('.assignment-notice button').click();
+  await student.frame.locator('[data-hw-detail] h3').filter({ hasText: 'ทวนคลื่น' }).waitFor();
+  await student.page.locator('.assignment-notice').waitFor({ state: 'hidden' });
+  assert.equal(await student.frame.locator('[data-hw-new]').isVisible(), false);
+  const homeworkLink = await student.frame.locator('.homework-share input').inputValue();
+  assert.match(homeworkLink, /#classroom\/r_[a-f0-9]{32}\/a_[a-f0-9]{32}$/);
+  await student.page.reload();
+  await student.frame.locator('[data-hw-detail] h3').filter({ hasText: 'ทวนคลื่น' }).waitFor();
+  assert.equal(await student.page.locator('.assignment-notice').isVisible(), false, 'Read state persists after reload');
+  await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').click();
+  await student.page.locator('#workspace-window-layer iframe[src*="quiz-player.html"]').waitFor();
+  assert.equal(await good('EMULATOR_ADMIN', 'GET', 'quizProgress'), null, 'Launching homework is not submission or a grade write');
+  await student.page.goBack();
+  await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').waitFor();
+  // Reset the retained homework iframe before the following independent
+  // monitoring regression opens its own quiz. Read receipts remain persisted.
+  await student.page.reload();
+  await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').waitFor();
+  teacher.page.once('dialog', dialog => dialog.accept());
+  await teacher.frame.locator('[data-hw-detail] [data-homework-action="close"]').click();
+  await student.frame.locator('[data-hw-detail] .homework-tag').filter({ hasText: 'ปิดงาน' }).waitFor();
+  assert.equal(await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').count(), 0);
+  console.log('PASS homework: private draft → publish → unread notice → deep link → read persistence → existing quiz → close');
   const people = teacher.frame.locator('[data-monitor-people]');
   await student.page.evaluate(() => { qaVisible(false); location.hash = '#chemistry/bank'; });
   assert.equal(await student.page.locator('.monitor-banner').isVisible(), false);

@@ -1,0 +1,130 @@
+{
+  "rules": {
+    "classroomAssignmentsV1": {
+      ".read": false,
+      ".write": false,
+      "drafts": {
+        "$roomId": {
+          ".read": "auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && root.child('classroomV1/rooms').child($roomId).child('ownerUid').val() === auth.uid",
+          "$assignmentId": {
+            ".write": "auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && root.child('classroomV1/rooms').child($roomId).child('ownerUid').val() === auth.uid && (!newData.exists() || !root.child('classroomAssignmentsV1/items').child($roomId).child($assignmentId).exists())",
+            ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && $assignmentId.matches(/^a_[a-f0-9]{32}$/) && newData.hasChildren([\"version\",\"ownerUid\",\"title\",\"instructions\",\"dueAt\",\"targetHash\",\"contentId\",\"quizTitleTh\",\"quizTitleEn\",\"status\",\"createdAt\",\"updatedAt\",\"publishedAt\",\"revision\"]) && newData.child('ownerUid').val() === auth.uid && (data.exists() ? (newData.child('ownerUid').val() === data.child('ownerUid').val() && newData.child('createdAt').val() === data.child('createdAt').val() && newData.child('revision').val() === data.child('revision').val() + 1) : (newData.child('createdAt').val() === now && newData.child('revision').val() === 1)) && newData.child('status').val() === 'draft' && newData.child('publishedAt').val() === 0",
+            "version": {
+              ".validate": "newData.val() === 1"
+            },
+            "ownerUid": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 128"
+            },
+            "title": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 180"
+            },
+            "instructions": {
+              ".validate": "newData.isString() && newData.val().length >= 0 && newData.val().length <= 4000"
+            },
+            "dueAt": {
+              ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 4102444800000 && newData.val() % 1 === 0"
+            },
+            "targetHash": {
+              ".validate": "newData.isString() && newData.val().matches(/^#[a-z0-9][a-z0-9/-]{0,519}$/)"
+            },
+            "contentId": {
+              ".validate": "newData.isString() && newData.val().matches(/^[a-z0-9][a-z0-9_-]{0,127}$/)"
+            },
+            "quizTitleTh": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 180"
+            },
+            "quizTitleEn": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 180"
+            },
+            "status": {
+              ".validate": "newData.val() === 'draft'"
+            },
+            "createdAt": {
+              ".validate": "newData.isNumber()"
+            },
+            "updatedAt": {
+              ".validate": "newData.val() === now"
+            },
+            "publishedAt": {
+              ".validate": "newData.isNumber()"
+            },
+            "revision": {
+              ".validate": "newData.isNumber() && newData.val() > 0 && newData.val() <= 1000000000 && newData.val() % 1 === 0"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      },
+      "items": {
+        "$roomId": {
+          ".read": "(auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && root.child('classroomV1/rooms').child($roomId).child('ownerUid').val() === auth.uid) || (auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists())",
+          "$assignmentId": {
+            ".write": "auth != null && (root.child('learningHub/admins').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).val() === true || root.child('learningHub/teacherApprovals').child(auth.uid).child('enabled').val() === true) && root.child('classroomV1/rooms').child($roomId).child('ownerUid').val() === auth.uid && newData.exists()",
+            ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && $assignmentId.matches(/^a_[a-f0-9]{32}$/) && newData.hasChildren([\"version\",\"ownerUid\",\"title\",\"instructions\",\"dueAt\",\"targetHash\",\"contentId\",\"quizTitleTh\",\"quizTitleEn\",\"status\",\"createdAt\",\"updatedAt\",\"publishedAt\",\"revision\"]) && newData.child('ownerUid').val() === auth.uid && (data.exists() ? (newData.child('ownerUid').val() === data.child('ownerUid').val() && newData.child('createdAt').val() === data.child('createdAt').val() && newData.child('revision').val() === data.child('revision').val() + 1) : (((root.child('classroomAssignmentsV1/drafts').child($roomId).child($assignmentId).exists() && newData.child('createdAt').val() === root.child('classroomAssignmentsV1/drafts').child($roomId).child($assignmentId).child('createdAt').val()) || (!root.child('classroomAssignmentsV1/drafts').child($roomId).child($assignmentId).exists() && newData.child('createdAt').val() === now)) && ((root.child('classroomAssignmentsV1/drafts').child($roomId).child($assignmentId).exists() && newData.child('revision').val() === root.child('classroomAssignmentsV1/drafts').child($roomId).child($assignmentId).child('revision').val() + 1) || (!root.child('classroomAssignmentsV1/drafts').child($roomId).child($assignmentId).exists() && newData.child('revision').val() === 1)))) && (!data.exists() ? newData.child('status').val() === 'published' && newData.child('publishedAt').val() === now : (newData.child('targetHash').val() === data.child('targetHash').val() && newData.child('contentId').val() === data.child('contentId').val() && newData.child('quizTitleTh').val() === data.child('quizTitleTh').val() && newData.child('quizTitleEn').val() === data.child('quizTitleEn').val() && newData.child('publishedAt').val() === data.child('publishedAt').val() && (data.child('status').val() !== 'closed' || newData.child('status').val() === 'closed'))) && !newData.parent().parent().parent().child('drafts').child($roomId).child($assignmentId).exists()",
+            "version": {
+              ".validate": "newData.val() === 1"
+            },
+            "ownerUid": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 128"
+            },
+            "title": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 180"
+            },
+            "instructions": {
+              ".validate": "newData.isString() && newData.val().length >= 0 && newData.val().length <= 4000"
+            },
+            "dueAt": {
+              ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 4102444800000 && newData.val() % 1 === 0"
+            },
+            "targetHash": {
+              ".validate": "newData.isString() && newData.val().matches(/^#[a-z0-9][a-z0-9/-]{0,519}$/)"
+            },
+            "contentId": {
+              ".validate": "newData.isString() && newData.val().matches(/^[a-z0-9][a-z0-9_-]{0,127}$/)"
+            },
+            "quizTitleTh": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 180"
+            },
+            "quizTitleEn": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 180"
+            },
+            "status": {
+              ".validate": "newData.val() === 'published' || newData.val() === 'closed'"
+            },
+            "createdAt": {
+              ".validate": "newData.isNumber()"
+            },
+            "updatedAt": {
+              ".validate": "newData.val() === now"
+            },
+            "publishedAt": {
+              ".validate": "newData.isNumber()"
+            },
+            "revision": {
+              ".validate": "newData.isNumber() && newData.val() > 0 && newData.val() <= 1000000000 && newData.val() % 1 === 0"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      },
+      "seen": {
+        "$roomId": {
+          "$uid": {
+            ".read": "(auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists()) && auth.uid === $uid",
+            "$assignmentId": {
+              ".write": "(auth != null && root.child('classroomV1/members').child($roomId).child(auth.uid).exists()) && auth.uid === $uid && root.child('classroomAssignmentsV1/items').child($roomId).child($assignmentId).exists() && newData.exists()",
+              ".validate": "$roomId.matches(/^r_[a-f0-9]{32}$/) && $assignmentId.matches(/^a_[a-f0-9]{32}$/) && newData.isNumber() && (data.exists() ? newData.val() === data.val() : newData.val() === now)"
+            }
+          }
+        }
+      },
+      "$other": {
+        ".validate": false
+      }
+    }
+  }
+}

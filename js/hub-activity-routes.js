@@ -4,7 +4,7 @@ import { toolCatalog } from './legacy-tool-catalog.js';
 import { createBankTool } from './question-bank-tools.js';
 import { createTopicReviewTool } from './topic-review-tools.js';
 
-export const isMenuRoute = route => ['section', 'chapter', 'topic', 'bank'].includes(route?.kind);
+export const isMenuRoute = route => ['section', 'chapter', 'topic', 'bank', 'classroom-assignment'].includes(route?.kind);
 export const isActivityRoute = route => ['content', 'legacy-tool', 'bank-tool', 'topic-review'].includes(route?.kind);
 
 // Resolve only authored catalog entries, never a source URL supplied in the hash.

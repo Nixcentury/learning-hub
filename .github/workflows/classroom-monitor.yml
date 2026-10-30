@@ -8,6 +8,8 @@ on:
       - 'js/hub-navigation.js'
       - 'index.html'
       - 'css/classroom-monitor.css'
+      - 'css/classroom-assignments.css'
+      - 'public/shared/classroom-assignment-model.js'
       - 'public/pages/classroom.html'
       - 'public/pages/shared/classroom*'
       - 'firebase/classroom*'

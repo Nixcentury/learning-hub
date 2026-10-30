@@ -25,6 +25,9 @@ import { createClassroomAccess } from "./classroom-access.js";
 import { createFirebaseClassrooms } from "./classroom-firebase.js";
 import { createFirebaseClassroomMonitor } from './classroom-monitor-firebase.js';
 import { createMonitorView } from './classroom-monitor-view.js';
+import { createFirebaseClassroomAssignments } from './classroom-assignment-firebase.js';
+import { createAssignmentNotice } from './classroom-assignment-view.js';
+import { assignmentHash } from './classroom-assignment-model.js';
 import {
   createHubContextMessage,
   createIdentityContext,
@@ -116,6 +119,12 @@ let classroomPageRevision = 0;
 let classroomRooms = null;
 let classroomMonitorState = null;
 let monitorView = null;
+let assignmentState = null, assignmentRoute = null, assignmentOpening = '', assignmentNotice = null;
+const assignments = createFirebaseClassroomAssignments({
+  hubUrl: new URL('./', location.href).href,
+  loadCatalog: () => navigation.loadCatalog(),
+  onChange: snapshot => { assignmentState = snapshot; assignmentNotice?.update(snapshot); postContextToPage(); },
+});
 const classroomMonitor = createFirebaseClassroomMonitor(snapshot => {
   classroomMonitorState = snapshot;
   monitorView?.update(snapshot);
@@ -126,11 +135,23 @@ const classrooms = createFirebaseClassrooms(snapshot => {
   if (snapshot.selected?.id) classroomMonitor.selectRoom(snapshot.selected.id);
   monitorView?.refresh();
   postContextToPage();
+  syncAssignmentRoute();
 });
 
 function syncClassrooms() {
   classrooms.setContext(activeSession, activeRole, activeSectionId === "classroom");
   classroomMonitor.setIdentity(activeSession, activeRole);
+  assignments.setIdentity(activeSession, activeRole);
+}
+
+function syncAssignmentRoute() {
+  if (activeSectionId !== 'classroom' || !assignmentRoute || classroomRooms?.status !== 'ready' || classroomRooms.uid !== activeSession.user?.uid) return;
+  const { roomId } = assignmentRoute;
+  if (classroomRooms.selected?.id === roomId) return;
+  const key = classroomRooms.uid + '/' + roomId;
+  if (assignmentOpening === key) return;
+  assignmentOpening = key;
+  void classrooms.command('open', { roomId }, classroomRooms.uid).catch(() => {}).finally(() => { if (assignmentOpening === key) assignmentOpening = ''; });
 }
 
 function getWorkspaceIdentity() {
@@ -172,6 +193,7 @@ monitorView = createMonitorView({ getLanguage: () => currentLanguage,
   onClassroom: () => { location.hash = '#classroom'; },
   getOpenRoom: () => activeSectionId === 'classroom' ? classroomRooms?.selected?.id || '' : '',
 });
+assignmentNotice = createAssignmentNotice({ getLanguage: () => currentLanguage, navigate: hash => void navigation?.openHash(hash) });
 classroomMonitor.setVisible(document.visibilityState !== 'hidden');
 document.addEventListener('visibilitychange', () => classroomMonitor.setVisible(document.visibilityState !== 'hidden'));
 
@@ -203,6 +225,8 @@ function postContextToPage() {
       classroom: createClassroomAccess(activeSession, activeRole),
       classroomRooms: activeSectionId === "classroom" && classroomRooms?.uid === activeSession.user?.uid ? classroomRooms : null,
       classroomMonitor: activeSectionId === 'classroom' && classroomMonitorState?.uid === activeSession.user?.uid ? classroomMonitorState : null,
+      classroomAssignments: activeSectionId === 'classroom' && assignmentState?.uid === activeSession.user?.uid ? assignmentState : null,
+      classroomAssignmentRoute: activeSectionId === 'classroom' ? assignmentRoute : null,
     },
     targetOrigin,
   );
@@ -491,6 +515,7 @@ function setLanguage(language) {
   workspace.setLanguage(language);
   companion.setLanguage(language);
   monitorView?.refresh();
+  assignmentNotice?.refresh();
   saveLanguage(language);
 }
 
@@ -632,7 +657,7 @@ function showSection(sectionId, force = false) {
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
   // Keep cached menu documents and their shared subject palette in sync.
-  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-monitor-20261028' : 'bank-chapter-links-20261027');
+  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-homework-20261030' : 'bank-chapter-links-20261027');
   pageFrameLoading.hidden = false;
   // Child-frame navigations must not add extra entries to the Hub's Back history.
   pageFrame.contentWindow.location.replace(pageUrl.href);
@@ -724,6 +749,7 @@ navigation = createHubNavigation({
     : activity.entry ? workspace.openContent(activity.entry) : workspace.open(activity.toolId),
   showMenu: () => workspace.showMenu(),
   onLocationChanged: value => classroomMonitor.setLocation(value),
+  onClassroomRoute: route => { assignmentRoute = route; assignmentOpening = ''; syncAssignmentRoute(); postContextToPage(); },
 });
 
 document.querySelector('#hub-share-button').addEventListener('click', event => void openHubShare({
@@ -759,10 +785,32 @@ window.addEventListener("message", (event) => {
       if (revision !== classroomPageRevision || activeSectionId !== "classroom" || activeSession.user?.uid !== uid) return;
       event.source.postMessage({ type: "learning-hub-classroom-result", requestId, uid, ...result }, event.origin);
     };
+    if (['open', 'back'].includes(action)) { assignmentRoute = null; assignmentOpening = ''; }
     void classrooms.command(action, payload, uid).then(
-      result => reply({ ok: true, result }),
+      result => {
+        reply({ ok: true, result });
+        if (uid === activeSession.user?.uid && activeSectionId === 'classroom' && ['open','back'].includes(action))
+          void navigation.openHash(action === 'back' ? '#classroom' : assignmentHash(payload.roomId));
+      },
       error => reply({ ok: false, error: String(error?.code || error?.message || "classroom/unavailable") }),
     );
+    return;
+  }
+  if (event.data?.type === 'learning-hub-assignment-command' && activeSectionId === 'classroom') {
+    const { action, payload = {}, uid, requestId } = event.data;
+    if (typeof requestId !== 'string' || requestId.length > 100 || uid !== activeSession.user?.uid || payload.roomId !== classroomRooms?.selected?.id) return;
+    const revision = classroomPageRevision;
+    const current = () => revision === classroomPageRevision && activeSectionId === 'classroom' && uid === activeSession.user?.uid && payload.roomId === classroomRooms?.selected?.id;
+    const reply = result => { if (current()) event.source.postMessage({ type: 'learning-hub-assignment-result', requestId, uid, ...result }, event.origin); };
+    if (action === 'retry') {
+      assignments.setIdentity(null, null); assignments.setIdentity(activeSession, activeRole); reply({ ok: true }); return;
+    }
+    void assignments.command(action, payload, uid).then(result => {
+      if (!current()) return;
+      reply({ ok: true, result });
+      if (action === 'launch') void navigation.openHash(result.targetHash);
+      else if (['view','save','publish'].includes(action)) void navigation.openHash(assignmentHash(payload.roomId, result.id));
+    }, failure => reply({ ok: false, error: String(failure?.code || failure?.message || 'assignment/unavailable') }));
     return;
   }
   if (event.data?.type === 'learning-hub-monitor-command' && activeSectionId === 'classroom') {

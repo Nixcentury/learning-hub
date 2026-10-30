@@ -47,3 +47,5 @@ LEARNING HUB/public/content/templates/quiz-template.html
 - ตรวจภาษาไทย–อังกฤษ
 - เปิดทดสอบผ่าน pages/tools/quiz-player.html?content=พาธของไฟล์ใหม่
 - รัน build และรายงานลิงก์ทดสอบ โดยไม่แก้ deployment workflow
+
+หากหนึ่งชุดมีทั้งลากวาง ข้อกา และเติมตัวเลข ให้ใช้ data-quiz-mode="mixed" และ quiz-mixed-template.html อ่าน QUESTION-MODEL-V1.md ส่วนชุดผสมและผลตรวจวิธีทำ คะแนนยังตรวจตามคำตอบเดิม ส่วนตรา AI แยกจากคะแนน

@@ -3,6 +3,10 @@ import assert from "node:assert/strict";
 import { normalizeQuestion, hasAnswer, isCorrectAnswer, isStoredAnswer } from "../public/shared/quiz-question-model.js";
 import { dragAnswerSummary, placeDragItem, describeDragAnswer } from "../public/shared/quiz-drag-model.js";
 import { readQuizContent } from "../public/shared/quiz-content-adapter.js";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { parseHTML } from "linkedom";
+import { createContentValidator } from "./validate-activity-content.mjs";
 
 const bilingual = text => ({ th: text, en: text });
 const record = extra => ({
@@ -79,5 +83,22 @@ test("normal sets keep mixed choice/number, while drag sets reject mixing", () =
   const root = { dataset: { activityKind: "quiz", activityId: "mixed" }, querySelectorAll: () => [make("choice"), make("number")] };
   assert.deepEqual(readQuizContent(root).errors, []);
   root.dataset.quizMode = "drag-drop";
+  assert.match(readQuizContent(root).errors.join(" "), /separate/);
+});
+
+test("the mixed template loads, validates and grades all three types in one set", async () => {
+  const url = new URL("../public/content/templates/quiz-mixed-template.html", import.meta.url);
+  const source = readFileSync(url, "utf8");
+  const root = parseHTML(source).document.querySelector("[data-learning-activity-content]");
+  const { questions, errors } = readQuizContent(root);
+  assert.deepEqual(errors, []);
+  assert.deepEqual(questions.map(q => q.type), ["drag-drop", "number", "choice"]);
+  assert.equal(isCorrectAnswer(questions[0], { frequency: "frequency", constant: "planck" }), true);
+  assert.equal(isCorrectAnswer(questions[1], "3.3*10^{-19}"), true);
+  assert.equal(isCorrectAnswer(questions[2], "b"), true);
+  const validator = createContentValidator({ read: async () => source });
+  await validator.validateFile(fileURLToPath(url));
+  assert.deepEqual(validator.errors, []);
+  root.dataset.quizMode = "standard";
   assert.match(readQuizContent(root).errors.join(" "), /separate/);
 });

@@ -646,3 +646,15 @@
     display: none !important;
   }
 }
+
+/* Evidence reports retain complete prompts, context, options and working. */
+.quiz-evidence-export-page:not(.is-cover) { height:auto; min-height:1584px; overflow:visible; }
+.quiz-evidence-export-page:not(.is-cover) > * { flex-shrink:0; }
+.quiz-evidence-export-prompt, .quiz-evidence-export-reason, .quiz-evidence-export-feedback { max-height:none; overflow:visible; }
+.quiz-evidence-export-prompt img, .quiz-evidence-export-prompt svg { max-width:100%; height:auto; }
+.quiz-evidence-panel[hidden] { display:none !important; }
+
+.quiz-evidence-export-prompt { font-size:20px; }
+.quiz-evidence-export-reason, .quiz-evidence-export-feedback, .quiz-evidence-export-answer { font-size:18px; }
+
+.quiz-evidence-export-notebook:not(.has-ink) { min-height:0; }

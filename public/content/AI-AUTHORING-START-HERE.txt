@@ -241,7 +241,8 @@ data-chapter-id และ data-topic-id ตามคู่มือ PDF
 - ข้อกา: data-question-type="choice"; data-answer ตรง data-choice-id จริง
 - ตัวเลข: data-question-type="number"; คำตอบไม่มีหน่วย; tolerance ไม่ติดลบ
 - ข้อกาและตัวเลขอยู่ชุดเดียวกันได้
-- ลากวางใช้ชุดแยกและ data-quiz-mode="drag-drop" ตามแม่แบบ
+- ลากวางล้วนใช้ data-quiz-mode="drag-drop"; ถ้าหนึ่งชุดมีทั้งลากวาง ข้อกา และเติมตัวเลข ใช้ data-quiz-mode="mixed" และ quiz-mixed-template.html
+- ข้อกา/ตัวเลขมีเหตุผล สมุดทด และตรา AI ใน PDF แยกจากคะแนน ลากวางไม่ต้องตรวจวิธีทำด้วย AI ดู QUESTION-MODEL-V1.md
 - รองรับข้อความ TH/EN ด้วย data-th/data-en หรือ data-quiz-language ตามแม่แบบ
 - สูตรใช้ \(...\) ในบรรทัด และ \[...\] สำหรับสมการแยกบรรทัด
 - ไฟล์ Quiz ไม่มี CSS, script, input/form หรือปุ่ม Engine ที่สร้างเอง

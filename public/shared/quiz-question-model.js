@@ -189,3 +189,8 @@ export function isStoredAnswer(question, answer) {
   if (question.type === "number") return typeof answer === "string" && answer.length <= MAX_ANSWER_LENGTH;
   return (question.choices || question.options?.map(option => ({ id: option.dataset.choiceId })) || []).some(choice => choice.id === answer);
 }
+
+// Choice/numeric methods are eligible for AI review; this never gates answer scoring.
+export function requiresReasoning(question) {
+  return question?.type !== "drag-drop";
+}

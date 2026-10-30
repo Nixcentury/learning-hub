@@ -430,11 +430,11 @@ async function validateFile(file) {
 
   const seenIds = new Set();
   const mode = rootAttributes.get("data-quiz-mode") || "standard";
-  if (!["standard", "drag-drop"].includes(mode)) addError(file, "Quiz mode must be standard or drag-drop.");
+  if (!["standard", "drag-drop", "mixed"].includes(mode)) addError(file, "Quiz mode must be standard, drag-drop or mixed.");
   questionBlocks.forEach((match, index) => {
     offsets.set(file, match.index);
     const isDrag = readAttributes(`<article ${match[1]}>`).get("data-question-type") === "drag-drop";
-    if (isDrag !== (mode === "drag-drop")) addError(file, "Drag-drop must be a separate data-quiz-mode=drag-drop set, without choice/number questions.");
+    if (mode !== "mixed" && isDrag !== (mode === "drag-drop")) addError(file, "Drag-drop must be a separate data-quiz-mode=drag-drop set, without choice/number questions.");
     validateQuestion(file, `<article ${match[1]}>`, match[2], index, seenIds);
   });
 }

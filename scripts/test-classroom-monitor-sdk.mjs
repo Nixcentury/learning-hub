@@ -69,8 +69,12 @@ try {
     const progress={version:2,identityKey:'student',contentId:'sdk-quiz',answers:{one:'a'},giveUps:{},masteredIds:[],elapsedMs:1234};
     await studentWork.quizCommand('save',binding,{value:progress,storageRevision:0});
     await studentWork.quizCommand('save',binding,{value:progress,storageRevision:1});
-    const outcomes=await Promise.all([studentWork.quizCommand('submit',binding,{value:progress,submissionId:'d'.repeat(32)}),studentWork.quizCommand('submit',binding,{value:progress,submissionId:'e'.repeat(32)})]);
-    assert.equal(outcomes[0].grade.score,1);assert.equal(outcomes[0].result.submittedAt,outcomes[1].result.submittedAt);
+    const raceApp=initializeApp({projectId:emulatorProject,databaseURL:`https://${emulatorProject}.firebaseio.com`},'homework-second-tab');
+    const raceDb=sdk.getDatabase(raceApp),endpoint=new URL(emulatorOrigin);sdk.connectDatabaseEmulator(raceDb,endpoint.hostname,Number(endpoint.port),{mockUserToken:mockToken('student')});
+    clients.push({app:raceApp,db:raceDb,service:{dispose(){}}});const otherStudentWork=homeworkClient({db:raceDb},'student',false);
+    await until(()=>otherStudentWork.getState().connected,'second homework tab');
+    const outcomes=await Promise.all([studentWork.quizCommand('submit',binding,{value:progress,submissionId:'d'.repeat(32)}),studentWork.quizCommand('submit',binding,{value:progress,submissionId:'e'.repeat(32)}),otherStudentWork.quizCommand('submit',binding,{value:progress,submissionId:'f'.repeat(32)})]);
+    assert.equal(outcomes[0].grade.score,1);for(const outcome of outcomes)assert.equal(outcomes[0].result.submittedAt,outcome.result.submittedAt);
     await until(()=>teacherWork.getState().grades[assignmentId]?.rows[0]?.grade?.score===1,'teacher homework score');
     assert.equal(await good('EMULATOR_ADMIN','GET','quizProgress'),null);
     console.log('PASS real SDK homework snapshot, revisioned autosave and concurrent final-submit retries retain one immutable result');

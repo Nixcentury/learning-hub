@@ -5,7 +5,7 @@ import { failSubmission, submissionPayload, gradeSubmission } from '../public/sh
 export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange = () => {} }) {
   let session, role, assignments, uid = '', roomId = '', epoch = 0, connected = false, error = '', busy = '', last = '';
   let quizzes = {}, results = {}, roster = {}, own = {}, ready = false;
-  const stops = [], itemStops = new Map(), parsed = new Map(), loaded = new Set(), resultLoaded = new Set();
+  const stops = [], itemStops = new Map(), parsed = new Map(), loaded = new Set(), resultLoaded = new Set(), submissionsInFlight = new Map();
   const room = (selected = roomId) => assignments?.rooms.find(value => value.id === selected);
   const isOwner = (selected = roomId) => role === 'teacher' && room(selected)?.membership === 'owner' && room(selected)?.ownerUid === uid;
   const live = (version, user = uid) => version === epoch && user === uid && session?.user?.uid === uid;
@@ -36,7 +36,7 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
   function clear() {
     ++epoch; for (const stop of stops.splice(0)) stop();
     for (const stop of itemStops.values()) stop(); itemStops.clear(); parsed.clear();
-    loaded.clear(); resultLoaded.clear(); quizzes = {}; results = {}; roster = {}; own = {}; ready = false; connected = false; busy = ''; error = ''; last = '';
+    loaded.clear(); resultLoaded.clear(); submissionsInFlight.clear(); quizzes = {}; results = {}; roster = {}; own = {}; ready = false; connected = false; busy = ''; error = ''; last = '';
   }
   function watch(path, callback, version) {
     const timer = setTimeout(() => { if (live(version)) { error = 'homework/read-timeout'; publish(); } }, 15000); timer.unref?.();
@@ -173,6 +173,20 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     if (!result) throw failSubmission('homework/unconfirmed');
     return { result, grade: gradeSubmission(result, quiz, questions) };
   }
-  return { setContext, prepare, open, quizCommand, getState: () => structuredClone(state()),
+  function command(action, binding, payload) {
+    if (action !== 'submit') return quizCommand(action, binding, payload);
+    // Multiple clicks/windows sharing this SDK must wait for the same confirmed
+    // write. An aborted overlapping transaction can otherwise read a cold cache
+    // before the first transaction has committed and incorrectly report failure.
+    try { guard(binding?.uid, epoch, false, binding?.roomId); }
+    catch (failure) { return Promise.reject(failure); }
+    const key = `${binding.uid}/${binding.roomId}/${binding.id}`;
+    if (submissionsInFlight.has(key)) return submissionsInFlight.get(key);
+    const operation = quizCommand(action, binding, payload).finally(() => {
+      if (submissionsInFlight.get(key) === operation) submissionsInFlight.delete(key);
+    });
+    submissionsInFlight.set(key, operation); return operation;
+  }
+  return { setContext, prepare, open, quizCommand: command, getState: () => structuredClone(state()),
     dispose() { clear(); uid = roomId = ''; } };
 }

@@ -129,3 +129,12 @@ test('frozen quiz reader strips executable markup while retaining bilingual cont
   document.body.innerHTML='<article><img src="https://example.org/a.png"><img src="data:text/html,bad"></article>';
   const sanitized=sanitizeHomeworkRoot(document.querySelector('article'),'https://example.test/');assert.equal(sanitized.querySelectorAll('img[src]').length,1);
 });
+
+test('simultaneous final-submit commands share the same pending server acknowledgement',async t=>{
+  const f=fixture(t);await tick();const binding=await f.service.open(aid);let finish;
+  const originalIO={...f.io};f.io.transaction=async(...args)=>{await new Promise(done=>{finish=done;});return originalIO.transaction(...args);};
+  const first=f.service.quizCommand('submit',binding,{value:progress({choice:'a'}),submissionId:'e'.repeat(32)});
+  const second=f.service.quizCommand('submit',binding,{value:progress({number:'5/6'}),submissionId:'f'.repeat(32)});
+  await tick();assert.equal(f.writes.length,0);finish();const results=await Promise.all([first,second]);
+  assert.equal(f.writes.length,1);assert.equal(results[0].result.submissionId,results[1].result.submissionId);assert.equal(results[1].grade.score,1);
+});

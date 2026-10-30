@@ -138,6 +138,7 @@ function makeHarness() {
     requiresReasoning, readQuizContent, hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, MAX_ANSWER_LENGTH, dragAnswerSummary, readBankSelection, resolveAuthoredPdfLinks,
     warmQuizEngine: async () => 'https://example.test/quiz-player.html?quizRefresh=test',
     hideMathKeyboard() {}, mountNumericAnswer() {},
+    createDragEvidenceBody(question, answer) { return { textContent: `Student passage: ${Object.values(answer).join(" ")}` }; },
     localStorage: {
       getItem(storageKey) { if (storageFails) throw new Error("Storage disabled"); return storage.get(storageKey) ?? null; },
       setItem(storageKey, value) {
@@ -167,7 +168,7 @@ function makeHarness() {
         saveLocalNow, loadCloud, saveCloudNow, persist, persistLocalOnly,
         storageKey, pendingStorageRequests, renderStorageStatus,
         persistNavigation, retrySync, resolveCloudConflict,
-        giveUp, retryGivenUp, editAnswers, selectAnswer, submitAll, resultFor,
+        giveUp, retryGivenUp, editAnswers, selectAnswer, submitAll, resultFor, goTo,
         evidence: () => evidenceManager,
         setContentReady: (ready) => { contentRoot = ready ? {} : null; },
       };
@@ -188,7 +189,7 @@ function makeHarness() {
     ...result,
   }, options);
   return {
-    ...api, storage, writes, timers, messages, parent, window, status,
+    ...api, storage, writes, timers, messages, parent, window, status, root,
     settle, dispatch, response,
     time: () => now,
     setTime(value) { now = value; },
@@ -618,4 +619,23 @@ test("unsynced work requires consent to close and a guest does not require cloud
   h.window.confirm = () => false;
   assert.equal(await h.window.LearningHubQuiz.prepareClose(), false);
   assert.deepEqual(h.read("student-a").answers, { q1: "A" });
+});
+
+test("opt-in drag reading confirms current work once, cancels navigation and rechecks edited answers", async () => {
+  const h = makeHarness(); await h.load();
+  h.root.dataset.dragReadConfirm = "true";
+  h.state.questions[0] = { ...h.state.questions[0], type: "drag-drop", slots: [{ id: "word" }] };
+  h.state.answers.q1 = { word: "student-choice" };
+  const prompts = [];
+  h.window.confirm = message => { prompts.push(message); return false; };
+  h.goTo(1); assert.equal(h.state.currentIndex, 0);
+  assert.match(prompts[0], /student-choice/); assert.equal(h.state.latestScore, null);
+  h.window.confirm = message => { prompts.push(message); return true; };
+  h.goTo(1); assert.equal(h.state.currentIndex, 1);
+  h.goTo(0); h.goTo(1); assert.equal(prompts.length, 2);
+  h.goTo(0); h.state.answers.q1 = { word: "edited-choice" }; h.goTo(1);
+  assert.equal(prompts.length, 3); assert.match(prompts[2], /edited-choice/);
+  h.goTo(0); delete h.state.answers.q1; h.goTo(1); assert.equal(prompts.length, 3);
+  h.goTo(0); h.state.answers.q1 = { word: "another" }; delete h.root.dataset.dragReadConfirm;
+  h.goTo(1); assert.equal(prompts.length, 3); assert.equal(h.state.latestScore, null);
 });

@@ -480,6 +480,21 @@ html[lang="en"] [data-quiz-language="th"] {
   margin-inline: auto;
 }
 
+/* Authored photo/graph assets can be thousands of pixels wide. Fit the image
+   without cropping so the whole reading figure remains available. */
+.quiz-question-context img:not([data-bank-svg]),
+.quiz-summary-content img:not([data-bank-svg]),
+.quiz-solution img:not([data-bank-svg]),
+.quiz-print-content [data-question-context] img:not([data-bank-svg]) {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 480px;
+  object-fit: contain;
+  margin-inline: auto;
+}
+
 /* Static bank SVG is an image document, also in hints, choices and print. */
 img[data-bank-svg] {
   display: block;

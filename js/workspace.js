@@ -99,6 +99,11 @@ export function createWorkspace({
   const records = new Map();
   let highestZIndex = 30;
   let cascadeIndex = 0;
+  let splitPair = null;
+  let pendingSplit = null;
+  let layoutDialog = null;
+  let layoutOwner = null;
+  let pendingBanner = null;
 
   function language() {
     return getLanguage() === "en" ? "en" : "th";
@@ -232,14 +237,150 @@ export function createWorkspace({
       "has-maximized-workspace",
       hasMaximizedWindow,
     );
+    document.body.classList.toggle("has-split-workspace", Boolean(splitPair));
+  }
+
+  function endSplit() {
+    if (!splitPair) return;
+    const previous = splitPair;
+    splitPair = null;
+    previous.forEach(record => {
+      delete record.element.dataset.windowSnap;
+      updateRecordText(record);
+    });
+    syncMaximizedState();
+    previous.forEach(constrainWindow);
+  }
+
+  function pairWindows(first, second, active = first) {
+    if (first === second || !records.has(first.tool.id) || !records.has(second.tool.id)) return false;
+    endSplit();
+    cancelPendingSplit(false);
+    records.forEach(record => record.element.classList.remove("is-maximized"));
+    splitPair = [first, second];
+    for (const [index, record] of splitPair.entries()) {
+      record.minimized = false;
+      record.element.hidden = false;
+      record.taskButton.classList.remove("is-minimized");
+      record.element.dataset.windowSnap = index ? "right" : "left";
+      record.element.style.zIndex = String(++highestZIndex);
+      postVideoVisibility(record, true);
+    }
+    syncMaximizedState();
+    records.forEach(updateRecordText);
+    focus(active);
+    return true;
+  }
+
+  function completePendingSplit(record) {
+    return Boolean(pendingSplit && pendingSplit !== record && pairWindows(pendingSplit, record, record));
+  }
+
+  function cancelPendingSplit(restoreWindow = true) {
+    const record = pendingSplit;
+    pendingSplit = null;
+    if (pendingBanner) pendingBanner.hidden = true;
+    if (restoreWindow && record && records.has(record.tool.id)) restore(record);
+  }
+
+  function renderPendingSplit() {
+    if (!pendingSplit) return;
+    if (!pendingBanner) {
+      pendingBanner = document.createElement("aside");
+      pendingBanner.className = "workspace-split-pending";
+      pendingBanner.setAttribute("role", "status");
+      pendingBanner.innerHTML = '<span></span><button type="button"></button>';
+      pendingBanner.querySelector("button").addEventListener("click", () => cancelPendingSplit());
+      document.body.append(pendingBanner);
+    }
+    const title = language() === "th" ? pendingSplit.tool.titleTh : pendingSplit.tool.titleEn;
+    pendingBanner.querySelector("span").textContent = label(`เลือกงานอีกชิ้นจากเมนู เพื่อเปิดคู่กับ ${title}`, `Choose another activity from the menu to open beside ${title}`);
+    pendingBanner.querySelector("button").textContent = label("ยกเลิก", "Cancel");
+    pendingBanner.hidden = false;
+  }
+
+  function chooseSecondWindow(record) {
+    layoutDialog?.close();
+    showMenu();
+    onWorkspaceIdle();
+    pendingSplit = record;
+    renderPendingSplit();
+    pendingBanner.querySelector("button").focus();
+  }
+
+  function openLayoutMenu(record) {
+    if (!layoutDialog) {
+      layoutDialog = document.createElement("dialog");
+      layoutDialog.className = "workspace-layout-dialog";
+      layoutDialog.setAttribute("aria-labelledby", "workspace-layout-heading");
+      layoutDialog.innerHTML = '<h2 id="workspace-layout-heading"></h2><p></p><div data-layout-choices></div><div class="workspace-layout-actions"><button type="button" data-layout-action="swap"></button><button type="button" data-layout-action="float"></button><button type="button" data-layout-action="choose"></button><button type="button" data-layout-action="close"></button></div>';
+      layoutDialog.addEventListener("click", event => {
+        const button = event.target.closest("button");
+        if (!button || !layoutOwner) return;
+        const owner = layoutOwner;
+        if (button.dataset.layoutPartner) {
+          const partner = records.get(button.dataset.layoutPartner);
+          if (partner) pairWindows(owner, partner);
+          layoutDialog.close();
+        } else if (button.dataset.layoutAction === "choose") chooseSecondWindow(owner);
+        else if (button.dataset.layoutAction === "float") {
+          endSplit();
+          owner.element.classList.remove("is-maximized");
+          syncMaximizedState();
+          constrainWindow(owner);
+          updateRecordText(owner);
+          focus(owner);
+          layoutDialog.close();
+        } else if (button.dataset.layoutAction === "swap" && splitPair?.includes(owner)) {
+          pairWindows(splitPair[1], splitPair[0], owner);
+          layoutDialog.close();
+        } else if (button.dataset.layoutAction === "close") layoutDialog.close();
+      });
+      layoutDialog.addEventListener("close", () => {
+        if (layoutDialog.open) return;
+        if (layoutOwner && !layoutOwner.minimized && records.has(layoutOwner.tool.id)) layoutOwner.splitButton.focus();
+        layoutOwner = null;
+      });
+      document.body.append(layoutDialog);
+    }
+    layoutOwner = record;
+    layoutDialog.querySelector("h2").textContent = label("แบ่งจอทำงาน", "Split view");
+    layoutDialog.querySelector("p").textContent = label("เลือกงานที่เปิดไว้เพื่อใช้คู่กัน หรือเปิดงานอีกชิ้นจากเมนู", "Choose an open activity to use alongside this one, or open another from the menu.");
+    const choices = layoutDialog.querySelector("[data-layout-choices]");
+    choices.replaceChildren();
+    [...records.values()].filter(candidate => candidate !== record && !candidate.closing)
+      .sort((a, b) => Number(b.element.style.zIndex) - Number(a.element.style.zIndex))
+      .forEach(candidate => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.layoutPartner = candidate.tool.id;
+        button.textContent = language() === "th" ? candidate.tool.titleTh : candidate.tool.titleEn;
+        choices.append(button);
+      });
+    const swap = layoutDialog.querySelector('[data-layout-action="swap"]');
+    swap.hidden = !splitPair?.includes(record);
+    swap.textContent = label("สลับตำแหน่ง", "Swap sides");
+    layoutDialog.querySelector('[data-layout-action="float"]').textContent = label("หน้าต่างลอย", "Floating windows");
+    layoutDialog.querySelector('[data-layout-action="choose"]').textContent = label("เปิดงานอีกชิ้นจากเมนู", "Open another activity");
+    layoutDialog.querySelector('[data-layout-action="close"]').textContent = label("ยกเลิก", "Cancel");
+    layoutDialog.showModal();
   }
 
   function updateRecordText(record) {
     const title = language() === "th" ? record.tool.titleTh : record.tool.titleEn;
     const isMaximized = record.element.classList.contains("is-maximized");
+    updateCompactWindow(record);
 
     record.title.textContent = title;
     record.frame.title = title;
+    const isSplit = Boolean(splitPair?.includes(record));
+    const splitLabel = isSplit ? label("จัดหน้าต่าง", "Arrange") : label("แบ่งจอ", "Split view");
+    record.splitButton.querySelector("span").textContent = splitLabel;
+    record.splitButton.title = `${splitLabel} · ${label("เลือกงานเปิดคู่ / กลับเป็นหน้าต่างลอย", "Choose a split-view partner / return to floating windows")}`;
+    record.splitButton.setAttribute("aria-label", record.splitButton.title);
+    record.splitButton.setAttribute("aria-pressed", String(isSplit));
+    record.resizeHandle.title = label("ลากมุมเพื่อปรับขนาด หรือใช้ปุ่มลูกศรเมื่อเลือกมุมนี้", "Drag to resize, or use arrow keys when this handle is focused");
+    record.resizeHandle.setAttribute("aria-label", record.resizeHandle.title);
     for (const [code, button] of [["th", record.languageTh], ["en", record.languageEn]]) {
       button.setAttribute("aria-pressed", String(language() === code));
       button.title = code === "th" ? "ภาษาไทย" : "English";
@@ -383,12 +524,14 @@ export function createWorkspace({
 
   function restore(record) {
     if (!record) return;
+    if (completePendingSplit(record)) return;
     record.minimized = false;
     record.element.hidden = false;
     postVideoVisibility(record, true);
     record.taskButton.classList.remove("is-minimized");
     updateRecordText(record);
     syncMaximizedState();
+    constrainWindow(record);
     focus(record);
     requestAnimationFrame(() => record.element.focus());
   }
@@ -401,6 +544,7 @@ export function createWorkspace({
 
   function minimize(record) {
     if (!record) return;
+    if (splitPair?.includes(record)) endSplit();
     postVideoVisibility(record, false);
     record.minimized = true;
     record.element.hidden = true;
@@ -435,6 +579,7 @@ export function createWorkspace({
 
   // Back to a menu must not destroy frames, answers, or notebook strokes.
   function showMenu() {
+    endSplit();
     records.forEach(record => {
       postVideoVisibility(record, false);
       record.minimized = true;
@@ -450,8 +595,10 @@ export function createWorkspace({
 
   function toggleMaximize(record) {
     if (!record) return;
+    endSplit();
     record.element.classList.toggle("is-maximized");
     syncMaximizedState();
+    constrainWindow(record);
     updateRecordText(record);
     focus(record);
   }
@@ -477,6 +624,9 @@ export function createWorkspace({
   }
 
   function removeRecord(record) {
+    if (splitPair?.includes(record)) endSplit();
+    if (pendingSplit === record) cancelPendingSplit(false);
+    if (layoutOwner === record) layoutDialog?.close();
     record.sheet?.dispose();
     record.guide?.dispose();
     quizStorageFrames.delete(record.frame);
@@ -531,7 +681,7 @@ export function createWorkspace({
 
     record.bar.addEventListener("pointerdown", (event) => {
       if (event.button !== 0 || event.target.closest("button")) return;
-      if (record.element.classList.contains("is-maximized")) return;
+      if (record.element.classList.contains("is-maximized") || record.element.dataset.windowSnap) return;
 
       const layerBounds = windowLayer.getBoundingClientRect();
       const windowBounds = record.element.getBoundingClientRect();
@@ -575,6 +725,68 @@ export function createWorkspace({
 
     record.bar.addEventListener("pointerup", stopDragging);
     record.bar.addEventListener("pointercancel", stopDragging);
+    record.bar.addEventListener("lostpointercapture", stopDragging);
+  }
+
+  function constrainWindow(record) {
+    updateCompactWindow(record);
+    if (record.minimized || record.element.classList.contains("is-maximized") || record.element.dataset.windowSnap) return;
+    const layer = windowLayer.getBoundingClientRect();
+    const bounds = record.element.getBoundingClientRect();
+    if (!layer.width || !layer.height) return;
+    const width = Math.min(bounds.width, Math.max(0, layer.width - 16));
+    const height = Math.min(bounds.height, Math.max(0, layer.height - 16));
+    if (width < bounds.width) record.element.style.width = `${width}px`;
+    if (height < bounds.height) record.element.style.height = `${height}px`;
+    record.element.style.left = `${clamp(bounds.left - layer.left, 8, layer.width - width - 8)}px`;
+    record.element.style.top = `${clamp(bounds.top - layer.top, 8, layer.height - height - 8)}px`;
+    updateCompactWindow(record);
+  }
+
+  function updateCompactWindow(record) {
+    record.element.classList.toggle("is-compact-window", record.element.getBoundingClientRect().width <= 1100);
+  }
+
+  function enableResizing(record) {
+    let drag = null;
+    const handle = record.resizeHandle;
+    function size(width, height) {
+      const layer = windowLayer.getBoundingClientRect();
+      const bounds = record.element.getBoundingClientRect();
+      const maxWidth = Math.max(0, layer.width - (bounds.left - layer.left) - 8);
+      const maxHeight = Math.max(0, layer.height - (bounds.top - layer.top) - 8);
+      record.element.style.width = `${clamp(width, Math.min(360, maxWidth), maxWidth)}px`;
+      record.element.style.height = `${clamp(height, Math.min(260, maxHeight), maxHeight)}px`;
+      updateCompactWindow(record);
+    }
+    handle.addEventListener("pointerdown", event => {
+      if (event.button !== 0 || record.element.classList.contains("is-maximized") || record.element.dataset.windowSnap) return;
+      const bounds = record.element.getBoundingClientRect();
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, width: bounds.width, height: bounds.height };
+      handle.setPointerCapture(event.pointerId);
+      record.element.classList.add("is-resizing");
+      focus(record);
+      event.preventDefault();
+    });
+    handle.addEventListener("pointermove", event => {
+      if (drag?.id === event.pointerId) size(drag.width + event.clientX - drag.x, drag.height + event.clientY - drag.y);
+    });
+    function stop(event) {
+      if (drag?.id !== event.pointerId) return;
+      record.element.classList.remove("is-resizing");
+      if (handle.hasPointerCapture(event.pointerId)) handle.releasePointerCapture(event.pointerId);
+      drag = null;
+    }
+    handle.addEventListener("pointerup", stop);
+    handle.addEventListener("pointercancel", stop);
+    handle.addEventListener("lostpointercapture", stop);
+    handle.addEventListener("keydown", event => {
+      if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return;
+      const bounds = record.element.getBoundingClientRect(), step = event.shiftKey ? 40 : 16;
+      size(bounds.width + (event.key === "ArrowRight" ? step : event.key === "ArrowLeft" ? -step : 0),
+        bounds.height + (event.key === "ArrowDown" ? step : event.key === "ArrowUp" ? -step : 0));
+      event.preventDefault();
+    });
   }
 
   function createRecord(tool) {
@@ -617,6 +829,7 @@ export function createWorkspace({
         </div>
         <div class="window-trailing-tools">
           <div class="window-language" role="group" aria-label="ภาษา / Language"><button type="button" data-window-language="th" lang="th">TH</button><button type="button" data-window-language="en" lang="en">EN</button></div>
+          <button class="window-split" type="button" aria-haspopup="dialog"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/></svg><span></span></button>
           ${tool.context.toolKind === "html" ? '<button class="window-sheet-guide" type="button" hidden><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4zm16 0h-4a3 3 0 0 0-3 3v14a4 4 0 0 1 4-2h3z"/></svg><span></span></button>' : ''}
           <button class="window-share" type="button"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m10 13 4-4M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m2 1 1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/></svg><span></span></button>
           ${tool.context.toolKind === "html" ? '<button class="window-html-print" type="button" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V3h12v6M6 18H3V9h18v9h-3M6 14h12v7H6z"/></svg><span class="window-print-label"></span></button>' : ''}
@@ -624,6 +837,7 @@ export function createWorkspace({
         </div>
       </header>
       ${tool.context.toolKind === "html" ? '<div class="sheet-reading-stage">' : ''}<iframe class="workspace-tool-frame" src="${tool.page}" loading="eager"></iframe>${tool.context.toolKind === "html" ? '</div>' : ''}
+      <button class="window-resize-handle" type="button"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 20 12-12M14 20l6-6"/></svg></button>
     `;
 
     if (tool.context.toolKind === "video") element.querySelector("iframe").setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
@@ -649,6 +863,8 @@ export function createWorkspace({
       closeButton: element.querySelector(".is-close"),
       minimizeButton: element.querySelector(".is-minimize"),
       maximizeButton: element.querySelector(".is-maximize"),
+      splitButton: element.querySelector(".window-split"),
+      resizeHandle: element.querySelector(".window-resize-handle"),
       shareButton: element.querySelector(".window-share"),
       languageTh: element.querySelector('[data-window-language="th"]'),
       languageEn: element.querySelector('[data-window-language="en"]'),
@@ -695,6 +911,7 @@ export function createWorkspace({
     record.closeButton.addEventListener("click", () => close(record));
     record.minimizeButton.addEventListener("click", () => minimize(record));
     record.maximizeButton.addEventListener("click", () => toggleMaximize(record));
+    record.splitButton.addEventListener("click", () => openLayoutMenu(record));
     record.shareButton.addEventListener("click", () => onShare(record.tool, record.shareButton));
     record.languageTh.addEventListener("click", () => onLanguageChange("th"));
     record.languageEn.addEventListener("click", () => onLanguageChange("en"));
@@ -762,6 +979,7 @@ export function createWorkspace({
     });
 
     enableDragging(record);
+    enableResizing(record);
     updateRecordText(record);
     renderWindowTime(record);
     return record;
@@ -784,7 +1002,7 @@ export function createWorkspace({
     taskbarItems.append(record.taskButton);
     positionNewWindow(record);
     setTaskbarVisibility();
-    focus(record);
+    if (!completePendingSplit(record)) focus(record);
     requestAnimationFrame(() => record.element.focus());
     return true;
   }
@@ -861,6 +1079,7 @@ export function createWorkspace({
       applyFrameLanguage(record);
       postContext(record);
     });
+    renderPendingSplit();
   }
 
   function setContext() {
@@ -868,6 +1087,9 @@ export function createWorkspace({
   }
 
   function clear() {
+    endSplit();
+    cancelPendingSplit(false);
+    layoutDialog?.close();
     records.forEach((record) => {
       flushLocalBeforeRemoval(record);
       record.sheet?.dispose();
@@ -945,23 +1167,9 @@ export function createWorkspace({
     records.forEach((record) => renderWindowTime(record, now));
   }, 250);
 
-  window.addEventListener("resize", () => {
-    records.forEach((record) => {
-      if (record.minimized || record.element.classList.contains("is-maximized")) return;
-      const layerBounds = windowLayer.getBoundingClientRect();
-      const windowBounds = record.element.getBoundingClientRect();
-      record.element.style.left = `${clamp(
-        windowBounds.left - layerBounds.left,
-        8,
-        layerBounds.width - windowBounds.width - 8,
-      )}px`;
-      record.element.style.top = `${clamp(
-        windowBounds.top - layerBounds.top,
-        8,
-        layerBounds.height - windowBounds.height - 8,
-      )}px`;
-    });
-  });
+  const constrainWindows = () => records.forEach(constrainWindow);
+  window.addEventListener("resize", constrainWindows);
+  if (typeof ResizeObserver === "function") new ResizeObserver(constrainWindows).observe(windowLayer);
 
   return { open, openContent, openBank, openReview, bindHtmlLinks, showMenu, setLanguage, setContext, clear, prepareAllForClose };
 }

@@ -92,12 +92,12 @@ try {
   const teacher = await client('teacher'), student = await client('student', true);
   // Homework uses the production Hub bundle, UI and real emulator Rules.
   // It remains independent of lesson lock/unlock and quiz submission/grades.
-  const quiz = catalog.routes.find(route => route.kind === 'content' && route.status === 'ready' &&
+  const homeworkQuizRoute = catalog.routes.find(route => route.kind === 'content' && route.status === 'ready' &&
     catalog.contents.find(item => item.id === route.contentId)?.toolKind === 'quiz');
-  assert.ok(quiz, 'An authored, available quiz is needed for assignment integration');
+  assert.ok(homeworkQuizRoute, 'An authored, available quiz is needed for assignment integration');
   await teacher.frame.locator('[data-hw-new]').click();
   await teacher.frame.locator('[data-hw-editor] [name="title"]').fill('ทวนคลื่น — การบ้านทดลอง');
-  await teacher.frame.locator('[data-hw-editor] [name="url"]').fill(origin + prefix + quiz.hash);
+  await teacher.frame.locator('[data-hw-editor] [name="url"]').fill(origin + prefix + homeworkQuizRoute.hash);
   await teacher.frame.locator('[data-hw-editor] [name="instructions"]').fill('อ่านคำชี้แจงแล้วเปิด Quiz');
   await teacher.frame.locator('[data-hw-preview]').click();
   await teacher.frame.locator('[data-hw-preview-result]').filter({ hasText: 'Quiz ที่เลือก' }).waitFor();
@@ -121,6 +121,10 @@ try {
   await student.page.locator('#workspace-window-layer iframe[src*="quiz-player.html"]').waitFor();
   assert.equal(await good('EMULATOR_ADMIN', 'GET', 'quizProgress'), null, 'Launching homework is not submission or a grade write');
   await student.page.goBack();
+  await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').waitFor();
+  // Reset the retained homework iframe before the following independent
+  // monitoring regression opens its own quiz. Read receipts remain persisted.
+  await student.page.reload();
   await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').waitFor();
   teacher.page.once('dialog', dialog => dialog.accept());
   await teacher.frame.locator('[data-hw-detail] [data-homework-action="close"]').click();

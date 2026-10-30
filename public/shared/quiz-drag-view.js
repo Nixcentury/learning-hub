@@ -35,7 +35,7 @@ export function dragQuestionText(question, lang) {
 }
 
 // Also used for PDF evidence: render the whole task without interactive controls.
-export function createDragEvidenceBody(question, answer, lang) {
+export function createDragEvidenceBody(question, answer, lang, { labels = true } = {}) {
   const body = document.createElement("div");
   body.className = "quiz-drag-body";
   body.append(fragment(question.body[lang], lang));
@@ -44,7 +44,7 @@ export function createDragEvidenceBody(question, answer, lang) {
     const item = question.items.find(candidate => candidate.id === answer?.[model?.id]);
     slot.removeAttribute("data-answer");
     slot.classList.add("quiz-drag-paper-slot");
-    slot.replaceChildren(document.createTextNode(`${model?.label[lang] || model?.id}: `));
+    slot.replaceChildren(document.createTextNode(labels ? `${model?.label[lang] || model?.id}: ` : ""));
     if (item) slot.append(fragment(item.text[lang], lang));
     else slot.append(document.createTextNode("________"));
   });

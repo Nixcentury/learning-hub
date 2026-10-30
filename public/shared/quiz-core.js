@@ -4,7 +4,7 @@ import { createNotebookBackupUi } from "./notebook-backup-ui.js?v=6c-backup-2";
 import { readQuizContent } from "./quiz-content-adapter.js?v=mixed-reasoning-20261030";
 import { hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, requiresReasoning } from "./quiz-question-model.js?v=mixed-reasoning-20261030";
 import { mountNumericAnswer, hideMathKeyboard } from "./quiz-math-input.js";
-import { mountDragAnswer } from "./quiz-drag-view.js";
+import { mountDragAnswer, createDragEvidenceBody } from "./quiz-drag-view.js?v=reading-confirm-20261030";
 import { dragAnswerSummary } from "./quiz-drag-model.js";
 import { readBankSelection, loadBankQuiz } from "./question-bank-player.js?v=bank-svg-2-20261026";
 import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
@@ -79,6 +79,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   let navigationRevision = 0;
   let closing = false;
   let dragAnswerUi = null;
+  const readingConfirmations = new Map();
   let bankSelection = null, bankReplacementBase;
   let bankContextWaiter = null, contentLoadVersion = 0, bankReloadBusy = false;
   try { bankSelection = temporary ? null : readBankSelection(location.search); }
@@ -888,6 +889,21 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   }
 
   function goTo(index) {
+    const question = currentQuestion();
+    if (index > state.currentIndex && contentRoot?.dataset?.dragReadConfirm === "true" &&
+        question?.type === "drag-drop" && hasAnswer(state.answers[question.id])) {
+      const key = `${identityEpoch}:${state.contentId}:${state.attempt}:${question.id}`;
+      const signature = JSON.stringify(question.slots.map(slot => state.answers[question.id]?.[slot.id] || ""));
+      if (readingConfirmations.get(key) !== signature) {
+        const passage = createDragEvidenceBody(question, state.answers[question.id], language(), { labels: false }).textContent.replace(/\s+/g, " ").trim();
+        const message = label(
+          "อ่านทบทวนบทความตามที่คุณเติมไว้ก่อนไปต่อ (ยังไม่ใช่เฉลย)\n\n",
+          "Reread the passage with your own answers before continuing (this is not an answer key).\n\n",
+        ) + passage + label("\n\nตกลง = อ่านทบทวนแล้ว ไปต่อ · ยกเลิก = กลับไปอ่านหรือแก้ไข", "\n\nOK = reviewed, continue · Cancel = return to read or edit");
+        if (!window.confirm(message)) return;
+        readingConfirmations.set(key, signature);
+      }
+    }
     state.currentIndex = Math.min(Math.max(0, index), state.questions.length - 1);
     persistNavigation();
     renderNavigation();

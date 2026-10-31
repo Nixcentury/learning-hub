@@ -79,11 +79,6 @@ try {
       // Deterministic tab visibility for desktop integration; real iPad behavior is a device check.
       let visible = true; Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => visible ? 'visible' : 'hidden' });
       window.qaVisible = value => { visible = value; document.dispatchEvent(new Event('visibilitychange')); };
-      window.qaClicks = [];
-      document.addEventListener('click', event => {
-        window.qaClicks.push({ target: event.target.outerHTML?.slice(0, 250), time: performance.now() });
-        window.qaClicks = window.qaClicks.slice(-12);
-      }, true);
     }, uid);
     await context.route('**/*', route => {
       const url = new URL(route.request().url()), name = url.pathname.split('/').at(-1);
@@ -280,18 +275,19 @@ try {
   const choice = quiz.locator('.quiz-option').first();
   await choice.waitFor({ state: 'visible' });
   await quiz.locator('[data-quiz-storage-status]').filter({ hasText: 'บันทึกบน Cloud แล้ว' }).waitFor();
-  // The mobile lesson banner overlays the bottom of the workspace. Center the
-  // choice inside its iframe before clicking, rather than clicking at that edge.
+  // Locator auto-scrolling in this nested mobile iframe can send the click to
+  // the fixed lesson banner. Use a real pointer at the verified visible center.
   await choice.evaluate(node => node.scrollIntoView({ block: 'center', behavior: 'instant' }));
   const choiceBounds = await choice.boundingBox();
-  console.log('QUIZ CLICK TARGET', JSON.stringify(await student.page.evaluate(bounds => ({
-    bounds, target: document.elementFromPoint(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2)?.outerHTML?.slice(0, 400),
-    dialogOpen: document.querySelector('.monitor-dialog').open,
-  }), choiceBounds)));
-  await mkdir(resolve(root, 'qa-output'), { recursive: true });
-  await student.page.screenshot({ path: resolve(root, 'qa-output/classroom-monitor-quiz-before-choice.png') });
-  await choice.click();
-  console.log('QUIZ CLICK RESULT', JSON.stringify(await student.page.evaluate(() => ({ open: document.querySelector('.monitor-dialog').open, clicks: qaClicks }))));
+  assert.ok(choiceBounds, 'The choice has visible bounds');
+  const point = { x: choiceBounds.x + choiceBounds.width / 2, y: choiceBounds.y + choiceBounds.height / 2 };
+  assert.equal(await choice.evaluate(node => {
+    const rect = node.getBoundingClientRect();
+    return document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2)?.closest('.quiz-option') === node;
+  }), true, 'The choice is unobstructed inside the quiz');
+  assert.equal(await student.page.locator('.workspace-tool-frame').evaluate((frame, point) =>
+    document.elementFromPoint(point.x, point.y) === frame, point), true, 'No Hub overlay covers the click');
+  await student.page.mouse.click(point.x, point.y);
   await quiz.locator('.quiz-option[aria-pressed="true"]').waitFor();
   assert.equal(await choice.getAttribute('aria-pressed'), 'true', 'The quiz choice was actually selected');
   const quizFrame = await student.page.locator('.workspace-tool-frame').elementHandle().then(handle => handle.contentFrame());

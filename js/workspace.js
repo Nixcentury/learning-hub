@@ -671,6 +671,15 @@ export function createWorkspace({
     catch { return null; }
   }
 
+  function applyReviewQuestion(record) {
+    if (!record?.reviewQuestion) return;
+    const quiz = getQuiz(record);
+    const saved = quiz?.getState?.();
+    // The first ready handshake may precede bank loading. The final one retries.
+    if (saved?.contentId !== record.tool.context.contentId || !saved?.currentQuestionId) return;
+    if (quiz.returnToQuestion?.(record.reviewQuestion - 1)) delete record.reviewQuestion;
+  }
+
   function flushLocalBeforeRemoval(record) {
     if (["html", "pdf", "video"].includes(record.tool.context.toolKind)) return;
     try {
@@ -1150,6 +1159,16 @@ export function createWorkspace({
         return;
       }
       if (event.data.commandId !== record.reviewCommand) return;
+      if (event.data.type === 'learning-hub-review-practice') {
+        const selection = record.tool.reviewSelection, requested = event.data.selection, number = event.data.questionNumber;
+        if (record.minimized || !record.element.classList.contains('is-active') || !Number.isInteger(number) || number < 1 || number > 1000 ||
+            !selection.bankKey || requested?.subjectId !== selection.subjectId || requested?.bankKey !== selection.bankKey) return;
+        const target = createBankTool({ ...selection, toolKey: 'quiz' }, location.href);
+        if (!target || !openBank({ ...selection, toolKey: 'quiz' })) return;
+        const quizRecord = records.get(target.id);
+        if (quizRecord) { quizRecord.reviewQuestion = number; applyReviewQuestion(quizRecord); }
+        return;
+      }
       if (event.data.type === 'learning-hub-review-back') {
         onReviewBack(record.tool.reviewSelection);
         return;
@@ -1177,7 +1196,7 @@ export function createWorkspace({
     const record = [...records.values()].find(
       (candidate) => candidate.frame.contentWindow === event.source,
     );
-    if (record) postContext(record);
+    if (record) { postContext(record); applyReviewQuestion(record); }
   });
 
   window.setInterval(() => {

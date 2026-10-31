@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { parseHTML, DOMParser } from 'linkedom';
-import { reviewTopics, preferredReviewTopic, reviewContentUrl, reviewDocument } from '../public/shared/topic-review-model.js';
+import { reviewTopics, preferredReviewTopic, reviewContentUrl, reviewDocument, reviewExamNumber } from '../public/shared/topic-review-model.js';
 import { createTopicReviewBrowser } from '../public/shared/topic-review.js';
 
 const key = 'b-' + '1'.repeat(24), other = 'b-' + '2'.repeat(24);
@@ -63,7 +63,7 @@ test('reading content retains math, tables, links, images, writing space and saf
   assert.doesNotMatch(body.outerHTML,/onclick|onerror|steal|<script|<iframe|English|Hidden answer/);
 });
 
-function uiSetup(fetcher) {
+function uiSetup(fetcher, options = {}) {
   const {window,document}=parseHTML('<html lang="th"><body><div id="browser"></div><div id="content"></div><button id="print"></button></body></html>');
   // linkedom exposes only a getter; model the browser select setter for these interaction tests.
   Object.defineProperty(window.HTMLSelectElement.prototype,'value',{
@@ -75,7 +75,7 @@ function uiSetup(fetcher) {
   let lang='th';
   const content=document.querySelector('#content'), printButton=document.querySelector('#print');
   const browser=createTopicReviewBrowser({root:document.querySelector('#browser'),content,printButton,
-    client:{catalog:async()=>catalog},fetcher,Parser:DOMParser,language:()=>lang,typeset:async()=>{}});
+    client:{catalog:async()=>catalog},fetcher,Parser:DOMParser,language:()=>lang,typeset:async()=>{}, ...options});
   const choose=async(selector,value)=>{const node=document.querySelector(selector);node.value=value;node.dispatchEvent(new window.Event('change'));await new Promise(resolve=>setImmediate(resolve));};
   return {browser,document,content,printButton,choose,setLang:value=>{lang=value;browser.refreshLanguage();}};
 }
@@ -196,4 +196,68 @@ test('reopening from a different quiz question selects that question topic', asy
   ui.browser.close();
   await ui.browser.open({subjectId:'chemistry',preferred:['unknown']});
   assert.equal(ui.document.querySelector('[data-review-topic]').value,'');
+});
+
+const examReview = `<main data-topic-review-document data-review-quiz-bank="${other}">
+<section data-review-exam-question="1"><h2>Exam question 1 — Count electrons</h2>
+<section data-review-question><h3>Question 1 — Practice</h3><p>Use different data.</p><div data-review-blank></div><div data-review-answer hidden>Practice answer only.</div></section></section>
+<section data-review-exam-question="3"><h2>Exam question 3 — Half-life</h2><p>Use a different isotope.</p></section></main>`;
+
+test('exam markers survive only with a valid declared bank and strict question numbers', () => {
+  for (const value of [1, '1', 1000, '1000']) assert.equal(reviewExamNumber(value), Number(value));
+  for (const value of [0, -1, 1001, 1.5, '01', '+1', '1.0', ' 1 ', [1], {}, null]) assert.equal(reviewExamNumber(value), null);
+  const {document}=parseHTML('<html></html>');
+  const render = html => reviewDocument(html,new URL('https://example.test/learning-hub/content/reviews/exam.html'),{document,Parser:DOMParser});
+  const good = render(examReview); assert.equal(good.dataset.reviewQuizBank, other);
+  assert.deepEqual([...good.querySelectorAll('[data-review-exam-question]')].map(x=>x.dataset.reviewExamQuestion), ['1','3']);
+  assert.equal(render(examReview.replace(other,'invalid')).querySelectorAll('[data-review-exam-question]').length,0);
+  assert.equal(render(examReview.replace('data-review-exam-question="1"','data-review-exam-question="-1"')).querySelectorAll('[data-review-exam-question]').length,1);
+});
+
+test('a published exam review opens at the current exam question and return identifies its actual question', async () => {
+  const returned=[];
+  const ui=uiSetup(async url=>response(url.endsWith('.json')?authored:examReview),{onExamQuestion:value=>returned.push(value)});
+  await ui.browser.open({subjectId:'chemistry',preferred:[key,other],quizContext:{bankKey:other,questionNumber:3}});
+  assert.equal(ui.browser.getSelection().bankKey,other);
+  assert.equal(ui.document.querySelector('[data-review-exam-select]').value,'3');
+  assert.equal(ui.content.querySelector('[data-review-exam-question="1"]').hidden,true);
+  assert.equal(ui.content.querySelector('[data-review-exam-question="3"]').hidden,false);
+  await ui.choose('[data-review-exam-select]','1');
+  ui.content.querySelector('[data-review-return-question="1"]').dispatchEvent(new ui.document.defaultView.Event('click'));
+  assert.deepEqual(returned,[{subjectId:'chemistry',bankKey:other,questionNumber:1}]);
+  assert.ok(ui.content.querySelector('[data-review-answer]').hidden);
+  ui.browser.setPrinting(true);
+  ui.content.querySelector('[data-review-return-question="1"]').dispatchEvent(new ui.document.defaultView.Event('click'));
+  assert.equal(returned.length,1,'Printing cannot navigate the quiz');
+});
+
+test('an unfinished question review is reported honestly and all prepared sections remain available', async () => {
+  const ui=uiSetup(async url=>response(url.endsWith('.json')?authored:examReview));
+  await ui.browser.open({subjectId:'chemistry',preferred:[key],quizContext:{bankKey:other,questionNumber:2}});
+  assert.equal(ui.document.querySelector('[data-review-exam-select]').value,'');
+  assert.match(ui.document.querySelector('[data-review-exam-status]').textContent,/ข้อ 2.*ยังไม่จัดทำ/);
+  assert.ok([...ui.content.querySelectorAll('[data-review-exam-question]')].every(section=>!section.hidden));
+  const link=ui.content.querySelector('[data-review-return-question="3"]');
+  assert.equal(link.localName,'a'); assert.match(link.textContent,/เลือกข้อ 3/);
+});
+
+test('language changes keep the chosen exam section while resetting the practice answers', async () => {
+  const ui=uiSetup(async url=>response(url.endsWith('.json')?authored:examReview),{onExamQuestion:()=>{}});
+  await ui.browser.open({subjectId:'chemistry',preferred:[other],quizContext:{bankKey:other,questionNumber:3}});
+  await ui.choose('[data-review-exam-select]','1');
+  ui.content.querySelector('[data-review-answer-toggle]').dispatchEvent(new ui.document.defaultView.Event('click'));
+  assert.equal(ui.content.querySelector('[data-review-answer]').hidden,false);
+  ui.setLang('en'); await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(ui.document.querySelector('[data-review-exam-select]').value,'1');
+  assert.equal(ui.content.querySelector('[data-review-return-question="1"]').textContent,'Return to question 1');
+  assert.ok(ui.content.querySelector('[data-review-answer]').hidden);
+});
+
+test('ordinary topic review remains the fallback when no exam content is published', async () => {
+  const available=structuredClone(authored); available.routes[1].status='preparing';
+  const ui=uiSetup(async url=>response(url.endsWith('.json')?available:examReview));
+  await ui.browser.open({subjectId:'chemistry',preferred:[key,other],quizContext:{bankKey:other,questionNumber:1}});
+  assert.equal(ui.browser.getSelection().bankKey,key);
+  assert.equal(ui.document.querySelector('[data-review-exam-tools]').hidden,true);
+  assert.equal(ui.content.querySelector('[data-review-return-question]'),null);
 });

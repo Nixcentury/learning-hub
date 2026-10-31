@@ -11,7 +11,7 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
 import { readBankSelection, loadBankQuiz } from "./question-bank-player.js?v=bank-svg-2-20261026";
 import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
 import { warmQuizEngine } from "./quiz-refresh.js";
-import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-20261028";
+import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-20261031";
 
 /* ==============================================================
    Quiz Engine กลางของ Learning Hub
@@ -104,6 +104,11 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     content: topicReviewDialog.querySelector('[data-topic-review-content]'),
     printButton: topicReviewDialog.querySelector('[data-topic-review-print]'),
     language,
+    onExamQuestion({ subjectId, bankKey, questionNumber }) {
+      if (!topicReviewDialog.open || subjectId !== bankSelection?.subjectId || bankKey !== bankSelection?.bankKey || navigationBusy()) return;
+      topicReviewDialog.close();
+      returnToQuestion(questionNumber - 1);
+    },
   });
 
   const notebookBackupUi = createNotebookBackupUi({
@@ -1065,6 +1070,13 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     goTo(index);
   }
 
+  function returnToQuestion(index) {
+    if (navigationBusy() || pendingNavigation || !Number.isInteger(index) || index < 0 || index >= state.questions.length) return false;
+    if (state.view !== 'exam') { state.view = 'exam'; persistNavigation(); render(); }
+    requestNavigation(index);
+    return true;
+  }
+
   function openDragReview(index) {
     const question = currentQuestion();
     if (!question || !navigationDialog?.showModal) return;
@@ -1505,7 +1517,9 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     void topicReviewBrowser?.open({
       subjectId: bankSelection?.subjectId || latestHubContext?.subjectId || contentRoot?.dataset.subjectId,
       preferred: [...(currentQuestion()?.topicIds || []), bankSelection?.bankKey],
+      quizContext: bankSelection ? { bankKey: bankSelection.bankKey, questionNumber: state.currentIndex + 1 } : null,
     });
+    topicReviewDialog.scrollTop = 0;
   }
 
   function openSummary() {
@@ -1934,6 +1948,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   window.LearningHubQuiz = Object.freeze({
     getState: () => ({ ...snapshot(), contentId: state.contentId }),
     goToQuestion: requestNavigation,
+    returnToQuestion,
     openSummary,
     restart,
     flushLocal,

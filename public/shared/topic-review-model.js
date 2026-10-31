@@ -21,6 +21,11 @@ export function preferredReviewTopic(topics, preferred = []) {
   return preferred.find(key => bankKeyPattern.test(key || '') && topics.some(item => item.bankKey === key)) || '';
 }
 
+export function reviewExamNumber(value) {
+  if (!['number', 'string'].includes(typeof value)) return null;
+  return /^(?:[1-9]\d{0,2}|1000)$/.test(String(value ?? '')) ? Number(value) : null;
+}
+
 export function reviewContentUrl(source, siteUrl) {
   if (typeof source !== 'string' || !source.startsWith('content/') || source.includes('\\')) throw Error('Invalid review source');
   const base = new URL(siteUrl), url = new URL(source, base);
@@ -37,6 +42,8 @@ export function reviewDocument(html, sourceUrl, { document: doc, Parser = DOMPar
   const parsed = new Parser().parseFromString(html, 'text/html');
   const source = parsed.querySelector('[data-topic-review-document]') || parsed.querySelector('main') || parsed.body;
   const target = doc.createElement('div');
+  const examBank = bankKeyPattern.test(source.dataset?.reviewQuizBank || '') ? source.dataset.reviewQuizBank : '';
+  if (examBank) target.dataset.reviewQuizBank = examBank;
   function copy(parent, into) {
     for (const child of parent.childNodes) {
       if (child.nodeType === 3) { into.append(doc.createTextNode(child.textContent)); continue; }
@@ -47,6 +54,9 @@ export function reviewDocument(html, sourceUrl, { document: doc, Parser = DOMPar
       if (discard.has(child.localName)) continue;
       if (!tags.has(child.localName)) { copy(child, into); continue; }
       const node = doc.createElement(child.localName);
+      if (examBank && child.localName === 'section' && reviewExamNumber(child.dataset.reviewExamQuestion)) {
+        node.dataset.reviewExamQuestion = child.dataset.reviewExamQuestion;
+      }
       if (child.localName === 'img' || child.localName === 'a') {
         const attribute = child.localName === 'img' ? 'src' : 'href';
         const raw = child.getAttribute(attribute);

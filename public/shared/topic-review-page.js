@@ -1,4 +1,4 @@
-import { createTopicReviewBrowser } from './topic-review.js?v=print-names-20261028';
+import { createTopicReviewBrowser } from './topic-review.js?v=exam-review-20261031';
 import { bankSubjects } from './question-bank-model.js';
 
 const params = new URLSearchParams(location.search);
@@ -16,6 +16,11 @@ function setLanguage(value, refresh = true) {
 }
 const browser = createTopicReviewBrowser({ root: document.querySelector('[data-topic-review-browser]'), content, printButton,
   allowEmptySubject: !embedded,
+  onExamQuestion: embedded ? selection => {
+    if (!printing && !applying && commandId !== null) parent.postMessage({
+      type: 'learning-hub-review-practice', commandId, selection: browser.getSelection(), questionNumber: selection.questionNumber,
+    }, location.origin);
+  } : null,
   onChange(selection) {
     const current = selection || browser.getSelection();
     const subject = current.subjectId || params.get('subject');

@@ -186,7 +186,7 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
         storageKey, pendingStorageRequests, renderStorageStatus,
         persistNavigation, retrySync, resolveCloudConflict,
         giveUp, retryGivenUp, editAnswers, startRetry, restart, selectAnswer, submitAll, resultFor, goTo, cloneInto,
-        requestNavigation, skipCurrentQuestion, confirmNavigationReview, closeNavigationDialog, progressSignature,
+        requestNavigation, returnToQuestion, skipCurrentQuestion, confirmNavigationReview, closeNavigationDialog, progressSignature,
         navigationState: () => pendingNavigation,
         evidence: () => evidenceManager,
         setContentReady: (ready) => { contentRoot = ready ? {} : null; },
@@ -900,4 +900,21 @@ test('a closed assignment restores the last submitted score and refuses edits, r
   const h=makeHarness({homeworkBinding});await loadHomework(h,{answersJson:'{"q1":"A"}',giveUpsJson:'{}',submittedAt:h.time()},{closed:true});
   const before=h.messages.length;h.startRetry();h.editAnswers();h.restart();h.selectAnswer('q2','B');await h.submitHomework();
   assert.deepEqual(plain(h.state.answers),{q1:'A'});assert.equal(h.state.view,'results');assert.equal(h.messages.length,before);
+});
+
+test('returning from review reopens the requested exam question and retains answers, scores and evidence', async () => {
+  const h=makeHarness(); await h.load(); h.state.answers={q1:'A',q2:'B'};
+  h.state.view='results'; h.state.latestScore={score:2,maxScore:2};
+  const manager=h.evidence(),before=plain(h.state.answers),score=plain(h.state.latestScore);
+  for(const index of[-1,2,NaN,'1']) assert.equal(h.returnToQuestion(index),false);
+  assert.equal(h.state.view,'results');
+  assert.equal(h.returnToQuestion(1),true); assert.equal(h.state.view,'exam'); assert.equal(h.state.currentIndex,1);
+  assert.deepEqual(plain(h.state.answers),before); assert.deepEqual(plain(h.state.latestScore),score); assert.equal(h.evidence(),manager);
+});
+
+test('a review return cannot bypass an editable drag reading check', async () => {
+  const h=makeHarness(); await h.load(); makeDragQuestion(h);
+  h.state.answers.q1={one:'b',two:'a'};
+  assert.equal(h.returnToQuestion(1),true);
+  assert.equal(h.state.currentIndex,0); assert.equal(h.navigationState().correct,false);
 });

@@ -1,13 +1,13 @@
 import { bankClient } from './question-bank-client.js';
 import { bankSubjects } from './question-bank-model.js';
-import { reviewTopics, bankChapters, bankTitlePair, preferredReviewTopic, reviewContentUrl, reviewDocument } from './topic-review-model.js?v=review-answers-20261023-1';
+import { reviewTopics, bankChapters, bankTitlePair, preferredReviewTopic, reviewContentUrl, reviewDocument, reviewExamNumber } from './topic-review-model.js?v=exam-review-20261031';
 
 const siteUrl = new URL('../', import.meta.url);
 let reviewInstance = 0;
 
 export function createTopicReviewBrowser({ root, content, printButton, language = () => document.documentElement.lang,
   allowEmptySubject = true,
-  client = bankClient, fetcher = (...args) => fetch(...args), Parser = DOMParser, onChange = () => {},
+  client = bankClient, fetcher = (...args) => fetch(...args), Parser = DOMParser, onChange = () => {}, onExamQuestion = null,
   typeset = async node => {
     await window.MathJax?.startup?.promise;
     if (node.isConnected) await window.MathJax?.typesetPromise?.([node]);
@@ -17,6 +17,7 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
   let subjectId = '', catalog = null, authored = null, topics = [], selected = '', chapter = '', version = 0, controller;
   let lastPreferred = [], opened = false, printing = false;
   let answers = [];
+  let quizContext = null, pendingExamNumber, examBank = '', examSections = [], examSelection = '';
   const instance = ++reviewInstance;
   root.classList.add('topic-review-browser');
   root.innerHTML = `<p class="review-help" data-review-help></p><div class="review-controls">
@@ -28,10 +29,59 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
     <div class="review-answer-tools" data-review-answer-tools hidden>
       <button type="button" class="review-answer-toggle" data-review-answers-toggle aria-expanded="false"></button>
       <span data-review-print-help></span>
+    </div><div class="review-exam-tools" data-review-exam-tools hidden>
+      <label><span data-review-exam-label></span><select data-review-exam-select></select></label>
+      <p data-review-exam-status role="status"></p>
     </div>`;
   const subject = root.querySelector('[data-review-subject]'), chapters = root.querySelector('[data-review-chapter]');
   const topic = root.querySelector('[data-review-topic]'), status = root.querySelector('[data-review-status]'), retry = root.querySelector('[data-review-retry]');
   const answerTools = root.querySelector('[data-review-answer-tools]'), answerToggle = root.querySelector('[data-review-answers-toggle]');
+  const examTools = root.querySelector('[data-review-exam-tools]'), examSelect = root.querySelector('[data-review-exam-select]');
+
+  function preferredTopic() {
+    const own = quizContext && topics.find(item => item.bankKey === quizContext.bankKey && item.source);
+    return preferredReviewTopic(topics, own ? [own.bankKey, ...lastPreferred] : lastPreferred);
+  }
+  function selectExam(value) {
+    examSelection = value;
+    examSections.forEach(section => { section.hidden = Boolean(value) && section.dataset.reviewExamQuestion !== value; });
+    examSelect.value = value;
+  }
+  function setupExam(body) {
+    const previousBank = examBank;
+    examBank = body.dataset.reviewQuizBank === selected ? selected : '';
+    examSections = examBank ? [...content.querySelectorAll('[data-review-exam-question]')] : [];
+    examTools.hidden = !examSections.length;
+    if (!examSections.length) { examSelection = ''; return; }
+    root.querySelector('[data-review-exam-label]').textContent = text('ข้อสอบที่ต้องการทวน', 'Exam question to review');
+    const notice = root.querySelector('[data-review-exam-status]'); notice.textContent = '';
+    examSelect.replaceChildren(); option(examSelect, '', text('ข้อที่จัดทำแล้วทั้งหมด', 'All available question reviews'));
+    for (const section of examSections) {
+      const number = reviewExamNumber(section.dataset.reviewExamQuestion);
+      option(examSelect, String(number), section.querySelector('h2')?.textContent || text(`ข้อ ${number}`, `Question ${number}`));
+      const action = doc.createElement(typeof onExamQuestion === 'function' ? 'button' : 'a');
+      action.className = 'review-exam-return'; action.dataset.noPrint = ''; action.dataset.reviewReturnQuestion = String(number);
+      if (typeof onExamQuestion === 'function') {
+        action.type = 'button'; action.textContent = text(`กลับไปทำข้อ ${number}`, `Return to question ${number}`);
+        action.addEventListener('click', () => {
+          if (!printing && opened && examBank === selected) onExamQuestion({ subjectId, bankKey: examBank, questionNumber: number });
+        });
+      } else {
+        const url = new URL('../index.html', import.meta.url); url.hash = `${subjectId}/bank/${examBank}/quiz`;
+        action.href = url.href; action.target = '_top';
+        action.textContent = text(`เปิดชุดข้อสอบ · เลือกข้อ ${number}`, `Open the quiz · Select question ${number}`);
+      }
+      section.append(action);
+    }
+    const wanted = pendingExamNumber ?? (previousBank === examBank ? examSelection : '');
+    const available = examSections.some(section => section.dataset.reviewExamQuestion === String(wanted));
+    if (pendingExamNumber && !available) notice.textContent = text(
+      `ส่วนทวนข้อ ${pendingExamNumber} ยังไม่จัดทำ เลือกอ่านข้อที่พร้อมแล้วได้`,
+      `The review for question ${pendingExamNumber} is not available yet. Choose an available section.`,
+    );
+    pendingExamNumber = undefined;
+    selectExam(available ? String(wanted) : '');
+  }
 
   function answerControls() {
     answerTools.hidden = !answers.length;
@@ -74,6 +124,7 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
   function option(select, value, title) { const item = doc.createElement('option'); item.value = value; item.textContent = title; select.append(item); }
   function message(title, detail = '') {
     answers = []; answerControls();
+    examTools.hidden = true; examSections = [];
     window.MathJax?.typesetClear?.([content]);
     content.replaceChildren();
     const heading = doc.createElement('h2'); heading.textContent = title; content.append(heading);
@@ -139,7 +190,7 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
       if (token !== version) return;
       const body = reviewDocument(html, url, { document: doc, Parser, language: language() === 'en' ? 'en' : 'th' });
       if (!body.textContent.trim() && !body.querySelector('img')) throw Error('Empty review');
-      message(localizedTitle(item)); content.append(...body.childNodes); setupAnswers();
+      message(localizedTitle(item)); content.append(...body.childNodes); setupAnswers(); setupExam(body);
       await typeset(content);
       if (token === version) setPrint(true);
     } catch (error) {
@@ -164,7 +215,7 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
       catalog = value;
       authored = media?.schemaVersion === 1 && Array.isArray(media.contents) && Array.isArray(media.routes) ? media : null;
       topics = reviewTopics(catalog, authored, subjectId);
-      selected = preferredReviewTopic(topics, lastPreferred);
+      selected = preferredTopic();
       chapter = selectedTopic()?.chapterKey || '';
       controls();
       await showTopic();
@@ -178,7 +229,7 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
     } finally { clearTimeout(timer); }
   }
   subject.addEventListener('change', () => {
-    subjectId = subject.value; lastPreferred = []; selected = ''; chapter = '';
+    subjectId = subject.value; lastPreferred = []; selected = ''; chapter = ''; quizContext = null; pendingExamNumber = undefined;
     onChange(null); void load();
   });
   chapters.addEventListener('change', () => { chapter = chapters.value; selected = ''; controls(); void showTopic(); });
@@ -189,13 +240,22 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
     const show = answers.some(item => item.answer.hidden);
     answers.forEach(item => { item.answer.hidden = !show; }); answerControls();
   });
+  examSelect.addEventListener('change', () => {
+    if (printing) return;
+    root.querySelector('[data-review-exam-status]').textContent = '';
+    selectExam(examSelect.value);
+  });
   labels(); setPrint(false);
   return {
-    async open({ subjectId: nextSubject = '', preferred = [], clearSelection = false } = {}) {
+    async open({ subjectId: nextSubject = '', preferred = [], clearSelection = false, quizContext: nextQuizContext } = {}) {
+      if (nextQuizContext !== undefined) {
+        quizContext = reviewExamNumber(nextQuizContext?.questionNumber) ? nextQuizContext : null;
+        pendingExamNumber = quizContext?.questionNumber;
+      }
       if (opened && catalog && (!nextSubject || subjectId === nextSubject)) {
         if (preferred.length || clearSelection) {
           lastPreferred = preferred;
-          selected = preferredReviewTopic(topics, preferred);
+          selected = preferredTopic();
           chapter = selectedTopic()?.chapterKey || '';
           controls();
         }
@@ -213,7 +273,7 @@ export function createTopicReviewBrowser({ root, content, printButton, language 
       const chapterTitle = item?.path?.length >= 4 ? item.path[2] : '';
       return { subjectId, chapter: bankTitlePair(chapterTitle)[language() === 'en' ? 1 : 0], work: item ? localizedTitle(item) : '' };
     },
-    setPrinting(value) { printing = value; controls(); answerControls(); setPrint(Boolean(selectedTopic())); },
+    setPrinting(value) { printing = value; controls(); answerControls(); examSelect.disabled = value; setPrint(Boolean(selectedTopic())); },
     close() { ++version; controller?.abort(); },
   };
 }

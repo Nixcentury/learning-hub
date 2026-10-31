@@ -124,3 +124,18 @@ test('closing the review during resource preparation cancels the deferred print'
   assert.equal(document.body.dataset.printMode, undefined);
   assert.equal(document.title, 'Saved quiz');
 });
+
+test('per-exam printing includes only visible exam sections and retains independent answer states', async () => {
+  const {api,document,printed}=setup(); const content=document.querySelector('#review');
+  content.innerHTML='<section data-review-exam-question="1"><h2>EXAM ONE</h2><div data-review-blank>SPACE ONE</div><div data-review-answer hidden>ANSWER ONE</div><button data-no-print>RETURN ONE</button></section><section data-review-exam-question="2" hidden><h2>EXAM TWO</h2><div data-review-blank hidden>SPACE TWO</div><div data-review-answer>ANSWER TWO</div><button data-no-print>RETURN TWO</button></section>';
+  const sections=content.querySelectorAll('[data-review-exam-question]');
+  await api.printReview({content}); assert.match(printed[0].html,/EXAM ONE/); assert.match(printed[0].html,/SPACE ONE/);
+  assert.doesNotMatch(printed[0].html,/EXAM TWO|ANSWER ONE|ANSWER TWO|RETURN/);
+  sections[0].hidden=true; sections[1].hidden=false;
+  await api.printReview({content}); assert.match(printed[1].html,/EXAM TWO/); assert.match(printed[1].html,/ANSWER TWO/);
+  assert.doesNotMatch(printed[1].html,/EXAM ONE|SPACE TWO|RETURN/);
+  sections[0].hidden=false;
+  await api.printReview({content}); assert.match(printed[2].html,/EXAM ONE/); assert.match(printed[2].html,/EXAM TWO/);
+  assert.match(printed[2].html,/SPACE ONE/); assert.match(printed[2].html,/ANSWER TWO/);
+  assert.doesNotMatch(printed[2].html,/ANSWER ONE|SPACE TWO|RETURN/);
+});

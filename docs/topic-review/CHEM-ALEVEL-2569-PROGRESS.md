@@ -25,13 +25,15 @@ Read the public service's current 35-row snapshot before authoring: revision `08
 
 The review opts into per-question navigation with `main[data-review-quiz-bank]` and `section[data-review-exam-question]`. Authors supply only passive content; the shared reader generates the selector and return controls. Quiz-modal returns use the current engine and preserve its answers/working/score. Hub review-window returns validate their source, active command, subject and bank before opening/restoring that bank Quiz and requesting its question. A direct legacy review-player page outside Hub supplies an honest link to the exam set, rather than claiming it can restore a particular Hub window.
 
+In Hub, the Quiz review button opens/restores the shared reader and automatically pairs the existing Quiz on the left with the reader on the right using the existing split-view controls. Small screens use the existing top/bottom layout. Acknowledged requests preserve the original Quiz iframe; unsupported/standalone players retain the inline review dialog. The current question context is passed without learner identity.
+
 Quiz opening prefers an authored review for the current bank, then the old row-topic preference when no bank review is available. If a later question has no section yet, the reader says so and offers the prepared sections. Existing topic reviews stay on their old behavior. No Apps Script, Sheet data, Classroom services or Firebase Rules are changed.
 
 Next authoring batch: inspect questions 4–6, extend both languages, keep question keys and numbering stable, then update this checkpoint and the menu's available range. Do not add placeholders that look ready.
 
 ## QA
 
-- `pnpm test:unit`: 554 passed, 0 failed. Tests include strict exam markers, current-question selection, exact returns preserving answers/working/score, drag-review navigation protection and PrintCore filtering.
+- `pnpm test:unit`: 558 passed, 0 failed. Tests include strict exam markers, current-question selection, exact returns preserving answers/working/score, drag-review navigation protection and PrintCore filtering.
 - `pnpm build`: passed; 660 public files verified. `node scripts/validate-topic-review.mjs --all`: all 12 reviews passed. `git diff --check`: clean.
 - Browser QA against the production build in a managed preview: Thai and English sections 1–3, rendered equations and both SVGs; no horizontal overflow in iPad-width and phone-width frames (768/1024/390 wrapper widths). This is desktop browser viewport QA, not a physical iPad/Safari test.
 - Quiz modal: opens the current question's review, changes sections and returns to the selected question. Tested 1 → 2 → 3 → 1; the synthetic Q1 answer and typed working survived. Question 4 shows an honest unavailable notice; manual selection clears it. Individual/all-answer toggles and independent writing spaces checked.
@@ -39,3 +41,9 @@ Next authoring batch: inspect questions 4–6, extend both languages, keep quest
 - PrintCore's production cloning path is covered by a test: only the selected exam section prints, hidden practice answers stay hidden, writing spaces remain and navigation controls are removed. No physical printer or exported-PDF visual QA claimed.
 - Preview-only HTTP compatibility shims supply UUID/SHA-256 APIs absent on the managed non-secure preview origin. These shims are outside the repository and are not production changes.
 - Screenshot proof: `qa-output/chem69-review-ipad.jpg` (ignored local QA artifact). Publishing is via PR; verify the live page after the teacher merges.
+
+### Automatic split-view follow-up
+
+The Quiz review action now requests its existing Hub reader as a split-view partner. Production Workspace validates the active registered Quiz, same origin, request sequence, content and current question before opening the reader, then acknowledges the request. The original inline dialog remains a fallback after 1.2 seconds if a host does not support this request. No answers, scores, working or learner identity are sent to the reader.
+
+Browser QA: at 1024px the same Quiz and shared reader occupied 508px each, side by side; at 390px they occupied two 390 × 438px rows. Review opened at Q1, selecting Q3 and returning reached Q3/35, reopening selected Q3 and reused exactly two windows, and returning to Q1 retained the typed working. Switching TH/EN preserved a manually chosen review section. No review horizontal overflow or MathJax errors observed. Unit regressions cover rejected stale/unregistered/inactive requests, reader reuse, acknowledgements and fallback. The workspace CI now also runs the existing production Hub review browser regression.

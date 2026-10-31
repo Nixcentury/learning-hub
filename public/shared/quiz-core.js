@@ -94,6 +94,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
   let closing = false;
   let dragAnswerUi = null;
   let pendingNavigation = null;
+  let reviewSplitRequest = null, reviewSplitSerial = 0;
   let bankSelection = null, bankReplacementBase;
   let bankContextWaiter = null, contentLoadVersion = 0, bankReloadBusy = false;
   try { bankSelection = temporary ? null : readBankSelection(location.search); }
@@ -1510,16 +1511,36 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
     document.querySelector("[data-open-print]")?.addEventListener("click", () => printToggle?.click());
   }
 
-  function openTopicReview() {
-    if (!currentQuestion() || submissionBusy || closing || !topicReviewDialog) return;
-    hideMathKeyboard();
+  function openTopicReviewDialog() {
     if (!topicReviewDialog.open) topicReviewDialog.showModal();
     void topicReviewBrowser?.open({
-      subjectId: bankSelection?.subjectId || latestHubContext?.subjectId || contentRoot?.dataset.subjectId,
+      subjectId: bankSelection?.subjectId || latestHubContext?.content?.subjectId || contentRoot?.dataset.subjectId,
       preferred: [...(currentQuestion()?.topicIds || []), bankSelection?.bankKey],
       quizContext: bankSelection ? { bankKey: bankSelection.bankKey, questionNumber: state.currentIndex + 1 } : null,
     });
     topicReviewDialog.scrollTop = 0;
+  }
+
+  function finishReviewSplit(opened) {
+    const request = reviewSplitRequest;
+    if (!request) return;
+    clearTimeout(request.timer); reviewSplitRequest = null;
+    if (!opened && request.epoch === identityEpoch && request.contentId === state.contentId &&
+        request.questionId === currentQuestion()?.id && !submissionBusy && !closing) openTopicReviewDialog();
+  }
+
+  function openTopicReview() {
+    if (!currentQuestion() || submissionBusy || closing || !topicReviewDialog || reviewSplitRequest) return;
+    hideMathKeyboard();
+    if (parent !== window && latestHubContext?.content?.contentId === state.contentId) {
+      const requestId = ++reviewSplitSerial;
+      reviewSplitRequest = { requestId, epoch: identityEpoch, contentId: state.contentId, questionId: currentQuestion().id };
+      reviewSplitRequest.timer = setTimeout(() => finishReviewSplit(false), 1200);
+      parent.postMessage({ type: 'learning-hub-quiz-review-request', requestId, contentId: state.contentId,
+        questionNumber: state.currentIndex + 1, topicIds: currentQuestion().topicIds || [] }, location.origin);
+      return;
+    }
+    openTopicReviewDialog();
   }
 
   function openSummary() {
@@ -1804,6 +1825,11 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
   window.addEventListener("message", (event) => {
     const trustedOrigin = location.origin === "null" || event.origin === location.origin;
     if (!trustedOrigin) return;
+    if (event.source === parent && event.data?.type === 'learning-hub-quiz-review-result') {
+      if (reviewSplitRequest && reviewSplitRequest.requestId === event.data.requestId && reviewSplitRequest.contentId === event.data.contentId)
+        finishReviewSplit(event.data.opened === true);
+      return;
+    }
     if (event.source === parent && event.data?.type === "learning-hub-context") {
       applyHubContext(event.data);
       return;

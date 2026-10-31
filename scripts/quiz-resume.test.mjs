@@ -71,6 +71,8 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
   navigationNodes["[data-navigation-confirm]"].hidden = true;
   navigationNodes["[data-navigation-back], [data-navigation-close]"] = [navigationNodes["[data-navigation-back]"], navigationNodes["[data-navigation-close]"]];
   const navigationDialog = node({}, navigationNodes);
+  const topicReviewDialog = node({}, Object.fromEntries(['[data-topic-review-browser]', '[data-topic-review-content]', '[data-topic-review-print]'].map(key => [key, node()])));
+  const reviewOpens = [];
   const questionNodes = ["q1", "q2"].map((id, index) => node(
     { questionId: id, answer: index === 0 ? "A" : "B" },
     {
@@ -92,6 +94,7 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
     ["[data-quiz-print-source]", node()],
     ["[data-quiz-storage-status]", status],
     ["[data-navigation-dialog]", navigationDialog],
+    ["[data-topic-review-dialog]", topicReviewDialog],
   ]);
   const parent = { postMessage(message, origin) { messages.push({ ...plain(message), origin }); } };
   const window = {
@@ -154,6 +157,7 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
     warmQuizEngine: async () => 'https://example.test/quiz-player.html?quizRefresh=test',
     receiveTemporaryQuiz: async () => ({ root, language: "en" }),
     hideMathKeyboard() {}, mountNumericAnswer() {},
+    createTopicReviewBrowser: () => ({ open: options => reviewOpens.push(plain(options)), close() {}, refreshLanguage() {} }),
     createDragEvidenceBody(question, answer) { return { textContent: `Student passage: ${Object.values(answer || {}).join(" ")}` }; },
     localStorage: {
       getItem(storageKey) { if (storageFails) throw new Error("Storage disabled"); return storage.get(storageKey) ?? null; },
@@ -186,7 +190,7 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
         storageKey, pendingStorageRequests, renderStorageStatus,
         persistNavigation, retrySync, resolveCloudConflict,
         giveUp, retryGivenUp, editAnswers, startRetry, restart, selectAnswer, submitAll, resultFor, goTo, cloneInto,
-        requestNavigation, returnToQuestion, skipCurrentQuestion, confirmNavigationReview, closeNavigationDialog, progressSignature,
+        requestNavigation, returnToQuestion, openTopicReview, skipCurrentQuestion, confirmNavigationReview, closeNavigationDialog, progressSignature,
         navigationState: () => pendingNavigation,
         evidence: () => evidenceManager,
         setContentReady: (ready) => { contentRoot = ready ? {} : null; },
@@ -208,7 +212,7 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
     ...result,
   }, options);
   return {
-    ...api, storage, writes, timers, messages, parent, window, status, root, navigationDialog, navigationNodes,
+    ...api, storage, writes, timers, messages, parent, window, status, root, navigationDialog, navigationNodes, topicReviewDialog, reviewOpens,
     settle, dispatch, response,
     time: () => now,
     setTime(value) { now = value; },
@@ -917,4 +921,33 @@ test('a review return cannot bypass an editable drag reading check', async () =>
   h.state.answers.q1={one:'b',two:'a'};
   assert.equal(h.returnToQuestion(1),true);
   assert.equal(h.state.currentIndex,0); assert.equal(h.navigationState().correct,false);
+});
+
+test('Hub review requests a split reader once and accepts only the matching parent acknowledgement', async () => {
+  const h = makeHarness(); await h.load();
+  h.dispatch({ type: 'learning-hub-quiz-review-result' });
+  h.applyHubContext({ identity: { uid: null }, content: { contentId: h.state.contentId, subjectId: 'chemistry' } });
+  h.openTopicReview(); h.openTopicReview();
+  const requests = h.messages.filter(m => m.type === 'learning-hub-quiz-review-request');
+  assert.equal(requests.length, 1); assert.equal(requests[0].questionNumber, 1);
+  assert.equal(h.topicReviewDialog.open, undefined);
+  const ack = { type: 'learning-hub-quiz-review-result', requestId: requests[0].requestId, contentId: h.state.contentId, opened: true };
+  h.dispatch({ ...ack, opened: false }, { origin: 'https://other.test' });
+  h.dispatch({ ...ack, opened: false }, { source: {} });
+  h.dispatch({ ...ack, requestId: 999, opened: false });
+  assert.equal(h.reviewOpens.length, 0);
+  h.dispatch(ack); await h.advance(1500);
+  assert.equal(h.reviewOpens.length, 0); assert.equal(h.topicReviewDialog.open, undefined);
+});
+
+test('unsupported Hub and standalone Quiz retain the original review dialog without losing work', async () => {
+  const h = makeHarness(); await h.load(); h.state.answers.q1 = 'A';
+  h.openTopicReview(); assert.equal(h.topicReviewDialog.open, true); assert.equal(h.reviewOpens.length, 1);
+  h.topicReviewDialog.close();
+  h.applyHubContext({ identity: { uid: null }, content: { contentId: h.state.contentId, subjectId: 'physics' } });
+  h.openTopicReview(); await h.advance(1200);
+  assert.equal(h.topicReviewDialog.open, true); assert.equal(h.reviewOpens.at(-1).subjectId, 'physics');
+  assert.equal(h.state.answers.q1, 'A');
+  h.topicReviewDialog.close(); h.openTopicReview(); h.state.currentIndex = 1; await h.advance(1200);
+  assert.equal(h.topicReviewDialog.open, false, 'A timed-out request from the previous question cannot open stale review');
 });

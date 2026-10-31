@@ -176,11 +176,20 @@ try {
   assert.ok(Object.keys(await quizChild.evaluate(() => LearningHubQuiz.getState().answers)).length > 0);
   assert.equal(await quiz.locator('[data-reasoning-input]').inputValue(), 'Keep this quiz reasoning');
   await quiz.locator('[data-topic-review-open]').click();
-  await quiz.locator('[data-review-subject]').selectOption('chemistry');
-  await quiz.locator(`[data-review-topic] option[value="${keyB}"]`).waitFor({ state: 'attached' });
-  await quiz.locator('[data-review-topic]').selectOption(keyB);
-  await quiz.locator('[data-topic-review-content]').getByText('QA qa-chemistry-review-1 EN', { exact: true }).waitFor();
-  console.log('PASS returning to a real bank Quiz retains its iframe, answer and reasoning; its own review uses the same content');
+  await page.waitForFunction(() => document.body.classList.contains('has-split-workspace'));
+  assert.equal(await quizWindow.getAttribute('data-window-snap'), 'left');
+  assert.equal(await reviewWindow.getAttribute('data-window-snap'), 'right');
+  assert.equal(await quiz.locator('[data-topic-review-dialog]').evaluate(node => node.open), false);
+  await review.locator('[data-topic-review-content]').getByText('QA qa-chemistry-review-0 EN', { exact: true }).waitFor();
+  await review.locator('[data-review-topic]').selectOption(keyB);
+  await review.locator('[data-topic-review-content]').getByText('QA qa-chemistry-review-1 EN', { exact: true }).waitFor();
+  await quiz.locator('[data-topic-review-open]').click();
+  await review.locator('[data-topic-review-content]').getByText('QA qa-chemistry-review-0 EN', { exact: true }).waitFor();
+  assert.equal(await reviewWindow.count(), 1);
+  assert.equal(await quizChild.evaluate(() => window.__frameSentinel), 'kept');
+  assert.equal(await quiz.locator('[data-reasoning-input]').inputValue(), 'Keep this quiz reasoning');
+  await page.screenshot({ path: resolve(output, 'quiz-review-split.png') });
+  console.log('PASS Review opens one reused reader beside the original Quiz, with its answer and reasoning intact');
 
   const fresh = await newContext(), direct = await fresh.newPage();
   direct.on('pageerror', error => errors.push(error.message));

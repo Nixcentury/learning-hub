@@ -21,7 +21,7 @@ function context(owner = true, uid = owner?'teacher':'student', language='th') {
     classroomRooms:{uid,status:'ready',roomStatus:'ready',busy:'',rooms:[room],selected:room,members:owner?[{uid:'student',displayName:'นักเรียนทดสอบ ก',joinedAt:stamp},{uid:'student-b',displayName:'นักเรียนทดสอบ ข',joinedAt:stamp}]:[]},
     classroomAssignments:{uid,connected:true,busy:'',hubUrl:'https://example.test/learning-hub/',rooms:[{...room,status:'ready',items,drafts:owner?[{...base,id:draft,title:'งานร่าง · ยังไม่เผยแพร่',status:'draft',publishedAt:0}]:[],seen:{}}]},
     classroomSubmissions:{uid,roomId:rid,connected:true,ready:true,grades},
-    classroomMonitor:{uid,connected:true,ready:true,busy:'',rooms:[{...room,session:{id:'s_'+'f'.repeat(32),active:true,startedAt:stamp,endsAt:stamp+3600000}}],lesson:owner?null:{roomId:rid,joined:true},rows:owner?[
+    classroomMonitor:{uid,selectedRoomId:rid,connected:true,ready:true,busy:'',rooms:[{...room,session:{id:'s_'+'f'.repeat(32),active:true,startedAt:stamp,endsAt:stamp+3600000}}],lesson:owner?null:{roomId:rid,joined:true},rows:owner?[
       {uid:'student',displayName:'นักเรียนทดสอบ ก',status:'visible',lastSeenAt:stamp,windows:1,location:{hash:'#content/wave-quiz',titleTh:'Quiz · คลื่น',titleEn:'Quiz · Waves'}},
       {uid:'student-b',displayName:'นักเรียนทดสอบ ข',status:'hidden',lastSeenAt:stamp-20000,windows:1,location:{hash:'#physics/bank',titleTh:'คลังข้อสอบฟิสิกส์',titleEn:'Physics question bank'},incident:{id:'qa-incident',ackAt:0}},
     ]:[]}
@@ -53,12 +53,12 @@ const server = createServer(async(req,res)=>{
 });
 await new Promise(done=>server.listen(0,'127.0.0.1',done));
 const origin='http://127.0.0.1:'+server.address().port, output=resolve(root,'qa-output'), errors=[];
-let browser;
+let browser, page;
 try {
   browser=await chromium.launch({headless:true,...(process.env.PLAYWRIGHT_EXECUTABLE_PATH?{executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH}:process.env.PLAYWRIGHT_CHANNEL?{channel:process.env.PLAYWRIGHT_CHANNEL}:{})});
   const browserContext=await browser.newContext({viewport:{width:1440,height:1100},acceptDownloads:true});
   await browserContext.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort());
-  const page=await browserContext.newPage();page.setDefaultTimeout(15000);page.on('pageerror',e=>errors.push(e.message));
+  page=await browserContext.newPage();page.setDefaultTimeout(15000);page.on('pageerror',e=>errors.push(e.message));
   await page.goto(origin+prefix+'__layout');const frame=page.frameLocator('#room');
   await frame.locator('[data-hw-feed] .homework-card').first().waitFor();await frame.locator('[data-room-monitor-slot] [data-monitor-uid="student"]').waitFor();
   const bounds=await frame.locator('[data-classroom-assignments]').evaluate(node=>{
@@ -118,4 +118,12 @@ try {
   const signedOut={type:'learning-hub-context',language:'th',identity:{status:'guest'},classroom:{state:'guest'},classroomRooms:null};await page.evaluate(value=>qa.replace(value),signedOut);
   await frame.locator('[data-classroom-assignments]').waitFor({state:'hidden'});assert.equal(await frame.locator('[data-hw-detail-dialog]').evaluate(node=>node.open),false);
   assert.deepEqual(errors,[]);console.log('PASS Classroom layout: revocation closes editor, empty/offline states and sign-out clear private content');
+} catch (failure) {
+  if(page){
+    await mkdir(output,{recursive:true});
+    await page.screenshot({path:resolve(output,'classroom-monitor-layout-failure.png'),fullPage:true}).catch(()=>{});
+    console.error('LAYOUT PAGE ERRORS',errors);
+    console.error('LAYOUT STATE',await page.frameLocator('#room').locator('body').evaluate(node=>({access:node.dataset.classroomAccess,owner:node.querySelector('[data-classroom-assignments]')?.dataset.owner,monitor:node.querySelector('[data-room-monitor-slot]')?.textContent.slice(0,1400)})).catch(()=>null));
+  }
+  throw failure;
 } finally { await browser?.close();await new Promise(done=>server.close(done)); }

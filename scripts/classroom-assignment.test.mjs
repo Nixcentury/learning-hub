@@ -1,13 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createClassroomAssignments } from '../js/classroom-assignment-service.js';
-import { assignmentHash, assignmentUrl, parseAssignmentRoute, parseThaiDateInput, thaiDateInput, resolveAssignmentQuiz, assignmentStatus } from '../js/classroom-assignment-model.js';
+import { assignmentHash, assignmentUrl, parseAssignmentRoute, parseThaiDateInput, thaiDateInput, resolveAssignmentQuiz, resolveAssignmentLesson, assignmentStatus } from '../js/classroom-assignment-model.js';
 import { resolveHubRoute } from '../js/hub-routes.js';
 import { resolveNavigation } from '../js/hub-navigation.js';
 const rid = 'r_' + 'a'.repeat(32), aid = 'a_' + 'b'.repeat(32), other = 'r_' + 'c'.repeat(32);
 const hub = 'https://example.test/learning-hub/';
-const quizRoute = { kind: 'content', status: 'ready', hash: '#physics/1/waves/quiz', aliases: [], subjectId: 'physics', chapterId: '1', topicId: 'waves', contentId: 'wave-quiz' };
-const catalog = { schemaVersion: 1, routes: [quizRoute, { hash: '#overview', aliases: [], kind: 'section', sectionId: 'overview', status: 'ready' }],
+const quizRoute = { kind: 'content', status: 'ready', hash: '#physics/1/waves/quiz', aliases: [], subjectId: 'physics', chapterId: '1', topicId: 'waves', contentId: 'wave-quiz', parentHash:'#physics/1' };
+const chapter={hash:'#physics/1',kind:'chapter',status:'legacy',subjectId:'physics',chapterId:'1',titleTh:'บทเรียนคลื่น',titleEn:'Waves lesson',parentHash:'#physics'};
+const catalog = { schemaVersion: 1, routes: [quizRoute, chapter, { hash: '#overview', aliases: [], kind: 'section', sectionId: 'overview', status: 'ready' }],
   contents: [{ id: 'wave-quiz', source: 'content/test/waves.html', toolKind: 'quiz', titleTh: 'คลื่น', titleEn: 'Waves' }] };
 const context = (uid, teacher = false) => [{ status: 'signed-in', user: { uid } }, { uid, status: 'ready', isTeacher: teacher, systemRole: teacher ? 'teacher' : 'student' }];
 const tick = () => new Promise(done => setImmediate(done));
@@ -29,6 +30,26 @@ function fixture(t, user = 'teacher', teacher = true) {
   return { service, db, io, get, put, emit, writes, reads, watchers };
 }
 const input = { roomId: rid, id: aid, title: 'ทวนคลื่น', instructions: 'ทำให้ครบ', url: hub + quizRoute.hash, dueAt: 0, revision: 0 };
+test('lesson shortcuts follow canonical content, chapter and bank parents without guessing titles',()=>{
+  const canonical={...quizRoute,hash:'#content/wave-quiz',aliases:['#content/wave-alias']};
+  const c={...catalog,routes:[...catalog.routes,canonical]};
+  assert.deepEqual(resolveAssignmentLesson({targetHash:'#content/wave-alias',contentId:'wave-quiz'},c),{hash:chapter.hash,titleTh:chapter.titleTh,titleEn:chapter.titleEn});
+  assert.equal(resolveAssignmentLesson({targetHash:canonical.hash,contentId:'different'},c),null);
+  assert.equal(resolveAssignmentLesson({targetHash:'#content/missing',title:'Physics chapter 4'},c),null);
+  const bank='#physics/bank/b-'+'a'.repeat(24);
+  const bankParent={hash:bank,kind:'bank',status:'ready',bankKey:'b-'+'a'.repeat(24),titleTh:'สมดุลกล',titleEn:'Equilibrium'};
+  const bankContent={...canonical,parentHash:bank};
+  assert.equal(resolveAssignmentLesson({targetHash:canonical.hash},{...c,routes:[bankContent,bankParent]}).hash,bank);
+  assert.equal(resolveAssignmentLesson({targetHash:canonical.hash},{...c,routes:[{...canonical,parentHash:canonical.hash}]}),null);
+});
+test('lesson navigation is resolved for the current room and performs no database writes',async t=>{
+  const f=fixture(t,'student',false);await tick();
+  f.put(`items/${rid}/${aid}`,{...input,status:'closed',publishedAt:1000,targetHash:quizRoute.hash,contentId:'wave-quiz'});f.emit();await tick();
+  assert.equal(f.service.getState().rooms[0].lessonShortcuts[aid].hash,chapter.hash);
+  const result=await f.service.command('lesson',{roomId:rid,id:aid,hash:'#chemistry'},'student');
+  assert.equal(result.lesson.hash,chapter.hash);assert.equal(f.writes.length,0);
+  await assert.rejects(f.service.command('lesson',{roomId:rid,id:'a_'+'d'.repeat(32)},'student'),{code:'assignment/room-unavailable'});
+});
 test('private assignment links preserve IDs without accepting malformed routes or weakening public routing', () => {
   const hash = assignmentHash(rid, aid);
   assert.deepEqual(parseAssignmentRoute(hash), { roomId: rid, assignmentId: aid });

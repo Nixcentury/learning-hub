@@ -129,13 +129,32 @@ test('selecting another post changes every teacher action to the same selected a
   assert.equal(f.document.querySelector('[data-hw-detail-dialog]').hasAttribute('open'),false);
   assert.equal(f.messages.at(-1).action,'view');assert.equal(f.messages.at(-1).payload.id,id2);
 });
-test('student next-work list orders open unsubmitted work by due date and never uses another student score',async()=>{
+test('student path retains submitted and closed work in publication order with only own status',async()=>{
   const f=await fixture(),value=context(false),id2='a_'+'c'.repeat(32),id3='a_'+'d'.repeat(32),id4='a_'+'e'.repeat(32);
-  value.classroomAssignments.rooms[0].items=[item,{...item,id:id2,title:'ใกล้ส่ง',dueAt:100},{...item,id:id3,title:'ส่งแล้ว'},{...item,id:id4,title:'ปิดแล้ว',status:'closed'}];
+  value.classroomAssignmentRoute.assignmentId='';
+  value.classroomAssignments.rooms[0].items=[{...item,publishedAt:3},{...item,id:id2,title:'งานแรก',dueAt:100,publishedAt:1},{...item,id:id3,title:'ส่งแล้ว',publishedAt:2},{...item,id:id4,title:'ปิดแล้ว',status:'closed',publishedAt:4}];
   value.classroomSubmissions={uid:'student',roomId:rid,connected:true,grades:Object.fromEntries(value.classroomAssignments.rooms[0].items.map(x=>[x.id,{ready:true,loaded:true,rows:[{uid:'student',submitted:x.id===id3},{uid:'other',name:'PRIVATE OTHER',submitted:true,grade:{score:999,maxScore:999}}]}]))};
   f.update(value);const entries=f.document.querySelectorAll('[data-next-assignment]');
-  assert.deepEqual(Array.from(entries,n=>n.dataset.id),[id2,aid]);assert.ok(!f.document.body.textContent.includes('PRIVATE OTHER'));assert.ok(!f.document.body.textContent.includes('999'));
+  assert.deepEqual(Array.from(entries,n=>n.dataset.id),[id2,id3,aid,id4]);assert.ok(!f.document.body.textContent.includes('PRIVATE OTHER'));assert.ok(!f.document.body.textContent.includes('999'));
+  assert.deepEqual(Array.from(f.document.querySelectorAll('.homework-step-number'),n=>n.textContent),['1','2','3','4']);
+  assert.ok(f.document.querySelector(`[data-homework-step="${id3}"]`).textContent.includes('ส่งแล้ว'));
+  assert.equal(f.document.querySelector(`[data-homework-step="${id4}"]`).dataset.stepAccess,'closed');
+  assert.equal(f.document.querySelector('[data-hw-next-count]').textContent,'1/4');
   assert.equal(f.document.querySelector('[data-hw-tools]').hidden,true);assert.equal(f.document.querySelector('[data-hw-tool-actions]').children.length,0);
+});
+
+test('all submitted work stays in the path, and lesson shortcuts send an assignment ID to the parent',async()=>{
+  const f=await fixture(),value=context(false);value.classroomAssignmentRoute.assignmentId='';
+  value.classroomAssignments.rooms[0].lessonShortcuts={[aid]:{hash:'#physics/4',titleTh:'บทที่ 4 สมดุลกล',titleEn:'Chapter 4 Mechanical Equilibrium'}};
+  value.classroomSubmissions={uid:'student',roomId:rid,grades:{[aid]:{loaded:true,ready:true,rows:[{uid:'student',submitted:true,grade:{percent:60}}]}}};
+  f.update(value);
+  assert.equal(f.document.querySelectorAll('[data-next-assignment]').length,1);
+  assert.ok(f.document.querySelector('[data-hw-next]').textContent.includes('60%'));
+  assert.ok(f.document.querySelector('[data-hw-next-note]').textContent.includes('ส่งครบแล้ว'));
+  assert.equal(f.document.querySelector('[data-hw-add-link]').disabled,true,'Link saving is explicitly deferred');
+  f.document.querySelector('[data-homework-action="lesson"]').click();
+  const command=f.messages.find(message=>message.action==='lesson');assert.ok(command);
+  assert.deepEqual(JSON.parse(JSON.stringify(command.payload)),{roomId:rid,id:aid});
 });
 test('same-account teacher role revocation closes editors and removes peer grades and teacher actions',async()=>{
   const f=await fixture(),value=context();value.classroomSubmissions={uid:'teacher',roomId:rid,grades:{[aid]:{ready:true,loaded:true,rows:[{uid:'peer',name:'PRIVATE PEER',submitted:true,grade:{score:1,maxScore:2,percent:50,submittedAt:1}}]}}};

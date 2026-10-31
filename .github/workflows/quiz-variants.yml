@@ -13,6 +13,7 @@ on:
       - 'public/content/templates/ai-quiz-variant-template.txt'
       - 'scripts/*companion*'
       - 'scripts/*quiz-variant*'
+      - 'scripts/*quiz-giveup*'
       - '.github/workflows/quiz-variants.yml'
 
 permissions:
@@ -43,6 +44,7 @@ jobs:
           PLAYWRIGHT_CHANNEL: chromium
         run: |
           export PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/work/qa-tools/node_modules/playwright"
+          node scripts/test-quiz-giveup-browser.mjs
           pnpm test:variant:browser
           pnpm test:companion:browser
       - name: Save browser screenshots

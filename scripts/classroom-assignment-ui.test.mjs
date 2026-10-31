@@ -31,7 +31,7 @@ test('homework UI renders stored user text safely and keeps published quiz desti
   const root = f.document.querySelector('[data-classroom-assignments]');
   assert.equal(root.hidden, false); assert.equal(root.querySelectorAll('img').length, 0);
   assert.ok(root.textContent.includes(item.title));
-  root.querySelector('[data-hw-detail] [data-homework-action="edit"]').click();
+  root.querySelector('[data-hw-tools] [data-homework-action="edit"]').click();
   assert.equal(root.querySelector('input[name="url"]').readOnly, true);
   assert.equal(root.querySelector('[data-hw-publish]').hidden, true);
   assert.equal(root.querySelector('[data-hw-save]').textContent, 'บันทึกการแก้ไข');
@@ -80,7 +80,8 @@ test('teacher gradebook shows all members, submitted scores and empty scores for
   assert.equal(results.querySelectorAll('tbody tr').length,2);assert.ok(results.textContent.includes('ส่งแล้ว 1/2 คน'));
   assert.ok(results.querySelector('[data-result-uid="student"]').textContent.includes('2/3'));
   assert.ok(results.querySelector('[data-result-uid="student-b"]').textContent.includes('ยังไม่ส่ง'));
-  assert.equal(results.querySelectorAll('img').length,0);assert.ok(results.querySelector('[data-homework-action="export-sheet"]'));
+  assert.equal(results.querySelectorAll('img').length,0);assert.ok(f.document.querySelector('[data-hw-tools] [data-homework-action="export-sheet"]'));
+  assert.equal(results.querySelectorAll('[data-homework-action="export-sheet"]').length,0);
 });
 test('student sees only own result; unprepared work offers a teacher recovery action, not a false zero score',async()=>{
   const f=await fixture(), value=context(false);
@@ -104,4 +105,57 @@ test('CSV download accepts only the matching parent response and leaves a clear 
   reply({});reply(f.parent,'student');assert.equal(f.downloads.length,0);
   reply(f.parent);assert.equal(f.downloads.length,1);assert.equal(await f.downloads[0].text(),'test csv');
   assert.ok(f.document.body.textContent.includes('ยังไม่ส่งคะแนนเข้า Google Classroom'));
+});
+
+
+test('Classroom feed keeps teacher management together at the top of the right column',async()=>{
+  const f=await fixture();f.update(context());const root=f.document.querySelector('[data-classroom-assignments]');
+  assert.ok(root.querySelector('[data-hw-next-panel]'));assert.ok(root.querySelector('[data-hw-feed]'));assert.ok(root.querySelector('[data-hw-right]'));
+  const right=root.querySelector('[data-hw-right]'),tools=right.querySelector('[data-hw-tools]');
+  assert.equal(right.firstElementChild,tools);assert.ok(right.querySelector('[data-room-monitor-slot]'));
+  for(const action of ['edit','close','scores','export-sheet'])assert.ok(tools.querySelector(`[data-homework-action="${action}"]`));
+  assert.equal(root.querySelectorAll('[data-hw-feed] [data-homework-action="edit"]').length,0);
+  assert.equal(root.querySelector('[data-hw-feed] .homework-post-instructions').textContent,item.instructions);
+  assert.equal(tools.querySelector('[data-hw-selection]').textContent,item.title);assert.equal(root.querySelectorAll('img').length,0);
+});
+test('selecting another post changes every teacher action to the same selected assignment without opening details',async()=>{
+  const f=await fixture(),value=context(),id2='a_'+'c'.repeat(32);
+  value.classroomAssignments.rooms[0].items.push({...item,id:id2,title:'งานที่สอง',publishedAt:2});f.update(value);
+  f.document.querySelector('[data-hw-detail-close]').click();
+  f.document.querySelector(`[data-assignment-id="${id2}"] [data-homework-action="select"]`).click();
+  const tools=f.document.querySelector('[data-hw-tools]');
+  assert.equal(tools.querySelector('[data-hw-selection]').textContent,'งานที่สอง');
+  for(const node of tools.querySelectorAll('[data-homework-action]'))assert.equal(node.dataset.id,id2);
+  assert.equal(f.document.querySelector('[data-hw-detail-dialog]').hasAttribute('open'),false);
+  assert.equal(f.messages.at(-1).action,'view');assert.equal(f.messages.at(-1).payload.id,id2);
+});
+test('student next-work list orders open unsubmitted work by due date and never uses another student score',async()=>{
+  const f=await fixture(),value=context(false),id2='a_'+'c'.repeat(32),id3='a_'+'d'.repeat(32),id4='a_'+'e'.repeat(32);
+  value.classroomAssignments.rooms[0].items=[item,{...item,id:id2,title:'ใกล้ส่ง',dueAt:100},{...item,id:id3,title:'ส่งแล้ว'},{...item,id:id4,title:'ปิดแล้ว',status:'closed'}];
+  value.classroomSubmissions={uid:'student',roomId:rid,connected:true,grades:Object.fromEntries(value.classroomAssignments.rooms[0].items.map(x=>[x.id,{ready:true,loaded:true,rows:[{uid:'student',submitted:x.id===id3},{uid:'other',name:'PRIVATE OTHER',submitted:true,grade:{score:999,maxScore:999}}]}]))};
+  f.update(value);const entries=f.document.querySelectorAll('[data-next-assignment]');
+  assert.deepEqual(Array.from(entries,n=>n.dataset.id),[id2,aid]);assert.ok(!f.document.body.textContent.includes('PRIVATE OTHER'));assert.ok(!f.document.body.textContent.includes('999'));
+  assert.equal(f.document.querySelector('[data-hw-tools]').hidden,true);assert.equal(f.document.querySelector('[data-hw-tool-actions]').children.length,0);
+});
+test('same-account teacher role revocation closes editors and removes peer grades and teacher actions',async()=>{
+  const f=await fixture(),value=context();value.classroomSubmissions={uid:'teacher',roomId:rid,grades:{[aid]:{ready:true,loaded:true,rows:[{uid:'peer',name:'PRIVATE PEER',submitted:true,grade:{score:1,maxScore:2,percent:50,submittedAt:1}}]}}};
+  f.update(value);f.document.querySelector('[data-hw-tools] [data-homework-action="edit"]').click();
+  const revoked=context(false,'teacher');revoked.classroomSubmissions=value.classroomSubmissions;f.update(revoked);
+  assert.equal(f.document.querySelector('[data-hw-editor-dialog]').hasAttribute('open'),false);
+  assert.equal(f.document.querySelector('[data-hw-tools]').hidden,true);assert.equal(f.document.querySelectorAll('[data-homework-action="edit"]').length,0);
+  assert.ok(!f.document.body.textContent.includes('PRIVATE PEER'));
+});
+test('closing assignment details keeps the feed visible across live context refreshes',async()=>{
+  const f=await fixture();f.update(context());assert.equal(f.document.querySelector('[data-hw-detail-dialog]').hasAttribute('open'),true);
+  f.document.querySelector('[data-hw-detail-close]').click();f.update(context());
+  assert.equal(f.document.querySelector('[data-hw-detail-dialog]').hasAttribute('open'),false);
+  assert.equal(f.document.querySelector('[data-classroom-assignments]').hidden,false);
+  assert.equal(f.document.querySelectorAll('[data-hw-feed] .homework-card').length,1);
+});
+test('assignment refresh leaves the monitoring controls to their own service and disables offline teacher actions',async()=>{
+  const f=await fixture(),value=context();f.update(value);
+  const monitor=f.document.createElement('button');monitor.disabled=true;f.document.querySelector('[data-room-monitor-slot]').append(monitor);
+  value.classroomAssignments.connected=false;f.update(value);
+  assert.equal(monitor.disabled,true);assert.equal(f.document.querySelector('[data-hw-tools] [data-homework-action="edit"]').disabled,true);
+  assert.equal(f.document.querySelector('[data-hw-retry]').disabled,false);
 });

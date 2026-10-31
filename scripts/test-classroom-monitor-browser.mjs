@@ -89,6 +89,9 @@ try {
     const page = await context.newPage(); page.on('pageerror', error => errors.push(error.message)); page.setDefaultTimeout(18000);
     await page.goto(origin + prefix + '#classroom'); const frame = page.frameLocator('#hub-page-frame');
     await frame.locator('[data-room-list] button').waitFor(); await frame.locator('[data-room-list] button').first().click();
+    // Narrow layouts keep the lesson panel collapsed until requested.
+    const panel = frame.locator('[data-room-monitor-panel]');
+    if (await panel.count() && !await panel.evaluate(node => node.open)) await panel.locator('summary').click();
     await frame.locator('[data-classroom-monitor]').waitFor(); return { context, page, frame };
   }
   const teacher = await client('teacher'), student = await client('student', true);
@@ -104,10 +107,10 @@ try {
   await teacher.frame.locator('[data-hw-preview]').click();
   await teacher.frame.locator('[data-hw-preview-result]').filter({ hasText: 'Quiz ที่เลือก' }).waitFor();
   await teacher.frame.locator('[data-hw-save]').click();
-  await teacher.frame.locator('.homework-card [data-homework-action="edit"]').waitFor();
+  await teacher.frame.locator('[data-next-assignment]').filter({hasText:'ทวนคลื่น'}).waitFor();
   assert.equal(await student.frame.locator('.homework-card').count(), 0, 'A student cannot see a private draft');
   assert.ok(!(await student.page.evaluate(() => qaDbRequests)).some(row => row.path.startsWith('classroomAssignmentsV1/drafts/')));
-  await teacher.frame.locator('.homework-card [data-homework-action="edit"]').click();
+  await teacher.frame.locator('[data-hw-tools] [data-homework-action="edit"]').click();
   await teacher.frame.locator('[data-hw-publish]').click();
   await student.page.locator('.assignment-notice button').waitFor();
   await student.page.locator('.assignment-notice button').click();
@@ -121,6 +124,7 @@ try {
   assert.equal(await student.page.locator('.assignment-notice').isVisible(), false, 'Read state persists after reload');
   // An old practice result must not become a homework result.
   await student.page.evaluate(id => localStorage.setItem(`learning-hub-quiz:v1:student:${id}`, JSON.stringify({version:2,identityKey:'student',contentId:id,answers:{},masteredIds:[],latestScore:{score:999,maxScore:999},savedAt:Date.now()})), homeworkQuizRoute.contentId);
+  await teacher.frame.locator('[data-hw-tools] [data-homework-action="scores"]').click();
   await teacher.frame.locator('[data-homework-results] tbody tr').filter({hasText:'นักเรียนทดลอง'}).waitFor();
   await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').click();
   const homeworkFrame=student.page.frameLocator('#workspace-window-layer iframe[src*="homework=1"]');
@@ -170,6 +174,7 @@ try {
   await teacher.frame.locator('[data-result-uid="student"] [data-homework-action="history"]').click();
   await teacher.frame.locator('[data-homework-history]').filter({hasText:'ครั้งที่ 1: 1/'}).waitFor();
   assert.ok((await teacher.frame.locator('[data-homework-history]').textContent()).includes('ครั้งที่ 2: 2/'));
+  await teacher.frame.locator('[data-hw-detail-close]').click();
   const downloadEvent = teacher.page.waitForEvent('download');
   await teacher.frame.locator('[data-homework-action="export-sheet"]').click();
   const download = await downloadEvent;
@@ -193,7 +198,7 @@ try {
   await student.page.reload();
   await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').waitFor();
   teacher.page.once('dialog', dialog => dialog.accept());
-  await teacher.frame.locator('[data-hw-detail] [data-homework-action="close"]').click();
+  await teacher.frame.locator('[data-hw-tools] [data-homework-action="close"]').click();
   await student.frame.locator('[data-hw-detail] .homework-tag').filter({ hasText: 'ปิดงาน' }).waitFor();
   assert.equal(await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').textContent(), 'ดูงานที่ส่ง');
   await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').click();

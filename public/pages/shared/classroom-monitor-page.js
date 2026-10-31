@@ -21,16 +21,18 @@
     if (uid !== nextUid) { uid = nextUid; pending = ''; feedback = ''; rows.clear(); root?.remove(); root = null; }
     const detail = document.querySelector('[data-room-detail]');
     if (!uid || !room || !detail || context.classroomRooms.roomStatus !== 'ready') { root?.remove(); root = null; rows.clear(); return; }
+    const target = document.querySelector('[data-room-monitor-slot]') || detail;
     if (!root?.isConnected) {
       rows.clear(); root = el('section', '', 'classroom-monitor'); root.dataset.classroomMonitor = '';
       root.innerHTML = `<div class="classroom-monitor-heading"><h3></h3><span data-monitor-badge></span></div>
         <p data-monitor-description></p><div class="classroom-monitor-controls"><label><span data-monitor-duration-label></span><select data-monitor-duration><option value="30">30</option><option value="45">45</option><option value="60" selected>60</option><option value="90">90</option><option value="120">120</option><option value="180">180</option></select></label><button type="button" class="classroom-button is-primary" data-monitor-lock></button><button type="button" class="classroom-button" data-monitor-student></button></div>
-        <p data-monitor-feedback role="status" aria-live="polite"></p><button type="button" class="classroom-button" data-monitor-retry hidden></button>
+        <button type="button" class="classroom-button" data-monitor-inbox-open hidden></button><p data-monitor-feedback role="status" aria-live="polite"></p><button type="button" class="classroom-button" data-monitor-retry hidden></button>
         <div class="classroom-monitor-filters"><input type="search" data-monitor-search data-allow-selection><select data-monitor-filter><option value="all"></option><option value="attention"></option><option value="visible"></option><option value="not-joined"></option></select></div>
         <div class="classroom-monitor-people" data-monitor-people></div>`;
-      detail.append(root);
+      target.append(root);
       root.querySelector('[data-monitor-lock]').addEventListener('click', () => send(root.dataset.locked === 'true' ? 'unlock' : 'lock', { roomId: context.classroomRooms.selected.id, minutes: Number(root.querySelector('[data-monitor-duration]').value) }));
       root.querySelector('[data-monitor-student]').addEventListener('click', () => send(context.classroomMonitor?.lesson?.joined && context.classroomMonitor.lesson.roomId === context.classroomRooms.selected.id ? 'leave' : 'join', { roomId: context.classroomRooms.selected.id }));
+      root.querySelector('[data-monitor-inbox-open]').addEventListener('click', () => send('inbox', {roomId:context.classroomRooms.selected.id}));
       root.querySelector('[data-monitor-retry]').addEventListener('click', () => send('retry', { roomId: context.classroomRooms.selected.id }));
       root.querySelector('[data-monitor-search]').addEventListener('input', paint);
       root.querySelector('[data-monitor-filter]').addEventListener('change', paint);
@@ -39,6 +41,7 @@
         send(node.dataset.monitorRowAction, { roomId: context.classroomRooms.selected.id, targetUid: node.dataset.uid, hash: node.dataset.hash });
       });
     }
+    if (root.parentElement !== target) target.append(root);
     const owner = room.membership === 'owner' && context.classroom?.state === 'teacher';
     const liveRoom = data?.rooms?.find(value => value.id === room.id), session = liveRoom?.session;
     const ready = data?.uid === uid, locked = Boolean(session), busy = Boolean(pending || data?.busy);
@@ -56,6 +59,9 @@
     const student = root.querySelector('[data-monitor-student]'); student.hidden = owner || !locked;
     student.textContent = data?.lesson?.joined && data.lesson.roomId === room.id ? t('ออกจากคาบ', 'Leave lesson') : t('เข้าคาบติดตามนี้', 'Join this lesson');
     student.disabled = !ready || !data.connected || busy;
+    const inbox = root.querySelector('[data-monitor-inbox-open]');
+    inbox.hidden = owner || !locked || !data?.lesson?.joined || data.lesson.roomId !== room.id;
+    inbox.textContent = t('ข้อความจากครู', 'Teacher messages'); inbox.disabled = !ready || busy;
     let message = feedback;
     if (busy) message = t('กำลังรอระบบยืนยัน…', 'Waiting for confirmation…');
     else if (data?.error) message = /permission.?denied/i.test(data.error)

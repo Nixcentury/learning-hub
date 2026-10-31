@@ -56,6 +56,12 @@ jobs:
         run: |
           export FIREBASE_MODULE="$GITHUB_WORKSPACE/work/qa-tools/node_modules/firebase"
           node scripts/run-classroom-monitor-qa.mjs --sdk
+      - name: Verify Classroom feed layout and role-specific side panels
+        env:
+          PLAYWRIGHT_CHANNEL: chromium
+        run: |
+          export PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/work/qa-tools/node_modules/playwright"
+          node scripts/test-classroom-layout-browser.mjs
       - name: Test production Hub against database Rules
         env:
           QA_BUILT: '1'

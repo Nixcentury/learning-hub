@@ -48,12 +48,14 @@
     if (uid !== nextUid) {
       uid = nextUid; pending = null; rendered = ''; createForm.reset(); joinForm.reset();
       list.replaceChildren(); detail.replaceChildren(); showFeedback('');
+      document.body.classList.remove('classroom-has-room');
     }
     area.hidden = !uid;
     if (!uid) return;
     createForm.hidden = access.state !== 'teacher';
     const data = snapshot?.uid === uid ? snapshot : null;
     area.classList.toggle('is-in-room', Boolean(data?.selected));
+    document.body.classList.toggle('classroom-has-room', Boolean(data?.selected));
     const saving = Boolean(pending || data?.busy);
     area.querySelectorAll('button,input').forEach(node => { node.disabled = saving; });
     area.setAttribute('aria-busy', String(saving));
@@ -84,9 +86,11 @@
         const invite = element('div', '', 'classroom-invite');
         const code = element('code', room.joinCode); code.dataset.allowSelection = ''; code.tabIndex = 0;
         invite.append(element('span', t('รหัสเข้าร่วมห้อง', 'Join code')), code, button(t('คัดลอกรหัส', 'Copy code'), 'copy'));
-        detail.append(invite, element('h3', t('สมาชิกในห้อง', 'Class members') + ' · ' + data.members.length));
-        if (data.roomStatus !== 'ready') detail.append(element('p', t('กำลังโหลดสมาชิก…', 'Loading members…')));
-        else if (!data.members.length) detail.append(element('p', t('ยังไม่มีนักเรียนเข้าร่วม ส่งรหัสห้องให้เด็กได้เลย', 'No students yet. Share the room code with your students.')));
+        const members = element('details', '', 'classroom-roster-details');
+        members.append(element('summary', t('สมาชิกในห้อง', 'Class members') + ' · ' + data.members.length));
+        detail.append(invite, members);
+        if (data.roomStatus !== 'ready') members.append(element('p', t('กำลังโหลดสมาชิก…', 'Loading members…')));
+        else if (!data.members.length) members.append(element('p', t('ยังไม่มีนักเรียนเข้าร่วม ส่งรหัสห้องให้เด็กได้เลย', 'No students yet. Share the room code with your students.')));
         else {
           const roster = element('ul', '', 'classroom-roster');
           for (const member of data.members) {
@@ -94,9 +98,9 @@
             row.append(element('strong', member.displayName), element('small', new Date(member.joinedAt).toLocaleDateString(context.language === 'en' ? 'en-GB' : 'th-TH')));
             roster.append(row);
           }
-          detail.append(roster);
+          members.append(roster);
         }
-      } else if (room.membership === 'student') detail.append(element('p', t('คุณเข้าร่วมห้องนี้แล้ว ดูการบ้านที่ครูมอบหมายได้ด้านล่าง', 'You have joined this classroom. Your assigned homework appears below.')));
+      } else if (room.membership === 'student') detail.append(element('p', t('คุณเข้าร่วมห้องนี้แล้ว ดูโพสต์งานที่ครูมอบหมายได้ด้านล่าง', 'You have joined this classroom. Your assigned homework appears below.')));
     }
     area.querySelectorAll('button,input').forEach(node => { node.disabled = saving; });
   }

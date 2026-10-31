@@ -53,6 +53,8 @@ function errorText(code) {
     'homework/offline': ['การเชื่อมต่อขาด รอให้กลับมาแล้วลองอีกครั้ง', 'Connection lost. Reconnect and try again.'],
     'homework/read-timeout': ['โหลดผลการส่งงานนานกว่าปกติ ตรวจการเชื่อมต่อแล้วลองอีกครั้ง', 'Results are taking longer than usual. Check your connection and retry.'],
     prepared: ['เปิดรับการส่งงานแล้ว ใช้ชุดคำถามเดียวกันสำหรับงานนี้', 'Submissions enabled. This assignment keeps the same question set.'],
+    exported: ['ดาวน์โหลด CSV แล้ว ใช้นำเข้าชีทตัวกลางชุดใหม่ การดาวน์โหลดนี้ยังไม่ส่งคะแนนเข้า Google Classroom', 'CSV downloaded for your new bridge spreadsheet. Downloading does not send grades to Google Classroom.'],
+    'export-failed': ['ดาวน์โหลด CSV ไม่สำเร็จ กรุณาลองอีกครั้ง', 'CSV download failed. Please retry.'],
     saved: ['บันทึกงานร่างแล้ว นักเรียนยังไม่เห็นงานนี้', 'Draft saved. Students cannot see it yet.'],
     published: ['เผยแพร่การบ้านให้สมาชิกในห้องแล้ว', 'Homework published to your classroom members.'],
     updated: ['บันทึกการแก้ไขแล้ว', 'Changes saved.'], closed: ['ปิดงานแล้ว ข้อมูลการบ้านยังอยู่', 'Assignment closed. Its details are retained.'],
@@ -114,6 +116,7 @@ function renderResults(item, isOwner) {
   }
   const rows = gradebook.rows || [];
   if (isOwner) {
+    section.append(button(t('ส่งออกไปชีท (.csv)', 'Export to spreadsheet (.csv)'), 'export-sheet', item.id));
     section.append(el('p', t(`ส่งแล้ว ${rows.filter(row => row.submitted).length}/${rows.length} คน`, `Submitted: ${rows.filter(row => row.submitted).length}/${rows.length} students`)));
     const wrap = el('div', '', 'homework-results-scroll'), table = document.createElement('table'); table.className = 'homework-results-table';
     const caption = el('caption', item.title); table.append(caption);
@@ -274,6 +277,16 @@ window.addEventListener('message', event => {
   else if (action === 'close') { feedback = 'closed'; feedbackError = false; }
   else if (action === 'prepare') { feedback = 'prepared'; feedbackError = false; }
   else if (action === 'history') historyView = event.data.result;
+  else if (action === 'export-sheet') {
+    try {
+      const { csv, filename } = event.data.result;
+      if (typeof csv !== 'string' || !/^hub-homework-[a-f0-9]{32}\.csv$/.test(filename)) throw Error();
+      const url = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'}));
+      const anchor = document.createElement('a'); anchor.href = url; anchor.download = filename;
+      document.body.append(anchor); anchor.click(); anchor.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+      feedback = 'exported'; feedbackError = false;
+    } catch { feedback = 'export-failed'; feedbackError = true; }
+  }
   paint();
   if (event.data.ok && action === 'view') detail.focus();
 });

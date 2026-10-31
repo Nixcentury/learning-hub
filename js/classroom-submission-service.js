@@ -1,6 +1,7 @@
 import { createClassroomAccess } from './classroom-access.js';
 import { assignmentIdPattern, assignmentRoomPattern } from './classroom-assignment-model.js';
 import { failSubmission, submissionPayload, gradeSubmission } from '../public/shared/classroom-submission-model.js';
+import { createClassroomSheetCsv } from '../public/shared/classroom-sheet-export.js';
 
 export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange = () => {} }) {
   let session, role, assignments, uid = '', roomId = '', epoch = 0, connected = false, error = '', busy = '', last = '';
@@ -211,6 +212,23 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     });
     submissionsInFlight.set(key, operation); return operation;
   }
-  return { setContext, prepare, open, history, quizCommand: command, getState: () => structuredClone(state()),
+  async function exportSheet(id) {
+    const user = uid, version = epoch, selected = roomId;
+    guard(user, version, true);
+    if (!assignmentIdPattern.test(id)) throw failSubmission('homework/invalid-request');
+    const item = await published(id, user, version, selected);
+    const [quiz, records, members] = await Promise.all([read(`quizzes/${selected}/${id}`),read(`results/${selected}/${id}`),read(`@classroom/members/${selected}`)]);
+    guard(user, version, true, selected);
+    if (!quiz) throw failSubmission('homework/not-ready');
+    if (quiz.contentId !== item.contentId) throw failSubmission('homework/quiz-changed');
+    const questions = questionSet(quiz);
+    const rows = Object.entries(members || {}).map(([studentUid, member]) => {
+      const record = records?.[studentUid];
+      return { uid: studentUid, name: member.displayName || studentUid, submitted: Boolean(record), submissionId: record?.submissionId,
+        grade: record ? gradeSubmission(record, quiz, questions) : null };
+    }).sort((a,b)=>a.name.localeCompare(b.name,'th') || a.uid.localeCompare(b.uid));
+    return { filename: `hub-homework-${id.slice(2)}.csv`, csv: createClassroomSheetCsv({roomId:selected,roomName:room(selected)?.name || '',item:{...item,id},hubUrl:assignments.hubUrl,rows}) };
+  }
+  return { setContext, prepare, open, history, exportSheet, quizCommand: command, getState: () => structuredClone(state()),
     dispose() { clear(); uid = roomId = ''; } };
 }

@@ -11,6 +11,7 @@ import {
 import { createContentTool } from "./content-tool.js";
 import { createBankTool } from "./question-bank-tools.js";
 import { createTopicReviewTool } from "./topic-review-tools.js";
+import { bankKeyPattern } from "../public/shared/question-bank-model.js";
 import { pdfLinkEntry } from "./pdf-link.js";
 import { videoLinkEntry } from "./video-link.js";
 import { htmlLinkEntry } from "./html-link.js";
@@ -473,12 +474,13 @@ export function createWorkspace({
   function postContext(record) {
     if (record.tool.context.toolKind === 'review') {
       if (!record.reviewReady) return;
-      const signature = JSON.stringify([record.tool.reviewSelection, language()]);
+      const signature = JSON.stringify([record.tool.reviewSelection, record.tool.reviewQuizContext, record.tool.reviewPreferred, language()]);
       if (record.reviewLastSent === signature) return;
       record.reviewLastSent = signature;
       record.reviewCommand = (record.reviewCommand || 0) + 1;
       record.frame.contentWindow?.postMessage({ type: 'learning-hub-review-select',
-        commandId: record.reviewCommand, selection: record.tool.reviewSelection, language: language() }, location.origin);
+        commandId: record.reviewCommand, selection: record.tool.reviewSelection, language: language(),
+        quizContext: record.tool.reviewQuizContext || null, preferred: record.tool.reviewPreferred || [] }, location.origin);
       return;
     }
     // Read-only HTML does not need the learner's identity or privileged bridges.
@@ -669,6 +671,15 @@ export function createWorkspace({
     if (record.tool.context.toolKind !== "quiz") return null;
     try { return record.frame.contentWindow?.LearningHubQuiz; }
     catch { return null; }
+  }
+
+  function applyReviewQuestion(record) {
+    if (!record?.reviewQuestion) return;
+    const quiz = getQuiz(record);
+    const saved = quiz?.getState?.();
+    // The first ready handshake may precede bank loading. The final one retries.
+    if (saved?.contentId !== record.tool.context.contentId || !saved?.currentQuestionId) return;
+    if (quiz.returnToQuestion?.(record.reviewQuestion - 1)) delete record.reviewQuestion;
   }
 
   function flushLocalBeforeRemoval(record) {
@@ -943,6 +954,7 @@ export function createWorkspace({
     record.timerReset.addEventListener("click", () => resetTimer(record));
     record.element.addEventListener("pointerdown", () => focus(record));
     record.frame.addEventListener("load", () => {
+      delete record.reviewRequestId;
       record.sheet?.dispose();
       record.sheet = null;
       applyFrameLanguage(record);
@@ -1043,9 +1055,10 @@ export function createWorkspace({
     return open(tool.id);
   }
 
-  function openReview(selection) {
+  function openReview(selection, { quizContext = null, preferred = [] } = {}) {
     const tool = createTopicReviewTool(selection, location.href);
     if (!tool) return false;
+    tool.reviewQuizContext = quizContext; tool.reviewPreferred = preferred;
     toolCatalog[tool.id] = tool;
     const record = records.get(tool.id);
     if (record) {
@@ -1132,6 +1145,28 @@ export function createWorkspace({
   }
 
   window.addEventListener("message", (event) => {
+    if (event.data?.type === 'learning-hub-quiz-review-request') {
+      if (event.origin !== location.origin || !isWorkspaceQuizSource(event.source)) return;
+      const record = [...records.values()].find(item => item.frame.contentWindow === event.source);
+      const data = event.data, saved = getQuiz(record)?.getState?.(), context = record?.tool.context;
+      if (!record || record.minimized || !record.element.classList.contains('is-active') ||
+          !Number.isSafeInteger(data.requestId) || data.requestId < 1 || data.requestId <= (record.reviewRequestId || 0) ||
+          data.contentId !== context.contentId || saved?.contentId !== context.contentId || !saved.currentQuestionId ||
+          !Number.isInteger(data.questionNumber) || data.questionNumber < 1 || data.questionNumber > 1000 ||
+          data.questionNumber !== saved.currentIndex + 1) return;
+      record.reviewRequestId = data.requestId;
+      const preferred = Array.isArray(data.topicIds) ? [...new Set(data.topicIds.filter(key =>
+        typeof key === 'string' && bankKeyPattern.test(key)))].slice(0, 20) : [];
+      const bankKey = bankKeyPattern.test(context.topicId || '') ? context.topicId : null;
+      const selection = { subjectId: context.subjectId, bankKey: bankKey || preferred[0] || null };
+      const quizContext = bankKey ? { bankKey, questionNumber: data.questionNumber, requestId: data.requestId } : null;
+      const opened = openReview(selection, { quizContext, preferred });
+      const review = records.get('topic-review-library');
+      const paired = Boolean(opened && review && pairWindows(record, review, review));
+      event.source.postMessage({ type: 'learning-hub-quiz-review-result', requestId: data.requestId,
+        contentId: data.contentId, opened: paired }, location.origin);
+      return;
+    }
     if (event.data?.type === 'learning-hub-quiz-variant-request') {
       if (event.origin !== location.origin || !isWorkspaceQuizSource(event.source)) return;
       const record = [...records.values()].find(item => item.frame.contentWindow === event.source);
@@ -1150,6 +1185,16 @@ export function createWorkspace({
         return;
       }
       if (event.data.commandId !== record.reviewCommand) return;
+      if (event.data.type === 'learning-hub-review-practice') {
+        const selection = record.tool.reviewSelection, requested = event.data.selection, number = event.data.questionNumber;
+        if (record.minimized || !record.element.classList.contains('is-active') || !Number.isInteger(number) || number < 1 || number > 1000 ||
+            !selection.bankKey || requested?.subjectId !== selection.subjectId || requested?.bankKey !== selection.bankKey) return;
+        const target = createBankTool({ ...selection, toolKey: 'quiz' }, location.href);
+        if (!target || !openBank({ ...selection, toolKey: 'quiz' })) return;
+        const quizRecord = records.get(target.id);
+        if (quizRecord) { quizRecord.reviewQuestion = number; applyReviewQuestion(quizRecord); }
+        return;
+      }
       if (event.data.type === 'learning-hub-review-back') {
         onReviewBack(record.tool.reviewSelection);
         return;
@@ -1177,7 +1222,7 @@ export function createWorkspace({
     const record = [...records.values()].find(
       (candidate) => candidate.frame.contentWindow === event.source,
     );
-    if (record) postContext(record);
+    if (record) { postContext(record); applyReviewQuestion(record); }
   });
 
   window.setInterval(() => {

@@ -8,6 +8,14 @@
 .review-controls select:disabled { opacity: .6; }
 .review-status { margin: 12px 0 0; color: #5b6880; font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
 .review-status:empty { display: none; }
+.review-exam-tools { margin-top: 18px; padding-top: 16px; border-top: 1px solid #d4e0ee; }
+.review-exam-tools[hidden] { display: none; }
+.review-exam-tools label { display: grid; gap: 7px; color: #203b63; font-size: 14px; font-weight: 700; }
+.review-exam-tools select { width: 100%; min-height: 46px; padding: 10px; border: 1px solid #afc2de; border-radius: 10px; background: white; color: #203b63; font: inherit; }
+.review-exam-tools p { margin: 8px 0 0; color: #785611; font-size: 14px; }
+.review-exam-tools p:empty { display: none; }
+.review-exam-return { display: inline-block; margin: 12px 0 24px; padding: 12px 20px; min-height: 48px; border: 1px solid #1b355c; border-radius: 12px; background: #1b355c; color: white !important; font: inherit; font-weight: 700; text-decoration: none !important; cursor: pointer; }
+.review-exam-return:focus-visible, .review-exam-tools select:focus-visible { outline: 3px solid #94c2ff; outline-offset: 2px; }
 [data-review-retry] { margin-top: 12px; }
 .topic-review-body { padding: 24px; text-align: start; line-height: 1.75; min-height: 200px; overflow-wrap: anywhere; }
 .topic-review-body h1, .topic-review-body h2, .topic-review-body h3 { color: #132e53; line-height: 1.5; }
@@ -47,6 +55,7 @@ body[data-review-embedded] .review-page-heading h1 { font-size: 22px; }
 }
 @media print {
   .review-answer-toggle, .review-answer-tools { display: none !important; }
+  .review-exam-return, .review-exam-tools { display: none !important; }
   .topic-review-browser, .review-page-heading, .review-page-footer { display: none !important; }
   .activity-topic-review-print .review-writing-space { min-height: 18mm; border-bottom: .75pt solid #666; }
   .activity-topic-review-print .review-answer { color: #111; background: white; border-left-color: #777; }

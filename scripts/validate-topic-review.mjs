@@ -3,7 +3,7 @@ import {readFile, readdir, realpath} from 'node:fs/promises';
 import {resolve, relative, isAbsolute} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {DOMParser, parseHTML} from 'linkedom';
-import {reviewDocument} from '../public/shared/topic-review-model.js';
+import {reviewDocument, reviewExamNumber} from '../public/shared/topic-review-model.js';
 import {catalogFromRepository} from './build-route-catalog.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -43,6 +43,8 @@ async function validate(path, catalog) {
   const parsed = new DOMParser().parseFromString(html, 'text/html');
   assert.equal(parsed.querySelectorAll('[data-topic-review-document]').length, 1, 'One review document root is required');
   const main = parsed.querySelector('[data-topic-review-document]');
+  const examBank = main.dataset.reviewQuizBank;
+  if (examBank !== undefined) assert.match(examBank, /^b-[a-f0-9]{24}$/, 'Exam review must declare its actual bank key');
   const languageRoots = [...main.querySelectorAll('[data-content-lang]')];
   assert.equal(languageRoots.length, 2, 'Use exactly two complete language sections');
   assert.deepEqual(languageRoots.map(node => node.dataset.contentLang), ['th', 'en'], 'Thai full section, then English full section');
@@ -70,6 +72,14 @@ async function validate(path, catalog) {
   for (const language of ['th', 'en']) {
     const languageRoot = languageRoots.find(node => node.dataset.contentLang === language);
     const questions = [...languageRoot.querySelectorAll('[data-review-question]')];
+    const examSections = [...languageRoot.querySelectorAll('[data-review-exam-question]')];
+    const examNumbers = examSections.map(section => reviewExamNumber(section.dataset.reviewExamQuestion));
+    if (examSections.length) {
+      assert.ok(examBank, 'Exam sections need a declared bank key');
+      assert.ok(examNumbers.every(Boolean), 'Exam question numbers must be integers from 1 to 1000');
+      assert.equal(new Set(examNumbers).size, examNumbers.length, 'Do not duplicate an exam question in one language');
+      assert.ok(examSections.every(section => section.localName === 'section' && section.querySelector('h2') && !section.querySelector('[data-review-exam-question]')), 'Use independent exam sections with h2 headings');
+    }
     assert.ok(questions.length, `${language}: supply recall questions`);
     const counts = [];
     questions.forEach((question, index) => {
@@ -93,9 +103,11 @@ async function validate(path, catalog) {
     assert.equal(answers.length, questions.length);
     assert.ok(answers.every(answer => answer.hidden), 'The player must keep every answer hidden');
     assert.equal(rendered.querySelectorAll('img').length, languageRoot.querySelectorAll('img,svg').length, 'Every figure must survive the sanitizer');
-    reports.push({language, questions:questions.length, blanks:counts.reduce((a,b)=>a+b,0), blanksByQuestion:counts, images:rendered.querySelectorAll('img').length});
+    assert.deepEqual([...rendered.querySelectorAll('[data-review-exam-question]')].map(section => reviewExamNumber(section.dataset.reviewExamQuestion)), examNumbers, 'Exam sections must survive the sanitizer');
+    reports.push({language, questions:questions.length, blanks:counts.reduce((a,b)=>a+b,0), blanksByQuestion:counts, images:rendered.querySelectorAll('img').length, ...(examBank ? {examNumbers} : {})});
   }
   assert.deepEqual(reports[0].blanksByQuestion, reports[1].blanksByQuestion, 'TH/EN question counts and writing-space counts must match');
+  assert.deepEqual(reports[0].examNumbers, reports[1].examNumbers, 'TH/EN must cover the same exam questions');
   let routes = [];
   if (!contentOnly) {
     const entries = catalog.contents.filter(item => item.source === source);
@@ -103,6 +115,7 @@ async function validate(path, catalog) {
     routes = catalog.routes.filter(route => route.contentId === entries[0].id && route.toolKey === 'review' && route.kind === 'content' && route.status === 'ready');
     assert.ok(routes.length, 'The content needs a ready bank review route');
     assert.ok(routes.every(route => /^b-[a-f0-9]{24}$/.test(route.bankKey || '')), 'Review routes must use real-format bank keys');
+    if (examBank) assert.ok(routes.every(route => route.bankKey === examBank), 'Exam review must be registered under its declared bank key');
   }
   console.log(JSON.stringify({source, languages:reports, routes:routes.map(route => ({subjectId:route.subjectId,bankKey:route.bankKey})), registrationChecked:!contentOnly}));
 }

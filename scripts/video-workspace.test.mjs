@@ -10,6 +10,9 @@ import { htmlLinkEntry } from '../js/html-link.js';
 import { pdfLinkEntry } from '../js/pdf-link.js';
 import { applyContentLanguage } from '../js/content-language.js';
 import { createLearningGuide } from '../js/learning-guide.js';
+import { createBankTool } from '../js/question-bank-tools.js';
+import { createTopicReviewTool } from '../js/topic-review-tools.js';
+import { bankKeyPattern } from '../public/shared/question-bank-model.js';
 
 // Execute the real Workspace and its DOM handlers, with iframe transport replaced.
 // This checks integration and state transitions, not browser layout or live YouTube.
@@ -39,7 +42,7 @@ function harness() {
     createContentTool, createHubContextMessage, videoLinkEntry, htmlLinkEntry, pdfLinkEntry, applyContentLanguage, createLearningGuide,
     toolCatalog: {}, requestAnimationFrame: fn => fn(),
     renderHtmlMath: async () => {}, attachLearningSheet: async () => null,
-    createBankTool() {}, createTopicReviewTool() {}, openHtmlPrint() {} });
+    createBankTool, createTopicReviewTool, bankKeyPattern, openHtmlPrint() {} });
   vm.runInContext(code + '\nglobalThis.makeWorkspace=createWorkspace;', vmContext);
   const workspace = vmContext.makeWorkspace({
     windowLayer: document.getElementById('layer'), taskbar: document.getElementById('bar'),
@@ -47,13 +50,13 @@ function harness() {
     getLanguage: () => language, getIdentity: () => ({ status: 'guest', isGuest: true, uid: null }), getRole: () => 'student',
   });
   workspace.bindHtmlLinks(document);
-  function load(frame, child) {
+  function load(frame, child, quiz = null) {
     const sent = [];
     Object.defineProperty(frame, 'contentDocument', { configurable: true, value: child.document });
-    Object.defineProperty(frame, 'contentWindow', { configurable: true, value: { postMessage: (...args) => sent.push(args) } });
+    Object.defineProperty(frame, 'contentWindow', { configurable: true, value: { postMessage: (...args) => sent.push(args), LearningHubQuiz: quiz } });
     frame.dispatchEvent(new domWindow.Event('load')); transports.push(sent); return sent;
   }
-  return { document, workspace, domWindow, load,
+  return { document, workspace, domWindow, load, message: event => events.message(event),
     language(value) { language = value; workspace.setLanguage(); } };
 }
 const videoButton = `<a data-hub-video data-content-id="sound-video" href="${url}" data-subject-id="physics" data-chapter-id="12" data-topic-id="sound">Video</a>`;
@@ -78,6 +81,53 @@ test('a top-level video button reuses one window, pauses on minimize/menu, and c
   h.document.querySelector('.taskbar-item').click();
   h.document.querySelector('.is-close').click();
   assert.equal(h.document.querySelectorAll('.workspace-tool-frame').length, 0);
+});
+
+test('Quiz review pairs the original Quiz with one reused reader and passes the current exam section', () => {
+  const h = harness(), bankKey = 'b-' + 'a'.repeat(24), topic = 'b-' + 'b'.repeat(24);
+  h.workspace.openBank({ subjectId: 'chemistry', bankKey });
+  const quiz = h.document.querySelector('iframe'), quizWindow = quiz.closest('.workspace-window');
+  const contentId = 'bank-chemistry-' + bankKey;
+  const api = { getState: () => ({ contentId, currentQuestionId: 'q3', currentIndex: 2 }) };
+  const sent = h.load(quiz, dom('<html><body><textarea>Keep my working</textarea></body></html>', 'pages/tools/quiz-player.html'), api);
+  const request = { type: 'learning-hub-quiz-review-request', requestId: 1, contentId, questionNumber: 3, topicIds: [topic, topic, 'https://untrusted.test'] };
+  h.message({ source: quiz.contentWindow, origin: 'https://school.test', data: request });
+  const reader = h.document.querySelector('[data-tool-id="topic-review-library"]'), frame = reader?.querySelector('iframe');
+  assert.ok(reader); assert.equal(quizWindow.dataset.windowSnap, 'left'); assert.equal(reader.dataset.windowSnap, 'right');
+  assert.equal(quiz.isConnected, true); assert.equal(quiz.contentDocument.querySelector('textarea').textContent, 'Keep my working');
+  assert.equal(sent.at(-1)[0].opened, true);
+  const reviewSent = h.load(frame, dom('<html><body>Review</body></html>', 'pages/tools/topic-review-player.html'));
+  h.message({ source: frame.contentWindow, origin: 'https://school.test', data: { type: 'learning-hub-review-ready' } });
+  const command = reviewSent.at(-1)[0];
+  assert.deepEqual(JSON.parse(JSON.stringify(command.quizContext)), { bankKey, questionNumber: 3, requestId: 1 });
+  assert.deepEqual([...command.preferred], [topic]); assert.equal('identity' in command, false);
+  // A second click restores the same reader and keeps the Quiz frame and draft.
+  quizWindow.dispatchEvent(new h.domWindow.Event('pointerdown'));
+  h.message({ source: quiz.contentWindow, origin: 'https://school.test', data: { ...request, requestId: 2 } });
+  assert.equal(h.document.querySelectorAll('iframe').length, 2); assert.equal(reader.querySelector('iframe'), frame);
+  assert.equal(quizWindow.dataset.windowSnap, 'left'); assert.equal(reader.dataset.windowSnap, 'right');
+});
+
+test('stale, inactive, mismatched and unregistered Quiz messages cannot rearrange the workspace', () => {
+  const h = harness(), bankKey = 'b-' + 'c'.repeat(24);
+  h.workspace.openBank({ subjectId: 'physics', bankKey });
+  const quiz = h.document.querySelector('iframe'), contentId = 'bank-physics-' + bankKey;
+  h.load(quiz, dom('<html><body>Quiz</body></html>', 'pages/tools/quiz-player.html'),
+    { getState: () => ({ contentId, currentQuestionId: 'q1', currentIndex: 0 }) });
+  const event = { source: quiz.contentWindow, origin: 'https://school.test', data: {
+    type: 'learning-hub-quiz-review-request', requestId: 1, contentId, questionNumber: 1 } };
+  for (const bad of [{ ...event, source: {} }, { ...event, origin: 'https://other.test' },
+    { ...event, data: { ...event.data, contentId: 'other-quiz' } }, { ...event, data: { ...event.data, questionNumber: 2 } },
+    { ...event, data: { ...event.data, requestId: '1' } }]) h.message(bad);
+  assert.equal(h.document.querySelectorAll('iframe').length, 1);
+  h.document.querySelector('.is-minimize').click(); h.message(event);
+  assert.equal(h.document.querySelectorAll('iframe').length, 1);
+  h.workspace.openBank({ subjectId: 'physics', bankKey }); h.message(event);
+  const reader = h.document.querySelector('[data-tool-id="topic-review-library"]');
+  assert.ok(reader);
+  h.document.querySelector('.workspace-window').dispatchEvent(new h.domWindow.Event('pointerdown'));
+  reader.querySelector('.is-minimize').click(); h.message(event);
+  assert.equal(reader.hidden, true, 'Duplicate request cannot restore the minimized reader');
 });
 
 test('nested reading, Quiz and Simulation buttons open the shared player without removing their source', () => {

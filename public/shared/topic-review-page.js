@@ -1,4 +1,4 @@
-import { createTopicReviewBrowser } from './topic-review.js?v=print-names-20261028';
+import { createTopicReviewBrowser } from './topic-review.js?v=exam-review-20261031';
 import { bankSubjects } from './question-bank-model.js';
 
 const params = new URLSearchParams(location.search);
@@ -7,7 +7,7 @@ const content = document.querySelector('[data-topic-review-content]');
 const embedded = params.get('embedded') === '1' && parent !== window;
 if (embedded) document.body.dataset.reviewEmbedded = '';
 let printing = false;
-let applying = false, applyVersion = 0, commandId = null;
+let applying = false, applyVersion = 0, commandId = null, quizSignature = '';
 function setLanguage(value, refresh = true) {
   document.documentElement.lang = value === 'en' ? 'en' : 'th';
   document.querySelectorAll('[data-th][data-en]').forEach(node => { if (!node.children.length) node.textContent = node.dataset[document.documentElement.lang]; });
@@ -16,6 +16,11 @@ function setLanguage(value, refresh = true) {
 }
 const browser = createTopicReviewBrowser({ root: document.querySelector('[data-topic-review-browser]'), content, printButton,
   allowEmptySubject: !embedded,
+  onExamQuestion: embedded ? selection => {
+    if (!printing && !applying && commandId !== null) parent.postMessage({
+      type: 'learning-hub-review-practice', commandId, selection: browser.getSelection(), questionNumber: selection.questionNumber,
+    }, location.origin);
+  } : null,
   onChange(selection) {
     const current = selection || browser.getSelection();
     const subject = current.subjectId || params.get('subject');
@@ -50,11 +55,16 @@ if (embedded) {
     commandId = data.commandId;
     const version = ++applyVersion;
     const previous = browser.getSelection();
-    const changed = previous.subjectId !== selection.subjectId || previous.bankKey !== selection.bankKey || document.documentElement.lang !== data.language;
+    const nextQuizSignature = JSON.stringify(data.quizContext || null);
+    const quizChanged = quizSignature !== nextQuizSignature;
+    quizSignature = nextQuizSignature;
+    const changed = previous.subjectId !== selection.subjectId || previous.bankKey !== selection.bankKey || document.documentElement.lang !== data.language || quizChanged;
     applying = true;
     setLanguage(data.language, false);
     try {
-      if (changed) await browser.open({ subjectId: selection.subjectId, preferred: selection.bankKey ? [selection.bankKey] : [], clearSelection: !selection.bankKey });
+      if (changed) await browser.open({ subjectId: selection.subjectId,
+        preferred: Array.isArray(data.preferred) && data.preferred.length ? data.preferred : selection.bankKey ? [selection.bankKey] : [],
+        quizContext: quizChanged ? data.quizContext || null : undefined, clearSelection: !selection.bankKey });
     } finally { if (version === applyVersion) applying = false; }
   });
   parent.postMessage({ type: 'learning-hub-review-ready' }, location.origin);

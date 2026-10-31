@@ -7,6 +7,8 @@ on:
       - 'css/styles.css'
       - 'css/learning-guide.css'
       - 'scripts/test-workspace-layout-browser.mjs'
+      - 'scripts/test-topic-review-hub-browser.mjs'
+      - 'public/shared/topic-review-page.js'
       - 'scripts/test-learning-sheet-browser.mjs'
       - '.github/workflows/workspace-layout.yml'
 
@@ -39,4 +41,5 @@ jobs:
           export PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/work/qa-tools/node_modules/playwright"
           export QA_BROWSER_EXECUTABLE="$(node -e 'console.log(require(process.env.PLAYWRIGHT_MODULE).chromium.executablePath())')"
           pnpm test:workspace:browser
+          pnpm test:review:browser
           pnpm test:sheet:browser

@@ -11,7 +11,7 @@ import { dragAnswerSummary } from "./quiz-drag-model.js";
 import { readBankSelection, loadBankQuiz } from "./question-bank-player.js?v=bank-svg-2-20261026";
 import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
 import { warmQuizEngine } from "./quiz-refresh.js";
-import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-20261028";
+import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-20261031";
 
 /* ==============================================================
    Quiz Engine กลางของ Learning Hub
@@ -94,6 +94,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   let closing = false;
   let dragAnswerUi = null;
   let pendingNavigation = null;
+  let reviewSplitRequest = null, reviewSplitSerial = 0;
   let bankSelection = null, bankReplacementBase;
   let bankContextWaiter = null, contentLoadVersion = 0, bankReloadBusy = false;
   try { bankSelection = temporary ? null : readBankSelection(location.search); }
@@ -104,6 +105,11 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     content: topicReviewDialog.querySelector('[data-topic-review-content]'),
     printButton: topicReviewDialog.querySelector('[data-topic-review-print]'),
     language,
+    onExamQuestion({ subjectId, bankKey, questionNumber }) {
+      if (!topicReviewDialog.open || subjectId !== bankSelection?.subjectId || bankKey !== bankSelection?.bankKey || navigationBusy()) return;
+      topicReviewDialog.close();
+      returnToQuestion(questionNumber - 1);
+    },
   });
 
   const notebookBackupUi = createNotebookBackupUi({
@@ -1069,6 +1075,13 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     goTo(index);
   }
 
+  function returnToQuestion(index) {
+    if (navigationBusy() || pendingNavigation || !Number.isInteger(index) || index < 0 || index >= state.questions.length) return false;
+    if (state.view !== 'exam') { state.view = 'exam'; persistNavigation(); render(); }
+    requestNavigation(index);
+    return true;
+  }
+
   function openDragReview(index) {
     const question = currentQuestion();
     if (!question || !navigationDialog?.showModal) return;
@@ -1480,14 +1493,36 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     document.querySelector("[data-open-print]")?.addEventListener("click", () => printToggle?.click());
   }
 
-  function openTopicReview() {
-    if (!currentQuestion() || submissionBusy || closing || !topicReviewDialog) return;
-    hideMathKeyboard();
+  function openTopicReviewDialog() {
     if (!topicReviewDialog.open) topicReviewDialog.showModal();
     void topicReviewBrowser?.open({
-      subjectId: bankSelection?.subjectId || latestHubContext?.subjectId || contentRoot?.dataset.subjectId,
+      subjectId: bankSelection?.subjectId || latestHubContext?.content?.subjectId || contentRoot?.dataset.subjectId,
       preferred: [...(currentQuestion()?.topicIds || []), bankSelection?.bankKey],
+      quizContext: bankSelection ? { bankKey: bankSelection.bankKey, questionNumber: state.currentIndex + 1 } : null,
     });
+    topicReviewDialog.scrollTop = 0;
+  }
+
+  function finishReviewSplit(opened) {
+    const request = reviewSplitRequest;
+    if (!request) return;
+    clearTimeout(request.timer); reviewSplitRequest = null;
+    if (!opened && request.epoch === identityEpoch && request.contentId === state.contentId &&
+        request.questionId === currentQuestion()?.id && !submissionBusy && !closing) openTopicReviewDialog();
+  }
+
+  function openTopicReview() {
+    if (!currentQuestion() || submissionBusy || closing || !topicReviewDialog || reviewSplitRequest) return;
+    hideMathKeyboard();
+    if (parent !== window && latestHubContext?.content?.contentId === state.contentId) {
+      const requestId = ++reviewSplitSerial;
+      reviewSplitRequest = { requestId, epoch: identityEpoch, contentId: state.contentId, questionId: currentQuestion().id };
+      reviewSplitRequest.timer = setTimeout(() => finishReviewSplit(false), 1200);
+      parent.postMessage({ type: 'learning-hub-quiz-review-request', requestId, contentId: state.contentId,
+        questionNumber: state.currentIndex + 1, topicIds: currentQuestion().topicIds || [] }, location.origin);
+      return;
+    }
+    openTopicReviewDialog();
   }
 
   function openSummary() {
@@ -1772,6 +1807,11 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   window.addEventListener("message", (event) => {
     const trustedOrigin = location.origin === "null" || event.origin === location.origin;
     if (!trustedOrigin) return;
+    if (event.source === parent && event.data?.type === 'learning-hub-quiz-review-result') {
+      if (reviewSplitRequest && reviewSplitRequest.requestId === event.data.requestId && reviewSplitRequest.contentId === event.data.contentId)
+        finishReviewSplit(event.data.opened === true);
+      return;
+    }
     if (event.source === parent && event.data?.type === "learning-hub-context") {
       applyHubContext(event.data);
       return;
@@ -1916,6 +1956,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   window.LearningHubQuiz = Object.freeze({
     getState: () => ({ ...snapshot(), contentId: state.contentId }),
     goToQuestion: requestNavigation,
+    returnToQuestion,
     openSummary,
     restart,
     flushLocal,

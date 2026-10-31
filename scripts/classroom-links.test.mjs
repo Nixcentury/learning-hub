@@ -59,6 +59,14 @@ test('students cannot edit peers; owner can edit/delete while preserving peer at
   f.emit(`items/${rid}`, { [id]: f.data() });
   await f.service.command('delete', { roomId: rid, id, revision: 2 }); assert.equal(f.data(), null);
 });
+test('an early link snapshot does not enable writes before room and own membership are verified', async () => {
+  const f = fixture(); f.open(); f.connections.at(-1).fn(true); f.emit(`items/${rid}`, {});
+  assert.equal(f.service.getState().status, 'loading');
+  await assert.rejects(f.service.command('create', { roomId: rid, id, title: 'A', url: 'https://example.com' }), /links\/session-changed/);
+  f.emit(`@classroom/rooms/${rid}`, { ownerUid: 'teacher' }); assert.equal(f.service.getState().status, 'loading');
+  f.emit(`@classroom/members/${rid}/student`, { displayName: 'Verified name' }); assert.equal(f.service.getState().status, 'ready');
+  await f.service.command('create', { roomId: rid, id, title: 'A', url: 'https://example.com' }); assert.equal(f.data().authorName, 'Verified name');
+});
 test('switching room/account while a write waits cannot commit to the old context or report success', async () => {
   const f = fixture(); f.open(); f.ready(); let resolve; f.hold(new Promise(done => { resolve = done; }));
   const task = f.service.command('create', { roomId: rid, id, title: 'A', url: 'https://example.com' });

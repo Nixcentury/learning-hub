@@ -27,9 +27,14 @@ export function createClassroomLinks({ io, onChange }) {
     if (!ready) return;
     const version = epoch;
     const live = () => version === epoch;
+    let roomReady = false, memberReady = owner, itemsReady = false;
     const timer = setTimeout(() => { if (live() && status === 'loading') fail(linkError('links/read-timeout')); }, 15000);
     timer.unref?.();
     stops.push(() => clearTimeout(timer));
+    function loaded() {
+      if (roomReady && memberReady && itemsReady) { clearTimeout(timer); status = 'ready'; }
+      publish();
+    }
     function watch(path, value) {
       const stop = io.watch(path, record => { if (live()) value(record); }, failure => { if (live()) fail(failure); });
       if (live()) stops.push(stop); else stop?.();
@@ -37,16 +42,16 @@ export function createClassroomLinks({ io, onChange }) {
     stops.push(io.connected(value => { if (live()) { connected = value === true; publish(); } }));
     watch(`@classroom/rooms/${roomId}`, room => {
       if (!room || room.ownerUid !== selected.ownerUid) fail(linkError('links/access-lost'));
+      else { roomReady = true; loaded(); }
     });
     if (!owner) watch(`@classroom/members/${roomId}/${uid}`, member => {
       if (!member) fail(linkError('links/access-lost'));
-      else name = String(member.displayName || 'Student').slice(0, 120);
+      else { name = String(member.displayName || 'Student').slice(0, 120); memberReady = true; loaded(); }
     });
     watch(`items/${roomId}`, value => {
-      clearTimeout(timer);
       items = Object.entries(value || {}).map(([id, record]) => ({ ...record, id }))
         .sort((a, b) => b.createdAt - a.createdAt || a.id.localeCompare(b.id));
-      status = 'ready'; error = ''; publish();
+      itemsReady = true; error = ''; loaded();
     });
   }
   async function command(action, payload = {}, expectedUid = uid) {

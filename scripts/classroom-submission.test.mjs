@@ -30,7 +30,7 @@ function fixture(t, user = 'student', prepared = true) {
   const service=createClassroomSubmissions({io,freezeQuiz:async()=>quiz,readQuiz:()=>({questions})});
   function context(uid=user, selected=rid) {
     const teacher=uid==='teacher', role={uid,status:'ready',isTeacher:teacher,systemRole:teacher?'teacher':'student'};
-    const assignments={uid,rooms:[rid,other].map(id=>({id,status:'ready',membership:teacher?'owner':'student',ownerUid:'teacher',items:[item]}))};
+    const assignments={uid,hubUrl:'https://example.test/learning-hub/',rooms:[rid,other].map(id=>({id,status:'ready',membership:teacher?'owner':'student',ownerUid:'teacher',items:[item]}))};
     service.setContext({status:'signed-in',user:{uid}},role,assignments,selected);
     return assignments;
   }
@@ -169,4 +169,29 @@ test('teacher pins authored and legacy quiz IDs with stable revisions and source
     assert.equal(legacyPinned.contentId,'physics-c1-quiz');assert.ok(legacyPinned.html.includes('data-activity-id="physics-c1-quiz"'));
     await assert.rejects(freezeHomeworkQuiz({...item,contentId:'wrong'},catalog,'https://example.test/learning-hub/',fetcher),{code:'homework/quiz-changed'});
   } finally {globalThis.DOMParser=previous;}
+});
+
+
+test('teacher CSV export fetches fresh roster/results and recomputes frozen answers instead of trusting a stored score',async t=>{
+  const f=fixture(t,'teacher');await tick();
+  f.put(`results/${rid}/${aid}/student`,{...submissionPayload(progress({choice:'a'}),questions),version:1,contentId:quiz.contentId,quizRevision:revision,submittedAt:1000,dueAt:900,submissionId:'e'.repeat(32),submissionRevision:2,score:999});
+  // Do not emit watchers: export must use fresh reads, not the displayed roster.
+  f.put(`@classroom/members/${rid}/new-student`,{displayName:'นักเรียนใหม่'});
+  const {filename,csv}=await f.service.exportSheet(aid);
+  assert.equal(filename,`hub-homework-${aid.slice(2)}.csv`);assert.ok(csv.includes('นักเรียนใหม่'));
+  assert.ok(csv.includes('"submitted","1","3","33.33"'));assert.ok(csv.includes('"not_submitted","","",""'));
+  assert.ok(!csv.includes('999'));assert.equal(f.writes.length,0);
+  assert.ok(f.reads.includes(`results/${rid}/${aid}`));assert.ok(f.reads.includes(`@classroom/members/${rid}`));
+});
+test('student export is denied; teacher export rechecks ownership/session after pending reads',async t=>{
+  const f=fixture(t);await tick();await assert.rejects(f.service.exportSheet(aid),{code:'homework/owner-required'});
+  f.context('teacher');await tick();const get=f.io.get;
+  f.io.get=async path=>{const result=await get(path);if(path===`results/${rid}/${aid}`)f.context('student');return result;};
+  await assert.rejects(f.service.exportSheet(aid),{code:'homework/session-changed'});assert.equal(f.writes.length,0);
+});
+test('export preserves invalid submissions as blank grading errors and requires a matching frozen quiz',async t=>{
+  const f=fixture(t,'teacher');await tick();f.put(`results/${rid}/${aid}/student`,{version:1,answersJson:'broken'});
+  assert.ok((await f.service.exportSheet(aid)).csv.includes('"grading_error","","",""'));
+  f.put(`quizzes/${rid}/${aid}`,{...quiz,contentId:'another-quiz'});
+  await assert.rejects(f.service.exportSheet(aid),{code:'homework/quiz-changed'});
 });

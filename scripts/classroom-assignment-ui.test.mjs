@@ -12,9 +12,9 @@ const context = (teacher = true, user = teacher ? 'teacher' : 'student') => ({ l
   classroomAssignments: { uid: user, connected: true, busy: '', hubUrl: 'https://example.test/learning-hub/', rooms: [{ id: rid, membership: teacher ? 'owner' : 'student', status: 'ready', items: [item], drafts: [], seen: {} }] } });
 async function fixture() {
   const { window, document } = parseHTML('<html><body><section data-classroom-assignments></section></body></html>');
-  const messages = [], parent = { postMessage: value => messages.push(value) };
+  const downloads = [], messages = [], parent = { postMessage: value => messages.push(value) };
   const scope = vm.createContext({ document, window, parent, location: { origin: 'https://example.test' }, navigator: { clipboard: { writeText: async () => {} } }, crypto,
-    URL, Date, setInterval: () => 1, queueMicrotask, ...model });
+    URL: class extends URL { static createObjectURL(blob) { downloads.push(blob); return 'blob:test'; } static revokeObjectURL() {} }, Blob, setTimeout: fn => fn(), Date, setInterval: () => 1, queueMicrotask, ...model });
   const script = (await readFile(new URL('../public/pages/shared/classroom-assignments-page.js', import.meta.url), 'utf8')).replace(/^import .*?;\n/, '');
   const proto = window.HTMLElement.prototype;
   proto.focus = function () {}; proto.reportValidity = () => true;
@@ -24,7 +24,7 @@ async function fixture() {
   Object.defineProperty(document, 'visibilityState', { value: 'visible', configurable: true });
   vm.runInContext(script, scope);
   const update = value => document.dispatchEvent(new window.CustomEvent('hub-page-context', { detail: value }));
-  return { document, window, messages, parent, update, scope };
+  return { document, window, messages, parent, update, scope, downloads };
 }
 test('homework UI renders stored user text safely and keeps published quiz destination read-only', async () => {
   const f = await fixture(); f.update(context());
@@ -80,14 +80,28 @@ test('teacher gradebook shows all members, submitted scores and empty scores for
   assert.equal(results.querySelectorAll('tbody tr').length,2);assert.ok(results.textContent.includes('ส่งแล้ว 1/2 คน'));
   assert.ok(results.querySelector('[data-result-uid="student"]').textContent.includes('2/3'));
   assert.ok(results.querySelector('[data-result-uid="student-b"]').textContent.includes('ยังไม่ส่ง'));
-  assert.equal(results.querySelectorAll('img').length,0);
+  assert.equal(results.querySelectorAll('img').length,0);assert.ok(results.querySelector('[data-homework-action="export-sheet"]'));
 });
 test('student sees only own result; unprepared work offers a teacher recovery action, not a false zero score',async()=>{
   const f=await fixture(), value=context(false);
   value.classroomSubmissions={uid:'student',roomId:rid,connected:true,ready:true,grades:{[aid]:{ready:true,loaded:true,rows:[{uid:'student',submitted:true,grade:{score:1,maxScore:3,submittedAt:1700000000000}}]}}};
   f.update(value);assert.ok(f.document.querySelector('[data-homework-results]').textContent.includes('คะแนนคำตอบ 1/3'));
-  assert.equal(f.document.querySelectorAll('.homework-results-table').length,0);
+  assert.equal(f.document.querySelectorAll('.homework-results-table').length,0);assert.equal(f.document.querySelectorAll('[data-homework-action="export-sheet"]').length,0);
   const teacher=context();teacher.classroomSubmissions={uid:'teacher',roomId:rid,ready:true,grades:{[aid]:{ready:false,loaded:true,rows:[]}}};
   f.update(teacher);assert.ok(f.document.querySelector('[data-homework-action="prepare"]'));
   assert.equal(f.document.querySelectorAll('[data-homework-action="launch"]').length,0);
+});
+
+
+test('CSV download accepts only the matching parent response and leaves a clear manual-export notice',async()=>{
+  const f=await fixture(),value=context();
+  value.classroomSubmissions={uid:'teacher',roomId:rid,connected:true,ready:true,grades:{[aid]:{ready:true,loaded:true,rows:[]}}};f.update(value);
+  f.document.querySelector('[data-homework-action="export-sheet"]').click();
+  const command=f.messages.find(message=>message.action==='export-sheet');assert.ok(command);
+  const reply=(source,uid='teacher')=>{
+    const event=new f.window.Event('message');Object.assign(event,{source,origin:'https://example.test',data:{type:'learning-hub-assignment-result',uid,requestId:command.requestId,ok:true,result:{csv:'test csv',filename:'hub-homework-'+aid.slice(2)+'.csv'}}});f.window.dispatchEvent(event);
+  };
+  reply({});reply(f.parent,'student');assert.equal(f.downloads.length,0);
+  reply(f.parent);assert.equal(f.downloads.length,1);assert.equal(await f.downloads[0].text(),'test csv');
+  assert.ok(f.document.body.textContent.includes('ยังไม่ส่งคะแนนเข้า Google Classroom'));
 });

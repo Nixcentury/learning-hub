@@ -42,7 +42,7 @@
   function changed(observed=true){s().solution=false;if(observed){s().mission.answers[s().mission.index]={};s().mission.attempted[s().mission.index]=false;Q.observe(mode,s(),true);}V.invalidate();dirty=true;update();publish();}
   function layerControls(){
     $('layer-controls').replaceChildren();
-    const list=[['field','รอยคลื่น / ค่าสนาม','Ripple / wave field'],['fronts','เส้นสัน–ท้องคลื่น','Crest / trough lines'],['variables','เส้นตัวแปร','Variables']];
+    const list=mode==='reflection'?[['fronts','รอยคลื่นน้ำ (สันคลื่น)','Water ripples (crests)'],['variables','เส้นตัวแปร','Variables']]:[['field','รอยคลื่น / ค่าสนาม','Ripple / wave field'],['fronts','เส้นสัน–ท้องคลื่น','Crest / trough lines'],['variables','เส้นตัวแปร','Variables']];
     if(mode==='interference')list.push(['nodes','แนวบัพ N','Nodal lines N'],['antinodes','แนวปฏิบัพ A','Antinodal lines A'],['paths','เส้นทาง r₁ / r₂','Paths r₁ / r₂'],['graph','กราฟฉาก I(y)','Screen I(y)']);
     for(const [key,th,en] of list){const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.id='layer-'+key;input.checked=s().visual[key];input.onchange=()=>{s().visual[key]=input.checked;changed(false);};label.append(input,document.createTextNode(T(th,en)));$('layer-controls').append(label);}
     $('probe-controls').replaceChildren();$('probe-controls').hidden=mode!=='interference';
@@ -108,7 +108,7 @@
     let values,note,observe;
     if(mode==='reflection'){
       values=[[T('มุมตกกระทบ θᵢ','Incidence θᵢ'),a.angle+'°'],[T('มุมสะท้อน θᵣ','Reflection θᵣ'),a.angle+'°'],[T('มุมตกกระทบกับผิว','Incident angle to surface'),(90-a.angle)+'°']];
-      note=T('สีพื้น: ค่าสนามสเกลาร์บวก/ลบ · เส้นทึบ/ประ: สัน/ท้องคลื่น · ฟ้า: ตกกระทบ ส้ม: สะท้อน · N: เส้นปกติ','Background: signed scalar field · solid/dashed: crests/troughs · blue: incident, orange: reflected · N: normal.');observe=T('เมื่อเพิ่มมุมตกกระทบ มุมสะท้อนเปลี่ยนอย่างไร? ลองเทียบมุมกับเส้นปกติและกับผิว','How does the reflection angle change with incidence? Compare angles to the normal and to the surface.');
+      note=T('ริ้วสีเทา: สันคลื่น · ลูกศรฟ้า: ตกกระทบ · ลูกศรส้ม: สะท้อน · N: เส้นปกติ · วัดมุมจาก N','Grey ripples: crests · blue arrow: incident · orange arrow: reflected · N: normal · measure angles from N.');observe=T('เมื่อเพิ่มมุมตกกระทบ มุมสะท้อนเปลี่ยนอย่างไร? ลองเทียบมุมกับเส้นปกติและกับผิว','How does the reflection angle change with incidence? Compare angles to the normal and to the surface.');
     }else if(mode==='refraction'){
       values=[[T('มุมหักเห θ₂','Refraction θ₂'),r.tir?T('สะท้อนกลับหมด','Total reflection'):F(r.angle)+'°'],[r.tir?T('มุมวิกฤต θc','Critical angle θc'):T('อัตราเร็ว v₂','Speed v₂'),r.tir?F(r.critical)+'°':F(r.v2/1e8,2)+' × 10⁸ m/s'],[r.tir?T('ความถี่ f','Frequency f'):T('ความยาวคลื่น λ₂','Wavelength λ₂'),r.tir?F(r.frequency/1e12,1)+' THz':F(r.lambda2)+' nm']];
       note=T('สีพื้น: ค่าสนามสเกลาร์บวก/ลบ · เส้นทึบ/ประ: สัน/ท้องคลื่น · ฟ้า: ตกกระทบ เขียว: หักเห · ระยะเส้นแทน λ','Background: signed scalar field · solid/dashed: crests/troughs · blue: incident, green: refracted · spacing represents λ.');

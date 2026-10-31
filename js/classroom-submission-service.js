@@ -220,6 +220,7 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     const [quiz, records, members] = await Promise.all([read(`quizzes/${selected}/${id}`),read(`results/${selected}/${id}`),read(`@classroom/members/${selected}`)]);
     guard(user, version, true, selected);
     if (!quiz) throw failSubmission('homework/not-ready');
+    if (quiz.contentId !== item.contentId) throw failSubmission('homework/quiz-changed');
     const questions = questionSet(quiz);
     const rows = Object.entries(members || {}).map(([studentUid, member]) => {
       const record = records?.[studentUid];

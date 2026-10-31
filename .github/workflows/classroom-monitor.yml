@@ -18,6 +18,7 @@ on:
       - 'public/pages/shared/classroom*'
       - 'firebase/classroom*'
       - 'scripts/*classroom*'
+      - 'integrations/google-classroom/**'
       - 'scripts/fixtures/classroom*'
       - '.github/workflows/classroom-monitor.yml'
 permissions:

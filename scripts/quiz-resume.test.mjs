@@ -32,6 +32,7 @@ const baseline = (overrides = {}) => ({
 });
 
 function node(dataset = {}, selectors = {}) {
+  const handlers = new Map();
   return {
     dataset,
     hidden: false,
@@ -42,15 +43,20 @@ function node(dataset = {}, selectors = {}) {
     querySelector(selector) { return selectors[selector] || null; },
     querySelectorAll(selector) { return selectors[selector] || []; },
     before() {},
-    replaceChildren() {},
-    append() {},
+    replaceChildren(...children) { this.children = children; },
+    append(...children) { this.children.push(...children); },
     setAttribute() {},
-    addEventListener() {},
-    removeEventListener() {},
+    removeAttribute(name) { if (name === "hidden") this.hidden = false; },
+    cloneNode() { return { ...node({ ...this.dataset }, selectors), textContent: this.textContent, hidden: this.hidden }; },
+    addEventListener(type, callback) { if (!handlers.has(type)) handlers.set(type, []); handlers.get(type).push(callback); },
+    removeEventListener(type, callback) { handlers.set(type, (handlers.get(type) || []).filter(fn => fn !== callback)); },
+    dispatch(type, event = {}) { for (const callback of handlers.get(type) || []) callback(event); },
+    showModal() { this.open = true; },
+    close() { this.open = false; this.dispatch("close"); },
   };
 }
 
-function makeHarness({ homeworkBinding = null } = {}) {
+function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
   let now = 1_700_000_000_000;
   let serial = 0;
   let storageFails = false;
@@ -61,6 +67,10 @@ function makeHarness({ homeworkBinding = null } = {}) {
   const listeners = new Map();
   const documentListeners = new Map();
   const status = node();
+  const navigationNodes = Object.fromEntries(["kicker", "title", "copy", "body", "content", "confirm", "back", "skip", "close"].map(name => [`[data-navigation-${name}]`, node()]));
+  navigationNodes["[data-navigation-confirm]"].hidden = true;
+  navigationNodes["[data-navigation-back], [data-navigation-close]"] = [navigationNodes["[data-navigation-back]"], navigationNodes["[data-navigation-close]"]];
+  const navigationDialog = node({}, navigationNodes);
   const questionNodes = ["q1", "q2"].map((id, index) => node(
     { questionId: id, answer: index === 0 ? "A" : "B" },
     {
@@ -81,6 +91,7 @@ function makeHarness({ homeworkBinding = null } = {}) {
     ["[data-quiz-error]", node()],
     ["[data-quiz-print-source]", node()],
     ["[data-quiz-storage-status]", status],
+    ["[data-navigation-dialog]", navigationDialog],
   ]);
   const parent = { postMessage(message, origin) { messages.push({ ...plain(message), origin }); } };
   const window = {
@@ -109,11 +120,12 @@ function makeHarness({ homeworkBinding = null } = {}) {
     mount() {}
     markContextChanged(id) { (this.changed ||= []).push(id); }
     missingForAnswered() { return []; }
-    noteSubmission() {}
-    async reviewPending() {}
+    noteSubmission() { this.submissionCalls = (this.submissionCalls || 0) + 1; }
+    async reviewPending() { this.reviewCalls = (this.reviewCalls || 0) + 1; }
   }
   const document = {
     documentElement: { lang: "en" },
+    body: node(),
     visibilityState: "visible",
     querySelector: (selector) => elements.get(selector) || null,
     querySelectorAll: () => [],
@@ -128,7 +140,7 @@ function makeHarness({ homeworkBinding = null } = {}) {
   };
   const context = vm.createContext({
     window, document, parent,
-    location: { search: homeworkBinding ? "?homework=1" : "", origin: "https://example.test", href: "https://example.test/quiz-player.html" },
+    location: { search: temporary ? "?temporary=1" : homeworkBinding ? "?homework=1" : "", origin: "https://example.test", href: "https://example.test/quiz-player.html" },
     URL, URLSearchParams, console,
     Date: class extends Date { static now() { return now; } },
     crypto: { randomUUID: () => `request-${++serial}` },
@@ -140,8 +152,9 @@ function makeHarness({ homeworkBinding = null } = {}) {
     gradeHomework, homeworkStorageKey, readHomeworkQuiz: () => ({ root }),
     requiresReasoning, readQuizContent, hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, MAX_ANSWER_LENGTH, dragAnswerSummary, readBankSelection, resolveAuthoredPdfLinks,
     warmQuizEngine: async () => 'https://example.test/quiz-player.html?quizRefresh=test',
+    receiveTemporaryQuiz: async () => ({ root, language: "en" }),
     hideMathKeyboard() {}, mountNumericAnswer() {},
-    createDragEvidenceBody(question, answer) { return { textContent: `Student passage: ${Object.values(answer).join(" ")}` }; },
+    createDragEvidenceBody(question, answer) { return { textContent: `Student passage: ${Object.values(answer || {}).join(" ")}` }; },
     localStorage: {
       getItem(storageKey) { if (storageFails) throw new Error("Storage disabled"); return storage.get(storageKey) ?? null; },
       setItem(storageKey, value) {
@@ -173,6 +186,8 @@ function makeHarness({ homeworkBinding = null } = {}) {
         storageKey, pendingStorageRequests, renderStorageStatus,
         persistNavigation, retrySync, resolveCloudConflict,
         giveUp, retryGivenUp, editAnswers, startRetry, restart, selectAnswer, submitAll, resultFor, goTo, cloneInto,
+        requestNavigation, skipCurrentQuestion, confirmNavigationReview, closeNavigationDialog, progressSignature,
+        navigationState: () => pendingNavigation,
         evidence: () => evidenceManager,
         setContentReady: (ready) => { contentRoot = ready ? {} : null; },
       };
@@ -193,7 +208,7 @@ function makeHarness({ homeworkBinding = null } = {}) {
     ...result,
   }, options);
   return {
-    ...api, storage, writes, timers, messages, parent, window, status, root,
+    ...api, storage, writes, timers, messages, parent, window, status, root, navigationDialog, navigationNodes,
     settle, dispatch, response,
     time: () => now,
     setTime(value) { now = value; },
@@ -644,23 +659,185 @@ test("unsynced work requires consent to close and a guest does not require cloud
   assert.deepEqual(h.read("student-a").answers, { q1: "A" });
 });
 
-test("opt-in drag reading confirms current work once, cancels navigation and rechecks edited answers", async () => {
+function makeDragQuestion(h, index = 0) {
+  const question = { ...h.state.questions[index], type: "drag-drop", reuse: "once",
+    items: [{ id: "a", text: { th: "ก", en: "a" } }, { id: "b", text: { th: "ข", en: "b" } }],
+    slots: [{ id: "one", answer: "a" }, { id: "two", answer: "b" }],
+    body: { th: "บทความ", en: "Passage" } };
+  h.state.questions[index] = question; return question;
+}
+
+test("every drag question checks forward navigation without exposing slot correctness or changing score", async () => {
+  const h = makeHarness(); await h.load(); makeDragQuestion(h);
+  h.state.answers.q1 = { one: "b", two: "a" };
+  h.requestNavigation(1);
+  assert.equal(h.state.currentIndex, 0); assert.equal(h.navigationDialog.open, true);
+  assert.equal(h.navigationState().correct, false);
+  assert.equal(h.navigationNodes["[data-navigation-title]"].textContent, "Not all correct yet");
+  assert.equal(h.navigationNodes["[data-navigation-confirm]"].hidden, true);
+  assert.equal(h.navigationNodes["[data-navigation-body]"].children.at(-1).textContent, "Student passage: b a");
+  h.confirmNavigationReview(); assert.equal(h.state.currentIndex, 0);
+  assert.deepEqual(plain(h.state.answers.q1), { one: "b", two: "a" });
+  assert.equal(h.state.latestScore, null); assert.deepEqual(plain(h.state.masteredIds), []);
+  assert.equal(h.evidence().reviewCalls || 0, 0);
+  h.closeNavigationDialog(); h.state.answers.q1 = { one: "a" }; h.requestNavigation(1);
+  assert.equal(h.navigationNodes["[data-navigation-title]"].textContent, "Some answer slots are still empty");
+  assert.equal(h.state.currentIndex, 0);
+});
+
+test("correct drag answers require confirmation and are rechecked after editing; cancel keeps the question", async () => {
+  const h = makeHarness(); await h.load(); makeDragQuestion(h);
+  h.state.answers.q1 = { one: "a", two: "b" }; h.requestNavigation(1);
+  assert.equal(h.navigationState().correct, true); assert.equal(h.state.currentIndex, 0);
+  assert.equal(h.navigationNodes["[data-navigation-confirm]"].hidden, false);
+  h.navigationDialog.dispatch("cancel", { preventDefault() {} });
+  assert.equal(h.navigationState(), null); assert.equal(h.state.currentIndex, 0);
+  h.requestNavigation(1); h.state.answers.q1 = { one: "b", two: "a" }; h.confirmNavigationReview();
+  assert.equal(h.state.currentIndex, 0); assert.equal(h.navigationState().correct, false);
+  h.closeNavigationDialog(); h.state.answers.q1 = { one: "a", two: "b" }; h.requestNavigation(1); h.confirmNavigationReview();
+  assert.equal(h.state.currentIndex, 1); assert.equal(h.navigationDialog.open, false);
+  assert.equal(h.state.latestScore, null); assert.deepEqual(plain(h.state.masteredIds), []);
+  h.requestNavigation(0); h.requestNavigation(1);
+  assert.equal(h.state.currentIndex, 0, "Revisiting still requires a fresh confirmation");
+  h.confirmNavigationReview(); assert.equal(h.state.currentIndex, 1);
+});
+
+test("skip works for choices, numeric drafts and partial drag answers without changing working or give-up state", async () => {
+  for (const type of ["choice", "number", "drag-drop"]) {
+    const h = makeHarness(); await h.load();
+    if (type === "drag-drop") makeDragQuestion(h);
+    if (type === "number") h.state.questions[0] = { ...h.state.questions[0], type, answer: "3" };
+    const answer = type === "drag-drop" ? { one: "b" } : type === "number" ? "1e" : "B";
+    h.state.answers.q1 = answer; h.evidence().data = { entries: { q1: { text: "My working" } } };
+    h.skipCurrentQuestion();
+    assert.equal(h.state.currentIndex, 1); assert.deepEqual(plain(h.state.answers.q1), answer);
+    assert.deepEqual(plain(h.state.skippedIds), ["q1"]); assert.deepEqual(plain(h.state.giveUps), {});
+    assert.equal(h.evidence().data.entries.q1.text, "My working"); assert.equal(h.state.latestScore, null);
+    await h.advance(120); assert.deepEqual(h.read("guest").skippedIds, ["q1"]);
+    h.state.skippedIds = []; assert.equal(h.loadLocal(), true); assert.deepEqual(plain(h.state.skippedIds), ["q1"]);
+  }
+});
+
+test("public jumps cannot bypass a drag check, while skip and backward navigation remain available", async () => {
+  const h = makeHarness(); await h.load(); makeDragQuestion(h);
+  h.window.LearningHubQuiz.goToQuestion(1);
+  assert.equal(h.state.currentIndex, 0); assert.equal(h.navigationDialog.open, true);
+  h.skipCurrentQuestion(); assert.equal(h.state.currentIndex, 1); assert.equal(h.navigationDialog.open, false);
+  h.requestNavigation(0); assert.equal(h.state.currentIndex, 0);
+  h.state.answers.q1 = { one: "a", two: "b" }; h.requestNavigation(1); h.confirmNavigationReview();
+  assert.deepEqual(plain(h.state.skippedIds), []);
+});
+
+test("the final drag check and final skip open an overview without grading or auto-submitting", async () => {
+  const h = makeHarness(); await h.load(); makeDragQuestion(h, 1); h.goTo(1);
+  h.state.answers.q2 = { one: "a", two: "b" }; h.requestNavigation(2);
+  assert.equal(h.state.currentIndex, 1); assert.equal(h.navigationState().kind, "review");
+  h.confirmNavigationReview(); assert.equal(h.navigationState().kind, "overview");
+  assert.equal(h.state.view, "exam"); assert.equal(h.state.latestScore, null);
+  h.closeNavigationDialog(); h.state.answers.q2 = { one: "b" }; h.skipCurrentQuestion();
+  assert.equal(h.navigationState().kind, "overview"); assert.deepEqual(plain(h.state.skippedIds), ["q2"]);
+  assert.equal(h.evidence().submissionCalls || 0, 0);
+});
+
+test("skipped metadata round-trips to cloud, reads old drafts and rejects malformed flags atomically", async () => {
+  const h = makeHarness(); await h.load(); await h.choose("student-a");
+  const before = h.progressSignature(h.snapshot()); h.skipCurrentQuestion();
+  assert.notEqual(h.progressSignature(h.snapshot()), before);
+  await h.advance(650);
+  const save = h.messages.findLast(message => message.type === "learning-hub-quiz-save");
+  assert.deepEqual(save.value.skippedIds, ["q1"]);
+  h.response(save, { ok: true }); await h.settle();
+  for (const skippedIds of [{ q1: true }, [4], "q1"]) {
+    const current = plain(h.snapshot()); assert.equal(h.applySnapshot(baseline({ skippedIds })), false); assert.deepEqual(plain(h.snapshot()), current);
+  }
+  assert.equal(h.applySnapshot(baseline({ skippedIds: ["q1", "unknown", "q1"] })), true);
+  assert.deepEqual(plain(h.state.skippedIds), ["q1"]);
+  h.applySnapshot(baseline()); assert.deepEqual(plain(h.state.skippedIds), []);
+});
+
+test("account changes and cloud replacement invalidate an open confirmation", async () => {
+  const h = makeHarness(); await h.load(); makeDragQuestion(h);
+  h.state.answers.q1 = { one: "a", two: "b" }; h.requestNavigation(1);
+  h.applyHubContext({ identity: { uid: "student-b" } });
+  h.confirmNavigationReview(); assert.equal(h.state.currentIndex, 0); assert.equal(h.navigationState(), null);
+  h.state.answers.q1 = { one: "a", two: "b" }; h.requestNavigation(1);
+  assert.equal(h.navigationState().correct, true);
+  h.applySnapshot(baseline({ answers: { q1: { one: "b", two: "a" } } }));
+  h.confirmNavigationReview(); assert.equal(h.state.currentIndex, 0); assert.equal(h.navigationState(), null);
+});
+
+test("skipping is a reminder, not a grading rule; explicit submit still scores retained answers", async () => {
+  const h = makeHarness(); await h.load(); h.state.answers = { q1: "A", q2: "B" };
+  h.skipCurrentQuestion(); h.skipCurrentQuestion();
+  const submitting = h.submitAll(); await h.settle();
+  assert.equal(h.navigationState().kind, "submit"); assert.equal(h.state.latestScore, null);
+  h.confirmNavigationReview(); await submitting;
+  assert.equal(h.state.latestScore.score, 2); assert.deepEqual(plain(h.state.skippedIds), []);
+});
+
+test("canceling the skipped-question reminder keeps the attempt editable and never starts grading", async () => {
+  const h = makeHarness(); await h.load(); h.skipCurrentQuestion();
+  const submitting = h.submitAll(); await h.settle();
+  assert.equal(h.navigationState().kind, "submit");
+  h.closeNavigationDialog(); await submitting;
+  assert.equal(h.state.view, "exam"); assert.equal(h.state.latestScore, null);
+  assert.equal(h.evidence().submissionCalls || 0, 0);
+  h.selectAnswer("q2", "B"); assert.equal(h.state.answers.q2, "B");
+});
+
+test("ordinary Next clears a skip after a valid answer, but keeps an incomplete numeric draft marked", async () => {
+  const h = makeHarness(); await h.load(); h.skipCurrentQuestion(); h.requestNavigation(0);
+  h.selectAnswer("q1", "B"); h.requestNavigation(1);
+  assert.deepEqual(plain(h.state.skippedIds), [], "A choice need not be correct just to use ordinary Next");
+  h.goTo(0); h.state.questions[0] = { ...h.state.questions[0], type: "number", answer: "3" };
+  h.state.answers.q1 = "1e"; h.skipCurrentQuestion(); h.requestNavigation(0); h.requestNavigation(1);
+  assert.deepEqual(plain(h.state.skippedIds), ["q1"]);
+  h.goTo(0); h.state.answers.q1 = "3"; h.requestNavigation(1);
+  assert.deepEqual(plain(h.state.skippedIds), []);
+});
+
+test("skip-only edits during cloud loading require conflict resolution rather than overwriting remote answers", async () => {
+  const h = makeHarness(); await h.load(); h.applyHubContext({ identity: { uid: "student-a" } }); await h.settle();
+  const loading = h.messages.findLast(message => message.type === "learning-hub-quiz-load");
+  h.skipCurrentQuestion();
+  h.response(loading, { ok: true, value: baseline({ answers: { q1: "A", q2: "B" }, savedAt: h.time() + 1000 }) }); await h.settle();
+  assert.equal(h.state.storageStatus, "conflict"); assert.deepEqual(plain(h.state.skippedIds), ["q1"]);
+  assert.ok(!h.messages.some(message => message.type === "learning-hub-quiz-save"));
+});
+
+test("upgrading an old dirty draft does not invent a conflict with its unchanged cloud baseline", async () => {
   const h = makeHarness(); await h.load();
-  h.root.dataset.dragReadConfirm = "true";
-  h.state.questions[0] = { ...h.state.questions[0], type: "drag-drop", slots: [{ id: "word" }] };
-  h.state.answers.q1 = { word: "student-choice" };
-  const prompts = [];
-  h.window.confirm = message => { prompts.push(message); return false; };
-  h.goTo(1); assert.equal(h.state.currentIndex, 0);
-  assert.match(prompts[0], /student-choice/); assert.equal(h.state.latestScore, null);
-  h.window.confirm = message => { prompts.push(message); return true; };
-  h.goTo(1); assert.equal(h.state.currentIndex, 1);
-  h.goTo(0); h.goTo(1); assert.equal(prompts.length, 2);
-  h.goTo(0); h.state.answers.q1 = { word: "edited-choice" }; h.goTo(1);
-  assert.equal(prompts.length, 3); assert.match(prompts[2], /edited-choice/);
-  h.goTo(0); delete h.state.answers.q1; h.goTo(1); assert.equal(prompts.length, 3);
-  h.goTo(0); h.state.answers.q1 = { word: "another" }; delete h.root.dataset.dragReadConfirm;
-  h.goTo(1); assert.equal(prompts.length, 3); assert.equal(h.state.latestScore, null);
+  const oldBase = JSON.stringify({ answers: [["q1", "A"]], giveUps: [], hintLevels: [], masteredIds: [], attempt: 1, latestScore: null });
+  h.seed("student-a", baseline({ answers: { q1: "A", q2: "B" }, localSync: { base: oldBase, dirty: true } }));
+  h.applyHubContext({ identity: { uid: "student-a" } }); await h.settle();
+  const loading = h.messages.findLast(message => message.type === "learning-hub-quiz-load");
+  h.response(loading, { ok: true, value: baseline({ answers: { q1: "A" } }) }); await h.settle();
+  assert.notEqual(h.state.storageStatus, "conflict");
+  const saving = h.messages.findLast(message => message.type === "learning-hub-quiz-save");
+  assert.ok(saving); assert.deepEqual(saving.value.answers, { q1: "A", q2: "B" });
+  h.response(saving, { ok: true }); await h.settle(); assert.equal(h.state.storageStatus, "cloud");
+});
+
+test("give-up, mastered questions and closed homework remain navigable; closed homework cannot be skipped", async () => {
+  const h = makeHarness(); await h.load(); makeDragQuestion(h); h.state.skippedIds = ["q1"];
+  h.giveUp(); assert.deepEqual(plain(h.state.skippedIds), []); h.requestNavigation(1);
+  assert.equal(h.state.currentIndex, 1); assert.equal(h.navigationState(), null);
+  h.goTo(0); delete h.state.giveUps.q1; h.state.masteredIds = ["q1"]; h.requestNavigation(1);
+  assert.equal(h.state.currentIndex, 1); assert.equal(h.navigationState(), null);
+  const closed = makeHarness({ homeworkBinding });
+  await loadHomework(closed, { answersJson: '{"q2":"B"}', giveUpsJson: '{}', submittedAt: closed.time() }, { closed: true });
+  makeDragQuestion(closed); closed.goTo(0); closed.skipCurrentQuestion();
+  assert.equal(closed.state.currentIndex, 0); assert.deepEqual(plain(closed.state.skippedIds), []);
+  closed.requestNavigation(1); assert.equal(closed.state.currentIndex, 1); assert.equal(closed.navigationState(), null);
+});
+
+test("temporary practice supports skip without writing a saved attempt or sending cloud traffic", async () => {
+  const h = makeHarness({ temporary: true }); await h.load();
+  h.state.answers.q1 = "B"; h.skipCurrentQuestion();
+  assert.equal(h.state.currentIndex, 1); assert.deepEqual(plain(h.state.skippedIds), ["q1"]);
+  await h.advance(1000); assert.equal(h.writes.length, 0);
+  assert.deepEqual(h.messages.filter(message => message.type !== "learning-hub-quiz-ready"), [], "A parent readiness handshake is not a cloud read/write");
+  h.restart(); assert.deepEqual(plain(h.state.skippedIds), []); assert.deepEqual(plain(h.state.answers), {});
 });
 
 const homeworkBinding={uid:'student',roomId:'r_'+'a'.repeat(32),id:'a_'+'b'.repeat(32),quizRevision:'c'.repeat(64),contentId:'sample-quiz',title:'Homework'};

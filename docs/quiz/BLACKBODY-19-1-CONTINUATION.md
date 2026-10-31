@@ -38,7 +38,7 @@ Work one set at a time; the user may switch topics between sets. End deliveries 
 
 ## Reading confirmation
 
-Root opt-in: `data-drag-read-confirm="true"`. Before moving forward from a drag question with placed answers, the engine confirms the student's filled passage without revealing correctness. Cancel stays on the question; accept continues. Revisit without editing does not repeat the prompt within the session; changed answers do. Blank questions remain skippable. Grading is unchanged and other sets do not opt in automatically. Native OK/Cancel controls are explained in the message. This acknowledgement is not proof of understanding or an AI stamp.
+Shared policy updated 2026-10-31: all editable drag questions check placements before forward navigation and show the student's passage in an HTML rereading modal. Only a completely correct placement offers Continue; incomplete/wrong work can be edited or explicitly skipped. Skip is available for every question type and does not change ordinary grading or AI stamps. The old `data-drag-read-confirm="true"` may remain in this content for compatibility. See `QUIZ-NAVIGATION-AND-READING.md` for current behavior and QA.
 
 ## QA
 

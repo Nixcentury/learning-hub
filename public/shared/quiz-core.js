@@ -6,7 +6,7 @@ import { createNotebookBackupUi } from "./notebook-backup-ui.js?v=6c-backup-2";
 import { readQuizContent } from "./quiz-content-adapter.js?v=mixed-reasoning-20261030";
 import { hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, requiresReasoning } from "./quiz-question-model.js?v=mixed-reasoning-20261030";
 import { mountNumericAnswer, hideMathKeyboard } from "./quiz-math-input.js";
-import { mountDragAnswer, createDragEvidenceBody } from "./quiz-drag-view.js?v=reading-confirm-20261030";
+import { mountDragAnswer, createDragEvidenceBody } from "./quiz-drag-view.js?v=skip-drag-review-20261031";
 import { dragAnswerSummary } from "./quiz-drag-model.js";
 import { readBankSelection, loadBankQuiz } from "./question-bank-player.js?v=bank-svg-2-20261026";
 import { resolveAuthoredPdfLinks } from "./pdf-content-model.js";
@@ -30,6 +30,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   const summaryContent = document.querySelector("[data-summary-content]");
   const summaryTitle = document.querySelector("[data-summary-title]");
   const topicReviewDialog = document.querySelector("[data-topic-review-dialog]");
+  const navigationDialog = document.querySelector("[data-navigation-dialog]");
   const printPanel = document.querySelector("[data-print-selection-panel]");
   const printToggle = document.querySelector("[data-print-selection-toggle]");
   const pendingStorageRequests = new Map();
@@ -60,6 +61,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     giveUps: {},
     hintLevels: {},
     masteredIds: [],
+    skippedIds: [],
     attempt: 1,
     view: "exam",
     startedAt: Date.now(),
@@ -91,7 +93,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   let navigationRevision = 0;
   let closing = false;
   let dragAnswerUi = null;
-  const readingConfirmations = new Map();
+  let pendingNavigation = null;
   let bankSelection = null, bankReplacementBase;
   let bankContextWaiter = null, contentLoadVersion = 0, bankReloadBusy = false;
   try { bankSelection = temporary ? null : readBankSelection(location.search); }
@@ -155,6 +157,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   function questionStatus(question) {
     if (state.masteredIds.includes(question.id)) return "mastered";
     if (state.giveUps[question.id]) return "giveup";
+    if (state.skippedIds.includes(question.id)) return "skipped";
     if (question.type === "drag-drop" && hasAnswer(state.answers[question.id]) && !dragAnswerSummary(question, state.answers[question.id]).complete) return "partial";
     if (hasAnswer(state.answers[question.id])) return "answered";
     return "empty";
@@ -191,6 +194,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       giveUps: { ...state.giveUps },
       hintLevels: { ...state.hintLevels },
       masteredIds: [...state.masteredIds],
+      skippedIds: [...state.skippedIds],
       currentIndex: state.currentIndex,
       currentQuestionId: currentQuestion()?.id || null,
       attempt: state.attempt,
@@ -218,6 +222,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     const isMap = (value) => value == null || (typeof value === "object" && !Array.isArray(value));
     if (![saved.answers, saved.giveUps, saved.hintLevels].every(isMap)) return false;
     if (saved.masteredIds != null && !Array.isArray(saved.masteredIds)) return false;
+    if (saved.skippedIds != null && (!Array.isArray(saved.skippedIds) || saved.skippedIds.some(id => typeof id !== "string"))) return false;
     if (saved.evidence != null && (!isMap(saved.evidence) || !isMap(saved.evidence.entries))) return false;
     if (saved.latestScore != null && (
       !isMap(saved.latestScore) ||
@@ -243,6 +248,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
 
   function applySnapshot(saved, { localEvidence = false } = {}) {
     if (!validSnapshot(saved)) return false;
+    closeNavigationDialog();
     if (homeworkMode) homeworkBaseSubmissionId = saved.homeworkBaseSubmissionId || '';
     const validIds = new Set(state.questions.map((question) => question.id));
     // Unmount before replacing evidence, so the old canvas cannot flush into
@@ -258,6 +264,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       Object.entries(saved.hintLevels || {}).filter(([id]) => validIds.has(id)),
     );
     state.masteredIds = [...new Set(saved.masteredIds || [])].filter((id) => validIds.has(id));
+    state.skippedIds = [...new Set(saved.skippedIds || [])].filter(id => validIds.has(id) && !state.masteredIds.includes(id) && !state.giveUps[id]);
     const savedQuestionIndex = state.questions.findIndex((question) => question.id === saved.currentQuestionId);
     state.currentIndex = Math.min(
       Math.max(0, savedQuestionIndex >= 0 ? savedQuestionIndex : Math.floor(Number(saved.currentIndex) || 0)),
@@ -289,6 +296,8 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       ...(value.bankRevision ? { bankRevision: value.bankRevision } : {}),
       answers: ordered(value.answers), giveUps: ordered(value.giveUps),
       hintLevels: ordered(value.hintLevels), masteredIds: [...(value.masteredIds || [])].sort(),
+      // Preserve pre-skip baseline signatures when reading an older dirty draft.
+      ...((value.skippedIds || []).length ? { skippedIds: [...value.skippedIds].sort() } : {}),
       attempt: value.attempt || 1, latestScore: value.latestScore ? ordered(value.latestScore) : null,
     });
   }
@@ -592,13 +601,15 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
 
   function lockHomeworkControls() {
     if (!homeworkMode || !homeworkClosed) return;
-    app.querySelectorAll('input,textarea,.quiz-option,[data-submit-all],[data-edit-results],[data-retry],[data-restart],[data-giveup-button],[data-hint-button],[data-try-again],[data-generate-variant],[data-retry-giveup]').forEach(node => { node.disabled = true; });
+    app.querySelectorAll('input,textarea,.quiz-option,[data-submit-all],[data-edit-results],[data-retry],[data-restart],[data-giveup-button],[data-hint-button],[data-try-again],[data-generate-variant],[data-retry-giveup],[data-skip-button]').forEach(node => { node.disabled = true; });
   }
   function applyHomeworkResult() {
     if (!homeworkResult || homeworkGrade?.error) return;
+    closeNavigationDialog();
     homeworkBaseSubmissionId = homeworkResult.submissionId; homeworkSubmissionId = '';
     state.answers = JSON.parse(homeworkResult.answersJson); state.giveUps = JSON.parse(homeworkResult.giveUpsJson);
     state.masteredIds = homeworkGrade.rows.filter(row => row.correct).map(row => row.id);
+    state.skippedIds = state.skippedIds.filter(id => !state.masteredIds.includes(id) && !state.giveUps[id]);
     state.view = 'results'; state.latestScore = { score: homeworkGrade.score, maxScore: homeworkGrade.maxScore, submittedAt: homeworkResult.submittedAt, status: 'homework-submitted' };
     state.elapsedBeforeMs = homeworkResult.elapsedMs || 0; state.startedAt = Date.now();
     unsyncedChanges = false; syncBase = progressSignature(snapshot());
@@ -661,12 +672,13 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     state.questions.forEach((question, index) => {
       const button = document.createElement("button");
       button.type = "button";
-      button.textContent = String(index + 1);
+      button.textContent = `${index + 1}${questionStatus(question) === "skipped" ? " ↷" : ""}`;
       button.dataset.questionJump = String(index);
       button.dataset.status = questionStatus(question);
       if (index === state.currentIndex) button.dataset.current = "true";
       button.setAttribute("aria-label", label(`ไปข้อ ${index + 1}`, `Go to question ${index + 1}`));
-      button.addEventListener("click", () => goTo(index));
+      if (questionStatus(question) === "skipped") button.setAttribute("aria-description", label("ข้ามไว้ก่อน", "Skipped for now"));
+      button.addEventListener("click", () => requestNavigation(index));
       navigation.append(button);
     });
   }
@@ -785,7 +797,11 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     giveUpButton.classList.toggle("quiz-giveup-button", !isGivenUp);
     giveUpButton.classList.toggle("quiz-primary-button", isGivenUp);
     document.querySelector("[data-previous-button]").disabled = state.currentIndex === 0;
-    document.querySelector("[data-next-button]").disabled = state.currentIndex === state.questions.length - 1;
+    const lastQuestion = state.currentIndex === state.questions.length - 1;
+    const reviewable = needsDragReview(question);
+    document.querySelector("[data-next-button]").disabled = lastQuestion && !reviewable;
+    document.querySelector("[data-next-button]").textContent = lastQuestion && reviewable
+      ? label("ตรวจและอ่านทวน", "Check and reread") : `${label("ถัดไป", "Next")} ›`;
     document.querySelector("[data-question-lock]").hidden = !isMastered;
     typeset(document.querySelector("[data-question-card]"));
     evidenceManager?.mount(
@@ -805,6 +821,8 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     document.querySelector("[data-answered-count]").textContent = String(answered);
     document.querySelector("[data-hints-count]").textContent = String(hints);
     document.querySelector("[data-giveups-count]").textContent = String(giveUps);
+    const skipped = document.querySelector("[data-skipped-count]");
+    if (skipped) skipped.textContent = String(state.skippedIds.length);
     const progress = document.querySelector("[data-progress-fill]");
     if (progress) progress.style.width = `${(answered / state.questions.length) * 100}%`;
   }
@@ -925,7 +943,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
           </div>
           <div class="quiz-meta-row">
             <span>${state.questions.length} ${label("ข้อ", "questions")}</span>
-            <span>${label("ทำทีละข้อ · ตรวจพร้อมกัน", "One at a time · Submit together")}</span>
+            <span>${label("ทำทีละข้อ · ตรวจคะแนนรวมเมื่อส่ง", "One at a time · Final score on submission")}</span>
             <span class="quiz-save-status" data-quiz-storage-status></span>
             <button type="button" class="quiz-print-menu-button" data-open-print>▣ ${label("เครื่องมือพิมพ์", "Print tools")}</button>
           </div>
@@ -957,6 +975,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
           <div class="quiz-live-stats">
             <span>${label("ตอบแล้ว", "Answered")} <strong data-answered-count>0</strong>/${state.questions.length}</span>
             <span>${label("ยอมแพ้", "Give up")} <strong data-giveups-count>0</strong></span>
+            <button type="button" class="quiz-skipped-summary" data-skipped-open>${label("ข้ามไว้ก่อน", "Skipped")} <strong data-skipped-count>0</strong> ↷</button>
             <span>${label("คำใบ้", "Hints")} <strong data-hints-count>0</strong></span>
             <span class="quiz-stopwatch">● <strong data-elapsed-time>${formatDuration(elapsedMs())}</strong></span>
           </div>
@@ -965,6 +984,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
             <button type="button" class="quiz-hint-button" data-hint-button>💡 ${label("คำใบ้", "Hint")} #<span data-hint-count>1</span></button>
             <button type="button" class="quiz-giveup-button" data-giveup-button>⚑ ${label("ยอมแพ้", "Give up")}</button>
             <button type="button" class="quiz-secondary-button" data-previous-button>‹ ${label("ก่อนหน้า", "Previous")}</button>
+            <button type="button" class="quiz-skip-button" data-skip-button>↷ ${label("ข้ามไว้ก่อน", "Skip for now")}</button>
             <button type="button" class="quiz-next-button" data-next-button>${label("ถัดไป", "Next")} ›</button>
           </div>
           <button type="button" class="quiz-submit-button" data-submit-all>${label("ตรวจคำตอบทั้งหมด", "Submit all answers")}</button>
@@ -981,6 +1001,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
 
   function render() {
     if (!contentRoot) return;
+    closeNavigationDialog();
     if (state.view === "results") renderResults();
     else renderExam();
     renderHomeworkBanner();
@@ -1000,26 +1021,155 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
   }
 
   function goTo(index) {
-    const question = currentQuestion();
-    if (index > state.currentIndex && contentRoot?.dataset?.dragReadConfirm === "true" &&
-        question?.type === "drag-drop" && hasAnswer(state.answers[question.id])) {
-      const key = `${identityEpoch}:${state.contentId}:${state.attempt}:${question.id}`;
-      const signature = JSON.stringify(question.slots.map(slot => state.answers[question.id]?.[slot.id] || ""));
-      if (readingConfirmations.get(key) !== signature) {
-        const passage = createDragEvidenceBody(question, state.answers[question.id], language(), { labels: false }).textContent.replace(/\s+/g, " ").trim();
-        const message = label(
-          "อ่านทบทวนบทความตามที่คุณเติมไว้ก่อนไปต่อ (ยังไม่ใช่เฉลย)\n\n",
-          "Reread the passage with your own answers before continuing (this is not an answer key).\n\n",
-        ) + passage + label("\n\nตกลง = อ่านทบทวนแล้ว ไปต่อ · ยกเลิก = กลับไปอ่านหรือแก้ไข", "\n\nOK = reviewed, continue · Cancel = return to read or edit");
-        if (!window.confirm(message)) return;
-        readingConfirmations.set(key, signature);
-      }
-    }
+    closeNavigationDialog();
     state.currentIndex = Math.min(Math.max(0, index), state.questions.length - 1);
     persistNavigation();
     renderNavigation();
     renderQuestion();
+    renderStats();
     app.querySelector("[data-question-card]")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function needsDragReview(question = currentQuestion()) {
+    return question?.type === "drag-drop" && !state.giveUps[question.id] &&
+      !state.masteredIds.includes(question.id) && !(homeworkMode && homeworkClosed);
+  }
+
+  function navigationBusy() {
+    return !contentReady || submissionBusy || closing || homeworkSending || bankReloadBusy;
+  }
+
+  function closeNavigationDialog(accepted = false) {
+    const previous = pendingNavigation;
+    pendingNavigation = null;
+    if (navigationDialog?.open) navigationDialog.close();
+    previous?.resolve?.(accepted);
+  }
+
+  function clearSkipped(question) {
+    if (!question || !state.skippedIds.includes(question.id)) return false;
+    state.skippedIds = state.skippedIds.filter(id => id !== question.id);
+    persist();
+    return true;
+  }
+
+  function requestNavigation(index) {
+    if (navigationBusy() || pendingNavigation || !Number.isInteger(index)) return;
+    const question = currentQuestion();
+    if (index > state.currentIndex && needsDragReview(question)) {
+      openDragReview(index);
+      return;
+    }
+    if (index > state.currentIndex && hasAnswer(state.answers[question?.id]) &&
+        (question.type !== "number" || parseNumericAnswer(state.answers[question.id]) !== null)) clearSkipped(question);
+    goTo(index);
+  }
+
+  function openDragReview(index) {
+    const question = currentQuestion();
+    if (!question || !navigationDialog?.showModal) return;
+    const answer = state.answers[question.id];
+    const complete = dragAnswerSummary(question, answer).complete;
+    const correct = complete && isCorrectAnswer(question, answer);
+    pendingNavigation = { kind: "review", index, questionId: question.id, epoch: identityEpoch,
+      contentId: state.contentId, attempt: state.attempt, signature: JSON.stringify(answer || {}), correct };
+    navigationDialog.dataset.state = correct ? "correct" : "retry";
+    navigationDialog.querySelector("[data-navigation-kicker]").textContent = label(`ข้อ ${state.currentIndex + 1} · อ่านทวนก่อนเดินต่อ`, `Question ${state.currentIndex + 1} · Reread before continuing`);
+    navigationDialog.querySelector("[data-navigation-title]").textContent = correct
+      ? label("ถูกต้องทั้งหมด", "All correct") : complete
+        ? label("ยังไม่ถูกทั้งหมด", "Not all correct yet") : label("ยังวางคำตอบไม่ครบ", "Some answer slots are still empty");
+    navigationDialog.querySelector("[data-navigation-copy]").textContent = correct
+      ? label("อ่านบทความที่คุณเติมไว้อีกครั้ง แล้วกดยืนยันเพื่อไปต่อ", "Reread the passage you completed, then confirm to continue.")
+      : label("อ่านบทความตามที่คุณเติมไว้ แล้วกลับไปทบทวนและแก้ไข ระบบยังไม่เปิดเฉลยหรือระบุช่องที่ผิด", "Reread your own completed passage, then return to review and edit. No answer key or incorrect slots are shown.");
+    const body = navigationDialog.querySelector("[data-navigation-body]");
+    body.replaceChildren();
+    const prompt = document.createElement("div"); prompt.className = "quiz-navigation-prompt";
+    cloneInto(prompt, question.prompt, true); body.append(prompt);
+    if (question.context) {
+      const context = document.createElement("div"); context.className = "quiz-question-context";
+      cloneInto(context, question.context); body.append(context);
+    }
+    // Render only the student's selections. Never supply the correct-key map.
+    body.append(createDragEvidenceBody(question, answer, language(), { labels: false }));
+    const confirm = navigationDialog.querySelector("[data-navigation-confirm]");
+    confirm.hidden = !correct;
+    confirm.textContent = label("ยืนยันอ่านทวน · ไปต่อ", "Reviewed · Continue");
+    navigationDialog.querySelector("[data-navigation-back]").textContent = label("กลับไปทบทวน / แก้ไข", "Return to review / edit");
+    const skip = navigationDialog.querySelector("[data-navigation-skip]"); skip.hidden = false;
+    skip.textContent = label("ข้ามไว้ก่อน", "Skip for now");
+    hideMathKeyboard();
+    if (!navigationDialog.open) navigationDialog.showModal();
+    navigationDialog.querySelector("[data-navigation-content]").scrollTop = 0;
+    typeset(navigationDialog);
+  }
+
+  function confirmNavigationReview() {
+    const review = pendingNavigation, question = currentQuestion();
+    if (review?.kind === "submit") {
+      closeNavigationDialog(review.epoch === identityEpoch && review.contentId === state.contentId);
+      return;
+    }
+    if (navigationBusy() || review?.kind !== "review" || !review.correct || !question ||
+        review.epoch !== identityEpoch || review.contentId !== state.contentId || review.attempt !== state.attempt || review.questionId !== question.id) return;
+    if (review.signature !== JSON.stringify(state.answers[question.id] || {}) || !isCorrectAnswer(question, state.answers[question.id])) {
+      closeNavigationDialog(); openDragReview(review.index); return;
+    }
+    closeNavigationDialog(); clearSkipped(question);
+    if (review.index >= state.questions.length) { renderNavigation(); renderStats(); openSkippedOverview(); }
+    else goTo(review.index);
+  }
+
+  function skipCurrentQuestion() {
+    if (navigationBusy() || (homeworkMode && homeworkClosed)) return;
+    const question = currentQuestion();
+    if (!question) return;
+    closeNavigationDialog();
+    if (!state.masteredIds.includes(question.id) && !state.giveUps[question.id] && !state.skippedIds.includes(question.id)) {
+      state.skippedIds.push(question.id); persist();
+    }
+    if (state.currentIndex < state.questions.length - 1) goTo(state.currentIndex + 1);
+    else { renderNavigation(); renderStats(); openSkippedOverview(); }
+  }
+
+  function openSkippedOverview() {
+    if (navigationBusy() || !navigationDialog?.showModal) return;
+    closeNavigationDialog(); pendingNavigation = { kind: "overview" };
+    navigationDialog.dataset.state = "overview";
+    navigationDialog.querySelector("[data-navigation-kicker]").textContent = label("ภาพรวมก่อนส่งตรวจ", "Review before submitting");
+    navigationDialog.querySelector("[data-navigation-title]").textContent = label("ข้อที่ข้ามไว้ก่อน", "Questions skipped for now");
+    navigationDialog.querySelector("[data-navigation-copy]").textContent = state.skippedIds.length
+      ? label("เลือกข้อเพื่อกลับไปทำต่อ คำตอบและวิธีทำที่มีอยู่ยังคงเดิม ยังไม่มีการส่งตรวจอัตโนมัติ", "Choose a question to resume. Existing answers and working are retained. Nothing has been submitted automatically.")
+      : label("ไม่มีข้อที่ข้ามไว้ คุณยังย้อนดูคำตอบหรือกดตรวจคำตอบทั้งหมดได้ตามปกติ", "No questions are marked as skipped. You can review your answers or submit all answers as usual.");
+    const body = navigationDialog.querySelector("[data-navigation-body]"); body.replaceChildren();
+    state.questions.forEach((question, index) => {
+      if (!state.skippedIds.includes(question.id)) return;
+      const button = document.createElement("button"); button.type = "button"; button.className = "quiz-skipped-question";
+      button.textContent = label(`↷ กลับไปข้อ ${index + 1}`, `↷ Return to question ${index + 1}`);
+      button.addEventListener("click", () => {
+        if (pendingNavigation?.kind === "submit") { closeNavigationDialog(); goTo(index); }
+        else if (!navigationBusy()) goTo(index);
+      }); body.append(button);
+    });
+    navigationDialog.querySelector("[data-navigation-confirm]").hidden = true;
+    navigationDialog.querySelector("[data-navigation-skip]").hidden = true;
+    navigationDialog.querySelector("[data-navigation-back]").textContent = label("กลับไปทำ Quiz", "Back to quiz");
+    hideMathKeyboard(); navigationDialog.showModal();
+    navigationDialog.querySelector("[data-navigation-content]").scrollTop = 0;
+  }
+
+  function confirmSkippedBeforeSubmit() {
+    if (!state.skippedIds.length) return Promise.resolve(true);
+    if (!navigationDialog?.showModal) return Promise.resolve(window.confirm(label(
+      `ยังมีข้อที่ข้ามไว้ ${state.skippedIds.length} ข้อ ต้องการตรวจคำตอบที่มีอยู่หรือไม่?`,
+      `${state.skippedIds.length} questions are marked as skipped. Grade the existing answers?`,
+    )));
+    openSkippedOverview();
+    const confirm = navigationDialog.querySelector("[data-navigation-confirm]");
+    confirm.hidden = false;
+    confirm.textContent = label("ตรวจคำตอบที่มีอยู่", "Grade existing answers");
+    return new Promise(resolve => {
+      pendingNavigation = { kind: "submit", epoch: identityEpoch, contentId: state.contentId, resolve };
+    });
   }
 
   function revealHint() {
@@ -1038,6 +1188,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     evidenceManager?.markContextChanged(question.id);
     state.giveUps[question.id] = true;
     delete state.answers[question.id];
+    state.skippedIds = state.skippedIds.filter(id => id !== question.id);
     persist();
     renderNavigation();
     renderQuestion();
@@ -1139,8 +1290,16 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       return;
     }
     const epoch = identityEpoch;
+    const skippedConfirmation = confirmSkippedBeforeSubmit();
     submissionBusy = true;
     if (homeworkMode) app.inert = true;
+    const skippedAccepted = await skippedConfirmation;
+    if (epoch !== identityEpoch) return;
+    if (!skippedAccepted) {
+      submissionBusy = false;
+      if (homeworkMode) app.inert = false;
+      return;
+    }
     const results = state.questions.map(resultFor);
     evidenceManager?.flushCurrent();
     const missing = evidenceManager?.missingForAnswered(results) || [];
@@ -1186,6 +1345,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       ...new Set([...state.masteredIds, ...results.filter((result) => result.correct).map((result) => result.question.id)]),
     ];
     if (homeworkMode) state.masteredIds = gradeHomework(state.questions, state.answers, state.giveUps).rows.filter(row => row.correct).map(row => row.id);
+    state.skippedIds = state.skippedIds.filter(id => !state.masteredIds.includes(id) && !state.giveUps[id]);
     const score = state.masteredIds.length;
     state.latestScore = {
       score,
@@ -1259,6 +1419,8 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
 
   function startRetry() {
     if (submissionBusy || closing || (homeworkMode && homeworkClosed)) return;
+    closeNavigationDialog();
+    state.skippedIds = [];
     state.questions.forEach((question) => {
       if (state.masteredIds.includes(question.id)) return;
       evidenceManager?.markContextChanged(question.id);
@@ -1279,12 +1441,12 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       if (!contentReady || homeworkClosed || homeworkSending || submissionBusy || closing || pendingRemote || cloudLoadPending) return;
       if (!window.confirm(label('เริ่มทำชุดการบ้านนี้ใหม่หรือไม่? คะแนนที่ส่งไว้จะคงเดิมจนกว่าจะส่งรอบใหม่สำเร็จ สมุดจดยังอยู่', 'Restart this homework question set? Your submitted score stays unchanged until you successfully resubmit. Notebook work is retained.'))) return;
       state.questions.forEach(question => evidenceManager?.markContextChanged(question.id));
-      Object.assign(state, { answers: {}, giveUps: {}, hintLevels: {}, masteredIds: [], currentIndex: 0, attempt: state.attempt + 1, view: 'exam', startedAt: Date.now(), elapsedBeforeMs: 0, latestScore: null });
+      Object.assign(state, { answers: {}, giveUps: {}, hintLevels: {}, masteredIds: [], skippedIds: [], currentIndex: 0, attempt: state.attempt + 1, view: 'exam', startedAt: Date.now(), elapsedBeforeMs: 0, latestScore: null });
       persist(); render(); return;
     }
     if (temporary) {
       if (submissionBusy) return;
-      Object.assign(state, { answers: {}, giveUps: {}, hintLevels: {}, masteredIds: [], currentIndex: 0,
+      Object.assign(state, { answers: {}, giveUps: {}, hintLevels: {}, masteredIds: [], skippedIds: [], currentIndex: 0,
         attempt: 1, view: 'exam', startedAt: Date.now(), elapsedBeforeMs: 0, latestScore: null });
       render(); return;
     }
@@ -1326,8 +1488,10 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
       if (question && state.giveUps[question.id]) retryGivenUp(question.id);
       else giveUp();
     });
-    document.querySelector("[data-previous-button]")?.addEventListener("click", () => goTo(state.currentIndex - 1));
-    document.querySelector("[data-next-button]")?.addEventListener("click", () => goTo(state.currentIndex + 1));
+    document.querySelector("[data-previous-button]")?.addEventListener("click", () => requestNavigation(state.currentIndex - 1));
+    document.querySelector("[data-next-button]")?.addEventListener("click", () => requestNavigation(state.currentIndex + 1));
+    document.querySelector("[data-skip-button]")?.addEventListener("click", skipCurrentQuestion);
+    document.querySelector("[data-skipped-open]")?.addEventListener("click", openSkippedOverview);
     document.querySelector("[data-submit-all]")?.addEventListener("click", () => {
       void submitAll();
     });
@@ -1496,7 +1660,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
         localStorage.setItem(archiveKey, JSON.stringify(archive));
         const evidence = bankSelection ? null : evidenceManager?.serializeLocal();
         evidenceManager?.dispose(); evidenceManager = null;
-        Object.assign(state, { answers: {}, giveUps: {}, hintLevels: {}, masteredIds: [], currentIndex: 0,
+        Object.assign(state, { answers: {}, giveUps: {}, hintLevels: {}, masteredIds: [], skippedIds: [], currentIndex: 0,
           attempt: 1, view: 'exam', startedAt: Date.now(), elapsedBeforeMs: 0, latestScore: null, savedAt: 0, evidenceSnapshot: evidence });
         if (bankSelection) { syncBase = null; unsyncedChanges = false; pendingRemote = null; cloudReady = false; }
       }
@@ -1578,6 +1742,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     latestHubContext = context;
     bankContextWaiter?.(context);
     if (homeworkMode && contentReady && context.identity?.uid !== homework?.uid) {
+      closeNavigationDialog();
       identityEpoch++; clearTimeout(cloudSaveHandle); cloudReady = false;
       pendingStorageRequests.forEach(request => request.resolve({ ok: false, code: "homework/session-changed" })); pendingStorageRequests.clear();
       app.inert = true; homeworkFeedback = "homework/session-changed";
@@ -1586,6 +1751,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     const nextIdentity = context?.identity?.uid || "guest";
     if (context?.language && context.language !== language()) setLanguage(context.language);
     if (!contentReady || nextIdentity === state.identityKey) return;
+    closeNavigationDialog();
     if (bankSelection) { flushLocal(); location.reload(); return; }
     flushLocal();
     identityEpoch += 1;
@@ -1609,7 +1775,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     evidenceManager?.dispose();
     evidenceManager = null;
     Object.assign(state, {
-      answers: {}, giveUps: {}, hintLevels: {}, masteredIds: [],
+      answers: {}, giveUps: {}, hintLevels: {}, masteredIds: [], skippedIds: [],
       currentIndex: 0, attempt: 1, view: "exam", startedAt: Date.now(),
       elapsedBeforeMs: 0, latestScore: null, savedAt: 0,
       evidenceSnapshot: null, storageStatus: "local",
@@ -1632,7 +1798,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     const request = pendingStorageRequests.get(event.data.requestId);
     if (!request || event.data.uid !== request.uid || event.data.contentId !== request.contentId) return;
     pendingStorageRequests.delete(event.data.requestId);
-    if (homeworkMode && !event.data.ok && event.data.code === 'homework/closed') { homeworkClosed = true; renderHomeworkBanner(); lockHomeworkControls(); }
+    if (homeworkMode && !event.data.ok && event.data.code === 'homework/closed') { closeNavigationDialog(); homeworkClosed = true; renderHomeworkBanner(); lockHomeworkControls(); }
     if (homeworkMode && event.data.ok) {
       if (Number.isSafeInteger(event.data.storageRevision)) homeworkStorageRevision = event.data.storageRevision;
       if (event.data.action === 'load' || event.data.action === 'submit') {
@@ -1656,6 +1822,11 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     });
   });
   document.querySelector("[data-summary-open]")?.addEventListener("click", openSummary);
+  navigationDialog?.querySelector("[data-navigation-confirm]")?.addEventListener("click", confirmNavigationReview);
+  navigationDialog?.querySelector("[data-navigation-skip]")?.addEventListener("click", skipCurrentQuestion);
+  navigationDialog?.querySelectorAll("[data-navigation-back], [data-navigation-close]").forEach(button => button.addEventListener("click", () => closeNavigationDialog()));
+  navigationDialog?.addEventListener("cancel", event => { event.preventDefault(); closeNavigationDialog(); });
+  navigationDialog?.addEventListener("close", () => { if (!navigationDialog.open) closeNavigationDialog(); });
   topicReviewDialog?.addEventListener("close", () => {
     topicReviewBrowser?.close();
     if (document.body.dataset.printMode === "topic-review") window.LearningHubPrint.restore();
@@ -1724,6 +1895,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
     if (temporary) return true;
     if (closing || notebookBackupUi.busy) return false;
     if (!contentReady) return true;
+    closeNavigationDialog();
     closing = true;
     app.inert = true;
     const epoch = identityEpoch;
@@ -1761,7 +1933,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=print-names-202610
 
   window.LearningHubQuiz = Object.freeze({
     getState: () => ({ ...snapshot(), contentId: state.contentId }),
-    goToQuestion: goTo,
+    goToQuestion: requestNavigation,
     openSummary,
     restart,
     flushLocal,

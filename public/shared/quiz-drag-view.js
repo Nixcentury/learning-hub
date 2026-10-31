@@ -64,7 +64,7 @@ export function mountDragAnswer(target, { question, value, disabled, language: l
   const root = document.createElement("section");
   root.className = "quiz-drag-answer";
   root.innerHTML = `<p class="quiz-drag-instructions"></p><div class="quiz-drag-body"></div><section class="quiz-drag-bank"><h3></h3><div class="quiz-drag-pieces"></div></section><p class="quiz-drag-status" role="status" aria-live="polite"></p>`;
-  root.querySelector(".quiz-drag-instructions").textContent = label("ลากชิ้นคำตอบลงช่อง หรือแตะชิ้นคำตอบแล้วแตะช่อง · ตรวจทุกช่องพร้อมกันเมื่อส่งตรวจ", "Drag a piece to a slot, or tap a piece then a slot. All slots are graded together on submission.");
+  root.querySelector(".quiz-drag-instructions").textContent = label("ลากชิ้นคำตอบลงช่อง หรือแตะชิ้นคำตอบแล้วแตะช่อง · กดถัดไปเพื่อตรวจและอ่านทวน หรือข้ามไว้ก่อน", "Drag a piece to a slot, or tap a piece then a slot. Choose Next to check and reread, or skip for now.");
   root.querySelector("h3").textContent = label("ชิ้นคำตอบ", "Answer pieces");
   const body = root.querySelector(".quiz-drag-body");
   body.append(fragment(question.body[lang], lang));

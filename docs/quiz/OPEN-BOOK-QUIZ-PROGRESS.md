@@ -1,6 +1,6 @@
 # Open-book quiz work across topics
 
-The user works on several topics in parallel. Use at most 50 questions per set; the user may review authoring/QA increments of about ten items and may switch topics. Report the PR and remaining coverage clearly. Preserve complete content/concept/problem coverage across sets without simply copying the source questions. Use the existing bilingual mixed quiz engine, per-question sheet links and reading-confirmation option. Scores remain independent of AI stamps.
+The user works on several topics in parallel. Use at most 50 questions per set; the user may review authoring/QA increments of about ten items and may switch topics. Report the PR and remaining coverage clearly. Preserve complete content/concept/problem coverage across sets without simply copying the source questions. Use the existing bilingual mixed quiz engine and per-question sheet links. The shared player now provides Skip for now for all types and checks editable drag placements before a forward rereading confirmation; see `QUIZ-NAVIGATION-AND-READING.md`. Scores remain independent of AI stamps.
 
 | Topic | Completed / current work | Next pending | Detailed handoff |
 | --- | --- | --- | --- |

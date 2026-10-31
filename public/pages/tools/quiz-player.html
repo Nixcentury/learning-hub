@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="light" />
     <link rel="stylesheet" href="../../shared/print-core.css?v=topic-review-print-20261023-2" />
-    <link rel="stylesheet" href="../../shared/quiz-core.css?v=giveup-homework-resubmissions-20261031" />
+    <link rel="stylesheet" href="../../shared/quiz-core.css?v=skip-drag-review-20261031" />
     <link rel="stylesheet" href="../../shared/topic-review.css?v=atomic-models-review-20261023-1" />
     <link rel="stylesheet" href="../../shared/quiz-drag.css?v=drag-1" />
     <link rel="stylesheet" href="notebook-core.css?v=6b1" />
@@ -167,6 +167,25 @@
       <span data-print-selection-label data-th="เลือกข้อ" data-en="Select questions">เลือกข้อ</span>
     </button>
 
+    <dialog class="quiz-dialog quiz-navigation-dialog" data-navigation-dialog aria-labelledby="quiz-navigation-title" aria-describedby="quiz-navigation-copy">
+      <header class="quiz-dialog-header">
+        <div>
+          <small data-navigation-kicker></small>
+          <h2 id="quiz-navigation-title" data-navigation-title></h2>
+        </div>
+        <button type="button" data-navigation-close aria-label="Close">×</button>
+      </header>
+      <div class="quiz-navigation-content" data-navigation-content>
+        <p id="quiz-navigation-copy" data-navigation-copy></p>
+        <div data-navigation-body></div>
+      </div>
+      <footer class="quiz-navigation-actions">
+        <button type="button" class="quiz-secondary-button" data-navigation-back></button>
+        <button type="button" class="quiz-skip-button" data-navigation-skip></button>
+        <button type="button" class="quiz-primary-button" data-navigation-confirm hidden></button>
+      </footer>
+    </dialog>
+
     <dialog class="quiz-evidence-warning-dialog" data-evidence-warning-dialog>
       <section class="quiz-evidence-warning-body">
         <small data-evidence-warning-kicker>REASONING CHECK</small>
@@ -187,6 +206,6 @@
     <script src="../../shared/print-core.js?v=print-rich-text-20261029"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-    <script type="module" src="../../shared/quiz-core.js?v=giveup-homework-resubmissions-20261031"></script>
+    <script type="module" src="../../shared/quiz-core.js?v=skip-drag-review-20261031"></script>
   </body>
 </html>

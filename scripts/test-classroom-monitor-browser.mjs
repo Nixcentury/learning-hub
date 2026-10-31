@@ -32,7 +32,7 @@ export async function signInWithPopup(){window.qaSession('teacher');}export asyn
 // real emulator Rules execute unchanged. Transactions use REST ETag compare-and-set.
 const database = `
 export const getDatabase=()=>({});export const ref=(_,path)=>path;export const serverTimestamp=()=>({'.sv':'timestamp'});
-window.qaDbRequests=[];window.qaDbFailures=[];const registrations=new Map(),connectionWatchers=new Set();let online=true;
+window.qaDbRequests=[];window.qaDbFailures=[];window.qaDbSnapshots=Object.create(null);const registrations=new Map(),connectionWatchers=new Set();let online=true;
 const snapshot=value=>({val:()=>value,exists:()=>value!==null});
 async function call(method,path,value,etag){window.qaDbRequests.push({method,path});if(!online)throw Object.assign(Error('offline'),{code:'monitor/offline'});
  const response=await fetch('${prefix}__qa-db?path='+encodeURIComponent(path),{method,headers:{'Content-Type':'application/json','X-QA-UID':window.qaUid||'',...(etag?{'If-Match':etag}:{})},body:value===undefined?undefined:JSON.stringify(value)});
@@ -43,7 +43,7 @@ export async function runTransaction(path,fn){for(let i=0;i<8;i++){const prior=a
 export function onValue(path,fn,error=()=>{}){
  if(path==='.info/serverTimeOffset'){queueMicrotask(()=>fn(snapshot(0)));return ()=>{};}
  if(path==='.info/connected'){const callback=()=>fn(snapshot(online));connectionWatchers.add(callback);queueMicrotask(callback);return ()=>connectionWatchers.delete(callback);}
- let active=true,timer,previous;async function poll(){if(!active)return;try{const result=await call('GET',path),next=JSON.stringify(result.value);if(active&&next!==previous){previous=next;fn(snapshot(result.value));}}catch(e){if(e.code!=='monitor/offline'){if(active)error(e);return;}}if(active)timer=setTimeout(poll,180);}void poll();return ()=>{active=false;clearTimeout(timer);};}
+ let active=true,timer,previous;async function poll(){if(!active)return;try{const result=await call('GET',path),next=JSON.stringify(result.value);if(active&&next!==previous){previous=next;fn(snapshot(result.value));window.qaDbSnapshots[path]=result.value;}}catch(e){if(e.code!=='monitor/offline'){if(active)error(e);return;}}if(active)timer=setTimeout(poll,180);}void poll();return ()=>{active=false;clearTimeout(timer);};}
 export function onDisconnect(path){return {remove:async()=>registrations.set(path,null),update:async value=>registrations.set(path,value),cancel:async()=>registrations.delete(path)};}
 window.qaNetwork=async value=>{if(!value)for(const [path,data]of registrations)await call(data===null?'DELETE':'PATCH',path,data).catch(()=>{});online=value;connectionWatchers.forEach(fn=>fn());};
 `;
@@ -246,6 +246,12 @@ try {
   await student.page.locator('.monitor-message p').filter({ hasText: '<b>ลองทำข้อ 2 ต่อครับ</b>' }).waitFor();
   assert.equal(await student.page.locator('.monitor-message b').count(), 0);
   await row.locator('.monitor-person-message').filter({ hasText: 'แสดงบนหน้าเด็กแล้ว' }).waitFor();
+  // This test transport polls instead of the real SDK's optimistic onValue.
+  // A teacher-side receipt can arrive before the student's own watch catches up.
+  // Wait for that local callback before sending the next user command; otherwise
+  // the fake can re-send an immutable deliveredAt with a new server timestamp.
+  await student.page.waitForFunction(() => Object.entries(window.qaDbSnapshots).some(([path, value]) =>
+    path.startsWith('classroomMonitorV1/notices/') && path.endsWith('/student') && Object.values(value || {}).some(note => note.deliveredAt > 0)));
   await student.page.locator('[data-monitor-reply] input').fill('ขอช่วยอธิบายสูตรครับ');
   await student.page.locator('[data-monitor-reply] button').click();
   await row.locator('.monitor-person-message').filter({ hasText: 'ขอช่วยอธิบายสูตรครับ' }).waitFor();

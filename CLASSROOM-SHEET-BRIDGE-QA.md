@@ -17,7 +17,7 @@ Updated 2026-10-31. The teacher-operated CSV bridge is implemented; production d
 - `pnpm build`: content validation, TypeScript, Vite and public-file artifact verification pass (658 public files).
 - Targeted oxlint on changed JS/test files: clean. `git diff --check`: clean.
 - Real Firebase RTDB emulator Rules: all 38 existing classroom / monitoring / assignment / submission checks pass. No real Firebase project contacted.
-- Local production-browser run could not launch because no browser binary was installed. The browser installer returned a truncated archive. Browser regression including actual teacher CSV download is wired into the Classroom monitoring GitHub workflow; record its result below after CI.
+- Local production-browser run could not launch because no browser binary was installed. The browser installer returned a truncated archive. GitHub CI on `51d7b388d75e6c4e58dcc347110df5ebf2cefaca` passed the actual teacher CSV download, missing-score and student-control checks, all homework resubmission checks, the real Firebase SDK check and the separate practice-browser workflow. A later pre-existing monitoring reply test hit the polling fake’s stale delivery receipt; the fixture now waits for the student’s own onValue callback before replying. Full regression is being rerun; see PR #87 checks for the final outcome.
 
 ## Important limits
 

@@ -11,6 +11,7 @@ export function createFirebaseClassroomSubmissions(options) {
     watch: (path, success, error) => sdk.onValue(target(path), value => success(value.val()), error),
     connected: success => sdk.onValue(sdk.ref(database,'.info/connected'), value => success(value.val() === true), () => success(false)),
     timestamp: sdk.serverTimestamp,
+    update: values => sdk.update(sdk.ref(database, submissionRoot), values),
     transaction: async (path, transform) => {
       const result = await sdk.runTransaction(target(path), transform, { applyLocally: false });
       return { committed: result.committed };

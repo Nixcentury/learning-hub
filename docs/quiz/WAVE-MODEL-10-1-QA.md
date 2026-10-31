@@ -32,3 +32,9 @@ Unlocked drag questions additionally render all correct placements as a complete
 ## Verification limits
 
 The browser twice showed **Evidence export completed** for a representative result with four included questions (numeric, answered drag, given-up drag and an illustrated choice). The automation's download-event capture timed out, so no exported PDF file was available for offline page rendering/inspection in this run. Do not claim visual PDF QA passed. Related print/evidence unit tests pass, and the source/print tree is unchanged by the on-screen clone repair. No physical printer, real iPad or live student account was used. No AI approval stamp was fabricated; the sample explicitly shows no AI review and its ordinary score remains valid.
+
+## Integration with current main — 2026-10-31
+
+Merged main `036136da5496cd4026438a7615839c534dc4f5f4` into the PR branch, including PR #85's homework resubmissions and PR #80's reflection visuals. Resolved the two conflicting files by updating both quiz-player cache versions and retaining `startRetry`, `restart` and `cloneInto` in the existing test harness. The production engine keeps both the homework resubmission changes and this PR's three give-up presentation changes. Classroom services and Firebase Rules match main exactly.
+
+After integration, **168 related tests passed, 0 failed** across quiz resume, drag, numeric, evidence, variants, review printing, classroom submissions, submission bridge and assignment UI. This includes homework correction/resubmission, reload of a correction draft, closed-assignment locking, hidden-solution rendering and give-up retry/scoring. `pnpm build` passed with **657 public files** verified; the index has no unresolved conflicts or whitespace errors. The earlier browser checks and PDF verification limits above still apply; they were not rerun for this conflict-only update. GitHub workflow results must be checked on the new merge commit.

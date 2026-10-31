@@ -25,6 +25,7 @@ function fixture(t, user = 'student', prepared = true) {
     connected(fn) { connections.push(fn);queueMicrotask(()=>fn(true));return ()=>{}; },
     watch(path,success,failure) { const w={path,success,failure,active:true};watchers.push(w);queueMicrotask(()=>{if(w.active)success(structuredClone(get(path)));});return()=>{w.active=false;}; },
     async transaction(path,change) { const next=change(structuredClone(get(path)));if(next===undefined)return{committed:false};writes.push({path,next});put(path,next);emit();return{committed:true}; },
+    async update(values) { writes.push({values});for(const [path,value] of Object.entries(values))put(path,value);emit(); },
   };
   const service=createClassroomSubmissions({io,freezeQuiz:async()=>quiz,readQuiz:()=>({questions})});
   function context(uid=user, selected=rid) {
@@ -76,19 +77,28 @@ test('opening and autosaving homework never create a submission or touch ordinar
   await assert.rejects(f.service.quizCommand('save',binding,{value:progress(),storageRevision:0}),{code:'homework/conflict'});
   const loaded=await f.service.quizCommand('load',binding);assert.equal(loaded.value.answers.number,'-');assert.equal(loaded.storageRevision,1);
 });
-test('submission is immutable and retryable; teacher sees each member including those who have not submitted',async t=>{
+test('resubmission retains previous scores while editing and archives each prior result; teacher sees the latest total',async t=>{
   const f=fixture(t);await tick();const binding=await f.service.open(aid);
   const first=await f.service.quizCommand('submit',binding,{value:progress({choice:'a'}),submissionId:'e'.repeat(32)});
   assert.equal(first.grade.score,1);const writes=f.writes.length;
-  const duplicate=await f.service.quizCommand('submit',binding,{value:progress({choice:'a',number:'5/6'}),submissionId:'f'.repeat(32)});
+  const duplicate=await f.service.quizCommand('submit',binding,{value:progress({choice:'a',number:'5/6'}),submissionId:'e'.repeat(32)});
   assert.equal(duplicate.grade.score,1);assert.equal(f.writes.length,writes);
-  await assert.rejects(f.service.quizCommand('save',binding,{value:progress(),storageRevision:0}),{code:'homework/already-submitted'});
+  await f.service.quizCommand('save',binding,{value:progress({choice:'a',number:'5/6'}),storageRevision:0,previousSubmissionId:first.result.submissionId});
+  assert.equal((await f.service.quizCommand('load',binding)).value.answers.number,'5/6');
+  assert.equal(f.get(`results/${rid}/${aid}/student`).answersJson,first.result.answersJson);
+  const second=await f.service.quizCommand('submit',binding,{value:progress({choice:'a',number:'5/6'}),submissionId:'f'.repeat(32),previousSubmissionId:first.result.submissionId});
+  assert.equal(second.grade.score,2);assert.equal(second.grade.submissionRevision,2);
+  assert.deepEqual(f.get(`history/${rid}/${aid}/student/${first.result.submissionId}`),first.result);
+  assert.equal((await f.service.quizCommand('load',binding)).value,null,'An older draft must not replace the newly submitted total');
+  await assert.rejects(f.service.quizCommand('submit',binding,{value:progress(),submissionId:'a'.repeat(32),previousSubmissionId:first.result.submissionId}),{code:'homework/conflict'});
   f.context('teacher');await tick();const rows=f.service.getState().grades[aid].rows;
-  assert.equal(rows.length,2);assert.equal(rows.find(row=>row.uid==='student').grade.score,1);assert.equal(rows.find(row=>row.uid==='student-b').submitted,false);
+  assert.equal(rows.length,2);assert.equal(rows.find(row=>row.uid==='student').grade.score,2);assert.equal(rows.find(row=>row.uid==='student-b').submitted,false);
+  assert.deepEqual((await f.service.history(aid,'student')).rows.map(row=>row.score),[2,1]);
+  f.context('student-b');await tick();await assert.rejects(f.service.history(aid,'student'),{code:'homework/invalid-request'});
 });
 test('a lost acknowledgement recovers the existing server result rather than creating another submission',async t=>{
-  const f=fixture(t);await tick();const binding=await f.service.open(aid); const originalIO={...f.io};const transact=(...args)=>originalIO.transaction(...args);
-  f.io.transaction=async(...args)=>{await transact(...args);throw Error('connection lost after commit');};
+  const f=fixture(t);await tick();const binding=await f.service.open(aid); const originalIO={...f.io};
+  f.io.update=async(...args)=>{await originalIO.update(...args);throw Error('connection lost after commit');};
   const saved=await f.service.quizCommand('submit',binding,{value:progress({choice:'a'}),submissionId:'e'.repeat(32)});
   assert.equal(saved.grade.score,1);assert.equal(f.writes.length,1);
 });
@@ -131,11 +141,11 @@ test('frozen quiz reader strips executable markup while retaining bilingual cont
   const sanitized=sanitizeHomeworkRoot(document.querySelector('article'),'https://example.test/');assert.equal(sanitized.querySelectorAll('img[src]').length,1);
 });
 
-test('simultaneous final-submit commands share the same pending server acknowledgement',async t=>{
+test('simultaneous submit commands share the same pending server acknowledgement',async t=>{
   const f=fixture(t);await tick();const binding=await f.service.open(aid);let finish;
-  const originalIO={...f.io};f.io.transaction=async(...args)=>{await new Promise(done=>{finish=done;});return originalIO.transaction(...args);};
+  const originalIO={...f.io};f.io.update=async(...args)=>{await new Promise(done=>{finish=done;});return originalIO.update(...args);};
   const first=f.service.quizCommand('submit',binding,{value:progress({choice:'a'}),submissionId:'e'.repeat(32)});
-  const second=f.service.quizCommand('submit',binding,{value:progress({number:'5/6'}),submissionId:'f'.repeat(32)});
+  const second=f.service.quizCommand('submit',binding,{value:progress({number:'5/6'}),submissionId:'e'.repeat(32)});
   await tick();assert.equal(f.writes.length,0);finish();const results=await Promise.all([first,second]);
   assert.equal(f.writes.length,1);assert.equal(results[0].result.submissionId,results[1].result.submissionId);assert.equal(results[1].grade.score,1);
 });

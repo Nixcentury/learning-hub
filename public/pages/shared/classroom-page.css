@@ -107,3 +107,139 @@
 .homework-results-table th { background: #f1f6fb; }
 .homework-results-table th:first-child { min-width: 10rem; }
 .homework-submission-status { font-weight: 700; }
+
+/* Classroom workspace: assignment feed between personal work and lesson tools. */
+[data-classroom-page] .page-shell{width:min(1600px,100%);padding:28px 24px 48px}
+.classroom-has-room .classroom-account,.classroom-has-room [data-classroom-state="teacher"],.classroom-has-room [data-classroom-state="student"]{display:none!important}
+.classroom-has-room .page-heading{margin-bottom:18px}
+.classroom-has-room .page-heading h1{font-size:24px}
+.classroom-room-detail{padding:18px 22px;margin-top:18px}
+.classroom-room-detail h2{margin:12px 0;font-size:24px}
+.classroom-room-detail>.classroom-button{min-height:36px;padding:6px 12px;font-size:12px}
+.classroom-invite{padding:10px 14px;gap:10px;font-size:12px}
+.classroom-invite code{font-size:19px}
+.classroom-roster-details{margin-top:12px;font-size:12px}
+.classroom-roster-details>summary{cursor:pointer;font-weight:700;color:#42628a;min-height:32px;align-content:center}
+.classroom-roster-details .classroom-roster{margin-bottom:0}
+.classroom-workspace{display:grid;grid-template-columns:200px minmax(0,1fr) 296px;align-items:start;gap:18px;margin-top:20px;padding:0}
+.classroom-workspace>*{min-width:0}
+.classroom-panel{border:1px solid #b8c9df;border-radius:16px;background:#f8fbff;box-shadow:0 3px 0 #bdcbdc4d;overflow:hidden}
+.classroom-panel>summary{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:52px;padding:13px 16px;cursor:pointer;font-size:13px;font-weight:800;list-style:none;color:#193457;background:#edf3fc}
+.classroom-panel>summary::-webkit-details-marker{display:none}
+.classroom-panel>summary::after{content:'+';color:#52709a;font-size:18px;font-weight:500}
+.classroom-panel[open]>summary::after{content:'−'}
+.classroom-panel-count{margin-left:auto;min-width:24px;padding:3px 6px;border-radius:6px;background:white;color:#315995;font-size:11px;text-align:center}
+.classroom-next-content{padding:0 12px 12px}
+.classroom-next-content>p{font-size:11px;color:#5b708d;line-height:1.7;margin:12px 3px}
+.classroom-next-content h3{font-size:12px;margin:20px 4px 8px}
+.classroom-workspace .homework-next-item{display:flex;flex-direction:column;align-items:start;justify-content:start;gap:6px;width:100%;padding:12px;text-align:left;margin:8px 0;border-color:#d1dfef;font-size:12px;line-height:1.6;overflow-wrap:anywhere;white-space:normal}
+.homework-next-item small{font-size:10px;font-weight:400;color:#607391}
+.homework-next-item[aria-pressed="true"]{border-color:#567fbd;background:#eaf1fd;box-shadow:inset 3px 0 #416ba8}
+.homework-empty-note{font-size:12px;color:#607391;line-height:1.7}
+.classroom-feed{min-width:0}
+.classroom-feed>.homework-heading{padding:4px 2px 0}
+.classroom-feed .homework-heading h2{font-size:25px;color:#1c355c;letter-spacing:-.02em}
+.classroom-feed .homework-heading small{font-size:11px;color:#72839a}
+.homework-feed-count{font-size:11px;color:#5d7596;padding:6px 9px;background:#e6eef9;border-radius:6px}
+.classroom-feed .homework-feedback{margin:6px 0;min-height:0}
+.classroom-feed .homework-feedback:empty{display:none}
+.classroom-feed .homework-list{display:flex;flex-direction:column;gap:18px;margin:18px 0}
+.classroom-feed .homework-card{background:white;padding:22px;border-color:#c1d1e6;box-shadow:0 4px 0 #cbd6e54d;position:relative}
+.classroom-feed .homework-card.is-selected{border-color:#577bb1;box-shadow:0 4px 0 #a6bddc}
+.homework-post-byline{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.homework-post-icon{display:grid;place-items:center;width:36px;height:36px;flex:none;border-radius:10px;background:#e6efff;border:1px solid #b9cdeb;color:#254b87;font-size:18px}
+.homework-post-byline strong,.homework-post-byline small{display:block}
+.homework-post-byline strong{font-size:12px;font-weight:700;color:#2c496f}
+.homework-post-byline small{font-size:10px;color:#71849d;margin-top:4px}
+.classroom-feed .homework-card h3{font-size:20px;margin:12px 0;color:#203a60}
+.classroom-feed .homework-post-instructions{font-size:13px;line-height:1.9;white-space:pre-wrap;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;color:#405b7a}
+.classroom-feed .homework-post-due{padding-top:12px;margin-top:16px;border-top:1px solid #e7edf5;font-size:11px;color:#6b7f99}
+.classroom-feed .homework-actions{gap:8px;margin-top:18px}
+.classroom-feed .homework-actions .classroom-button{margin:0;flex:1;min-width:115px;font-size:12px;padding:9px 12px}
+.classroom-feed .homework-actions [data-homework-action="launch"]{background:#203d6d;border-color:#203d6d;color:white}
+.homework-empty{padding:40px 24px;border:1px dashed #b3c8e3;border-radius:16px;background:#ffffffb3;text-align:center;color:#5f7592;line-height:1.8;font-size:13px}
+.homework-empty h3{color:#355474;font-size:18px}
+.homework-empty-icon{display:grid;place-items:center;width:48px;height:48px;margin:auto;background:#e6eefb;border:1px solid #beceea;border-radius:12px;color:#476caa;font-size:24px}
+.classroom-right{display:grid;gap:16px}
+.homework-teacher-tools{padding:18px}
+.homework-teacher-tools header small{font-size:10px;letter-spacing:.03em;color:#6b819d}
+.homework-teacher-tools h2{font-size:18px;margin:4px 0 14px;color:#213d66}
+.homework-teacher-tools>[data-hw-new]{width:100%;margin:0;background:#203d6d;border-color:#203d6d}
+.homework-tool-selection{display:grid;gap:6px;margin:18px 0 12px;font-size:11px;color:#6b7f9a}
+.homework-tool-selection strong{font-size:12px;color:#29476f;line-height:1.7;overflow-wrap:anywhere}
+.homework-tool-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.homework-tool-actions>.classroom-button{font-size:11px;padding:9px 8px;line-height:1.5;min-width:0;margin:0;white-space:normal}
+.homework-tool-actions>[data-homework-action="export-sheet"],.homework-tool-actions>[data-homework-action="prepare"]{grid-column:1/-1}
+.classroom-monitor-panel .classroom-monitor{padding:14px;border:0;margin:0}
+.classroom-monitor-panel .classroom-monitor-heading h3{font-size:13px}
+.classroom-monitor-panel .classroom-monitor-heading span{font-size:10px}
+.classroom-monitor-panel [data-monitor-description]{font-size:11px;line-height:1.8;color:#647b96}
+.classroom-monitor-panel .classroom-monitor-controls{align-items:stretch;gap:8px}
+.classroom-monitor-panel .classroom-monitor-controls>*{width:100%;margin:0;font-size:12px}
+.classroom-monitor-panel .classroom-monitor-filters{display:grid;gap:8px}
+.classroom-monitor-panel .classroom-monitor-filters>*{width:100%;font-size:11px;min-width:0}
+.classroom-monitor-panel .classroom-monitor-people{grid-template-columns:1fr;max-height:640px;overflow-y:auto;padding:0 2px 6px}
+.classroom-monitor-panel .classroom-monitor-person{padding:12px;gap:8px}
+.classroom-monitor-panel .monitor-person-name{font-size:12px}
+.classroom-monitor-panel .monitor-person-status,.classroom-monitor-panel .monitor-person-time{font-size:10px}
+.classroom-monitor-panel .monitor-person-location,.classroom-monitor-panel .monitor-person-message{font-size:11px}
+.classroom-monitor-panel .classroom-monitor-person>.classroom-button{margin:4px 0 0;padding:7px 10px;font-size:11px;min-height:38px}
+.homework-modal{box-sizing:border-box;width:min(800px,calc(100vw - 32px));max-height:88dvh;overflow:auto;padding:0;border:1px solid #91aaca;border-radius:18px;background:#f9fbff;color:#203858;box-shadow:0 16px 70px #18345c40;font:inherit}
+.homework-modal::backdrop{background:#172e505c}
+.homework-modal .homework-editor{border:0;margin:0;border-radius:0;padding:28px;gap:18px}
+.homework-modal .homework-detail{border:0;margin:0;border-radius:0;background:transparent;padding:22px 26px}
+.homework-modal-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 22px;border-bottom:1px solid #d2dfef;background:#edf3fc}
+.homework-modal-heading h2{font-size:16px;margin:0}
+.homework-modal-heading .classroom-button{margin:0;min-height:36px;padding:6px 14px;font-size:12px}
+.homework-modal .homework-results-scroll{max-width:100%;overflow:auto}
+.homework-modal .homework-results-table{width:100%}
+.homework-modal .homework-results-table caption{font-size:14px}
+.homework-modal .homework-results{margin-top:22px}
+.homework-modal .homework-share input{font-size:11px}
+.homework-modal .homework-instructions{white-space:pre-wrap}
+@media(max-width:1179px){
+  .classroom-workspace{display:flex;flex-direction:column;gap:14px}
+  .classroom-workspace>:not(dialog){width:100%}
+  .classroom-right{order:0}
+  .classroom-next{order:1}
+  .classroom-feed{order:2}
+  .homework-teacher-tools{padding:14px 16px}
+  .homework-teacher-tools header{display:none}
+  .homework-teacher-tools>[data-hw-new]{width:auto;min-width:170px}
+  .homework-tool-selection{margin:12px 0 8px}
+  .homework-tool-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .homework-tool-actions>.classroom-button{flex:1;min-width:110px}
+  .classroom-monitor-panel .classroom-monitor-people{max-height:440px}
+  .classroom-next-content [data-hw-next]{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+  .classroom-workspace .homework-next-item{margin:0}
+}
+@media(max-width:600px){
+  [data-classroom-page] .page-shell{padding:18px 12px 32px}
+  .classroom-has-room .page-heading h1{font-size:20px}
+  .classroom-phase{font-size:10px;padding:6px 8px}
+  .classroom-room-detail{padding:14px;margin-top:12px}
+  .classroom-room-detail h2{font-size:21px}
+  .classroom-invite{gap:8px;font-size:11px;padding:10px}
+  .classroom-invite code{font-size:17px}
+  .classroom-feed .homework-card{padding:17px}
+  .classroom-feed .homework-card h3{font-size:18px}
+  .classroom-feed .homework-actions .classroom-button{font-size:11px;min-width:105px}
+  .homework-tool-actions>.classroom-button{min-width:100px}
+  .homework-modal{width:calc(100vw - 20px);max-height:92dvh}
+  .homework-modal .homework-editor,.homework-modal .homework-detail{padding:18px}
+  .homework-modal-heading{padding:12px 16px}
+}
+
+/* Keep room context compact so assignment posts start near the top. */
+.classroom-has-room .page-heading{padding:10px 16px;gap:10px}
+.classroom-has-room .page-heading .page-icon{width:36px;height:36px;font-size:20px}
+.classroom-has-room .page-heading h1{font-size:20px}
+.classroom-has-room .classroom-phase{display:none}
+.classroom-room-detail>p{font-size:12px;line-height:1.7;margin:8px 0}
+@media(min-width:1180px){
+  .classroom-room-detail{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px 18px;padding:14px 20px}
+  .classroom-room-detail h2{margin:0;font-size:22px;min-width:0}
+  .classroom-room-detail>.classroom-button{margin:0}
+  .classroom-roster-details{grid-column:1/-1;margin:0}
+  .classroom-room-detail>p{grid-column:2/-1;margin:0}
+}

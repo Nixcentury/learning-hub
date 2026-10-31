@@ -3,25 +3,59 @@ import { newAssignmentId, assignmentUrl, assignmentStatus, thaiDateInput, parseT
 // DOM presentation only. All authority, catalog resolution and writes live in
 // the signed-in parent Hub and are checked again by Database Rules.
 const root = document.querySelector('[data-classroom-assignments]');
-root.innerHTML = `<header class="homework-heading"><div><small data-hw-kicker></small><h2 data-hw-heading></h2></div><button type="button" class="classroom-button is-primary" data-hw-new></button></header>
-  <p class="homework-feedback" data-hw-feedback role="status" aria-live="polite"></p>
-  <button type="button" class="classroom-button" data-hw-retry hidden></button>
-  <form class="homework-editor" data-hw-editor hidden>
-    <h3 data-hw-editor-title tabindex="-1"></h3>
-    <label><span data-hw-label="title"></span><input name="title" required maxlength="180" data-allow-selection></label>
-    <label><span data-hw-label="url"></span><input name="url" type="url" required data-allow-selection><small data-hw-url-help></small></label>
-    <button type="button" class="classroom-button" data-hw-preview></button><p data-hw-preview-result role="status"></p>
-    <label><span data-hw-label="instructions"></span><textarea name="instructions" rows="4" maxlength="4000" data-allow-selection></textarea></label>
-    <label><span data-hw-label="due"></span><input name="due" type="datetime-local" min="1970-01-01T07:00" max="2099-12-31T23:59" data-allow-selection><small data-hw-due-help></small></label>
-    <div class="homework-actions"><button type="button" class="classroom-button" data-hw-save></button><button type="submit" class="classroom-button is-primary" data-hw-publish></button><button type="button" class="classroom-button" data-hw-cancel></button></div>
-  </form>
-  <section class="homework-detail" data-hw-detail hidden tabindex="-1"></section>
-  <div class="homework-list" data-hw-list></div>
-  <p class="classroom-footnote" data-hw-note></p>`;
+root.innerHTML = `<details class="classroom-next classroom-panel" data-hw-next-panel open>
+    <summary><span data-hw-next-heading></span><span class="classroom-panel-count" data-hw-next-count></span></summary>
+    <div class="classroom-next-content"><p data-hw-next-note></p><div data-hw-next></div></div>
+  </details>
+  <section class="classroom-feed" data-hw-feed aria-labelledby="homework-feed-title">
+    <header class="homework-heading"><div><small data-hw-kicker></small><h2 id="homework-feed-title" data-hw-heading></h2></div><span class="homework-feed-count" data-hw-feed-count></span></header>
+    <p class="homework-feedback" data-hw-feedback role="status" aria-live="polite"></p>
+    <button type="button" class="classroom-button" data-hw-retry hidden></button>
+    <div class="homework-list" data-hw-list></div>
+    <p class="classroom-footnote" data-hw-note></p>
+  </section>
+  <aside class="classroom-right" data-hw-right>
+    <section class="homework-teacher-tools classroom-panel" data-hw-tools hidden aria-labelledby="homework-tools-title">
+      <header><small data-hw-tools-kicker></small><h2 id="homework-tools-title" data-hw-tools-heading></h2></header>
+      <button type="button" class="classroom-button is-primary" data-hw-new></button>
+      <p class="homework-tool-selection"><span data-hw-selection-label></span><strong data-hw-selection></strong></p>
+      <div class="homework-tool-actions" data-hw-tool-actions></div>
+    </section>
+    <details class="classroom-monitor-panel classroom-panel" data-room-monitor-panel open>
+      <summary data-room-monitor-summary></summary><div data-room-monitor-slot></div>
+    </details>
+  </aside>
+  <dialog class="homework-modal" data-hw-editor-dialog aria-labelledby="homework-editor-title">
+    <form class="homework-editor" data-hw-editor hidden>
+      <h3 id="homework-editor-title" data-hw-editor-title tabindex="-1"></h3>
+      <label><span data-hw-label="title"></span><input name="title" required maxlength="180" data-allow-selection></label>
+      <label><span data-hw-label="url"></span><input name="url" type="url" required data-allow-selection><small data-hw-url-help></small></label>
+      <button type="button" class="classroom-button" data-hw-preview></button><p data-hw-preview-result role="status"></p>
+      <label><span data-hw-label="instructions"></span><textarea name="instructions" rows="4" maxlength="4000" data-allow-selection></textarea></label>
+      <label><span data-hw-label="due"></span><input name="due" type="datetime-local" min="1970-01-01T07:00" max="2099-12-31T23:59" data-allow-selection><small data-hw-due-help></small></label>
+      <div class="homework-actions"><button type="button" class="classroom-button" data-hw-save></button><button type="submit" class="classroom-button is-primary" data-hw-publish></button><button type="button" class="classroom-button" data-hw-cancel></button></div>
+    </form>
+  </dialog>
+  <dialog class="homework-modal homework-inspect-modal" data-hw-detail-dialog aria-labelledby="homework-detail-title">
+    <header class="homework-modal-heading"><h2 id="homework-detail-title" data-hw-detail-title></h2><button class="classroom-button" type="button" data-hw-detail-close></button></header>
+    <section class="homework-detail" data-hw-detail hidden tabindex="-1"></section>
+  </dialog>`;
 const form = root.querySelector('form'), list = root.querySelector('[data-hw-list]'), detail = root.querySelector('[data-hw-detail]');
+const editorDialog = root.querySelector('[data-hw-editor-dialog]'), detailDialog = root.querySelector('[data-hw-detail-dialog]');
+const nextList = root.querySelector('[data-hw-next]'), toolActions = root.querySelector('[data-hw-tool-actions]');
+const media = window.matchMedia?.('(max-width: 1179px)');
+function setPanelDefaults() {
+  for (const selector of ['[data-hw-next-panel]', '[data-room-monitor-panel]']) root.querySelector(selector).open = !media?.matches;
+}
+setPanelDefaults(); media?.addEventListener('change', setPanelDefaults);
+function modal(node, open) {
+  const opened = node.open ?? node.hasAttribute('open');
+  if (open && !opened) { if (node.showModal) node.showModal(); else node.setAttribute('open', ''); }
+  else if (!open && opened) { if (node.close) node.close(); else node.removeAttribute('open'); }
+}
 let context, uid = '', roomId = '', pending = null, editor = null, preview = null, feedback = '', feedbackError = false, listSignature = '', detailSignature = '';
 const seenAttempts = new Set();
-let historyView = null;
+let historyView = null, selectedId = '', routeKey = '', inspectMode = '', nextSignature = '';
 const t = (th, en) => context?.language === 'en' ? en : th;
 const el = (tag, text, cls) => { const node = document.createElement(tag); node.textContent = text; if (cls) node.className = cls; return node; };
 const snapshot = () => context?.classroomAssignments?.uid === uid ? context.classroomAssignments : null;
@@ -76,8 +110,10 @@ function dueText(item) {
   if (!item.dueAt) return t('ไม่กำหนดวันส่ง', 'No due date');
   return t('กำหนดส่ง ', 'Due ') + new Date(item.dueAt).toLocaleString(context.language === 'en' ? 'en-GB' : 'th-TH', { timeZone: 'Asia/Bangkok', dateStyle: 'medium', timeStyle: 'short' }) + t(' น. (เวลาไทย)', ' (Thailand time)');
 }
-function closeEditor() { editor = null; preview = null; form.reset(); form.hidden = true; }
+function closeEditor() { editor = null; preview = null; form.reset(); form.hidden = true; modal(editorDialog, false); }
+function closeDetail() { inspectMode = ''; detail.hidden = true; modal(detailDialog, false); }
 function edit(item) {
+  closeDetail();
   editor = item ? { id: item.id, revision: item.revision, status: item.status } : { id: newAssignmentId(), revision: 0, status: 'draft' };
   form.reset();
   form.elements.title.value = item?.title || '';
@@ -111,12 +147,10 @@ function renderResults(item, isOwner) {
   if (!gradebook.ready) {
     section.append(el('p', isOwner ? t('เปิดรับการส่งงานเพื่อเก็บชุดคำถามของงานนี้ นักเรียนแต่ละคนจะเริ่มคำตอบใหม่แยกจากการฝึกเดิม', 'Enable submissions to keep this assignment’s question set. Students start with answers separate from earlier practice.')
       : t('รอครูเปิดรับการส่งงานสำหรับการบ้านนี้', 'Waiting for your teacher to enable submissions.')));
-    if (isOwner && item.status === 'published') section.append(button(t('เปิดรับการส่งงาน', 'Enable submissions'), 'prepare', item.id));
     return section;
   }
   const rows = gradebook.rows || [];
   if (isOwner) {
-    section.append(button(t('ส่งออกไปชีท (.csv)', 'Export to spreadsheet (.csv)'), 'export-sheet', item.id));
     section.append(el('p', t(`ส่งแล้ว ${rows.filter(row => row.submitted).length}/${rows.length} คน`, `Submitted: ${rows.filter(row => row.submitted).length}/${rows.length} students`)));
     const wrap = el('div', '', 'homework-results-scroll'), table = document.createElement('table'); table.className = 'homework-results-table';
     const caption = el('caption', item.title); table.append(caption);
@@ -155,6 +189,86 @@ function renderResults(item, isOwner) {
   section.append(el('p', t('คะแนนนี้ตรวจจากคำตอบของการบ้าน ไม่รวมคะแนนฝึกเก่าและไม่ใช่คะแนนประเมินวิธีทำ', 'These scores check assignment answers. Earlier practice scores and reasoning reviews are separate.'), 'classroom-footnote'));
   return section;
 }
+function ownResult(item) { return submissions()?.grades?.[item.id]?.rows.find(row => row.uid === uid); }
+function launchButton(item, isOwner) {
+  const gradebook = submissions()?.grades?.[item.id], sent = ownResult(item)?.submitted;
+  if (!gradebook?.ready || !(isOwner || item.status === 'published' || sent)) return null;
+  return button(isOwner ? t('ดูชุดคำถาม', 'Preview question set') : sent ? item.status === 'published' ? t('แก้คำตอบ / ส่งอีกครั้ง', 'Edit / resubmit') : t('ดูงานที่ส่ง', 'View submitted work') : t('เปิดทำ Quiz', 'Open quiz'), 'launch', item.id);
+}
+function renderNext(values, isOwner) {
+  nextList.replaceChildren();
+  const published = values.filter(item => item.status !== 'draft');
+  const loaded = published.every(item => submissions()?.grades?.[item.id]?.loaded);
+  const sent = published.filter(item => ownResult(item)?.submitted).length;
+  root.querySelector('[data-hw-next-heading]').textContent = isOwner ? t('งานของห้อง', 'Classroom work') : t('งานที่ต้องทำต่อ', 'Up next');
+  root.querySelector('[data-hw-next-count]').textContent = isOwner ? String(published.length) : loaded ? `${sent}/${published.length}` : '…';
+  root.querySelector('[data-hw-next-note]').textContent = isOwner ? t('เลือกงานเพื่อจัดการจากเครื่องมือด้านขวา', 'Select a post to use the tools on the right.')
+    : loaded && published.length && sent === published.length ? t('ส่งครบแล้ว กลับไปแก้และส่งซ้ำได้ในงานที่ยังเปิดอยู่', 'All work submitted. You can revise and resubmit open assignments.') : t('งานที่ยังไม่ส่ง เรียงตามกำหนดส่ง', 'Unsubmitted work, ordered by due date.');
+  const pendingWork = published.filter(item => item.status === 'published' && (isOwner || !ownResult(item)?.submitted))
+    .sort((a,b) => (a.dueAt || Infinity) - (b.dueAt || Infinity) || a.publishedAt - b.publishedAt || a.id.localeCompare(b.id));
+  if (!pendingWork.length) nextList.append(el('p', isOwner ? t('ไม่มีงานที่เปิดอยู่', 'No open assignments') : published.length && loaded ? t('ไม่มีงานค้างที่เปิดอยู่', 'No open work awaiting submission') : t('งานใหม่จะแสดงที่นี่', 'New assignments will appear here.'), 'homework-empty-note'));
+  for (const item of pendingWork) {
+    const entry = button(item.title, 'select', item.id); entry.classList.add('homework-next-item'); entry.dataset.nextAssignment = item.id;
+    entry.setAttribute('aria-pressed', String(selectedId === item.id));
+    const gradebook = submissions()?.grades?.[item.id];
+    entry.append(el('small', dueText(item)));
+    entry.append(el('small', !gradebook?.loaded ? t('กำลังโหลดสถานะ…', 'Loading status…') : isOwner ? t(`ส่งแล้ว ${gradebook.rows.filter(row => row.submitted).length}/${gradebook.rows.length} คน`, `Submitted ${gradebook.rows.filter(row => row.submitted).length}/${gradebook.rows.length}`) : t('ยังไม่ส่ง', 'Not submitted')));
+    nextList.append(entry);
+  }
+  const drafts = isOwner ? values.filter(item => item.status === 'draft') : [];
+  if (drafts.length) {
+    nextList.append(el('h3', t(`งานร่าง · ${drafts.length}`, `Drafts · ${drafts.length}`)));
+    for (const item of drafts) { const entry = button(item.title, 'select', item.id); entry.classList.add('homework-next-item'); entry.dataset.nextAssignment = item.id; entry.setAttribute('aria-pressed', String(selectedId === item.id)); nextList.append(entry); }
+  }
+}
+function renderTools(item, isOwner) {
+  root.querySelector('[data-hw-tools]').hidden = !isOwner;
+  root.querySelector('[data-hw-tools-kicker]').textContent = t('สำหรับครูเจ้าของห้อง', 'Room owner');
+  root.querySelector('[data-hw-tools-heading]').textContent = t('จัดการงาน', 'Assignment tools');
+  root.querySelector('[data-hw-selection-label]').textContent = t('งานที่เลือก', 'Selected assignment');
+  root.querySelector('[data-hw-selection]').textContent = item?.title || t('เลือกโพสต์งานเพื่อจัดการ', 'Select an assignment post');
+  toolActions.replaceChildren();
+  if (!isOwner) return;
+  const gradebook = item && submissions()?.grades?.[item.id];
+  for (const [th,en,action,available] of [
+    ['แก้ไขงาน','Edit assignment','edit',Boolean(item)],
+    ['ปิดงาน','Close assignment','close',item?.status === 'published'],
+    ['ดูคะแนน','View scores','scores',item && item.status !== 'draft'],
+    ['ส่งออกไปชีท (.csv)','Export to spreadsheet (.csv)','export-sheet',item && item.status !== 'draft' && gradebook?.ready],
+  ]) {
+    const node = button(t(th,en), action, item?.id); node.dataset.hwUnavailable = String(!available); toolActions.append(node);
+  }
+  if (item?.status === 'published' && gradebook?.loaded && !gradebook.ready) toolActions.append(button(t('เปิดรับการส่งงาน','Enable submissions'),'prepare',item.id));
+}
+function renderFeed(values, room, isOwner) {
+  list.replaceChildren();
+  const posts = values.filter(item => item.status !== 'draft').sort((a,b) => b.publishedAt - a.publishedAt || a.id.localeCompare(b.id));
+  root.querySelector('[data-hw-feed-count]').textContent = t(`${posts.length} งาน`, `${posts.length} assignments`);
+  if (room?.status !== 'ready') { list.append(el('p', t('กำลังโหลดงานของห้อง…', 'Loading classroom assignments…'), 'homework-empty')); return; }
+  if (!posts.length) {
+    const empty = el('section', '', 'homework-empty'); empty.append(el('span', '✓', 'homework-empty-icon'), el('h3', t('ฟีดงานของห้อง', 'Classroom assignment feed')),
+      el('p', isOwner ? t('เริ่มโพสต์แรกด้วยปุ่ม + มอบหมายงาน ในเครื่องมือครู', 'Create the first post with + Assign homework in the teacher tools.') : t('เมื่อครูมอบหมายงาน โพสต์งานจะแสดงที่นี่', 'Assignment posts will appear here when your teacher publishes them.'))); list.append(empty);
+  }
+  for (const item of posts) {
+    const card = el('article', '', 'homework-card'); card.dataset.assignmentId = item.id; card.classList.toggle('is-selected', item.id === selectedId);
+    const byline = el('header', '', 'homework-post-byline'); byline.append(el('span','✓','homework-post-icon'));
+    const who = el('div',''); who.append(el('strong',t('งานที่ครูมอบหมาย','Teacher assignment')),el('small',resultTime(item.publishedAt))); byline.append(who);
+    const tags = el('div','','homework-tags'); tags.append(el('span',statusLabel(item),'homework-tag'));
+    if (!isOwner && item.status === 'published' && !room.seen?.[item.id]) tags.append(el('span',t('ใหม่','New'),'homework-tag'));
+    const gradebook = submissions()?.grades?.[item.id];
+    if (gradebook?.loaded && gradebook.ready) {
+      const own = ownResult(item);
+      tags.append(el('span',isOwner ? t(`ส่งแล้ว ${gradebook.rows.filter(row=>row.submitted).length}/${gradebook.rows.length} คน`,`Submitted ${gradebook.rows.filter(row=>row.submitted).length}/${gradebook.rows.length}`) : sentLabel(own),'homework-tag'));
+      if (!isOwner && own?.submitted && own.grade && !own.grade.error) tags.append(el('span',t(`คะแนนที่ส่ง ${own.grade.score}/${own.grade.maxScore}`,`Submitted score ${own.grade.score}/${own.grade.maxScore}`),'homework-tag'));
+    }
+    card.append(byline,tags,el('h3',item.title),el('p',item.instructions || t('เปิดรายละเอียดงานเพื่อเริ่มทำ Quiz','Open the assignment details to start the quiz.'),'homework-post-instructions'),el('p',dueText(item),'homework-post-due'));
+    const actions = el('div','','homework-actions');
+    if (isOwner) { const select = button(t('เลือกงานนี้','Select assignment'),'select',item.id); select.setAttribute('aria-pressed',String(item.id===selectedId)); actions.append(select); }
+    actions.append(button(t('รายละเอียดงาน','Assignment details'),'view',item.id));
+    const launch = launchButton(item,isOwner); if (launch) actions.append(launch);
+    card.append(actions); list.append(card);
+  }
+}
 function paint() {
   const access = context?.classroom, identity = context?.identity;
   const nextUid = parent !== window && identity?.status === 'signed-in' && access?.uid === identity.uid && ['teacher', 'student'].includes(access.state) ? identity.uid : '';
@@ -162,13 +276,18 @@ function paint() {
   const nextRoom = nextUid && context.classroomRooms?.roomStatus === 'ready' ? selected?.id || '' : '';
   if (uid !== nextUid || roomId !== nextRoom) {
     uid = nextUid; roomId = nextRoom; pending = null; closeEditor(); feedback = ''; feedbackError = false;
-    seenAttempts.clear(); historyView = null; listSignature = detailSignature = ''; list.replaceChildren(); detail.replaceChildren();
+    seenAttempts.clear(); historyView = null; selectedId = routeKey = inspectMode = nextSignature = ''; closeDetail();
+    listSignature = detailSignature = ''; list.replaceChildren(); detail.replaceChildren(); nextList.replaceChildren(); toolActions.replaceChildren();
+    root.querySelector('[data-hw-tools]').hidden = true; root.querySelector('[data-hw-selection]').textContent = '';
   }
   root.hidden = !uid || !roomId;
-  if (root.hidden) return;
+  if (root.hidden) { closeDetail(); closeEditor(); return; }
   const data = snapshot(), room = currentRoom(), isOwner = owner();
   root.querySelector('[data-hw-kicker]').textContent = t('งานของสมาชิกในห้อง', 'Classroom assignments');
-  root.querySelector('[data-hw-heading]').textContent = t('การบ้าน', 'Homework');
+  root.querySelector('[data-hw-heading]').textContent = t('โพสต์งาน', 'Assignment posts');
+  if (!isOwner) { if (editor) closeEditor(); if (inspectMode === 'scores') closeDetail(); }
+  root.dataset.owner = String(isOwner);
+  root.querySelector('[data-room-monitor-summary]').textContent = isOwner ? t('ติดตามคาบเรียน','Lesson monitoring') : t('คาบเรียนของฉัน','My lesson');
   const newButton = root.querySelector('[data-hw-new]'); newButton.hidden = !isOwner || Boolean(editor); newButton.textContent = t('+ มอบหมายงาน', '+ Assign homework');
   root.querySelector('[data-hw-note]').textContent = t('ทำ Quiz → ตรวจคำตอบ → ดูคะแนน → ส่งงานให้ครู กลับไปแก้และส่งซ้ำได้จนกว่าครูปิดงาน ครูเห็นคะแนนรวมที่ส่งล่าสุด การเปิด Quiz ยังไม่นับเป็นการส่งงาน', 'Complete quiz → Check answers → Review score → Submit to teacher. Edit and resubmit until your teacher closes the assignment. Teachers see the latest submitted total. Opening a quiz is not a submission.');
   const failure = room?.error || data?.error || submissions()?.error || (feedbackError ? feedback : '');
@@ -192,44 +311,34 @@ function paint() {
     form.querySelector('[data-hw-cancel]').textContent = t('ยกเลิก', 'Cancel');
   }
   const values = [...(room?.drafts || []), ...(room?.items || [])];
-  const signature = JSON.stringify([context.language, room?.status, values, values.map(value => assignmentStatus(value)), room?.seen, submissions(), busy(), data?.connected]);
-  if (signature !== listSignature) {
-    listSignature = signature; list.replaceChildren();
-    if (room?.status === 'ready' && !values.length) list.append(el('p', isOwner ? t('ยังไม่มีการบ้าน เริ่มจากมอบหมาย Quiz ให้ห้องนี้', 'No homework yet. Assign a quiz to this classroom.') : t('ยังไม่มีการบ้านที่ครูเผยแพร่', 'No published homework yet.')));
-    for (const item of values) {
-      const card = el('article', '', 'homework-card'); card.dataset.assignmentId = item.id;
-      const tags = el('div', '', 'homework-tags'); tags.append(el('span', statusLabel(item), 'homework-tag'));
-      if (!isOwner && item.status === 'published') tags.append(el('span', room.seen?.[item.id] ? t('อ่านแล้ว', 'Read') : t('ใหม่', 'New'), 'homework-tag'));
-      const gradebook = submissions()?.grades?.[item.id];
-      if (gradebook?.loaded && gradebook.ready) {
-        const ownRow = gradebook.rows.find(row => row.uid === uid);
-        tags.append(el('span', isOwner ? t(`ส่งแล้ว ${gradebook.rows.filter(row => row.submitted).length}/${gradebook.rows.length} คน`, `Submitted ${gradebook.rows.filter(row => row.submitted).length}/${gradebook.rows.length}`) : sentLabel(ownRow), 'homework-tag'));
-      }
-      card.append(tags, el('h3', item.title), el('p', dueText(item)), button(t('ดูการบ้าน', 'View homework'), 'view', item.id));
-      if (isOwner) card.append(button(t('แก้ไข', 'Edit'), 'edit', item.id));
-      list.append(card);
-    }
-  }
   const requested = context.classroomAssignmentRoute;
-  const id = requested?.roomId === roomId ? requested.assignmentId : '';
+  const routeId = requested?.roomId === roomId ? requested.assignmentId || '' : '';
+  const key = `${roomId}/${routeId}`;
+  if (key !== routeKey) {
+    routeKey = key;
+    if (routeId !== selectedId) { selectedId = routeId; inspectMode = routeId ? 'details' : ''; historyView = null; }
+  }
+  const id = selectedId;
   const item = id ? values.find(value => value.id === id) : null;
-  detail.hidden = !id;
-  const nextDetail = JSON.stringify([context.language, id, item, item && assignmentStatus(item), room?.status, submissions(), historyView, busy(), data?.connected]);
+  const signature = JSON.stringify([context.language, room?.status, values, values.map(value => assignmentStatus(value)), room?.seen, submissions(), busy(), data?.connected, selectedId, isOwner]);
+  if (signature !== listSignature) { listSignature = signature; renderFeed(values, room, isOwner); }
+  if (signature !== nextSignature) { nextSignature = signature; renderNext(values, isOwner); renderTools(item, isOwner); }
+  detail.hidden = !inspectMode;
+  root.querySelector('[data-hw-detail-title]').textContent = inspectMode === 'scores' ? t('ผลการส่งงาน','Submission results') : t('รายละเอียดงาน','Assignment details');
+  root.querySelector('[data-hw-detail-close]').textContent = t('ปิด','Close');
+  const nextDetail = JSON.stringify([context.language, id, item, item && assignmentStatus(item), room?.status, submissions(), historyView, busy(), data?.connected, inspectMode, isOwner]);
   if (nextDetail !== detailSignature) {
     detailSignature = nextDetail; detail.replaceChildren();
     if (id && !item && room?.status === 'ready') detail.append(el('p', t('ไม่พบการบ้านนี้ หรือคุณไม่มีสิทธิ์เปิดงานร่าง ตรวจลิงก์กับครูอีกครั้ง', 'This assignment was not found or its draft is private. Check the link with your teacher.')));
     if (item) {
-      detail.append(el('span', statusLabel(item), 'homework-tag'), el('h3', item.title), el('p', dueText(item)), el('p', item.instructions || t('ไม่มีคำชี้แจงเพิ่มเติม', 'No additional instructions.'), 'homework-instructions'),
-        el('p', t('Quiz: ', 'Quiz: ') + (context.language === 'en' ? item.quizTitleEn : item.quizTitleTh)));
-      const gradebook = submissions()?.grades?.[item.id];
-      const sent = gradebook?.rows.find(row => row.uid === uid)?.submitted;
-      if (gradebook?.ready && (isOwner || item.status === 'published' || sent)) detail.append(button(isOwner ? t('ดูชุดคำถาม', 'Preview question set') : sent ? item.status === 'published' ? t('แก้คำตอบ / ส่งอีกครั้ง', 'Edit / resubmit') : t('ดูงานที่ส่ง', 'View submitted work') : t('เปิดทำ Quiz', 'Open quiz'), 'launch', item.id));
-      if (item.status !== 'draft') detail.append(renderResults(item, isOwner));
-      if (isOwner) {
-        detail.append(button(t('แก้ไขงาน', 'Edit assignment'), 'edit', item.id));
-        if (item.status === 'published') detail.append(button(t('ปิดงาน', 'Close assignment'), 'close', item.id));
+      detail.append(el('h3', item.title));
+      if (inspectMode !== 'scores') {
+        detail.append(el('span', statusLabel(item), 'homework-tag'), el('p', dueText(item)), el('p', item.instructions || t('ไม่มีคำชี้แจงเพิ่มเติม', 'No additional instructions.'), 'homework-instructions'),
+          el('p', t('Quiz: ', 'Quiz: ') + (context.language === 'en' ? item.quizTitleEn : item.quizTitleTh)));
+        const launch = launchButton(item,isOwner); if (launch) detail.append(launch);
       }
-      if (item.status !== 'draft') {
+      if (item.status !== 'draft') detail.append(renderResults(item, isOwner));
+      if (item.status !== 'draft' && inspectMode !== 'scores') {
         const linkLabel = el('label', t('ลิงก์ประจำการบ้าน', 'Assignment link'), 'homework-share');
         const input = document.createElement('input'); input.readOnly = true; input.dataset.allowSelection = '';
         input.value = assignmentUrl(roomId, item.id, data.hubUrl); input.setAttribute('aria-label', linkLabel.textContent);
@@ -237,13 +346,22 @@ function paint() {
       }
     }
   }
-  root.querySelectorAll('button,input,textarea').forEach(node => { node.disabled = busy() || !data?.connected || room?.status !== 'ready'; });
+  root.querySelectorAll('button,input,textarea').forEach(node => { if (node.closest('[data-room-monitor-slot]')) return; node.disabled = busy() || !data?.connected || room?.status !== 'ready' || node.dataset.hwUnavailable === 'true'; });
   if (editor) for (const selector of ['[data-hw-save]','[data-hw-publish]']) form.querySelector(selector).disabled ||= preview?.url !== form.elements.url.value;
   // Recovery must remain available even when a room read is denied or offline.
   retry.disabled = busy();
+  root.querySelector('[data-hw-detail-close]').disabled = false;
+  root.querySelector('[data-hw-cancel]').disabled = false;
+  modal(editorDialog, Boolean(editor));
+  modal(detailDialog, Boolean(inspectMode) && !editor);
   if (item && item.status !== 'draft' && !isOwner && !room.seen?.[id] && document.visibilityState === 'visible' && !busy() && data?.connected && !seenAttempts.has(id)) {
     seenAttempts.add(id); queueMicrotask(() => send('seen', { id }));
   }
+}
+root.querySelector('[data-hw-detail-close]').addEventListener('click', closeDetail);
+for (const [node, close] of [[editorDialog,closeEditor],[detailDialog,closeDetail]]) {
+  node.addEventListener('cancel', event => { event.preventDefault(); close(); });
+  node.addEventListener('close', () => { if (!node.open) close(); });
 }
 root.querySelector('[data-hw-new]').addEventListener('click', () => edit(null));
 root.querySelector('[data-hw-cancel]').addEventListener('click', () => { closeEditor(); paint(); });
@@ -257,7 +375,12 @@ root.addEventListener('click', async event => {
   const item = [...(currentRoom()?.items || []), ...(currentRoom()?.drafts || [])].find(value => value.id === node.dataset.id);
   if (!item) return;
   const action = node.dataset.homeworkAction;
-  if (action === 'edit') edit(item);
+  if (['select','view','scores'].includes(action)) {
+    selectedId = item.id; inspectMode = action === 'select' ? '' : action === 'scores' ? 'scores' : 'details'; historyView = null;
+    if (action === 'scores') { paint(); detail.focus(); }
+    else { send('view', {id:item.id}); if (action === 'select') list.querySelector(`[data-assignment-id="${item.id}"]`)?.scrollIntoView?.({block:'nearest',behavior:'smooth'}); }
+  }
+  else if (action === 'edit') edit(item);
   else if (action === 'history') send('history', { id: item.id, studentUid: node.dataset.studentUid });
   else if (action === 'close') {
     if (window.confirm(t('ปิดการบ้านนี้? นักเรียนจะยังอ่านคำชี้แจงได้ แต่เปิดทำจากการบ้านนี้ไม่ได้', 'Close this assignment? Students can still read its instructions, but cannot launch it as homework.'))) send('close', { id: item.id, revision: item.revision });
@@ -273,7 +396,7 @@ window.addEventListener('message', event => {
   const action = pending.action; pending = null;
   if (!event.data.ok) { feedback = String(event.data.error || ''); feedbackError = true; }
   else if (action === 'preview') preview = { ...event.data.result.preview, url: form.elements.url.value };
-  else if (['save','publish'].includes(action)) { feedback = event.data.result.status === 'draft' ? 'saved' : editor?.status === 'draft' ? 'published' : 'updated'; feedbackError = false; closeEditor(); }
+  else if (['save','publish'].includes(action)) { selectedId = event.data.result.id || selectedId; inspectMode = ''; feedback = event.data.result.status === 'draft' ? 'saved' : editor?.status === 'draft' ? 'published' : 'updated'; feedbackError = false; closeEditor(); }
   else if (action === 'close') { feedback = 'closed'; feedbackError = false; }
   else if (action === 'prepare') { feedback = 'prepared'; feedbackError = false; }
   else if (action === 'history') historyView = event.data.result;
@@ -288,7 +411,7 @@ window.addEventListener('message', event => {
     } catch { feedback = 'export-failed'; feedbackError = true; }
   }
   paint();
-  if (event.data.ok && action === 'view') detail.focus();
+  if (event.data.ok && action === 'view' && inspectMode) detail.focus();
 });
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') paint(); });
 setInterval(() => { if (!root.hidden) paint(); }, 30000);

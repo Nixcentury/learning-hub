@@ -99,6 +99,7 @@ try {
   await student.frame.locator('#room-code').fill(code.toLowerCase());
   await student.frame.locator('[data-join-room] button').click();
   await student.frame.locator('[data-room-detail]').filter({ hasText: 'คุณเข้าร่วมห้องนี้แล้ว' }).waitFor();
+  await teacher.frame.locator('.classroom-roster-details>summary').click();
   await teacher.frame.locator('.classroom-roster li').filter({ hasText: 'Name student' }).waitFor();
   assert.equal(await student.frame.locator('.classroom-roster').count(), 0);
   assert.equal(await student.page.evaluate(id => qaRequests.some(r => r.path === 'classroomV1/members/' + id), roomId), false);

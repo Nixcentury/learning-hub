@@ -34,6 +34,7 @@
     "test:navigation": "node --test scripts/content-tool.test.mjs",
     "test:navigation:browser": "node scripts/test-content-navigation-browser.mjs",
     "test:classroom": "node --test --test-isolation=none scripts/classroom-access.test.mjs scripts/classroom-service.test.mjs",
+    "test:classroom:layout": "node scripts/test-classroom-layout-browser.mjs",
     "test:classroom:browser": "node scripts/test-classroom-browser.mjs",
     "test:classroom:rules": "node --test --test-isolation=none scripts/classroom-rules.test.mjs",
     "test:classroom:rooms": "node scripts/test-classroom-rooms-browser.mjs",

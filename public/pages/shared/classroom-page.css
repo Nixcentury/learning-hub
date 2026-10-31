@@ -291,3 +291,19 @@ body.theme-classroom {
   .classroom-roster-details{grid-column:1/-1;margin:0}
   .classroom-room-detail>p{grid-column:2/-1;margin:0}
 }
+
+/* Classroom links follow the existing blue panel and raised controls. */
+.room-links-list { list-style: none; padding: 0; margin: .7rem 0 0; display: grid; gap: .65rem; }
+.room-link { padding: .7rem; border: 1px solid #c6d9f3; background: #fff; min-width: 0; }
+.room-link > a { display: block; color: #1255ad; font-weight: 700; overflow-wrap: anywhere; }
+.room-link > small { display: block; margin-top: .25rem; color: #475b73; overflow-wrap: anywhere; }
+.room-links-actions { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .5rem; }
+.room-links-actions .classroom-button { padding: .35rem .6rem; font-size: .85rem; }
+.room-links-form { display: grid; gap: .65rem; margin-top: .8rem; padding: .7rem; background: #eef5ff; border: 1px solid #b7cfee; min-width: 0; }
+.room-links-form[hidden] { display: none; }
+.room-links-form h3 { margin: 0; font-size: 1rem; }
+.room-links-form label { display: grid; gap: .25rem; min-width: 0; font-weight: 600; }
+.room-links-form input { box-sizing: border-box; width: 100%; min-width: 0; border: 1px solid #93afd2; border-radius: 3px; padding: .5rem; font: inherit; color: #18324e; background: #fff; }
+.room-links-form small, .room-links-feedback { font-size: .85rem; color: #475b73; overflow-wrap: anywhere; }
+.room-links-feedback:empty { display: none; }
+.room-links-feedback.is-error { color: #a71d31; }

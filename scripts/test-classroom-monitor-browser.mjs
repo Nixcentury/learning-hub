@@ -5,6 +5,7 @@ import { resolve, extname, sep } from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { reset, good, emulatorOrigin, emulatorProject, mockToken } from './fixtures/classroom-emulator.mjs';
+import { buildLinksRules } from './build-classroom-links-rules.mjs';
 import { buildMonitorRules } from './build-classroom-monitor-rules.mjs';
 import { buildSubmissionRules } from './build-classroom-submission-rules.mjs';
 import { buildAssignmentRules } from './build-classroom-assignment-rules.mjs';
@@ -13,6 +14,7 @@ import { catalogFromRepository } from './build-route-catalog.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url)), prefix = '/learning-hub/', built = process.env.QA_BUILT === '1';
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const rules = JSON.parse(await readFile(resolve(root, 'firebase/classroom-phase1.merged-draft.json'), 'utf8'));
+rules.rules.classroomLinksV1 = buildLinksRules();
 rules.rules.classroomMonitorV1 = buildMonitorRules();
 rules.rules.classroomAssignmentsV1 = buildAssignmentRules();
 rules.rules.classroomSubmissionsV1 = buildSubmissionRules(); await reset(rules);
@@ -102,6 +104,27 @@ try {
   const teacher = await client('teacher'), student = await client('student', true);
   // Homework uses the production Hub bundle, UI and real emulator Rules.
   // It remains independent of lesson lock/unlock and quiz submission/grades.
+  // Live classroom links use production UI/service and the same emulator Rules.
+  await student.frame.locator('[data-hw-links-panel]>summary').click();
+  await student.frame.locator('[data-hw-add-link]:not([disabled])').waitFor();
+  await student.frame.locator('[data-hw-add-link]').click();
+  await student.frame.locator('[name="linkTitle"]').fill('สมุดจดร่วมของห้อง');
+  await student.frame.locator('[name="linkUrl"]').fill('https://example.com/notebook#page=2');
+  await student.frame.locator('[data-links-save]').click();
+  await student.frame.locator('[data-links-form]').waitFor({state:'hidden'});
+  await teacher.frame.locator('[data-links-list] a').filter({hasText:'สมุดจดร่วมของห้อง'}).waitFor();
+  const links = await good('teacher','GET',`classroomLinksV1/items/${roomId}`);
+  const linkId = Object.keys(links)[0]; assert.equal(links[linkId].authorUid,'student');
+  await teacher.frame.locator('[data-link-action="edit"]').click();
+  await teacher.frame.locator('[name="linkTitle"]').fill('สมุดจดที่ครูตรวจแล้ว');
+  await teacher.frame.locator('[data-links-save]').click();
+  await student.frame.locator('[data-links-list] a').filter({hasText:'สมุดจดที่ครูตรวจแล้ว'}).waitFor();
+  assert.equal((await good('student','GET',`classroomLinksV1/items/${roomId}/${linkId}`)).authorUid,'student');
+  student.page.once('dialog',dialog=>dialog.accept());
+  await student.frame.locator('[data-link-action="delete"]').click();
+  await teacher.frame.locator('[data-links-list] a').waitFor({state:'hidden'});
+  assert.equal(await good('teacher','GET',`classroomLinksV1/items/${roomId}/${linkId}`),null);
+  console.log('PASS live classroom links: student adds → teacher sees/edits → attribution retained → author deletes');
   const homeworkQuizRoute = catalog.routes.find(route => route.kind === 'content' && route.status === 'ready' &&
     catalog.contents.find(item => item.id === route.contentId)?.source.endsWith('equilibrium/4-1-equilibrium-quiz.html'));
   assert.ok(homeworkQuizRoute, 'An authored, available quiz is needed for assignment integration');

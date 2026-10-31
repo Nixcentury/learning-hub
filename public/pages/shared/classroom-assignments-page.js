@@ -10,9 +10,7 @@ root.innerHTML = `<aside class="classroom-left" data-hw-left>
   </details>
   <details class="classroom-links classroom-panel" data-hw-links-panel open>
     <summary data-hw-links-heading></summary>
-    <div class="classroom-links-content"><p id="homework-links-note" data-hw-links-note></p>
-      <button type="button" class="classroom-button" data-hw-add-link data-hw-unavailable="true" aria-describedby="homework-links-note" disabled></button><small data-hw-links-state></small>
-    </div>
+    <div class="classroom-links-content"></div>
   </details>
   </aside>
   <section class="classroom-feed" data-hw-feed aria-labelledby="homework-feed-title">
@@ -367,10 +365,6 @@ function paint() {
   root.querySelector('[data-hw-heading]').textContent = t('โพสต์งาน', 'Assignment posts');
   if (!isOwner) { if (editor) closeEditor(); if (inspectMode === 'scores') closeDetail(); }
   root.dataset.owner = String(isOwner);
-  root.querySelector('[data-hw-links-heading]').textContent = t('ลิงก์ของห้อง', 'Classroom links');
-  root.querySelector('[data-hw-links-note]').textContent = t('สมุดจดและสื่อที่ใช้ในคาบ', 'Notebooks and lesson resources');
-  root.querySelector('[data-hw-add-link]').textContent = t('+ ลิงก์อื่น', '+ Add a link');
-  root.querySelector('[data-hw-links-state]').textContent = t('เตรียมพื้นที่ไว้ก่อน ยังไม่เปิดบันทึกลิงก์', 'Prepared for a later step. Link saving is not enabled yet.');
   root.querySelector('[data-room-monitor-summary]').textContent = isOwner ? t('ติดตามคาบเรียน','Lesson monitoring') : t('คาบเรียนของฉัน','My lesson');
   const newButton = root.querySelector('[data-hw-new]'); newButton.hidden = !isOwner || Boolean(editor); newButton.textContent = t('+ มอบหมายงาน', '+ Assign homework');
   root.querySelector('[data-hw-note]').textContent = t('ทำ Quiz → ตรวจคำตอบ → ดูคะแนน → ส่งงานให้ครู กลับไปแก้และส่งซ้ำได้จนกว่าครูปิดงาน ครูเห็นคะแนนรวมที่ส่งล่าสุด การเปิด Quiz ยังไม่นับเป็นการส่งงาน', 'Complete quiz → Check answers → Review score → Submit to teacher. Edit and resubmit until your teacher closes the assignment. Teachers see the latest submitted total. Opening a quiz is not a submission.');
@@ -433,7 +427,7 @@ function paint() {
       }
     }
   }
-  root.querySelectorAll('button,input,textarea,select').forEach(node => { if (node.closest('[data-room-monitor-slot]')) return; node.disabled = busy() || !data?.connected || room?.status !== 'ready' || node.dataset.hwUnavailable === 'true'; });
+  root.querySelectorAll('button,input,textarea,select').forEach(node => { if (node.closest('[data-room-monitor-slot], [data-room-links]')) return; node.disabled = busy() || !data?.connected || room?.status !== 'ready' || node.dataset.hwUnavailable === 'true'; });
   if (editor) for (const selector of ['[data-hw-save]','[data-hw-publish]']) form.querySelector(selector).disabled ||= preview?.url !== form.elements.url.value;
   // Recovery must remain available even when a room read is denied or offline.
   retry.disabled = busy();

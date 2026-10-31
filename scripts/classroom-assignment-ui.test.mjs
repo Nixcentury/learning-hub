@@ -176,7 +176,6 @@ test('all submitted work stays in the path, and lesson shortcuts send an assignm
   assert.equal(f.document.querySelectorAll('[data-next-assignment]').length,1);
   assert.ok(f.document.querySelector('[data-hw-next]').textContent.includes('60%'));
   assert.ok(f.document.querySelector('[data-hw-next-note]').textContent.includes('ส่งครบแล้ว'));
-  assert.equal(f.document.querySelector('[data-hw-add-link]').disabled,true,'Link saving is explicitly deferred');
   f.document.querySelector('[data-homework-action="lesson"]').click();
   const command=f.messages.find(message=>message.action==='lesson');assert.ok(command);
   assert.deepEqual(JSON.parse(JSON.stringify(command.payload)),{roomId:rid,id:aid});

@@ -16,7 +16,7 @@ Agreed scope (2026-10-31): left = work to do next; center = teacher assignment p
 
 ## Validation
 
-- `pnpm test:unit`: 546 passing, including retained submitted/closed steps, private status, catalog-derived shortcuts, write-free lesson navigation, selection/toolbar IDs, role revocation, native-dialog state and monitoring-control isolation.
+- `pnpm test:unit`: 554 passing, including prerequisite thresholds/history, config validation, locked/loading UI, retained steps, private status, catalog-derived shortcuts, write-free lesson navigation, toolbar IDs, role revocation and monitoring-control isolation.
 - `pnpm build`: content, TypeScript, Vite and 658-public-file artifact checks pass.
 - Changed JS/test files: targeted oxlint and `git diff --check` pass.
 - `scripts/test-classroom-layout-browser.mjs` checks the built Classroom page in Chromium with a same-origin parent supplying explicitly synthetic QA context. It exercises desktop columns, scores/editor dialogs, CSV, student privacy, collapsible panels at 1024/768/390, TH/EN, empty/offline states and account/role changes. Screenshots use the `classroom-monitor-layout-` prefix in the Classroom workflow artifact.
@@ -25,9 +25,9 @@ Agreed scope (2026-10-31): left = work to do next; center = teacher assignment p
 
 ## Deferred work
 
-Shared practice/homework saves, score-based prerequisites, student posts/comments, groups and Sheet storage are separate tasks. No lock-by-score UI is claimed here. No database Rules, storage paths, question content or grading logic changes are required.
+Shared practice/homework saves, student posts/comments, groups and Sheet storage are separate tasks. Prerequisite configuration and the >50% submitted-work gate are described in [CLASSROOM-PREREQUISITES.md](CLASSROOM-PREREQUISITES.md).
 
-The path currently has no prerequisite gates. Open/closed padlock indicators describe the teacher's existing assignment status. Submitted steps remain selectable, and open assignments retain correction and resubmission. The displayed sequence uses publication time with ID as a tie-breaker; custom reordering and unlock rules are later work.
+Assignments default to no prerequisite. The path distinguishes teacher-closed work from work awaiting a prerequisite; posts remain selectable for instructions and results. A passing submitted result or history (>50%) opens the dependent work. The displayed sequence uses publication time with ID as a tie-breaker; custom reordering remains later work.
 
 ## Monitoring browser regression (#91)
 

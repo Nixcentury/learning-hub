@@ -5,8 +5,9 @@ import { createClassroomSheetCsv } from '../public/shared/classroom-sheet-export
 
 export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange = () => {} }) {
   let session, role, assignments, uid = '', roomId = '', epoch = 0, connected = false, error = '', busy = '', last = '';
-  let quizzes = {}, results = {}, roster = {}, own = {}, ready = false;
+  let quizzes = {}, results = {}, roster = {}, own = {}, histories = {}, ready = false;
   const stops = [], itemStops = new Map(), parsed = new Map(), loaded = new Set(), resultLoaded = new Set(), submissionsInFlight = new Map();
+  const historyStops = new Map(), historyLoaded = new Set(), passed = new Set();
   const room = (selected = roomId) => assignments?.rooms.find(value => value.id === selected);
   const isOwner = (selected = roomId) => role === 'teacher' && room(selected)?.membership === 'owner' && room(selected)?.ownerUid === uid;
   const live = (version, user = uid) => version === epoch && user === uid && session?.user?.uid === uid;
@@ -15,6 +16,30 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     const key = quiz.contentId + ':' + quiz.revision;
     if (!parsed.has(key)) parsed.set(key, readQuiz(quiz).questions);
     return parsed.get(key);
+  }
+  function passedRecord(record, quiz) {
+    if (!record || !quiz) return false;
+    try {
+      const grade = gradeSubmission(record, quiz, questionSet(quiz));
+      return !grade.error && grade.maxScore > 0 && grade.score * 2 > grade.maxScore;
+    } catch { return false; }
+  }
+  const passKey = (id, quiz) => `${id}:${quiz?.revision || ''}`;
+  function gateState(item) {
+    const requiredId = item.requiresAssignmentId || '';
+    const prior = room()?.items.find(value => value.id === requiredId);
+    const info = { requiredId, requiredTitle: prior?.title || '' };
+    if (isOwner() || !requiredId) return { ...info, status: 'open' };
+    if (error) return { ...info, status: 'error' };
+    if (!prior) return { ...info, status: 'locked' };
+    const quiz = quizzes[requiredId], key = passKey(requiredId, quiz);
+    if (passed.has(key)) return { ...info, status: 'open' };
+    if (!loaded.has('quizzes') || !resultLoaded.has(requiredId)) return { ...info, status: 'loading' };
+    if (!quiz) return { ...info, status: 'locked' };
+    if (passedRecord(own[requiredId], quiz) || Object.values(histories[requiredId] || {}).some(record => passedRecord(record, quiz))) {
+      passed.add(key); return { ...info, status: 'open' };
+    }
+    return { ...info, status: historyLoaded.has(requiredId) ? 'locked' : 'loading' };
   }
   function state() {
     const grades = {};
@@ -31,13 +56,15 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
         return { uid: user, name: member.displayName || user, submitted: Boolean(record), grade };
       }).sort((a, b) => a.name.localeCompare(b.name, 'th') || a.uid.localeCompare(b.uid)) };
     }
-    return { uid, roomId, connected, ready, busy, error, grades };
+    const gates = Object.fromEntries((room()?.items || []).map(item => [item.id, gateState(item)]));
+    return { uid, roomId, connected, ready, busy, error, grades, gates };
   }
   function publish() { const next = state(), signature = JSON.stringify(next); if (last !== signature) { last = signature; onChange(structuredClone(next)); } }
   function clear() {
     ++epoch; for (const stop of stops.splice(0)) stop();
     for (const stop of itemStops.values()) stop(); itemStops.clear(); parsed.clear();
-    loaded.clear(); resultLoaded.clear(); submissionsInFlight.clear(); quizzes = {}; results = {}; roster = {}; own = {}; ready = false; connected = false; busy = ''; error = ''; last = '';
+    for (const stop of historyStops.values()) stop(); historyStops.clear(); historyLoaded.clear(); passed.clear();
+    loaded.clear(); resultLoaded.clear(); submissionsInFlight.clear(); quizzes = {}; results = {}; roster = {}; own = {}; histories = {}; ready = false; connected = false; busy = ''; error = ''; last = '';
   }
   function watch(path, callback, version) {
     const timer = setTimeout(() => { if (live(version)) { error = 'homework/read-timeout'; publish(); } }, 15000); timer.unref?.();
@@ -51,6 +78,11 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     const ids = new Set((room()?.items || []).map(item => item.id));
     for (const [id, close] of itemStops) if (!ids.has(id)) { close(); itemStops.delete(id); delete own[id]; resultLoaded.delete(id); }
     for (const id of ids) if (!itemStops.has(id)) itemStops.set(id, watch(`results/${roomId}/${id}/${uid}`, value => { if (itemStops.has(id)) { own[id] = value.version ? value : null; resultLoaded.add(id); } }, version));
+    const required = new Set((room()?.items || []).map(item => item.requiresAssignmentId).filter(id => assignmentIdPattern.test(id || '') && ids.has(id)));
+    for (const [id, close] of historyStops) if (!required.has(id)) { close(); historyStops.delete(id); delete histories[id]; historyLoaded.delete(id); }
+    for (const id of required) if (!historyStops.has(id)) historyStops.set(id, watch(`history/${roomId}/${id}/${uid}`, value => {
+      if (historyStops.has(id)) { histories[id] = value; historyLoaded.add(id); }
+    }, version));
   }
   function setContext(identity, access, assignmentState, selectedRoom) {
     const verified = createClassroomAccess(identity, access);
@@ -86,6 +118,22 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     if (!item || !['published','closed'].includes(item.status)) throw failSubmission('homework/closed');
     return item;
   }
+  async function assertUnlocked(item, user, version, selected) {
+    const requiredId = item.requiresAssignmentId;
+    if (isOwner(selected) || !requiredId) return;
+    if (!assignmentIdPattern.test(requiredId)) throw failSubmission('homework/prerequisite-locked');
+    const prior = await read(`@assignments/items/${selected}/${requiredId}`); guard(user, version, false, selected);
+    if (!prior || !['published','closed'].includes(prior.status)) throw failSubmission('homework/prerequisite-locked');
+    const quiz = await read(`quizzes/${selected}/${requiredId}`); guard(user, version, false, selected);
+    if (!quiz) throw failSubmission('homework/prerequisite-locked');
+    const key = passKey(requiredId, quiz);
+    if (passed.has(key)) return;
+    const latest = await read(`results/${selected}/${requiredId}/${user}`); guard(user, version, false, selected);
+    if (passedRecord(latest, quiz)) { passed.add(key); publish(); return; }
+    const archived = await read(`history/${selected}/${requiredId}/${user}`); guard(user, version, false, selected);
+    if (Object.values(archived || {}).some(record => passedRecord(record, quiz))) { passed.add(key); publish(); return; }
+    throw failSubmission('homework/prerequisite-locked');
+  }
   async function prepare(id, user = uid) {
     guard(user, epoch, true);
     if (!assignmentIdPattern.test(id) || busy) throw failSubmission('homework/busy');
@@ -117,6 +165,8 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     const quiz = await read(`quizzes/${selected}/${id}`); guard(user, version);
     if (!quiz) throw failSubmission('homework/not-ready');
     questionSet(quiz);
+    await assertUnlocked({ ...item, id }, user, version, selected);
+    guard(user, version, false, selected);
     return { uid: user, roomId: selected, id, quizRevision: quiz.revision, contentId: item.contentId, title: item.title, preview: isOwner() };
   }
   async function quizCommand(action, binding, payload = {}) {
@@ -134,6 +184,7 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     }
     const finalPath = `results/${selected}/${id}/${user}`, draftPath = `attempts/${selected}/${id}/${user}`;
     let result = await read(finalPath); guard(user, version, false, selected);
+    await assertUnlocked({ ...item, id }, user, version, selected);
     if (action === 'load') {
       const draft = await read(draftPath); guard(user, version, false, selected);
       const currentDraft = draft && (draft.baseSubmissionId || '') === (result?.submissionId || '') && !(result && item.status === 'closed');
@@ -182,6 +233,7 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     }
     guard(user, version, false, selected); result = await read(finalPath); guard(user, version, false, selected);
     if (result?.submissionId !== payload.submissionId) throw failSubmission('homework/conflict');
+    own[id] = result; resultLoaded.add(id); publish();
     return { result, grade: gradeSubmission(result, quiz, questions) };
   }
   async function history(id, studentUid = uid) {

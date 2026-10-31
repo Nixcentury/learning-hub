@@ -23,11 +23,13 @@ export function cleanAssignmentFields(value) {
   const title = String(value.title || '').trim();
   const instructions = String(value.instructions || '').trim();
   const dueAt = Number(value.dueAt || 0);
+  const requiresAssignmentId = String(value.requiresAssignmentId || '').trim();
   const control = text => [...text].some(char => char.charCodeAt(0) < 32);
   if (!title || title.length > 180 || control(title)) throw assignmentError('assignment/invalid-title');
   if (instructions.length > 4000 || control(instructions.replaceAll('\n', '').replaceAll('\r', '').replaceAll('\t', ''))) throw assignmentError('assignment/invalid-instructions');
   if (!Number.isSafeInteger(dueAt) || dueAt < 0 || dueAt > 4102444800000) throw assignmentError('assignment/invalid-due');
-  return { title, instructions, dueAt };
+  if (requiresAssignmentId && !assignmentIdPattern.test(requiresAssignmentId)) throw assignmentError('assignment/invalid-prerequisite');
+  return { title, instructions, dueAt, ...(requiresAssignmentId ? { requiresAssignmentId } : {}) };
 }
 export function thaiDateInput(timestamp) {
   if (!timestamp) return '';

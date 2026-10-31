@@ -24,6 +24,9 @@
             "dueAt": {
               ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 4102444800000 && newData.val() % 1 === 0"
             },
+            "requiresAssignmentId": {
+              ".validate": "newData.isString() && newData.val().matches(/^a_[a-f0-9]{32}$/) && newData.val() !== $assignmentId && root.child('classroomAssignmentsV1/items').child($roomId).child(newData.val()).exists()"
+            },
             "targetHash": {
               ".validate": "newData.isString() && newData.val().matches(/^#[a-z0-9][a-z0-9/-]{0,519}$/)"
             },
@@ -77,6 +80,9 @@
             },
             "dueAt": {
               ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 4102444800000 && newData.val() % 1 === 0"
+            },
+            "requiresAssignmentId": {
+              ".validate": "newData.isString() && newData.val().matches(/^a_[a-f0-9]{32}$/) && newData.val() !== $assignmentId && root.child('classroomAssignmentsV1/items').child($roomId).child(newData.val()).exists() && root.child('classroomAssignmentsV1/items').child($roomId).child(newData.val()).child('publishedAt').val() < newData.parent().child('publishedAt').val()"
             },
             "targetHash": {
               ".validate": "newData.isString() && newData.val().matches(/^#[a-z0-9][a-z0-9/-]{0,519}$/)"

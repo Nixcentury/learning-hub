@@ -87,7 +87,7 @@
 .homework-editor{display:grid;gap:16px;padding:20px;border:1px solid #c4d7ed;border-radius:16px;background:#f4f8ff;margin:18px 0}
 .homework-editor h3{margin:0}.homework-editor label,.homework-share{display:grid;gap:8px;font-size:13px;font-weight:600}
 .homework-editor small{font-weight:400;color:#5a6f88;line-height:1.6}
-.classroom-assignments input,.classroom-assignments textarea{box-sizing:border-box;max-width:100%;width:100%;min-width:0;border:1px solid #bdcce1;border-radius:10px;padding:12px;font:inherit;background:white;color:#193253;min-height:44px}
+.classroom-assignments input,.classroom-assignments textarea,.classroom-assignments select{box-sizing:border-box;max-width:100%;width:100%;min-width:0;border:1px solid #bdcce1;border-radius:10px;padding:12px;font:inherit;background:white;color:#193253;min-height:44px}
 .classroom-assignments textarea{resize:vertical}.classroom-assignments :focus-visible{outline:3px solid #72a2f4;outline-offset:3px}
 .homework-actions{justify-content:flex-start}.homework-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;margin:18px 0}
 .homework-card{padding:18px;border:1px solid #d3e0ef;border-radius:16px;background:#fcfdff;min-width:0}
@@ -143,6 +143,12 @@
 .homework-step.is-submitted .homework-step-number{border-color:#9ecabb;background:#e5f5ed;color:#28745c}
 .homework-step.is-selected .homework-step-number{background:#254573;border-color:#254573;color:white}
 .homework-step[data-step-access="closed"] .homework-step-number{background:#edf0f5;border-color:#cbd4e1;color:#74839a}
+.homework-step[data-step-access="locked"] .homework-step-number{background:#fff1cc;border-color:#d9bb73;color:#7d5d18}
+.homework-gate-note{padding:10px 12px;border:1px solid #d9c58e;border-radius:9px;background:#fff9e9;color:#7a6024;font-size:12px;line-height:1.8;overflow-wrap:anywhere}
+.homework-gate-note[data-gate-status="open"]{border-color:#c6dfd3;background:#f0faf4;color:#39765b}
+.homework-step-body .homework-gate-note{margin:2px 0;padding:7px 8px;font-size:10px;line-height:1.7}
+.classroom-workspace .homework-required-work{font-size:11px;min-height:38px;padding:7px 9px;white-space:normal}
+.classroom-assignments button[data-hw-unavailable="true"]:disabled{cursor:not-allowed}
 .homework-step-body{display:grid;gap:6px;min-width:0}
 .classroom-workspace .homework-step .homework-next-item{margin:0;padding:11px 10px;gap:7px}
 .homework-step-title{font-size:12px;line-height:1.6;font-weight:750}

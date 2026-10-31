@@ -23,4 +23,8 @@ Agreed scope (2026-10-31): left = work to do next; center = teacher assignment p
 
 ## Deferred work
 
-Shared practice/homework saves, score-based prerequisites, student posts/comments, groups and Sheet storage are separate tasks. No lock-by-score UI is claimed here. The pre-existing PR #88 monitoring-dialog interception failure is a separate issue; this layout change does not force-click, skip or remove that regression assertion. No database Rules, storage paths, question content or grading logic changes are required.
+Shared practice/homework saves, score-based prerequisites, student posts/comments, groups and Sheet storage are separate tasks. No lock-by-score UI is claimed here. No database Rules, storage paths, question content or grading logic changes are required.
+
+## Monitoring browser regression (#91)
+
+Native dialog and click traces reproduced the old red check after #88/#90: messages were closed after acknowledgement, but the next mobile quiz-choice locator click hit the fixed lesson-banner button, reopened messages and left the answer map empty. A pre-click screenshot and hit checks also showed that centering the choice places it under the quiz's sticky action dock in this short iframe. The preservation scenario now waits for cloud readiness, scrolls the choice above that dock and sends a real pointer click at its visible center after checking hit targets in both the Hub and quiz documents. It then verifies the selected choice, a nonempty answer map and closed messages before opening/closing messages and comparing the answers. The complete integration scenario remains; no forced clicks, hidden overlays, production changes or skipped assertions are used.

@@ -272,9 +272,28 @@ try {
   const menuFrame = await student.page.locator('#hub-page-frame').elementHandle().then(handle => handle.contentFrame());
   await menuFrame.evaluate(() => parent.postMessage({ type: 'learning-hub-open-tool', toolId: 'test-c1-quiz' }, location.origin));
   const quiz = student.page.frameLocator('.workspace-tool-frame');
-  await quiz.locator('.quiz-option').first().click();
+  const choice = quiz.locator('.quiz-option').first();
+  await choice.waitFor({ state: 'visible' });
+  await quiz.locator('[data-quiz-storage-status]').filter({ hasText: 'บันทึกบน Cloud แล้ว' }).waitFor();
+  // The sticky quiz action dock covers the middle of this short mobile iframe.
+  // Scroll above it, then use a pointer only after checking both documents.
+  await choice.evaluate(node => node.scrollIntoView({ block: 'start', behavior: 'instant' }));
+  const choiceBounds = await choice.boundingBox();
+  assert.ok(choiceBounds, 'The choice has visible bounds');
+  const point = { x: choiceBounds.x + choiceBounds.width / 2, y: choiceBounds.y + choiceBounds.height / 2 };
+  assert.equal(await choice.evaluate(node => {
+    const rect = node.getBoundingClientRect();
+    return document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2)?.closest('.quiz-option') === node;
+  }), true, 'The choice is unobstructed inside the quiz');
+  assert.equal(await student.page.locator('.workspace-tool-frame').evaluate((frame, point) =>
+    document.elementFromPoint(point.x, point.y) === frame, point), true, 'No Hub overlay covers the click');
+  await student.page.mouse.click(point.x, point.y);
+  await quiz.locator('.quiz-option[aria-pressed="true"]').waitFor();
+  assert.equal(await choice.getAttribute('aria-pressed'), 'true', 'The quiz choice was actually selected');
   const quizFrame = await student.page.locator('.workspace-tool-frame').elementHandle().then(handle => handle.contentFrame());
   const answers = await quizFrame.evaluate(() => LearningHubQuiz.getState().answers);
+  assert.ok(Object.keys(answers).length > 0, 'Preservation must start with a real quiz answer');
+  assert.equal(await student.page.locator('.monitor-dialog').evaluate(node => node.open), false, 'Selecting an answer does not open messages');
   await student.page.locator('[data-monitor-open]').click(); await student.page.locator('[data-monitor-close]').click();
   assert.deepEqual(await quizFrame.evaluate(() => LearningHubQuiz.getState().answers), answers);
   console.log('PASS teacher disconnect pauses status; monitoring messages preserve an authenticated quiz answer');

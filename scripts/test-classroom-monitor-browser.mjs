@@ -79,6 +79,16 @@ try {
       // Deterministic tab visibility for desktop integration; real iPad behavior is a device check.
       let visible = true; Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => visible ? 'visible' : 'hidden' });
       window.qaVisible = value => { visible = value; document.dispatchEvent(new Event('visibilitychange')); };
+      window.qaDialogTrace = [];
+      const trace = (kind, detail) => window.qaDialogTrace.push({ kind, detail, time: performance.now() });
+      for (const method of ['showModal', 'close']) {
+        const original = HTMLDialogElement.prototype[method];
+        HTMLDialogElement.prototype[method] = function (...args) {
+          trace(method, { className: this.className, open: this.open, stack: new Error().stack });
+          return original.apply(this, args);
+        };
+      }
+      document.addEventListener('click', event => trace('click', { target: event.target.outerHTML?.slice(0, 300), trusted: event.isTrusted }), true);
     }, uid);
     await context.route('**/*', route => {
       const url = new URL(route.request().url()), name = url.pathname.split('/').at(-1);
@@ -264,6 +274,7 @@ try {
   await row.locator('.monitor-person-message').filter({ hasText: 'ข้อความ: รับทราบแล้ว' }).waitFor();
   await student.page.locator('[data-monitor-close]').click();
   console.log('PASS text is escaped, delivery differs from ack, and student replies reach teacher');
+  console.log('DIALOG TRACE after acknowledgement', await student.page.evaluate(() => ({ open: document.querySelector('.monitor-dialog').open, events: qaDialogTrace.slice(-20) })));
   await teacher.page.evaluate(() => qaNetwork(false));
   await teacher.frame.locator('[data-monitor-feedback]').filter({ hasText: 'การเชื่อมต่อขาด' }).waitFor();
   assert.equal(await row.locator('.monitor-person-status').textContent(), 'หน้าเว็บแสดงอยู่');
@@ -275,6 +286,7 @@ try {
   await quiz.locator('.quiz-option').first().click();
   const quizFrame = await student.page.locator('.workspace-tool-frame').elementHandle().then(handle => handle.contentFrame());
   const answers = await quizFrame.evaluate(() => LearningHubQuiz.getState().answers);
+  console.log('DIALOG TRACE after quiz choice', await student.page.evaluate(() => ({ open: document.querySelector('.monitor-dialog').open, events: qaDialogTrace.slice(-20) })), answers);
   await student.page.locator('[data-monitor-open]').click(); await student.page.locator('[data-monitor-close]').click();
   assert.deepEqual(await quizFrame.evaluate(() => LearningHubQuiz.getState().answers), answers);
   console.log('PASS teacher disconnect pauses status; monitoring messages preserve an authenticated quiz answer');

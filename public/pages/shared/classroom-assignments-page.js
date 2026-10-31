@@ -331,11 +331,14 @@ function paint() {
     detailSignature = nextDetail; detail.replaceChildren();
     if (id && !item && room?.status === 'ready') detail.append(el('p', t('ไม่พบการบ้านนี้ หรือคุณไม่มีสิทธิ์เปิดงานร่าง ตรวจลิงก์กับครูอีกครั้ง', 'This assignment was not found or its draft is private. Check the link with your teacher.')));
     if (item) {
-      detail.append(el('span', statusLabel(item), 'homework-tag'), el('h3', item.title), el('p', dueText(item)), el('p', item.instructions || t('ไม่มีคำชี้แจงเพิ่มเติม', 'No additional instructions.'), 'homework-instructions'),
-        el('p', t('Quiz: ', 'Quiz: ') + (context.language === 'en' ? item.quizTitleEn : item.quizTitleTh)));
-      const launch = launchButton(item,isOwner); if (launch) detail.append(launch);
+      detail.append(el('h3', item.title));
+      if (inspectMode !== 'scores') {
+        detail.append(el('span', statusLabel(item), 'homework-tag'), el('p', dueText(item)), el('p', item.instructions || t('ไม่มีคำชี้แจงเพิ่มเติม', 'No additional instructions.'), 'homework-instructions'),
+          el('p', t('Quiz: ', 'Quiz: ') + (context.language === 'en' ? item.quizTitleEn : item.quizTitleTh)));
+        const launch = launchButton(item,isOwner); if (launch) detail.append(launch);
+      }
       if (item.status !== 'draft') detail.append(renderResults(item, isOwner));
-      if (item.status !== 'draft') {
+      if (item.status !== 'draft' && inspectMode !== 'scores') {
         const linkLabel = el('label', t('ลิงก์ประจำการบ้าน', 'Assignment link'), 'homework-share');
         const input = document.createElement('input'); input.readOnly = true; input.dataset.allowSelection = '';
         input.value = assignmentUrl(roomId, item.id, data.hubUrl); input.setAttribute('aria-label', linkLabel.textContent);

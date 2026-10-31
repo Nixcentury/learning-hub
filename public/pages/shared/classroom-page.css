@@ -229,3 +229,17 @@
   .homework-modal .homework-editor,.homework-modal .homework-detail{padding:18px}
   .homework-modal-heading{padding:12px 16px}
 }
+
+/* Keep room context compact so assignment posts start near the top. */
+.classroom-has-room .page-heading{padding:10px 16px;gap:10px}
+.classroom-has-room .page-heading .page-icon{width:36px;height:36px;font-size:20px}
+.classroom-has-room .page-heading h1{font-size:20px}
+.classroom-has-room .classroom-phase{display:none}
+.classroom-room-detail>p{font-size:12px;line-height:1.7;margin:8px 0}
+@media(min-width:1180px){
+  .classroom-room-detail{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px 18px;padding:14px 20px}
+  .classroom-room-detail h2{margin:0;font-size:22px;min-width:0}
+  .classroom-room-detail>.classroom-button{margin:0}
+  .classroom-roster-details{grid-column:1/-1;margin:0}
+  .classroom-room-detail>p{grid-column:2/-1;margin:0}
+}

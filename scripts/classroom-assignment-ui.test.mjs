@@ -159,3 +159,14 @@ test('assignment refresh leaves the monitoring controls to their own service and
   assert.equal(monitor.disabled,true);assert.equal(f.document.querySelector('[data-hw-tools] [data-homework-action="edit"]').disabled,true);
   assert.equal(f.document.querySelector('[data-hw-retry]').disabled,false);
 });
+
+
+test('View scores opens the selected gradebook directly while the post stays in the center feed',async()=>{
+  const f=await fixture();f.update(context());f.document.querySelector('[data-hw-detail-close]').click();
+  f.document.querySelector('[data-hw-tools] [data-homework-action="scores"]').click();
+  const detail=f.document.querySelector('[data-hw-detail]');
+  assert.equal(detail.querySelectorAll('.homework-instructions').length,0);
+  assert.equal(detail.querySelectorAll('.homework-share').length,0);
+  assert.ok(detail.querySelector('[data-homework-results]'));
+  assert.equal(f.document.querySelector('[data-hw-feed] .homework-post-instructions').textContent,item.instructions);
+});

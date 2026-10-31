@@ -275,9 +275,9 @@ try {
   const choice = quiz.locator('.quiz-option').first();
   await choice.waitFor({ state: 'visible' });
   await quiz.locator('[data-quiz-storage-status]').filter({ hasText: 'บันทึกบน Cloud แล้ว' }).waitFor();
-  // Locator auto-scrolling in this nested mobile iframe can send the click to
-  // the fixed lesson banner. Use a real pointer at the verified visible center.
-  await choice.evaluate(node => node.scrollIntoView({ block: 'center', behavior: 'instant' }));
+  // The sticky quiz action dock covers the middle of this short mobile iframe.
+  // Scroll above it, then use a pointer only after checking both documents.
+  await choice.evaluate(node => node.scrollIntoView({ block: 'start', behavior: 'instant' }));
   const choiceBounds = await choice.boundingBox();
   assert.ok(choiceBounds, 'The choice has visible bounds');
   const point = { x: choiceBounds.x + choiceBounds.width / 2, y: choiceBounds.y + choiceBounds.height / 2 };

@@ -30,6 +30,17 @@ function fixture(t, user = 'teacher', teacher = true) {
   return { service, db, io, get, put, emit, writes, reads, watchers };
 }
 const input = { roomId: rid, id: aid, title: 'ทวนคลื่น', instructions: 'ทำให้ครบ', url: hub + quizRoute.hash, dueAt: 0, revision: 0 };
+test('assignment prerequisites are optional and must refer to earlier published work in the same room',async t=>{
+  const f=fixture(t);await tick();
+  const prior='a_'+'c'.repeat(32);f.put(`items/${rid}/${prior}`,{...input,status:'published',publishedAt:500,targetHash:quizRoute.hash,contentId:'wave-quiz',revision:1});f.emit();
+  await f.service.command('save',{...input,requiresAssignmentId:prior});
+  assert.equal(f.get(`drafts/${rid}/${aid}`).requiresAssignmentId,prior);
+  await f.service.command('publish',{...input,revision:1,requiresAssignmentId:prior});
+  assert.equal(f.get(`items/${rid}/${aid}`).requiresAssignmentId,prior);
+  for(const requiresAssignmentId of [aid,'not-an-id','a_'+'e'.repeat(32)])await assert.rejects(f.service.command('save',{...input,revision:2,requiresAssignmentId}),{code:'assignment/invalid-prerequisite'});
+  f.put(`items/${rid}/${prior}`,{...f.get(`items/${rid}/${prior}`),publishedAt:2000});f.emit();
+  await assert.rejects(f.service.command('save',{...input,revision:2,requiresAssignmentId:prior}),{code:'assignment/invalid-prerequisite'});
+});
 test('lesson shortcuts follow canonical content, chapter and bank parents without guessing titles',()=>{
   const canonical={...quizRoute,hash:'#content/wave-quiz',aliases:['#content/wave-alias']};
   const c={...catalog,routes:[...catalog.routes,canonical]};

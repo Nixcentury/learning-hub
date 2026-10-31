@@ -142,6 +142,11 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
         if ((previous?.revision || 0) !== payload.revision) throw assignmentError('assignment/conflict');
         if (action === 'close' && !oldItem) throw assignmentError('assignment/closed');
         const fields = action === 'close' ? cleanAssignmentFields(oldItem) : cleanAssignmentFields(payload);
+        if (fields.requiresAssignmentId) {
+          const prior = await read(`items/${roomId}/${fields.requiresAssignmentId}`); guard(user, version); roomFor(roomId, true);
+          if (fields.requiresAssignmentId === id || !prior || !['published','closed'].includes(prior.status) ||
+              oldItem && !(prior.publishedAt < oldItem.publishedAt)) throw assignmentError('assignment/invalid-prerequisite');
+        }
         const target = oldItem ? Object.fromEntries(['targetHash','contentId','quizTitleTh','quizTitleEn'].map(key => [key, oldItem[key]]))
           : resolveAssignmentQuiz(payload.url, await loadCatalog(), hubUrl);
         guard(user, version); roomFor(roomId, true);

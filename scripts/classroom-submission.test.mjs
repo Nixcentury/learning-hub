@@ -15,8 +15,9 @@ const quiz = { version: 1, contentId: 'waves-quiz', revision, html: '<quiz>', qu
 const item = { id: aid, contentId: quiz.contentId, targetHash: quiz.targetHash, title: 'Waves', status: 'published', dueAt: 900 };
 const progress = (answers = {}) => ({ version: 2, identityKey: 'student', contentId: quiz.contentId, answers, giveUps: {}, masteredIds: ['choice','number','drag'], elapsedMs: 2345 });
 const tick = () => new Promise(done => setImmediate(done));
-function fixture(t, user = 'student', prepared = true) {
-  const db = { quizzes: prepared ? {[rid]:{[aid]:quiz}} : {}, results: {}, attempts: {}, '@classroom': { members: { [rid]: { student: {displayName:'นักเรียน ก'}, 'student-b': {displayName:'นักเรียน ข'} } } }, '@assignments': {items:{[rid]:{[aid]:item},[other]:{[aid]:item}}} };
+function fixture(t, user = 'student', prepared = true, questionList = questions) {
+  const frozen = { ...quiz, questionCount: questionList.length };
+  const db = { quizzes: prepared ? {[rid]:{[aid]:frozen}} : {}, results: {}, attempts: {}, '@classroom': { members: { [rid]: { student: {displayName:'นักเรียน ก'}, 'student-b': {displayName:'นักเรียน ข'} } } }, '@assignments': {items:{[rid]:{[aid]:item},[other]:{[aid]:item}}} };
   const watchers = [], writes = [], reads = [], connections = [];
   const get = path => path.split('/').reduce((value,key)=>value?.[key],db) ?? null;
   const put = (path,value) => { const parts=path.split('/'), key=parts.pop();let at=db;for(const part of parts)at=at[part] ||= {};if(value===null)delete at[key];else at[key]=structuredClone(value); };
@@ -27,16 +28,83 @@ function fixture(t, user = 'student', prepared = true) {
     async transaction(path,change) { const next=change(structuredClone(get(path)));if(next===undefined)return{committed:false};writes.push({path,next});put(path,next);emit();return{committed:true}; },
     async update(values) { writes.push({values});for(const [path,value] of Object.entries(values))put(path,value);emit(); },
   };
-  const service=createClassroomSubmissions({io,freezeQuiz:async()=>quiz,readQuiz:()=>({questions})});
-  function context(uid=user, selected=rid) {
+  const service=createClassroomSubmissions({io,freezeQuiz:async()=>frozen,readQuiz:()=>({questions:questionList})});
+  function context(uid=user, selected=rid, items=[item]) {
     const teacher=uid==='teacher', role={uid,status:'ready',isTeacher:teacher,systemRole:teacher?'teacher':'student'};
-    const assignments={uid,hubUrl:'https://example.test/learning-hub/',rooms:[rid,other].map(id=>({id,status:'ready',membership:teacher?'owner':'student',ownerUid:'teacher',items:[item]}))};
+    const assignments={uid,hubUrl:'https://example.test/learning-hub/',rooms:[rid,other].map(id=>({id,status:'ready',membership:teacher?'owner':'student',ownerUid:'teacher',items}))};
     service.setContext({status:'signed-in',user:{uid}},role,assignments,selected);
     return assignments;
   }
   context();t.after(()=>service.dispose());
   return {service,io,db,get,put,emit,writes,reads,watchers,connections,context};
 }
+
+const nextId='a_'+'e'.repeat(32);
+async function gatedFixture(t, questionList=questions) {
+  const f=fixture(t,'student',true,questionList), next={...item,id:nextId,title:'Next work',requiresAssignmentId:aid};
+  f.put(`@assignments/items/${rid}/${nextId}`,next);f.put(`quizzes/${rid}/${nextId}`,f.get(`quizzes/${rid}/${aid}`));
+  f.context('student',rid,[item,next]);await tick();return {...f,next};
+}
+test('prerequisites require a final submission above 50%; drafts and exactly 50% do not unlock, and other students stay locked',async t=>{
+  const f=await gatedFixture(t,questions.slice(0,2)), binding=await f.service.open(aid);
+  await assert.rejects(f.service.open(nextId),{code:'homework/prerequisite-locked'});
+  await f.service.quizCommand('save',binding,{value:progress({choice:'a',number:'5/6'}),storageRevision:0});
+  assert.equal(f.service.getState().gates[nextId].status,'locked');
+  const half=await f.service.quizCommand('submit',binding,{value:progress({choice:'a'}),submissionId:'1'.repeat(32)});
+  assert.equal(half.grade.percent,50);assert.equal(f.service.getState().gates[nextId].status,'locked');
+  const direct={...binding,id:nextId};
+  for(const action of ['load','save','submit']) await assert.rejects(f.service.quizCommand(action,direct,{value:progress(),storageRevision:0,submissionId:'3'.repeat(32)}),{code:'homework/prerequisite-locked'});
+  const pass=await f.service.quizCommand('submit',binding,{value:progress({choice:'a',number:'5/6'}),submissionId:'2'.repeat(32),previousSubmissionId:half.result.submissionId});
+  assert.equal(pass.grade.percent,100);assert.equal(f.service.getState().gates[nextId].status,'open');
+  assert.equal((await f.service.open(nextId)).id,nextId);
+  f.context('student-b',rid,[item,f.next]);await tick();
+  assert.equal(f.service.getState().gates[nextId].status,'locked');await assert.rejects(f.service.open(nextId),{code:'homework/prerequisite-locked'});
+});
+test('an archived passing submission keeps access after score reduction and a fresh account/context load while grades stay latest',async t=>{
+  const f=await gatedFixture(t),binding=await f.service.open(aid);
+  const first=await f.service.quizCommand('submit',binding,{value:progress({choice:'a',number:'5/6'}),submissionId:'1'.repeat(32)});
+  assert.ok(first.grade.percent>50);
+  await f.service.quizCommand('submit',binding,{value:progress({choice:'b'}),submissionId:'2'.repeat(32),previousSubmissionId:first.result.submissionId});
+  assert.equal(f.service.getState().grades[aid].rows[0].grade.score,0);assert.equal(f.service.getState().gates[nextId].status,'open');
+  f.context('student-b',rid,[item,f.next]);await tick();f.context('student',rid,[item,f.next]);await tick();
+  assert.equal(f.service.getState().gates[nextId].status,'open');await f.service.open(nextId);
+  f.context('teacher',rid,[item,f.next]);await tick();
+  assert.equal(f.service.getState().grades[aid].rows.find(row=>row.uid==='student').grade.score,0);
+  assert.equal((await f.service.open(nextId)).preview,true);
+});
+test('adding a prerequisite while a quiz is open is checked on load, save and submit even with stale UI context',async t=>{
+  const f=await gatedFixture(t),unrestricted={...f.next};delete unrestricted.requiresAssignmentId;
+  f.put(`@assignments/items/${rid}/${nextId}`,unrestricted);f.context('student',rid,[item,unrestricted]);await tick();
+  const binding=await f.service.open(nextId);
+  f.put(`@assignments/items/${rid}/${nextId}`,f.next);
+  const before=f.writes.length;
+  for(const action of ['load','save','submit']) await assert.rejects(f.service.quizCommand(action,binding,{value:progress(),storageRevision:0,submissionId:'3'.repeat(32)}),{code:'homework/prerequisite-locked'});
+  assert.equal(f.writes.length,before);
+});
+test('adding a prerequisite retains old results but requires the prerequisite before reopening for correction',async t=>{
+  const f=await gatedFixture(t),unrestricted={...f.next};delete unrestricted.requiresAssignmentId;
+  f.put(`@assignments/items/${rid}/${nextId}`,unrestricted);f.context('student',rid,[item,unrestricted]);await tick();
+  const binding=await f.service.open(nextId);
+  const sent=await f.service.quizCommand('submit',binding,{value:progress({choice:'b'}),submissionId:'3'.repeat(32)});
+  f.put(`@assignments/items/${rid}/${nextId}`,f.next);f.context('student',rid,[item,f.next]);await tick();
+  assert.equal(f.service.getState().gates[nextId].status,'locked');
+  assert.equal(f.service.getState().grades[nextId].rows[0].submitted,true);
+  assert.equal(f.get(`results/${rid}/${nextId}/student`).submissionId,sent.result.submissionId);
+  await assert.rejects(f.service.open(nextId),{code:'homework/prerequisite-locked'});
+  const prior=await f.service.open(aid);
+  await f.service.quizCommand('submit',prior,{value:progress({choice:'a',number:'5/6'}),submissionId:'2'.repeat(32)});
+  assert.equal(f.service.getState().gates[nextId].status,'open');
+  await f.service.quizCommand('save',binding,{value:progress({choice:'a'}),storageRevision:0,previousSubmissionId:sent.result.submissionId});
+});
+test('a delayed prerequisite history read cannot unlock a different account',async t=>{
+  const f=await gatedFixture(t),original=f.io.get;let release;
+  const record={...submissionPayload(progress({choice:'a',number:'5/6'}),questions),version:1,contentId:quiz.contentId,quizRevision:revision,submittedAt:1000,submissionId:'1'.repeat(32),dueAt:0};
+  f.io.get=async path=>path===`history/${rid}/${aid}/student`?new Promise(done=>{release=done;}):original(path);
+  const opening=f.service.open(nextId);await tick();assert.equal(typeof release,'function');
+  f.context('student-b',rid,[item,f.next]);await tick();release({old:record});
+  await assert.rejects(opening,{code:'homework/session-changed'});
+  assert.equal(f.service.getState().gates[nextId].status,'locked');
+});
 
 test('homework grading uses the submitted answers, never cumulative mastery or client score fields',()=>{
   const answer={choice:'a',number:'\\frac56',drag:{x:'one',y:'two'}};

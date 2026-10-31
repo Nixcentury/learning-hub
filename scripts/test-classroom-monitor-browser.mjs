@@ -20,6 +20,11 @@ const roomId = 'r_' + 'a'.repeat(32), stamp = { '.sv': 'timestamp' };
 await good('teacher', 'PATCH', 'classroomV1', createRoomUpdates('teacher', 'ฟิสิกส์ ม.5/1', { roomId, code: 'ABCD2345' }, stamp));
 for (const uid of ['student','student-b']) await good(uid, 'PATCH', 'classroomV1', joinRoomUpdates(uid, roomId, 'ABCD2345', uid === 'student' ? 'นักเรียนทดลอง' : 'นักเรียนอีกคน', stamp));
 const catalog = await catalogFromRepository();
+// A QA-only placement of the repository's two-question template makes exactly
+// 50% reachable. Production navigation, freezing, grading and Rules stay intact.
+const qaLocation = catalog.contents.find(content => content.source.endsWith('equilibrium/4-1-equilibrium-quiz.html')).placements[0];
+catalog.contents.push({ id:'qa-prerequisite-quiz',toolKind:'quiz',source:'content/templates/quiz-template.html',titleTh:'ทดสอบเงื่อนไข 2 ข้อ',titleEn:'Two-question prerequisite QA',canonicalHash:'#content/qa-prerequisite-quiz',placements:[qaLocation] });
+catalog.routes.push({ hash:'#content/qa-prerequisite-quiz',aliases:[],kind:'content',status:'ready',contentId:'qa-prerequisite-quiz',...qaLocation,titleTh:'ทดสอบเงื่อนไข 2 ข้อ',titleEn:'Two-question prerequisite QA' });
 const auth = `
 export class GoogleAuthProvider{setCustomParameters(){}} export const browserLocalPersistence={};export const getAuth=()=>({});export const setPersistence=async()=>{};
 let user=localStorage.getItem('monitor-qa-user'),callback;window.qaUid=user;
@@ -61,7 +66,7 @@ const server = createServer(async (req, res) => {
     const name = decodeURIComponent(url.pathname.slice(prefix.length)) || 'index.html', directory = built ? resolve(root, 'dist') : root;
     if (!resolve(directory, name).startsWith(directory.replace(/[\\/]$/, '') + sep)) throw Error('Outside root');
     let data;
-    if (name === 'route-catalog.v1.json' && !built) data = JSON.stringify(catalog);
+    if (name === 'route-catalog.v1.json') data = JSON.stringify(catalog);
     else { try { data = await readFile(resolve(directory, name)); } catch { if (built) throw Error('Missing built resource'); data = await readFile(resolve(root, 'public', name)); } }
     if (name === 'index.html') data = data.toString().replaceAll('%BASE_URL%', prefix);
     res.setHeader('Content-Type', ({ '.html':'text/html; charset=utf-8', '.js':'text/javascript', '.mjs':'text/javascript', '.css':'text/css', '.svg':'image/svg+xml', '.json':'application/json' })[extname(name)] || 'application/octet-stream'); res.end(data);
@@ -219,6 +224,74 @@ try {
   await student.page.evaluate(hash => { location.hash = hash; }, new URL(homeworkLink).hash);
   await student.frame.locator('[data-classroom-assignments]').waitFor();
   console.log('PASS classroom path retains submitted/closed work and lesson shortcut opens the authored menu without changing results');
+  const smallQuiz = catalog.contents.find(content => content.source === 'content/templates/quiz-template.html');
+  assert.ok(smallQuiz, 'The two-question template fixture is available for the threshold check');
+  async function assignStep(title, requiresAssignmentId = '') {
+    const close = teacher.frame.locator('[data-hw-detail-dialog][open] [data-hw-detail-close]');
+    if (await close.count()) await close.click();
+    await teacher.frame.locator('[data-hw-new]').click();
+    await teacher.frame.locator('[name="title"]').fill(title);
+    await teacher.frame.locator('[name="url"]').fill(origin + prefix + smallQuiz.canonicalHash);
+    await teacher.frame.locator('[name="requiresAssignmentId"]').selectOption(requiresAssignmentId);
+    await teacher.frame.locator('[data-hw-preview]').click();
+    await teacher.frame.locator('[data-hw-preview-result]').filter({hasText:'Quiz ที่เลือก'}).waitFor();
+    await teacher.frame.locator('[data-hw-publish]').click();
+    await teacher.frame.locator('[data-hw-selection]').filter({hasText:title}).waitFor();
+    const id = await teacher.frame.locator('[data-hw-tools] [data-homework-action="edit"]').getAttribute('data-id');
+    await teacher.frame.locator(`[data-hw-feed] [data-assignment-id="${id}"] [data-homework-action="launch"]`).waitFor();
+    return id;
+  }
+  const stepA = await assignStep('ทดสอบเงื่อนไข · งาน 1'), stepB = await assignStep('ทดสอบเงื่อนไข · งาน 2', stepA);
+  async function inspectStep(client, id) {
+    await client.page.evaluate(hash => { location.hash = hash; }, `#classroom/${roomId}/${id}`);
+    await client.frame.locator('[data-hw-detail-dialog][open]').waitFor();
+    await client.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${id}"]`).waitFor();
+  }
+  await inspectStep(student, stepA);
+  await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepA}"]`).click();
+  const stepWindow = `#workspace-window-layer [data-tool-id="homework-${roomId}-${stepA}-student"] iframe`;
+  const stepQuiz = student.page.frameLocator(stepWindow);
+  async function answerStep(questionIndex) {
+    const correctIndex = await stepQuiz.locator('[data-quiz-print-source] [data-question]').nth(questionIndex).evaluate(question => [...question.querySelectorAll('[data-choice-id]')].findIndex(choice => choice.dataset.choiceId === question.dataset.answer));
+    assert.ok(correctIndex >= 0);
+    const option = stepQuiz.locator('.quiz-option').nth(correctIndex);
+    await option.evaluate(node => node.scrollIntoView({block:'start',behavior:'instant'}));
+    assert.equal(await option.evaluate(node => {const r=node.getBoundingClientRect();return document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)?.closest('.quiz-option')===node;}),true);
+    const rect = await option.boundingBox(), point = {x:rect.x+rect.width/2,y:rect.y+rect.height/2};
+    assert.equal(await student.page.locator(stepWindow).evaluate((frame,p)=>document.elementFromPoint(p.x,p.y)===frame,point),true);
+    await student.page.mouse.click(point.x,point.y);
+    await stepQuiz.locator('.quiz-option[aria-pressed="true"]').waitFor();
+  }
+  async function sendStep(score) {
+    await stepQuiz.locator('[data-submit-all]').click();await stepQuiz.locator('[data-evidence-warning-continue]').click();
+    await stepQuiz.locator('[data-homework-submit]').waitFor();student.page.once('dialog',dialog=>dialog.accept());await stepQuiz.locator('[data-homework-submit]').click();
+    await stepQuiz.locator('[data-homework-status]').filter({hasText:`คะแนนที่ส่งล่าสุด ${score}/2`}).waitFor();
+    await stepQuiz.locator('[data-homework-back]').click();
+    await student.page.locator(stepWindow).waitFor({state:'hidden'});
+    await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepA}"]`).waitFor();
+  }
+  await answerStep(0);await sendStep(1);
+  await inspectStep(student,stepB);
+  await student.frame.locator('[data-hw-detail] [data-gate-status="locked"]').waitFor();
+  assert.equal(await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepB}"]`).isDisabled(),true,'Exactly 50% stays locked');
+  const deniedLaunch = await student.page.locator('#hub-page-frame').elementHandle().then(handle=>handle.contentFrame()).then(frame=>frame.evaluate(({roomId,id})=>new Promise(resolve=>{
+    const requestId=crypto.randomUUID(),timeout=setTimeout(()=>{window.removeEventListener('message',receive);resolve('timeout');},10000);
+    function receive(event){if(event.source===parent&&event.origin===location.origin&&event.data?.type==='learning-hub-assignment-result'&&event.data.requestId===requestId){clearTimeout(timeout);window.removeEventListener('message',receive);resolve(event.data.error);}}
+    window.addEventListener('message',receive);parent.postMessage({type:'learning-hub-assignment-command',uid:'student',requestId,action:'launch',payload:{roomId,id}},location.origin);
+  }),{roomId,id:stepB}));
+  assert.equal(deniedLaunch,'homework/prerequisite-locked','The parent also rejects direct launch requests');
+  await inspectStep(student,stepA);await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepA}"]`).click();
+  await stepQuiz.locator('[data-retry]').click();await answerStep(1);await sendStep(2);
+  await inspectStep(student,stepB);
+  await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepB}"]:not([disabled])`).waitFor();
+  await student.page.reload();
+  await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepB}"]:not([disabled])`).waitFor();
+  const otherStudent = await client('student-b',true);await inspectStep(otherStudent,stepB);
+  await otherStudent.frame.locator('[data-hw-detail] [data-gate-status="locked"]').waitFor();await otherStudent.context.close();
+  await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepB}"]`).click();
+  await student.page.frameLocator(`#workspace-window-layer [data-tool-id="homework-${roomId}-${stepB}-student"] iframe`).locator('[data-quiz-app]').waitFor();
+  await student.page.reload();await student.frame.locator('[data-classroom-assignments]').waitFor();
+  console.log('PASS prerequisites: 50% locked → direct launch denied → resubmit above 50% unlocks → reload stays open → other student locked → next quiz opens');
   const people = teacher.frame.locator('[data-monitor-people]');
   await student.page.evaluate(() => { qaVisible(false); location.hash = '#chemistry/bank'; });
   assert.equal(await student.page.locator('.monitor-banner').isVisible(), false);

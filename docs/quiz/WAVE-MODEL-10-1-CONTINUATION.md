@@ -15,7 +15,7 @@ PR #82's original 20-question Set 1 was merged. Its twenty stable question IDs a
 | 2 | 41 | 8 drag passages, 28 choices, 5 numeric | Sections 7–10: superposition, interference, diffraction, experiments and light-model evidence |
 
 Files: `10-1-wave-model-quiz-set-1.html`, `10-1-wave-model-quiz-set-2.html`.
-Activity IDs: `physics-ipst-wave-optics-10-1-quiz-set-1` and `physics-ipst-wave-optics-10-1-quiz-set-2`; content version 2. Keep the existing IDs stable when editing. Saved practice answers are handled by the existing engine; the normal “Restart · load latest” control is available when starting a fresh attempt.
+Activity IDs: `physics-ipst-wave-optics-10-1-quiz-set-1` and `physics-ipst-wave-optics-10-1-quiz-set-2`; content version 3 (consistent MathJax notation, 2026-10-31). Keep the existing IDs stable when editing. Saved practice answers are handled by the existing engine; the normal “Restart · load latest” control is available when starting a fresh attempt.
 
 ## Coverage against the complete source
 

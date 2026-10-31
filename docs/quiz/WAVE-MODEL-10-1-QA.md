@@ -38,3 +38,19 @@ The browser twice showed **Evidence export completed** for a representative resu
 Merged main `036136da5496cd4026438a7615839c534dc4f5f4` into the PR branch, including PR #85's homework resubmissions and PR #80's reflection visuals. Resolved the two conflicting files by updating both quiz-player cache versions and retaining `startRetry`, `restart` and `cloneInto` in the existing test harness. The production engine keeps both the homework resubmission changes and this PR's three give-up presentation changes. Classroom services and Firebase Rules match main exactly.
 
 After integration, **168 related tests passed, 0 failed** across quiz resume, drag, numeric, evidence, variants, review printing, classroom submissions, submission bridge and assignment UI. This includes homework correction/resubmission, reload of a correction draft, closed-assignment locking, hidden-solution rendering and give-up retry/scoring. `pnpm build` passed with **657 public files** verified; the index has no unresolved conflicts or whitespace errors. The earlier browser checks and PDF verification limits above still apply; they were not rerun for this conflict-only update. GitHub workflow results must be checked on the new merge commit.
+
+## Equation presentation — 2026-10-31
+
+Base main: `1cae1be94b2c010c9d4cc198301d276b8622906c` (PR #84 merged). Several formulas were authored as ordinary text, such as `n₁sinθ₁=n₂sinθ₂` and `c/v`, while nearby formulas used MathJax. Both sets now use inline TeX for physical symbols, fractions, roots, indices, scientific notation and angles, including the answer pieces and completed drag passages. Long calculation chains are split into short math runs with wrap opportunities between steps. The existing player renders these as SVG; no raster equation images, new engine, CSS or Classroom/Rules changes are needed.
+
+Both sets are content version 3. An adapter comparison against the base proves all **48 + 41** question IDs, types, final keys, choice IDs, slot/answer mappings, units, tolerances and topic mappings are unchanged. Both files still validate through the real content adapter.
+
+Validation:
+
+- **83 tests pass**: `html-math`, `quiz-drag`, `quiz-number` and `topic-review-print`. `pnpm build` passes; **657 public files** match the Pages artifact. `git diff --check` passes.
+- In Chromium with a **390 px iframe viewport**, opened every question, revealed every solution, and revisited all 89 in English: **178 TH/EN views**, with no raw TeX delimiters, MathJax errors, page overflow or horizontally overflowing prompt/choice/passage/solution areas.
+- Rechecked 16 calculation-heavy Set 1 questions and 10 Set 2 questions in both languages at **360 px**: **52 views**, no errors or overflow.
+- iPad is the primary classroom target. Checked formula-heavy questions and original SVG figures in **768 px portrait** (55 TH/EN views) and **1024 px landscape** (50 TH/EN views), with no errors or overflow. These are viewport simulations in Chromium, not tests on physical iPads or Safari.
+- Clicked the SVG inside a fraction answer piece, placed it into its slot, and completed all three slots in Set 2 Q12. Both symbolic pieces remained rendered math after placement; the status was `3/3`.
+
+No new PDF export was visually inspected. The existing print tests pass; the earlier PDF/device verification limits still apply. Ignored QA screenshots show the actual equation display in the simulated viewport.

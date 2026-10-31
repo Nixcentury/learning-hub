@@ -21,6 +21,8 @@ export function buildAssignmentRules() {
         (published ? ` && (!data.exists() ? newData.child('status').val() === 'published' && newData.child('publishedAt').val() === now : (${immutable(['targetHash','contentId','quizTitleTh','quizTitleEn','publishedAt'])} && (data.child('status').val() !== 'closed' || newData.child('status').val() === 'closed'))) && !newData.parent().parent().parent().child('drafts').child($roomId).child($assignmentId).exists()` : " && newData.child('status').val() === 'draft' && newData.child('publishedAt').val() === 0"),
       version: { '.validate': 'newData.val() === 1' }, ownerUid: text(128), title: text(180), instructions: text(4000, true),
       dueAt: { '.validate': 'newData.isNumber() && newData.val() >= 0 && newData.val() <= 4102444800000 && newData.val() % 1 === 0' },
+      requiresAssignmentId: { '.validate': "newData.isString() && newData.val().matches(/^a_[a-f0-9]{32}$/) && newData.val() !== $assignmentId && root.child('classroomAssignmentsV1/items').child($roomId).child(newData.val()).exists()" +
+        (published ? " && root.child('classroomAssignmentsV1/items').child($roomId).child(newData.val()).child('publishedAt').val() < newData.parent().child('publishedAt').val()" : '') },
       targetHash: { '.validate': "newData.isString() && newData.val().matches(/^#[a-z0-9][a-z0-9/-]{0,519}$/)" },
       contentId: { '.validate': "newData.isString() && newData.val().matches(/^[a-z0-9][a-z0-9_-]{0,127}$/)" },
       quizTitleTh: text(180), quizTitleEn: text(180),

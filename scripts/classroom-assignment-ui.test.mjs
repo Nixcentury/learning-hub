@@ -26,6 +26,31 @@ async function fixture() {
   const update = value => document.dispatchEvent(new window.CustomEvent('hub-page-context', { detail: value }));
   return { document, window, messages, parent, update, scope, downloads };
 }
+test('teacher chooses only earlier published work as a prerequisite and the selection survives live refresh',async()=>{
+  const f=await fixture(),value=context(),prior='a_'+'c'.repeat(32),future='a_'+'d'.repeat(32);
+  value.classroomAssignments.rooms[0].items=[{...item,publishedAt:2000},{...item,id:prior,title:'งานแรก',publishedAt:1000},{...item,id:future,title:'งานถัดไป',publishedAt:3000}];
+  f.update(value);f.document.querySelector('[data-hw-tools] [data-homework-action="edit"]').click();
+  const select=f.document.querySelector('[name="requiresAssignmentId"]');
+  assert.deepEqual(Array.from(select.querySelectorAll('option'),node=>node.value),['',prior]);
+  for(const option of select.querySelectorAll('option'))option.selected=option.value===prior;
+  f.update(value);assert.equal(select.value,prior);
+  f.document.querySelector('[data-hw-save]').click();
+  assert.equal(f.messages.find(message=>message.action==='save').payload.requiresAssignmentId,prior);
+});
+test('locked work remains readable but every launch button is disabled until the parent confirms access',async()=>{
+  const f=await fixture(),value=context(false),prior='a_'+'c'.repeat(32);
+  value.classroomAssignments.rooms[0].items=[{...item,requiresAssignmentId:prior},{...item,id:prior,title:'งานแรก'}];
+  value.classroomSubmissions={uid:'student',roomId:rid,grades:{[aid]:{ready:true,loaded:true,rows:[]},[prior]:{ready:true,loaded:true,rows:[]}},gates:{[aid]:{status:'locked'}}};
+  f.update(value);
+  assert.equal(f.document.querySelector(`[data-homework-step="${aid}"]`).dataset.stepAccess,'locked');
+  assert.ok(f.document.querySelector('[data-hw-detail]').textContent.includes('มากกว่า 50%'));
+  for(const node of f.document.querySelectorAll(`[data-homework-action="launch"][data-id="${aid}"]`))assert.equal(node.disabled,true);
+  value.classroomSubmissions.gates={};f.update(value);
+  assert.equal(f.document.querySelector(`[data-homework-action="launch"][data-id="${aid}"]`).disabled,true,'Loading must not briefly unlock');
+  value.classroomSubmissions.gates[aid]={status:'open'};f.update(value);
+  assert.equal(f.document.querySelector(`[data-homework-action="launch"][data-id="${aid}"]`).disabled,false);
+  assert.equal(f.document.querySelector(`[data-homework-step="${aid}"]`).dataset.stepAccess,'open');
+});
 test('homework UI renders stored user text safely and keeps published quiz destination read-only', async () => {
   const f = await fixture(); f.update(context());
   const root = f.document.querySelector('[data-classroom-assignments]');
@@ -151,7 +176,6 @@ test('all submitted work stays in the path, and lesson shortcuts send an assignm
   assert.equal(f.document.querySelectorAll('[data-next-assignment]').length,1);
   assert.ok(f.document.querySelector('[data-hw-next]').textContent.includes('60%'));
   assert.ok(f.document.querySelector('[data-hw-next-note]').textContent.includes('ส่งครบแล้ว'));
-  assert.equal(f.document.querySelector('[data-hw-add-link]').disabled,true,'Link saving is explicitly deferred');
   f.document.querySelector('[data-homework-action="lesson"]').click();
   const command=f.messages.find(message=>message.action==='lesson');assert.ok(command);
   assert.deepEqual(JSON.parse(JSON.stringify(command.payload)),{roomId:rid,id:aid});

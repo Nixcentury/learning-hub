@@ -727,6 +727,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
         value: state.answers[question.id] ?? "", disabled: isMastered || isGivenUp,
         unit: question.unit[language()], language: language(),
         onInput(value) {
+          if (!canAnswerQuestion(question.id)) return;
           if (state.answers[question.id] !== value) evidenceManager?.markContextChanged(question.id);
           state.answers[question.id] = value;
           persist();
@@ -739,9 +740,9 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
     if (question.type === "drag-drop") {
       dragAnswerUi = mountDragAnswer(optionTarget, {
         question, value: state.answers[question.id], disabled: isMastered || isGivenUp,
-        language: language(), typeset, canEdit: () => !submissionBusy && !closing,
+        language: language(), typeset, canEdit: () => canAnswerQuestion(question.id),
         onChange(value) {
-          if (submissionBusy || closing) return;
+          if (!canAnswerQuestion(question.id)) return;
           evidenceManager?.markContextChanged(question.id);
           state.answers[question.id] = value;
           persist(); renderNavigation(); renderStats();
@@ -781,8 +782,8 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
       if (isGivenUp) {
         const retryNote = document.createElement("p");
         retryNote.textContent = label(
-          "กด “ลองทำข้อนี้ใหม่” เพื่อซ่อนเฉลยและลองตอบอีกครั้ง คะแนนจะเปลี่ยนหลังส่งตรวจใหม่",
-          "Choose “Try this question again” to hide the solution and answer again. Your score updates after resubmitting.",
+          "ข้อนี้ยอมแพ้แล้ว จึงไม่ได้คะแนนในรอบนี้ จะตอบได้อีกครั้งเมื่อกด “เริ่มรอบถัดไป” จากหน้าผลคะแนน",
+          "You gave up this question, so it earns no point this attempt. Choose “Start next attempt” on the results screen to answer it again.",
         );
         solutionTarget.append(retryNote);
       }
@@ -796,12 +797,10 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
       isMastered || isGivenUp || visibleHintCount >= question.hints.length;
     document.querySelector("[data-hint-count]").textContent = String(visibleHintCount + 1);
     const giveUpButton = document.querySelector("[data-giveup-button]");
-    giveUpButton.disabled = isMastered;
+    giveUpButton.disabled = isMastered || isGivenUp;
     giveUpButton.textContent = isGivenUp
-      ? label("↻ ลองทำข้อนี้ใหม่", "↻ Try this question again")
+      ? label("⚑ ยอมแพ้แล้ว", "⚑ Gave up")
       : label("⚑ ยอมแพ้", "⚑ Give up");
-    giveUpButton.classList.toggle("quiz-giveup-button", !isGivenUp);
-    giveUpButton.classList.toggle("quiz-primary-button", isGivenUp);
     document.querySelector("[data-previous-button]").disabled = state.currentIndex === 0;
     const lastQuestion = state.currentIndex === state.questions.length - 1;
     const reviewable = needsDragReview(question);
@@ -884,7 +883,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
         </section>
         <footer class="quiz-results-actions">
           <button type="button" class="quiz-secondary-button" data-edit-results>${label("กลับไปแก้คำตอบ", "Edit answers")}</button>
-          ${perfect ? `<button type="button" class="quiz-primary-button" data-restart>${label("เริ่มทำใหม่", "Start over")}</button>` : `<button type="button" class="quiz-primary-button" data-retry>${label("ทำเฉพาะข้อที่ยังไม่ผ่าน", "Retry unmastered questions")}</button>`}
+          ${perfect ? `<button type="button" class="quiz-primary-button" data-restart>${label("เริ่มทำใหม่", "Start over")}</button>` : `<button type="button" class="quiz-primary-button" data-retry>${label("เริ่มรอบถัดไป · ทำข้อที่ยังไม่ผ่าน", "Start next attempt · retry unmastered questions")}</button>`}
         </footer>
       </section>`;
 
@@ -1014,8 +1013,13 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
     lockHomeworkControls();
   }
 
+  function canAnswerQuestion(questionId) {
+    return !submissionBusy && !closing && !(homeworkMode && homeworkClosed) &&
+      !state.masteredIds.includes(questionId) && !state.giveUps[questionId];
+  }
+
   function selectAnswer(questionId, optionId) {
-    if ((homeworkMode && homeworkClosed) || state.masteredIds.includes(questionId) || state.giveUps[questionId]) return;
+    if (!canAnswerQuestion(questionId)) return;
     if (state.answers[questionId] !== optionId) {
       evidenceManager?.markContextChanged(questionId);
     }
@@ -1197,7 +1201,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
 
   function giveUp() {
     const question = currentQuestion();
-    if (!question || state.masteredIds.includes(question.id)) return;
+    if (!question || !canAnswerQuestion(question.id)) return;
     evidenceManager?.markContextChanged(question.id);
     state.giveUps[question.id] = true;
     delete state.answers[question.id];
@@ -1209,31 +1213,13 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
     document.querySelector("[data-current-solution]")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  function reopenGivenUp(questionId) {
-    if (!state.giveUps[questionId] || state.masteredIds.includes(questionId)) return false;
-    evidenceManager?.markContextChanged(questionId);
-    delete state.giveUps[questionId];
-    delete state.answers[questionId];
-    delete state.hintLevels[questionId];
-    return true;
-  }
-
-  function retryGivenUp(questionId) {
-    if (submissionBusy || closing || !reopenGivenUp(questionId)) return;
-    state.currentIndex = state.questions.findIndex(question => question.id === questionId);
-    state.view = "exam";
-    persist();
-    render();
-  }
-
   function editAnswers() {
     if (submissionBusy || closing || (homeworkMode && homeworkClosed)) return;
-    let reopened = false;
-    state.questions.forEach(question => { if (reopenGivenUp(question.id)) reopened = true; });
     state.view = "exam";
+    const firstEditable = state.questions.findIndex(question => canAnswerQuestion(question.id));
     const firstUnmastered = state.questions.findIndex(question => !state.masteredIds.includes(question.id));
-    state.currentIndex = firstUnmastered < 0 ? 0 : firstUnmastered;
-    if (reopened) persist(); else persistNavigation();
+    state.currentIndex = firstEditable < 0 ? Math.max(0, firstUnmastered) : firstEditable;
+    persistNavigation();
     render();
   }
 
@@ -1496,11 +1482,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
   function bindExamActions() {
     document.querySelector("[data-topic-review-open]")?.addEventListener("click", openTopicReview);
     document.querySelector("[data-hint-button]")?.addEventListener("click", revealHint);
-    document.querySelector("[data-giveup-button]")?.addEventListener("click", () => {
-      const question = currentQuestion();
-      if (question && state.giveUps[question.id]) retryGivenUp(question.id);
-      else giveUp();
-    });
+    document.querySelector("[data-giveup-button]")?.addEventListener("click", giveUp);
     document.querySelector("[data-previous-button]")?.addEventListener("click", () => requestNavigation(state.currentIndex - 1));
     document.querySelector("[data-next-button]")?.addEventListener("click", () => requestNavigation(state.currentIndex + 1));
     document.querySelector("[data-skip-button]")?.addEventListener("click", skipCurrentQuestion);

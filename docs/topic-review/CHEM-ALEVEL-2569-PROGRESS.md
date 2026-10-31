@@ -47,3 +47,9 @@ Next authoring batch: inspect questions 4–6, extend both languages, keep quest
 The Quiz review action now requests its existing Hub reader as a split-view partner. Production Workspace validates the active registered Quiz, same origin, request sequence, content and current question before opening the reader, then acknowledges the request. The original inline dialog remains a fallback after 1.2 seconds if a host does not support this request. No answers, scores, working or learner identity are sent to the reader.
 
 Browser QA: at 1024px the same Quiz and shared reader occupied 508px each, side by side; at 390px they occupied two 390 × 438px rows. Review opened at Q1, selecting Q3 and returning reached Q3/35, reopening selected Q3 and reused exactly two windows, and returning to Q1 retained the typed working. Switching TH/EN preserved a manually chosen review section. No review horizontal overflow or MathJax errors observed. Unit regressions cover rejected stale/unregistered/inactive requests, reader reuse, acknowledgements and fallback. The workspace CI now also runs the existing production Hub review browser regression.
+
+### Conflict resolution — 2026-11-01
+
+Merged main `01ac3e9` into this review branch, preserving the shared Give Up round lock from PR #97 and the split-review/current-question return behavior. Resolved the shared player cache version and combined the production test harness exports (`canAnswerQuestion`, `returnToQuestion`, `openTopicReview`). Added an integration regression proving that reading review and returning to a given-up question does not unlock it within the same attempt; the next explicit attempt can answer it.
+
+Final local verification after resolution: 578 unit tests passed, 0 failed; build passed and verified 662 public files; all 12 review files passed the validator. Classroom/Rules files match main exactly. The branch is updated through a two-parent merge commit; the PR itself remains unmerged.

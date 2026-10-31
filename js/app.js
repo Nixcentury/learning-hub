@@ -22,6 +22,7 @@ import {
   subscribeRoles,
 } from "./roles.js";
 import { createClassroomAccess } from "./classroom-access.js";
+import { createFirebaseClassroomLinks } from './classroom-links-firebase.js';
 import { createFirebaseClassrooms } from "./classroom-firebase.js";
 import { createFirebaseClassroomMonitor } from './classroom-monitor-firebase.js';
 import { createMonitorView } from './classroom-monitor-view.js';
@@ -122,6 +123,11 @@ let activeSectionId = "overview";
 let classroomPageRevision = 0;
 let classroomRooms = null;
 let classroomMonitorState = null;
+let classroomLinksState = null;
+const classroomLinks = createFirebaseClassroomLinks(snapshot => { classroomLinksState = snapshot; postContextToPage(); });
+function syncClassroomLinks() {
+  classroomLinks.setContext(activeSession, activeRole, classroomRooms, activeSectionId === 'classroom');
+}
 let monitorView = null;
 let submissionState = null;
 const submissions = createFirebaseClassroomSubmissions({
@@ -145,6 +151,7 @@ const classroomMonitor = createFirebaseClassroomMonitor(snapshot => {
 });
 const classrooms = createFirebaseClassrooms(snapshot => {
   classroomRooms = snapshot;
+  syncClassroomLinks();
   if (snapshot.selected?.id) classroomMonitor.selectRoom(snapshot.selected.id);
   monitorView?.refresh();
   syncSubmissions();
@@ -154,6 +161,7 @@ const classrooms = createFirebaseClassrooms(snapshot => {
 
 function syncClassrooms() {
   classrooms.setContext(activeSession, activeRole, activeSectionId === "classroom");
+  syncClassroomLinks();
   classroomMonitor.setIdentity(activeSession, activeRole);
   assignments.setIdentity(activeSession, activeRole);
   syncSubmissions();
@@ -246,6 +254,7 @@ function postContextToPage() {
       classroomMonitor: activeSectionId === 'classroom' && classroomMonitorState?.uid === activeSession.user?.uid ? classroomMonitorState : null,
       classroomAssignments: activeSectionId === 'classroom' && assignmentState?.uid === activeSession.user?.uid ? assignmentState : null,
       classroomSubmissions: activeSectionId === 'classroom' && submissionState?.uid === activeSession.user?.uid ? submissionState : null,
+      classroomLinks: activeSectionId === 'classroom' && classroomLinksState?.uid === activeSession.user?.uid ? classroomLinksState : null,
       classroomAssignmentRoute: activeSectionId === 'classroom' ? assignmentRoute : null,
     },
     targetOrigin,
@@ -677,7 +686,7 @@ function showSection(sectionId, force = false) {
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
   // Keep cached menu documents and their shared subject palette in sync.
-  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-learning-path-20261031' : 'bank-chapter-links-20261027');
+  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-room-links-20261031' : 'bank-chapter-links-20261027');
   pageFrameLoading.hidden = false;
   // Child-frame navigations must not add extra entries to the Hub's Back history.
   pageFrame.contentWindow.location.replace(pageUrl.href);
@@ -814,6 +823,18 @@ window.addEventListener("message", (event) => {
       },
       error => reply({ ok: false, error: String(error?.code || error?.message || "classroom/unavailable") }),
     );
+    return;
+  }
+  if (event.data?.type === 'learning-hub-links-command' && activeSectionId === 'classroom') {
+    const { action, payload = {}, uid, requestId } = event.data;
+    if (typeof requestId !== 'string' || requestId.length > 100 || uid !== activeSession.user?.uid || payload.roomId !== classroomRooms?.selected?.id) return;
+    const revision = classroomPageRevision;
+    const reply = result => {
+      if (revision === classroomPageRevision && activeSectionId === 'classroom' && uid === activeSession.user?.uid && payload.roomId === classroomRooms?.selected?.id)
+        event.source.postMessage({ type: 'learning-hub-links-result', requestId, uid, ...result }, event.origin);
+    };
+    if (action === 'retry') { classroomLinks.dispose(); syncClassroomLinks(); reply({ ok: true }); }
+    else void classroomLinks.command(action, payload, uid).then(result => reply({ ok: true, result }), error => reply({ ok: false, error: String(error?.code || error?.message || 'links/unavailable') }));
     return;
   }
   if (event.data?.type === 'learning-hub-assignment-command' && activeSectionId === 'classroom') {

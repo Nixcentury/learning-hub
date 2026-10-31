@@ -189,7 +189,7 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
         saveLocalNow, loadCloud, saveCloudNow, persist, persistLocalOnly,
         storageKey, pendingStorageRequests, renderStorageStatus,
         persistNavigation, retrySync, resolveCloudConflict,
-        giveUp, retryGivenUp, editAnswers, startRetry, restart, selectAnswer, submitAll, resultFor, goTo, cloneInto,
+        giveUp, canAnswerQuestion, editAnswers, startRetry, restart, selectAnswer, submitAll, resultFor, goTo, cloneInto,
         requestNavigation, returnToQuestion, openTopicReview, skipCurrentQuestion, confirmNavigationReview, closeNavigationDialog, progressSignature,
         navigationState: () => pendingNavigation,
         evidence: () => evidenceManager,
@@ -265,27 +265,23 @@ test("unlocking a hidden solution reveals only its clone and preserves bilingual
   assert.equal(target.child.nested.hidden, true, "hidden descendants are not indiscriminately revealed");
 });
 
-test("give-up questions can be retried immediately and earn credit only after a correct resubmission", async () => {
-  const h = makeHarness();
-  await h.load();
-  h.state.hintLevels.q1 = 1;
-  h.giveUp();
+test("give-up locks the current attempt through editing and resubmission, then next attempt permits answering", async () => {
+  const h = makeHarness(); await h.load(); h.state.hintLevels.q1 = 1;
+  h.selectAnswer("q1", "B"); h.giveUp();
   assert.equal(h.resultFor(h.state.questions[0]).status, "giveup");
-  await h.submitAll();
-  assert.equal(h.state.latestScore.score, 0);
-  h.retryGivenUp("q1");
-  assert.equal(h.state.view, "exam");
-  assert.equal(h.state.giveUps.q1, undefined);
-  assert.equal(h.state.hintLevels.q1, undefined);
-  assert.equal(h.state.latestScore.score, 0, "Retrying alone does not award credit");
-  h.selectAnswer("q1", "B");
-  await h.submitAll();
-  assert.equal(h.state.latestScore.score, 0, "An incorrect retry is still incorrect");
-  h.editAnswers();
-  h.selectAnswer("q1", "A");
-  await h.submitAll();
-  assert.equal(h.state.latestScore.score, 1);
-  assert.deepEqual(plain(h.state.masteredIds), ["q1"]);
+  assert.equal(h.canAnswerQuestion("q1"), false);
+  h.selectAnswer("q1", "A"); assert.equal(h.state.answers.q1, undefined);
+  await h.submitAll(); assert.equal(h.state.latestScore.score, 0);
+  h.editAnswers(); h.selectAnswer("q1", "A");
+  assert.equal(h.state.giveUps.q1, true); assert.equal(h.state.answers.q1, undefined);
+  assert.equal(h.state.attempt, 1); assert.equal(h.state.hintLevels.q1, 1);
+  await h.submitAll(); assert.equal(h.state.latestScore.score, 0);
+  h.startRetry();
+  assert.equal(h.state.attempt, 2); assert.equal(h.state.giveUps.q1, undefined);
+  assert.equal(h.state.hintLevels.q1, undefined); assert.equal(h.canAnswerQuestion("q1"), true);
+  assert.equal(h.state.latestScore.score, 0, "Starting a round alone does not award credit");
+  h.selectAnswer("q1", "A"); await h.submitAll();
+  assert.equal(h.state.latestScore.score, 1); assert.deepEqual(plain(h.state.masteredIds), ["q1"]);
 });
 
 test("AI outcome and missing working never change ordinary quiz scoring", async () => {
@@ -301,43 +297,51 @@ test("AI outcome and missing working never change ordinary quiz scoring", async 
   }
 });
 
-test("Edit answers reopens give-ups, preserves mastered work and reasoning, and survives reload", async () => {
-  const h = makeHarness();
-  await h.load();
+test("Edit answers keeps give-ups locked and retains mastered work, hints and reasoning after reload", async () => {
+  const h = makeHarness(); await h.load();
   assert.equal(h.applySnapshot(baseline({
     answers: { q1: "A" }, masteredIds: ["q1"], giveUps: { q2: true },
-    hintLevels: { q1: 2, q2: 1 }, view: "results",
-    latestScore: { score: 1, maxScore: 2 },
+    hintLevels: { q1: 2, q2: 1 }, view: "results", latestScore: { score: 1, maxScore: 2 },
     evidence: { version: 1, entries: { q2: { reasoning: "Keep my working" } } },
   })), true);
-  h.editAnswers();
-  assert.equal(h.state.currentIndex, 1);
-  assert.equal(h.state.view, "exam");
-  assert.deepEqual(plain(h.state.giveUps), {});
+  h.editAnswers(); assert.equal(h.state.currentIndex, 1); assert.equal(h.state.view, "exam");
+  assert.deepEqual(plain(h.state.giveUps), { q2: true });
   assert.deepEqual(plain(h.state.answers), { q1: "A" });
-  assert.deepEqual(plain(h.state.hintLevels), { q1: 2 });
-  h.saveLocalNow();
-  const restored = makeHarness();
-  restored.seed("guest", h.read("guest"));
-  await restored.load();
-  assert.deepEqual(plain(restored.state.giveUps), {});
+  assert.deepEqual(plain(h.state.hintLevels), { q1: 2, q2: 1 }); h.saveLocalNow();
+  const restored = makeHarness(); restored.seed("guest", h.read("guest")); await restored.load();
+  restored.selectAnswer("q2", "B");
+  assert.deepEqual(plain(restored.state.giveUps), { q2: true });
   assert.deepEqual(plain(restored.state.masteredIds), ["q1"]);
   assert.equal(restored.evidence().data.entries.q2.reasoning, "Keep my working");
-  restored.retryGivenUp("q1");
-  assert.deepEqual(plain(restored.state.masteredIds), ["q1"], "Retry cannot unlock a mastered question");
+  await restored.submitAll(); assert.equal(restored.state.latestScore.score, 1);
+  restored.startRetry(); assert.equal(restored.state.attempt, 2);
+  assert.deepEqual(plain(restored.state.giveUps), {});
+  assert.deepEqual(plain(restored.state.masteredIds), ["q1"], "Next attempt retains mastered work");
+  assert.equal(restored.evidence().data.entries.q2.reasoning, "Keep my working");
 });
 
-test("reopening a saved account give-up persists the unlocked state to the same cloud context", async () => {
-  const h = makeHarness();
-  await h.load();
+test("saved account give-ups stay locked until a next-attempt save in the same cloud context", async () => {
+  const h = makeHarness(); await h.load();
   await h.choose("student-a", baseline({ giveUps: { q1: true } }));
-  h.retryGivenUp("q1");
-  await h.advance(1000);
+  h.editAnswers(); h.selectAnswer("q1", "A"); h.saveLocalNow();
+  assert.deepEqual(h.read("student-a").giveUps, { q1: true });
+  assert.equal(h.state.answers.q1, undefined); assert.equal(h.state.attempt, 1);
+  await h.submitAll(); h.startRetry(); await h.advance(1000);
   const save = h.messages.findLast(message => message.type === "learning-hub-quiz-save");
-  assert.equal(save.uid, "student-a");
-  assert.equal(save.contentId, "sample-quiz");
-  assert.deepEqual(save.value.giveUps, {});
+  assert.equal(save.uid, "student-a"); assert.equal(save.contentId, "sample-quiz");
+  assert.deepEqual(save.value.giveUps, {}); assert.equal(save.value.attempt, 2);
   assert.deepEqual(h.read("student-a").giveUps, {});
+});
+
+test("all answer types share the give-up lock, while unanswered questions in the same round stay editable", async () => {
+  for (const type of ["choice", "number", "drag-drop"]) {
+    const h = makeHarness(); await h.load(); h.state.questions[0].type = type;
+    h.giveUp(); h.editAnswers();
+    assert.equal(h.canAnswerQuestion("q1"), false, type);
+    assert.equal(h.canAnswerQuestion("q2"), true, type);
+    assert.equal(h.state.currentIndex, 1, "Edit answers selects an editable question first");
+    await h.submitAll(); h.startRetry(); assert.equal(h.canAnswerQuestion("q1"), true, type);
+  }
 });
 
 test("context received before HTML load selects the correct local account and starts cloud load", async () => {
@@ -851,6 +855,17 @@ async function loadHomework(h, result = null, extra = {}) {
   assert.ok(request);h.response(request,{ok:true,action:'load',quiz:{contentId:'sample-quiz'},value:null,storageRevision:0,result:result?{submissionId:'a'.repeat(32),...result}:null,grade:result?{score:1,maxScore:2,submissionRevision:1,rows:[{id:'q1',correct:true},{id:'q2',correct:false}]}:null,closed:false,...extra});
   await loading;await h.settle();
 }
+test('temporary practice and homework keep a give-up at zero until starting the next attempt',async()=>{
+  for (const mode of ['temporary','homework']) {
+    const h=makeHarness(mode==='homework'?{homeworkBinding}:{temporary:true});
+    if(mode==='homework')await loadHomework(h);else await h.load();
+    h.giveUp();await h.submitAll();h.editAnswers();h.selectAnswer('q1','A');
+    assert.equal(h.state.giveUps.q1,true,mode);assert.equal(h.state.answers.q1,undefined,mode);
+    await h.submitAll();assert.equal(h.state.latestScore.score,0,mode);
+    h.startRetry();assert.equal(h.state.attempt,2,mode);assert.equal(h.state.giveUps.q1,undefined,mode);
+    h.selectAnswer('q1','A');await h.submitAll();assert.equal(h.state.latestScore.score,1,mode);
+  }
+});
 test('homework starts separately from old practice and autosaves only under its assignment binding',async()=>{
   const h=makeHarness({homeworkBinding});h.seed('student',baseline({answers:{q1:'A',q2:'B'},masteredIds:['q1','q2']}));
   await loadHomework(h);assert.deepEqual(plain(h.state.answers),{});
@@ -921,6 +936,18 @@ test('a review return cannot bypass an editable drag reading check', async () =>
   h.state.answers.q1={one:'b',two:'a'};
   assert.equal(h.returnToQuestion(1),true);
   assert.equal(h.state.currentIndex,0); assert.equal(h.navigationState().correct,false);
+});
+
+test('reading review and returning to a given-up question preserves its current-attempt lock', async () => {
+  const h = makeHarness(); await h.load(); h.giveUp(); await h.submitAll();
+  assert.equal(h.state.latestScore.score, 0);
+  h.returnToQuestion(0); h.openTopicReview(); h.topicReviewDialog.close();
+  h.selectAnswer('q1', 'A');
+  assert.equal(h.state.giveUps.q1, true); assert.equal(h.state.answers.q1, undefined);
+  assert.equal(h.canAnswerQuestion('q1'), false);
+  assert.equal(h.resultFor(h.state.questions[0]).status, 'giveup');
+  h.startRetry(); h.selectAnswer('q1', 'A');
+  assert.equal(h.state.answers.q1, 'A'); assert.equal(h.canAnswerQuestion('q1'), true);
 });
 
 test('Hub review requests a split reader once and accepts only the matching parent acknowledgement', async () => {

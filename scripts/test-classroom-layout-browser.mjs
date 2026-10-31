@@ -12,15 +12,16 @@ const stamp = Date.now();
 const base = {title:'ทวนเรื่องคลื่น',instructions:'ทบทวนการเคลื่อนที่ของคลื่น แล้วทำ Quiz\nกลับไปแก้ข้อผิดและส่งใหม่ได้จนกว่าครูปิดงาน',targetHash:'#content/wave-quiz',contentId:'wave-quiz',quizTitleTh:'คลื่นและสมบัติของคลื่น',quizTitleEn:'Waves and their properties',status:'published',revision:1,publishedAt:stamp-3600000,dueAt:stamp+86400000};
 function context(owner = true, uid = owner?'teacher':'student', language='th') {
   const room = {id:rid,name:'ฟิสิกส์ ม.5/1 · ห้องทดสอบ',ownerUid:'teacher',membership:owner?'owner':'student',joinCode:'ABCD2345'};
-  const items = [{...base,id:aid},{...base,id:aid2,title:'งานที่ 2 · การสะท้อนและหักเห',publishedAt:stamp-7200000,dueAt:stamp+172800000},{...base,id:closed,title:'งานทบทวนที่ปิดแล้ว',status:'closed',publishedAt:stamp-86400000,dueAt:0}];
+  const items = [{...base,id:aid,requiresAssignmentId:aid2},{...base,id:aid2,title:'งานที่ 2 · การสะท้อนและหักเห',publishedAt:stamp-7200000,dueAt:stamp+172800000},{...base,id:closed,title:'งานทบทวนที่ปิดแล้ว',status:'closed',publishedAt:stamp-86400000,dueAt:0}];
   const grades = Object.fromEntries(items.map(item=>[item.id,{ready:true,loaded:true,rows:owner?[
     {uid:'student',name:'นักเรียนทดสอบ ก',submitted:item.id!==aid,grade:item.id!==aid?{score:5,maxScore:10,percent:50,submittedAt:stamp-300000,submissionRevision:1}:null},
     {uid:'student-b',name:'นักเรียนทดสอบ ข',submitted:true,grade:{score:8,maxScore:10,percent:80,submittedAt:stamp-600000,submissionRevision:2}},
   ]:[{uid,name:'นักเรียนทดสอบ ก',submitted:item.id!==aid,grade:item.id!==aid?{score:5,maxScore:10,percent:50,submittedAt:stamp-300000,submissionRevision:1}:null}]}]));
   return {type:'learning-hub-context',language,role:owner?'teacher':'student',identity:{status:'signed-in',uid},classroom:{uid,state:owner?'teacher':'student',displayName:owner?'ครูทดสอบ':'นักเรียนทดสอบ',email:uid+'@example.test'},
     classroomRooms:{uid,status:'ready',roomStatus:'ready',busy:'',rooms:[room],selected:room,members:owner?[{uid:'student',displayName:'นักเรียนทดสอบ ก',joinedAt:stamp},{uid:'student-b',displayName:'นักเรียนทดสอบ ข',joinedAt:stamp}]:[]},
+    classroomLinks:{uid,roomId:rid,status:'ready',connected:true,busy:'',error:'',owner,items:[{id:'l_'+'f'.repeat(32),version:1,title:'สมุดจดประจำห้อง · Notebook',url:'https://example.com/notebook',authorUid:'student',authorName:'นักเรียนทดสอบ ก',createdAt:stamp,updatedAt:stamp,revision:1}]},
     classroomAssignments:{uid,connected:true,busy:'',hubUrl:'https://example.test/learning-hub/',rooms:[{...room,status:'ready',items,lessonShortcuts:Object.fromEntries(items.map(item=>[item.id,{hash:'#physics/10',titleTh:'บทที่ 10 แสงเชิงคลื่น',titleEn:'Chapter 10 Wave Optics'}])),drafts:owner?[{...base,id:draft,title:'งานร่าง · ยังไม่เผยแพร่',status:'draft',publishedAt:0}]:[],seen:{}}]},
-    classroomSubmissions:{uid,roomId:rid,connected:true,ready:true,grades},
+    classroomSubmissions:{uid,roomId:rid,connected:true,ready:true,grades,gates:{[aid]:{status:owner?'open':'locked'},[aid2]:{status:'open'},[closed]:{status:'open'}}},
     classroomMonitor:{uid,selectedRoomId:rid,connected:true,ready:true,busy:'',rooms:[{...room,session:{id:'s_'+'f'.repeat(32),active:true,startedAt:stamp,endsAt:stamp+3600000}}],lesson:owner?null:{roomId:rid,joined:true},rows:owner?[
       {uid:'student',displayName:'นักเรียนทดสอบ ก',status:'visible',lastSeenAt:stamp,windows:1,location:{hash:'#content/wave-quiz',titleTh:'Quiz · คลื่น',titleEn:'Quiz · Waves'}},
       {uid:'student-b',displayName:'นักเรียนทดสอบ ข',status:'hidden',lastSeenAt:stamp-20000,windows:1,location:{hash:'#physics/bank',titleTh:'คลังข้อสอบฟิสิกส์',titleEn:'Physics question bank'},incident:{id:'qa-incident',ackAt:0}},
@@ -78,8 +79,8 @@ try {
   await frame.locator('[data-hw-detail-close]').click();
   await frame.locator('[data-hw-tools] [data-homework-action="edit"]').click();
   await frame.locator('[data-hw-editor-dialog][open]').waitFor();assert.equal(await frame.locator('[name="url"]').evaluate(node=>node.readOnly),true);
-  await frame.locator('[name="title"]').fill('QA draft retained');
-  await page.evaluate(()=>qa.send());assert.equal(await frame.locator('[name="title"]').inputValue(),'QA draft retained');
+  await frame.locator('[data-hw-editor] [name="title"]').fill('QA draft retained');
+  await page.evaluate(()=>qa.send());assert.equal(await frame.locator('[data-hw-editor] [name="title"]').inputValue(),'QA draft retained');
   await frame.locator('[data-hw-cancel]').click();
   const downloadPromise=page.waitForEvent('download');await frame.locator('[data-hw-tools] [data-homework-action="export-sheet"]').click();
   const download=await downloadPromise;assert.equal(download.suggestedFilename(),'hub-homework-'+aid.slice(2)+'.csv');
@@ -93,7 +94,15 @@ try {
   assert.equal(await frame.locator('[data-hw-feed]').getByText('งานร่าง · ยังไม่เผยแพร่',{exact:true}).count(),0);
   assert.equal(await frame.locator('[data-next-assignment]').count(),3,'Submitted and closed assignments stay in the path');
   assert.equal(await frame.locator('.homework-step.is-submitted').count(),2);
-  assert.equal(await frame.locator('[data-hw-add-link]').isDisabled(),true);
+  assert.equal(await frame.locator(`[data-homework-action="launch"][data-id="${aid}"]`).isDisabled(),true);
+  assert.equal(await frame.locator(`[data-homework-step="${aid}"]`).getAttribute('data-step-access'),'locked');
+  assert.equal(await frame.locator('[data-hw-add-link]').isEnabled(),true);
+  assert.equal(await frame.locator('[data-links-list] a').count(),1);
+  await frame.locator('[data-hw-add-link]').click();
+  await frame.locator('[name="linkTitle"]').fill('QA retained link');
+  await page.evaluate(()=>qa.send());
+  assert.equal(await frame.locator('[name="linkTitle"]').inputValue(),'QA retained link');
+  await frame.locator('[data-links-cancel]').click();
   await frame.locator(`[data-homework-action="lesson"][data-id="${aid}"]`).click();
   await page.waitForFunction(()=>qa.commands.some(command=>command.action==='lesson'));
   assert.equal(await page.evaluate(()=>qa.commands.at(-1).action),'lesson');

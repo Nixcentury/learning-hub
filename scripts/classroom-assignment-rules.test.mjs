@@ -57,6 +57,21 @@ test('assignment Rules — real local RTDB emulator, no production traffic', asy
     await denied('student', 'PUT', `${root}/seen/${rid}/student/${second}`, stamp);
     await denied('student', 'DELETE', seen);
   });
+  await t.test('prerequisites are optional, owner-only, earlier published work in the same room, and can be cleared', async () => {
+    const gated='a_'+'d'.repeat(32),gatedPath=`${root}/items/${rid}/${gated}`;
+    await good('teacher','PUT',gatedPath,{...record('published'),requiresAssignmentId:aid});
+    const before=await good('teacher','GET',gatedPath);
+    for(const requiresAssignmentId of [gated,'a_'+'9'.repeat(32),'bad-id'])await denied('teacher','PUT',gatedPath,{...before,requiresAssignmentId,revision:2,updatedAt:stamp});
+    const prior=await good('teacher','GET',itemPath);
+    await denied('teacher','PUT',itemPath,{...prior,requiresAssignmentId:gated,revision:prior.revision+1,updatedAt:stamp});
+    await denied('student','PUT',gatedPath,{...before,revision:2,updatedAt:stamp});
+    const otherRoom='r_'+'e'.repeat(32),otherWork='a_'+'f'.repeat(32);
+    await good('teacher','PATCH','classroomV1',createRoomUpdates('teacher','Other room',{roomId:otherRoom,code:'EFGH2345'},stamp));
+    await good('teacher','PUT',`${root}/items/${otherRoom}/${otherWork}`,record('published'));
+    await denied('teacher','PUT',gatedPath,{...before,requiresAssignmentId:otherWork,revision:2,updatedAt:stamp});
+    await good('teacher','PUT',gatedPath,{...before,requiresAssignmentId:null,revision:2,updatedAt:stamp});
+    assert.equal((await good('student','GET',gatedPath)).requiresAssignmentId,undefined);
+  });
   await t.test('closing retains readable instructions and forbids reopening; revocation removes write authority', async () => {
     const item = await good('teacher', 'GET', itemPath);
     await good('teacher', 'PUT', itemPath, { ...item, status: 'closed', updatedAt: stamp, revision: 4 });

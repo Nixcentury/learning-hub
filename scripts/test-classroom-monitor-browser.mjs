@@ -79,6 +79,11 @@ try {
       // Deterministic tab visibility for desktop integration; real iPad behavior is a device check.
       let visible = true; Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => visible ? 'visible' : 'hidden' });
       window.qaVisible = value => { visible = value; document.dispatchEvent(new Event('visibilitychange')); };
+      window.qaClicks = [];
+      document.addEventListener('click', event => {
+        window.qaClicks.push({ target: event.target.outerHTML?.slice(0, 250), time: performance.now() });
+        window.qaClicks = window.qaClicks.slice(-12);
+      }, true);
     }, uid);
     await context.route('**/*', route => {
       const url = new URL(route.request().url()), name = url.pathname.split('/').at(-1);
@@ -273,10 +278,20 @@ try {
   await menuFrame.evaluate(() => parent.postMessage({ type: 'learning-hub-open-tool', toolId: 'test-c1-quiz' }, location.origin));
   const quiz = student.page.frameLocator('.workspace-tool-frame');
   const choice = quiz.locator('.quiz-option').first();
+  await choice.waitFor({ state: 'visible' });
+  await quiz.locator('[data-quiz-storage-status]').filter({ hasText: 'บันทึกบน Cloud แล้ว' }).waitFor();
   // The mobile lesson banner overlays the bottom of the workspace. Center the
   // choice inside its iframe before clicking, rather than clicking at that edge.
   await choice.evaluate(node => node.scrollIntoView({ block: 'center', behavior: 'instant' }));
+  const choiceBounds = await choice.boundingBox();
+  console.log('QUIZ CLICK TARGET', JSON.stringify(await student.page.evaluate(bounds => ({
+    bounds, target: document.elementFromPoint(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2)?.outerHTML?.slice(0, 400),
+    dialogOpen: document.querySelector('.monitor-dialog').open,
+  }), choiceBounds)));
+  await mkdir(resolve(root, 'qa-output'), { recursive: true });
+  await student.page.screenshot({ path: resolve(root, 'qa-output/classroom-monitor-quiz-before-choice.png') });
   await choice.click();
+  console.log('QUIZ CLICK RESULT', JSON.stringify(await student.page.evaluate(() => ({ open: document.querySelector('.monitor-dialog').open, clicks: qaClicks }))));
   await quiz.locator('.quiz-option[aria-pressed="true"]').waitFor();
   assert.equal(await choice.getAttribute('aria-pressed'), 'true', 'The quiz choice was actually selected');
   const quizFrame = await student.page.locator('.workspace-tool-frame').elementHandle().then(handle => handle.contentFrame());

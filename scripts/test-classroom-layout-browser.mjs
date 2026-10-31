@@ -19,7 +19,7 @@ function context(owner = true, uid = owner?'teacher':'student', language='th') {
   ]:[{uid,name:'นักเรียนทดสอบ ก',submitted:item.id!==aid,grade:item.id!==aid?{score:5,maxScore:10,percent:50,submittedAt:stamp-300000,submissionRevision:1}:null}]}]));
   return {type:'learning-hub-context',language,role:owner?'teacher':'student',identity:{status:'signed-in',uid},classroom:{uid,state:owner?'teacher':'student',displayName:owner?'ครูทดสอบ':'นักเรียนทดสอบ',email:uid+'@example.test'},
     classroomRooms:{uid,status:'ready',roomStatus:'ready',busy:'',rooms:[room],selected:room,members:owner?[{uid:'student',displayName:'นักเรียนทดสอบ ก',joinedAt:stamp},{uid:'student-b',displayName:'นักเรียนทดสอบ ข',joinedAt:stamp}]:[]},
-    classroomAssignments:{uid,connected:true,busy:'',hubUrl:'https://example.test/learning-hub/',rooms:[{...room,status:'ready',items,drafts:owner?[{...base,id:draft,title:'งานร่าง · ยังไม่เผยแพร่',status:'draft',publishedAt:0}]:[],seen:{}}]},
+    classroomAssignments:{uid,connected:true,busy:'',hubUrl:'https://example.test/learning-hub/',rooms:[{...room,status:'ready',items,lessonShortcuts:Object.fromEntries(items.map(item=>[item.id,{hash:'#physics/10',titleTh:'บทที่ 10 แสงเชิงคลื่น',titleEn:'Chapter 10 Wave Optics'}])),drafts:owner?[{...base,id:draft,title:'งานร่าง · ยังไม่เผยแพร่',status:'draft',publishedAt:0}]:[],seen:{}}]},
     classroomSubmissions:{uid,roomId:rid,connected:true,ready:true,grades},
     classroomMonitor:{uid,selectedRoomId:rid,connected:true,ready:true,busy:'',rooms:[{...room,session:{id:'s_'+'f'.repeat(32),active:true,startedAt:stamp,endsAt:stamp+3600000}}],lesson:owner?null:{roomId:rid,joined:true},rows:owner?[
       {uid:'student',displayName:'นักเรียนทดสอบ ก',status:'visible',lastSeenAt:stamp,windows:1,location:{hash:'#content/wave-quiz',titleTh:'Quiz · คลื่น',titleEn:'Quiz · Waves'}},
@@ -91,7 +91,14 @@ try {
   assert.equal(await frame.locator('[data-monitor-people] [data-monitor-uid]').count(),0);
   assert.equal(await frame.locator('.classroom-roster').count(),0);
   assert.equal(await frame.locator('[data-hw-feed]').getByText('งานร่าง · ยังไม่เผยแพร่',{exact:true}).count(),0);
-  assert.equal(await frame.locator('[data-next-assignment]').count(),1);
+  assert.equal(await frame.locator('[data-next-assignment]').count(),3,'Submitted and closed assignments stay in the path');
+  assert.equal(await frame.locator('.homework-step.is-submitted').count(),2);
+  assert.equal(await frame.locator('[data-hw-add-link]').isDisabled(),true);
+  await frame.locator(`[data-homework-action="lesson"][data-id="${aid}"]`).click();
+  await page.waitForFunction(()=>qa.commands.some(command=>command.action==='lesson'));
+  assert.equal(await page.evaluate(()=>qa.commands.at(-1).action),'lesson');
+  await page.screenshot({path:resolve(output,'classroom-monitor-layout-student-path.png'),fullPage:true});
+  await frame.locator('[data-hw-left]').screenshot({path:resolve(output,'classroom-monitor-layout-left-sidebar.png')});
   assert.equal(await frame.locator('[data-room-monitor-slot] [data-monitor-inbox-open]').isVisible(),true);
   for(const [width,height,name,language] of [[1024,900,'student-ipad-landscape','th'],[768,1024,'student-ipad-portrait','th'],[390,844,'student-mobile-en','en']]){
     await page.setViewportSize({width,height});await page.evaluate(value=>qa.replace(value),context(false,'student',language));

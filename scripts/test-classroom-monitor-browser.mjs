@@ -207,6 +207,18 @@ try {
   assert.equal(await homeworkFrame.locator('[data-homework-submit]').count(),0);
   await student.page.reload();
   console.log('PASS homework: private draft → publish → unread notice → deep link → read persistence → frozen homework quiz → final submission → close');
+  // Lesson shortcuts navigate through the Hub to the authored parent menu,
+  // including closed/submitted work; they do not open or submit a new attempt.
+  await student.frame.locator('[data-hw-detail-close]').click();
+  await student.frame.locator('[data-hw-next-panel]>summary').click();
+  const lessonMenu = catalog.routes.find(route => route.hash === homeworkQuizRoute.parentHash);
+  assert.equal(lessonMenu?.kind, 'bank');
+  await student.frame.locator(`[data-homework-action="lesson"][data-id="${assignmentId}"]`).click();
+  await student.page.waitForURL(url => url.hash === lessonMenu.hash);
+  assert.equal((await good('student','GET',`classroomSubmissionsV1/results/${roomId}/${assignmentId}/student`)).submissionId,secondSubmission.submissionId);
+  await student.page.evaluate(hash => { location.hash = hash; }, new URL(homeworkLink).hash);
+  await student.frame.locator('[data-classroom-assignments]').waitFor();
+  console.log('PASS classroom path retains submitted/closed work and lesson shortcut opens the authored menu without changing results');
   const people = teacher.frame.locator('[data-monitor-people]');
   await student.page.evaluate(() => { qaVisible(false); location.hash = '#chemistry/bank'; });
   assert.equal(await student.page.locator('.monitor-banner').isVisible(), false);

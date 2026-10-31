@@ -677,7 +677,7 @@ function showSection(sectionId, force = false) {
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
   // Keep cached menu documents and their shared subject palette in sync.
-  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-three-column-20261031' : 'bank-chapter-links-20261027');
+  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-learning-path-20261031' : 'bank-chapter-links-20261027');
   pageFrameLoading.hidden = false;
   // Child-frame navigations must not add extra entries to the Hub's Back history.
   pageFrame.contentWindow.location.replace(pageUrl.href);
@@ -847,6 +847,7 @@ window.addEventListener("message", (event) => {
       if (!current()) return;
       reply({ ok: true, result });
       if (action === 'launch' && !result.homework) void navigation.openHash(result.targetHash);
+      else if (action === 'lesson' && result.lesson) void navigation.openHash(result.lesson.hash);
       else if (['view','save','publish'].includes(action)) void navigation.openHash(assignmentHash(payload.roomId, result.id));
     }, failure => reply({ ok: false, error: String(failure?.code || failure?.message || 'assignment/unavailable') }));
     return;

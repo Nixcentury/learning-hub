@@ -1,15 +1,18 @@
 import { createClassroomAccess } from './classroom-access.js';
-import { assignmentIdPattern, assignmentRoomPattern, assignmentError, cleanAssignmentFields, resolveAssignmentQuiz } from './classroom-assignment-model.js';
+import { assignmentIdPattern, assignmentRoomPattern, assignmentError, cleanAssignmentFields, resolveAssignmentQuiz, resolveAssignmentLesson } from './classroom-assignment-model.js';
 
 // Reads/writes use authenticated IO. Firebase Rules independently enforce the
 // same room ownership and membership. No student score/answer access is added.
 export function createClassroomAssignments({ io, onChange = () => {}, loadCatalog, hubUrl }) {
   let uid = '', access = '', identity, epoch = 0, connected = false, busy = '', error = '', published = '';
+  let lessonCatalog = null;
   const rooms = new Map(), stops = [], roomStops = new Map();
   const code = failure => String(failure?.code || failure?.message || 'assignment/unavailable');
   const live = version => version === epoch && Boolean(uid);
   function state() {
     const values = [...rooms.values()].map(room => ({ ...room,
+      lessonShortcuts: Object.fromEntries([...Object.entries(room.items || {}), ...Object.entries(room.drafts || {})]
+        .map(([id, item]) => [id, resolveAssignmentLesson(item, lessonCatalog)]).filter(([, lesson]) => lesson)),
       items: Object.entries(room.items || {}).map(([id, item]) => ({ id, ...item })).sort((a, b) => b.publishedAt - a.publishedAt),
       drafts: Object.entries(room.drafts || {}).map(([id, item]) => ({ id, ...item })).sort((a, b) => b.updatedAt - a.updatedAt),
     }));
@@ -70,7 +73,7 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
   }
   function clear() {
     ++epoch; stop(stops); for (const list of roomStops.values()) stop(list);
-    roomStops.clear(); rooms.clear(); connected = false; busy = ''; error = ''; published = '';
+    roomStops.clear(); rooms.clear(); connected = false; busy = ''; error = ''; published = ''; lessonCatalog = null;
   }
   function setIdentity(session, role) {
     const verified = createClassroomAccess(session, role);
@@ -80,6 +83,9 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
     clear(); uid = nextUid; access = uid ? verified.state : ''; publish();
     if (!uid) return;
     const version = epoch;
+    void Promise.resolve().then(() => loadCatalog()).then(catalog => {
+      if (live(version)) { lessonCatalog = catalog; publish(); }
+    }).catch(() => {}); // Optional shortcuts must not block assignment access.
     stops.push(io.connected(value => { if (live(version)) { connected = value === true; publish(); } }));
     watch('@classroom/userRooms/' + uid, value => {
       const index = value || {};
@@ -107,6 +113,14 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
       if (action === 'view') {
         if (!room.items[id] && !room.drafts[id]) throw assignmentError('assignment/room-unavailable');
         return { id, roomId };
+      } else if (action === 'lesson') {
+        const item = room.items[id] || room.drafts[id];
+        if (!item) throw assignmentError('assignment/room-unavailable');
+        const catalog = await loadCatalog(); guard(user, version); roomFor(roomId);
+        const lesson = resolveAssignmentLesson(item, catalog);
+        if (!lesson) throw assignmentError('assignment/lesson-unavailable');
+        lessonCatalog = catalog;
+        return { lesson };
       } else if (action === 'seen') {
         const item = room.items[id];
         if (!item || room.membership !== 'student') return {};

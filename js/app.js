@@ -22,6 +22,10 @@ import {
   subscribeRoles,
 } from "./roles.js";
 import { createClassroomAccess } from "./classroom-access.js";
+import { createGoogleClassroomConnection } from './classroom-google-service.js';
+import { createGoogleClassroomProvider } from './classroom-google-provider.js';
+import { createGoogleClassroomDialog } from './classroom-google-view.js';
+import { googleClassroomClientId } from './classroom-google-config.js';
 import { createFirebaseClassroomLinks } from './classroom-links-firebase.js';
 import { createFirebaseClassrooms } from "./classroom-firebase.js";
 import { createFirebaseClassroomMonitor } from './classroom-monitor-firebase.js';
@@ -123,6 +127,11 @@ let activeSectionId = "overview";
 let classroomPageRevision = 0;
 let classroomRooms = null;
 let classroomMonitorState = null;
+let googleClassroomState = null, googleClassroomDialog = null;
+const googleClassroom = createGoogleClassroomConnection({ provider: createGoogleClassroomProvider(), onChange: snapshot => {
+  googleClassroomState = snapshot; googleClassroomDialog?.update(snapshot); postContextToPage();
+} });
+googleClassroomDialog = createGoogleClassroomDialog({ service: googleClassroom, language: () => currentLanguage, configuredClientId: googleClassroomClientId });
 let classroomLinksState = null;
 const classroomLinks = createFirebaseClassroomLinks(snapshot => { classroomLinksState = snapshot; postContextToPage(); });
 function syncClassroomLinks() {
@@ -160,6 +169,7 @@ const classrooms = createFirebaseClassrooms(snapshot => {
 });
 
 function syncClassrooms() {
+  googleClassroom.setContext(activeSession, activeRole, activeSectionId === 'classroom');
   classrooms.setContext(activeSession, activeRole, activeSectionId === "classroom");
   syncClassroomLinks();
   classroomMonitor.setIdentity(activeSession, activeRole);
@@ -255,6 +265,7 @@ function postContextToPage() {
       classroomAssignments: activeSectionId === 'classroom' && assignmentState?.uid === activeSession.user?.uid ? assignmentState : null,
       classroomSubmissions: activeSectionId === 'classroom' && submissionState?.uid === activeSession.user?.uid ? submissionState : null,
       classroomLinks: activeSectionId === 'classroom' && classroomLinksState?.uid === activeSession.user?.uid ? classroomLinksState : null,
+      classroomGoogle: activeSectionId === 'classroom' && googleClassroomState?.uid === activeSession.user?.uid ? googleClassroomState : null,
       classroomAssignmentRoute: activeSectionId === 'classroom' ? assignmentRoute : null,
     },
     targetOrigin,
@@ -545,6 +556,7 @@ function setLanguage(language) {
   companion.setLanguage(language);
   monitorView?.refresh();
   assignmentNotice?.refresh();
+  googleClassroomDialog?.update(googleClassroom.getState());
   saveLanguage(language);
 }
 
@@ -686,7 +698,7 @@ function showSection(sectionId, force = false) {
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
   // Keep cached menu documents and their shared subject palette in sync.
-  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-room-links-20261031' : 'bank-chapter-links-20261027');
+  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-google-phase1-20261101' : 'bank-chapter-links-20261027');
   pageFrameLoading.hidden = false;
   // Child-frame navigations must not add extra entries to the Hub's Back history.
   pageFrame.contentWindow.location.replace(pageUrl.href);
@@ -804,6 +816,14 @@ window.addEventListener("message", (event) => {
     if (event.data.action === "sign-in" && activeSession.status === "guest") googleButton.click();
     if (event.data.action === "account" && activeSession.status === "signed-in") openRolePanel();
     if (event.data.action === "retry" && activeSession.status === "signed-in") retryRoleCheck();
+    return;
+  }
+  if (event.data?.type === 'learning-hub-google-classroom-action' && activeSectionId === 'classroom') {
+    if (event.data.uid !== activeSession.user?.uid || createClassroomAccess(activeSession, activeRole).state !== 'teacher') return;
+    const action = event.data.action;
+    if (action === 'open') googleClassroomDialog.open(pageFrame);
+    else if (action === 'reload') void googleClassroom.reload().catch(() => {});
+    else if (action === 'disconnect') googleClassroom.disconnect();
     return;
   }
   if (event.data?.type === "learning-hub-classroom-command" && activeSectionId === "classroom") {

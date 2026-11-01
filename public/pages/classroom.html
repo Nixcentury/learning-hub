@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="shared/page.css?v=subject-colours-20261025" />
-    <link rel="stylesheet" href="shared/classroom-page.css?v=room-links-20261031" />
+    <link rel="stylesheet" href="shared/classroom-page.css?v=google-phase1-20261101" />
     <title>Classroom · Learning Hub</title>
   </head>
   <body class="theme-classroom" data-classroom-page>
@@ -53,6 +53,17 @@
       </section>
       <p class="classroom-notice" data-account-warning hidden data-th="อ่านข้อมูลบัญชีบางส่วนไม่สำเร็จ แต่ยืนยันสิทธิ์แล้ว ลองตรวจใหม่ได้หากข้อมูลคำขอยังไม่พร้อม" data-en="Access is verified, but some account details are unavailable. Retry if request details are missing.">อ่านข้อมูลบัญชีบางส่วนไม่สำเร็จ แต่ยืนยันสิทธิ์แล้ว ลองตรวจใหม่ได้หากข้อมูลคำขอยังไม่พร้อม</p>
       <button class="classroom-button" data-classroom-action="retry" data-account-warning-retry hidden data-th="ตรวจข้อมูลบัญชีอีกครั้ง" data-en="Retry account details">ตรวจข้อมูลบัญชีอีกครั้ง</button>
+      <section class="surface classroom-google-panel" data-google-classroom-panel hidden aria-labelledby="classroom-google-heading">
+        <h2 id="classroom-google-heading" data-google-heading>Google Classroom</h2>
+        <p data-google-note></p><p data-google-account></p>
+        <div class="classroom-google-actions">
+          <button type="button" class="classroom-button is-primary" data-google-connect data-google-action="open"></button>
+          <button type="button" class="classroom-button" data-google-reload data-google-action="reload" hidden></button>
+          <button type="button" class="classroom-button" data-google-disconnect data-google-action="disconnect" hidden></button>
+        </div>
+        <p class="classroom-google-feedback" data-google-feedback role="status" aria-live="polite"></p>
+        <ul class="classroom-google-courses" data-google-courses></ul><small data-google-session-note></small>
+      </section>
       <section data-rooms-workspace hidden aria-label="Classrooms">
         <div class="classroom-forms">
           <form class="surface classroom-form" data-create-room hidden>
@@ -80,10 +91,11 @@
     </main>
     <script src="../shared/learning-hub-tools.js"></script>
     <script src="shared/classroom-page.js"></script>
+    <script type="module" src="shared/classroom-google-page.js?v=google-phase1-20261101"></script>
     <script src="shared/classroom-rooms.js?v=three-column-20261031"></script>
     <script src="shared/classroom-monitor-page.js?v=three-column-20261031"></script>
-    <script type="module" src="shared/classroom-assignments-page.js?v=room-links-20261031"></script>
-    <script type="module" src="shared/classroom-links-page.js?v=room-links-20261031"></script>
+    <script type="module" src="shared/classroom-assignments-page.js?v=google-phase1-20261101"></script>
+    <script type="module" src="shared/classroom-links-page.js?v=google-phase1-20261101"></script>
     <script src="shared/page.js"></script>
   </body>
 </html>

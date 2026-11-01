@@ -9,6 +9,7 @@ on:
       - 'index.html'
       - 'css/classroom-monitor.css'
       - 'css/classroom-assignments.css'
+      - 'css/classroom-google.css'
       - 'public/shared/classroom*'
       - 'public/shared/quiz-core.js'
       - 'public/shared/quiz-core.css'

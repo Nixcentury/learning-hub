@@ -33,6 +33,7 @@ jobs:
       # Draft warnings exit successfully; malformed/unsafe content still fails.
       - name: Validate content (drafts allowed) and build Learning Hub
         env:
+          VITE_GOOGLE_CLASSROOM_CLIENT_ID: ${{ vars.GOOGLE_CLASSROOM_CLIENT_ID }}
           CONTENT_VALIDATION_REPORT: ${{ runner.temp }}/content-validation-report.json
         run: pnpm build
       - name: Upload content validation report

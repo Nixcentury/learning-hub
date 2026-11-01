@@ -307,3 +307,16 @@ body.theme-classroom {
 .room-links-form small, .room-links-feedback { font-size: .85rem; color: #475b73; overflow-wrap: anywhere; }
 .room-links-feedback:empty { display: none; }
 .room-links-feedback.is-error { color: #a71d31; }
+
+.classroom-google-panel { margin: 0 0 18px; padding: 18px; }
+.classroom-google-panel h2 { margin: 0; font-size: 1.15rem; color: #164d96; }
+.classroom-google-panel p { margin: .65rem 0; overflow-wrap: anywhere; }
+.classroom-google-panel > small { color: #475b73; display: block; margin-top: .7rem; }
+.classroom-google-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+.classroom-google-courses { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: .7rem; padding: 0; margin: .8rem 0 0; list-style: none; }
+.classroom-google-courses li { padding: .8rem; border: 1px solid #bfd3ed; background: #f5f9ff; min-width: 0; overflow-wrap: anywhere; }
+.classroom-google-courses strong, .classroom-google-courses small, .classroom-google-courses a { display: block; }
+.classroom-google-courses small, .classroom-google-courses a { margin-top: .4rem; }
+.classroom-google-courses a { color: #1255ad; }
+.classroom-google-feedback:empty { display: none; }
+.classroom-google-feedback.is-error { color: #a71d31; }

@@ -16,7 +16,10 @@ The teacher teaches this 35-question set over several lessons. Add about three e
 | 4 | Lewis electron accounting; multiple bonds as one region; AXₘEₙ shapes including 5/6 regions; molecular versus bond polarity; terminal-atom symmetry | Written TH/EN |
 | 5 | Molecular versus ionic/network substances; London and dipole forces; hydrogen-bond donors/acceptors; self versus water interactions; nonpolar-chain effects on solubility | Written TH/EN |
 | 6 | PV=nRT to slope nR/P; Kelvin versus Celsius intercepts; compare n/P; coincident lines; invert slope ratios for n or P | Written TH/EN |
-| 7–35 | Not authored yet; read the actual next questions before planning their review | Pending |
+| 7 | Graham rate/mass ratios; equal-time distance ratios; x and L−x; reference ends; inverse molar-mass and equal-quantity time ratios | Written TH/EN |
+| 8 | Simple monocyclic monoalkene scope; double bond 1–2; first-difference locant sets; alphabetical order ignoring di/tri; tied locants; punctuation | Written TH/EN |
+| 9 | Skeletal C/H/O/N counts; carbonyl C and ring N; amine versus amide; formula-first comparison; identical redrawings versus constitutional/stereoisomers | Written TH/EN |
+| 10–35 | Not authored yet; read the actual next questions before planning their review | Pending |
 
 First batch: 3 exam sections, 8 recall questions and 19 separately spaced subparts in each language, with 2 reused diagrams per language. Worked examples use S, illustrative M ionization energies and an isotope Y with different quantities. There is no Sn configuration/exam total, Nd calculation, correct choice letter or original exam solution in this review. The existing bank Q2 is already an adapted practice question with the Z >= 2 condition; do not describe its key as the official original exam verdict.
 
@@ -32,7 +35,7 @@ In Hub, the Quiz review button opens/restores the shared reader and automaticall
 
 Quiz opening prefers an authored review for the current bank, then the old row-topic preference when no bank review is available. If a later question has no section yet, the reader says so and offers the prepared sections. Existing topic reviews stay on their old behavior. No Apps Script, Sheet data, Classroom services or Firebase Rules are changed.
 
-Next authoring batch: inspect questions 7–9, extend both languages, keep question keys and numbering stable, then update this checkpoint and the menu's available range. Do not add placeholders that look ready.
+Next authoring batch: inspect questions 10–12, extend both languages, keep question keys and numbering stable, then update this checkpoint and the menu's available range. Do not add placeholders that look ready.
 
 ## QA
 
@@ -100,3 +103,57 @@ Batch 2 QA:
   authored sections. Coverage is never presented as all 35 questions.
 - Two small visual fixes from browser QA: explicit AX subscripts for MathJax,
   and the net-dipole label moved clear of the bond arrows.
+
+
+### Batch 3 — questions 7–9 (2026-11-01)
+
+Started from main `07993d8` after PR #101 merged. Read the current public
+35-row source snapshot again; revision remains
+`08b5f19efdef6747ec0ed0a6d8664ae6bb81af0f40c8437b21d3b63ac5778c6b`.
+Questions 7–9 are rows 8–10. Inspected the original Q9 image to establish the
+needed carbonyl/ring-N/implicit-H skills; no original question or image copied.
+
+Added three exam sections and nine recall questions (18–26), with 19 separate
+subparts in each language. Current total: nine exam sections, 26 recall
+questions, 58 subparts and eight figures per language. New original SVGs show
+complementary diffusion distances, identical cycloheptene numberings, and
+practice chain/ring atom-counting structures.
+
+Worked/practice data differ from the source exam: 72.0/60.0/84.0 cm tubes and
+16.0/144.0, 64.0/16.0, 36.0 g/mol examples; a seven-membered ring and new
+substituent locants; hydroxypropanamide and a four-membered N-methyl ring.
+No source option letter, source ring position, source molecule-pair formula
+table or original exam solution is included.
+
+Live catalog verified the diffusion, naming, isomer, structural-formula and
+functional-group topic keys. These have no owned review menus in this base,
+so related reading names the chapter and links to verified IPST lessons; it
+does not imply a missing owned review is ready. Primary factual checks also
+use OpenStax Chemistry 2e 9.4, Organic Chemistry 1.12/5.9/7.3 and IUPAC’s
+Brief Guide to Organic Nomenclature. All reading links are inside the review.
+
+Scope remains content, three assets, the existing bank menu range and this
+checkpoint. Shared reader/return/print tools are unchanged. Next batch is
+questions 10–12 after reading the actual questions.
+
+Batch 3 QA:
+- Questions 1–6 match the base section bytes after parsing in both languages.
+  New LaTeX expressions match between TH/EN; gas arithmetic checked independently.
+- `pnpm test:unit`: 616 passed, 0 failed. Production build passed; 670 public
+  files verified. All 12 review validators passed; `git diff --check` clean.
+- Current-content PrintCore: 18 paths (two languages × Q7/Q8/Q9 × hidden/first/
+  all answers) preserve only the selected exam section, correct answer/blank
+  states, one figure and the original quiz draft. No physical-printer or
+  exported-PDF visual test is claimed.
+- Browser QA of the production build: Review from Q7 selects section 7;
+  returning from section 9 reaches Q9/35 with one Quiz iframe. The typed Q7
+  working remains. Individual/all answers show 1/3 answers and 5/0 blanks for
+  section 9. TH/EN Q7–9 have loaded images, no MathJax errors and no horizontal
+  overflow at wrapper widths 1024/768/390. Desktop viewport tests, not an
+  actual iPad/Safari test. No AI check or final score submission used.
+- Visual QA moved the R label clear of CH3, separated the heptagon captions,
+  and split the tube's dimension paths so both arrowheads render on each.
+  Re-inspected the final ring, atom-counting and tube figures through the player.
+- Proof image: `qa-output/chem69-review-q7-q9-ipad.jpg` (ignored local QA file).
+  HTTP-preview crypto compatibility stays outside the repository. Publish via
+  PR; verify deployment after an authorized merge.

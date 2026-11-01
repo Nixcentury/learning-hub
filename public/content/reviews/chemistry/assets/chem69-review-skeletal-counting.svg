@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="455" viewBox="0 0 660 455" role="img" aria-labelledby="title desc"><title id="title">Practice structures for atom counting</title><desc id="desc">P is HOCH2CH2C(=O)NH2. R is an N-methyl four-membered ring with OH on the carbon opposite N. No stereochemistry is specified.</desc><rect width="100%" height="100%" fill="white"/><g font-family="Arial, sans-serif" fill="#152e47"><text x="330" y="31" font-size="24" text-anchor="middle" font-weight="bold">Count atoms • complete ordinary valences</text>
+<text x="55" y="107" font-size="26" font-weight="bold">P</text>
+<text x="123" y="126" text-anchor="middle" font-size="27">HO</text>
+<path d="M145 117 L220 157 L300 113 L380 157 L447 120 M374 147V80 M386 147V80" stroke="#152e47" stroke-width="3" fill="none"/>
+<text x="380" y="69" text-anchor="middle" font-size="27">O</text>
+<text x="476" y="125" text-anchor="middle" font-size="27">NH₂</text>
+<text x="330" y="207" text-anchor="middle" font-size="19">An unlabelled end or corner is C; a labelled atom is not C.</text>
+<path d="M42 232H618" stroke="#b6c3cd"/>
+<text x="55" y="270" font-size="26" font-weight="bold">R</text>
+<text x="190" y="335" text-anchor="middle" font-size="28">N</text>
+<path d="M203 314 L285 266 L380 322 L285 378 L203 333 M176 322H119 M380 322H447" stroke="#152e47" stroke-width="3" fill="none"/>
+<text x="89" y="331" text-anchor="middle" font-size="27">CH₃</text>
+<text x="474" y="331" text-anchor="middle" font-size="27">OH</text>
+<text x="330" y="428" text-anchor="middle" font-size="19">N has three single bonds; include the OH hydrogen.</text></g></svg>

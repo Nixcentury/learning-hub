@@ -27,7 +27,7 @@ const auth = `let session={status:'signed-in',user:{uid:'qa-a'}};const listeners
 export function getAuthSession(){return session;}
 export function subscribeAuth(fn){listeners.push(fn);fn(session);return ()=>{};}
 export function setUser(uid){session={status:uid?'signed-in':'guest',user:uid?{uid}:null};listeners.forEach(fn=>fn(session));}`;
-const database = `export const getDatabase=()=>({});export const ref=(_,path)=>path;
+const database = `export const orderByChild=value=>value;export const equalTo=value=>value;export const query=path=>path;export const getDatabase=()=>({});export const ref=(_,path)=>path;
 export const serverTimestamp=()=>Date.now();
 export async function get(path){const value=structuredClone(window.db.records[path]||null);if(window.db.hold)await new Promise(resolve=>window.db.releases.push(resolve));if(window.db.fail)throw {code:'permission-denied'};return {exists:()=>value!==null,val:()=>value};}
 export async function set(path,value){window.db.records[path]=structuredClone(value);window.db.writes.push({path,value});}`;

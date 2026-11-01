@@ -35,7 +35,7 @@ const stubs = {
     export const browserLocalPersistence={};export const getAuth=()=>({});
     export const setPersistence=async()=>{};export const onAuthStateChanged=(_,fn)=>{fn(null);return ()=>{}};
     export const signOut=async()=>{};export const signInWithPopup=async()=>{throw Error('Real login disabled in QA')};`,
-  'firebase-database.js': `export const getDatabase=()=>({});export const ref=(_,p)=>p;
+  'firebase-database.js': `export const orderByChild=value=>value;export const equalTo=value=>value;export const query=path=>path;export const getDatabase=()=>({});export const ref=(_,p)=>p;
     export const onValue=(_,fn)=>{fn({exists:()=>false,val:()=>null});return ()=>{}};
     export const get=async()=>({exists:()=>false,val:()=>null});export const serverTimestamp=()=>Date.now();
     export const onDisconnect=()=>({remove:async()=>{},cancel:async()=>{}});

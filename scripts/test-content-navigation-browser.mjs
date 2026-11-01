@@ -18,7 +18,7 @@ export function getAuthSession(){return session;} export function subscribeAuth(
 export async function continueAsGuest(){} export async function signInWithGoogle(){} export async function signOutFromHub(){}`;
 const presence = `export function setPresenceContext(){} export async function stopPresence(){} export function subscribePresence(fn){fn({connectionStatus:'OFFLINE',rows:[],counts:{active:0,online:0,idle:0,visible:0},error:''});return ()=>{};}`;
 const roles = `export function retryRoleCheck(){} export async function cancelTeacherRequest(){} export async function requestTeacherAccess(){} export function subscribeRoles(fn){fn({uid:'navigation-qa',status:'ready',systemRole:'student',isAdmin:false,isTeacher:false,requestStatus:'none',request:null,error:''});return ()=>{};}`;
-const database = `const records=new Map();export const getDatabase=()=>({});export const ref=(_,path)=>path;
+const database = `const records=new Map();export const orderByChild=value=>value;export const equalTo=value=>value;export const query=path=>path;export const getDatabase=()=>({});export const ref=(_,path)=>path;
 export const serverTimestamp=()=>Date.now();export async function get(path){const value=records.get(path);return {exists:()=>value!==undefined,val:()=>structuredClone(value)};}
 export async function set(path,value){records.set(path,structuredClone(value));}
 export async function update(){} export function onValue(){return ()=>{};}`;

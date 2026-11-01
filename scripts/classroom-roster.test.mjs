@@ -62,7 +62,7 @@ test('owner adds pending email, removes/restores atomically and guards peers; de
 test('live removal clears the selected room; denied enrollment never invents membership',async t=>{
  const f=fixture(t);f.db.rooms={[rid]:{name:'Physics',ownerUid:'teacher',joinCode:code}};f.db.userRooms={student:{[rid]:'student'}};f.db.members={[rid]:{student:{displayName:'Student',joinedAt:7,joinCode:code}}};
  f.service.setContext(...ctx(),true);await tick();await f.service.command('open',{roomId:rid},'student');
- delete f.db.userRooms.student[rid];delete f.db.members[rid].student;f.notify();await tick();assert.equal(f.service.getState().selected,null);
+ delete f.db.userRooms.student[rid];delete f.db.members[rid].student;f.notify();await tick();assert.equal(f.service.getState().selected,null);assert.equal(f.service.getState().rooms.length,0);
  f.db.invitations={i:invite()};f.io.update=async()=>{throw Error('denied');};f.enrollment.setContext(...ctx());await tick();await tick();assert.equal(f.db.members[rid].student,undefined);
 });
 

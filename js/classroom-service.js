@@ -54,7 +54,7 @@ export function createClassroomService({ io, onChange, makeKey = newRoomKey }) {
       index = value || {};
       if (wasSelectedMember && !index[state.selected.id]) {
         ++detailRevision; stopDetail();
-        publish({ selected: null, members: [], invitations: [], removed: [], rosterError: "", rosterStatus: "idle", roomStatus: "idle", detailError: "classroom/removed" });
+        publish({ selected: null, rooms: state.rooms.filter(room => index[room.id]), members: [], invitations: [], removed: [], rosterError: "", rosterStatus: "idle", roomStatus: "idle", detailError: "classroom/removed" });
       }
       void loadList(version);
     }, error => {

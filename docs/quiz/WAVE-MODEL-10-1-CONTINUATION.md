@@ -7,15 +7,15 @@ Source: `public/content/physics/ipst/wave-optics/10-1-wave-model-learning-sheet.
 
 The user changed the former ~20-question batches to **at most 50 questions per set**, with **10.1 completed in two sets**. They may inspect increments of about ten items, but students should see the two complete sets. Both are review companions at the sheet's level: short passages, direct calculations, adapted situations, no added derivation-heavy course. Questions must state their own task, necessary supplied data and physical assumptions; sheet links are optional help, rather than instructions to find an unspecified earlier figure or question.
 
-PR #82's original 20-question Set 1 was merged. The retained questions keep their stable question IDs and activity ID in the expanded Set 1. The two-set plan supersedes the previous provisional five-set plan. Original Set 1 Q4 (`accelerating-charge`) was removed on 2026-10-31 at the user's request because it is covered in another lesson; current Set 1 has 47 questions. Former Q5–48 now display as Q4–47. The remaining question IDs and answer keys are unchanged. No blackbody/19.1 content is changed here.
+PR #82's original 20-question Set 1 was merged. The retained questions keep their stable question IDs and activity ID in the expanded Set 1. The two-set plan supersedes the previous provisional five-set plan. Original Set 1 Q4 (`accelerating-charge`) was removed on 2026-10-31 at the user's request because it is covered in another lesson; that revision had 47 questions. On 2026-11-01 the user also removed current Q3 (`field-plot-not-particle-path`), leaving 46 questions. The vacuum question now displays as Q3 and following numbers close up automatically. The remaining question IDs and answer keys are unchanged. No blackbody/19.1 content is changed here.
 
 | Set | Questions | Formats | Scope |
 | --- | --- | --- | --- |
-| 1 | 47 | 18 drag passages, 18 choices, 11 numeric | Sheet sections 1–6: stars/EM, spectrum, colours, speed, media/index, light-years, reflection/refraction |
+| 1 | 46 | 18 drag passages, 17 choices, 11 numeric | Sheet sections 1–6: stars/EM, spectrum, colours, speed, media/index, light-years, reflection/refraction |
 | 2 | 41 | 8 drag passages, 28 choices, 5 numeric | Sections 7–10: superposition, interference, diffraction, experiments and light-model evidence |
 
 Files: `10-1-wave-model-quiz-set-1.html`, `10-1-wave-model-quiz-set-2.html`.
-Activity IDs: `physics-ipst-wave-optics-10-1-quiz-set-1` and `physics-ipst-wave-optics-10-1-quiz-set-2`; Set 1 content version 5 and Set 2 content version 4 (unused distractor pieces added, 2026-10-31). Keep the existing IDs stable when editing. Saved practice answers are handled by the existing engine; the normal “Restart · load latest” control is available when starting a fresh attempt.
+Activity IDs: `physics-ipst-wave-optics-10-1-quiz-set-1` and `physics-ipst-wave-optics-10-1-quiz-set-2`; Set 1 content version 6 (Q3 removed, 2026-11-01) and Set 2 content version 4 (unused distractor pieces added, 2026-10-31). Keep the existing IDs stable when editing. Saved practice answers are handled by the existing engine; the normal “Restart · load latest” control is available when starting a fresh attempt.
 
 ## Coverage against the complete source
 
@@ -23,15 +23,15 @@ The sheet has ten sections, 83 note/answer slots, five worked examples and two o
 
 | Source content | Review location |
 | --- | --- |
-| Solar energy source versus radiation; several EM regions; E/B fields, perpendicular directions, transverse waves; curves are field plots and vacuum | Set 1, 1–4 |
-| Definition/order of all seven spectral regions; all listed applications; increasing f/decreasing λ; equal vacuum speed | Set 1, 5–10 |
-| Visible light ≈400–700 nm, continuous colours, six categories and approximate wavelength ranges; red/violet comparison | Set 1, 11–15 |
-| c=fλ and nm conversion; forward/inverse and elementary symbolic problems | Set 1, 16–18 and 24–25 |
-| Human perception of visible light; adapted official understanding Q2 | Set 1, 19 |
-| Symbols/units, nm, minutes and a 365-day year; all six approximate frequency intervals and reversed endpoints under f=c/λ | Set 1, 20–23 and 35 |
-| v=fλ in a medium, n=c/v, dimensionless n, n/v ordering; air/water/glass; stationary interface f fixed and v/λ changed, symbolic comparison | Set 1, 24–32 |
-| All five worked-example skill types: vacuum wavelength/frequency, glass speed, Sun–Earth travel time, light-year in m/km, stellar distance/look-back time; added analogous Moon problem | Set 1, 16–17, 27, 33–39 |
-| Normal and three rays; reflection angles from normal versus surface, Snell law, normal incidence, index increase/decrease and equal indices | Set 1, 40–47 |
+| Solar energy source versus radiation; several EM regions; E/B fields, perpendicular directions, transverse waves and vacuum | Set 1, 1–3 |
+| Definition/order of all seven spectral regions; all listed applications; increasing f/decreasing λ; equal vacuum speed | Set 1, 4–9 |
+| Visible light ≈400–700 nm, continuous colours, six categories and approximate wavelength ranges; red/violet comparison | Set 1, 10–14 |
+| c=fλ and nm conversion; forward/inverse and elementary symbolic problems | Set 1, 15–17 and 23–24 |
+| Human perception of visible light; adapted official understanding Q2 | Set 1, 18 |
+| Symbols/units, nm, minutes and a 365-day year; all six approximate frequency intervals and reversed endpoints under f=c/λ | Set 1, 19–22 and 34 |
+| v=fλ in a medium, n=c/v, dimensionless n, n/v ordering; air/water/glass; stationary interface f fixed and v/λ changed, symbolic comparison | Set 1, 23–31 |
+| All five worked-example skill types: vacuum wavelength/frequency, glass speed, Sun–Earth travel time, light-year in m/km, stellar distance/look-back time; added analogous Moon problem | Set 1, 15–16, 26, 32–38 |
+| Normal and three rays; reflection angles from normal versus surface, Snell law, normal incidence, index increase/decrease and equal indices | Set 1, 39–46 |
 | Signed y=y1+y2; +2A/−2A/0; both crest+crest and trough+trough constructive; unequal cancellation, amplitude versus signed displacement | Set 2, 1–6 |
 | Node versus momentary zero; antinode; equal-amplitude assumption; centre line for matching/opposite phases | Set 2, 5–9 |
 | Absolute path difference; need to know source phase; all four constructive/destructive path conditions; direct numeric/symbolic applications | Set 2, 10–18 and 20 |
@@ -61,3 +61,22 @@ All 26 drag passages now have at least two unused choices. Added 28 bilingual pi
 The diffraction passage now distinguishes a gap from an obstacle rim before asking about spreading. Its former “opening or edge” wording allowed a physically valid swap that the fixed slot keys rejected. The slot IDs and keys remain unchanged. The student instructions explain that some pieces are unused.
 
 Validation: the production adapter accepts both sets with 47/41 questions. Compared with the preceding removal commit, all question IDs, slot keys, existing answer pieces, choice/numeric questions and solutions are unchanged; only the diffraction passage wording is clarified. All correct drag maps grade correctly, and 168 single-slot substitutions with unused pieces are valid saved answers but grade incorrect. The existing `html-math` and `quiz-drag` suites pass (12 tests); `pnpm build` and `git diff --check` pass with 658 public files verified. No new browser/device or PDF QA is claimed for this content-only edit.
+
+
+## Remove the field-plot choice question — 2026-11-01
+
+At the user's request, removed current Set 1 Q3, `field-plot-not-particle-path`,
+including its bilingual prompt, figure, choices, hint and solution. Set 1 now
+has 46 questions (18 drag, 17 choice, 11 number), content version 6. The vacuum
+question takes display number 3; all remaining question/activity IDs and their
+content are retained. Set 2, the learning sheet and the shared engine are unchanged.
+Updated the menu counts and current coverage map. The field diagram asset remains
+available because other questions and the sheet use it.
+
+Validation for this removal: the production content adapter accepts 46 questions;
+each retained question's parsed HTML matches the base, including IDs and keys.
+The real quiz print-source helper and PrintCore pass four paths (TH/EN × worksheet/
+answer key): 46 consecutive numbers, vacuum at Q3, and the removed question absent.
+The existing quiz-drag/html-print suites pass 22 tests; production build passes
+with 679 public files verified; `git diff --check` is clean. No new browser,
+physical-device or rendered-PDF QA is claimed for this content-only removal.

@@ -760,6 +760,26 @@ svg [data-quiz-visual~="axis-label"] {
   border-radius: 22px;
 }
 
+.quiz-action-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: 8px 16px;
+  color: var(--quiz-navy);
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  list-style: none;
+  touch-action: manipulation;
+}
+.quiz-action-toggle::-webkit-details-marker { display: none; }
+.quiz-action-toggle svg { width: 20px; height: 20px; flex-shrink: 0; }
+.quiz-action-panel:not([open]) > .quiz-action-toggle svg { transform: rotate(180deg); }
+.quiz-action-panel[open] .quiz-action-show,
+.quiz-action-panel:not([open]) .quiz-action-hide { display: none; }
+.quiz-action-toggle:focus-visible { outline: 3px solid var(--quiz-blue); outline-offset: -4px; }
+
 .quiz-live-stats {
   display: flex;
   flex-wrap: wrap;

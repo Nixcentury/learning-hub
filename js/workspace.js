@@ -385,6 +385,11 @@ export function createWorkspace({
     record.splitButton.title = `${splitLabel} · ${label("เลือกงานเปิดคู่ / กลับเป็นหน้าต่างลอย", "Choose a split-view partner / return to floating windows")}`;
     record.splitButton.setAttribute("aria-label", record.splitButton.title);
     record.splitButton.setAttribute("aria-pressed", String(isSplit));
+    record.element.classList.toggle('is-toolbar-collapsed', record.toolbarCollapsed);
+    record.trailingTools.hidden = record.toolbarCollapsed;
+    record.toolbarToggle.setAttribute('aria-expanded', String(!record.toolbarCollapsed));
+    record.toolbarToggle.title = record.toolbarCollapsed ? label('แสดงแถบเครื่องมือ', 'Show window tools') : label('ซ่อนแถบเครื่องมือ', 'Hide window tools');
+    record.toolbarToggle.setAttribute('aria-label', record.toolbarToggle.title);
     record.resizeHandle.title = label("ลากมุมเพื่อปรับขนาด หรือใช้ปุ่มลูกศรเมื่อเลือกมุมนี้", "Drag to resize, or use arrow keys when this handle is focused");
     record.resizeHandle.setAttribute("aria-label", record.resizeHandle.title);
     for (const [code, button] of [["th", record.languageTh], ["en", record.languageEn]]) {
@@ -843,8 +848,9 @@ export function createWorkspace({
         <div class="window-identity">
           <span class="window-icon" aria-hidden="true">${tool.icon}</span>
           <strong class="window-title"></strong>
+          <button class="window-toolbar-toggle" type="button" aria-controls="window-tools-${tool.id}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 15 6-6 6 6"/></svg></button>
         </div>
-        <div class="window-trailing-tools">
+        <div class="window-trailing-tools" id="window-tools-${tool.id}">
           <div class="window-language" role="group" aria-label="ภาษา / Language"><button type="button" data-window-language="th" lang="th">TH</button><button type="button" data-window-language="en" lang="en">EN</button></div>
           <button class="window-split" type="button" aria-haspopup="dialog"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/></svg><span></span></button>
           ${tool.context.toolKind === "html" ? '<button class="window-sheet-guide" type="button" hidden><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4zm16 0h-4a3 3 0 0 0-3 3v14a4 4 0 0 1 4-2h3z"/></svg><span></span></button>' : ''}
@@ -881,6 +887,9 @@ export function createWorkspace({
       minimizeButton: element.querySelector(".is-minimize"),
       maximizeButton: element.querySelector(".is-maximize"),
       splitButton: element.querySelector(".window-split"),
+      toolbarToggle: element.querySelector('.window-toolbar-toggle'),
+      trailingTools: element.querySelector('.window-trailing-tools'),
+      toolbarCollapsed: false,
       resizeHandle: element.querySelector(".window-resize-handle"),
       shareButton: element.querySelector(".window-share"),
       languageTh: element.querySelector('[data-window-language="th"]'),
@@ -928,6 +937,10 @@ export function createWorkspace({
     record.closeButton.addEventListener("click", () => close(record));
     record.minimizeButton.addEventListener("click", () => minimize(record));
     record.maximizeButton.addEventListener("click", () => toggleMaximize(record));
+    record.toolbarToggle.addEventListener('click', () => {
+      record.toolbarCollapsed = !record.toolbarCollapsed;
+      updateRecordText(record); constrainWindow(record);
+    });
     record.splitButton.addEventListener("click", () => openLayoutMenu(record));
     record.shareButton.addEventListener("click", () => onShare(record.tool, record.shareButton));
     record.languageTh.addEventListener("click", () => onLanguageChange("th"));

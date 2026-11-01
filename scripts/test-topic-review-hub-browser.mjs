@@ -191,6 +191,21 @@ try {
   await page.screenshot({ path: resolve(output, 'quiz-review-split.png') });
   console.log('PASS Review opens one reused reader beside the original Quiz, with its answer and reasoning intact');
 
+  const dock = quiz.locator('[data-action-dock-panel]'), dockSummary = dock.locator('summary');
+  const dockHeight = (await quiz.locator('.quiz-action-dock').boundingBox()).height;
+  await dockSummary.click();
+  assert.equal(await dock.evaluate(node => node.open), false);
+  assert.equal(await quiz.locator('[data-submit-all]').isVisible(), false);
+  assert.ok((await quiz.locator('.quiz-action-dock').boundingBox()).height < dockHeight - 100);
+  await quizWindow.locator('[data-window-language="th"]').click();
+  assert.equal(await dock.evaluate(node => node.open), false, 'Language rerenders keep the chosen fold state');
+  assert.equal(await quiz.locator('[data-reasoning-input]').inputValue(), 'Keep this quiz reasoning');
+  assert.equal(await quizChild.evaluate(() => window.__frameSentinel), 'kept');
+  await dockSummary.press('Enter');
+  assert.equal(await quiz.locator('[data-submit-all]').isVisible(), true);
+  await quizWindow.locator('[data-window-language="en"]').click();
+  console.log('PASS the Quiz action dock folds to a small strip, survives language rerender and restores its original controls');
+
   const fresh = await newContext(), direct = await fresh.newPage();
   direct.on('pageerror', error => errors.push(error.message));
   await direct.goto(shared);

@@ -285,3 +285,28 @@ test('export preserves invalid submissions as blank grading errors and requires 
   f.put(`quizzes/${rid}/${aid}`,{...quiz,contentId:'another-quiz'});
   await assert.rejects(f.service.exportSheet(aid),{code:'homework/quiz-changed'});
 });
+
+test('student room progress uses latest submitted work and pinned question totals without new reads or writes',async t=>{
+  const f=await gatedFixture(t),binding=await f.service.open(aid);await tick();
+  let summary=f.service.getState().progress;
+  assert.equal(summary.assignmentCount,2);assert.equal(summary.percent,0);assert.equal(summary.maxScore,6);
+  assert.equal(summary.submittedCount,0);
+  const first=await f.service.quizCommand('submit',binding,{value:progress({choice:'a',number:'5/6',drag:{x:'one',y:'two'}}),submissionId:'7'.repeat(32)});
+  summary=f.service.getState().progress;assert.equal(summary.percent,50);assert.equal(summary.submittedCount,1);
+  await f.service.quizCommand('save',binding,{value:progress({choice:'b'}),storageRevision:0,previousSubmissionId:first.result.submissionId});
+  assert.equal(f.service.getState().progress.percent,50,'An unsent edit does not change the submitted total');
+  await f.service.quizCommand('submit',binding,{value:progress({choice:'b'}),submissionId:'8'.repeat(32),previousSubmissionId:first.result.submissionId});
+  assert.equal(f.service.getState().progress.percent,0,'Latest submission wins even when lower');
+  assert.equal(f.service.getState().gates[nextId].status,'open','Historical prerequisite pass stays independent');
+  const writes=f.writes.length,reads=f.reads.length;f.service.getState();assert.equal(f.writes.length,writes);assert.equal(f.reads.length,reads);
+  assert.ok(!f.watchers.some(w=>w.path===`results/${rid}`),'Students never watch the whole room results');
+  f.context('student-b',rid,[item,f.next]);await tick();assert.equal(f.service.getState().progress.uid,'student-b');assert.equal(f.service.getState().progress.percent,0);
+  f.context('teacher',rid,[item,f.next]);await tick();assert.equal(f.service.getState().progress,null);
+});
+test('progress waits for unknown work and clears on room removal, errors and late callbacks',async t=>{
+  const f=fixture(t,'student',false);await tick();
+  assert.equal(f.service.getState().progress.status,'waiting');assert.equal(f.service.getState().progress.percent,null);
+  const watcher=f.watchers.find(w=>w.path===`quizzes/${rid}`);
+  watcher.failure({code:'PERMISSION_DENIED'});assert.equal(f.service.getState().progress.status,'error');
+  f.service.setContext({status:'signed-out'},null,null,'');watcher.success({[aid]:quiz});assert.equal(f.service.getState().progress,null);
+});

@@ -1,3 +1,4 @@
+import { summarizeClassroomProgress } from '../public/shared/classroom-progress-model.js';
 import { createClassroomAccess } from './classroom-access.js';
 import { assignmentIdPattern, assignmentRoomPattern } from './classroom-assignment-model.js';
 import { failSubmission, submissionPayload, gradeSubmission } from '../public/shared/classroom-submission-model.js';
@@ -46,7 +47,7 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     for (const item of room()?.items || []) {
       const quiz = quizzes[item.id];
       const members = isOwner() ? Object.entries(roster) : [[uid, {}]];
-      grades[item.id] = { ready: Boolean(quiz), loaded: !error && loaded.has('quizzes') && (isOwner() ? loaded.has('results') && loaded.has('roster') : resultLoaded.has(item.id)), rows: members.map(([user, member]) => {
+      grades[item.id] = { maxScore: quiz?.questionCount || null, ready: Boolean(quiz), loaded: !error && loaded.has('quizzes') && (isOwner() ? loaded.has('results') && loaded.has('roster') : resultLoaded.has(item.id)), rows: members.map(([user, member]) => {
         const record = isOwner() ? results[item.id]?.[user] : own[item.id];
         let grade = null;
         if (record && quiz) {
@@ -57,7 +58,8 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
       }).sort((a, b) => a.name.localeCompare(b.name, 'th') || a.uid.localeCompare(b.uid)) };
     }
     const gates = Object.fromEntries((room()?.items || []).map(item => [item.id, gateState(item)]));
-    return { uid, roomId, connected, ready, busy, error, grades, gates };
+    const progress = !isOwner() ? summarizeClassroomProgress({ uid, roomId, items: room()?.items || [], grades, connected, error }) : null;
+    return { uid, roomId, connected, ready, busy, error, grades, gates, progress };
   }
   function publish() { const next = state(), signature = JSON.stringify(next); if (last !== signature) { last = signature; onChange(structuredClone(next)); } }
   function clear() {

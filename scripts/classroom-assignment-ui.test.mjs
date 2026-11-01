@@ -213,3 +213,22 @@ test('View scores opens the selected gradebook directly while the post stays in 
   assert.ok(detail.querySelector('[data-homework-results]'));
   assert.equal(f.document.querySelector('[data-hw-feed] .homework-post-instructions').textContent,item.instructions);
 });
+
+test('student sees room score and submission progress, with separate labels and native accessible meters',async()=>{
+  const f=await fixture(),value=context(false);
+  value.classroomSubmissions={uid:'student',roomId:rid,grades:{},progress:{uid:'student',roomId:rid,status:'ready',connected:true,percent:60,score:18,maxScore:30,submittedCount:2,assignmentCount:3,completionPercent:66.67}};
+  f.update(value);const summary=f.document.querySelector('[data-hw-overall]');
+  assert.equal(summary.hidden,false);assert.equal(summary.querySelector('[data-hw-overall-percent]').textContent,'60%');assert.equal(summary.querySelector('[data-hw-overall-count]').textContent,'2/3');
+  assert.equal(summary.querySelectorAll('progress').length,2);assert.ok(summary.textContent.includes('18/30'));assert.ok(summary.textContent.includes('งานยังไม่ส่งนับ 0'));
+  value.language='en';f.update(value);assert.ok(summary.textContent.includes('Overall score'));assert.ok(summary.textContent.includes('Assignments submitted'));
+  value.classroomSubmissions.progress.connected=false;f.update(value);assert.ok(summary.textContent.includes('Offline'));assert.equal(summary.querySelector('[data-hw-overall-percent]').textContent,'60%');
+});
+test('overall progress hides old room/account values and stays unavailable for loading, invalid or unprepared data',async()=>{
+  const f=await fixture(),value=context(false);
+  value.classroomSubmissions={uid:'student',roomId:rid,grades:{},progress:{uid:'student',roomId:rid,status:'waiting',connected:true,percent:null,submittedCount:1,assignmentCount:2,completionPercent:50,unpreparedCount:1}};
+  f.update(value);const summary=f.document.querySelector('[data-hw-overall]');assert.equal(summary.querySelector('[data-hw-overall-percent]').textContent,'—');assert.ok(summary.textContent.includes('รอข้อมูลคะแนนเต็ม'));
+  value.classroomSubmissions.progress.status='error';f.update(value);assert.ok(summary.textContent.includes('ยังคำนวณคะแนนรวมไม่ได้'));assert.equal(summary.querySelector('[data-hw-overall-percent]').textContent,'—');
+  value.classroomSubmissions.progress.roomId='other';f.update(value);assert.equal(summary.hidden,true);assert.equal(summary.textContent,'');
+  f.update(context(true));assert.equal(summary.hidden,true);f.update(context(false,'student-b'));assert.equal(summary.hidden,true);
+  f.update({identity:{status:'guest'},classroom:{state:'guest'}});assert.equal(summary.textContent,'');
+});

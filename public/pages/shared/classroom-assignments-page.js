@@ -47,6 +47,7 @@ root.innerHTML = `<aside class="classroom-left" data-hw-left>
     <header class="homework-modal-heading"><h2 id="homework-detail-title" data-hw-detail-title></h2><button class="classroom-button" type="button" data-hw-detail-close></button></header>
     <section class="homework-detail" data-hw-detail hidden tabindex="-1"></section>
   </dialog>`;
+const overall = document.createElement('section'); overall.className = 'homework-overall classroom-panel'; overall.dataset.hwOverall = ''; overall.hidden = true; overall.setAttribute('aria-live', 'polite'); root.before(overall);
 const form = root.querySelector('form'), list = root.querySelector('[data-hw-list]'), detail = root.querySelector('[data-hw-detail]');
 const editorDialog = root.querySelector('[data-hw-editor-dialog]'), detailDialog = root.querySelector('[data-hw-detail-dialog]');
 const nextList = root.querySelector('[data-hw-next]'), draftList = root.querySelector('[data-hw-drafts]'), toolActions = root.querySelector('[data-hw-tool-actions]');
@@ -62,6 +63,7 @@ function modal(node, open) {
 }
 let context, uid = '', roomId = '', pending = null, editor = null, preview = null, feedback = '', feedbackError = false, listSignature = '', detailSignature = '';
 const seenAttempts = new Set();
+let overallSignature = '';
 let historyView = null, selectedId = '', routeKey = '', inspectMode = '', nextSignature = '';
 const t = (th, en) => context?.language === 'en' ? en : th;
 const el = (tag, text, cls) => { const node = document.createElement(tag); node.textContent = text; if (cls) node.className = cls; return node; };
@@ -347,6 +349,37 @@ function renderFeed(values, room, isOwner) {
     card.append(actions); list.append(card);
   }
 }
+function renderOverall(isOwner) {
+  const data = submissions(), progress = data?.progress;
+  const valid = !isOwner && uid && roomId && progress?.uid === uid && progress.roomId === roomId;
+  if (!valid) { overall.hidden = true; overall.replaceChildren(); overallSignature = ''; return; }
+  const signature = JSON.stringify([context.language, uid, roomId, progress]);
+  if (signature === overallSignature) return;
+  overallSignature = signature; overall.hidden = false; overall.replaceChildren(); overall.dataset.progressStatus = progress.status;
+  overall.append(el('h3', t('ภาพรวมคะแนนของฉัน', 'My classroom progress')));
+  const values = el('div', '', 'homework-overall-values');
+  const score = el('div', '', 'homework-overall-metric');
+  score.append(el('span', t('คะแนนรวมปัจจุบัน', 'Overall score')));
+  const amount = el('strong', progress.status === 'ready' ? `${progress.percent}%` : '—'); amount.dataset.hwOverallPercent = ''; score.append(amount);
+  if (progress.status === 'ready') {
+    score.append(el('small', t(`${progress.score}/${progress.maxScore} คะแนน`, `${progress.score}/${progress.maxScore} points`)));
+    const bar = document.createElement('progress'); bar.max = 100; bar.value = progress.percent; bar.setAttribute('aria-label', t('เปอร์เซ็นต์คะแนนรวม', 'Overall score percentage')); score.append(bar);
+  }
+  const completion = el('div', '', 'homework-overall-metric');
+  completion.append(el('span', t('ส่งงานแล้ว', 'Assignments submitted')));
+  const count = el('strong', progress.submittedCount === null ? `…/${progress.assignmentCount}` : `${progress.submittedCount}/${progress.assignmentCount}`); count.dataset.hwOverallCount = ''; completion.append(count);
+  if (progress.completionPercent !== null) {
+    const bar = document.createElement('progress'); bar.max = 100; bar.value = progress.completionPercent; bar.setAttribute('aria-label', t('เปอร์เซ็นต์งานที่ส่งแล้ว', 'Assignments submitted percentage')); completion.append(bar);
+  }
+  values.append(score, completion); overall.append(values);
+  const note = progress.status === 'empty' ? t('ยังไม่มีงานที่ประกาศในห้องนี้', 'No assignments have been published in this room.')
+    : progress.status === 'loading' ? t('กำลังโหลดคะแนนและสถานะงานทั้งหมด…', 'Loading all scores and submission statuses…')
+    : progress.status === 'waiting' ? t(`รอข้อมูลคะแนนเต็ม ${progress.unpreparedCount} งาน ให้ครูตรวจการเปิดรับการส่งงานก่อนคำนวณคะแนนรวมครบทุกงาน`, `Waiting for total points for ${progress.unpreparedCount} assignments. Ask your teacher to check that submissions have been enabled.`)
+    : progress.status === 'error' ? t('ยังคำนวณคะแนนรวมไม่ได้ กรุณาลองเชื่อมต่ออีกครั้ง หรือติดต่อครูหากบางงานตรวจคะแนนไม่ได้', 'Overall score unavailable. Reconnect, or contact your teacher if an assignment cannot be graded.')
+    : t('ใช้คะแนนจากการส่งล่าสุด ÷ คะแนนเต็มของ Quiz ใน Hub ทุกงานที่ประกาศ งานยังไม่ส่งนับ 0 ในภาพรวม รวมงานที่ปิดและงานที่ยังล็อก ไม่นับงานร่าง', 'Latest submitted points ÷ total Quiz points in Hub across all published assignments. Unsubmitted work counts as 0 here; closed and locked work is included. Drafts are excluded.');
+  overall.append(el('p', note));
+  if (!progress.connected) overall.append(el('p', t('การเชื่อมต่อขาด · แสดงข้อมูลล่าสุดที่โหลดได้', 'Offline · showing the last loaded data'), 'homework-overall-offline'));
+}
 function paint() {
   const access = context?.classroom, identity = context?.identity;
   const nextUid = parent !== window && identity?.status === 'signed-in' && access?.uid === identity.uid && ['teacher', 'student'].includes(access.state) ? identity.uid : '';
@@ -359,8 +392,10 @@ function paint() {
     root.querySelector('[data-hw-tools]').hidden = true; root.querySelector('[data-hw-selection]').textContent = '';
   }
   root.hidden = !uid || !roomId;
+  if (root.hidden) { overall.hidden = true; overall.replaceChildren(); overallSignature = ''; }
   if (root.hidden) { closeDetail(); closeEditor(); return; }
   const data = snapshot(), room = currentRoom(), isOwner = owner();
+  renderOverall(isOwner);
   root.querySelector('[data-hw-kicker]').textContent = t('งานของสมาชิกในห้อง', 'Classroom assignments');
   root.querySelector('[data-hw-heading]').textContent = t('โพสต์งาน', 'Assignment posts');
   if (!isOwner) { if (editor) closeEditor(); if (inspectMode === 'scores') closeDetail(); }

@@ -72,7 +72,7 @@ const server = createServer(async (req, res) => {
     if (url.pathname === prefix + '__qa-db') {
       const chunks = []; for await (const chunk of req) chunks.push(chunk);
       const uid = req.headers['x-qa-uid'], path = url.searchParams.get('path');
-      const headers = { 'Content-Type': 'application/json', ...(req.method === 'GET' ? { 'X-Firebase-ETag': 'true' } : {}), ...(req.headers['if-match'] ? { 'If-Match': req.headers['if-match'] } : {}) };
+      const headers = { 'Content-Type': 'application/json', ...(req.method === 'GET' && !path.includes('?') ? { 'X-Firebase-ETag': 'true' } : {}), ...(req.headers['if-match'] ? { 'If-Match': req.headers['if-match'] } : {}) };
       const [dbPath, dbQuery] = path.split('?');
       const response = await fetch(emulatorOrigin + '/' + dbPath + '.json?ns=' + emulatorProject + (uid ? '&auth=' + encodeURIComponent(mockToken(uid)) : '') + (dbQuery ? '&' + dbQuery : ''), { method: req.method, headers, body: chunks.length ? Buffer.concat(chunks) : undefined });
       res.writeHead(response.status, { 'Content-Type': 'application/json', ...(response.headers.get('etag') ? { etag: response.headers.get('etag') } : {}) }); res.end(await response.text()); return;

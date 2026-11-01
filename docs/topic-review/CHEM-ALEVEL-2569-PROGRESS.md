@@ -22,7 +22,10 @@ The teacher teaches this 35-question set over several lessons. Add about three e
 | 10 | Solute–water donor/acceptor roles; carbonyl O; hydrocarbon chain/ring size; matched comparisons; neutral forms versus pH/ions | Written TH/EN |
 | 11 | Complete-combustion mole/mass calculations; molecular versus empirical formula; dark/light Br2 tests; aromatic ring versus side chain; intersecting evidence without claiming uniqueness | Written TH/EN |
 | 12 | Ester name fragments; acid-catalyzed hydrolysis; compare both product Mr values; acid/amine salt versus amide conditions; retain N attachment; atom/mass conservation | Written TH/EN |
-| 13–35 | Not authored yet; read the actual next questions before planning their review | Pending |
+| 13 | Monomer versus repeat unit; vinyl addition versus specified condensation; restore groups at the identified interunit bond; preserve pre-existing internal amides and side groups | Written TH/EN |
+| 14 | Linear/branched/network connectivity; pendant group versus crosslink; thermoplastic versus cured thermoset; dipoles, hardness/toughness and composition limits | Written TH/EN |
+| 15 | Balance coefficients; convert to moles; compare n/coefficient; multiply by product coefficient; remaining reactants, exact proportions and product mass | Written TH/EN |
+| 16–35 | Not authored yet; read the actual next questions before planning their review | Pending |
 
 First batch: 3 exam sections, 8 recall questions and 19 separately spaced subparts in each language, with 2 reused diagrams per language. Worked examples use S, illustrative M ionization energies and an isotope Y with different quantities. There is no Sn configuration/exam total, Nd calculation, correct choice letter or original exam solution in this review. The existing bank Q2 is already an adapted practice question with the Z >= 2 condition; do not describe its key as the official original exam verdict.
 
@@ -38,7 +41,7 @@ In Hub, the Quiz review button opens/restores the shared reader and automaticall
 
 Quiz opening prefers an authored review for the current bank, then the old row-topic preference when no bank review is available. If a later question has no section yet, the reader says so and offers the prepared sections. Existing topic reviews stay on their old behavior. No Apps Script, Sheet data, Classroom services or Firebase Rules are changed.
 
-Next authoring batch: inspect questions 13–15, extend both languages, keep question keys and numbering stable, then update this checkpoint and the menu's available range. Do not add placeholders that look ready.
+Next authoring batch: inspect questions 16–18, extend both languages, keep question keys and numbering stable, then update this checkpoint and the menu's available range. Do not add placeholders that look ready.
 
 ## QA
 
@@ -220,3 +223,80 @@ Batch 4 QA:
 - No AI grading or real final submission used. The HTTP-preview crypto shim
   stays outside Git. Proof image: `qa-output/chem69-review-q10-q12-ipad.jpg`.
   Publish via PR and verify live deployment after an authorized merge.
+
+
+### Batch 5 — questions 13–15 (2026-11-01)
+
+Started from main `9fb045d` after PR #105 merged. Read the current public
+35-row source snapshot again; its revision remains
+`08b5f19efdef6747ec0ed0a6d8664ae6bb81af0f40c8437b21d3b63ac5778c6b`.
+Questions 13–15 are rows 14–16. Inspected Q13's polymer and all five candidate
+images, plus Q14's copolymer image. The original questions and keys are unchanged.
+
+Added three TH/EN exam sections and nine recall questions (36–44), with 18
+separately spaced subparts per language. Current total: 15 exam sections,
+44 recall questions, 95 subparts and 14 figures per language. Three original
+SVGs show end-group restoration at a specified new amide bond, polymer-chain
+architectures, and a different limiting-reactant mole-ratio example.
+
+Different examples include propene, simple AB amino/hydroxy acids, a model
+precursor retaining an internal amide and pendant CH2OH, a pendant ethyl ester,
+FeCl3/NaOH, N2/H2 and MgCl2/NaOH. The Fe example gives 21.4 g; Mg practice gives
+5.80 g or 11.6 g under the stated conditions. No source tripeptide structure,
+EVA diagram, CuSO4 calculation, correct exam option letter or source solution
+is included in student-facing review content. Calculation/drawing subparts
+have extra writing space. All stated reaction conditions and quantities match
+between TH and EN.
+
+Live catalog checks verified polymer-monomer, polymerization, structure/property,
+equation and limiting-reactant keys. These have no owned review menus in this
+base, so further reading names the chapters and links to verified IPST lessons.
+Primary sources: IPST Book 5 lessons 014/015/016 and Book 2 lesson 025;
+OpenStax Organic Chemistry 21.9/31.7 and Chemistry 2e 4.3/4.4; the University
+of Illinois polymer principles and UNSW polymer types tutorials. No original
+exam images were committed.
+
+Teacher-only source observation for Q14: the source asks for the incorrect
+statement. Its key selects D (the claim that the pictured polymer does not melt,
+although it may decompose at high temperature). Rejecting that claim is reasonable
+under the intended thermoplastic classification. However, the separate
+“hard and tough” wording should not be treated as a universal property inferred
+from the drawn copolymer alone: its n/m composition is unspecified. Dow's official
+ELVAX information says changing vinyl-acetate proportion changes flexibility,
+toughness and stiffness: https://www.dow.com/en-us/brand/elvax.html . Stiffness and
+hardness are different properties; this is a request to review wording, not proof
+that the existing answer key is wrong. Keep the source question/key intact and
+ask the teacher before any later source correction. Student content teaches the
+general limits of the inference without identifying an exam option as correct.
+
+Scope is review content, three SVG assets, the existing bank menu's available
+range and this checkpoint only. Next batch: inspect questions 16–18 and extend
+this same page/bank identity.
+
+Batch 5 QA:
+- Sections 1–12 match the base section bytes after parsing in TH and EN. New
+  LaTeX expressions agree between languages. Independently checked all mole,
+  coefficient, leftover and molar-mass calculations, and atom conservation in
+  the example condensation and balanced Fe/Mg/N reactions.
+- `pnpm test:unit`: 616 passed, 0 failed. Final build passed; 676 public files
+  verified. All 12 review validators and `git diff --check` passed. After moving
+  one SVG label clear of carbonyl O, build/content/print checks were rerun and
+  the final asset was inspected through the shared reader.
+- Real PrintCore cloning: 18 paths (TH/EN × sections 13/14/15 × hidden/first/all
+  answers) retain only the selected section, correct answer/writing-space
+  states, its diagram, and the original Quiz draft. No physical-printer or
+  exported-PDF visual test is claimed.
+- Production-build browser: Review from Q13 selects section 13; selecting 15
+  and returning reaches Q15/35 in the same Quiz iframe. The typed Q13 working
+  remains. Section 15 individual/all-answer controls show 1/3 answers and 4/0
+  blank wrappers respectively.
+- TH/EN sections 13–15 have loaded images, no MathJax errors and no horizontal
+  overflow at wrapper widths 1024/768/390. At phone width, open answers in both
+  languages also fit without formula overflow. Desktop viewport QA, not a
+  physical iPad/Safari test.
+- Visually inspected all three new SVGs: carbonyl-C/N cleavage and correct
+  restored ends; separate pendant groups, polymer arm and covalent bridges;
+  and n/coefficient to product coefficient to mass. No AI grading or real final
+  submission used. Preview HTTP crypto compatibility remains outside Git.
+- Proof image: `qa-output/chem69-review-q13-q15-ipad.jpg` (ignored local QA
+  artifact). Publish via PR; verify the live deployment after an authorized merge.

@@ -95,13 +95,15 @@ try {
       const url = new URL(route.request().url()), name = url.pathname.split('/').at(-1);
       if (url.origin === origin) return route.continue();
       if (['accounts.google.com','openidconnect.googleapis.com','classroom.googleapis.com'].includes(url.hostname)) {
+        const headers={'access-control-allow-origin':'*','access-control-allow-headers':'Authorization','access-control-allow-methods':'GET, OPTIONS'};
+        if(route.request().method()==='OPTIONS')return route.fulfill({status:204,headers});
         googleRequests.push({uid,url:url.href,method:route.request().method()});
         if(url.hostname==='accounts.google.com'&&url.pathname==='/gsi/client')return route.fulfill({contentType:'text/javascript',body:googleIdentity});
-        if(url.hostname==='openidconnect.googleapis.com'&&url.pathname==='/v1/userinfo')return route.fulfill({json:{sub:'school-teacher-id',email:googleEmail,email_verified:true}});
+        if(url.hostname==='openidconnect.googleapis.com'&&url.pathname==='/v1/userinfo')return route.fulfill({headers,json:{sub:'school-teacher-id',email:googleEmail,email_verified:true}});
         if(url.hostname==='classroom.googleapis.com'&&url.pathname==='/v1/courses') {
           assert.equal(route.request().method(),'GET');assert.equal(url.searchParams.get('teacherId'),'me');assert.equal(url.searchParams.get('courseStates'),'ACTIVE');
           assert.equal(route.request().headers().authorization,'Bearer mock-classroom-token-never-store');
-          const page=url.searchParams.get('pageToken');return route.fulfill({json:page?{courses:[{id:'456',name:'TEST #2',section:'ห้อง 2',courseState:'ACTIVE',alternateLink:'https://classroom.google.com/c/test2'}]}:{courses:[{id:'123',name:'TEST #1',section:'ห้อง 1',courseState:'ACTIVE',alternateLink:'https://classroom.google.com/c/test1'}],nextPageToken:'page2'}});
+          const page=url.searchParams.get('pageToken');return route.fulfill({headers,json:page?{courses:[{id:'456',name:'TEST #2',section:'ห้อง 2',courseState:'ACTIVE',alternateLink:'https://classroom.google.com/c/test2'}]}:{courses:[{id:'123',name:'TEST #1',section:'ห้อง 1',courseState:'ACTIVE',alternateLink:'https://classroom.google.com/c/test1'}],nextPageToken:'page2'}});
         }
       }
       if (url.hostname === 'www.gstatic.com') return route.fulfill({ contentType:'text/javascript', body: name === 'firebase-app.js' ? 'export const getApps=()=>[];export const initializeApp=()=>({});' : name === 'firebase-auth.js' ? auth : name === 'firebase-database.js' ? database : '' });

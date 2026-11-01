@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="455" viewBox="0 0 660 455" role="img" aria-labelledby="title desc"><title id="title">Carbonyl oxygen accepts a hydrogen bond from water</title><desc id="desc">Pentan-2-one carbonyl oxygen accepts from a hydrogen still bonded to water oxygen. The lower comparison shows four-carbon and seven-carbon straight-chain alcohols with one OH each.</desc><rect width="100%" height="100%" fill="white"/><g font-family="Arial, sans-serif" fill="#152e47"><text x="330" y="32" text-anchor="middle" font-size="23" font-weight="bold">Carbonyl O accepts • water donates</text>
+<text x="245" y="102" text-anchor="middle" font-size="29">O</text><text x="245" y="184" text-anchor="middle" font-size="29">C</text>
+<path d="M239 157V119 M251 157V119 M224 176H150 M266 176H350" fill="none" stroke="#152e47" stroke-width="3"/>
+<text x="120" y="184" text-anchor="middle" font-size="28">CH₃</text><text x="447" y="184" text-anchor="middle" font-size="28">CH₂CH₂CH₃</text>
+<circle cx="267" cy="86" r="3"/><circle cx="267" cy="98" r="3"/>
+<path d="M280 94H386" stroke="#152e47" stroke-width="3" stroke-dasharray="4 6"/>
+<text x="406" y="102" text-anchor="middle" font-size="29">H</text><text x="485" y="102" text-anchor="middle" font-size="29">O</text><text x="535" y="53" text-anchor="middle" font-size="29">H</text>
+<path d="M425 94H465 M497 79L519 60" stroke="#152e47" stroke-width="3"/>
+<text x="334" y="76" text-anchor="middle" font-size="18">H-bond</text><text x="488" y="137" text-anchor="middle" font-size="19">O–H stays intact</text>
+<text x="330" y="225" text-anchor="middle" font-size="19">The solute needs an acceptor, not its own O–H donor.</text>
+<path d="M25 248H635" stroke="#b7c4cd"/>
+<text x="330" y="280" text-anchor="middle" font-size="22" font-weight="bold">Same OH count • different hydrocarbon size</text>
+<rect x="25" y="301" width="285" height="100" rx="6" fill="#f3f6f8" stroke="#789"/><rect x="335" y="301" width="300" height="100" rx="6" fill="#f3f6f8" stroke="#789"/>
+<text x="167" y="337" text-anchor="middle" font-size="25">CH₃(CH₂)₃OH</text><text x="485" y="337" text-anchor="middle" font-size="25">CH₃(CH₂)₆OH</text>
+<text x="167" y="377" text-anchor="middle" font-size="21">4 C • 1 OH</text><text x="485" y="377" text-anchor="middle" font-size="21">7 C • 1 OH</text>
+<text x="330" y="435" text-anchor="middle" font-size="19">Neutral, straight-chain alcohols at the same temperature</text></g></svg>

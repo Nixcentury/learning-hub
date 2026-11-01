@@ -16,6 +16,7 @@ const nextMember = `${proposed}.child('members').child($roomId).child($uid)`;
 const nextIndex = `${proposed}.child('userRooms').child($uid).child($roomId)`;
 const nextRemoved = `${proposed}.child('removed').child($roomId).child($uid)`;
 const sameFields = (a,b) => ['displayName','joinedAt','joinCode','email','invitationId'].map(key => `${a}.child('${key}').val() === ${b}.child('${key}').val()`).join(' && ');
+const sameMemberCore = ['displayName','joinedAt','joinCode'].map(key => `newData.child('${key}').val() === data.child('${key}').val()`).join(' && ') + ['email','invitationId'].map(key => ` && (!data.child('${key}').exists() || newData.child('${key}').val() === data.child('${key}').val())`).join('');
 const none = { '.validate': false };
 const emailRule = { '.validate': `(${verified}) && newData.isString() && newData.val() === ${email} && newData.val().length <= 254` };
 export function mergeRosterRules(base) {
@@ -27,7 +28,7 @@ export function mergeRosterRules(base) {
   const remove = `(${owner}) && data.exists() && !newData.exists() && ${nextRemoved}.exists() && !${nextIndex}.exists()`;
   const restore = `(${owner}) && !data.exists() && newData.exists() && ${oldRemoved}.exists() && !${nextRemoved}.exists() && ${sameFields('newData',archived)}`;
   member['.write'] = `(${selfJoin}) || (${remove}) || (${restore})`;
-  member['.validate'] = `$roomId.matches(/^r_[a-f0-9]{32}$/) && newData.hasChildren(['displayName','joinedAt','joinCode']) && ${nextIndex}.val() === 'student' && ((!data.exists() && auth.uid === $uid) || (data.exists() && ${sameFields('newData','data')}) || (${restore}))`;
+  member['.validate'] = `$roomId.matches(/^r_[a-f0-9]{32}$/) && newData.hasChildren(['displayName','joinedAt','joinCode']) && ${nextIndex}.val() === 'student' && ((!data.exists() && auth.uid === $uid) || (data.exists() && ${sameMemberCore}) || (${restore}))`;
   member.joinedAt['.validate'] = `newData.isNumber() && (newData.val() === now || (data.exists() && newData.val() === data.val()) || ((${owner}) && newData.val() === ${archived}.child('joinedAt').val()))`;
   member.email = { '.validate': `(${emailRule['.validate']}) || ((${owner}) && newData.val() === ${archived}.child('email').val())` };
   const invite = "root.child('classroomV1/invitations').child(newData.val())";

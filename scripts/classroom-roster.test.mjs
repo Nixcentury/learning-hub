@@ -73,3 +73,10 @@ test('code join remains compatible before new Rules are applied; no email field 
  f.service.setContext(...ctx(),true);await tick();await f.service.command('join',{code},'student');
  assert.equal(f.db.userRooms.student[rid],'student');assert.equal(f.db.members[rid].student.email,undefined);
 });
+
+test('email entry attaches to an existing code member without duplicating membership or changing name/time',async t=>{
+ const f=fixture(t),id=await invitationKey(rid,'student@example.test');f.db.invitations={[id]:invite()};
+ f.db.members={[rid]:{student:{displayName:'Original code name',joinedAt:7,joinCode:code}}};
+ f.enrollment.setContext(...ctx());await tick();await tick();
+ assert.equal(Object.keys(f.db.members[rid]).length,1);assert.equal(f.db.members[rid].student.displayName,'Original code name');assert.equal(f.db.members[rid].student.joinedAt,7);assert.equal(f.db.members[rid].student.email,'student@example.test');
+});

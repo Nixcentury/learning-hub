@@ -24,11 +24,11 @@ export function createClassroomEnrollment({ io }) {
         void (async () => {
           try {
             const previous = await io.get('members/' + invite.roomId + '/' + user.uid);
-            if (!current() || previous) return;
+            if (!current() || previous?.email) return;
             const removed = await io.get('removed/' + invite.roomId + '/' + user.uid);
             if (!current() || removed) return;
-            const patch = joinRoomUpdates(user.uid, invite.roomId, invite.joinCode, user.displayName || email, io.timestamp());
-            Object.assign(patch['members/' + invite.roomId + '/' + user.uid], { email, invitationId: id });
+            const patch = joinRoomUpdates(user.uid, invite.roomId, invite.joinCode, user.displayName || email, io.timestamp(), previous);
+            Object.assign(patch['members/' + invite.roomId + '/' + user.uid], { email, invitationId: previous?.invitationId || id });
             // Never continue a pending write after the identity changed.
             if (current()) await io.update(patch);
           } catch {

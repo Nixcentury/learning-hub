@@ -77,6 +77,16 @@ test('real Rules: email enrollment, owner removal/restore, cross-account and cro
   assert.deepEqual(await read('members/'+rid+'/student'),previous);assert.equal(await read('removed/'+rid+'/student'),null);
   assert.equal((await good('student','GET',root+'/rooms/'+rid)).ownerUid,'teacher');
  });
+ await t.test('verified invitation can attach to an existing code member without changing original name or time',async()=>{
+  await good('student-d','PATCH',root,joinRoomUpdates('student-d',rid,code,'Original code name',stamp));
+  const legacy=await read('members/'+rid+'/student-d');const invitation=await invite('teacher',rid,'student-d@example.test',code);
+  const patch=joinRoomUpdates('student-d',rid,code,'ignored',stamp,legacy);
+  Object.assign(patch['members/'+rid+'/student-d'],{email:'student-d@example.test',invitationId:invitation});
+  await good('student-d','PATCH',root,patch);
+  assert.equal((await read('members/'+rid+'/student-d')).joinedAt,legacy.joinedAt);
+  assert.equal((await read('members/'+rid+'/student-d')).displayName,'Original code name');
+  await deny('student-d','PATCH','members/'+rid+'/student-d',{email:'other@example.test'});
+ });
  await t.test('legacy code member without email can be removed/restored; revoked owner loses management',async()=>{
   await good('student-c','PATCH',root,joinRoomUpdates('student-c',rid,code,'Legacy',stamp));
   const legacy=await read('members/'+rid+'/student-c');await good('teacher','PATCH',root,removeMemberUpdates(rid,'student-c',legacy,stamp));

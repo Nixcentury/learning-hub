@@ -164,6 +164,7 @@ try {
   await teacher.page.evaluate(()=>{window.qaGoogleMode='closed';});
   await teacher.frame.locator('[data-google-connect]').click();await teacher.page.locator('[data-google-authorize]').click();
   await teacher.page.locator('[data-google-dialog-feedback]').filter({hasText:'ปิดหน้าต่าง Google'}).waitFor();
+  await teacher.frame.locator('[data-google-course-id]').first().waitFor({state:'hidden'});
   assert.equal(await teacher.frame.locator('[data-google-course-id]').count(),0);
   await teacher.page.evaluate(()=>{window.qaGoogleMode='ok';});googleEmail='second-teacher@school.example';
   await teacher.page.locator('[data-google-authorize]').click();

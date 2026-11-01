@@ -55,7 +55,7 @@ export function onDisconnect(path){return {remove:async()=>registrations.set(pat
 window.qaNetwork=async value=>{if(!value)for(const [path,data]of registrations)await call(data===null?'DELETE':'PATCH',path,data).catch(()=>{});online=value;connectionWatchers.forEach(fn=>fn());};
 `;
 const googleRequests = [];
-let googleEmail = 'teacher@school.example';
+let googleEmail = 'teacher@school.example', googleListVersion = 0;
 const googleIdentity = `window.google={accounts:{oauth2:{initTokenClient(config){window.qaGoogleConfig={client_id:config.client_id,scope:config.scope,include_granted_scopes:config.include_granted_scopes};return{requestAccessToken(){queueMicrotask(()=>window.qaGoogleMode==='closed'?config.error_callback({type:'popup_closed'}):config.callback({access_token:'mock-classroom-token-never-store',expires_in:3600,scope:config.scope}));}};}}}};`;
 const server = createServer(async (req, res) => {
   try {
@@ -103,7 +103,8 @@ try {
         if(url.hostname==='classroom.googleapis.com'&&url.pathname==='/v1/courses') {
           assert.equal(route.request().method(),'GET');assert.equal(url.searchParams.get('teacherId'),'me');assert.equal(url.searchParams.get('courseStates'),'ACTIVE');
           assert.equal(route.request().headers().authorization,'Bearer mock-classroom-token-never-store');
-          const page=url.searchParams.get('pageToken');return route.fulfill({headers,json:page?{courses:[{id:'456',name:'TEST #2',section:'ห้อง 2',courseState:'ACTIVE',alternateLink:'https://classroom.google.com/c/test2'}]}:{courses:[{id:'123',name:'TEST #1',section:'ห้อง 1',courseState:'ACTIVE',alternateLink:'https://classroom.google.com/c/test1'}],nextPageToken:'page2'}});
+          const page=url.searchParams.get('pageToken');if(!page)googleListVersion++;
+          return route.fulfill({headers,json:page?{courses:[{id:'456',name:'TEST #2 · load '+googleListVersion,section:'ห้อง 2',courseState:'ACTIVE',alternateLink:'https://classroom.google.com/c/test2'}]}:{courses:[{id:'123',name:'TEST #1',section:'ห้อง 1',courseState:'ACTIVE',alternateLink:'https://classroom.google.com/c/test1'}],nextPageToken:'page2'}});
         }
       }
       if (url.hostname === 'www.gstatic.com') return route.fulfill({ contentType:'text/javascript', body: name === 'firebase-app.js' ? 'export const getApps=()=>[];export const initializeApp=()=>({});' : name === 'firebase-auth.js' ? auth : name === 'firebase-database.js' ? database : '' });
@@ -141,7 +142,8 @@ try {
   assert.equal(await teacher.frame.locator('body').evaluate(()=>window.qaGoogleContexts.some(message=>message.includes('mock-classroom-token-never-store'))),false);
   const googleOutput=resolve(root,'qa-output');await mkdir(googleOutput,{recursive:true});
   await teacher.page.screenshot({path:resolve(googleOutput,'classroom-monitor-google-connected.png'),fullPage:true});
-  await teacher.frame.locator('[data-google-reload]').click();await teacher.frame.locator('[data-google-course-id="456"]').waitFor();
+  const reloadVersion=googleListVersion+1;await teacher.frame.locator('[data-google-reload]').click();
+  await teacher.frame.locator('[data-google-course-id="456"]').filter({hasText:'load '+reloadVersion}).waitFor();
   assert.equal(await teacher.frame.locator('[data-google-course-id]').count(),2);
   await teacher.page.evaluate(()=>{window.qaGoogleMode='closed';});
   await teacher.frame.locator('[data-google-connect]').click();await teacher.page.locator('[data-google-authorize]').click();

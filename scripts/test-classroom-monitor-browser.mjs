@@ -54,6 +54,9 @@ export function onValue(path,fn,error=()=>{}){
 export function onDisconnect(path){return {remove:async()=>registrations.set(path,null),update:async value=>registrations.set(path,value),cancel:async()=>registrations.delete(path)};}
 window.qaNetwork=async value=>{if(!value)for(const [path,data]of registrations)await call(data===null?'DELETE':'PATCH',path,data).catch(()=>{});online=value;connectionWatchers.forEach(fn=>fn());};
 `;
+const googleRequests = [];
+let googleEmail = 'teacher@school.example', googleListVersion = 0;
+const googleIdentity = `window.google={accounts:{oauth2:{initTokenClient(config){window.qaGoogleConfig={client_id:config.client_id,scope:config.scope,include_granted_scopes:config.include_granted_scopes};return{requestAccessToken(){queueMicrotask(()=>window.qaGoogleMode==='closed'?config.error_callback({type:'popup_closed'}):config.callback({access_token:'mock-classroom-token-never-store',expires_in:3600,scope:config.scope}));}};}}}};`;
 const server = createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost');
@@ -86,10 +89,24 @@ try {
       // Deterministic tab visibility for desktop integration; real iPad behavior is a device check.
       let visible = true; Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => visible ? 'visible' : 'hidden' });
       window.qaVisible = value => { visible = value; document.dispatchEvent(new Event('visibilitychange')); };
+      window.qaGoogleContexts=[];window.addEventListener('message',event=>{if(event.data?.type==='learning-hub-context')window.qaGoogleContexts.push(JSON.stringify(event.data));});
     }, uid);
     await context.route('**/*', route => {
       const url = new URL(route.request().url()), name = url.pathname.split('/').at(-1);
       if (url.origin === origin) return route.continue();
+      if (['accounts.google.com','openidconnect.googleapis.com','classroom.googleapis.com'].includes(url.hostname)) {
+        const headers={'access-control-allow-origin':'*','access-control-allow-headers':'Authorization','access-control-allow-methods':'GET, OPTIONS'};
+        if(route.request().method()==='OPTIONS')return route.fulfill({status:204,headers});
+        googleRequests.push({uid,url:url.href,method:route.request().method()});
+        if(url.hostname==='accounts.google.com'&&url.pathname==='/gsi/client')return route.fulfill({contentType:'text/javascript',body:googleIdentity});
+        if(url.hostname==='openidconnect.googleapis.com'&&url.pathname==='/v1/userinfo')return route.fulfill({headers,json:{sub:'school-teacher-id',email:googleEmail,email_verified:true}});
+        if(url.hostname==='classroom.googleapis.com'&&url.pathname==='/v1/courses') {
+          assert.equal(route.request().method(),'GET');assert.equal(url.searchParams.get('teacherId'),'me');assert.equal(url.searchParams.get('courseStates'),'ACTIVE');
+          assert.equal(route.request().headers().authorization,'Bearer mock-classroom-token-never-store');
+          const page=url.searchParams.get('pageToken');if(!page)googleListVersion++;
+          return route.fulfill({headers,json:page?{courses:[{id:'456',name:'TEST #2 · load '+googleListVersion,section:'ห้อง 2',courseState:'ACTIVE',alternateLink:'https://classroom.google.com/c/test2'}]}:{courses:[{id:'123',name:'TEST #1',section:'ห้อง 1',courseState:'ACTIVE',alternateLink:'https://classroom.google.com/c/test1'}],nextPageToken:'page2'}});
+        }
+      }
       if (url.hostname === 'www.gstatic.com') return route.fulfill({ contentType:'text/javascript', body: name === 'firebase-app.js' ? 'export const getApps=()=>[];export const initializeApp=()=>({});' : name === 'firebase-auth.js' ? auth : name === 'firebase-database.js' ? database : '' });
       return route.abort();
     });
@@ -102,6 +119,53 @@ try {
     await frame.locator('[data-classroom-monitor]').waitFor(); return { context, page, frame };
   }
   const teacher = await client('teacher'), student = await client('student', true);
+  // Direct Google connection: actual parent/dialog/provider/iframe, mock Google only.
+  assert.equal(googleRequests.length,0,'Google must not load or prompt until a teacher explicitly connects');
+  assert.equal(await student.frame.locator('[data-google-classroom-panel]').isVisible(),false);
+  await student.frame.locator('body').evaluate(()=>parent.postMessage({type:'learning-hub-google-classroom-action',uid:'student',action:'open'},location.origin));
+  assert.equal(await student.page.locator('[data-google-classroom-dialog]').isVisible(),false);
+  await teacher.frame.locator('[data-google-connect]').click();
+  await teacher.page.locator('[data-google-classroom-dialog][open]').waitFor();
+  await teacher.page.locator('[data-google-client-id]').fill('123456789012-ownedwebclient123.apps.googleusercontent.com');
+  await teacher.page.locator('[data-google-prepare]').click();
+  await teacher.page.locator('[data-google-authorize]:not([disabled])').waitFor();
+  await teacher.page.locator('[data-google-authorize]').click();
+  await teacher.frame.locator('[data-google-account]').filter({hasText:'teacher@school.example'}).waitFor();
+  await teacher.frame.locator('[data-google-course-id="456"]').waitFor();
+  assert.equal(await teacher.page.evaluate(()=>qaUid),'teacher','Connecting a school account must not switch Firebase/Hub identity');
+  const googleConfig=await teacher.page.evaluate(()=>qaGoogleConfig);
+  assert.deepEqual(googleConfig.scope.split(' ').sort(),['openid','https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/classroom.courses.readonly'].sort());
+  assert.equal(googleConfig.include_granted_scopes,false);
+  await teacher.page.locator('[data-google-dialog-done]').click();
+  assert.equal(await teacher.frame.locator('[data-google-course-id]').count(),2);
+  assert.equal(await teacher.page.evaluate(()=>Object.keys(localStorage).map(key=>localStorage.getItem(key)).join('').includes('mock-classroom-token-never-store')),false);
+  assert.equal(await teacher.frame.locator('body').evaluate(()=>window.qaGoogleContexts.some(message=>message.includes('mock-classroom-token-never-store'))),false);
+  const googleOutput=resolve(root,'qa-output');await mkdir(googleOutput,{recursive:true});
+  await teacher.page.screenshot({path:resolve(googleOutput,'classroom-monitor-google-connected.png'),fullPage:true});
+  const reloadVersion=googleListVersion+1;await teacher.frame.locator('[data-google-reload]').click();
+  await teacher.frame.locator('[data-google-course-id="456"]').filter({hasText:'load '+reloadVersion}).waitFor();
+  assert.equal(await teacher.frame.locator('[data-google-course-id]').count(),2);
+  await teacher.page.evaluate(()=>{window.qaGoogleMode='closed';});
+  await teacher.frame.locator('[data-google-connect]').click();await teacher.page.locator('[data-google-authorize]').click();
+  await teacher.page.locator('[data-google-dialog-feedback]').filter({hasText:'ปิดหน้าต่าง Google'}).waitFor();
+  assert.equal(await teacher.frame.locator('[data-google-course-id]').count(),0);
+  await teacher.page.evaluate(()=>{window.qaGoogleMode='ok';});googleEmail='second-teacher@school.example';
+  await teacher.page.locator('[data-google-authorize]').click();
+  await teacher.frame.locator('[data-google-account]').filter({hasText:'second-teacher@school.example'}).waitFor();
+  await teacher.frame.locator('[data-google-course-id="456"]').waitFor();
+  await teacher.page.locator('[data-google-dialog-done]').click();
+  await teacher.page.setViewportSize({width:390,height:844});
+  assert.equal(await teacher.frame.locator('html').evaluate(node=>node.scrollWidth<=innerWidth),true);
+  await teacher.frame.locator('[data-google-connect]').click();
+  assert.equal(await teacher.page.locator('[data-google-classroom-dialog]').evaluate(node=>{const r=node.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.bottom<=innerHeight;}),true);
+  await teacher.page.locator('[data-google-dialog-done]').click();await teacher.page.setViewportSize({width:1360,height:1000});
+  await teacher.frame.locator('[data-google-disconnect]').click();
+  await teacher.frame.locator('[data-google-account]').filter({hasText:'second-teacher@school.example'}).waitFor({state:'hidden'});
+  assert.equal(await teacher.frame.locator('[data-google-course-id]').count(),0);
+  assert.equal(googleRequests.some(request=>request.uid==='student'),false);
+  assert.ok(googleRequests.every(request=>request.method==='GET'));
+  console.log('PASS direct Classroom phase 1: teacher gesture → separate school account → paginated read-only courses → popup cancellation/reconnect → no token persistence/iframe leak → student denial → mobile dialog');
+
   // Homework uses the production Hub bundle, UI and real emulator Rules.
   // It remains independent of lesson lock/unlock and quiz submission/grades.
   // Live classroom links use production UI/service and the same emulator Rules.

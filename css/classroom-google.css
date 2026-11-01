@@ -1,0 +1,16 @@
+.classroom-google-dialog { width: min(560px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); box-sizing: border-box; overflow: auto; border: 2px solid #1863c2; border-radius: 8px; padding: 22px; color: #193453; background: #fff; font: inherit; box-shadow: 0 12px 50px #12345640; }
+.classroom-google-dialog::backdrop { background: #102a4b80; }
+.classroom-google-dialog header { display: flex; align-items: start; gap: 12px; justify-content: space-between; }
+.classroom-google-dialog h2 { margin: 0; font-size: 1.25rem; }
+.classroom-google-dialog p { line-height: 1.6; overflow-wrap: anywhere; }
+.classroom-google-dialog details { padding: 12px; background: #eef5ff; border: 1px solid #bed4f2; }
+.classroom-google-dialog summary { cursor: pointer; font-weight: 700; }
+.classroom-google-dialog label { display: grid; gap: 6px; margin: 14px 0 8px; font-weight: 600; }
+.classroom-google-dialog input { width: 100%; min-width: 0; box-sizing: border-box; padding: 10px; border: 1px solid #8caacb; border-radius: 3px; background: #fff; color: #193453; font: inherit; font-size: .9rem; }
+.classroom-google-dialog button { margin-top: 12px; padding: 9px 14px; border: 1px solid #9ebadb; border-radius: 3px; background: #eef5ff; color: #164d96; font: inherit; cursor: pointer; }
+.classroom-google-dialog header button { margin: 0; padding: 0 8px; font-size: 1.4rem; }
+.classroom-google-dialog > button { display: block; width: 100%; }
+.classroom-google-dialog button.is-primary { color: white; background: #1877f2; border-color: #1259b8; font-weight: 700; }
+.classroom-google-dialog button:disabled { opacity: .55; cursor: default; }
+.classroom-google-dialog a { color: #1255ad; display: block; margin-top: 12px; }
+.classroom-google-feedback.is-error { color: #a71d31; }

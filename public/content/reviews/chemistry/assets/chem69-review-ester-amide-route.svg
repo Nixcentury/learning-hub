@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="610" viewBox="0 0 660 610" role="img" aria-labelledby="title desc"><title id="title">A different worked ester-to-amide route</title><desc id="desc">Methyl propanoate hydrolyzes to propanoic acid and methanol. The acid is heavier in this example and forms N-ethylpropanamide with ethanamine under amide-forming heating and dehydration conditions.</desc><rect width="100%" height="100%" fill="white"/><g font-family="Arial, sans-serif" fill="#152e47"><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#152e47"/></marker></defs>
+<text x="330" y="30" text-anchor="middle" font-size="24" font-weight="bold">Follow the fragments through each step</text>
+<text x="330" y="75" text-anchor="middle" font-size="22">methyl propanoate</text>
+<text x="330" y="116" text-anchor="middle" font-size="29">CH₃CH₂–C(=O)–O–CH₃</text>
+<path d="M330 135V181" stroke="#152e47" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="350" y="162" font-size="20">H₂O, H⁺, heat</text>
+<rect x="20" y="205" width="362" height="121" rx="6" fill="#f3f6f8" stroke="#152e47"/><rect x="411" y="205" width="229" height="121" rx="6" fill="white" stroke="#789"/>
+<text x="201" y="237" text-anchor="middle" font-size="22">propanoic acid</text><text x="526" y="237" text-anchor="middle" font-size="22">methanol</text>
+<text x="201" y="277" text-anchor="middle" font-size="27">CH₃CH₂COOH</text><text x="526" y="277" text-anchor="middle" font-size="27">CH₃OH</text>
+<text x="201" y="311" text-anchor="middle" font-size="21">Mr = 74 • selected here</text><text x="526" y="311" text-anchor="middle" font-size="21">Mr = 32</text>
+<path d="M201 336V404" stroke="#152e47" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="223" y="363" font-size="22">+ H₂NCH₂CH₃</text><text x="223" y="394" font-size="20">amide-forming heat; − H₂O</text>
+<rect x="20" y="427" width="620" height="122" rx="6" fill="#f3f6f8" stroke="#152e47"/>
+<text x="330" y="464" text-anchor="middle" font-size="28">CH₃CH₂–C(=O)–NH–CH₂CH₃</text>
+<text x="330" y="505" text-anchor="middle" font-size="22">C₅H₁₁NO • Mr = 101</text>
+<text x="330" y="533" text-anchor="middle" font-size="18">3 acid-side C + 2 amine-side C = 5 C</text>
+<text x="330" y="585" text-anchor="middle" font-size="19">The original N–CH₂CH₃ bond stays connected.</text></g></svg>

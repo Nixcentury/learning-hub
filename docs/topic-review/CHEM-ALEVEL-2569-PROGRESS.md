@@ -19,7 +19,10 @@ The teacher teaches this 35-question set over several lessons. Add about three e
 | 7 | Graham rate/mass ratios; equal-time distance ratios; x and L−x; reference ends; inverse molar-mass and equal-quantity time ratios | Written TH/EN |
 | 8 | Simple monocyclic monoalkene scope; double bond 1–2; first-difference locant sets; alphabetical order ignoring di/tri; tied locants; punctuation | Written TH/EN |
 | 9 | Skeletal C/H/O/N counts; carbonyl C and ring N; amine versus amide; formula-first comparison; identical redrawings versus constitutional/stereoisomers | Written TH/EN |
-| 10–35 | Not authored yet; read the actual next questions before planning their review | Pending |
+| 10 | Solute–water donor/acceptor roles; carbonyl O; hydrocarbon chain/ring size; matched comparisons; neutral forms versus pH/ions | Written TH/EN |
+| 11 | Complete-combustion mole/mass calculations; molecular versus empirical formula; dark/light Br2 tests; aromatic ring versus side chain; intersecting evidence without claiming uniqueness | Written TH/EN |
+| 12 | Ester name fragments; acid-catalyzed hydrolysis; compare both product Mr values; acid/amine salt versus amide conditions; retain N attachment; atom/mass conservation | Written TH/EN |
+| 13–35 | Not authored yet; read the actual next questions before planning their review | Pending |
 
 First batch: 3 exam sections, 8 recall questions and 19 separately spaced subparts in each language, with 2 reused diagrams per language. Worked examples use S, illustrative M ionization energies and an isotope Y with different quantities. There is no Sn configuration/exam total, Nd calculation, correct choice letter or original exam solution in this review. The existing bank Q2 is already an adapted practice question with the Z >= 2 condition; do not describe its key as the official original exam verdict.
 
@@ -35,7 +38,7 @@ In Hub, the Quiz review button opens/restores the shared reader and automaticall
 
 Quiz opening prefers an authored review for the current bank, then the old row-topic preference when no bank review is available. If a later question has no section yet, the reader says so and offers the prepared sections. Existing topic reviews stay on their old behavior. No Apps Script, Sheet data, Classroom services or Firebase Rules are changed.
 
-Next authoring batch: inspect questions 10–12, extend both languages, keep question keys and numbering stable, then update this checkpoint and the menu's available range. Do not add placeholders that look ready.
+Next authoring batch: inspect questions 13–15, extend both languages, keep question keys and numbering stable, then update this checkpoint and the menu's available range. Do not add placeholders that look ready.
 
 ## QA
 
@@ -157,3 +160,63 @@ Batch 3 QA:
 - Proof image: `qa-output/chem69-review-q7-q9-ipad.jpg` (ignored local QA file).
   HTTP-preview crypto compatibility stays outside the repository. Publish via
   PR; verify deployment after an authorized merge.
+
+
+### Batch 4 — questions 10–12 (2026-11-01)
+
+Started from main `01a962d` after PR #104 merged. Read the live public 35-row
+snapshot again; revision remains
+`08b5f19efdef6747ec0ed0a6d8664ae6bb81af0f40c8437b21d3b63ac5778c6b`.
+Questions 10–12 are rows 11–13. Inspected Q10's three structures and all five
+image options of Q11 and Q12. The original source questions/images are unchanged.
+
+Added three exam sections and nine recall questions (27–35), with 19 separate
+subparts per language. Current total: 12 exam sections, 35 recall questions,
+77 subparts and 11 figures per language. Three new original SVGs show water
+donating to a carbonyl, an aromatic ring versus its side chain, and a different
+worked ester-to-amide route. No source option letter, original structure ranking,
+C9H10 calculation, or ethyl-butanoate/propan-2-amine solution is provided.
+
+Different examples: pentan-2-one/ol; butan-1-ol/heptan-1-ol; sorbitol/hexan-1-ol;
+0.250/0.200/0.100 mol combustion data; methylbenzene/ethenylbenzene; pent-1-ene
+versus cyclopentane; methyl propanoate/ethanamine and propyl methanoate;
+ethanoic acid/butan-2-amine. The last product has C6H13NO, Mr 115; the worked
+route product has C5H11NO, Mr 101. Preserve original N–carbon attachment.
+
+Live catalog confirmed the organic-properties, organic-reactions and chemical-
+formulas IDs. They have no owned review pages here, so related reading names
+the chapter and links to verified IPST lessons. The covalent review link uses
+its existing owned bank key. Sources checked: IPST Book 5 lessons 010/011/012,
+Purdue alcohols/reactions, OpenStax combustion/aromatic stability/halogenation/
+ester hydrolysis, and KPU solubility/amide preparation. Original explanations,
+examples and diagrams are authored here rather than copying source pages.
+
+Scope is review content, three assets, existing bank menu range and this
+checkpoint. Next batch: read questions 13–15 before extending the same page.
+
+Batch 4 QA:
+- Existing exam sections 1–9 match the base section bytes after parsing for TH
+  and EN. New LaTeX expressions match between languages. Independently checked
+  combustion mole/mass arithmetic, every example Mr, and atom conservation
+  across the hydrolysis and amide net reactions.
+- `pnpm test:unit`: 616 passed, 0 failed. Final build passed; 673 public files
+  verified. All 12 review validators and `git diff --check` passed. Content
+  clarifications after the unit run added explicit starting structures and an
+  amine-locant explanation; final build/content/print checks were rerun.
+- Real PrintCore cloning: 18 paths (TH/EN × exam 10/11/12 × hidden/first/all)
+  keep only the selected exam section, correct answer/blank states, its one
+  diagram, and the original Quiz draft. No physical-printer or exported-PDF
+  visual result is claimed.
+- Production-build browser: Review from Q10 selects section 10, and returning
+  from section 12 reaches Q12/35 with one Quiz iframe. The typed Q10 reasoning
+  survives. Section 12 individual/all toggles show 1/3 answers and 4/0 blanks.
+- TH/EN sections 10–12 checked at wrapper widths 1024/768/390: all images load,
+  no MathJax errors or horizontal overflow. At phone width, open-answer states
+  of sections 11/12 also fit. The general combustion equation uses two rows for
+  narrow screens. This is desktop viewport QA, not a physical iPad/Safari test.
+- Inspected all three new SVGs through the shared reader, including carbonyl
+  O···H–O connectivity, three ring double bonds plus the separate side-chain
+  alkene, and retained N–ethyl connectivity in the worked amide.
+- No AI grading or real final submission used. The HTTP-preview crypto shim
+  stays outside Git. Proof image: `qa-output/chem69-review-q10-q12-ipad.jpg`.
+  Publish via PR and verify live deployment after an authorized merge.

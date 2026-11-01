@@ -320,3 +320,11 @@ body.theme-classroom {
 .classroom-google-courses a { color: #1255ad; }
 .classroom-google-feedback:empty { display: none; }
 .classroom-google-feedback.is-error { color: #a71d31; }
+
+.classroom-roster-form{display:flex;flex-wrap:wrap;gap:8px;align-items:end;margin:12px 0;padding:12px;background:#eff6ff;border:1px solid #bfd5ef;border-radius:4px}
+.classroom-roster-form label{display:grid;gap:6px;flex:1;min-width:180px;font-weight:600}
+.classroom-roster-form input{width:100%;min-width:0;box-sizing:border-box;padding:9px;border:1px solid #93afd2;border-radius:3px;font:inherit;background:#fff;color:#18324e}
+.classroom-roster-form small{flex-basis:100%;color:var(--muted);line-height:1.6}
+.classroom-roster li{flex-wrap:wrap;gap:6px;overflow-wrap:anywhere}
+.classroom-roster li .classroom-button{font-size:12px;padding:6px 10px;margin:0;min-height:36px}
+@media(max-width:600px){.classroom-roster-form{align-items:stretch}.classroom-roster-form label,.classroom-roster-form>.classroom-button{flex-basis:100%}}

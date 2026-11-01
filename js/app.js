@@ -180,6 +180,12 @@ function syncClassrooms() {
 function syncAssignmentRoute() {
   if (activeSectionId !== 'classroom' || !assignmentRoute || classroomRooms?.status !== 'ready' || classroomRooms.uid !== activeSession.user?.uid) return;
   const { roomId } = assignmentRoute;
+  if (!classroomRooms.rooms.some(room => room.id === roomId)) {
+    // An old shared/assignment URL must not reopen a room after removal.
+    assignmentRoute = null; assignmentOpening = '';
+    void navigation.openHash('#classroom');
+    return;
+  }
   if (classroomRooms.selected?.id === roomId) return;
   const key = classroomRooms.uid + '/' + roomId;
   if (assignmentOpening === key) return;

@@ -3,13 +3,13 @@ export const emulatorOrigin = process.env.CLASSROOM_EMULATOR_ORIGIN || 'http://1
 export const emulatorProject = 'demo-classroom-phase1';
 const url = new URL(emulatorOrigin);
 if (url.protocol !== 'http:' || !['127.0.0.1', 'localhost'].includes(url.hostname) || url.pathname !== '/') throw Error('Classroom tests require a loopback emulator.');
-export function mockToken(uid) {
+export function mockToken(uid, claims = {}) {
   const iat = Math.floor(Date.now() / 1000);
   // Same unsigned JWT format as Firebase util createMockUserToken. Emulator only.
   const encode = value => Buffer.from(JSON.stringify(value)).toString('base64url');
   return encode({ alg: 'none', type: 'JWT' }) + '.' + encode({ iss: 'https://securetoken.google.com/' + emulatorProject,
     aud: emulatorProject, sub: uid, user_id: uid, iat, exp: iat + 3600, auth_time: iat,
-    email: uid + '@example.test', firebase: { sign_in_provider: 'google.com', identities: {} } }) + '.';
+    email: uid + '@example.test', email_verified: true, ...claims, firebase: { sign_in_provider: 'google.com', identities: {} } }) + '.';
 }
 export async function request(uid, method, path, body) {
   const headers = { 'Content-Type': 'application/json' };
@@ -29,6 +29,12 @@ export async function good(uid, method, path, body) {
   return response.value;
 }
 export async function reset(rules) {
+  if (process.env.CLASSROOM_TEST_ROSTER === '1' && !rules.rules?.classroomV1?.invitations) {
+    const { readFile } = await import('node:fs/promises');
+    const { mergeRosterRules } = await import('../build-classroom-roster-rules.mjs');
+    const baseline = JSON.parse(await readFile(new URL('../../firebase/classroom-links.merged-draft.json', import.meta.url), 'utf8'));
+    rules = mergeRosterRules({ rules: { ...baseline.rules, ...rules.rules } });
+  }
   await good('EMULATOR_ADMIN', 'PUT', '.settings/rules', rules);
   await good('EMULATOR_ADMIN', 'PUT', '', { learningHub: { teacherApprovals: { teacher: true, 'teacher-b': { enabled: true } } } });
 }

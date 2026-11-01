@@ -1,3 +1,4 @@
+import { cleanStudentEmail, invitationKey, removeMemberUpdates, restoreMemberUpdates } from "./classroom-roster-model.js";
 import { createClassroomAccess } from "./classroom-access.js";
 import { classroomError, cleanRoomName, cleanJoinCode, newRoomKey, roomIdPattern, createRoomUpdates, joinRoomUpdates } from "./classroom-model.js";
 
@@ -5,9 +6,9 @@ import { classroomError, cleanRoomName, cleanJoinCode, newRoomKey, roomIdPattern
 // the real database emulator. The page never supplies an authoritative UID/role.
 export function createClassroomService({ io, onChange, makeKey = newRoomKey }) {
   let session = null, role = null, signature = "", epoch = 0, listRevision = 0, detailRevision = 0;
-  let unwatchList, unwatchMembers, index = {}, busy = false, pendingCreate = null;
+  let unwatchList, unwatchMembers, unwatchInvites, unwatchRemoved, index = {}, busy = false, pendingCreate = null;
   let state = empty();
-  function empty() { return { uid: null, status: "inactive", rooms: [], selected: null, members: [], roomStatus: "idle", error: "", detailError: "", busy: "" }; }
+  function empty() { return { uid: null, status: "inactive", rooms: [], selected: null, members: [], invitations: [], removed: [], rosterError: "", rosterStatus: "idle", roomStatus: "idle", error: "", detailError: "", busy: "" }; }
   function publish(patch = {}) { state = { ...state, ...patch }; onChange(structuredClone(state)); }
   function alive(version) { return version === epoch && state.uid; }
   function guard(uid = state.uid) {
@@ -49,11 +50,20 @@ export function createClassroomService({ io, onChange, makeKey = newRoomKey }) {
     publish({ status: "loading", error: "" });
     unwatchList = watch("userRooms/" + state.uid, value => {
       if (!alive(version)) return;
+      const wasSelectedMember = state.selected && index[state.selected.id];
       index = value || {};
+      if (wasSelectedMember && !index[state.selected.id]) {
+        ++detailRevision; stopDetail();
+        publish({ selected: null, rooms: state.rooms.filter(room => index[room.id]), members: [], invitations: [], removed: [], rosterError: "", rosterStatus: "idle", roomStatus: "idle", detailError: "classroom/removed" });
+      }
       void loadList(version);
     }, error => {
       if (alive(version)) { ++listRevision; publish({ status: "error", rooms: [], error: codeOf(error) }); }
     });
+  }
+  function stopDetail() {
+    unwatchMembers?.(); unwatchInvites?.(); unwatchRemoved?.();
+    unwatchMembers = unwatchInvites = unwatchRemoved = null;
   }
   function setContext(nextSession, nextRole, active) {
     session = nextSession; role = nextRole;
@@ -61,7 +71,7 @@ export function createClassroomService({ io, onChange, makeKey = newRoomKey }) {
     const next = active && ["teacher", "student"].includes(access.state) ? access.uid + ":" + access.state : "";
     if (next === signature) return;
     signature = next; ++epoch; ++detailRevision; ++listRevision;
-    unwatchList?.(); unwatchMembers?.(); unwatchList = unwatchMembers = null;
+    unwatchList?.(); stopDetail(); unwatchList = null;
     index = {}; busy = false; pendingCreate = null;
     state = { ...empty(), uid: next ? access.uid : null };
     publish();
@@ -71,8 +81,8 @@ export function createClassroomService({ io, onChange, makeKey = newRoomKey }) {
     const { uid, teacher } = guard();
     if (!roomIdPattern.test(roomId)) throw classroomError("classroom/invalid-room");
     const version = epoch, revision = ++detailRevision;
-    unwatchMembers?.(); unwatchMembers = null;
-    publish({ selected: { id: roomId }, members: [], roomStatus: "loading", detailError: "" });
+    stopDetail();
+    publish({ selected: { id: roomId }, members: [], invitations: [], removed: [], rosterError: "", rosterStatus: "idle", roomStatus: "loading", detailError: "" });
     try {
       const room = await read("rooms/" + roomId);
       if (!alive(version) || revision !== detailRevision) return;
@@ -87,22 +97,35 @@ export function createClassroomService({ io, onChange, makeKey = newRoomKey }) {
       if (owner) {
         unwatchMembers = watch("members/" + roomId, value => {
           if (!alive(version) || revision !== detailRevision) return;
-          const members = Object.entries(value || {}).map(([memberUid, record]) => ({ uid: memberUid, displayName: record.displayName, joinedAt: record.joinedAt }));
+          const members = Object.entries(value || {}).map(([memberUid, record]) => ({ uid: memberUid, ...record }));
           publish({ members, roomStatus: "ready", detailError: "" });
         }, error => {
-          if (alive(version) && revision === detailRevision) publish({ members: [], roomStatus: "error", detailError: codeOf(error) });
+          if (alive(version) && revision === detailRevision) publish({ members: [], invitations: [], removed: [], rosterError: "", rosterStatus: "idle", roomStatus: "error", detailError: codeOf(error) });
         });
+        if (io.watchInvitations) {
+          const current = () => alive(version) && revision === detailRevision;
+          let invitesReady = false, removedReady = false;
+          publish({ rosterStatus: 'loading' });
+          const failed = error => { if (current()) publish({ rosterError: codeOf(error), rosterStatus: 'error' }); };
+          unwatchInvites = io.watchInvitations('roomId', roomId, value => {
+            if (current()) { invitesReady = true; publish({ invitations: Object.entries(value || {}).map(([id, record]) => ({ id, ...record })), rosterStatus: state.rosterError ? 'error' : removedReady ? 'ready' : 'loading' }); }
+          }, failed);
+          unwatchRemoved = watch('removed/' + roomId, value => {
+            if (current()) { removedReady = true; publish({ removed: Object.entries(value || {}).map(([uid, record]) => ({ uid, ...record })), rosterStatus: state.rosterError ? 'error' : invitesReady ? 'ready' : 'loading' }); }
+          }, failed);
+        }
       }
     } catch (error) {
-      if (alive(version) && revision === detailRevision) publish({ members: [], roomStatus: "error", detailError: codeOf(error) });
+      if (alive(version) && revision === detailRevision) publish({ members: [], invitations: [], removed: [], rosterError: "", rosterStatus: "idle", roomStatus: "error", detailError: codeOf(error) });
     }
   }
   async function command(action, payload = {}, uid) {
     const current = guard(uid);
     if (busy) throw classroomError("classroom/busy");
     if (action === "open") return openRoom(String(payload.roomId || ""));
-    if (action === "back") { ++detailRevision; unwatchMembers?.(); unwatchMembers = null; publish({ selected: null, members: [], roomStatus: "idle", detailError: "" }); return; }
+    if (action === "back") { ++detailRevision; stopDetail(); publish({ selected: null, members: [], invitations: [], removed: [], rosterError: "", rosterStatus: "idle", roomStatus: "idle", detailError: "" }); return; }
     if (action === "reload") { startList(); if (state.selected) await openRoom(state.selected.id); return; }
+    if (['invite', 'cancel-invite', 'remove-member', 'restore-member'].includes(action)) return manageRoster(action, payload, current);
     if (!["create", "join"].includes(action)) throw classroomError("classroom/invalid-action");
     if (action === "create" && !current.teacher) throw classroomError("classroom/teacher-required");
     const name = action === "create" ? cleanRoomName(payload.name) : null;
@@ -147,7 +170,17 @@ export function createClassroomService({ io, onChange, makeKey = newRoomKey }) {
           if (!alive(version)) throw classroomError("classroom/session-changed");
           guard(current.uid);
           try {
-            await io.update(joinRoomUpdates(current.uid, match.roomId, code, session.user.displayName || session.user.email, io.timestamp(), previous));
+            let supportsRosterRules = true;
+            const removed = await read('removed/' + match.roomId + '/' + current.uid).catch(error => {
+              if (/permission.?denied/i.test(codeOf(error))) { supportsRosterRules = false; return null; }
+              throw error;
+            });
+            if (!alive(version)) throw classroomError('classroom/session-changed');
+            if (removed) throw classroomError('classroom/removed');
+            guard(current.uid);
+            const patch = joinRoomUpdates(current.uid, match.roomId, code, session.user.displayName || session.user.email, io.timestamp(), previous);
+            if (!previous && supportsRosterRules && session.user.emailVerified === true) patch['members/' + match.roomId + '/' + current.uid].email = cleanStudentEmail(session.user.email);
+            await io.update(patch);
           } catch (error) {
             if (!alive(version)) throw classroomError("classroom/session-changed");
             // Two tabs may both read an absent membership. Preserve the first
@@ -171,5 +204,49 @@ export function createClassroomService({ io, onChange, makeKey = newRoomKey }) {
       }
     }
   }
-  return { setContext, command, getState: () => structuredClone(state), dispose: () => { signature = ""; ++epoch; unwatchList?.(); unwatchMembers?.(); } };
+  async function manageRoster(action, payload, current) {
+    const roomId = String(payload.roomId || '');
+    if (!current.teacher || state.selected?.membership !== 'owner' || state.selected?.id !== roomId) throw classroomError('classroom/owner-required');
+    if (state.rosterError || state.roomStatus !== 'ready' || state.rosterStatus !== 'ready') throw classroomError('classroom/roster-unavailable');
+    const version = epoch, revision = detailRevision;
+    const valid = () => {
+      guard(current.uid);
+      if (!alive(version) || revision !== detailRevision || state.selected?.id !== roomId) throw classroomError('classroom/session-changed');
+    };
+    busy = true; publish({ busy: action });
+    try {
+      let patch;
+      if (action === 'invite') {
+        const email = cleanStudentEmail(payload.email);
+        if (email === session.user.email?.toLowerCase()) throw classroomError('classroom/invite-self');
+        if (state.members.some(member => member.email === email)) return { status: 'already-member' };
+        const removed = state.removed.find(record => record.member.email === email);
+        if (removed) patch = restoreMemberUpdates(roomId, removed.uid, removed);
+        else {
+          const id = await invitationKey(roomId, email); valid();
+          const previous = state.invitations.find(record => record.id === id);
+          const saved = previous ? (({ id, ...record }) => record)(previous) : null;
+          patch = { ['invitations/' + id]: saved || { roomId, email, ownerUid: current.uid, joinCode: state.selected.joinCode, createdAt: io.timestamp() } };
+        }
+      } else if (action === 'cancel-invite') {
+        const invite = state.invitations.find(record => record.id === payload.invitationId);
+        if (!invite || state.members.some(member => member.invitationId === invite.id)) throw classroomError('classroom/invalid-invitation');
+        patch = { ['invitations/' + invite.id]: null };
+      } else if (action === 'remove-member') {
+        const member = state.members.find(record => record.uid === payload.memberUid);
+        if (!member) throw classroomError('classroom/member-unavailable');
+        const { uid, ...record } = member;
+        patch = removeMemberUpdates(roomId, uid, record, io.timestamp());
+      } else {
+        const record = state.removed.find(record => record.uid === payload.memberUid);
+        if (!record) throw classroomError('classroom/member-unavailable');
+        patch = restoreMemberUpdates(roomId, record.uid, record);
+      }
+      valid(); await io.update(patch); valid();
+      return { status: action };
+    } finally {
+      if (alive(version)) { busy = false; publish({ busy: '' }); startList(); }
+    }
+  }
+  return { setContext, command, getState: () => structuredClone(state), dispose: () => { signature = ""; ++epoch; unwatchList?.(); stopDetail(); } };
 }

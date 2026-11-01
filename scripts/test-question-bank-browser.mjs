@@ -31,7 +31,7 @@ const bankConfig = `export const questionBankConfig={endpoint:'https://bank.test
 const auth = `let session={status:'signed-in',user:{uid:'student-a'}};const listeners=[];
 export function getAuthSession(){return session} export function subscribeAuth(fn){listeners.push(fn);fn(session);return ()=>{}}
 export function setUser(uid){session={status:uid?'signed-in':'guest',user:uid?{uid}:null};listeners.forEach(fn=>fn(session))}`;
-const database = `export const getDatabase=()=>({});export const ref=(_,path)=>path;export const serverTimestamp=()=>Date.now();
+const database = `export const orderByChild=value=>value;export const equalTo=value=>value;export const query=path=>path;export const getDatabase=()=>({});export const ref=(_,path)=>path;export const serverTimestamp=()=>Date.now();
 export const onValue=(_,fn)=>{fn({exists:()=>false,val:()=>null});return ()=>{}};
 export const onDisconnect=()=>({remove:async()=>{},cancel:async()=>{}});
 export async function get(path){const value=structuredClone(window.bankDb?.[path]||null);return {exists:()=>value!==null,val:()=>value}}

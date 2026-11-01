@@ -28,7 +28,8 @@ const qaLocation = catalog.contents.find(content => content.source.endsWith('equ
 const reviewBank = qaLocation.topicId;
 // A small owned reading keeps this integration deterministic and independent of
 // the public bank service. Production readers and homework bridges run unchanged.
-catalog.routes.unshift({subjectId:'physics',bankKey:reviewBank,toolKey:'review',kind:'content',status:'ready',contentId:'qa-homework-review'});
+catalog.routes.unshift({hash:'#content/qa-homework-review',aliases:[],subjectId:'physics',chapterId:'bank',topicId:reviewBank,
+  bankKey:reviewBank,toolKey:'review',kind:'content',status:'ready',contentId:'qa-homework-review',parentHash:'#physics/bank/'+reviewBank});
 catalog.contents.push({id:'qa-homework-review',toolKind:'html',source:'content/qa-homework-review.html'});
 catalog.contents.push({ id:'qa-prerequisite-quiz',toolKind:'quiz',source:'content/templates/quiz-template.html',titleTh:'ทดสอบเงื่อนไข 2 ข้อ',titleEn:'Two-question prerequisite QA',canonicalHash:'#content/qa-prerequisite-quiz',placements:[qaLocation] });
 catalog.routes.push({ hash:'#content/qa-prerequisite-quiz',aliases:[],kind:'content',status:'ready',contentId:'qa-prerequisite-quiz',...qaLocation,titleTh:'ทดสอบเงื่อนไข 2 ข้อ',titleEn:'Two-question prerequisite QA' });

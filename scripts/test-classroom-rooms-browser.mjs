@@ -24,6 +24,7 @@ export async function signOutFromHub(){window.qaSession(null);}
 // SDK transport shim only: actual app, roles, service and UI run against real
 // RTDB emulator Rules. No mock access decisions, no production calls.
 const database = `
+export const orderByChild=value=>value;export const equalTo=value=>value;export const query=(path)=>path;
 const requests=[];window.qaRequests=requests;
 export const getDatabase=()=>({});export const ref=(_,path)=>path;export const serverTimestamp=()=>({'.sv':'timestamp'});
 async function call(method,path,value){

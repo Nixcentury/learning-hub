@@ -5,6 +5,7 @@ import { resolve, extname, sep } from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { reset, good, emulatorOrigin, emulatorProject, mockToken } from './fixtures/classroom-emulator.mjs';
+import { mergeRosterRules } from './build-classroom-roster-rules.mjs';
 import { buildLinksRules } from './build-classroom-links-rules.mjs';
 import { buildMonitorRules } from './build-classroom-monitor-rules.mjs';
 import { buildSubmissionRules } from './build-classroom-submission-rules.mjs';
@@ -17,7 +18,7 @@ const rules = JSON.parse(await readFile(resolve(root, 'firebase/classroom-phase1
 rules.rules.classroomLinksV1 = buildLinksRules();
 rules.rules.classroomMonitorV1 = buildMonitorRules();
 rules.rules.classroomAssignmentsV1 = buildAssignmentRules();
-rules.rules.classroomSubmissionsV1 = buildSubmissionRules(); await reset(rules);
+rules.rules.classroomSubmissionsV1 = buildSubmissionRules(); await reset(mergeRosterRules(rules));
 const roomId = 'r_' + 'a'.repeat(32), stamp = { '.sv': 'timestamp' };
 await good('teacher', 'PATCH', 'classroomV1', createRoomUpdates('teacher', 'ฟิสิกส์ ม.5/1', { roomId, code: 'ABCD2345' }, stamp));
 for (const uid of ['student','student-b']) await good(uid, 'PATCH', 'classroomV1', joinRoomUpdates(uid, roomId, 'ABCD2345', uid === 'student' ? 'นักเรียนทดลอง' : 'นักเรียนอีกคน', stamp));
@@ -36,7 +37,7 @@ catalog.routes.push({ hash:'#content/qa-prerequisite-quiz',aliases:[],kind:'cont
 const auth = `
 export class GoogleAuthProvider{setCustomParameters(){}} export const browserLocalPersistence={};export const getAuth=()=>({});export const setPersistence=async()=>{};
 let user=localStorage.getItem('monitor-qa-user'),callback;window.qaUid=user;
-const value=()=>user?{uid:user,displayName:'Name '+user,email:user+'@example.test',photoURL:''}:null;
+const value=()=>user?{uid:user,displayName:'Name '+user,email:user+'@example.test',photoURL:'',emailVerified:true}:null;
 export function onAuthStateChanged(_,fn){callback=fn;queueMicrotask(()=>fn(value()));return ()=>{};}
 window.qaSession=uid=>{user=uid;window.qaUid=uid;uid?localStorage.setItem('monitor-qa-user',uid):localStorage.removeItem('monitor-qa-user');callback?.(value());};
 export async function signInWithPopup(){window.qaSession('teacher');}export async function signOut(){window.qaSession(null);}
@@ -45,6 +46,8 @@ export async function signInWithPopup(){window.qaSession('teacher');}export asyn
 // real emulator Rules execute unchanged. Transactions use REST ETag compare-and-set.
 const database = `
 export const getDatabase=()=>({});export const ref=(_,path)=>path;export const serverTimestamp=()=>({'.sv':'timestamp'});
+export const orderByChild=field=>({field});export const equalTo=value=>({value});
+export const query=(path,field,value)=>path+'?orderBy='+encodeURIComponent(JSON.stringify(field.field))+'&equalTo='+encodeURIComponent(JSON.stringify(value.value));
 window.qaDbRequests=[];window.qaDbFailures=[];window.qaDbSnapshots=Object.create(null);const registrations=new Map(),connectionWatchers=new Set();let online=true;
 const snapshot=value=>({val:()=>value,exists:()=>value!==null});
 async function call(method,path,value,etag){window.qaDbRequests.push({method,path});if(!online)throw Object.assign(Error('offline'),{code:'monitor/offline'});
@@ -70,7 +73,8 @@ const server = createServer(async (req, res) => {
       const chunks = []; for await (const chunk of req) chunks.push(chunk);
       const uid = req.headers['x-qa-uid'], path = url.searchParams.get('path');
       const headers = { 'Content-Type': 'application/json', ...(req.method === 'GET' ? { 'X-Firebase-ETag': 'true' } : {}), ...(req.headers['if-match'] ? { 'If-Match': req.headers['if-match'] } : {}) };
-      const response = await fetch(emulatorOrigin + '/' + path + '.json?ns=' + emulatorProject + (uid ? '&auth=' + encodeURIComponent(mockToken(uid)) : ''), { method: req.method, headers, body: chunks.length ? Buffer.concat(chunks) : undefined });
+      const [dbPath, dbQuery] = path.split('?');
+      const response = await fetch(emulatorOrigin + '/' + dbPath + '.json?ns=' + emulatorProject + (uid ? '&auth=' + encodeURIComponent(mockToken(uid)) : '') + (dbQuery ? '&' + dbQuery : ''), { method: req.method, headers, body: chunks.length ? Buffer.concat(chunks) : undefined });
       res.writeHead(response.status, { 'Content-Type': 'application/json', ...(response.headers.get('etag') ? { etag: response.headers.get('etag') } : {}) }); res.end(await response.text()); return;
     }
     if (!url.pathname.startsWith(prefix)) throw Error('Outside base');
@@ -534,6 +538,30 @@ try {
   await teacher.frame.locator('[data-monitor-badge]').filter({ hasText: 'ปลดล็อก' }).waitFor();
   await student.page.locator('.monitor-banner').waitFor({ state: 'hidden' });
   console.log('PASS account switch clears old messages; expiry returns to ordinary browsing');
+  // Owner email roster: pending first login, automatic enrollment, live revocation,
+  // blocked room-code rejoin and explicit restoration through the real UI/Rules.
+  const roster = teacher.frame.locator('.classroom-roster-details');
+  if (!await roster.evaluate(node => node.open)) await roster.locator('summary').click();
+  await teacher.frame.locator('[data-student-email]:not([disabled])').waitFor();
+  await teacher.frame.locator('[data-student-email]').fill('email-student@example.test');
+  await teacher.frame.locator('[data-invite-student] button').click();
+  await teacher.frame.locator('[data-room-feedback]').filter({hasText:'บันทึกอีเมลแล้ว'}).waitFor();
+  await roster.locator('li').filter({hasText:'email-student@example.test'}).waitFor();
+  const added = await client('email-student', true);
+  const remove = teacher.frame.locator('[data-room-action="remove-member"][data-member-uid="email-student"]');
+  await remove.waitFor(); await remove.click(); await remove.filter({hasText:'ยืนยันนำออก'}).click();
+  await added.frame.locator('[data-room-detail]').waitFor({state:'hidden'});
+  await added.frame.locator('[data-join-room] [name="code"]').fill('ABCD2345');
+  await added.frame.locator('[data-join-room] button').click();
+  await added.frame.locator('[data-room-feedback]').filter({hasText:'ครูนำคุณออก'}).waitFor();
+  await teacher.frame.locator('[data-room-action="restore-member"][data-member-uid="email-student"]').click();
+  await added.frame.locator('[data-room-list] button').waitFor(); await added.frame.locator('[data-room-list] button').click();
+  await added.frame.locator('[data-room-detail]').waitFor();
+  await teacher.page.screenshot({path:resolve(output,'classroom-monitor-roster.png'),fullPage:true});
+  assert.equal(await added.frame.locator('[data-invite-student]').count(),0);
+  assert.equal(await added.frame.locator('html').evaluate(node=>node.scrollWidth<=innerWidth),true);
+  await added.context.close();
+  console.log('PASS email roster: pending first login → auto-enroll → owner removal → live access cleared → code rejoin denied → restore → mobile/student isolation');
   assert.deepEqual(errors, []);
 } catch (failure) {
   const output = resolve(root, 'qa-output'); await mkdir(output, { recursive: true });

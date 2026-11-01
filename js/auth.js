@@ -55,6 +55,7 @@ function toHubUser(user) {
     uid: user.uid,
     displayName: user.displayName || "",
     email: user.email || "",
+    emailVerified: user.emailVerified === true,
     photoURL: user.photoURL || "",
   });
 }

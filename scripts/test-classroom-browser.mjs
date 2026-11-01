@@ -22,6 +22,7 @@ export async function signOutFromHub(){window.qaSession(null);}
 `;
 const presence = `export function setPresenceContext(){} export async function stopPresence(){} export function subscribePresence(fn){fn({connectionStatus:'OFFLINE',rows:[],counts:{active:0,online:0,idle:0,visible:0},error:''});return ()=>{};}`;
 const database = `
+export const orderByChild=value=>value;export const equalTo=value=>value;export const query=(path)=>path;
 const watchers=[],writes=[]; export const getDatabase=()=>({}); export const ref=(_,path)=>path;
 export const serverTimestamp=()=>Date.now();
 export async function get(){return {exists:()=>true,val:()=>({})};}

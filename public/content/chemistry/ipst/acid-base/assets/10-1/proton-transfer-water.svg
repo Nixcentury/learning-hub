@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="title desc">
+  <title id="title">Water in two proton-transfer reactions</title>
+  <desc id="desc">Panel A shows HCl transferring H plus to water, with Cl minus and H3O plus as products. Panel B shows water transferring H plus to ammonia, with OH minus and NH4 plus as products. The curved arrows track the transferred proton, not electron pairs.</desc>
+  <defs><marker id="proton-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#2563a6"/></marker></defs>
+  <rect x="8" y="8" width="704" height="172" rx="12" fill="#f0f6ff" stroke="#b9cce7"/>
+  <rect x="8" y="196" width="704" height="172" rx="12" fill="#f0f6ff" stroke="#b9cce7"/>
+  <g font-family="Arial,sans-serif" fill="#193c65">
+    <g font-size="18" font-weight="bold"><text x="26" y="35">A</text><text x="26" y="223">B</text></g>
+    <g font-size="28" text-anchor="middle">
+      <text x="130" y="99">HCl</text><text x="254" y="99">+</text><text x="380" y="99">H₂O</text>
+      <text x="511" y="99">→</text><text x="612" y="99">Cl⁻ + H₃O⁺</text>
+      <text x="130" y="287">H₂O</text><text x="254" y="287">+</text><text x="380" y="287">NH₃</text>
+      <text x="511" y="287">⇌</text><text x="612" y="287">OH⁻ + NH₄⁺</text>
+    </g>
+    <g fill="none" stroke="#2563a6" stroke-width="2.5" marker-end="url(#proton-arrow)">
+      <path d="M145 72 Q254 9 368 72"/>
+      <path d="M145 260 Q254 197 368 260"/>
+    </g>
+    <g font-size="19" fill="#2563a6" text-anchor="middle"><text x="255" y="56">H⁺</text><text x="255" y="244">H⁺</text></g>
+    <g font-size="16" fill="#455c77"><text x="34" y="150">HCl → Cl⁻</text><text x="344" y="150">H₂O → H₃O⁺</text><text x="34" y="338">H₂O → OH⁻</text><text x="344" y="338">NH₃ → NH₄⁺</text></g>
+  </g>
+</svg>

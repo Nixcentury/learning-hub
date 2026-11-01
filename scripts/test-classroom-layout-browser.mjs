@@ -1,6 +1,7 @@
 // Presentation QA: the production Classroom page, with synthetic context from
 // a same-origin parent. No Google/Firebase requests or real student data.
 import assert from 'node:assert/strict';
+import { summarizeClassroomProgress } from '../public/shared/classroom-progress-model.js';
 import { createServer } from 'node:http';
 import { readFile, mkdir } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
@@ -13,7 +14,7 @@ const base = {title:'ทวนเรื่องคลื่น',instructions:'�
 function context(owner = true, uid = owner?'teacher':'student', language='th') {
   const room = {id:rid,name:'ฟิสิกส์ ม.5/1 · ห้องทดสอบ',ownerUid:'teacher',membership:owner?'owner':'student',joinCode:'ABCD2345'};
   const items = [{...base,id:aid,requiresAssignmentId:aid2},{...base,id:aid2,title:'งานที่ 2 · การสะท้อนและหักเห',publishedAt:stamp-7200000,dueAt:stamp+172800000},{...base,id:closed,title:'งานทบทวนที่ปิดแล้ว',status:'closed',publishedAt:stamp-86400000,dueAt:0}];
-  const grades = Object.fromEntries(items.map(item=>[item.id,{ready:true,loaded:true,rows:owner?[
+  const grades = Object.fromEntries(items.map(item=>[item.id,{ready:true,loaded:true,maxScore:10,rows:owner?[
     {uid:'student',name:'นักเรียนทดสอบ ก',submitted:item.id!==aid,grade:item.id!==aid?{score:5,maxScore:10,percent:50,submittedAt:stamp-300000,submissionRevision:1}:null},
     {uid:'student-b',name:'นักเรียนทดสอบ ข',submitted:true,grade:{score:8,maxScore:10,percent:80,submittedAt:stamp-600000,submissionRevision:2}},
   ]:[{uid,name:'นักเรียนทดสอบ ก',submitted:item.id!==aid,grade:item.id!==aid?{score:5,maxScore:10,percent:50,submittedAt:stamp-300000,submissionRevision:1}:null}]}]));
@@ -21,7 +22,7 @@ function context(owner = true, uid = owner?'teacher':'student', language='th') {
     classroomRooms:{uid,status:'ready',roomStatus:'ready',busy:'',rooms:[room],selected:room,members:owner?[{uid:'student',displayName:'นักเรียนทดสอบ ก',joinedAt:stamp},{uid:'student-b',displayName:'นักเรียนทดสอบ ข',joinedAt:stamp}]:[]},
     classroomLinks:{uid,roomId:rid,status:'ready',connected:true,busy:'',error:'',owner,items:[{id:'l_'+'f'.repeat(32),version:1,title:'สมุดจดประจำห้อง · Notebook',url:'https://example.com/notebook',authorUid:'student',authorName:'นักเรียนทดสอบ ก',createdAt:stamp,updatedAt:stamp,revision:1}]},
     classroomAssignments:{uid,connected:true,busy:'',hubUrl:'https://example.test/learning-hub/',rooms:[{...room,status:'ready',items,lessonShortcuts:Object.fromEntries(items.map(item=>[item.id,{hash:'#physics/10',titleTh:'บทที่ 10 แสงเชิงคลื่น',titleEn:'Chapter 10 Wave Optics'}])),drafts:owner?[{...base,id:draft,title:'งานร่าง · ยังไม่เผยแพร่',status:'draft',publishedAt:0}]:[],seen:{}}]},
-    classroomSubmissions:{uid,roomId:rid,connected:true,ready:true,grades,gates:{[aid]:{status:owner?'open':'locked'},[aid2]:{status:'open'},[closed]:{status:'open'}}},
+    classroomSubmissions:{uid,roomId:rid,connected:true,ready:true,grades,progress:owner?null:summarizeClassroomProgress({uid,roomId:rid,items,grades,connected:true}),gates:{[aid]:{status:owner?'open':'locked'},[aid2]:{status:'open'},[closed]:{status:'open'}}},
     classroomMonitor:{uid,selectedRoomId:rid,connected:true,ready:true,busy:'',rooms:[{...room,session:{id:'s_'+'f'.repeat(32),active:true,startedAt:stamp,endsAt:stamp+3600000}}],lesson:owner?null:{roomId:rid,joined:true},rows:owner?[
       {uid:'student',displayName:'นักเรียนทดสอบ ก',status:'visible',lastSeenAt:stamp,windows:1,location:{hash:'#content/wave-quiz',titleTh:'Quiz · คลื่น',titleEn:'Quiz · Waves'}},
       {uid:'student-b',displayName:'นักเรียนทดสอบ ข',status:'hidden',lastSeenAt:stamp-20000,windows:1,location:{hash:'#physics/bank',titleTh:'คลังข้อสอบฟิสิกส์',titleEn:'Physics question bank'},incident:{id:'qa-incident',ackAt:0}},
@@ -88,6 +89,8 @@ try {
 
   await page.evaluate(value=>qa.replace(value),context(false));
   await frame.locator('[data-hw-tools]').waitFor({state:'hidden'});
+  await frame.locator('[data-hw-overall-percent]').filter({hasText:'33.33%'}).waitFor();
+  assert.equal(await frame.locator('[data-hw-overall-count]').textContent(),'2/3');
   assert.equal(await frame.locator('[data-hw-editor]').isVisible(),false);
   assert.equal(await frame.locator('[data-monitor-people] [data-monitor-uid]').count(),0);
   assert.equal(await frame.locator('.classroom-roster').count(),0);
@@ -116,6 +119,8 @@ try {
     assert.equal(await frame.locator('[data-hw-next-panel]').evaluate(node=>node.open),false);
     assert.equal(await frame.locator('[data-room-monitor-panel]').evaluate(node=>node.open),false);
     assert.equal(await frame.locator('html').evaluate(node=>node.scrollWidth<=innerWidth),true,'No horizontal overflow at '+width);
+    assert.equal(await frame.locator('[data-hw-overall-percent]').textContent(),'33.33%');
+    assert.equal(await frame.locator('[data-hw-overall-count]').textContent(),'2/3');
     await frame.locator('[data-hw-next-panel]>summary').click();await frame.locator('[data-next-assignment]').first().waitFor();
     await frame.locator('[data-next-assignment]').first().click();
     assert.equal(await frame.locator('[data-hw-detail-dialog]').evaluate(node=>node.open),false);
@@ -132,7 +137,7 @@ try {
   await frame.locator('.homework-empty').waitFor();assert.equal(await frame.locator('[data-hw-new]').isEnabled(),true);
   await page.evaluate(()=>{qa.context.classroomAssignments.connected=false;qa.send();});await frame.locator('[data-hw-feedback]').filter({hasText:'การเชื่อมต่อขาด'}).waitFor();assert.equal(await frame.locator('[data-hw-new]').isEnabled(),false);
   const signedOut={type:'learning-hub-context',language:'th',identity:{status:'guest'},classroom:{state:'guest'},classroomRooms:null};await page.evaluate(value=>qa.replace(value),signedOut);
-  await frame.locator('[data-classroom-assignments]').waitFor({state:'hidden'});assert.equal(await frame.locator('[data-hw-detail-dialog]').evaluate(node=>node.open),false);
+  await frame.locator('[data-classroom-assignments]').waitFor({state:'hidden'});await frame.locator('[data-hw-overall]').waitFor({state:'hidden'});assert.equal(await frame.locator('[data-hw-detail-dialog]').evaluate(node=>node.open),false);
   assert.deepEqual(errors,[]);console.log('PASS Classroom layout: revocation closes editor, empty/offline states and sign-out clear private content');
 } catch (failure) {
   if(page){

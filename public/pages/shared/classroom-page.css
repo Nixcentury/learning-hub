@@ -328,3 +328,16 @@ body.theme-classroom {
 .classroom-roster li{flex-wrap:wrap;gap:6px;overflow-wrap:anywhere}
 .classroom-roster li .classroom-button{font-size:12px;padding:6px 10px;margin:0;min-height:36px}
 @media(max-width:600px){.classroom-roster-form{align-items:stretch}.classroom-roster-form label,.classroom-roster-form>.classroom-button{flex-basis:100%}}
+
+.homework-overall{margin:14px 0 18px;padding:18px 22px;background:#f4f8ff;color:#203a60}
+.homework-overall[hidden]{display:none}
+.homework-overall h3{margin:0 0 14px;font-size:16px;color:#1d3d70}
+.homework-overall-values{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:760px}
+.homework-overall-metric{display:grid;gap:5px;min-width:0}
+.homework-overall-metric>span{font-size:12px;font-weight:600}
+.homework-overall-metric>strong{font-size:28px;line-height:1.2;overflow-wrap:anywhere;color:#184e9b}
+.homework-overall-metric>small,.homework-overall>p{font-size:11px;line-height:1.8;color:#4a607e}
+.homework-overall>p{margin:12px 0 0}
+.homework-overall progress{display:block;width:100%;height:10px;margin-top:4px;accent-color:#275ea5}
+.homework-overall .homework-overall-offline{color:#775a19;font-weight:600}
+@media(max-width:600px){.homework-overall{padding:15px}.homework-overall-values{gap:18px}.homework-overall-metric>strong{font-size:25px}}

@@ -288,6 +288,11 @@ try {
   assert.equal(await good('EMULATOR_ADMIN','GET','quizProgress'),null);
   assert.equal(await homeworkFrame.locator('[data-homework-submit]').count(),0);
   assert.equal(await homeworkFrame.locator('[data-retry]').isEnabled(),true,'Submitted homework can retry unmastered questions');
+  const frozenQuiz=await good('teacher','GET',`classroomSubmissionsV1/quizzes/${roomId}/${assignmentId}`);
+  const firstPercent=Math.round(1/frozenQuiz.questionCount*10000)/100;
+  await student.frame.locator('[data-hw-overall-percent]').filter({hasText:`${firstPercent}%`}).waitFor();
+  assert.equal(await student.frame.locator('[data-hw-overall-count]').textContent(),'1/1');
+  assert.equal(await teacher.frame.locator('[data-hw-overall]').isVisible(),false);
   const firstSubmission=sent[assignmentId].student;
   await homeworkFrame.locator('[data-retry]').click();
   const nextQuestion=await homeworkFrame.locator('[data-quiz-print-source] [data-question]').nth(1).evaluate(question=>({id:question.dataset.questionId,index:[...question.querySelectorAll('[data-choice-id]')].findIndex(choice=>choice.dataset.choiceId===question.dataset.answer)}));
@@ -305,6 +310,10 @@ try {
   student.page.once('dialog',dialog=>dialog.accept());await homeworkFrame.locator('[data-homework-submit]').click();
   await homeworkFrame.locator('[data-homework-status]').filter({hasText:'คะแนนที่ส่งล่าสุด 2/'}).waitFor();
   await teacher.frame.locator('[data-result-uid="student"]').filter({hasText:'2/'}).waitFor();
+  const secondPercent=Math.round(2/frozenQuiz.questionCount*10000)/100;
+  await student.frame.locator('[data-hw-overall-percent]').filter({hasText:`${secondPercent}%`}).waitFor();
+  assert.equal(await student.frame.locator('[data-hw-overall-count]').textContent(),'1/1');
+  console.log('PASS own overall progress: latest submitted score/total question points, resubmission updates, completion stays 1/1, teacher panel hidden');
   const secondSubmission=await good('student','GET',`classroomSubmissionsV1/results/${roomId}/${assignmentId}/student`);
   assert.equal(secondSubmission.submissionRevision,2);assert.notEqual(secondSubmission.submissionId,firstSubmission.submissionId);
   assert.deepEqual(await good('student','GET',`classroomSubmissionsV1/history/${roomId}/${assignmentId}/student/${firstSubmission.submissionId}`),firstSubmission);

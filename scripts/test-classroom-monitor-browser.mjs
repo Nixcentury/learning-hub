@@ -254,7 +254,8 @@ try {
   assert.match(new URL(student.page.url()).hash,/^#classroom\//,'Reading must retain the selected classroom/assignment route');
   assert.equal(await homeworkFrame.locator('[data-topic-review-dialog]').isVisible(),false);
   await reviewFrame.locator('[data-review-return-question="1"]').click();
-  assert.equal(await homeworkWindow.evaluate(node=>node.classList.contains('is-active')),true);
+  // The iframe return crosses postMessage; wait for its observable destination.
+  await student.page.locator('.workspace-window.is-active iframe[src*="homework=1"]').waitFor();
   assert.equal(await homeworkWindow.locator('iframe').getAttribute('src'),homeworkSrc);
   assert.equal(await homeworkFrame.locator('[data-reasoning-input]').inputValue(),'Keep this homework working');
   assert.equal(await homeworkWindow.locator('.window-trailing-tools').isVisible(),false,'Fold retained through review return');

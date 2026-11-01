@@ -9,6 +9,8 @@ on:
       - 'scripts/test-workspace-layout-browser.mjs'
       - 'scripts/test-topic-review-hub-browser.mjs'
       - 'public/shared/topic-review-page.js'
+      - 'public/shared/quiz-core.js'
+      - 'public/shared/quiz-core.css'
       - 'scripts/test-learning-sheet-browser.mjs'
       - '.github/workflows/workspace-layout.yml'
 

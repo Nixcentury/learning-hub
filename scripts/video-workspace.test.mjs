@@ -159,3 +159,23 @@ test('unfinished and conflicting links cannot open blank windows or replace an e
   assert.equal(h.workspace.openContent({ ...entry, videoSource: 'https://youtu.be/dQw4w9WgXcQ' }), false);
   assert.equal(h.document.querySelectorAll('.workspace-tool-frame').length, 1);
 });
+
+test('each window folds its own tools without reloading content, then restores them after language changes', () => {
+  const h = harness();
+  for (const id of ['first', 'second']) h.workspace.openContent({ ...context, toolKind: 'simulation', contentId: id,
+    source: `https://school.test/learning-hub/content/p/${id}.html`, titleTh: id, titleEn: id });
+  const [first, second] = [...h.document.querySelectorAll('.workspace-window')];
+  const frame = first.querySelector('iframe');
+  h.load(frame, dom('<html><body><input value="keep my experiment"></body></html>', 'content/p/first.html'));
+  const toggle = first.querySelector('.window-toolbar-toggle'), tools = first.querySelector('.window-trailing-tools');
+  toggle.click();
+  assert.equal(toggle.getAttribute('aria-expanded'), 'false'); assert.equal(tools.hidden, true);
+  assert.equal(first.classList.contains('is-toolbar-collapsed'), true);
+  assert.equal(second.querySelector('.window-trailing-tools').hidden, false);
+  assert.equal(frame, first.querySelector('iframe')); assert.equal(frame.contentDocument.querySelector('input').getAttribute('value'), 'keep my experiment');
+  first.querySelector('.is-minimize').click(); h.workspace.openContent({ ...context, toolKind: 'simulation', contentId: 'first',
+    source: 'https://school.test/learning-hub/content/p/first.html', titleTh: 'first', titleEn: 'first' });
+  h.language('en'); assert.equal(tools.hidden, true); assert.equal(toggle.getAttribute('aria-label'), 'Show window tools');
+  toggle.click(); assert.equal(tools.hidden, false); assert.equal(toggle.getAttribute('aria-expanded'), 'true');
+  assert.equal(first.querySelector('iframe'), frame);
+});

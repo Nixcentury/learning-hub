@@ -116,6 +116,19 @@ try {
   await assertPair();
   console.log('PASS choose second activity from menu, restore both, swap and accessible dialog; drafts and simulation state survive');
 
+  const barHeight = (await sheet.locator('.workspace-window-bar').boundingBox()).height;
+  const frameHeight = (await sheet.locator('iframe').boundingBox()).height;
+  await sheet.locator('.window-toolbar-toggle').click();
+  assert.equal(await sheet.locator('.window-trailing-tools').isVisible(), false);
+  assert.equal(await simulation.locator('.window-trailing-tools').isVisible(), true);
+  assert.ok((await sheet.locator('.workspace-window-bar').boundingBox()).height < barHeight - 25);
+  assert.ok((await sheet.locator('iframe').boundingBox()).height > frameHeight + 25);
+  assert.equal(await sheet.locator('.is-close').isVisible(), true);
+  await assertState(); await assertPair();
+  await sheet.locator('.window-toolbar-toggle').press('Enter');
+  assert.equal(await sheet.locator('.window-trailing-tools').isVisible(), true);
+  console.log('PASS per-window tools fold and restore by keyboard, gaining reading space without reloading either activity');
+
   await sheet.locator('.is-maximize').click();
   assert.ok((await sheet.boundingBox()).width >= 1358);
   await sheet.locator('.is-maximize').click();

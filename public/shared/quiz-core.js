@@ -94,6 +94,7 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
   let closing = false;
   let dragAnswerUi = null;
   let pendingNavigation = null;
+  let actionsExpanded = true;
   let reviewSplitRequest = null, reviewSplitSerial = 0;
   let bankSelection = null, bankReplacementBase;
   let bankContextWaiter = null, contentLoadVersion = 0, bankReloadBusy = false;
@@ -935,6 +936,8 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
   }
 
   function renderExam() {
+    const previousActions = app.querySelector('[data-action-dock-panel]');
+    if (previousActions) actionsExpanded = previousActions.open;
     dragAnswerUi?.destroy(); dragAnswerUi = null;
     evidenceManager?.unmount();
     const title = contentRoot.querySelector("[data-quiz-title]");
@@ -977,6 +980,13 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
         </article>
 
         <footer class="quiz-action-dock">
+          <details class="quiz-action-panel" data-action-dock-panel ${actionsExpanded ? 'open' : ''}>
+          <summary class="quiz-action-toggle" aria-controls="quiz-action-dock-body">
+            <span class="quiz-action-show">${label('แสดงปุ่มทำข้อสอบ', 'Show quiz controls')}</span>
+            <span class="quiz-action-hide">${label('ซ่อนปุ่มทำข้อสอบ', 'Hide quiz controls')}</span>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div id="quiz-action-dock-body">
           <div class="quiz-live-stats">
             <span>${label("ตอบแล้ว", "Answered")} <strong data-answered-count>0</strong>/${state.questions.length}</span>
             <span>${label("ยอมแพ้", "Give up")} <strong data-giveups-count>0</strong></span>
@@ -994,6 +1004,8 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
           </div>
           <button type="button" class="quiz-submit-button" data-submit-all>${label("ตรวจคำตอบทั้งหมด", "Submit all answers")}</button>
           <div class="quiz-ai-batch-status" data-ai-batch-status hidden></div>
+          </div>
+          </details>
         </footer>
       </section>`;
 
@@ -1480,6 +1492,8 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
   }
 
   function bindExamActions() {
+    const actions = document.querySelector('[data-action-dock-panel]');
+    actions?.addEventListener('toggle', () => { if (actions.isConnected) actionsExpanded = actions.open; });
     document.querySelector("[data-topic-review-open]")?.addEventListener("click", openTopicReview);
     document.querySelector("[data-hint-button]")?.addEventListener("click", revealHint);
     document.querySelector("[data-giveup-button]")?.addEventListener("click", giveUp);

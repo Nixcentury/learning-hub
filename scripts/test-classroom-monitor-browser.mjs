@@ -25,6 +25,11 @@ const catalog = await catalogFromRepository();
 // A QA-only placement of the repository's two-question template makes exactly
 // 50% reachable. Production navigation, freezing, grading and Rules stay intact.
 const qaLocation = catalog.contents.find(content => content.source.endsWith('equilibrium/4-1-equilibrium-quiz.html')).placements[0];
+const reviewBank = qaLocation.topicId;
+// A small owned reading keeps this integration deterministic and independent of
+// the public bank service. Production readers and homework bridges run unchanged.
+catalog.routes.unshift({subjectId:'physics',bankKey:reviewBank,toolKey:'review',kind:'content',status:'ready',contentId:'qa-homework-review'});
+catalog.contents.push({id:'qa-homework-review',toolKind:'html',source:'content/qa-homework-review.html'});
 catalog.contents.push({ id:'qa-prerequisite-quiz',toolKind:'quiz',source:'content/templates/quiz-template.html',titleTh:'ทดสอบเงื่อนไข 2 ข้อ',titleEn:'Two-question prerequisite QA',canonicalHash:'#content/qa-prerequisite-quiz',placements:[qaLocation] });
 catalog.routes.push({ hash:'#content/qa-prerequisite-quiz',aliases:[],kind:'content',status:'ready',contentId:'qa-prerequisite-quiz',...qaLocation,titleTh:'ทดสอบเงื่อนไข 2 ข้อ',titleEn:'Two-question prerequisite QA' });
 const auth = `
@@ -72,6 +77,7 @@ const server = createServer(async (req, res) => {
     if (!resolve(directory, name).startsWith(directory.replace(/[\\/]$/, '') + sep)) throw Error('Outside root');
     let data;
     if (name === 'route-catalog.v1.json') data = JSON.stringify(catalog);
+    else if (name === 'content/qa-homework-review.html') data = `<main data-topic-review-document data-review-quiz-bank="${reviewBank}"><section data-review-exam-question="1"><h2>ทวนข้อ 1 · Review question 1</h2><p>แยกแรงและพิจารณาแรงลัพธ์ / Identify forces and their resultant.</p></section></main>`;
     else { try { data = await readFile(resolve(directory, name)); } catch { if (built) throw Error('Missing built resource'); data = await readFile(resolve(root, 'public', name)); } }
     if (name === 'index.html') data = data.toString().replaceAll('%BASE_URL%', prefix);
     res.setHeader('Content-Type', ({ '.html':'text/html; charset=utf-8', '.js':'text/javascript', '.mjs':'text/javascript', '.css':'text/css', '.svg':'image/svg+xml', '.json':'application/json' })[extname(name)] || 'application/octet-stream'); res.end(data);
@@ -94,6 +100,11 @@ try {
     await context.route('**/*', route => {
       const url = new URL(route.request().url()), name = url.pathname.split('/').at(-1);
       if (url.origin === origin) return route.continue();
+      if (url.hostname === 'script.google.com' && url.searchParams.get('action') === 'catalog') return route.fulfill({
+        headers:{'access-control-allow-origin':'*'},json:{ok:true,data:{schemaVersion:1,subjectId:url.searchParams.get('subject'),sets:[{
+          bankKey:reviewBank,legacyId:'qa-review-source',title:'สมดุล(Equilibrium)',path:['Physics','Hub','สมดุล(Equilibrium)','สมดุล(Equilibrium)'],questionCount:13,
+        }]}},
+      });
       if (['accounts.google.com','openidconnect.googleapis.com','classroom.googleapis.com'].includes(url.hostname)) {
         const headers={'access-control-allow-origin':'*','access-control-allow-headers':'Authorization','access-control-allow-methods':'GET, OPTIONS'};
         if(route.request().method()==='OPTIONS')return route.fulfill({status:204,headers});
@@ -225,6 +236,33 @@ try {
   assert.deepEqual(await homeworkFrame.locator('body').evaluate(()=>window.LearningHubQuiz.getState().answers),{});
   assert.equal(await homeworkFrame.locator('[data-homework-submit]').count(),0,'No final submit button before checking answers');
   assert.equal(await good('EMULATOR_ADMIN','GET','quizProgress'),null,'Opening homework does not touch ordinary practice');
+  const homeworkWindow=student.page.locator('.workspace-window').filter({has:student.page.locator('iframe[src*="homework=1"]')});
+  const homeworkSrc=await homeworkWindow.locator('iframe').getAttribute('src');
+  await homeworkWindow.locator('.window-toolbar-toggle').click();
+  assert.equal(await homeworkWindow.locator('.window-trailing-tools').isVisible(),false);
+  await homeworkFrame.locator('[data-action-dock-panel] > summary').click();
+  assert.equal(await homeworkFrame.locator('[data-next-button]').isVisible(),false);
+  await homeworkFrame.locator('[data-action-dock-panel] > summary').click();
+  await homeworkFrame.locator('[data-reasoning-input]').fill('Keep this homework working');
+  await homeworkFrame.locator('[data-topic-review-open]').click();
+  const reviewWindow=student.page.locator('[data-tool-id="topic-review-library"]');
+  const reviewFrame=reviewWindow.frameLocator('iframe');
+  await reviewFrame.locator('[data-review-return-question="1"]').waitFor();
+  assert.equal(await homeworkWindow.getAttribute('data-window-snap'),'left');
+  assert.equal(await reviewWindow.getAttribute('data-window-snap'),'right');
+  assert.match(new URL(student.page.url()).hash,/^#classroom\//,'Reading must retain the selected classroom/assignment route');
+  assert.equal(await homeworkFrame.locator('[data-topic-review-dialog]').isVisible(),false);
+  await reviewFrame.locator('[data-review-return-question="1"]').click();
+  assert.equal(await homeworkWindow.evaluate(node=>node.classList.contains('is-active')),true);
+  assert.equal(await homeworkWindow.locator('iframe').getAttribute('src'),homeworkSrc);
+  assert.equal(await homeworkFrame.locator('[data-reasoning-input]').inputValue(),'Keep this homework working');
+  assert.equal(await homeworkWindow.locator('.window-trailing-tools').isVisible(),false,'Fold retained through review return');
+  assert.equal(await student.page.locator('#workspace-window-layer iframe[src*="quiz-player"]').count(),1,'Return must not open free bank practice');
+  await student.page.screenshot({path:resolve(root,'qa-output/classroom-monitor-homework-review.png'),fullPage:true});
+  await reviewWindow.locator('.is-close').click();
+  await homeworkFrame.locator('[data-reasoning-input]').fill('');
+  await homeworkWindow.locator('.window-toolbar-toggle').click();
+  assert.equal(await good('EMULATOR_ADMIN','GET','quizProgress'),null,'Reading never writes normal practice');
   const correctIndex=await homeworkFrame.locator('[data-quiz-print-source] [data-question]').first().evaluate(question=>[...question.querySelectorAll('[data-choice-id]')].findIndex(choice=>choice.dataset.choiceId===question.dataset.answer));
   assert.ok(correctIndex>=0);await homeworkFrame.locator('.quiz-option').nth(correctIndex).click();
   await homeworkFrame.locator('[data-submit-all]').click();

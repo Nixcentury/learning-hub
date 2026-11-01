@@ -167,7 +167,8 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     questionSet(quiz);
     await assertUnlocked({ ...item, id }, user, version, selected);
     guard(user, version, false, selected);
-    return { uid: user, roomId: selected, id, quizRevision: quiz.revision, contentId: item.contentId, title: item.title, preview: isOwner() };
+    return { uid: user, roomId: selected, id, quizRevision: quiz.revision, contentId: item.contentId,
+      targetHash: quiz.targetHash || item.targetHash, title: item.title, preview: isOwner() };
   }
   async function quizCommand(action, binding, payload = {}) {
     const user = binding?.uid, version = epoch, selected = binding?.roomId, id = binding?.id;

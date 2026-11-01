@@ -6,6 +6,19 @@ import { readQuizContent } from '../public/shared/quiz-content-adapter.js';
 import { sanitizeHomeworkRoot } from '../public/shared/classroom-submission-quiz.js';
 import { resolveAuthoredPdfLinks } from '../public/shared/pdf-content-model.js';
 import { failSubmission } from '../public/shared/classroom-submission-model.js';
+import { reviewSelection } from './topic-review-tools.js';
+import { bankKeyPattern } from '../public/shared/question-bank-model.js';
+
+// The pinned route identifies the reading; assignment storage stays in Classroom.
+// Resolve through the owned catalog and require the same Quiz content identity.
+export function homeworkReviewSource(binding, catalog, hubUrl) {
+  const route = resolveHubRoute(catalog, binding?.targetHash).route;
+  const activity = activityForRoute(catalog, route, hubUrl);
+  const context = activity?.tool.context;
+  if (!context || context.toolKind !== 'quiz' || context.contentId !== binding?.contentId) return null;
+  const bankKey = activity.bank?.bankKey || (bankKeyPattern.test(context.topicId || '') ? context.topicId : undefined);
+  return reviewSelection({ subjectId: context.subjectId, bankKey });
+}
 
 export async function freezeHomeworkQuiz(item, catalog, hubUrl, fetcher = fetch) {
   const route = resolveHubRoute(catalog, item.targetHash).route;

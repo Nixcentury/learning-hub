@@ -7,11 +7,18 @@ const content = document.querySelector('[data-topic-review-content]');
 const embedded = params.get('embedded') === '1' && parent !== window;
 if (embedded) document.body.dataset.reviewEmbedded = '';
 let printing = false;
-let applying = false, applyVersion = 0, commandId = null, quizSignature = '';
+let applying = false, applyVersion = 0, commandId = null, quizSignature = '', returnToHomework = false;
 function setLanguage(value, refresh = true) {
   document.documentElement.lang = value === 'en' ? 'en' : 'th';
   document.querySelectorAll('[data-th][data-en]').forEach(node => { if (!node.children.length) node.textContent = node.dataset[document.documentElement.lang]; });
   document.querySelectorAll('[data-review-language]').forEach(node => node.setAttribute('aria-pressed', String(node.dataset.reviewLanguage === document.documentElement.lang)));
+  const back = document.querySelector('[data-review-back]');
+  back.dataset.th = returnToHomework ? '← กลับไปทำ Quiz' : '← กลับคลังข้อสอบ';
+  back.dataset.en = returnToHomework ? '← Back to Quiz' : '← Back to question bank';
+  back.textContent = back.dataset[document.documentElement.lang];
+  const selection = browser.getSelection();
+  if (returnToHomework) back.href = '#';
+  else if (Object.hasOwn(bankSubjects, selection.subjectId)) back.href = `../../index.html#${selection.subjectId}/bank${selection.bankKey ? '/' + selection.bankKey : ''}`;
   if (refresh) browser?.refreshLanguage();
 }
 const browser = createTopicReviewBrowser({ root: document.querySelector('[data-topic-review-browser]'), content, printButton,
@@ -24,7 +31,7 @@ const browser = createTopicReviewBrowser({ root: document.querySelector('[data-t
   onChange(selection) {
     const current = selection || browser.getSelection();
     const subject = current.subjectId || params.get('subject');
-    if (Object.hasOwn(bankSubjects, subject)) document.querySelector('[data-review-back]').href = `../../index.html#${subject}/bank${current.bankKey ? '/' + current.bankKey : ''}`;
+    if (!returnToHomework && Object.hasOwn(bankSubjects, subject)) document.querySelector('[data-review-back]').href = `../../index.html#${subject}/bank${current.bankKey ? '/' + current.bankKey : ''}`;
     if (embedded && !applying && commandId !== null) parent.postMessage({ type: 'learning-hub-review-selection',
       commandId, selection: browser.getSelection() }, location.origin);
   },
@@ -35,7 +42,7 @@ document.querySelectorAll('[data-review-language]').forEach(button => button.add
   if (embedded) parent.postMessage({ type: 'learning-hub-language-request', language: document.documentElement.lang }, location.origin);
 }));
 document.querySelector('[data-review-back]').addEventListener('click', event => {
-  if (!embedded || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button > 0) return;
+  if (!embedded || (!returnToHomework && (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button > 0))) return;
   event.preventDefault();
   if (!printing && commandId !== null) parent.postMessage({ type: 'learning-hub-review-back', commandId }, location.origin);
 });
@@ -53,6 +60,7 @@ if (embedded) {
         (selection.bankKey !== null && !/^b-[a-f0-9]{24}$/.test(selection.bankKey || ''))) return;
     if (commandId !== null && data.commandId <= commandId) return;
     commandId = data.commandId;
+    returnToHomework = data.returnToHomework === true;
     const version = ++applyVersion;
     const previous = browser.getSelection();
     const nextQuizSignature = JSON.stringify(data.quizContext || null);

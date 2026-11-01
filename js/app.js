@@ -33,7 +33,7 @@ import { createMonitorView } from './classroom-monitor-view.js';
 import { createFirebaseClassroomAssignments } from './classroom-assignment-firebase.js';
 import { createAssignmentNotice } from './classroom-assignment-view.js';
 import { createFirebaseClassroomSubmissions } from './classroom-submission-firebase.js';
-import { freezeHomeworkQuiz } from './classroom-submission-quiz.js';
+import { freezeHomeworkQuiz, homeworkReviewSource } from './classroom-submission-quiz.js';
 import { readHomeworkQuiz } from '../public/shared/classroom-submission-quiz.js';
 import { installHomeworkBridge } from './classroom-submission-bridge.js';
 import { assignmentHash } from './classroom-assignment-model.js';
@@ -206,7 +206,7 @@ const workspace = createWorkspace({
   getRole: getWorkspaceRole,
   onToolActivated: tool => {
     classroomMonitor.setLocation({ hash: location.hash, titleTh: tool.titleTh, titleEn: tool.titleEn, subjectId: tool.context?.subjectId });
-    if (!tool.homework) navigation?.toolActivated(tool);
+    if (!tool.homework && !tool.reviewHomeworkId) navigation?.toolActivated(tool);
   },
   onWorkspaceIdle: () => navigation?.workspaceIdle(),
   onLanguageChange: language => setLanguage(language),
@@ -873,7 +873,10 @@ window.addEventListener("message", (event) => {
       if (action === 'export-sheet') return submissions.exportSheet(payload.id);
       if (action === 'launch') {
         const binding = await submissions.open(payload.id, uid);
-        if (current()) workspace.openHomework(binding);
+        let reviewSource = null;
+        try { reviewSource = homeworkReviewSource(binding, await navigation.loadCatalog(), location.href); }
+        catch { /* A reading lookup must not block an otherwise available homework. */ }
+        if (current()) workspace.openHomework({ ...binding, reviewSource });
         return { homework: true };
       }
       const result = await assignments.command(action, payload, uid);

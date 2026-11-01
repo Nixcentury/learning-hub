@@ -849,8 +849,8 @@ test("temporary practice supports skip without writing a saved attempt or sendin
 });
 
 const homeworkBinding={uid:'student',roomId:'r_'+'a'.repeat(32),id:'a_'+'b'.repeat(32),quizRevision:'c'.repeat(64),contentId:'sample-quiz',title:'Homework'};
-async function loadHomework(h, result = null, extra = {}) {
-  h.applyHubContext({identity:{status:'signed-in',uid:'student'},homework:homeworkBinding});
+async function loadHomework(h, result = null, extra = {}, binding = homeworkBinding) {
+  h.applyHubContext({identity:{status:'signed-in',uid:'student'},homework:binding});
   const loading=h.loadContent();await h.settle();const request=h.messages.findLast(message=>message.type==='learning-hub-homework-load');
   assert.ok(request);h.response(request,{ok:true,action:'load',quiz:{contentId:'sample-quiz'},value:null,storageRevision:0,result:result?{submissionId:'a'.repeat(32),...result}:null,grade:result?{score:1,maxScore:2,submissionRevision:1,rows:[{id:'q1',correct:true},{id:'q2',correct:false}]}:null,closed:false,...extra});
   await loading;await h.settle();
@@ -977,4 +977,18 @@ test('unsupported Hub and standalone Quiz retain the original review dialog with
   assert.equal(h.state.answers.q1, 'A');
   h.topicReviewDialog.close(); h.openTopicReview(); h.state.currentIndex = 1; await h.advance(1200);
   assert.equal(h.topicReviewDialog.open, false, 'A timed-out request from the previous question cannot open stale review');
+});
+
+test('homework fallback review keeps its pinned subject, bank and question context without changing answers', async () => {
+  const bankKey='b-'+'e'.repeat(24), binding={...homeworkBinding,reviewSource:{subjectId:'chemistry',bankKey}};
+  const h=makeHarness({homeworkBinding:binding});await loadHomework(h,null,{},binding);
+  h.applyHubContext({identity:{status:'signed-in',uid:'student'},content:{contentId:'sample-quiz',subjectId:'classroom'},homework:binding});
+  h.state.answers.q1='A';h.state.currentIndex=1;
+  h.openTopicReview();await h.advance(1200);
+  assert.equal(h.topicReviewDialog.open,true);
+  assert.equal(h.reviewOpens.at(-1).subjectId,'chemistry');
+  assert.deepEqual(h.reviewOpens.at(-1).quizContext,{bankKey,questionNumber:2});
+  assert.equal(h.state.answers.q1,'A');assert.equal(h.state.currentIndex,1);
+  assert.equal(h.state.latestScore,null);
+  assert.equal(h.messages.some(message=>message.type==='learning-hub-quiz-save'),false);
 });

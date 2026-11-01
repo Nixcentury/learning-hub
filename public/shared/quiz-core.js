@@ -1509,10 +1509,11 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
 
   function openTopicReviewDialog() {
     if (!topicReviewDialog.open) topicReviewDialog.showModal();
+    const source = homework?.reviewSource || bankSelection;
     void topicReviewBrowser?.open({
-      subjectId: bankSelection?.subjectId || latestHubContext?.content?.subjectId || contentRoot?.dataset.subjectId,
-      preferred: [...(currentQuestion()?.topicIds || []), bankSelection?.bankKey],
-      quizContext: bankSelection ? { bankKey: bankSelection.bankKey, questionNumber: state.currentIndex + 1 } : null,
+      subjectId: source?.subjectId || contentRoot?.dataset.subjectId || latestHubContext?.content?.subjectId,
+      preferred: [...(currentQuestion()?.topicIds || []), source?.bankKey],
+      quizContext: source?.bankKey ? { bankKey: source.bankKey, questionNumber: state.currentIndex + 1 } : null,
     });
     topicReviewDialog.scrollTop = 0;
   }

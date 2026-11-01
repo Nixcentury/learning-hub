@@ -10,7 +10,7 @@ import {
 } from "./content-context.js";
 import { createContentTool } from "./content-tool.js";
 import { createBankTool } from "./question-bank-tools.js";
-import { createTopicReviewTool } from "./topic-review-tools.js";
+import { createTopicReviewTool, reviewSelection } from "./topic-review-tools.js";
 import { bankKeyPattern } from "../public/shared/question-bank-model.js";
 import { pdfLinkEntry } from "./pdf-link.js";
 import { videoLinkEntry } from "./video-link.js";
@@ -479,13 +479,14 @@ export function createWorkspace({
   function postContext(record) {
     if (record.tool.context.toolKind === 'review') {
       if (!record.reviewReady) return;
-      const signature = JSON.stringify([record.tool.reviewSelection, record.tool.reviewQuizContext, record.tool.reviewPreferred, language()]);
+      const signature = JSON.stringify([record.tool.reviewSelection, record.tool.reviewQuizContext, record.tool.reviewPreferred, Boolean(record.tool.reviewHomeworkId), language()]);
       if (record.reviewLastSent === signature) return;
       record.reviewLastSent = signature;
       record.reviewCommand = (record.reviewCommand || 0) + 1;
       record.frame.contentWindow?.postMessage({ type: 'learning-hub-review-select',
         commandId: record.reviewCommand, selection: record.tool.reviewSelection, language: language(),
-        quizContext: record.tool.reviewQuizContext || null, preferred: record.tool.reviewPreferred || [] }, location.origin);
+        quizContext: record.tool.reviewQuizContext || null, preferred: record.tool.reviewPreferred || [],
+        returnToHomework: Boolean(record.tool.reviewHomeworkId) }, location.origin);
       return;
     }
     // Read-only HTML does not need the learner's identity or privileged bridges.
@@ -685,6 +686,21 @@ export function createWorkspace({
     // The first ready handshake may precede bank loading. The final one retries.
     if (saved?.contentId !== record.tool.context.contentId || !saved?.currentQuestionId) return;
     if (quiz.returnToQuestion?.(record.reviewQuestion - 1)) delete record.reviewQuestion;
+  }
+
+  function returnToHomework(record, questionNumber) {
+    const owner = toolCatalog[record.tool.reviewHomeworkId];
+    const identity = getIdentity();
+    if (!owner?.homework || identity?.status !== 'signed-in' || identity.uid !== owner.homework.uid) return false;
+    // Restore this assignment's frame, never a separate practice attempt in its bank.
+    // Reopening a closed frame uses the normal authorized homework load bridge.
+    if (!open(owner.id)) return false;
+    if (questionNumber) {
+      const quizRecord = records.get(owner.id);
+      quizRecord.reviewQuestion = questionNumber;
+      applyReviewQuestion(quizRecord);
+    }
+    return true;
   }
 
   function flushLocalBeforeRemoval(record) {
@@ -1060,7 +1076,7 @@ export function createWorkspace({
 
   function openHomework(homework) {
     const page = new URL('pages/tools/quiz-player.html', location.href);
-    page.searchParams.set('homework', '1'); page.searchParams.set('v', 'homework-submissions-20261030');
+    page.searchParams.set('homework', '1'); page.searchParams.set('v', 'homework-review-20261101');
     const tool = { id: `homework-${homework.roomId}-${homework.id}-${homework.uid}`, page: page.href,
       source: page.href, homework, icon: '✓', accent: 'blue', titleTh: homework.title, titleEn: homework.title,
       context: { subjectId: 'classroom', chapterId: 'homework', contentId: homework.contentId, toolKind: 'quiz', itemId: 'main', pageId: 'page-001' } };
@@ -1068,10 +1084,11 @@ export function createWorkspace({
     return open(tool.id);
   }
 
-  function openReview(selection, { quizContext = null, preferred = [] } = {}) {
+  function openReview(selection, { quizContext = null, preferred = [], homeworkId = null } = {}) {
     const tool = createTopicReviewTool(selection, location.href);
     if (!tool) return false;
     tool.reviewQuizContext = quizContext; tool.reviewPreferred = preferred;
+    if (homeworkId) tool.reviewHomeworkId = homeworkId;
     toolCatalog[tool.id] = tool;
     const record = records.get(tool.id);
     if (record) {
@@ -1170,10 +1187,14 @@ export function createWorkspace({
       record.reviewRequestId = data.requestId;
       const preferred = Array.isArray(data.topicIds) ? [...new Set(data.topicIds.filter(key =>
         typeof key === 'string' && bankKeyPattern.test(key)))].slice(0, 20) : [];
-      const bankKey = bankKeyPattern.test(context.topicId || '') ? context.topicId : null;
-      const selection = { subjectId: context.subjectId, bankKey: bankKey || preferred[0] || null };
+      const homework = record.tool.homework;
+      if (homework && (getIdentity()?.status !== 'signed-in' || getIdentity().uid !== homework.uid)) return;
+      const source = homework ? reviewSelection(homework.reviewSource) :
+        reviewSelection({ subjectId: context.subjectId, bankKey: bankKeyPattern.test(context.topicId || '') ? context.topicId : null });
+      const bankKey = source?.bankKey;
+      const selection = source && { subjectId: source.subjectId, bankKey: bankKey || preferred[0] || null };
       const quizContext = bankKey ? { bankKey, questionNumber: data.questionNumber, requestId: data.requestId } : null;
-      const opened = openReview(selection, { quizContext, preferred });
+      const opened = openReview(selection, { quizContext, preferred, homeworkId: homework ? record.tool.id : null });
       const review = records.get('topic-review-library');
       const paired = Boolean(opened && review && pairWindows(record, review, review));
       event.source.postMessage({ type: 'learning-hub-quiz-review-result', requestId: data.requestId,
@@ -1202,6 +1223,13 @@ export function createWorkspace({
         const selection = record.tool.reviewSelection, requested = event.data.selection, number = event.data.questionNumber;
         if (record.minimized || !record.element.classList.contains('is-active') || !Number.isInteger(number) || number < 1 || number > 1000 ||
             !selection.bankKey || requested?.subjectId !== selection.subjectId || requested?.bankKey !== selection.bankKey) return;
+        if (record.tool.reviewHomeworkId) {
+          const homework = toolCatalog[record.tool.reviewHomeworkId]?.homework;
+          if (getIdentity()?.status !== 'signed-in' || getIdentity().uid !== homework?.uid) return;
+          if (homework.reviewSource?.subjectId === selection.subjectId && homework.reviewSource?.bankKey === selection.bankKey) {
+            returnToHomework(record, number); return;
+          }
+        }
         const target = createBankTool({ ...selection, toolKey: 'quiz' }, location.href);
         if (!target || !openBank({ ...selection, toolKey: 'quiz' })) return;
         const quizRecord = records.get(target.id);
@@ -1209,13 +1237,16 @@ export function createWorkspace({
         return;
       }
       if (event.data.type === 'learning-hub-review-back') {
-        onReviewBack(record.tool.reviewSelection);
+        if (record.minimized || !record.element.classList.contains('is-active')) return;
+        if (record.tool.reviewHomeworkId) returnToHomework(record);
+        else onReviewBack(record.tool.reviewSelection);
         return;
       }
       if (event.data.type !== 'learning-hub-review-selection' || record.minimized ||
           !record.element.classList.contains('is-active')) return;
       const tool = createTopicReviewTool(event.data.selection, location.href);
       if (!tool || tool.reviewRoute === record.tool.reviewRoute) return;
+      if (record.tool.reviewHomeworkId) tool.reviewHomeworkId = record.tool.reviewHomeworkId;
       record.tool = tool;
       toolCatalog[tool.id] = tool;
       record.reviewLastSent = JSON.stringify([tool.reviewSelection, language()]);

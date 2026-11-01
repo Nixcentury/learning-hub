@@ -1,11 +1,30 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import vm from 'node:vm';
 import { parseHTML, DOMParser } from 'linkedom';
 import { reviewTopics, preferredReviewTopic, reviewContentUrl, reviewDocument, reviewExamNumber } from '../public/shared/topic-review-model.js';
 import { createTopicReviewBrowser } from '../public/shared/topic-review.js';
 
 const key = 'b-' + '1'.repeat(24), other = 'b-' + '2'.repeat(24);
+
+test('the shared review page labels the homework return in both languages and can be reused for normal bank review', async () => {
+  const {document}=parseHTML('<html lang="th"><body><div data-topic-review-browser></div><div data-topic-review-content></div><button data-topic-review-print></button><a data-review-back data-th="← กลับคลังข้อสอบ" data-en="← Back to question bank"></a></body></html>');
+  const listeners={},sent=[],parent={postMessage:value=>sent.push(value)},window={addEventListener:(name,fn)=>{listeners[name]=fn;}};
+  let selection={subjectId:'chemistry',bankKey:key};
+  const source=fs.readFileSync(new URL('../public/shared/topic-review-page.js',import.meta.url),'utf8').replace(/^import[^\n]+\n/gm,'');
+  vm.runInNewContext(source,{document,window,parent,location:{search:'?embedded=1',origin:'https://school.test'},URLSearchParams,
+    bankSubjects:{physics:{},chemistry:{}},createTopicReviewBrowser:()=>({getSelection:()=>selection,refreshLanguage(){},async open(value){selection={subjectId:value.subjectId,bankKey:value.preferred[0]||null};}})});
+  const apply=async(data,extra={})=>listeners.message({source:parent,origin:'https://school.test',data:{type:'learning-hub-review-select',selection,commandId:1,language:'th',...data},...extra});
+  await apply({returnToHomework:true});
+  const back=document.querySelector('[data-review-back]');
+  assert.equal(back.textContent,'← กลับไปทำ Quiz');assert.equal(back.getAttribute('href'),'#');
+  back.click();assert.equal(sent.at(-1).type,'learning-hub-review-back');assert.equal(sent.at(-1).commandId,1);
+  await apply({commandId:2,language:'en',returnToHomework:true});assert.equal(back.textContent,'← Back to Quiz');
+  await apply({commandId:3,language:'th',returnToHomework:false});
+  assert.equal(back.textContent,'← กลับคลังข้อสอบ');assert.equal(back.getAttribute('href'),'../../index.html#chemistry/bank/'+key);
+  await apply({commandId:4,returnToHomework:true},{source:{}});assert.equal(back.textContent,'← กลับคลังข้อสอบ');
+});
 const catalog = { sets: [
   {bankKey:key,legacyId:'real-id-1',title:'ไอโซโทป(Isotopes)',path:['Chemistry','Hub','อะตอม(Atoms)','ไอโซโทป(Isotopes)'],questionCount:0},
   {bankKey:other,legacyId:'real-id-2',title:'มวลอะตอม(Atomic Mass)',path:['Chemistry','Hub','โมล(Mole)','มวลอะตอม(Atomic Mass)'],questionCount:3},

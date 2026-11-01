@@ -11,7 +11,7 @@ import { pdfLinkEntry } from '../js/pdf-link.js';
 import { applyContentLanguage } from '../js/content-language.js';
 import { createLearningGuide } from '../js/learning-guide.js';
 import { createBankTool } from '../js/question-bank-tools.js';
-import { createTopicReviewTool } from '../js/topic-review-tools.js';
+import { createTopicReviewTool, reviewSelection } from '../js/topic-review-tools.js';
 import { bankKeyPattern } from '../public/shared/question-bank-model.js';
 
 // Execute the real Workspace and its DOM handlers, with iframe transport replaced.
@@ -32,22 +32,24 @@ function dom(html, path) {
   result.window.HTMLElement.prototype.getBoundingClientRect = () => ({ left: 0, top: 0, width: 1000, height: 800 });
   return result;
 }
-function harness() {
+function harness(initialIdentity = { status: 'guest', isGuest: true, uid: null }) {
   const { document, window: domWindow } = dom('<html><body><main id="layer"></main><nav id="bar"><div id="items"></div><output id="count"></output></nav></body></html>', 'index.html');
   const events = {}, transports = [];
-  let language = 'th';
+  let language = 'th', identity = initialIdentity;
+  const activated = [];
   const window = { addEventListener: (name, fn) => { events[name] = fn; }, setInterval() {} };
   const location = new URL(document.URL);
   const vmContext = vm.createContext({ document, window, location, URL, Intl, Date, console,
     createContentTool, createHubContextMessage, videoLinkEntry, htmlLinkEntry, pdfLinkEntry, applyContentLanguage, createLearningGuide,
     toolCatalog: {}, requestAnimationFrame: fn => fn(),
     renderHtmlMath: async () => {}, attachLearningSheet: async () => null,
-    createBankTool, createTopicReviewTool, bankKeyPattern, openHtmlPrint() {} });
+    createBankTool, createTopicReviewTool, reviewSelection, bankKeyPattern, openHtmlPrint() {} });
   vm.runInContext(code + '\nglobalThis.makeWorkspace=createWorkspace;', vmContext);
   const workspace = vmContext.makeWorkspace({
     windowLayer: document.getElementById('layer'), taskbar: document.getElementById('bar'),
     taskbarItems: document.getElementById('items'), countElement: document.getElementById('count'),
-    getLanguage: () => language, getIdentity: () => ({ status: 'guest', isGuest: true, uid: null }), getRole: () => 'student',
+    getLanguage: () => language, getIdentity: () => identity, getRole: () => 'student',
+    onToolActivated: tool => activated.push(tool),
   });
   workspace.bindHtmlLinks(document);
   function load(frame, child, quiz = null) {
@@ -56,7 +58,7 @@ function harness() {
     Object.defineProperty(frame, 'contentWindow', { configurable: true, value: { postMessage: (...args) => sent.push(args), LearningHubQuiz: quiz } });
     frame.dispatchEvent(new domWindow.Event('load')); transports.push(sent); return sent;
   }
-  return { document, workspace, domWindow, load, message: event => events.message(event),
+  return { document, workspace, domWindow, load, activated, setIdentity(value) { identity = value; }, message: event => events.message(event),
     language(value) { language = value; workspace.setLanguage(); } };
 }
 const videoButton = `<a data-hub-video data-content-id="sound-video" href="${url}" data-subject-id="physics" data-chapter-id="12" data-topic-id="sound">Video</a>`;
@@ -128,6 +130,60 @@ test('stale, inactive, mismatched and unregistered Quiz messages cannot rearrang
   h.document.querySelector('.workspace-window').dispatchEvent(new h.domWindow.Event('pointerdown'));
   reader.querySelector('.is-minimize').click(); h.message(event);
   assert.equal(reader.hidden, true, 'Duplicate request cannot restore the minimized reader');
+});
+
+test('Classroom review pairs the correct bank section and returns to that exact assignment with folds and work retained', () => {
+  const h=harness({status:'signed-in',uid:'student'}), bankKey='b-'+'e'.repeat(24);
+  const homework={uid:'student',roomId:'room-a',id:'assignment-a',contentId:`bank-chemistry-${bankKey}`,title:'Homework',reviewSource:{subjectId:'chemistry',bankKey}};
+  h.workspace.openHomework(homework);
+  const quiz=h.document.querySelector('iframe'), owner=quiz.closest('.workspace-window'), returned=[];
+  const api={getState:()=>({contentId:homework.contentId,currentQuestionId:'q3',currentIndex:2}),returnToQuestion:index=>{returned.push(index);return true;}};
+  h.load(quiz,dom('<html><body><textarea>My assignment working</textarea></body></html>','pages/tools/quiz-player.html'),api);
+  owner.querySelector('.window-toolbar-toggle').click();
+  h.message({source:quiz.contentWindow,origin:'https://school.test',data:{type:'learning-hub-quiz-review-request',requestId:1,contentId:homework.contentId,questionNumber:3}});
+  const reader=h.document.querySelector('[data-tool-id="topic-review-library"]'), frame=reader.querySelector('iframe');
+  assert.equal(owner.dataset.windowSnap,'left');assert.equal(reader.dataset.windowSnap,'right');
+  assert.equal(h.activated.at(-1).reviewHomeworkId,owner.dataset.toolId,'App retains the Classroom route on reader focus');
+  const sent=h.load(frame,dom('<html><body>Reading</body></html>','pages/tools/topic-review-player.html'));
+  h.message({source:frame.contentWindow,origin:'https://school.test',data:{type:'learning-hub-review-ready'}});
+  const command=sent.at(-1)[0];
+  assert.equal(command.selection.subjectId,'chemistry');assert.equal(command.quizContext.questionNumber,3);assert.equal(command.returnToHomework,true);
+  assert.equal(command.selection.bankKey,bankKey);
+  for(const secret of ['identity','homework','uid','roomId','answers'])assert.equal(secret in command,false);
+  const practice={source:frame.contentWindow,origin:'https://school.test',data:{type:'learning-hub-review-practice',commandId:command.commandId,selection:command.selection,questionNumber:3}};
+  h.message(practice);
+  assert.deepEqual(returned,[2]);assert.equal(h.document.querySelectorAll('iframe').length,2);
+  assert.equal(owner.classList.contains('is-active'),true);assert.equal(owner.classList.contains('is-toolbar-collapsed'),true);
+  assert.equal(quiz.contentDocument.querySelector('textarea').textContent,'My assignment working');
+  // Opening the same bank in another assignment must not steal this reader's return.
+  h.workspace.openHomework({...homework,id:'assignment-b'});
+  reader.dispatchEvent(new h.domWindow.Event('pointerdown'));h.message(practice);
+  assert.equal(owner.classList.contains('is-active'),true);assert.deepEqual(returned,[2,2]);
+  // Browsing another topic retains ownership, including a language change.
+  reader.dispatchEvent(new h.domWindow.Event('pointerdown'));
+  h.message({source:frame.contentWindow,origin:'https://school.test',data:{type:'learning-hub-review-selection',commandId:command.commandId,selection:{subjectId:'physics',bankKey:null}}});
+  assert.equal(h.activated.at(-1).reviewHomeworkId,owner.dataset.toolId);
+  h.language('en');const after=sent.at(-1)[0];assert.equal(after.returnToHomework,true);
+  h.message({source:frame.contentWindow,origin:'https://school.test',data:{type:'learning-hub-review-back',commandId:after.commandId}});
+  assert.equal(owner.classList.contains('is-active'),true);
+});
+
+test('homework reader cannot restore an assignment under another account or without a verified review source', () => {
+  const h=harness({status:'signed-in',uid:'student'}), bankKey='b-'+'f'.repeat(24);
+  const binding={uid:'student',roomId:'room-a',id:'assignment-a',contentId:'sample-quiz',title:'Homework'};
+  h.workspace.openHomework(binding);const quiz=h.document.querySelector('iframe');
+  h.load(quiz,dom('<html><body>Quiz</body></html>','pages/tools/quiz-player.html'),{getState:()=>({contentId:'sample-quiz',currentQuestionId:'q1',currentIndex:0})});
+  const request={type:'learning-hub-quiz-review-request',requestId:1,contentId:'sample-quiz',questionNumber:1};
+  h.message({source:quiz.contentWindow,origin:'https://school.test',data:request});
+  assert.equal(h.document.querySelectorAll('iframe').length,1);
+  assert.equal(h.workspace.openReview({subjectId:'chemistry',bankKey},{homeworkId:quiz.closest('.workspace-window').dataset.toolId}),true);
+  const reader=h.document.querySelector('[data-tool-id="topic-review-library"]'), frame=reader.querySelector('iframe');
+  const sent=h.load(frame,dom('<html><body>Reading</body></html>','pages/tools/topic-review-player.html'));
+  h.message({source:frame.contentWindow,origin:'https://school.test',data:{type:'learning-hub-review-ready'}});
+  h.setIdentity({status:'signed-in',uid:'other-student'});
+  h.message({source:frame.contentWindow,origin:'https://school.test',data:{type:'learning-hub-review-back',commandId:sent.at(-1)[0].commandId}});
+  assert.equal(reader.classList.contains('is-active'),true);
+  assert.equal(h.document.querySelectorAll('iframe').length,2);
 });
 
 test('nested reading, Quiz and Simulation buttons open the shared player without removing their source', () => {

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { DOMParser, parseHTML } from 'linkedom';
-import { freezeHomeworkQuiz } from '../js/classroom-submission-quiz.js';
+import { freezeHomeworkQuiz, homeworkReviewSource } from '../js/classroom-submission-quiz.js';
 import { createClassroomSubmissions } from '../js/classroom-submission-service.js';
 import { gradeHomework, gradeSubmission, submissionPayload, homeworkStorageKey } from '../public/shared/classroom-submission-model.js';
 import { readHomeworkQuiz, sanitizeHomeworkRoot } from '../public/shared/classroom-submission-quiz.js';
@@ -136,6 +136,28 @@ test('teacher preview reads the frozen quiz without creating practice, drafts or
   assert.equal((await f.service.quizCommand('load',binding)).quiz.revision,revision);
   await assert.rejects(f.service.quizCommand('submit',binding,{value:progress(),submissionId:'e'.repeat(32)}),{code:'homework/student-required'});
   assert.equal(f.writes.length,0);
+});
+test('homework review follows the pinned source route, including older snapshots without a route', async t => {
+  const f=fixture(t);await tick();
+  f.put(`quizzes/${rid}/${aid}`,{...quiz,targetHash:'#content/pinned-quiz'});
+  assert.equal((await f.service.open(aid)).targetHash,'#content/pinned-quiz');
+  f.put(`quizzes/${rid}/${aid}`,{...quiz,targetHash:''});
+  assert.equal((await f.service.open(aid)).targetHash,item.targetHash);
+  assert.equal(f.writes.length,0);
+});
+test('review lookup resolves only the matching owned Quiz without fetching or re-freezing questions', () => {
+  const bankKey='b-'+'a'.repeat(24), hub='https://example.test/learning-hub/';
+  const route={kind:'content',status:'ready',hash:'#content/waves-quiz',aliases:[],subjectId:'physics',chapterId:'1',topicId:'waves',contentId:'waves-quiz'};
+  const catalog={schemaVersion:1,routes:[route],contents:[{id:'waves-quiz',source:'content/test/waves.html',toolKind:'quiz',titleTh:'คลื่น',titleEn:'Waves'}]};
+  assert.deepEqual(homeworkReviewSource({contentId:'waves-quiz',targetHash:route.hash},catalog,hub),{subjectId:'physics',bankKey:null});
+  assert.deepEqual(homeworkReviewSource({contentId:'waves-quiz',targetHash:route.hash},{...catalog,routes:[{...route,topicId:bankKey}]},hub),{subjectId:'physics',bankKey});
+  const binding={contentId:`bank-chemistry-${bankKey}`,targetHash:`#chemistry/bank/${bankKey}/quiz`};
+  assert.deepEqual(homeworkReviewSource(binding,catalog,hub),{subjectId:'chemistry',bankKey});
+  for (const targetHash of ['#chemistry/bank/'+bankKey, '#chemistry/review/'+bankKey, '#content/missing', 'https://untrusted.test/quiz'])
+    assert.equal(homeworkReviewSource({...binding,targetHash},catalog,hub),null);
+  assert.equal(homeworkReviewSource({...binding,contentId:'another-quiz'},catalog,hub),null);
+  assert.equal(homeworkReviewSource({...binding,targetHash:binding.targetHash.replace('chemistry','physics')},catalog,hub),null);
+  assert.equal(homeworkReviewSource(binding,null,hub),null);
 });
 test('opening and autosaving homework never create a submission or touch ordinary quiz progress',async t=>{
   const f=fixture(t);await tick();const binding=await f.service.open(aid);

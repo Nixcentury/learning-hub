@@ -1,0 +1,637 @@
+{
+  "status": "Approved proposal, integrated into worksheet revision 2026-11-02-1 in PR #110; not merged/deployed by this change.",
+  "bankKey": "b-21460452889578f11c3a8bac",
+  "activityId": "physics-ipst-wave-optics-10-2-sheet",
+  "date": "2026-11-02",
+  "assumptions": {
+    "th": "ทุกโจทย์ใช้แสงสีเดียว อาพันธ์ เริ่มต้นเฟสตรงกันในตัวกลางเดียวกัน และแอมพลิจูดเท่ากันเมื่อกล่าวถึงมืดสนิท สมการมุมใช้ฉากไกล ส่วนสมการตำแหน่งใช้มุมเล็กตามที่ระบุ",
+    "en": "All tasks use monochromatic coherent sources, initially in phase in one medium, with equal amplitudes when complete darkness is claimed. Angular relations assume far field; screen-position relations use small angles where stated."
+  },
+  "items": [
+    {
+      "id": "X1",
+      "kind": "experiment",
+      "source": "กิจกรรม 10.1: เปรียบเทียบ d และสีแสง",
+      "skill": "ควบคุมตัวแปรและอ่านความถี่ของแถบบนฉาก",
+      "figure": "03-controlled-patterns.svg",
+      "intro": {
+        "th": "ใช้ภาพแบบจำลอง A–C ซึ่งใช้ระยะฉากและความกว้างแต่ละช่องเท่ากัน ภาพทุกแถวใช้สเกลตำแหน่งเดียวกัน ในภาพนี้เทาเข้มแทนความเข้มแสงมาก",
+        "en": "Use model strips A–C. Screen distance and individual slit width are fixed, and every strip uses the same position scale. Darker ink represents greater light intensity."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "เทียบ A กับ B: เปลี่ยนตัวแปรใด และภาพใดมีแถบสว่างอยู่ชิดกันกว่า?",
+            "en": "Compare A and B: which variable changes, and which pattern has closer bright fringes?"
+          },
+          "answer": {
+            "th": "เพิ่ม d จาก 0.20 เป็น 0.40 mm โดย λ,L,a คงที่ ภาพ B มีระยะห่างแถบประมาณครึ่งหนึ่งของ A",
+            "en": "d increases from 0.20 to 0.40 mm with λ,L,a fixed. B has approximately half A’s fringe spacing."
+          }
+        },
+        {
+          "id": "b",
+          "prompt": {
+            "th": "เทียบ B กับ C: ภาพใดมีระยะห่างแถบมากกว่า? อธิบายด้วยความยาวคลื่น โดยไม่อ้างความเข้มของภาพ",
+            "en": "Compare B and C: which has greater fringe spacing? Explain using wavelength, not brightness."
+          },
+          "answer": {
+            "th": "C มี λ มากกว่า จึงมีระยะห่างแถบมากกว่า เมื่อ d,L คงที่ อัตราส่วนเป็น 650/520 = 1.25",
+            "en": "C has the longer wavelength and therefore greater spacing with d,L fixed. The ratio is 650/520 = 1.25."
+          }
+        }
+      ]
+    },
+    {
+      "id": "X2",
+      "kind": "experiment",
+      "source": "กิจกรรม 10.1: ตัวแปรควบคุม",
+      "skill": "วัดระยะโดยอ้างแนวกลางเดียวกัน",
+      "figure": "02-apparatus.svg",
+      "intro": {
+        "th": "ก่อนบันทึกรูปแต่ละกรณี ผู้ทดลองทำเครื่องหมายตำแหน่งแนวกลางบนฉากให้ตรงกัน",
+        "en": "Before recording each case, the experimenter aligns the central axis with the same screen mark."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "เหตุใดการจัดแนวนี้จึงช่วยให้เปรียบเทียบภาพได้? การเลื่อนภาพทั้งภาพแปลว่าระยะห่างแถบเปลี่ยนเสมอหรือไม่?",
+            "en": "Why does this help comparison? Must shifting the whole pattern mean that fringe spacing has changed?"
+          },
+          "answer": {
+            "th": "ช่วยแยกการเลื่อนทั้งลวดลายออกจากการเปลี่ยนระยะห่างระหว่างแถบ การเลื่อนทั้งภาพอย่างเดียวไม่พิสูจน์ว่าระยะห่างแถบเปลี่ยน",
+            "en": "It separates a translation of the whole pattern from a change in spacing. Translation alone does not establish a spacing change."
+          }
+        }
+      ]
+    },
+    {
+      "id": "E1",
+      "kind": "worked-example",
+      "source": "แทนตัวอย่าง 10.1",
+      "skill": "ผลต่างทางเดิน → ความต่างเฟสสะสม → เฟสเทียบรอบ",
+      "figure": "04-paths-phase.svg",
+      "intro": {
+        "th": "แหล่ง U,V เริ่มต้นเฟสตรงกัน ให้หาผลต่างทางเดิน ความต่างเฟสสะสม และเฟสเทียบรอบในแต่ละกรณี",
+        "en": "Sources U,V start in phase. In each case find the path difference, accumulated phase difference and equivalent phase modulo 2π."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "λ = 500 nm, UP = 35.20 μm และ VP = 36.45 μm",
+            "en": "λ = 500 nm, UP = 35.20 μm and VP = 36.45 μm"
+          },
+          "answer": {
+            "th": "Δr = 1.25 μm = 1250 nm = 2.5λ; Δφ = 5π rad เทียบรอบเหลือ π rad จึงเฟสตรงข้าม",
+            "en": "Δr = 1.25 μm = 1250 nm = 2.5λ; Δφ = 5π rad, equivalent to π rad: opposite phase."
+          }
+        },
+        {
+          "id": "b",
+          "prompt": {
+            "th": "UP = 40λ และ VP = 46λ",
+            "en": "UP = 40λ and VP = 46λ"
+          },
+          "answer": {
+            "th": "Δr = 6λ; Δφ = 12π rad = 6 รอบ เทียบรอบเป็น 0 rad จึงเฟสตรงกัน",
+            "en": "Δr = 6λ; Δφ = 12π rad = six cycles, equivalent to 0 rad: in phase."
+          }
+        }
+      ]
+    },
+    {
+      "id": "E2",
+      "kind": "worked-example",
+      "source": "แทนตัวอย่าง 10.2",
+      "skill": "แยกชนิดแถบและอันดับ",
+      "figure": "04-paths-phase.svg",
+      "intro": {
+        "th": "ใช้แสง λ = 480 nm จากสองแหล่งที่เริ่มต้นเฟสตรงกัน ระบุชนิดและอันดับแถบที่จุด P",
+        "en": "Use λ = 480 nm from two initially in-phase sources. Identify the fringe type and order at P."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "ผลต่างทางเดิน 1440 nm",
+            "en": "Path difference 1440 nm"
+          },
+          "answer": {
+            "th": "Δr/λ = 3 จึงเป็นแถบสว่างอันดับ 3",
+            "en": "Δr/λ = 3, so it is the third bright fringe."
+          }
+        },
+        {
+          "id": "b",
+          "prompt": {
+            "th": "ผลต่างทางเดิน 2160 nm",
+            "en": "Path difference 2160 nm"
+          },
+          "answer": {
+            "th": "Δr/λ = 4.5 = n−0.5 จึง n = 5 เป็นแถบมืดอันดับ 5",
+            "en": "Δr/λ = 4.5 = n−0.5, so n = 5: the fifth dark fringe."
+          }
+        }
+      ]
+    },
+    {
+      "id": "U1",
+      "kind": "short-question",
+      "source": "แทนตรวจความเข้าใจ 10.2 ข้อ 1",
+      "skill": "หลักฐานจากลวดลาย ไม่ใช้ชื่อบุคคลเป็นคำตอบ",
+      "figure": "03-controlled-patterns.svg",
+      "intro": {
+        "th": "มีผู้เสนอว่าเมื่อแสงผ่านสองช่อง ฉากต้องมีเพียงสองบริเวณสว่างที่ตรงกับช่อง",
+        "en": "Someone claims that two openings must produce only two bright regions aligned with them."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "ลวดลายหลายแถบในภาพขัดกับคำอธิบายนี้ตรงไหน และการเสริม–หักล้างช่วยอธิบายบริเวณมืดได้อย่างไร?",
+            "en": "How do the multiple bands challenge this account, and how does interference explain dark regions?"
+          },
+          "answer": {
+            "th": "เพียงทางเดินตรงสองแนวอธิบายหลายแถบไม่ได้ คลื่นจากสองช่องซ้อนทับกัน บางตำแหน่งเสริมและบางตำแหน่งหักล้าง จึงเกิดสว่าง–มืดสลับกัน",
+            "en": "Two straight transmission paths alone do not explain many fringes. Waves from both openings overlap; constructive and destructive interference produce alternating bright and dark regions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "U2",
+      "kind": "short-question",
+      "source": "แทนตรวจความเข้าใจ 10.2 ข้อ 2",
+      "skill": "อย่าปัดผลต่างทางเดินทุกค่าเป็นสว่างหรือมืด",
+      "figure": "04-paths-phase.svg",
+      "intro": {
+        "th": "สองแหล่งเริ่มต้นเฟสตรงกัน ให้ UP = 92.50λ และ VP = 96.75λ",
+        "en": "Two sources start in phase. Let UP = 92.50λ and VP = 96.75λ."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "หาผลต่างทางเดินและความต่างเฟสสะสม",
+            "en": "Find the path difference and accumulated phase difference."
+          },
+          "answer": {
+            "th": "Δr = 4.25λ; Δφ = 8.5π rad",
+            "en": "Δr = 4.25λ; Δφ = 8.5π rad."
+          }
+        },
+        {
+          "id": "b",
+          "prompt": {
+            "th": "จุดนี้เป็นตำแหน่งสว่างสูงสุดหรือมืดสนิทหรือไม่?",
+            "en": "Is this an intensity maximum or a complete minimum?"
+          },
+          "answer": {
+            "th": "ไม่ใช่ทั้งสอง เพราะ 4.25 ไม่ใช่จำนวนเต็มหรือครึ่งจำนวนคี่ เฟสเทียบรอบเป็น π/2 rad ไม่ปัดเป็น 4 หรือ 4.5",
+            "en": "Neither: 4.25 is neither an integer nor a half-integer. The equivalent phase is π/2 rad; do not round it to 4 or 4.5."
+          }
+        }
+      ]
+    },
+    {
+      "id": "U4",
+      "kind": "short-question",
+      "source": "แทนตรวจความเข้าใจ 10.2 ข้อ 4",
+      "skill": "ผลต่างทางเดินไม่ใช่จำนวน λ ของทางเดินเดียว",
+      "figure": "06-observation-points.svg",
+      "intro": {
+        "th": "สำหรับรูป ให้ UP = (k+2)λ และ VP = (k+6)λ โดย k เป็นจำนวนเต็มไม่ลบ",
+        "en": "For the diagram, let UP = (k+2)λ and VP = (k+6)λ, where k is a nonnegative integer."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "ที่ P เป็นแถบใด อันดับเท่าใด? จำเป็นต้องรู้ k หรือไม่?",
+            "en": "What fringe type and order occur at P? Must k be known?"
+          },
+          "answer": {
+            "th": "Δr = 4λ จึงเป็นแถบสว่างอันดับ 4 ไม่ต้องรู้ k เพราะหักล้างออกเมื่อลบทางเดิน",
+            "en": "Δr = 4λ gives the fourth bright fringe. k cancels when the paths are subtracted, so its value is unnecessary."
+          }
+        }
+      ]
+    },
+    {
+      "id": "E3",
+      "kind": "worked-example",
+      "source": "แทนตัวอย่าง 10.3",
+      "skill": "ใช้ d sinθ และค่าแบบจำลองที่ไม่ต้องปัดอันดับ",
+      "figure": "05-geometry.svg",
+      "intro": {
+        "th": "แสง λ = 520 nm ผ่านสลิตคู่ d = 13.0 μm ใช้สมการมุมในกรณีฉากไกล พิจารณาจุด P ทีละกรณี โดยให้ค่า sine มาแล้ว",
+        "en": "Light of λ = 520 nm passes through slits separated by d = 13.0 μm. Use the far-field angular relation for point P in each separate case; sine values are supplied."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "เมื่อ sinθ = 0.0800 ระบุชนิดและอันดับแถบ",
+            "en": "For sinθ = 0.0800, identify the fringe type and order."
+          },
+          "answer": {
+            "th": "d sinθ/λ = 2.00 จึงเป็นแถบสว่างอันดับ 2",
+            "en": "d sinθ/λ = 2.00, so it is the second bright fringe."
+          }
+        },
+        {
+          "id": "b",
+          "prompt": {
+            "th": "เมื่อ sinθ = 0.1000 ระบุชนิดและอันดับแถบ",
+            "en": "For sinθ = 0.1000, identify the fringe type and order."
+          },
+          "answer": {
+            "th": "d sinθ/λ = 2.50 จึงเป็นแถบมืดอันดับ 3",
+            "en": "d sinθ/λ = 2.50, so it is the third dark fringe."
+          }
+        }
+      ]
+    },
+    {
+      "id": "E4",
+      "kind": "worked-example",
+      "source": "แทนตัวอย่าง 10.4",
+      "skill": "ใช้ตำแหน่งบนฉากและตรวจมุมเล็ก",
+      "figure": "05-geometry.svg",
+      "intro": {
+        "th": "แสง λ = 640 nm, d = 0.160 mm และ L = 1.50 m จุด P อยู่ด้านเดียวกับที่รูปแสดง ระบุชนิดและอันดับแถบในแต่ละกรณี พร้อมตรวจ x/L",
+        "en": "For λ = 640 nm, d = 0.160 mm and L = 1.50 m, point P is on the side shown. Identify the fringe type/order in each case and check x/L."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "x = 18.0 mm",
+            "en": "x = 18.0 mm"
+          },
+          "answer": {
+            "th": "x/L = 0.0120; dx/(λL) = 3.00 เป็นแถบสว่างอันดับ 3 ใช้มุมเล็กได้",
+            "en": "x/L = 0.0120; dx/(λL) = 3.00: the third bright fringe. The small-angle approximation is suitable."
+          }
+        },
+        {
+          "id": "b",
+          "prompt": {
+            "th": "x = 21.0 mm",
+            "en": "x = 21.0 mm"
+          },
+          "answer": {
+            "th": "x/L = 0.0140; dx/(λL) = 3.50 เป็นแถบมืดอันดับ 4",
+            "en": "x/L = 0.0140; dx/(λL) = 3.50: the fourth dark fringe."
+          }
+        }
+      ]
+    },
+    {
+      "id": "U3",
+      "kind": "short-question",
+      "source": "แทนตรวจความเข้าใจ 10.2 ข้อ 3",
+      "skill": "อ่านแนวกลาง/ผลต่างทางเดินและเปลี่ยนหลายตัวแปร",
+      "figure": "06-observation-points.svg",
+      "intro": {
+        "th": "U,V สมมาตรกับแนวกลาง OC และเริ่มต้นเฟสตรงกัน ที่ R ให้ |UR−VR| = 1.5λ",
+        "en": "U,V are symmetric about central axis OC and start in phase. At R, |UR−VR| = 1.5λ."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "ที่ C และ R เป็นแถบใด อันดับเท่าใด?",
+            "en": "What fringe type and order occur at C and R?"
+          },
+          "answer": {
+            "th": "C มีทางเดินเท่ากัน จึงเป็นแถบสว่างกลาง n = 0; R เป็นแถบมืดอันดับ 2",
+            "en": "C has equal paths: central bright fringe, n = 0. R is the second dark fringe."
+          }
+        },
+        {
+          "id": "b",
+          "prompt": {
+            "th": "ถ้า L ใหม่ = 1.5L และ d ใหม่ = 3d โดย λ คงเดิม ระยะห่างแถบติดกันเป็นกี่เท่าของเดิม?",
+            "en": "If the new L is 1.5L and the new d is 3d, with λ fixed, what fraction of the original adjacent-fringe spacing results?"
+          },
+          "answer": {
+            "th": "Δx ใหม่/Δx เดิม = 1.5/3 = 0.5 ระยะห่างลดครึ่งหนึ่ง",
+            "en": "New/old Δx = 1.5/3 = 0.5: the spacing is halved."
+          }
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "kind": "practice",
+      "source": "แทนแบบฝึกหัด 10.2 ข้อ 1",
+      "skill": "ตำแหน่งแถบสว่างอันดับที่ไม่ใช่ 1",
+      "figure": "05-geometry.svg",
+      "intro": {
+        "th": "แสง λ = 460 nm ผ่านสลิตคู่ d = 0.230 mm ฉากห่าง L = 1.20 m ให้มุมเล็ก",
+        "en": "Light of λ = 460 nm passes through slits separated by d = 0.230 mm onto a screen L = 1.20 m away. Assume small angles."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "หาตำแหน่งแถบสว่างอันดับ 2 วัดจากแนวกลาง เป็น mm",
+            "en": "Find the second bright-fringe position measured from the central axis, in mm."
+          },
+          "answer": {
+            "th": "x₂ = 2λL/d = 4.80×10⁻³ m = 4.80 mm",
+            "en": "x₂ = 2λL/d = 4.80×10⁻³ m = 4.80 mm."
+          }
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "kind": "practice",
+      "source": "แทนแบบฝึกหัด 10.2 ข้อ 2",
+      "skill": "อ่านหลายช่วงแล้วเชื่อมการเปลี่ยน L และความเข้ม",
+      "figure": "07-count-intervals.svg",
+      "intro": {
+        "th": "ใช้ λ = 540 nm, d = 0.180 mm และ L = 1.60 m ให้มุมเล็ก เส้นในรูปแทนศูนย์กลางแถบสว่าง โดย C เป็นแถบกลาง ทุกข้อย่อยเทียบกับสภาพเริ่มต้นนี้",
+        "en": "Use λ = 540 nm, d = 0.180 mm and L = 1.60 m at small angles. Lines mark bright-fringe centres; C is central. Every subpart refers to this original setup."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "หาระยะ x ที่กำกับในรูป เป็น mm ระวังจำนวนช่วง",
+            "en": "Find the marked x in mm, taking care to count intervals."
+          },
+          "answer": {
+            "th": "มี 3 ช่วง; Δx = λL/d = 4.80 mm จึง x = 14.4 mm",
+            "en": "There are three intervals. Δx = λL/d = 4.80 mm, so x = 14.4 mm."
+          }
+        },
+        {
+          "id": "b",
+          "prompt": {
+            "th": "ถ้าเลื่อนฉากไปที่ L = 2.40 m โดยแสงและสลิตเดิม x ใหม่เป็นเท่าใด?",
+            "en": "Move the screen to L = 2.40 m with the same light and slits. What is the new x?"
+          },
+          "answer": {
+            "th": "x แปรตาม L จึง x ใหม่ = 14.4(2.40/1.60) = 21.6 mm",
+            "en": "x is proportional to L, so new x = 14.4(2.40/1.60) = 21.6 mm."
+          }
+        },
+        {
+          "id": "c",
+          "prompt": {
+            "th": "ถ้าเพิ่มความเข้มแสงที่ตกสลิต แต่คง λ,d,L เดิม x เปลี่ยนหรือไม่?",
+            "en": "If incident intensity increases but the original λ,d,L remain fixed, does x change?"
+          },
+          "answer": {
+            "th": "x ไม่เปลี่ยน เพราะตำแหน่งแถบตามแบบจำลองนี้ขึ้นกับ λ,d,L ไม่ใช่ความเข้มแสง",
+            "en": "x is unchanged: fringe positions in this model depend on λ,d,L, not incident intensity."
+          }
+        }
+      ]
+    },
+    {
+      "id": "P3",
+      "kind": "practice",
+      "source": "แทนแบบฝึกหัด 10.2 ข้อ 3",
+      "skill": "วัดความกว้างหนึ่งแถบจากตำแหน่งมืดที่ขนาบ",
+      "figure": "08-width-ruler.svg",
+      "intro": {
+        "th": "กราฟเป็นแบบจำลองความเข้มแสง โดยแนวกลางอยู่ที่ขีด 3.0 cm บนไม้บรรทัด ไม่ใช่รูปผลทดลองจริง",
+        "en": "The graph models light intensity, with the central axis at the ruler’s 3.0 cm mark. It is not an experimental photograph."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "อ่านตำแหน่งความเข้มต่ำสุดที่ใกล้แนวกลางที่สุดทั้งสองข้าง แล้วหาความกว้างแถบสว่างกลาง",
+            "en": "Read the nearest intensity minimum on each side of the central axis, then find the central bright-fringe width."
+          },
+          "answer": {
+            "th": "อ่านได้ประมาณ 2.4 และ 3.6 cm ความกว้าง = 3.6−2.4 = 1.2 cm วัดแถบเดียว ไม่คร่อมกลุ่มแถบทั้งหมด",
+            "en": "The bounds read approximately 2.4 and 3.6 cm. Width = 3.6−2.4 = 1.2 cm, for one band rather than the entire pattern."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F1",
+      "kind": "practice",
+      "source": "แทนคำถามเดิม 21 / ท้ายบทปัญหา 1",
+      "skill": "เปลี่ยนจากสว่างแรกเป็นมืดแรก",
+      "figure": "05-geometry.svg",
+      "intro": {
+        "th": "ใช้แสง λ = 620 nm, d = 0.310 mm และ L = 1.80 m ให้มุมเล็ก",
+        "en": "Use λ = 620 nm, d = 0.310 mm and L = 1.80 m at small angles."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "แถบมืดอันดับ 1 อยู่ห่างจากแนวกลางเท่าใด เป็น mm?",
+            "en": "How far is the first dark fringe from the central axis, in mm?"
+          },
+          "answer": {
+            "th": "x = (1−0.5)λL/d = 1.80 mm",
+            "en": "x = (1−0.5)λL/d = 1.80 mm."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F2",
+      "kind": "practice",
+      "source": "แทนคำถามเดิม 22 / ท้ายบทปัญหา 2",
+      "skill": "อ่านหลายช่วงจากไม้บรรทัดใหม่",
+      "figure": "09-spacing-ruler.svg",
+      "intro": {
+        "th": "เส้นตั้งทั้งห้าแทนศูนย์กลางแถบสว่างที่ติดกัน",
+        "en": "The five vertical lines mark consecutive bright-fringe centres."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "หาระยะห่างแถบสว่างติดกัน โดยวัดตั้งแต่เส้นแรกถึงเส้นที่ห้าแล้วหารจำนวนช่วง ตอบเป็น cm",
+            "en": "Find adjacent bright-fringe spacing by measuring from the first to fifth line and dividing by the number of intervals. Give cm."
+          },
+          "answer": {
+            "th": "เส้นแรก 0.4 cm เส้นที่ห้า 3.6 cm ช่วงรวม 3.2 cm มี 4 ช่วง จึง Δx = 0.80 cm",
+            "en": "First line: 0.4 cm; fifth: 3.6 cm. The 3.2 cm span has four intervals, so Δx = 0.80 cm."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F3",
+      "kind": "practice",
+      "source": "แทนคำถามเดิม 23 / ท้ายบทปัญหา 3",
+      "skill": "หาความยาวคลื่นจากอันดับและตำแหน่งใหม่",
+      "figure": "05-geometry.svg",
+      "intro": {
+        "th": "สลิตคู่ห่าง 0.240 mm ฉากห่าง 1.50 m แถบสว่างอันดับ 5 อยู่ห่างแนวกลาง 17.5 mm ให้มุมเล็ก",
+        "en": "Slits are 0.240 mm apart, the screen is 1.50 m away, and the fifth bright fringe lies 17.5 mm from the central axis. Assume small angles."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "แสงมีความยาวคลื่นเท่าใด เป็น nm?",
+            "en": "Find the wavelength in nm."
+          },
+          "answer": {
+            "th": "λ = dx/(5L) = 5.60×10⁻⁷ m = 560 nm",
+            "en": "λ = dx/(5L) = 5.60×10⁻⁷ m = 560 nm."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F4",
+      "kind": "practice",
+      "source": "แทนคำถามเดิม 24 / ท้ายบทปัญหา 4",
+      "skill": "ระยะคร่อมสองด้านแทนระยะติดกัน",
+      "figure": "10-opposite-sides.svg",
+      "intro": {
+        "th": "ใช้แสง λ = 450 nm, d = 0.300 mm และ L = 1.60 m ให้มุมเล็ก ในรูป P,Q เป็นแถบมืดอันดับ 2 คนละด้านของ C",
+        "en": "Use λ = 450 nm, d = 0.300 mm and L = 1.60 m at small angles. P and Q mark second dark fringes on opposite sides of C."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "ระยะจากแถบมืดอันดับ 2 ทางซ้ายถึงแถบมืดอันดับ 2 ทางขวาเป็นเท่าใด? ระบุว่าต้องบวกหรือลบระยะจากแนวกลาง",
+            "en": "Find the distance from the second dark fringe on the left to the second dark fringe on the right. State whether the distances from the centre should be added or subtracted."
+          },
+          "answer": {
+            "th": "Δx = 2.40 mm แต่ละด้านห่างกลาง 1.5Δx = 3.60 mm จึงคร่อมสองด้าน 7.20 mm",
+            "en": "Δx = 2.40 mm. Each side is 1.5Δx = 3.60 mm from centre, so the two-sided distance is 7.20 mm."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F5",
+      "kind": "practice",
+      "source": "แทนคำถามเดิม 25 / ท้ายบทปัญหา 5",
+      "skill": "จัดรูปหาระยะห่างสลิตด้วยข้อมูลใหม่",
+      "figure": "05-geometry.svg",
+      "intro": {
+        "th": "ต้องการให้แถบสว่างติดกันห่าง 3.60 mm เมื่อใช้แสง λ = 480 nm และวางฉากห่าง 1.50 m ให้มุมเล็ก",
+        "en": "To obtain 3.60 mm adjacent bright-fringe spacing, use λ = 480 nm and a screen 1.50 m away. Assume small angles."
+      },
+      "parts": [
+        {
+          "id": "a",
+          "prompt": {
+            "th": "ต้องใช้สลิตคู่ห่างกันเท่าใด เป็น μm?",
+            "en": "What slit separation is needed, in μm?"
+          },
+          "answer": {
+            "th": "d = λL/Δx = 2.00×10⁻⁴ m = 200 μm",
+            "en": "d = λL/Δx = 2.00×10⁻⁴ m = 200 μm."
+          }
+        }
+      ]
+    }
+  ],
+  "figures": [
+    "01-openings.svg",
+    "02-apparatus.svg",
+    "03-controlled-patterns.svg",
+    "04-paths-phase.svg",
+    "05-geometry.svg",
+    "06-observation-points.svg",
+    "07-count-intervals.svg",
+    "08-width-ruler.svg",
+    "09-spacing-ruler.svg",
+    "10-opposite-sides.svg"
+  ],
+  "protected_original_files": [
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/exercise-q1.jpg",
+      "sha256": "31fae01e45c9a08f8237500a5a1812f6bbdbbc59b8af93f55623d11040d553b8"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/exercise-q2.jpg",
+      "sha256": "9ebc9499349be7b4dac56c45d4e9353fe98b87864a525a922bf6bae2aaaebcfb"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/exercise-q3.jpg",
+      "sha256": "4b02b3ec060e5847b51b44e3a759f3be1998ac149f13edaa2d977764273a3160"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/experiment-setup.jpg",
+      "sha256": "7a438e34bf2fa37571cb846cdafdba87eb341396e7360ee0f3631d5d58774596"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/fringe-width.jpg",
+      "sha256": "55fe01f08dff144a9df41c4a6be464ac07bed995b1fa0c59337b8b32629d4c8e"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/further-fringe-ruler.jpg",
+      "sha256": "4c11595c27f4d9f532af498687f0556f5b6e4d97967d56818e6093ed3b16ec6c"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/geometry-angle-position.jpg",
+      "sha256": "bc28bc36a914c97e119520726f491c3eeca5a82209dcc15ec88457a26aaf7317"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/intro-double-slit.jpg",
+      "sha256": "5a6f79759b1465441ce49ee6783ffef0120a2970b06fe8365b8607f592c58ddb"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/intro-single-slit.jpg",
+      "sha256": "b87a0970da1d05dd4e646bca4c94bf4bd5a6a2fd90332a24ac6f45dc86948a67"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/paths-and-orders.jpg",
+      "sha256": "a839587ef37448f9eff1d8126662cc85b8e5065b4894ef7a64f04a731708dd91"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/result-green-d100.jpg",
+      "sha256": "047ae8d41666b000eb20042bf0ce9c4677a573066795b1022feca97e4c4e6339"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/result-green-d50.jpg",
+      "sha256": "6fb409e5f66ff1933e058629071848e4201fdfc709485a7cf4493a6c4a626f0e"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/result-red-d100.jpg",
+      "sha256": "8b1399f177fd3a141d92b44ebf81b48dae37443501c472b1fd21b03a4ca37126"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/understanding-q3.jpg",
+      "sha256": "a5fa3545d97e76812587449c3ab2d8c779e3a679b303b5d283902d82c55f925b"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/understanding-q4.jpg",
+      "sha256": "8d5182864efa89b51fd9a6f829773712e3cc7e3589559b47c1dea95ff587795d"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/10-2-double-slit-learning-sheet.html",
+      "sha256": "947447cd38f1f3625e343d143bd15faa27556e3156e3fd2025082054eea44c8d"
+    },
+    {
+      "path": "public/content/bank/physics/b-21460452889578f11c3a8bac.html",
+      "sha256": "9e4374360b1846cb4db29c91ac3e9e3167c1b3e6a6c1c1bfac53d7b9e7df1757"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/10-2-double-slit-lab.html",
+      "sha256": "6381aec55e4b0bb50b84498d2a187ca316c6dbfd22dcee8a71b54f87564ba55c"
+    }
+  ],
+  "photo_candidate": {
+    "page": "https://commons.wikimedia.org/wiki/File:Young%27s_slits.jpg",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/3/39/Young%27s_slits.jpg",
+    "author": "Graham Beards",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "use": "Optional real-pattern photograph, distinct from IPST crops; qualitative observation only. No scale, wavelength or screen distance inferred. Not downloaded or integrated."
+  }
+}

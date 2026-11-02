@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="390" viewBox="0 0 800 390" role="img" aria-labelledby="title desc"><title id="title">Single and double slit front views</title><desc id="desc">Two original front-view diagrams. a is each opening width; d is centre-to-centre separation, not edge gap.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#253744"/></marker></defs><rect width="100%" height="100%" fill="white"/><g font-family="DejaVu Sans, sans-serif" fill="#172c3b">
+<text id="text-1" x="400.0" y="34" font-size="24" text-anchor="middle" font-weight="bold">Front view: opening width a and separation d</text>
+<text id="text-2" x="205" y="81" font-size="21" text-anchor="middle" font-weight="normal">One opening</text>
+<text id="text-3" x="595" y="81" font-size="21" text-anchor="middle" font-weight="normal">Two openings</text>
+<rect x="80" y="110" width="250" height="190" fill="#f3f5f6" stroke="#253744" stroke-width="1"/>
+<rect x="190" y="130" width="30" height="150" fill="white" stroke="#253744" stroke-width="1"/>
+<path d="M190 305L220 305" fill="none" stroke="#253744" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text id="text-4" x="205" y="338" font-size="22" text-anchor="middle" font-weight="normal">a</text>
+<rect x="450" y="110" width="290" height="190" fill="#f3f5f6" stroke="#253744" stroke-width="1"/>
+<rect x="510" y="130" width="30" height="150" fill="white" stroke="#253744" stroke-width="1"/>
+<path d="M525 100L525 290" fill="none" stroke="#687b86" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="625" y="130" width="30" height="150" fill="white" stroke="#253744" stroke-width="1"/>
+<path d="M640 100L640 290" fill="none" stroke="#687b86" stroke-width="1" stroke-dasharray="4 4"/>
+<path d="M525 120L640 120" fill="none" stroke="#253744" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text id="text-5" x="582.5" y="105" font-size="22" text-anchor="middle" font-weight="normal">d</text>
+<path d="M510 320L540 320" fill="none" stroke="#253744" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text id="text-6" x="525" y="347" font-size="22" text-anchor="middle" font-weight="normal">a</text>
+<text id="text-7" x="400.0" y="374" font-size="16" text-anchor="middle" font-weight="normal">Same symbol a for an opening; d joins the opening centres. Not to scale.</text>
+</g></svg>

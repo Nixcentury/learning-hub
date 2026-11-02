@@ -1,3 +1,31 @@
+# Current revision: 2026-11-02-1
+
+The teacher approved replacement of source-IPST tasks and cropped images in the **learning sheet**, while preserving source material for a later review Quiz. This section supersedes the historical counts and source-task descriptions below.
+
+## Implemented content
+
+- Existing eight-stage sequence, content ID, route, theory and complete path-to-phase derivation retained.
+- Four newly authored worked examples; Questions 1–37, with 50 separate question/subpart rows. Along with 14 headed note slots, this gives **64 paired answer/writing slots per language**. No questions were merely appended as a second copy of the old source set.
+- Ten original replacement SVGs, 14 image instances per language including the retained original wavefront schematic. None of the 15 source JPEGs is referenced by the revised sheet. Calculated intensity/ruler diagrams explicitly say they are models; point names and geometric quantities match the new figures.
+- Eleven headed-note answers are byte-identical to the prior sheet; three update only the opening/point/geometry explanation for the new diagrams. The phase proof is unchanged. Every subpart has an individual writing area and hidden solution.
+- All 15 source JPEG files and the separate simulation are SHA-256 identical to the preparation snapshot. Sixteen source-derived task groups (22 old question rows per language), their contexts, solutions and source references are frozen in `docs/quiz/preparation/physics-double-slit-10-2/`. These fragments preserve the previous sheet's paraphrases; they must be compared with the source book before publishing a verbatim-original Quiz. The original Quiz itself is not created by this PR.
+- New eight-step bilingual sheet guide: short summaries, spoken explanations, minimum tasks and checks, linked to existing headings/slots. Revision and fingerprint validation pass. Bank-menu description now describes the replacement tasks and guide.
+
+## Verification
+
+- 26 independent calculations pass: phase, bright/dark order, small-angle position, fringe spacing, interval counting, opposite sides, inverse wavelength/separation and retained extension tasks.
+- Static integration checks pass: 64 unique paired slot keys, 14 notes, four examples, continuous 1–37 question numbering, 50 individual rows, 14 images per language, 16 protected files unchanged, and complete bilingual archived task rows. There are 272 authored math runs, below the shared 500-run limit.
+- Related learning-sheet, learning-guide, math and print tests: **32 passed**. `pnpm build` passes, including guide/content validation, TypeScript and Vite; artifact verification confirms **695 public files**. `git diff --check` passes.
+- Actual Hub workflow checked in Guest Chromium, with iframe fixtures 1024, 768 and 390 px wide (usable sheet widths 1005, 749 and 371 px): TH/EN content has no horizontal overflow or MathJax errors, and all images load. Individual reveal and reveal-all/hide-all work; all 64 answers can be revealed on the narrow English sheet without overflow.
+- All 23 Thai guide jump buttons reach an existing figure/note/question and keep answers closed. The guide loads the authored revision rather than a fallback.
+- Central A4 print previews pass all four editions: **TH blank/answers 28 pages; EN blank/answers 29 pages**. Every edition contains 64 slots, 50 question rows and 14 images; blank editions contain zero answer elements, answer editions contain all 64. No page-body overflow, broken images or math errors. Guide controls are omitted. These are central Chromium preview checks; native PDF export and native iPad Safari were not tested.
+
+No shared engine, Classroom, authorization rules, dependencies or lockfile changes.
+
+---
+
+# Historical QA — 24 October 2026
+
 # Physics 10.2: double-slit interference
 
 Date: 24 October 2026.

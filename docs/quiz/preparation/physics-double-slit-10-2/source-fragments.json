@@ -1,0 +1,342 @@
+{
+  "status": "Preserved source-derived sheet fragments for future review Quiz; not a live Quiz.",
+  "sourceSheet": "public/content/physics/ipst/wave-optics/10-2-double-slit-learning-sheet.html",
+  "sourceSheetSha256": "947447cd38f1f3625e343d143bd15faa27556e3156e3fd2025082054eea44c8d",
+  "sourceCommit": "1f98c5a68532c79120dc01e04154a94a17d8c58f",
+  "studentDriveId": "1R-jSSONIMji5S-_KRSww1Pl7r_QK3Zpj",
+  "teacherDriveId": "1CJ9lV_SpjmvXTmZno8Sgg5vx4YotXQzE",
+  "caution": "These fragments preserve the previous bilingual sheet, including its paraphrases and worked solutions. Compare the original book before publishing an original-IPST Quiz; never treat a paraphrase as an exact quotation. Teacher answers belong only in hidden Quiz solutions.",
+  "groups": [
+    {
+      "id": "E1",
+      "reference": "ตัวอย่าง 10.1",
+      "studentPrintedPages": "114–115",
+      "originalSheetSlots": [
+        "example-1a",
+        "example-1b"
+      ],
+      "th": {
+        "contextHtml": "<div class=\"example-heading\"><h3>ตัวอย่าง 1</h3><p>แหล่งกำเนิดอาพันธ์สองแหล่งเริ่มเฟสตรงกัน ให้แสงความยาวคลื่น 600 nm หาความต่างเฟสที่จุด P สำหรับแต่ละกรณี</p></div>",
+        "questionHtml": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 1 · ก</p><p class=\"question-prompt\">ก. \\(S_1P=65.00\\) cm และ \\(S_2P=65.60\\) cm</p><div data-sheet-slot=\"example-1a\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ก. \\(S_1P=65.00\\) cm และ \\(S_2P=65.60\\) cm\" data-sheet-label-en=\"(a) \\(S_1P=65.00\\) cm and \\(S_2P=65.60\\) cm\" style=\"--sheet-print-height:38mm\"><div data-sheet-answer=\"\">ผลต่างทางเดิน 0.60 cm = 0.0060 m และความยาวคลื่น 600 nm = 0.000000600 m จึงได้ \\(\\Delta\\phi=2\\pi\\times10^4\\) rad เท่ากับ 10000 รอบ เฟสจึงตรงกัน หรือเทียบเท่า 0 rad (เขียนเป็น \\(2\\pi\\) rad ก็เป็นเฟสเดียวกัน)</div></div></div>\n<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 1 · ข</p><p class=\"question-prompt\">ข. \\(S_1P=120\\lambda\\) และ \\(S_2P=125.5\\lambda\\)</p><div data-sheet-slot=\"example-1b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ข. \\(S_1P=120\\lambda\\) และ \\(S_2P=125.5\\lambda\\)\" data-sheet-label-en=\"(b) \\(S_1P=120\\lambda\\) and \\(S_2P=125.5\\lambda\\)\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer=\"\">ผลต่างทางเดินเป็น \\(5.5\\lambda\\) จึงได้ \\(\\Delta\\phi=11\\pi\\) rad ลบ 5 รอบเต็มออก เหลือเฟสเทียบเท่า \\(\\pi\\) rad หรือเฟสตรงข้าม</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "<div class=\"example-heading\"><h3>Example 1</h3><p>Two coherent sources start in phase with wavelength 600 nm. Find the phase difference at P in each case.</p></div>",
+        "questionHtml": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 1 · (a)</p><p class=\"question-prompt\">(a) \\(S_1P=65.00\\) cm and \\(S_2P=65.60\\) cm</p><div data-sheet-slot=\"example-1a\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ก. \\(S_1P=65.00\\) cm และ \\(S_2P=65.60\\) cm\" data-sheet-label-en=\"(a) \\(S_1P=65.00\\) cm and \\(S_2P=65.60\\) cm\" style=\"--sheet-print-height:38mm\"><div data-sheet-answer=\"\">The path difference is 0.60 cm = 0.0060 m, and 600 nm = 0.000000600 m. Thus \\(\\Delta\\phi=2\\pi\\times10^4\\) rad, or 10000 whole cycles: the waves are in phase, equivalent to 0 rad (also equivalent to \\(2\\pi\\) rad).</div></div></div>\n<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 1 · (b)</p><p class=\"question-prompt\">(b) \\(S_1P=120\\lambda\\) and \\(S_2P=125.5\\lambda\\)</p><div data-sheet-slot=\"example-1b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ข. \\(S_1P=120\\lambda\\) และ \\(S_2P=125.5\\lambda\\)\" data-sheet-label-en=\"(b) \\(S_1P=120\\lambda\\) and \\(S_2P=125.5\\lambda\\)\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer=\"\">The path difference is \\(5.5\\lambda\\), giving \\(\\Delta\\phi=11\\pi\\) rad. Removing five full cycles leaves \\(\\pi\\) rad: opposite phase.</div></div></div>"
+      }
+    },
+    {
+      "id": "E2",
+      "reference": "ตัวอย่าง 10.2",
+      "studentPrintedPages": "117–118",
+      "originalSheetSlots": [
+        "example-2a",
+        "example-2b"
+      ],
+      "th": {
+        "contextHtml": "<div class=\"example-heading\"><h3>ตัวอย่าง 2</h3><p>แสงจากสองแหล่งอาพันธ์เริ่มเฟสตรงกัน มีความยาวคลื่น 550 nm ระบุชนิดและอันดับแถบจากผลต่างทางเดิน</p></div>",
+        "questionHtml": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 2 · ก</p><p class=\"question-prompt\">ก. ผลต่างทางเดิน 1100 nm</p><div data-sheet-slot=\"example-2a\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ก. ผลต่างทางเดิน 1100 nm\" data-sheet-label-en=\"(a) Path difference 1100 nm\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">\\(\\Delta r/\\lambda=1100/550=2\\) เป็นจำนวนเต็ม จึงเป็นแถบสว่างอันดับ 2</div></div></div>\n<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 2 · ข</p><p class=\"question-prompt\">ข. ผลต่างทางเดิน 825 nm</p><div data-sheet-slot=\"example-2b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ข. ผลต่างทางเดิน 825 nm\" data-sheet-label-en=\"(b) Path difference 825 nm\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">\\(\\Delta r/\\lambda=825/550=1.5\\) จึงเป็นแถบมืด โดยอันดับ n = 1.5 + 0.5 = 2</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "<div class=\"example-heading\"><h3>Example 2</h3><p>Two coherent sources start in phase at wavelength 550 nm. Identify the fringe type and order from the path difference.</p></div>",
+        "questionHtml": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 2 · (a)</p><p class=\"question-prompt\">(a) Path difference 1100 nm</p><div data-sheet-slot=\"example-2a\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ก. ผลต่างทางเดิน 1100 nm\" data-sheet-label-en=\"(a) Path difference 1100 nm\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">\\(\\Delta r/\\lambda=1100/550=2\\), an integer: the second bright fringe.</div></div></div>\n<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 2 · (b)</p><p class=\"question-prompt\">(b) Path difference 825 nm</p><div data-sheet-slot=\"example-2b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ข. ผลต่างทางเดิน 825 nm\" data-sheet-label-en=\"(b) Path difference 825 nm\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">\\(\\Delta r/\\lambda=825/550=1.5\\), so it is dark, with order n = 1.5 + 0.5 = 2.</div></div></div>"
+      }
+    },
+    {
+      "id": "E3",
+      "reference": "ตัวอย่าง 10.3",
+      "studentPrintedPages": "120–121",
+      "originalSheetSlots": [
+        "example-3a",
+        "example-3b"
+      ],
+      "th": {
+        "contextHtml": "<div class=\"example-heading\"><h3>ตัวอย่าง 3</h3><p>แสงความยาวคลื่น 556 nm ผ่านสลิตคู่ห่างกัน 18 µm พิจารณาชนิดและอันดับแถบที่มุมต่อไปนี้ตามการประมาณในหนังสือ</p></div>",
+        "questionHtml": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 3 · ก</p><p class=\"question-prompt\">ก. θ = 7.0°</p><div data-sheet-slot=\"example-3a\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ก. θ = 7.0°\" data-sheet-label-en=\"(a) θ = 7.0°\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer=\"\">คำนวณ \\(d\\sin\\theta/\\lambda\\approx3.95\\) ใกล้จำนวนเต็ม 4 จึงอยู่ใกล้แถบสว่างอันดับ 4 ตามการประมาณของตัวอย่าง ค่านี้ไม่เท่ากับ 4 อย่างแม่นตรง</div></div></div>\n<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 3 · ข</p><p class=\"question-prompt\">ข. θ = 8.0°</p><div data-sheet-slot=\"example-3b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ข. θ = 8.0°\" data-sheet-label-en=\"(b) θ = 8.0°\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer=\"\">\\(d\\sin\\theta/\\lambda\\approx4.50\\) ใกล้ครึ่งจำนวนคี่ 4.5 จึงอยู่ใกล้แถบมืดอันดับ n = 4.5 + 0.5 = 5 ตามการประมาณของตัวอย่าง</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "<div class=\"example-heading\"><h3>Example 3</h3><p>Light of wavelength 556 nm passes through slits separated by 18 µm. Interpret each angle using the precision and approximation of the textbook example.</p></div>",
+        "questionHtml": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 3 · (a)</p><p class=\"question-prompt\">(a) θ = 7.0°</p><div data-sheet-slot=\"example-3a\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ก. θ = 7.0°\" data-sheet-label-en=\"(a) θ = 7.0°\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer=\"\">\\(d\\sin\\theta/\\lambda\\approx3.95\\), close to 4. It is near the fourth bright fringe under the example’s approximation, rather than exactly at the maximum.</div></div></div>\n<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 3 · (b)</p><p class=\"question-prompt\">(b) θ = 8.0°</p><div data-sheet-slot=\"example-3b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ข. θ = 8.0°\" data-sheet-label-en=\"(b) θ = 8.0°\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer=\"\">\\(d\\sin\\theta/\\lambda\\approx4.50\\), close to 4.5. It is near the fifth dark fringe, n = 4.5 + 0.5 = 5, under the example’s approximation.</div></div></div>"
+      }
+    },
+    {
+      "id": "E4",
+      "reference": "ตัวอย่าง 10.4",
+      "studentPrintedPages": "121–122",
+      "originalSheetSlots": [
+        "example-4"
+      ],
+      "th": {
+        "contextHtml": "<div class=\"example-heading\"><h3>ตัวอย่าง 4</h3><p>จุดบนฉากห่างจากแนวกลาง 1.35 cm ใช้แสง 540 nm สลิตคู่ห่างกัน 0.10 mm และฉากห่าง 1.0 m จงระบุชนิดและอันดับแถบ</p></div>",
+        "questionHtml": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 4</p><p class=\"question-prompt\">แปลงหน่วย ตรวจมุมเล็ก แล้วหาผลต่างทางเดินเทียบกับความยาวคลื่น</p><div data-sheet-slot=\"example-4\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แปลงหน่วย ตรวจมุมเล็ก แล้วหาผลต่างทางเดินเทียบกับความยาวคลื่น\" data-sheet-label-en=\"Convert units, check the small angle, then find the path difference in wavelengths.\" style=\"--sheet-print-height:38mm\"><div data-sheet-answer=\"\">\\(x/L=0.0135\\) จึงเป็นมุมเล็ก แปลง d = 0.00010 m, x = 0.0135 m และ λ = 0.000000540 m ได้ \\(dx/(\\lambda L)=2.5\\) จึงเป็นแถบมืดอันดับ n = 3</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "<div class=\"example-heading\"><h3>Example 4</h3><p>A screen point is 1.35 cm from the centre. The wavelength is 540 nm, slit separation 0.10 mm, and screen distance 1.0 m. Identify the fringe type and order.</p></div>",
+        "questionHtml": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 4</p><p class=\"question-prompt\">Convert units, check the small angle, then find the path difference in wavelengths.</p><div data-sheet-slot=\"example-4\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แปลงหน่วย ตรวจมุมเล็ก แล้วหาผลต่างทางเดินเทียบกับความยาวคลื่น\" data-sheet-label-en=\"Convert units, check the small angle, then find the path difference in wavelengths.\" style=\"--sheet-print-height:38mm\"><div data-sheet-answer=\"\">\\(x/L=0.0135\\), a small angle. With d = 0.00010 m, x = 0.0135 m and λ = 0.000000540 m, \\(dx/(\\lambda L)=2.5\\). This is the third dark fringe.</div></div></div>"
+      }
+    },
+    {
+      "id": "U1",
+      "reference": "ตรวจความเข้าใจ 10.2 ข้อ 1",
+      "studentPrintedPages": "123",
+      "originalSheetSlots": [
+        "ipst-understanding-1"
+      ],
+      "th": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจความเข้าใจ 10.2 · ข้อ 1</p><p class=\"question-prompt\">การทดลองการแทรกสอดของธอมัส ยัง เป็นหลักฐานสนับสนุนแนวคิดใดเกี่ยวกับแสง?</p><div data-sheet-slot=\"ipst-understanding-1\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"การทดลองการแทรกสอดของธอมัส ยัง เป็นหลักฐานสนับสนุนแนวคิดใดเกี่ยวกับแสง?\" data-sheet-label-en=\"Which idea about light is supported by Thomas Young’s interference experiment?\" style=\"--sheet-print-height:21mm\"><div data-sheet-answer=\"\">สนับสนุนว่าแสงมีสมบัติเป็นคลื่น เพราะเกิดการแทรกสอดแบบเสริมและหักล้างได้</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Understanding check 10.2 · Q1</p><p class=\"question-prompt\">Which idea about light is supported by Thomas Young’s interference experiment?</p><div data-sheet-slot=\"ipst-understanding-1\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"การทดลองการแทรกสอดของธอมัส ยัง เป็นหลักฐานสนับสนุนแนวคิดใดเกี่ยวกับแสง?\" data-sheet-label-en=\"Which idea about light is supported by Thomas Young’s interference experiment?\" style=\"--sheet-print-height:21mm\"><div data-sheet-answer=\"\">It supports the wave nature of light: light can interfere constructively and destructively.</div></div></div>"
+      }
+    },
+    {
+      "id": "U2",
+      "reference": "ตรวจความเข้าใจ 10.2 ข้อ 2",
+      "studentPrintedPages": "123",
+      "originalSheetSlots": [
+        "ipst-understanding-2"
+      ],
+      "th": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจความเข้าใจ 10.2 · ข้อ 2</p><p class=\"question-prompt\">กำหนด \\(S_1P=125\\lambda\\) และ \\(S_2P=120\\lambda\\) ความต่างเฟสที่ P เป็นเท่าใด?</p><div data-sheet-slot=\"ipst-understanding-2\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"กำหนด \\(S_1P=125\\lambda\\) และ \\(S_2P=120\\lambda\\) ความต่างเฟสที่ P เป็นเท่าใด?\" data-sheet-label-en=\"Given \\(S_1P=125\\lambda\\) and \\(S_2P=120\\lambda\\), find the phase difference at P.\" style=\"--sheet-print-height:29mm\"><div data-sheet-answer=\"\">ผลต่างทางเดิน \\(5\\lambda\\) ทำให้ความต่างเฟส \\(10\\pi\\) rad หรือ 5 รอบเต็ม จึงเทียบเท่า 0 rad หรือ \\(2\\pi\\) rad และเฟสตรงกัน</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Understanding check 10.2 · Q2</p><p class=\"question-prompt\">Given \\(S_1P=125\\lambda\\) and \\(S_2P=120\\lambda\\), find the phase difference at P.</p><div data-sheet-slot=\"ipst-understanding-2\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"กำหนด \\(S_1P=125\\lambda\\) และ \\(S_2P=120\\lambda\\) ความต่างเฟสที่ P เป็นเท่าใด?\" data-sheet-label-en=\"Given \\(S_1P=125\\lambda\\) and \\(S_2P=120\\lambda\\), find the phase difference at P.\" style=\"--sheet-print-height:29mm\"><div data-sheet-answer=\"\">A path difference of \\(5\\lambda\\) gives \\(10\\pi\\) rad, five full cycles. This is equivalent to 0 or \\(2\\pi\\) rad: the waves are in phase.</div></div></div>"
+      }
+    },
+    {
+      "id": "U3",
+      "reference": "ตรวจความเข้าใจ 10.2 ข้อ 3",
+      "studentPrintedPages": "123–124",
+      "originalSheetSlots": [
+        "ipst-understanding-3a",
+        "ipst-understanding-3b"
+      ],
+      "th": {
+        "contextHtml": "<p>โจทย์ สสวท. ใช้ S เป็นสลิตเดี่ยวหน้าแผ่นสลิตคู่ M,N โดยแนวแบ่งครึ่งผ่าน G และกำหนด \\(NK-MK=\\lambda/2\\); ระยะ D ในภาพคือระยะสลิตคู่ถึงฉาก</p>\n<figure class=\"problem\" data-print-keep=\"\"><img src=\"assets/10-2/understanding-q3.jpg\" width=\"1163\" height=\"483\" alt=\"แผนภาพประกอบคำถามตรวจความเข้าใจ 10.2 ข้อ 3\"><figcaption>แผนภาพประกอบคำถามตรวจความเข้าใจ 10.2 ข้อ 3</figcaption></figure>",
+        "questionHtml": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจความเข้าใจ 10.2 · ข้อ 3 ก</p><p class=\"question-prompt\">ก. ที่ตำแหน่ง G และ K เป็นแถบอย่างไร?</p><div data-sheet-slot=\"ipst-understanding-3a\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ก. ที่ตำแหน่ง G และ K เป็นแถบอย่างไร?\" data-sheet-label-en=\"(a) What fringes occur at G and K?\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer=\"\">G มีทางเดินจาก M,N เท่ากัน จึงเป็นแถบสว่างกลาง ส่วน K มีผลต่างทางเดิน \\(\\lambda/2\\) จึงเป็นแถบมืดอันดับ 1</div></div></div>\n<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจความเข้าใจ 10.2 · ข้อ 3 ข</p><p class=\"question-prompt\">ข. ถ้าต้องการให้แถบสว่างอยู่ใกล้กันมากขึ้น ปรับตัวแปรใดได้บ้าง? ระบุสิ่งที่คงที่ในแต่ละกรณี</p><div data-sheet-slot=\"ipst-understanding-3b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ข. ถ้าต้องการให้แถบสว่างอยู่ใกล้กันมากขึ้น ปรับตัวแปรใดได้บ้าง? ระบุสิ่งที่คงที่ในแต่ละกรณี\" data-sheet-label-en=\"(b) How can the bright fringes be brought closer together? State what is kept fixed for each change.\" style=\"--sheet-print-height:29mm\"><div data-sheet-answer=\"\">จาก \\(\\Delta x=\\lambda L/d\\) ทำได้โดยลด L (คง λ,d), ลด λ (คง L,d) หรือเพิ่ม d (คง λ,L)</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "<p>In the IPST diagram, S precedes the double slit M,N, the bisector reaches G, and \\(NK-MK=\\lambda/2\\). D is the double-slit-to-screen distance.</p>\n<figure class=\"problem\" data-print-keep=\"\"><img src=\"assets/10-2/understanding-q3.jpg\" width=\"1163\" height=\"483\" alt=\"Diagram for understanding check 10.2 Q3.\"><figcaption>Diagram for understanding check 10.2 Q3.</figcaption></figure>",
+        "questionHtml": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Understanding check 10.2 · Q3(a)</p><p class=\"question-prompt\">(a) What fringes occur at G and K?</p><div data-sheet-slot=\"ipst-understanding-3a\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ก. ที่ตำแหน่ง G และ K เป็นแถบอย่างไร?\" data-sheet-label-en=\"(a) What fringes occur at G and K?\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer=\"\">G is equidistant from M,N and is the central bright fringe. K has path difference \\(\\lambda/2\\) and is the first dark fringe.</div></div></div>\n<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Understanding check 10.2 · Q3(b)</p><p class=\"question-prompt\">(b) How can the bright fringes be brought closer together? State what is kept fixed for each change.</p><div data-sheet-slot=\"ipst-understanding-3b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ข. ถ้าต้องการให้แถบสว่างอยู่ใกล้กันมากขึ้น ปรับตัวแปรใดได้บ้าง? ระบุสิ่งที่คงที่ในแต่ละกรณี\" data-sheet-label-en=\"(b) How can the bright fringes be brought closer together? State what is kept fixed for each change.\" style=\"--sheet-print-height:29mm\"><div data-sheet-answer=\"\">Using \\(\\Delta x=\\lambda L/d\\): decrease L at fixed λ,d; decrease λ at fixed L,d; or increase d at fixed λ,L.</div></div></div>"
+      }
+    },
+    {
+      "id": "U4",
+      "reference": "ตรวจความเข้าใจ 10.2 ข้อ 4",
+      "studentPrintedPages": "124",
+      "originalSheetSlots": [
+        "ipst-understanding-4"
+      ],
+      "th": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจความเข้าใจ 10.2 · ข้อ 4</p><p class=\"question-prompt\">AB เป็นสลิตคู่ แสงตกกระทบตั้งฉาก ถ้า \\(AC=n\\lambda\\) และ \\(BC=(n+3)\\lambda\\) เมื่อ n เป็นจำนวนเต็ม ให้ OM เป็นแนวกลาง ที่ C เป็นแถบใด อันดับเท่าใด?</p><figure class=\"tall-problem\" data-print-keep=\"\"><img src=\"assets/10-2/understanding-q4.jpg\" width=\"938\" height=\"810\" alt=\"แผนภาพตามโจทย์ สสวท. ข้อ 4\"><figcaption>แผนภาพตามโจทย์ สสวท. ข้อ 4</figcaption></figure><div data-sheet-slot=\"ipst-understanding-4\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"AB เป็นสลิตคู่ แสงตกกระทบตั้งฉาก ถ้า \\(AC=n\\lambda\\) และ \\(BC=(n+3)\\lambda\\) เมื่อ n เป็นจำนวนเต็ม ให้ OM เป็นแนวกลาง ที่ C เป็นแถบใด อันดับเท่าใด?\" data-sheet-label-en=\"AB is a double slit at normal incidence. If \\(AC=n\\lambda\\) and \\(BC=(n+3)\\lambda\\), with integer n and OM the central axis, identify the fringe at C.\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer=\"\">ผลต่างทางเดิน \\(BC-AC=3\\lambda\\) จึงเป็นแถบสว่างอันดับ 3 เลข n ในข้อมูลระยะ AC เป็นจำนวนความยาวคลื่นของทางเดิน ไม่ใช่อันดับแถบที่ C โดยตรง</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Understanding check 10.2 · Q4</p><p class=\"question-prompt\">AB is a double slit at normal incidence. If \\(AC=n\\lambda\\) and \\(BC=(n+3)\\lambda\\), with integer n and OM the central axis, identify the fringe at C.</p><figure class=\"tall-problem\" data-print-keep=\"\"><img src=\"assets/10-2/understanding-q4.jpg\" width=\"938\" height=\"810\" alt=\"IPST Q4 diagram.\"><figcaption>IPST Q4 diagram.</figcaption></figure><div data-sheet-slot=\"ipst-understanding-4\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"AB เป็นสลิตคู่ แสงตกกระทบตั้งฉาก ถ้า \\(AC=n\\lambda\\) และ \\(BC=(n+3)\\lambda\\) เมื่อ n เป็นจำนวนเต็ม ให้ OM เป็นแนวกลาง ที่ C เป็นแถบใด อันดับเท่าใด?\" data-sheet-label-en=\"AB is a double slit at normal incidence. If \\(AC=n\\lambda\\) and \\(BC=(n+3)\\lambda\\), with integer n and OM the central axis, identify the fringe at C.\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer=\"\">The path difference is \\(BC-AC=3\\lambda\\), giving the third bright fringe. The n used to specify AC counts wavelengths along that path; it is not directly the fringe order at C.</div></div></div>"
+      }
+    },
+    {
+      "id": "P1",
+      "reference": "แบบฝึกหัด 10.2 ข้อ 1",
+      "studentPrintedPages": "125",
+      "originalSheetSlots": [
+        "exercise-1"
+      ],
+      "th": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item exercise\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.2 · ข้อ 1</p><p class=\"question-prompt\">แสงความยาวคลื่น \\(5.9\\times10^{-7}\\) m ตกกระทบตั้งฉากกับสลิตคู่ที่ห่างกัน \\(1.0\\times10^{-3}\\) m ฉากห่าง 1.0 m จงหาระยะจากแถบสว่างกลางถึงแถบสว่างแรก ตามรูป</p><figure class=\"problem\" data-print-keep=\"\"><img src=\"assets/10-2/exercise-q1.jpg\" width=\"951\" height=\"576\" alt=\"แผนภาพแบบฝึกหัดข้อ 1: x วัดจากแถบกลางถึงแถบสว่างแรก\"><figcaption>แผนภาพแบบฝึกหัดข้อ 1: x วัดจากแถบกลางถึงแถบสว่างแรก</figcaption></figure><div data-sheet-slot=\"exercise-1\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แสงความยาวคลื่น \\(5.9\\times10^{-7}\\) m ตกกระทบตั้งฉากกับสลิตคู่ที่ห่างกัน \\(1.0\\times10^{-3}\\) m ฉากห่าง 1.0 m จงหาระยะจากแถบสว่างกลางถึงแถบสว่างแรก ตามรูป\" data-sheet-label-en=\"Light of wavelength \\(5.9\\times10^{-7}\\) m is normally incident on slits separated by \\(1.0\\times10^{-3}\\) m. The screen is 1.0 m away. Find the distance from the central maximum to the first bright fringe shown.\" style=\"--sheet-print-height:36mm\"><div data-sheet-answer=\"\">แถบสว่างแรก n = 1 ใช้ \\(x_1=\\lambda L/d\\) ได้ \\(5.9\\times10^{-4}\\) m = 0.59 mm โดย x/L เล็กมาก จึงใช้การประมาณมุมเล็กได้</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item exercise\" data-print-keep=\"\"><p class=\"question-label\">Exercise 10.2 · Q1</p><p class=\"question-prompt\">Light of wavelength \\(5.9\\times10^{-7}\\) m is normally incident on slits separated by \\(1.0\\times10^{-3}\\) m. The screen is 1.0 m away. Find the distance from the central maximum to the first bright fringe shown.</p><figure class=\"problem\" data-print-keep=\"\"><img src=\"assets/10-2/exercise-q1.jpg\" width=\"951\" height=\"576\" alt=\"Exercise Q1: x runs from the central to the first bright fringe.\"><figcaption>Exercise Q1: x runs from the central to the first bright fringe.</figcaption></figure><div data-sheet-slot=\"exercise-1\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แสงความยาวคลื่น \\(5.9\\times10^{-7}\\) m ตกกระทบตั้งฉากกับสลิตคู่ที่ห่างกัน \\(1.0\\times10^{-3}\\) m ฉากห่าง 1.0 m จงหาระยะจากแถบสว่างกลางถึงแถบสว่างแรก ตามรูป\" data-sheet-label-en=\"Light of wavelength \\(5.9\\times10^{-7}\\) m is normally incident on slits separated by \\(1.0\\times10^{-3}\\) m. The screen is 1.0 m away. Find the distance from the central maximum to the first bright fringe shown.\" style=\"--sheet-print-height:36mm\"><div data-sheet-answer=\"\">For the first bright fringe, n = 1. \\(x_1=\\lambda L/d=5.9\\times10^{-4}\\) m = 0.59 mm. The small-angle approximation is valid because x/L is very small.</div></div></div>"
+      }
+    },
+    {
+      "id": "P2",
+      "reference": "แบบฝึกหัด 10.2 ข้อ 2",
+      "studentPrintedPages": "125",
+      "originalSheetSlots": [
+        "exercise-2a",
+        "exercise-2b",
+        "exercise-2c"
+      ],
+      "th": {
+        "contextHtml": "<p>ข้อ 2: ใช้แสง \\(6.0\\times10^{-7}\\) m สลิตคู่ห่าง \\(2.0\\times10^{-5}\\) m ฉากห่าง 2.0 m โดย x ในรูปคือระยะระหว่างแถบสว่างที่ติดกัน</p>\n<figure class=\"problem\" data-print-keep=\"\"><img src=\"assets/10-2/exercise-q2.jpg\" width=\"975\" height=\"301\" alt=\"แผนภาพแบบฝึกหัดข้อ 2: อ่านปลายลูกศร x ก่อนเลือกสมการ\"><figcaption>แผนภาพแบบฝึกหัดข้อ 2: อ่านปลายลูกศร x ก่อนเลือกสมการ</figcaption></figure>",
+        "questionHtml": "<div class=\"question-item exercise\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.2 · ข้อ 2 ก</p><p class=\"question-prompt\">ก. จงหาระยะ x</p><div data-sheet-slot=\"exercise-2a\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ก. จงหาระยะ x\" data-sheet-label-en=\"(a) Find x.\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer=\"\">เป็นระยะระหว่างแถบติดกัน ใช้ \\(x=\\Delta x=\\lambda L/d\\) ได้ 0.060 m = 6.0 cm และ x/L = 0.030 จึงใช้มุมเล็กได้</div></div></div>\n<div class=\"question-item exercise\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.2 · ข้อ 2 ข</p><p class=\"question-prompt\">ข. ถ้าเลื่อนฉากให้ไกลขึ้น โดยใช้แสงและแผ่นสลิตเดิม x จะเปลี่ยนอย่างไร?</p><div data-sheet-slot=\"exercise-2b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ข. ถ้าเลื่อนฉากให้ไกลขึ้น โดยใช้แสงและแผ่นสลิตเดิม x จะเปลี่ยนอย่างไร?\" data-sheet-label-en=\"(b) Move the screen farther away, keeping the same light and slits. How does x change?\" style=\"--sheet-print-height:25mm\"><div data-sheet-answer=\"\">จาก \\(\\Delta x=\\lambda L/d\\) เมื่อ λ,d คงที่ ระยะห่างแถบเพิ่มเป็นสัดส่วนกับ L</div></div></div>\n<div class=\"question-item exercise\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.2 · ข้อ 2 ค</p><p class=\"question-prompt\">ค. ถ้าเพิ่มความสว่างของแหล่งกำเนิด โดยคงสีแสง สลิต และระยะฉาก x จะเปลี่ยนหรือไม่?</p><div data-sheet-slot=\"exercise-2c\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ค. ถ้าเพิ่มความสว่างของแหล่งกำเนิด โดยคงสีแสง สลิต และระยะฉาก x จะเปลี่ยนหรือไม่?\" data-sheet-label-en=\"(c) Increase source brightness while keeping wavelength, slits and screen distance fixed. Does x change?\" style=\"--sheet-print-height:25mm\"><div data-sheet-answer=\"\">x ไม่เปลี่ยน เพราะ λ,d,L เท่าเดิม แถบสว่างมีความเข้มเพิ่มขึ้น</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "<p>Q2: wavelength \\(6.0\\times10^{-7}\\) m, slit separation \\(2.0\\times10^{-5}\\) m, and screen distance 2.0 m. In the diagram, x is the spacing between adjacent bright fringes.</p>\n<figure class=\"problem\" data-print-keep=\"\"><img src=\"assets/10-2/exercise-q2.jpg\" width=\"975\" height=\"301\" alt=\"Exercise Q2: identify both endpoints of x before selecting an equation.\"><figcaption>Exercise Q2: identify both endpoints of x before selecting an equation.</figcaption></figure>",
+        "questionHtml": "<div class=\"question-item exercise\" data-print-keep=\"\"><p class=\"question-label\">Exercise 10.2 · Q2(a)</p><p class=\"question-prompt\">(a) Find x.</p><div data-sheet-slot=\"exercise-2a\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ก. จงหาระยะ x\" data-sheet-label-en=\"(a) Find x.\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer=\"\">For adjacent fringes, \\(x=\\Delta x=\\lambda L/d\\) = 0.060 m = 6.0 cm. Since x/L = 0.030, the small-angle approximation is suitable.</div></div></div>\n<div class=\"question-item exercise\" data-print-keep=\"\"><p class=\"question-label\">Exercise 10.2 · Q2(b)</p><p class=\"question-prompt\">(b) Move the screen farther away, keeping the same light and slits. How does x change?</p><div data-sheet-slot=\"exercise-2b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ข. ถ้าเลื่อนฉากให้ไกลขึ้น โดยใช้แสงและแผ่นสลิตเดิม x จะเปลี่ยนอย่างไร?\" data-sheet-label-en=\"(b) Move the screen farther away, keeping the same light and slits. How does x change?\" style=\"--sheet-print-height:25mm\"><div data-sheet-answer=\"\">From \\(\\Delta x=\\lambda L/d\\), with wavelength and d fixed, the spacing increases in direct proportion to L.</div></div></div>\n<div class=\"question-item exercise\" data-print-keep=\"\"><p class=\"question-label\">Exercise 10.2 · Q2(c)</p><p class=\"question-prompt\">(c) Increase source brightness while keeping wavelength, slits and screen distance fixed. Does x change?</p><div data-sheet-slot=\"exercise-2c\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ค. ถ้าเพิ่มความสว่างของแหล่งกำเนิด โดยคงสีแสง สลิต และระยะฉาก x จะเปลี่ยนหรือไม่?\" data-sheet-label-en=\"(c) Increase source brightness while keeping wavelength, slits and screen distance fixed. Does x change?\" style=\"--sheet-print-height:25mm\"><div data-sheet-answer=\"\">x is unchanged because wavelength, d and L are unchanged. The bright fringes become more intense.</div></div></div>"
+      }
+    },
+    {
+      "id": "P3",
+      "reference": "แบบฝึกหัด 10.2 ข้อ 3",
+      "studentPrintedPages": "126",
+      "originalSheetSlots": [
+        "exercise-3"
+      ],
+      "th": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item exercise\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.2 · ข้อ 3</p><p class=\"question-prompt\">ภาพแถบแสงและไม้บรรทัดด้านล่าง: ความกว้างของแถบสว่างกลางมีค่าประมาณเท่าใด? ระบุขอบที่ใช้วัด</p><figure class=\"problem\" data-print-keep=\"\"><img src=\"assets/10-2/exercise-q3.jpg\" width=\"575\" height=\"270\" alt=\"ภาพต้นฉบับสำหรับอ่านความกว้างแถบสว่างกลาง\"><figcaption>ภาพต้นฉบับสำหรับอ่านความกว้างแถบสว่างกลาง</figcaption></figure><div data-sheet-slot=\"exercise-3\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ภาพแถบแสงและไม้บรรทัดด้านล่าง: ความกว้างของแถบสว่างกลางมีค่าประมาณเท่าใด? ระบุขอบที่ใช้วัด\" data-sheet-label-en=\"Using the fringe photograph and ruler below, estimate the width of the central bright fringe. State the two boundaries used.\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer=\"\">วัดระหว่างแถบมืดสองข้างที่ขนาบแถบสว่างกลาง อ่านได้ประมาณ 1.20 cm และ 1.85 cm จึงกว้างประมาณ 1.85−1.20 = 0.65 cm ตามความละเอียดของภาพ ไม่วัดคร่อมกลุ่มแถบทั้งหมด</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item exercise\" data-print-keep=\"\"><p class=\"question-label\">Exercise 10.2 · Q3</p><p class=\"question-prompt\">Using the fringe photograph and ruler below, estimate the width of the central bright fringe. State the two boundaries used.</p><figure class=\"problem\" data-print-keep=\"\"><img src=\"assets/10-2/exercise-q3.jpg\" width=\"575\" height=\"270\" alt=\"Original photograph for estimating the central bright-fringe width.\"><figcaption>Original photograph for estimating the central bright-fringe width.</figcaption></figure><div data-sheet-slot=\"exercise-3\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ภาพแถบแสงและไม้บรรทัดด้านล่าง: ความกว้างของแถบสว่างกลางมีค่าประมาณเท่าใด? ระบุขอบที่ใช้วัด\" data-sheet-label-en=\"Using the fringe photograph and ruler below, estimate the width of the central bright fringe. State the two boundaries used.\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer=\"\">Measure between the two minima immediately bounding the central bright fringe. The approximate readings are 1.20 cm and 1.85 cm, so the width is about 0.65 cm. Do not measure the entire broad group of fringes.</div></div></div>"
+      }
+    },
+    {
+      "id": "F1",
+      "reference": "ท้ายบท ปัญหา 1",
+      "studentPrintedPages": "150",
+      "originalSheetSlots": [
+        "extra-1"
+      ],
+      "th": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item extra\" data-print-keep=\"\"><p class=\"question-label\">คำถาม 21</p><p class=\"question-prompt\">ใช้แสง 650 nm สลิตห่าง 0.25 mm และฉากห่าง 1.0 m แถบสว่างแรกอยู่ห่างแถบสว่างกลางเท่าใด?</p><div data-sheet-slot=\"extra-1\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ใช้แสง 650 nm สลิตห่าง 0.25 mm และฉากห่าง 1.0 m แถบสว่างแรกอยู่ห่างแถบสว่างกลางเท่าใด?\" data-sheet-label-en=\"For 650 nm light, slit separation 0.25 mm and screen distance 1.0 m, how far is the first bright fringe from the central maximum?\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer=\"\">\\(x_1=\\lambda L/d\\) = 0.0026 m = 2.6 mm</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item extra\" data-print-keep=\"\"><p class=\"question-label\">Question 21</p><p class=\"question-prompt\">For 650 nm light, slit separation 0.25 mm and screen distance 1.0 m, how far is the first bright fringe from the central maximum?</p><div data-sheet-slot=\"extra-1\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ใช้แสง 650 nm สลิตห่าง 0.25 mm และฉากห่าง 1.0 m แถบสว่างแรกอยู่ห่างแถบสว่างกลางเท่าใด?\" data-sheet-label-en=\"For 650 nm light, slit separation 0.25 mm and screen distance 1.0 m, how far is the first bright fringe from the central maximum?\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer=\"\">\\(x_1=\\lambda L/d\\) = 0.0026 m = 2.6 mm.</div></div></div>"
+      }
+    },
+    {
+      "id": "F2",
+      "reference": "ท้ายบท ปัญหา 2",
+      "studentPrintedPages": "151",
+      "originalSheetSlots": [
+        "extra-2"
+      ],
+      "th": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item extra\" data-print-keep=\"\"><p class=\"question-label\">คำถาม 22</p><p class=\"question-prompt\">อ่านภาพไม้บรรทัด: ระยะห่างแถบสว่างติดกัน x มีค่าประมาณเท่าใด?</p><figure class=\"problem\" data-print-keep=\"\"><img src=\"assets/10-2/further-fringe-ruler.jpg\" width=\"774\" height=\"261\" alt=\"ภาพประกอบปัญหาท้ายบท: เส้นตั้งแทนตำแหน่งแถบสว่าง\"><figcaption>ภาพประกอบปัญหาท้ายบท: เส้นตั้งแทนตำแหน่งแถบสว่าง</figcaption></figure><div data-sheet-slot=\"extra-2\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"อ่านภาพไม้บรรทัด: ระยะห่างแถบสว่างติดกัน x มีค่าประมาณเท่าใด?\" data-sheet-label-en=\"Read the ruler diagram. Estimate x, the spacing between adjacent bright fringes.\" style=\"--sheet-print-height:25mm\"><div data-sheet-answer=\"\">อ่านระยะระหว่างเส้นสว่างที่ติดกัน ได้ประมาณ 0.70 cm หรือวัดหลายช่วงแล้วหารจำนวนช่วงเพื่อลดความคลาดเคลื่อน</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item extra\" data-print-keep=\"\"><p class=\"question-label\">Question 22</p><p class=\"question-prompt\">Read the ruler diagram. Estimate x, the spacing between adjacent bright fringes.</p><figure class=\"problem\" data-print-keep=\"\"><img src=\"assets/10-2/further-fringe-ruler.jpg\" width=\"774\" height=\"261\" alt=\"End-of-chapter diagram: vertical lines mark bright fringes.\"><figcaption>End-of-chapter diagram: vertical lines mark bright fringes.</figcaption></figure><div data-sheet-slot=\"extra-2\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"อ่านภาพไม้บรรทัด: ระยะห่างแถบสว่างติดกัน x มีค่าประมาณเท่าใด?\" data-sheet-label-en=\"Read the ruler diagram. Estimate x, the spacing between adjacent bright fringes.\" style=\"--sheet-print-height:25mm\"><div data-sheet-answer=\"\">The adjacent bright-fringe spacing is approximately 0.70 cm. Measuring several intervals and dividing by their number can reduce reading uncertainty.</div></div></div>"
+      }
+    },
+    {
+      "id": "F3",
+      "reference": "ท้ายบท ปัญหา 3",
+      "studentPrintedPages": "151",
+      "originalSheetSlots": [
+        "extra-3"
+      ],
+      "th": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item extra\" data-print-keep=\"\"><p class=\"question-label\">คำถาม 23</p><p class=\"question-prompt\">สลิตห่าง 0.20 mm ฉากห่าง 1.0 m แถบสว่างอันดับ 4 อยู่ห่างแนวกลาง 1.2 cm จงหาความยาวคลื่นเป็น nm</p><div data-sheet-slot=\"extra-3\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"สลิตห่าง 0.20 mm ฉากห่าง 1.0 m แถบสว่างอันดับ 4 อยู่ห่างแนวกลาง 1.2 cm จงหาความยาวคลื่นเป็น nm\" data-sheet-label-en=\"Slit separation is 0.20 mm and screen distance 1.0 m. The fourth bright fringe is 1.2 cm from the centre. Find the wavelength in nm.\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer=\"\">\\(\\lambda=dx_4/(4L)\\) = 0.000000600 m = 600 nm</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item extra\" data-print-keep=\"\"><p class=\"question-label\">Question 23</p><p class=\"question-prompt\">Slit separation is 0.20 mm and screen distance 1.0 m. The fourth bright fringe is 1.2 cm from the centre. Find the wavelength in nm.</p><div data-sheet-slot=\"extra-3\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"สลิตห่าง 0.20 mm ฉากห่าง 1.0 m แถบสว่างอันดับ 4 อยู่ห่างแนวกลาง 1.2 cm จงหาความยาวคลื่นเป็น nm\" data-sheet-label-en=\"Slit separation is 0.20 mm and screen distance 1.0 m. The fourth bright fringe is 1.2 cm from the centre. Find the wavelength in nm.\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer=\"\">\\(\\lambda=dx_4/(4L)\\) = 0.000000600 m = 600 nm.</div></div></div>"
+      }
+    },
+    {
+      "id": "F4",
+      "reference": "ท้ายบท ปัญหา 4",
+      "studentPrintedPages": "151",
+      "originalSheetSlots": [
+        "extra-4"
+      ],
+      "th": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item extra\" data-print-keep=\"\"><p class=\"question-label\">คำถาม 24</p><p class=\"question-prompt\">แสง 500 nm ผ่านสลิตคู่ห่าง 0.50 mm ฉากห่าง 2.0 m แถบสว่างติดกันห่างเท่าใดเป็น mm?</p><div data-sheet-slot=\"extra-4\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แสง 500 nm ผ่านสลิตคู่ห่าง 0.50 mm ฉากห่าง 2.0 m แถบสว่างติดกันห่างเท่าใดเป็น mm?\" data-sheet-label-en=\"For 500 nm light, slit separation 0.50 mm and screen distance 2.0 m, find the adjacent bright-fringe spacing in mm.\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer=\"\">\\(\\Delta x=\\lambda L/d\\) = 0.0020 m = 2.0 mm</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item extra\" data-print-keep=\"\"><p class=\"question-label\">Question 24</p><p class=\"question-prompt\">For 500 nm light, slit separation 0.50 mm and screen distance 2.0 m, find the adjacent bright-fringe spacing in mm.</p><div data-sheet-slot=\"extra-4\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แสง 500 nm ผ่านสลิตคู่ห่าง 0.50 mm ฉากห่าง 2.0 m แถบสว่างติดกันห่างเท่าใดเป็น mm?\" data-sheet-label-en=\"For 500 nm light, slit separation 0.50 mm and screen distance 2.0 m, find the adjacent bright-fringe spacing in mm.\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer=\"\">\\(\\Delta x=\\lambda L/d\\) = 0.0020 m = 2.0 mm.</div></div></div>"
+      }
+    },
+    {
+      "id": "F5",
+      "reference": "ท้ายบท ปัญหา 5",
+      "studentPrintedPages": "151",
+      "originalSheetSlots": [
+        "extra-5"
+      ],
+      "th": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item extra\" data-print-keep=\"\"><p class=\"question-label\">คำถาม 25</p><p class=\"question-prompt\">ใช้แสง 600 nm ฉากห่าง 1.0 m แถบสว่างติดกันห่าง 5.0 mm จงหาระยะห่างสลิตเป็น µm</p><div data-sheet-slot=\"extra-5\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ใช้แสง 600 nm ฉากห่าง 1.0 m แถบสว่างติดกันห่าง 5.0 mm จงหาระยะห่างสลิตเป็น µm\" data-sheet-label-en=\"For 600 nm light, screen distance 1.0 m and adjacent-fringe spacing 5.0 mm, find the slit separation in µm.\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer=\"\">\\(d=\\lambda L/\\Delta x\\) = 0.000120 m = 120 µm</div></div></div>"
+      },
+      "en": {
+        "contextHtml": "",
+        "questionHtml": "<div class=\"question-item extra\" data-print-keep=\"\"><p class=\"question-label\">Question 25</p><p class=\"question-prompt\">For 600 nm light, screen distance 1.0 m and adjacent-fringe spacing 5.0 mm, find the slit separation in µm.</p><div data-sheet-slot=\"extra-5\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ใช้แสง 600 nm ฉากห่าง 1.0 m แถบสว่างติดกันห่าง 5.0 mm จงหาระยะห่างสลิตเป็น µm\" data-sheet-label-en=\"For 600 nm light, screen distance 1.0 m and adjacent-fringe spacing 5.0 mm, find the slit separation in µm.\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer=\"\">\\(d=\\lambda L/\\Delta x\\) = 0.000120 m = 120 µm.</div></div></div>"
+      }
+    }
+  ],
+  "retainedCrops": [
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/exercise-q1.jpg",
+      "sha256": "31fae01e45c9a08f8237500a5a1812f6bbdbbc59b8af93f55623d11040d553b8"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/exercise-q2.jpg",
+      "sha256": "9ebc9499349be7b4dac56c45d4e9353fe98b87864a525a922bf6bae2aaaebcfb"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/exercise-q3.jpg",
+      "sha256": "4b02b3ec060e5847b51b44e3a759f3be1998ac149f13edaa2d977764273a3160"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/experiment-setup.jpg",
+      "sha256": "7a438e34bf2fa37571cb846cdafdba87eb341396e7360ee0f3631d5d58774596"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/fringe-width.jpg",
+      "sha256": "55fe01f08dff144a9df41c4a6be464ac07bed995b1fa0c59337b8b32629d4c8e"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/further-fringe-ruler.jpg",
+      "sha256": "4c11595c27f4d9f532af498687f0556f5b6e4d97967d56818e6093ed3b16ec6c"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/geometry-angle-position.jpg",
+      "sha256": "bc28bc36a914c97e119520726f491c3eeca5a82209dcc15ec88457a26aaf7317"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/intro-double-slit.jpg",
+      "sha256": "5a6f79759b1465441ce49ee6783ffef0120a2970b06fe8365b8607f592c58ddb"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/intro-single-slit.jpg",
+      "sha256": "b87a0970da1d05dd4e646bca4c94bf4bd5a6a2fd90332a24ac6f45dc86948a67"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/paths-and-orders.jpg",
+      "sha256": "a839587ef37448f9eff1d8126662cc85b8e5065b4894ef7a64f04a731708dd91"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/result-green-d100.jpg",
+      "sha256": "047ae8d41666b000eb20042bf0ce9c4677a573066795b1022feca97e4c4e6339"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/result-green-d50.jpg",
+      "sha256": "6fb409e5f66ff1933e058629071848e4201fdfc709485a7cf4493a6c4a626f0e"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/result-red-d100.jpg",
+      "sha256": "8b1399f177fd3a141d92b44ebf81b48dae37443501c472b1fd21b03a4ca37126"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/understanding-q3.jpg",
+      "sha256": "a5fa3545d97e76812587449c3ab2d8c779e3a679b303b5d283902d82c55f925b"
+    },
+    {
+      "path": "public/content/physics/ipst/wave-optics/assets/10-2/understanding-q4.jpg",
+      "sha256": "8d5182864efa89b51fd9a6f829773712e3cc7e3589559b47c1dea95ff587795d"
+    }
+  ],
+  "pendingOriginalItems": [
+    "Chapter-end question 2",
+    "Chapter-end problems 6–8",
+    "Book challenge problems 15–20 (teacher-guide challenge 1–6)",
+    "Activity 10.1 end questions and p.112 think question"
+  ],
+  "sourceDiscrepancy": "Chapter-end problem 8: student scan has fringe spacing 1.0×10⁻⁷ m; teacher guide uses 1.0×10⁻³ m. Record the selected version explicitly before Quiz publication."
+}

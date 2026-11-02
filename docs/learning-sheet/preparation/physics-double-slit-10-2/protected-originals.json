@@ -1,0 +1,74 @@
+[
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/exercise-q1.jpg",
+    "sha256": "31fae01e45c9a08f8237500a5a1812f6bbdbbc59b8af93f55623d11040d553b8"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/exercise-q2.jpg",
+    "sha256": "9ebc9499349be7b4dac56c45d4e9353fe98b87864a525a922bf6bae2aaaebcfb"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/exercise-q3.jpg",
+    "sha256": "4b02b3ec060e5847b51b44e3a759f3be1998ac149f13edaa2d977764273a3160"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/experiment-setup.jpg",
+    "sha256": "7a438e34bf2fa37571cb846cdafdba87eb341396e7360ee0f3631d5d58774596"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/fringe-width.jpg",
+    "sha256": "55fe01f08dff144a9df41c4a6be464ac07bed995b1fa0c59337b8b32629d4c8e"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/further-fringe-ruler.jpg",
+    "sha256": "4c11595c27f4d9f532af498687f0556f5b6e4d97967d56818e6093ed3b16ec6c"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/geometry-angle-position.jpg",
+    "sha256": "bc28bc36a914c97e119520726f491c3eeca5a82209dcc15ec88457a26aaf7317"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/intro-double-slit.jpg",
+    "sha256": "5a6f79759b1465441ce49ee6783ffef0120a2970b06fe8365b8607f592c58ddb"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/intro-single-slit.jpg",
+    "sha256": "b87a0970da1d05dd4e646bca4c94bf4bd5a6a2fd90332a24ac6f45dc86948a67"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/paths-and-orders.jpg",
+    "sha256": "a839587ef37448f9eff1d8126662cc85b8e5065b4894ef7a64f04a731708dd91"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/result-green-d100.jpg",
+    "sha256": "047ae8d41666b000eb20042bf0ce9c4677a573066795b1022feca97e4c4e6339"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/result-green-d50.jpg",
+    "sha256": "6fb409e5f66ff1933e058629071848e4201fdfc709485a7cf4493a6c4a626f0e"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/result-red-d100.jpg",
+    "sha256": "8b1399f177fd3a141d92b44ebf81b48dae37443501c472b1fd21b03a4ca37126"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/understanding-q3.jpg",
+    "sha256": "a5fa3545d97e76812587449c3ab2d8c779e3a679b303b5d283902d82c55f925b"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/assets/10-2/understanding-q4.jpg",
+    "sha256": "8d5182864efa89b51fd9a6f829773712e3cc7e3589559b47c1dea95ff587795d"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/10-2-double-slit-learning-sheet.html",
+    "sha256": "947447cd38f1f3625e343d143bd15faa27556e3156e3fd2025082054eea44c8d"
+  },
+  {
+    "path": "public/content/bank/physics/b-21460452889578f11c3a8bac.html",
+    "sha256": "9e4374360b1846cb4db29c91ac3e9e3167c1b3e6a6c1c1bfac53d7b9e7df1757"
+  },
+  {
+    "path": "public/content/physics/ipst/wave-optics/10-2-double-slit-lab.html",
+    "sha256": "6381aec55e4b0bb50b84498d2a187ca316c6dbfd22dcee8a71b54f87564ba55c"
+  }
+]

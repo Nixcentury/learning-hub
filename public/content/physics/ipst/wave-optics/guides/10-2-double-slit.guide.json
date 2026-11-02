@@ -1,0 +1,546 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "physics-ipst-wave-optics-10-2-sheet",
+    "revision": "2026-11-02-1",
+    "sha256": "914ca54c33ab443c5511a92a5c29bdf9f678b533830e5ee39ce98caa1c81dba3"
+  },
+  "title": {
+    "th": "การแทรกสอดผ่านสลิตคู่",
+    "en": "Double-slit interference"
+  },
+  "prerequisites": {
+    "th": "ทวนการซ้อนทับ เฟสหนึ่งรอบ 2π และการแปลง nm, μm, mm เป็น m รู้จัก sin และ tan จากรูปสามเหลี่ยม",
+    "en": "Review superposition, one cycle as 2π, conversions from nm/μm/mm to m, and sine/tangent in a triangle."
+  },
+  "goal": {
+    "th": "เชื่อมผลต่างทางเดินกับเฟสและชนิดแถบ แล้วอ่านมุมหรือระยะบนฉากเพื่อเลือกสมการได้ พร้อมแยกตำแหน่งแถบออกจากระยะห่างแถบ",
+    "en": "Connect path difference to phase and fringe type, then read angles or screen distances to choose an equation. Distinguish fringe position from fringe spacing."
+  },
+  "steps": [
+    {
+      "id": "openings",
+      "title": {
+        "th": "เริ่มจากอ่านช่องเปิด",
+        "en": "Begin with the openings"
+      },
+      "summary": {
+        "th": "สลิตเดี่ยวใช้ช่องเดียว สลิตคู่ใช้สองช่องแคบขนานกัน\na คือความกว้างช่องหนึ่งช่อง ส่วน d คือระยะระหว่างกึ่งกลางสองช่อง แสงเลี้ยวเบนจากแต่ละช่องก่อนซ้อนทับกัน",
+        "en": "A single slit uses one opening; a double slit uses two parallel narrow openings.\na is an opening width; d is centre separation. Light diffracts from each opening before overlapping."
+      },
+      "story": {
+        "th": "ชี้ขอบช่องและกึ่งกลางช่องในภาพเดียวกัน ให้ลองบอกว่าลูกศร a กับ d เริ่มและจบตรงไหน แล้วเชื่อมภาพหน้าคลื่นกับการซ้อนทับ",
+        "en": "Point to opening edges and centres in the same picture. Locate the ends of a and d, then connect the wavefront picture to overlap."
+      },
+      "action": {
+        "th": "ทำคำถาม 2 และอธิบายคำถาม 3 สั้น ๆ ไม่ต้องวาดแผ่นอุปกรณ์ซ้ำ",
+        "en": "Do Question 2 and briefly explain Question 3; there is no need to redraw the apparatus."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ภาพ a และ d",
+            "en": "a and d diagram"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "opening-geometry"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 2",
+            "en": "Question 2"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "check-02"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "หมู่ช่องที่มีสองช่องอยู่ใกล้กัน ระยะ d วัดระหว่างขอบช่องหรือกึ่งกลางช่อง?",
+          "en": "For a pair of nearby openings, is d measured between edges or centres?"
+        },
+        "answer": {
+          "th": "กึ่งกลางช่องทั้งสอง ส่วน a วัดความกว้างของช่องเดียว",
+          "en": "Between the two opening centres. a measures one opening’s width."
+        }
+      },
+      "after": {
+        "th": "ถ้าแยก a,d ได้ ไปอ่านรูปการจัดอุปกรณ์และลวดลาย A–C",
+        "en": "Once a and d are clear, read the apparatus and pattern diagrams A–C."
+      }
+    },
+    {
+      "id": "patterns",
+      "title": {
+        "th": "สังเกตก่อนใช้สูตร",
+        "en": "Observe before using a formula"
+      },
+      "summary": {
+        "th": "ภาพ A–C เป็นแบบจำลองที่ใช้สเกลตำแหน่งเดียวกัน โดย L = 1.50 m และ a คงที่\nA→B เพิ่ม d โดยคง λ ส่วน B→C เพิ่ม λ โดยคง d เทาเข้มแทนความเข้มแสงมาก",
+        "en": "A–C are model strips on one position scale, with L = 1.50 m and a fixed.\nA→B increases d at fixed λ; B→C increases λ at fixed d. Darker ink means greater intensity."
+      },
+      "story": {
+        "th": "ให้ชี้คู่ที่เปลี่ยนเพียงตัวแปรเดียวก่อนตัดสินว่าแถบชิดหรือห่าง แยกตำแหน่งทั้งภาพออกจากระยะห่างระหว่างแถบ",
+        "en": "First identify the pair differing in one variable, then compare spacing. Separate a shift of the whole pattern from a change in spacing."
+      },
+      "action": {
+        "th": "ทำคำถาม 4 ก–ข และใช้คำถาม 5 ถ้าการจัดแนวของภาพยังทำให้สับสน",
+        "en": "Do Question 4a–b; use Question 5 if alignment still causes confusion."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ภาพ A–C",
+            "en": "Patterns A–C"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "controlled-patterns"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 4 ก",
+            "en": "Question 4a"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "check-04"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 5",
+            "en": "Question 5"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "experiment-alignment"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้าขยับภาพทั้งภาพไปด้านข้าง แต่ช่องว่างระหว่างแถบเท่าเดิม จะสรุปว่าแถบห่างขึ้นได้ไหม?",
+          "en": "If the whole pattern shifts sideways but inter-fringe gaps stay the same, has spacing increased?"
+        },
+        "answer": {
+          "th": "ไม่ได้ ต้องเปรียบเทียบระยะระหว่างแถบ ไม่ใช่ตำแหน่งของทั้งภาพ",
+          "en": "No. Compare inter-fringe distances, not the position of the whole pattern."
+        }
+      },
+      "after": {
+        "th": "อ่านสรุปความสัมพันธ์ แล้วค่อยหาที่มาจากผลต่างทางเดิน",
+        "en": "Read the pattern conclusion, then explain it through path difference."
+      }
+    },
+    {
+      "id": "path-phase",
+      "title": {
+        "th": "ทางเดินต่างกัน เฟสต่างกัน",
+        "en": "Different paths change phase"
+      },
+      "summary": {
+        "th": "เปรียบเทียบ UP กับ VP ที่มาถึงจุด P เดียวกัน: Δr = |UP−VP|\nเมื่อสองแหล่งเริ่มเฟสตรงกัน Δφ = 2πΔr/λ คือเฟสสะสม เฟสเทียบรอบต่างกันได้ทีละ 2π",
+        "en": "Compare UP and VP reaching the same P: Δr = |UP−VP|.\nFor initially in-phase sources, Δφ = 2πΔr/λ is accumulated phase difference; equivalent phases differ by whole multiples of 2π."
+      },
+      "story": {
+        "th": "เริ่มจากหนึ่งความยาวคลื่นเท่ากับหนึ่งรอบ ให้เทียบจำนวนรอบก่อนแทนสูตร แล้วแยกคำตอบเฟสสะสมกับเฟสเทียบรอบ",
+        "en": "Start with one wavelength per cycle. Count cycles before substituting, then separate accumulated from equivalent phase."
+      },
+      "action": {
+        "th": "พาทำตัวอย่าง 1 ก แล้วให้ลองตัวอย่าง 1 ขเอง ใช้คำถาม 9 หากยังเผลอปัดเศษจำนวนรอบ",
+        "en": "Work through Example 1a and let learners try 1b. Use Question 9 when they are tempted to round the number of cycles."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ที่มาสูตรเฟส",
+            "en": "Phase derivation"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "phase-difference"
+          }
+        },
+        {
+          "label": {
+            "th": "ตัวอย่าง 1 ก",
+            "en": "Example 1a"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "example-1a"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 9 ข",
+            "en": "Question 9b"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "review-phase-classify"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้า Δr = 1.25λ เฟสสะสมเป็นเท่าใด และเทียบรอบเหลือเท่าใด?",
+          "en": "For Δr = 1.25λ, what are the accumulated and equivalent phase differences?"
+        },
+        "answer": {
+          "th": "2.5π rad และเทียบรอบเป็น 0.5π rad ไม่ใช่เฟสตรงหรือเฟสตรงข้าม",
+          "en": "2.5π rad, equivalent to 0.5π rad; neither in phase nor exactly opposite."
+        }
+      },
+      "after": {
+        "th": "ถ้าคิดรอบได้ ไปแยกเงื่อนไขสว่างและมืด",
+        "en": "Once cycle counting is clear, classify bright and dark conditions."
+      }
+    },
+    {
+      "id": "orders",
+      "title": {
+        "th": "ชนิดแถบกับอันดับเป็นคนละขั้น",
+        "en": "Type first, then order"
+      },
+      "summary": {
+        "th": "สว่างเมื่อ Δr = nλ โดย n = 0,1,2,…; มืดเมื่อ Δr = (n−1/2)λ โดย n = 1,2,3,…\nเริ่มนับแถบมืดจาก 1 และต้องมีแอมพลิจูดเท่ากันจึงหักล้างได้มืดสนิท ค่าอื่นไม่ควรปัดเป็นตำแหน่งสุดขั้ว",
+        "en": "Bright: Δr = nλ for n = 0,1,2,…; dark: Δr = (n−1/2)λ for n = 1,2,3,….\nDark orders start at 1; equal amplitudes are needed for complete cancellation. Do not round other ratios into extrema."
+      },
+      "story": {
+        "th": "ให้หาร Δr ด้วย λ ก่อน แล้วตัดสินว่าเป็นจำนวนเต็ม ครึ่งจำนวนคี่ หรือค่าอื่น เลขจำนวน λ ของทางเดินเดียวไม่ใช่อันดับแถบ",
+        "en": "Divide Δr by λ, then classify the result as integer, half-integer or neither. A single path’s wavelength count is not the fringe order."
+      },
+      "action": {
+        "th": "ทำตัวอย่าง 2 ข และคำถาม 13 เลือกคำถาม 12 หากต้องทวนกรณีที่ไม่ใช่สว่างสุดหรือมืดสนิท",
+        "en": "Do Example 2b and Question 13; use Question 12 to revisit a point that is neither an exact maximum nor minimum."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เงื่อนไขสว่าง–มืด",
+            "en": "Bright/dark conditions"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "bright-dark-conditions"
+          }
+        },
+        {
+          "label": {
+            "th": "ตัวอย่าง 2 ข",
+            "en": "Example 2b"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "example-2b"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 13",
+            "en": "Question 13"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "review-subtract-paths"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ผลต่างทางเดิน 3.5λ เป็นแถบมืดอันดับใด?",
+          "en": "Which dark order has path difference 3.5λ?"
+        },
+        "answer": {
+          "th": "อันดับ 4 เพราะ n−0.5 = 3.5 จึง n = 4",
+          "en": "Fourth order: n−0.5 = 3.5 gives n = 4."
+        }
+      },
+      "after": {
+        "th": "ไปอ่านมุมและระยะในภาพเดียวกันก่อนใช้สูตรตำแหน่ง",
+        "en": "Read the angle and lengths in one diagram before using position formulas."
+      }
+    },
+    {
+      "id": "geometry",
+      "title": {
+        "th": "ชี้มุมให้ถูก แล้วเลือกสมการ",
+        "en": "Locate the angle, then choose an equation"
+      },
+      "summary": {
+        "th": "O คือกึ่งกลางสองสลิต C คือแนวกลางบนฉาก θ วัดระหว่าง OC กับ OP และ x คือ CP\nฉากไกลใช้ Δr ≈ d sinθ; เมื่อมุมเล็กจึงใช้ sinθ ≈ tanθ ≈ x/L แล้วได้สูตรตำแหน่งบนฉาก",
+        "en": "O is the slit midpoint, C is the central-axis screen point, θ is between OC and OP, and x is CP.\nFar field gives Δr ≈ d sinθ. Only for small angles use sinθ ≈ tanθ ≈ x/L to obtain screen-position formulas."
+      },
+      "story": {
+        "th": "ให้ลากนิ้วตาม OC และ OP โดยชี้จุดยอด O จากนั้นแยกโจทย์ที่ให้มุมออกจากโจทย์ที่ให้ระยะ x บนฉาก",
+        "en": "Trace OC and OP with a finger, locating vertex O. Then distinguish a supplied angle from a supplied screen displacement x."
+      },
+      "action": {
+        "th": "ทำคำถาม 14 แล้วเลือกตัวอย่าง 3 กกับตัวอย่าง 4 ข เพื่อใช้สมการทั้งสองรูป",
+        "en": "Do Question 14, then Example 3a and Example 4b to use both equation forms."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ภาพมุมและระยะ",
+            "en": "Angle and distance diagram"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "angle-geometry"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 14",
+            "en": "Question 14"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "check-11"
+          }
+        },
+        {
+          "label": {
+            "th": "ตัวอย่าง 4 ข",
+            "en": "Example 4b"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "example-4b"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้ามุมไม่เล็ก ควรแทน sinθ ด้วย x/L เลยหรือไม่?",
+          "en": "If the angle is not small, may sinθ be replaced directly by x/L?"
+        },
+        "answer": {
+          "th": "ไม่ได้ ใช้สมการที่มี sinθ และเรขาคณิตของภาพตามจริง โดยยังตรวจเงื่อนไขฉากไกลด้วย",
+          "en": "No. Use the sine relation and the actual geometry, while also checking the far-field assumption."
+        }
+      },
+      "after": {
+        "th": "ฝึกนับระยะและแปลงหน่วยก่อนคำนวณโจทย์หลายช่วง",
+        "en": "Practise interval counting and unit conversion before multi-interval tasks."
+      }
+    },
+    {
+      "id": "spacing",
+      "title": {
+        "th": "ระยะจากกลาง กับระยะห่างแถบ",
+        "en": "Position versus spacing"
+      },
+      "summary": {
+        "th": "มุมเล็กให้ Δx = λL/d สำหรับสว่างติดกันหรือมืดติดกัน และระยะสว่างถึงมืดถัดไปเป็นครึ่งหนึ่ง\nแถบสว่าง N แถบคร่อม N−1 ช่วง ระยะที่คร่อมสองด้านของแนวกลางต้องอ่านจุดเริ่ม–จุดจบก่อน",
+        "en": "At small angles, adjacent bright or dark spacing is Δx = λL/d; the next opposite type is half a spacing away.\nN consecutive bright centres span N−1 intervals. For opposite-side points, identify both endpoints before combining distances."
+      },
+      "story": {
+        "th": "ให้วงศูนย์กลางแถบและนับช่องว่างระหว่างศูนย์กลาง แยกการหาตำแหน่งจากกลางออกจากระยะลูกศรที่โจทย์ถาม",
+        "en": "Mark fringe centres and count the gaps between them. Separate a position from centre from the actual distance marked by the problem."
+      },
+      "action": {
+        "th": "ทำคำถาม 19 และ 26 ก แล้วลองคำถาม 31 ถ้าต้องการฝึกระยะสองด้าน",
+        "en": "Do Questions 19 and 26a; try Question 31 for an opposite-side distance."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "สูตรระยะห่างแถบ",
+            "en": "Fringe-spacing rule"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "spacing-and-reading"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 26 ก",
+            "en": "Question 26a"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "practice-intervals"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 31",
+            "en": "Question 31"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "extra-4"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ศูนย์กลางแถบสว่าง 5 แถบคร่อมกี่ช่วง?",
+          "en": "How many intervals are spanned by five consecutive bright centres?"
+        },
+        "answer": {
+          "th": "4 ช่วง ไม่ใช่ 5 ช่วง",
+          "en": "Four intervals, not five."
+        }
+      },
+      "after": {
+        "th": "ถ้าทำได้ ลองอ่านไม้บรรทัดหลายช่วงในคำถาม 29 แทนการวัดเพียงช่วงเดียว",
+        "en": "If ready, read multiple ruler intervals in Question 29 rather than measuring just one."
+      }
+    },
+    {
+      "id": "variables",
+      "title": {
+        "th": "เปลี่ยนตัวแปรอย่างมีเงื่อนไข",
+        "en": "Vary quantities with controls"
+      },
+      "summary": {
+        "th": "จาก Δx = λL/d เมื่อคงตัวอื่น เพิ่ม λ หรือ L ทำให้แถบห่างขึ้น เพิ่ม d ทำให้ชิดขึ้น\nความเข้มแสงเพียงอย่างเดียวไม่เปลี่ยนระยะห่างแถบในแบบจำลองนี้ หากเปลี่ยนหลายตัวให้เทียบอัตราส่วนพร้อมกัน",
+        "en": "From Δx = λL/d, increasing λ or L increases spacing and increasing d reduces it, with other quantities fixed.\nIntensity alone does not change spacing in this model. If several quantities change, combine their ratios."
+      },
+      "story": {
+        "th": "เริ่มจากบอกว่าคงตัวใด ก่อนตอบว่ามากหรือน้อย แล้วลองเปลี่ยน L และ d พร้อมกันเพื่อไม่ให้จำเพียงทิศทางอย่างเดียว",
+        "en": "State what stays fixed before predicting a direction. Then change L and d together to move beyond memorised one-variable rules."
+      },
+      "action": {
+        "th": "ทำคำถาม 22 และ 24 ข ใช้คำถาม 23 หรือ 26 คแยกเรื่องความเข้มแสง",
+        "en": "Do Questions 22 and 24b; use Question 23 or 26c to separate intensity from spacing."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ความสัมพันธ์ตัวแปร",
+            "en": "Variable relationships"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "variable-summary"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 24 ข",
+            "en": "Question 24b"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "review-changing-ratio"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 23",
+            "en": "Question 23"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "check-20"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เพิ่ม L เป็นสองเท่าและ d เป็นสองเท่า โดย λ คงเดิม ระยะห่างแถบเปลี่ยนไหม?",
+          "en": "Double L and d while keeping λ fixed. Does fringe spacing change?"
+        },
+        "answer": {
+          "th": "ไม่เปลี่ยน เพราะอัตราส่วน L/d เท่าเดิม",
+          "en": "No, because L/d is unchanged."
+        }
+      },
+      "after": {
+        "th": "อ่านภาพกราฟและโจทย์กลับด้านเพื่อปิดคาบ โดยเลือกเฉพาะข้อที่ยังติด",
+        "en": "Finish with a graph or inverse task, selecting only what still needs practice."
+      }
+    },
+    {
+      "id": "practice",
+      "title": {
+        "th": "อ่านรูปแล้วเลือกงานที่ต้องฝึก",
+        "en": "Read the figure and choose practice"
+      },
+      "summary": {
+        "th": "คำถาม 27 วัดแถบสว่างกลางระหว่างความเข้มต่ำสุดที่ขนาบ ส่วนคำถาม 29 วัดหลายช่วงของแถบติดกัน\nโจทย์ 28–32 ฝึกมืดแรก อ่านสเกล หาความยาวคลื่น ระยะสองด้าน และหาระยะสลิตโดยใช้ข้อมูลใหม่",
+        "en": "Question 27 bounds the central bright fringe by its adjacent minima; Question 29 averages several adjacent-fringe intervals.\nQuestions 28–32 use new data for a first minimum, ruler reading, wavelength, opposite-side distance and slit separation."
+      },
+      "story": {
+        "th": "ให้ชี้ว่าลูกศรหรือขอบที่ใช้วัดแทนอะไร แล้วค่อยเลือกสมการ ไม่ใช้ความกว้างกลุ่มแถบแทนความกว้างหนึ่งแถบ",
+        "en": "Identify what the marked distance or measured boundaries represent before choosing a formula. Do not confuse an envelope with one fringe."
+      },
+      "action": {
+        "th": "ทำคำถาม 27 แล้วเลือก 30 หรือ 32 เพียงข้อเดียวตามทักษะที่อยากฝึก ไม่ต้องทำทุกช่องในคาบเดียว",
+        "en": "Do Question 27, then select either 30 or 32 for the skill needing practice. The whole sheet need not be completed in one lesson."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "คำถาม 27",
+            "en": "Question 27"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "practice-ruler-width"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 30",
+            "en": "Question 30"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "extra-3"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 32",
+            "en": "Question 32"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "extra-5"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เมื่อวัดจากแถบมืดซ้ายที่ขนาบถึงแถบมืดขวาที่ขนาบแถบสว่างเดียว ได้ระยะชนิดใด?",
+          "en": "What distance is measured between the bounding dark minima on both sides of one bright fringe?"
+        },
+        "answer": {
+          "th": "ความกว้างแถบสว่างหนึ่งแถบ ไม่ใช่ความกว้างของกลุ่มแถบทั้งหมด",
+          "en": "The width of one bright fringe, not the whole envelope."
+        }
+      },
+      "after": {
+        "th": "กลับไปดูขั้นคำนวณในช่องเฉลยเฉพาะข้อที่ติด ข้อ 33–37 ใช้ฝึกมุม ระยะสองด้าน หลายช่วง และหาตำแหน่งฉากต่อเองได้",
+        "en": "Use the individual solution where needed. Questions 33–37 add angles, opposite sides, multiple intervals and screen distance for later practice."
+      }
+    }
+  ],
+  "finish": {
+    "th": "เดินให้ครบจากช่องเปิด → ลวดลาย → ผลต่างทางเดินและเฟส → เงื่อนไขสว่าง–มืด → มุมและตำแหน่ง → การอ่านระยะ ข้อที่เหลือเก็บไว้ทบทวนตามสิ่งที่ยังไม่คล่อง",
+    "en": "Connect openings → patterns → path and phase → bright/dark conditions → angle and position → distance reading. Use the remaining tasks to practise what still needs work."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "ใช้ λ = 600 nm, d = 0.300 mm และ L = 1.00 m ในกรณีมุมเล็ก แถบสว่างอันดับ 2 อยู่ห่างกลางเท่าใด และถ้าเพิ่ม d เป็นสองเท่าโดยคงตัวอื่น ตำแหน่งนี้เปลี่ยนอย่างไร?",
+      "en": "For λ = 600 nm, d = 0.300 mm and L = 1.00 m at small angles, where is the second bright fringe? If d doubles with other quantities fixed, what happens to that position?"
+    },
+    "answer": {
+      "th": "x₂ = 2λL/d = 4.00 mm เมื่อเพิ่ม d เป็นสองเท่า ระยะจากกลางเหลือ 2.00 mm",
+      "en": "x₂ = 2λL/d = 4.00 mm. Doubling d reduces this distance to 2.00 mm."
+    }
+  }
+}

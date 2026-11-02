@@ -3,12 +3,47 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import vm from 'node:vm';
+import { parseHTML } from 'linkedom';
 import { bankContentId, bankQuestionId, bankSnapshotBody, validateBankSnapshot, chooseBankRevision, bankRowsWithReviewTopics } from '../public/shared/question-bank-model.js';
 import { createBankClient } from '../public/shared/question-bank-client.js';
 import { resolveHubRoute, createHubShareUrl } from '../js/hub-routes.js';
 import { activityForRoute, menuForRoute, routeForTool } from '../js/hub-activity-routes.js';
 import { routeForSelection } from '../js/hub-navigation.js';
 import { BANK_ALL_CHAPTERS, BANK_OTHER_CHAPTER, bankChapterKey, bankChapters, bankChapterLinks, filterBankSets, bankTitlePair } from '../public/shared/question-bank-menu.js';
+
+async function rememberedChapterMenu() {
+  const { document, window } = parseHTML('<html lang="th"><head></head><body><main data-subject-home="bank"><section id="chapter-view"><div class="section-intro"></div></section></main></body></html>');
+  window.HTMLElement.prototype.focus = function () {};
+  const set = { bankKey: 'b-'+'a'.repeat(24), legacyId: 'a-level-69', title: 'A-level 2569', path: ['Chemistry','Hub','A-level','A-level 2569'], questionCount: 35 };
+  const requests = [];
+  const scope = vm.createContext({ document, window, URL, AbortController, setTimeout, clearTimeout,
+    sessionStorage: { getItem: () => JSON.stringify({chapter:bankChapterKey(set),query:''}), setItem() {} },
+    bankClient: { catalog: async () => ({ sets:[set] }) }, bankSubjects:{chemistry:{th:'เคมี',en:'Chemistry'}}, questionBankTools:{},
+    authoredBankTools: () => [], readMenuCatalog: async () => null,
+    BANK_ALL_CHAPTERS, BANK_OTHER_CHAPTER, bankChapterKey, bankChapterLinks, filterBankSets, bankTitlePair });
+  const source = (await readFile(new URL('../public/pages/shared/subject-bank-nav.js',import.meta.url),'utf8'))
+    .replace(/^import .*?;\n/gm,'').replace('export function','function').replaceAll('import.meta.url',JSON.stringify('https://example.test/learning-hub/pages/shared/subject-bank-nav.js'));
+  vm.runInContext(source,scope);
+  const menu = scope.createSubjectBankNavigation({ root:document.querySelector('main'), subject:{id:'chemistry',titleTh:'เคมี',titleEn:'Chemistry'},
+    setStage() {}, backToChapters() {}, requestNavigation(selection) { requests.push(JSON.parse(JSON.stringify(selection))); return true; } });
+  return { menu, requests, set, document };
+}
+
+test('restoring an A-Level chapter behind an open activity does not navigate away from the activity',async()=>{
+  const f=await rememberedChapterMenu();
+  await f.menu.open(null,false,null,{canonicalizeChapter:false});
+  assert.ok(f.menu.panel.querySelector(`[data-bank-chapter] option[value="${bankChapterKey(f.set)}"]`));
+  assert.ok(f.menu.panel.textContent.includes('A-level 2569'));
+  assert.deepEqual(f.requests,[],'Background filter restoration must not minimize the review window');
+  f.menu.panel.querySelector('.bank-review-entry').click();
+  assert.deepEqual(f.requests,[{review:true,bankKey:null}],'An explicit review click must still navigate');
+});
+
+test('opening the bank menu itself still shares the remembered chapter as its canonical route',async()=>{
+  const f=await rememberedChapterMenu();
+  await f.menu.open();
+  assert.deepEqual(f.requests,[{bank:true,bankChapterId:(await bankChapterLinks([f.set]))[0].routeId}]);
+});
 
 test('chapter links are stable across order, translation and added topics without changing bank IDs', async () => {
   const make = (bankKey, chapter, title) => ({ bankKey, legacyId: bankKey, title, path: ['ฟิสิกส์','Learning hub',chapter,title] });

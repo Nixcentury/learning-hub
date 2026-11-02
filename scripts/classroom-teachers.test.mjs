@@ -109,3 +109,14 @@ test('invalid and missing search results clear the previous selected identity', 
   f.service.search('missing@school.test'); assert.equal(f.service.getState().candidate, null); assert.equal(f.service.getState().error, 'teachers/account-missing');
   f.service.search('bad'); assert.equal(f.service.getState().query, ''); assert.equal(f.service.getState().error, 'teachers/invalid-email');
 });
+
+test('a first Hub login arriving while the admin dialog is open refreshes the match and clears stale lookup errors', () => {
+  const f = fixture(); f.login(); f.load({ profiles: {} }); f.service.search('new@school.test');
+  assert.equal(f.service.getState().error, 'teachers/account-missing');
+  f.emit('profiles', { newcomer: { email: 'new@school.test', displayName: 'New Teacher' } });
+  assert.equal(f.service.getState().candidate.uid, 'newcomer'); assert.equal(f.service.getState().error, '');
+  f.emit('profiles', { newcomer: { email: 'new@school.test' }, duplicate: { email: 'new@school.test' } });
+  assert.equal(f.service.getState().candidate, null); assert.equal(f.service.getState().error, 'teachers/ambiguous-email');
+  f.emit('profiles', { newcomer: { email: 'new@school.test' } });
+  assert.equal(f.service.getState().candidate.uid, 'newcomer'); assert.equal(f.service.getState().error, ''); f.service.close();
+});

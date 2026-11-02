@@ -52,7 +52,12 @@ export function createClassroomTeachers({ io, onChange }) {
       watch(path, value => {
         if (!live()) return;
         values[key] = value || {}; loaded.add(key); directory = teacherDirectory(values.profiles, values.approvals, values.requests);
-        if (query) { try { candidate = findTeacherAccount(directory.people, query).person; } catch (failure) { candidate = null; error = failure.code; } }
+        if (query) {
+          try {
+            candidate = findTeacherAccount(directory.people, query).person;
+            if (['', 'teachers/account-missing', 'teachers/ambiguous-email'].includes(error)) error = candidate ? '' : 'teachers/account-missing';
+          } catch (failure) { candidate = null; error = failure.code; }
+        }
         if (loaded.size === 3) { clearTimeout(timer); status = 'ready'; }
         publish();
       });

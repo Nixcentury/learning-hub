@@ -25,6 +25,8 @@
 
 ## ข้อมูลและการอัปเดต
 
+> รุ่นล่าสุดที่มีครูร่วม/โหมดฉุกเฉิน ใช้ `firebase/classroom-assist.merged-draft.json` ตาม [คู่มือเปิดใช้ล่าสุด](CLASSROOM-ASSIST-START-HERE.md) ซึ่งรวมเงื่อนไขงานแล้ว
+
 เพิ่มฟิลด์ทางเลือก `requiresAssignmentId` ใน assignment เท่านั้น ไม่เพิ่มชุดเซฟคำตอบหรือคะแนนใหม่
 สถานะปลดล็อกคำนวณจาก `classroomSubmissionsV1/results` และ `history` ของนักเรียนคนนั้น พร้อมชุดคำถามที่ตรึงไว้แล้ว
 การฝึกนอกห้องเรียนและการเชื่อม Google Classroom/CSV ใช้กลไกเดิม

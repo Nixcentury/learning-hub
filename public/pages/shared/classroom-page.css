@@ -364,3 +364,5 @@ body.theme-classroom {
 .classroom-teachers-details>p{font-size:13px;line-height:1.7;color:var(--muted)}
 
 .classroom-teachers-details .classroom-button{min-height:44px}
+
+.homework-student-work{margin:16px 0;padding:16px;border:1px solid #c7d9ed;border-radius:12px;background:#f4f8ff}.homework-student-work-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #dce6f2}.homework-student-work-row strong{flex:1;min-width:100px}.homework-student-work-row button{min-height:44px}

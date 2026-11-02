@@ -241,3 +241,12 @@ test('co-teacher receives homework tools only in the invited room without global
  value.classroomAssignments.rooms[0].membership='student';f.update(value);
  assert.equal(f.document.querySelector('[data-hw-tools]').hidden,true);
 });
+
+test('Student work opens within Assignment details, confirms a named student, and stays hidden from students',async()=>{
+ const f=await fixture(),value=context();f.window.confirm=()=>true;
+ value.classroomSubmissions={uid:'teacher',roomId:rid,connected:true,ready:true,grades:{[aid]:{ready:true,loaded:true,rows:[{uid:'student',name:'Student <img src=x>',submitted:false}]}}};
+ f.update(value);const entry=f.document.querySelector('[data-hw-detail] [data-homework-action="student-work"]');assert.ok(entry);
+ entry.click();assert.ok(f.document.querySelector('[data-hw-detail] [data-student-work]'));assert.equal(f.document.querySelectorAll('img').length,0);
+ f.document.querySelector('[data-homework-action="assist-start"]').click();assert.equal(f.messages.at(-1).action,'assist-start');assert.equal(f.messages.at(-1).payload.studentUid,'student');
+ f.update(context(false));assert.equal(f.document.querySelector('[data-homework-action="student-work"]'),null);
+});

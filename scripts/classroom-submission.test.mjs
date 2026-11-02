@@ -322,3 +322,30 @@ test('co-teacher views grades and quiz preview, then downgrade clears all staff-
  assignments.rooms[0].membership='student';f.service.setContext(session,role,assignments,rid);await tick();assert.ok(old.every(w=>!w.active));
  await assert.rejects(f.service.exportSheet(aid),{code:'homework/owner-required'});
 });
+
+test('emergency work loads and saves the student draft, submits for that student, and hands the same work back',async t=>{
+ const f=fixture(t,'teacher');f.io.assistEnabled=true;await tick();
+ f.put(`attempts/${rid}/${aid}/student`,{version:1,contentId:quiz.contentId,quizRevision:quiz.revision,progressJson:JSON.stringify({...progress({choice:'a'}),currentIndex:1}),revision:1,createdAt:1,updatedAt:1,baseSubmissionId:''});
+ const binding=await f.service.startAssist(aid,'student');assert.equal(binding.actorUid,'teacher');assert.equal(binding.uid,'student');assert.equal(binding.preview,false);
+ const loaded=await f.service.quizCommand('load',binding);assert.equal(loaded.value.answers.choice,'a');assert.equal(loaded.value.currentIndex,1);
+ const save=await f.service.quizCommand('save',binding,{value:progress({choice:'a',number:'5/6'}),storageRevision:1,assistEpoch:binding.assistId});assert.equal(save.storageRevision,2);
+ const sent=await f.service.quizCommand('submit',binding,{value:progress({choice:'a',number:'5/6'}),submissionId:'a'.repeat(32),assistEpoch:binding.assistId});assert.equal(sent.grade.score,2);assert.equal(sent.result.assistedByUid,'teacher');assert.equal(f.get(`results/${rid}/${aid}/teacher`),null);
+ const events=f.get(`assistEvents/${rid}/${aid}/student`);assert.equal(Object.values(events).filter(v=>v.action==='submitted').length,1);
+ await f.service.finishAssist(binding);assert.equal(f.get(`assists/${rid}/${aid}/student`).status,'ended');assert.equal(f.service.getState().assistance,null);
+ f.context('student');await tick();const own=await f.service.open(aid);const returned=await f.service.quizCommand('load',own);assert.equal(returned.result.submissionId,sent.result.submissionId);assert.equal(returned.assistEpoch,binding.assistId);
+ await assert.rejects(f.service.quizCommand('save',own,{value:progress(),storageRevision:2,previousSubmissionId:sent.result.submissionId}),{code:'homework/handoff-changed'});
+ await f.service.quizCommand('save',own,{value:progress({choice:'a',number:'5/6',drag:{x:'one',y:'two'}}),storageRevision:2,previousSubmissionId:sent.result.submissionId,assistEpoch:returned.assistEpoch});
+});
+test('a student reclaims immediately and an old teacher binding cannot save or load after reclaim',async t=>{
+ const f=fixture(t,'teacher');f.io.assistEnabled=true;await tick();const binding=await f.service.startAssist(aid,'student');
+ await assert.rejects(f.service.startAssist(aid,'student-b'),{code:'homework/assist-unavailable'});
+ f.context('student');await tick();const own=await f.service.open(aid);await assert.rejects(f.service.quizCommand('save',own,{value:progress(),storageRevision:0}),{code:'homework/assist-busy'});
+ await f.service.reclaim(aid);assert.equal(f.get(`assists/${rid}/${aid}/student`).status,'ended');assert.ok(Object.values(f.get(`assistEvents/${rid}/${aid}/student`)).some(v=>v.action==='reclaimed'));
+ f.context('teacher');await tick();await assert.rejects(f.service.quizCommand('load',binding),{code:'homework/assist-ended'});
+});
+test('assistance respects the target student prerequisite, not the teacher preview bypass; concurrent starts and offline use fail closed',async t=>{
+ const f=await gatedFixture(t);f.io.assistEnabled=true;f.context('teacher',rid,[item,f.next]);await tick();
+ await assert.rejects(f.service.startAssist(nextId,'student'),{code:'homework/prerequisite-locked'});
+ const p=f.service.startAssist(aid,'student');await assert.rejects(f.service.startAssist(aid,'student-b'),{code:'homework/assist-busy'});const binding=await p;
+ f.connections.at(-1)(false);await assert.rejects(f.service.finishAssist(binding),{code:'homework/offline'});
+});

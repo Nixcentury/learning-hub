@@ -2,6 +2,8 @@
 
 ครูเจ้าของห้องเพิ่มเพื่อนได้เหมือนเพิ่มนักเรียน ผู้รับไม่ต้องเป็นครูที่อนุมัติส่วนกลางก่อน และยังไม่ต้องเคยเข้า Hub
 
+> รุ่นล่าสุดที่มีโหมดฉุกเฉิน: ใช้ Rules ชุดเต็ม `firebase/classroom-assist.merged-draft.json` ตาม [คู่มือทำต่อบนเครื่องครู](../CLASSROOM-ASSIST-START-HERE.md) ชุดนี้รวมครูร่วมเดิมแล้ว
+
 ## เปิดใช้ครั้งแรก
 
 เจ้าของ Firebase นำ [Rules ชุดเต็ม classroom-room-teachers.merged-draft.json](../firebase/classroom-room-teachers.merged-draft.json) ไปวางใน Realtime Database → Rules แล้ว Publish ด้วยตนเอง

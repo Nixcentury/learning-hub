@@ -46,14 +46,14 @@ jobs:
       - name: Download local database emulator
         run: |
           mkdir -p work/monitor-qa
-          curl --fail --location --output work/monitor-qa/firebase-database-emulator.jar https://storage.googleapis.com/firebase-preview-drop/emulator/firebase-database-emulator-v4.11.2.jar
+          curl --http1.1 --fail --location --connect-timeout 15 --max-time 90 --speed-limit 1024 --speed-time 20 --retry 3 --retry-all-errors --retry-delay 3 --retry-max-time 300 --output work/monitor-qa/firebase-database-emulator.jar https://storage.googleapis.com/firebase-preview-drop/emulator/firebase-database-emulator-v4.11.2.jar
       - name: Verify monitoring and existing classroom Rules
         run: pnpm test:monitor:rules
       - name: Verify email roster, co-teachers and full handoff Rules
         run: pnpm test:classroom:roster
       - name: Install isolated browser tools
         run: |
-          npm install --prefix work/qa-tools --no-save --package-lock=false playwright@1.62.1 firebase@10.12.5
+          npm install --prefix work/qa-tools --no-save --package-lock=false playwright@1.62.1 firebase@10.12.5 jspdf@2.5.1 html2canvas@1.4.1
           node work/qa-tools/node_modules/playwright/cli.js install --with-deps chromium
       - name: Test real Firebase SDK connection and reconnect
         run: |

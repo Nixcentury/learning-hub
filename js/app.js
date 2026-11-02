@@ -145,10 +145,11 @@ function syncClassroomLinks() {
 }
 let monitorView = null;
 let submissionState = null;
+let workspace = null;
 const submissions = createFirebaseClassroomSubmissions({
   freezeQuiz: async item => freezeHomeworkQuiz(item, await navigation.loadCatalog(), new URL('./', location.href).href),
   readQuiz: readHomeworkQuiz,
-  onChange: snapshot => { submissionState = snapshot; postContextToPage(); },
+  onChange: snapshot => { submissionState = snapshot; workspace?.refreshHomework(); postContextToPage(); },
 });
 function syncSubmissions() {
   submissions.setContext(activeSession, activeRole, assignmentState, classroomRooms?.selected?.id || '');
@@ -209,7 +210,7 @@ function getWorkspaceRole() {
     ? activeRole.systemRole : "student";
 }
 
-const workspace = createWorkspace({
+workspace = createWorkspace({
   windowLayer: workspaceWindowLayer,
   taskbar: hubTaskbar,
   taskbarItems,
@@ -217,6 +218,7 @@ const workspace = createWorkspace({
   getLanguage: () => currentLanguage,
   getIdentity: getWorkspaceIdentity,
   getRole: getWorkspaceRole,
+  getHomeworkStatus: binding => binding.assistId ? {active:submissionState?.assistance?.assistId===binding.assistId && submissionState.assistance.active} : {lease:submissionState?.locks?.[binding.id] || null},
   onToolActivated: tool => {
     classroomMonitor.setLocation({ hash: location.hash, titleTh: tool.titleTh, titleEn: tool.titleEn, subjectId: tool.context?.subjectId });
     if (!tool.homework && !tool.reviewHomeworkId) navigation?.toolActivated(tool);
@@ -228,7 +230,8 @@ const workspace = createWorkspace({
   onShare: (tool, opener) => void openHubShare({
     getTarget: () => navigation.shareTarget(tool), getLanguage: () => currentLanguage, opener,
   }),
-  onToolClosed: (toolId) => {
+  onToolClosed: (toolId, tool) => {
+    if (tool?.homework?.assistId) void submissions.finishAssist(tool.homework).catch(()=>{});
     companion.closeVariantFor(toolId);
     pageFrame.contentWindow?.postMessage({ type: 'learning-hub-tool-closed', toolId }, location.origin);
   },
@@ -236,6 +239,7 @@ const workspace = createWorkspace({
 
 installHomeworkBridge({ submissions, getSession: () => activeSession,
   onBack: binding => void navigation.openHash(assignmentHash(binding.roomId, binding.id)),
+  onFinish: binding => { workspace.removeFinishedHomework(binding); void navigation.openHash(assignmentHash(binding.roomId,binding.id)); },
 });
 
 monitorView = createMonitorView({ getLanguage: () => currentLanguage,
@@ -901,8 +905,8 @@ window.addEventListener("message", (event) => {
       if (action === 'prepare') { await submissions.prepare(payload.id, uid); return {}; }
       if (action === 'history') return submissions.history(payload.id, payload.studentUid);
       if (action === 'export-sheet') return submissions.exportSheet(payload.id);
-      if (action === 'launch') {
-        const binding = await submissions.open(payload.id, uid);
+      if (action === 'launch' || action === 'assist-start') {
+        const binding = action==='assist-start' ? await submissions.startAssist(payload.id,payload.studentUid) : await submissions.open(payload.id, uid);
         let reviewSource = null;
         try { reviewSource = homeworkReviewSource(binding, await navigation.loadCatalog(), location.href); }
         catch { /* A reading lookup must not block an otherwise available homework. */ }

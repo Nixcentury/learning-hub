@@ -15,6 +15,8 @@
 
 ## Rules ชุดเต็ม — ครูวางเอง
 
+> รุ่นที่มีครูร่วมและโหมดฉุกเฉิน ให้ใช้ `firebase/classroom-assist.merged-draft.json` ตาม [คู่มือล่าสุด](../CLASSROOM-ASSIST-START-HERE.md) แทนชุด roster ด้านล่าง
+
 ใช้ `firebase/classroom-roster.merged-draft.json` เป็น **Rules ชุดเต็ม** ที่ต่อจาก `classroom-links.merged-draft.json` และรวม Rules คะแนน คำตอบ งาน เงื่อนไขงาน ส่งซ้ำ และกล่องลิงก์เดิมแล้ว
 
 1. สำรอง Rules ปัจจุบันก่อน ถ้ามีแก้ไขเองเพิ่มเติมนอกชุดกล่องลิงก์เดิม ให้เทียบ/รวมก่อนแทนที่

@@ -39,6 +39,9 @@ export async function reset(rules) {
     const { mergeRoomTeacherRules } = await import('../build-classroom-room-teacher-rules.mjs');
     rules = mergeRoomTeacherRules(rules);
   }
+  if(process.env.CLASSROOM_TEST_ASSIST==='1' && !rules.rules?.classroomSubmissionsV1?.assists) {
+    const {mergeClassroomAssistRules}=await import('../build-classroom-assist-rules.mjs');rules=mergeClassroomAssistRules(rules);
+  }
   await good('EMULATOR_ADMIN', 'PUT', '.settings/rules', rules);
   await good('EMULATOR_ADMIN', 'PUT', '', { learningHub: { teacherApprovals: { teacher: true, 'teacher-b': { enabled: true } } } });
 }

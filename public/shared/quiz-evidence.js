@@ -323,6 +323,7 @@ function notebookMarkup(questionId) {
 export class QuizEvidenceManager {
   constructor(options) {
     this.contentId = options.contentId;
+    this.exportContext = options.exportContext || (()=>this.contentId);
     this.identityKey = options.identityKey || "guest";
     this.questions = options.questions || [];
     this.language = options.language;
@@ -1290,7 +1291,7 @@ export class QuizEvidenceManager {
         ? "Answered choice/numeric questions include working. Drag-fill questions do not require AI review."
         : "ข้อกาและตัวเลขที่ตอบมีเหตุผลหรือวิธีทำ ส่วนลากวางไม่ต้องตรวจด้วย AI";
     const meta = document.createElement("footer");
-    meta.textContent = `${new Date().toLocaleString(this.language() === "en" ? "en-GB" : "th-TH")} · ${this.contentId}`;
+    meta.textContent = `${new Date().toLocaleString(this.language() === "en" ? "en-GB" : "th-TH")} · ${this.exportContext()}`;
     page.append(heading, stats, note, meta);
     return page;
   }
@@ -1303,7 +1304,8 @@ export class QuizEvidenceManager {
     page.className = "quiz-evidence-export-page";
     if (question.type === "drag-drop") page.classList.add("is-drag-evidence");
     const header = document.createElement("header");
-    header.innerHTML = `<div><small>LEARNING HUB · ${this.contentId}</small><h1></h1></div><span>Q${question.index + 1}</span>`;
+    header.innerHTML = `<div><small></small><h1></h1></div><span>Q${question.index + 1}</span>`;
+    header.querySelector("small").textContent = "LEARNING HUB · " + this.exportContext();
     header.querySelector("h1").textContent = title;
     const stampBox = document.createElement("section");
     stampBox.className = `quiz-evidence-export-stamp is-${stamp.kind}`;

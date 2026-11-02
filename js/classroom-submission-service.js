@@ -1,15 +1,18 @@
 import { canTeachRoom } from '../public/shared/classroom-room-role.js';
+import { assistLifetime, assistHeartbeat, assistLive, assistPath, homeworkActor } from '../public/shared/classroom-assist-model.js';
 import { summarizeClassroomProgress } from '../public/shared/classroom-progress-model.js';
 import { createClassroomAccess } from './classroom-access.js';
 import { assignmentIdPattern, assignmentRoomPattern } from './classroom-assignment-model.js';
 import { failSubmission, submissionPayload, gradeSubmission } from '../public/shared/classroom-submission-model.js';
 import { createClassroomSheetCsv } from '../public/shared/classroom-sheet-export.js';
 
-export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange = () => {} }) {
+export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange = () => {}, now = Date.now }) {
   let session, role, assignments, uid = '', roomId = '', epoch = 0, connected = false, error = '', busy = '', last = '', membership = '';
   let quizzes = {}, results = {}, roster = {}, own = {}, histories = {}, ready = false;
   const stops = [], itemStops = new Map(), parsed = new Map(), loaded = new Set(), resultLoaded = new Set(), submissionsInFlight = new Map();
   const historyStops = new Map(), historyLoaded = new Set(), passed = new Set();
+  const leaseStops = new Map(); let locks = {}, assistance = null, assistStop, assistTimer, assistStarting = false;
+  const clock = () => now() + (io.serverOffset?.() || 0);
   const room = (selected = roomId) => assignments?.rooms.find(value => value.id === selected);
   const isOwner = (selected = roomId) => canTeachRoom(room(selected), uid, role === 'teacher');
   const live = (version, user = uid) => version === epoch && user === uid && session?.user?.uid === uid;
@@ -55,15 +58,17 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
           try { grade = gradeSubmission(record, quiz, questionSet(quiz)); }
           catch { grade = { error: 'homework/invalid-result' }; }
         }
-        return { uid: user, name: member.displayName || user, submitted: Boolean(record), grade };
+        return { uid: user, name: member.displayName || user, email:member.email || '', assistedByUid:record?.assistedByUid || '', submitted: Boolean(record), grade };
       }).sort((a, b) => a.name.localeCompare(b.name, 'th') || a.uid.localeCompare(b.uid)) };
     }
     const gates = Object.fromEntries((room()?.items || []).map(item => [item.id, gateState(item)]));
     const progress = !isOwner() ? summarizeClassroomProgress({ uid, roomId, items: room()?.items || [], grades, connected, error }) : null;
-    return { uid, roomId, connected, ready, busy, error, grades, gates, progress };
+    return { uid, roomId, connected, ready, busy, error, grades, gates, progress, locks, assistance };
   }
   function publish() { const next = state(), signature = JSON.stringify(next); if (last !== signature) { last = signature; onChange(structuredClone(next)); } }
   function clear() {
+    clearInterval(assistTimer); assistTimer = null; assistStop?.(); assistStop = null; assistance = null; locks = {};
+    for (const close of leaseStops.values()) close(); leaseStops.clear();
     ++epoch; for (const stop of stops.splice(0)) stop();
     for (const stop of itemStops.values()) stop(); itemStops.clear(); parsed.clear();
     for (const stop of historyStops.values()) stop(); historyStops.clear(); historyLoaded.clear(); passed.clear();
@@ -79,6 +84,12 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
   function syncItems(version) {
     if (!uid || isOwner()) return;
     const ids = new Set((room()?.items || []).map(item => item.id));
+    if (io.assistEnabled) {
+      for (const [id, close] of leaseStops) if (!ids.has(id)) { close(); leaseStops.delete(id); delete locks[id]; }
+      for (const id of ids) if (!leaseStops.has(id)) leaseStops.set(id, io.watch(assistPath(roomId,id,uid), value => {
+        if (live(version) && leaseStops.has(id)) { locks[id] = value || null; publish(); }
+      }, () => {})); // Older Rules leave ordinary homework available.
+    }
     for (const [id, close] of itemStops) if (!ids.has(id)) { close(); itemStops.delete(id); delete own[id]; resultLoaded.delete(id); }
     for (const id of ids) if (!itemStops.has(id)) itemStops.set(id, watch(`results/${roomId}/${id}/${uid}`, value => { if (itemStops.has(id)) { own[id] = value.version ? value : null; resultLoaded.add(id); } }, version));
     const required = new Set((room()?.items || []).map(item => item.requiresAssignmentId).filter(id => assignmentIdPattern.test(id || '') && ids.has(id)));
@@ -120,6 +131,80 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     const item = await read(`@assignments/items/${selected}/${id}`); guard(user, version, false, selected);
     if (!item || !['published','closed'].includes(item.status)) throw failSubmission('homework/closed');
     return item;
+  }
+  async function studentUnlocked(item, student, user, version, selected) {
+    if (!item.requiresAssignmentId) return;
+    const required = item.requiresAssignmentId;
+    if (!assignmentIdPattern.test(required)) throw failSubmission('homework/prerequisite-locked');
+    const prior = await read(`@assignments/items/${selected}/${required}`); guard(user,version,true,selected);
+    const quiz = await read(`quizzes/${selected}/${required}`); guard(user,version,true,selected);
+    if (!prior || !['published','closed'].includes(prior.status) || !quiz) throw failSubmission('homework/prerequisite-locked');
+    const latest = await read(`results/${selected}/${required}/${student}`); guard(user,version,true,selected);
+    const archive = passedRecord(latest,quiz) ? {} : await read(`history/${selected}/${required}/${student}`); guard(user,version,true,selected);
+    if (!passedRecord(latest,quiz) && !Object.values(archive || {}).some(record=>passedRecord(record,quiz))) throw failSubmission('homework/prerequisite-locked');
+  }
+  async function startAssist(id,student) {
+    if(assistStarting || busy)throw failSubmission('homework/assist-busy');
+    assistStarting=true;const version=epoch;busy='assist-start';publish();
+    try{return await startAssistOperation(id,student);}finally{if(live(version)){assistStarting=false;busy='';publish();}}
+  }
+  async function startAssistOperation(id, student) {
+    const actor = uid, version = epoch, selected = roomId;
+    guard(actor,version,true);
+    if (!io.assistEnabled || assistance || !assignmentIdPattern.test(id) || typeof student !== 'string' || !student || /[/.#$\[\]]/.test(student) || student === actor) throw failSubmission('homework/assist-unavailable');
+    const item = await published(id,actor,version); guard(actor,version,true);
+    if (item.status !== 'published') throw failSubmission('homework/closed');
+    const [member,quiz] = await Promise.all([read(`@classroom/members/${selected}/${student}`),read(`quizzes/${selected}/${id}`)]);
+    guard(actor,version,true);
+    // The index is private to the student in existing Rules; membership is
+    // independently checked by the assist Rules, not supplied by the iframe.
+    if (!member || !quiz) throw failSubmission('homework/not-ready');
+    await studentUnlocked(item,student,actor,version,selected);
+    const key = 'e_' + crypto.randomUUID().replaceAll('-','');
+    const path = assistPath(selected,id,student);
+    const previous=await read(path);guard(actor,version,true);
+    if(assistLive(previous,clock()))throw failSubmission('homework/assist-busy');
+    const event='v_'+crypto.randomUUID().replaceAll('-','');
+    await io.update({[path]:{version:1,id:key,actorUid:actor,status:'active',startedAt:io.timestamp(),updatedAt:io.timestamp(),expiresAt:clock()+assistLifetime-5000},[`assistEvents/${selected}/${id}/${student}/${event}`]:{actorUid:actor,assistId:key,action:'started',createdAt:io.timestamp()}});
+    guard(actor,version,true);
+    const binding = { uid:student,actorUid:actor,roomId:selected,id,quizRevision:quiz.revision,contentId:item.contentId,targetHash:quiz.targetHash || item.targetHash,title:item.title,preview:false,assistId:key,studentName:member.displayName || student,studentEmail:member.email || '',actorName:session.user.displayName || session.user.email || actor };
+    assistance = { ...binding, active:true }; publish();
+    assistStop = io.watch(path, lease => {
+      if (!live(version,actor) || assistance?.assistId !== key) return;
+      assistance = { ...assistance, active:lease?.id === key && lease.actorUid === actor && assistLive(lease,clock()) };
+      publish();
+    }, () => { if (assistance?.assistId === key) { assistance = {...assistance,active:false}; publish(); } });
+    assistTimer = setInterval(()=>void renewAssist(binding).catch(()=>{if(assistance?.assistId===key){assistance={...assistance,active:false};publish();}}),assistHeartbeat); assistTimer.unref?.();
+    return binding;
+  }
+  async function renewAssist(binding) {
+    guard(homeworkActor(binding),epoch,true,binding.roomId);
+    const version=epoch;
+    const result=await io.transaction(assistPath(binding.roomId,binding.id,binding.uid), current=>{
+      if (!live(version) || current?.id!==binding.assistId || current.actorUid!==uid || !assistLive(current,clock())) return;
+      return {...current,updatedAt:io.timestamp(),expiresAt:clock()+assistLifetime-5000};
+    });
+    if (!result.committed) throw failSubmission('homework/assist-ended');
+  }
+  async function finishAssist(binding) {
+    const actor=uid,version=epoch;guard(actor,version,false,binding.roomId);
+    const path=assistPath(binding.roomId,binding.id,binding.uid),current=await read(path);
+    guard(actor,version,false,binding.roomId);
+    if(current?.id===binding.assistId && current.status==='active') {
+      if(current.actorUid!==actor && binding.uid!==actor && !isOwner(binding.roomId))throw failSubmission('homework/owner-required');
+      const event='v_'+crypto.randomUUID().replaceAll('-','');
+      await io.update({[path]:{...current,status:'ended',updatedAt:io.timestamp(),expiresAt:0},[`assistEvents/${binding.roomId}/${binding.id}/${binding.uid}/${event}`]:{actorUid:actor,assistId:binding.assistId,action:actor===binding.uid?'reclaimed':'ended',createdAt:io.timestamp()}});
+      guard(actor,version,false,binding.roomId);
+    }
+    if(assistance?.assistId===binding.assistId){clearInterval(assistTimer);assistTimer=null;assistStop?.();assistStop=null;assistance=null;publish();}
+    return {};
+  }
+  async function reclaim(id) {
+    guard(uid);
+    if (!assignmentIdPattern.test(id)) throw failSubmission('homework/invalid-request');
+    const lease=await read(assistPath(roomId,id,uid));
+    if (lease?.status==='active') await finishAssist({uid,actorUid:lease.actorUid,roomId,id,assistId:lease.id});
+    return {};
   }
   async function assertUnlocked(item, user, version, selected) {
     const requiredId = item.requiresAssignmentId;
@@ -174,53 +259,67 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
       targetHash: quiz.targetHash || item.targetHash, title: item.title, preview: isOwner() };
   }
   async function quizCommand(action, binding, payload = {}) {
-    const user = binding?.uid, version = epoch, selected = binding?.roomId, id = binding?.id;
-    guard(user, version, false, selected);
+    const user = binding?.uid, actor = homeworkActor(binding), version = epoch, selected = binding?.roomId, id = binding?.id;
+    const assisted = Boolean(binding?.assistId);
+    if(assisted && assistance?.assistId!==binding.assistId)throw failSubmission('homework/assist-ended');
+    guard(actor, version, assisted, selected);
     if (!assignmentIdPattern.test(id)) throw failSubmission('homework/invalid-request');
     const preview = isOwner(selected) && binding.preview === true;
-    if (isOwner(selected) && !preview) throw failSubmission('homework/student-required');
-    const item = await published(id, user, version, selected);
-    const quiz = await read(`quizzes/${selected}/${id}`); guard(user, version, false, selected);
+    if (isOwner(selected) && !preview && !assisted) throw failSubmission('homework/student-required');
+    const item = await published(id, actor, version, selected);
+    const quiz = await read(`quizzes/${selected}/${id}`); guard(actor, version, assisted, selected);
     if (!quiz || quiz.revision !== binding.quizRevision || quiz.contentId !== binding.contentId) throw failSubmission('homework/quiz-changed');
     if (preview) {
       if (action !== 'load') throw failSubmission('homework/student-required');
       return { quiz, value: null, storageRevision: 0, result: null, grade: null, closed: true };
     }
+    let lease = null;
+    if (io.assistEnabled) lease = await read(assistPath(selected,id,user)).catch(failure=>{
+      if (!assisted && /permission.?denied/i.test(code(failure))) return null;
+      throw failure;
+    });
+    guard(actor,version,assisted,selected);
+    const assistEpoch=lease?.id || '';
+    if (assisted && (lease?.id!==binding.assistId || lease.actorUid!==actor || !assistLive(lease,clock()))) throw failSubmission('homework/assist-ended');
+    if (!assisted && assistLive(lease,clock()) && action!=='load') throw failSubmission('homework/assist-busy');
+    if (action!=='load' && (payload.assistEpoch || '')!==assistEpoch) throw failSubmission('homework/handoff-changed');
     const finalPath = `results/${selected}/${id}/${user}`, draftPath = `attempts/${selected}/${id}/${user}`;
-    let result = await read(finalPath); guard(user, version, false, selected);
-    await assertUnlocked({ ...item, id }, user, version, selected);
+    let result = await read(finalPath); guard(actor, version, assisted, selected);
+    if (assisted) await studentUnlocked(item,user,actor,version,selected);
+    else await assertUnlocked({ ...item, id }, actor, version, selected);
     if (action === 'load') {
-      const draft = await read(draftPath); guard(user, version, false, selected);
+      const draft = await read(draftPath); guard(actor, version, assisted, selected);
       const currentDraft = draft && (draft.baseSubmissionId || '') === (result?.submissionId || '') && !(result && item.status === 'closed');
-      return { quiz, value: currentDraft ? JSON.parse(draft.progressJson) : null, storageRevision: draft?.revision || 0,
+      return { quiz, value: currentDraft ? {...JSON.parse(draft.progressJson),homeworkAssistEpoch:assistEpoch} : null, storageRevision: draft?.revision || 0, lastSavedAt:draft?.updatedAt || result?.submittedAt || 0, assistEpoch, assistLock: !assisted && assistLive(lease,clock()) ? lease : null,
         result: result || null, grade: result ? gradeSubmission(result, quiz, questionSet(quiz)) : null, closed: item.status === 'closed' };
     }
     if (action === 'submit' && result && result.submissionId === payload.submissionId) return { result, grade: gradeSubmission(result, quiz, questionSet(quiz)) };
     if (item.status !== 'published') throw failSubmission('homework/closed');
     if ((payload.previousSubmissionId || '') !== (result?.submissionId || '')) throw failSubmission('homework/conflict');
     const questions = questionSet(quiz), cleaned = submissionPayload(payload.value, questions, { draft: action === 'save' });
-    guard(user, version, false, selected);
+    guard(actor, version, assisted, selected);
     if (action === 'save') {
       if (!Number.isSafeInteger(payload.storageRevision) || payload.storageRevision < 0) throw failSubmission('homework/conflict');
       const progressJson = JSON.stringify({ ...payload.value, homeworkBaseSubmissionId: result?.submissionId || '' });
       if (progressJson.length > 80000 || payload.value.contentId !== quiz.contentId || payload.value.identityKey !== user) throw failSubmission('homework/invalid-answers');
-      const previous = await read(draftPath); guard(user, version, false, selected);
+      const previous = await read(draftPath); guard(actor, version, assisted, selected);
       if ((previous?.revision || 0) !== payload.storageRevision) throw failSubmission('homework/conflict');
       const transaction = await io.transaction(draftPath, current => {
-        if (!live(version, user) || ((current || previous)?.revision || 0) !== payload.storageRevision) return;
-        return { version: 1, contentId: quiz.contentId, quizRevision: quiz.revision, progressJson, baseSubmissionId: result?.submissionId || '',
+        if (!live(version, actor) || ((current || previous)?.revision || 0) !== payload.storageRevision) return;
+        return { version: 1, contentId: quiz.contentId, quizRevision: quiz.revision, progressJson, ...(assistEpoch ? {handoffId:assistEpoch} : {}), ...(assisted ? {assistedByUid:actor,assistId:binding.assistId} : {}), baseSubmissionId: result?.submissionId || '',
           createdAt: (current || previous)?.createdAt || io.timestamp(), updatedAt: io.timestamp(), revision: payload.storageRevision + 1 };
       });
-      guard(user, version, false, selected);
+      guard(actor, version, assisted, selected);
       if (!transaction.committed) throw failSubmission('homework/conflict');
       return { storageRevision: payload.storageRevision + 1 };
     }
     if (action !== 'submit' || !/^[a-f0-9]{32}$/.test(payload.submissionId || '')) throw failSubmission('homework/invalid-request');
     if (await read(`history/${selected}/${id}/${user}/${payload.submissionId}`)) throw failSubmission('homework/conflict');
-    guard(user, version, false, selected);
-    const record = { ...cleaned, version: 1, contentId: quiz.contentId, quizRevision: quiz.revision,
+    guard(actor, version, assisted, selected);
+    const record = { ...cleaned, ...(assistEpoch ? {handoffId:assistEpoch} : {}), ...(assisted ? {assistedByUid:actor,assistId:binding.assistId} : {}), version: 1, contentId: quiz.contentId, quizRevision: quiz.revision,
       dueAt: item.dueAt || 0, submissionId: payload.submissionId, submittedAt: io.timestamp(), submissionRevision: (result?.submissionRevision || (result ? 1 : 0)) + 1 };
     const updates = { [finalPath]: record };
+    if(assisted)updates[`assistEvents/${selected}/${id}/${user}/v_${crypto.randomUUID().replaceAll('-','')}`]={actorUid:actor,assistId:binding.assistId,action:'submitted',createdAt:io.timestamp()};
     if (result) updates[`history/${selected}/${id}/${user}/${result.submissionId}`] = result;
     try {
       // Rules check the next revision and require an exact immutable archive of
@@ -229,15 +328,15 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     } catch (failure) {
       // A committed write may lose its acknowledgement. Only this operation's
       // ID proves success; another tab's result must not masquerade as ours.
-      result = await read(finalPath); guard(user, version, false, selected);
+      result = await read(finalPath); guard(actor, version, assisted, selected);
       if (result?.submissionId !== payload.submissionId) {
         if ((result?.submissionId || '') !== (payload.previousSubmissionId || '')) throw failSubmission('homework/conflict');
         throw failure;
       }
     }
-    guard(user, version, false, selected); result = await read(finalPath); guard(user, version, false, selected);
+    guard(actor, version, assisted, selected); result = await read(finalPath); guard(actor, version, assisted, selected);
     if (result?.submissionId !== payload.submissionId) throw failSubmission('homework/conflict');
-    own[id] = result; resultLoaded.add(id); publish();
+    if (!assisted) { own[id] = result; resultLoaded.add(id); publish(); }
     return { result, grade: gradeSubmission(result, quiz, questions) };
   }
   async function history(id, studentUid = uid) {
@@ -259,7 +358,7 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     if (action !== 'submit') return quizCommand(action, binding, payload);
     // Repeated delivery of one operation waits for the same acknowledgement.
     // Different operations remain distinct and Rules reject a stale revision.
-    try { guard(binding?.uid, epoch, false, binding?.roomId); }
+    try { guard(homeworkActor(binding), epoch, Boolean(binding?.assistId), binding?.roomId); }
     catch (failure) { return Promise.reject(failure); }
     const key = `${binding.uid}/${binding.roomId}/${binding.id}/${payload?.submissionId}`;
     if (submissionsInFlight.has(key)) return submissionsInFlight.get(key);
@@ -285,6 +384,6 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     }).sort((a,b)=>a.name.localeCompare(b.name,'th') || a.uid.localeCompare(b.uid));
     return { filename: `hub-homework-${id.slice(2)}.csv`, csv: createClassroomSheetCsv({roomId:selected,roomName:room(selected)?.name || '',item:{...item,id},hubUrl:assignments.hubUrl,rows}) };
   }
-  return { setContext, prepare, open, history, exportSheet, quizCommand: command, getState: () => structuredClone(state()),
+  return { setContext, prepare, open, history, exportSheet, startAssist, finishAssist, reclaim, quizCommand: command, getState: () => structuredClone(state()),
     dispose() { clear(); uid = roomId = ''; } };
 }

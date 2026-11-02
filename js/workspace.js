@@ -94,6 +94,7 @@ export function createWorkspace({
   getLanguage,
   getIdentity,
   getRole,
+  getHomeworkStatus = () => null,
   onToolClosed = () => {},
   onToolActivated = () => {},
   onWorkspaceIdle = () => {},
@@ -498,7 +499,7 @@ export function createWorkspace({
         role: getRole(),
         identity: getIdentity(),
         content: record.tool.context,
-      }), ...(record.tool.homework ? { homework: record.tool.homework } : {}) },
+      }), ...(record.tool.homework ? { homework: record.tool.homework, homeworkStatus: getHomeworkStatus(record.tool.homework) } : {}) },
       targetOrigin,
     );
   }
@@ -648,7 +649,7 @@ export function createWorkspace({
     record.element.remove();
     record.taskButton.remove();
     records.delete(record.tool.id);
-    onToolClosed(record.tool.id);
+    onToolClosed(record.tool.id, record.tool);
     setTaskbarVisibility();
     syncMaximizedState();
 
@@ -691,7 +692,7 @@ export function createWorkspace({
   function returnToHomework(record, questionNumber) {
     const owner = toolCatalog[record.tool.reviewHomeworkId];
     const identity = getIdentity();
-    if (!owner?.homework || identity?.status !== 'signed-in' || identity.uid !== owner.homework.uid) return false;
+    if (!owner?.homework || identity?.status !== 'signed-in' || identity.uid !== (owner.homework.actorUid || owner.homework.uid)) return false;
     // Restore this assignment's frame, never a separate practice attempt in its bank.
     // Reopening a closed frame uses the normal authorized homework load bridge.
     if (!open(owner.id)) return false;
@@ -1076,9 +1077,9 @@ export function createWorkspace({
 
   function openHomework(homework) {
     const page = new URL('pages/tools/quiz-player.html', location.href);
-    page.searchParams.set('homework', '1'); page.searchParams.set('v', 'homework-review-20261101');
-    const tool = { id: `homework-${homework.roomId}-${homework.id}-${homework.uid}`, page: page.href,
-      source: page.href, homework, icon: '✓', accent: 'blue', titleTh: homework.title, titleEn: homework.title,
+    page.searchParams.set('homework', '1'); page.searchParams.set('v', 'emergency-work-20261102');
+    const tool = { id: `homework-${homework.roomId}-${homework.id}-${homework.uid}${homework.assistId ? "-"+homework.assistId : ""}`, page: page.href,
+      source: page.href, homework, icon: '✓', accent: 'blue', titleTh: homework.assistId ? `${homework.studentName} · ${homework.title}` : homework.title, titleEn: homework.assistId ? `${homework.studentName} · ${homework.title}` : homework.title,
       context: { subjectId: 'classroom', chapterId: 'homework', contentId: homework.contentId, toolKind: 'quiz', itemId: 'main', pageId: 'page-001' } };
     toolCatalog[tool.id] = tool;
     return open(tool.id);
@@ -1192,7 +1193,7 @@ export function createWorkspace({
       const preferred = Array.isArray(data.topicIds) ? [...new Set(data.topicIds.filter(key =>
         typeof key === 'string' && bankKeyPattern.test(key)))].slice(0, 20) : [];
       const homework = record.tool.homework;
-      if (homework && (getIdentity()?.status !== 'signed-in' || getIdentity().uid !== homework.uid)) return;
+      if (homework && (getIdentity()?.status !== 'signed-in' || getIdentity().uid !== (homework.actorUid || homework.uid))) return;
       const source = homework ? reviewSelection(homework.reviewSource) :
         reviewSelection({ subjectId: context.subjectId, bankKey: bankKeyPattern.test(context.topicId || '') ? context.topicId : null });
       const bankKey = source?.bankKey;
@@ -1229,7 +1230,7 @@ export function createWorkspace({
             !selection.bankKey || requested?.subjectId !== selection.subjectId || requested?.bankKey !== selection.bankKey) return;
         if (record.tool.reviewHomeworkId) {
           const homework = toolCatalog[record.tool.reviewHomeworkId]?.homework;
-          if (getIdentity()?.status !== 'signed-in' || getIdentity().uid !== homework?.uid) return;
+          if (getIdentity()?.status !== 'signed-in' || getIdentity().uid !== (homework?.actorUid || homework?.uid)) return;
           if (homework.reviewSource?.subjectId === selection.subjectId && homework.reviewSource?.bankKey === selection.bankKey) {
             returnToHomework(record, number); return;
           }
@@ -1282,5 +1283,7 @@ export function createWorkspace({
   window.addEventListener("resize", constrainWindows);
   if (typeof ResizeObserver === "function") new ResizeObserver(constrainWindows).observe(windowLayer);
 
-  return { open, openContent, openBank, openHomework, openReview, bindHtmlLinks, showMenu, setLanguage, setContext, clear, prepareAllForClose };
+  function refreshHomework() { for (const record of records.values()) if(record.tool.homework) postContext(record); }
+  function removeFinishedHomework(binding) { for(const record of records.values()) if(record.tool.homework?.assistId===binding.assistId && binding.assistId && getIdentity()?.uid===(binding.actorUid || binding.uid)) removeRecord(record); }
+  return { refreshHomework, removeFinishedHomework, open, openContent, openBank, openHomework, openReview, bindHtmlLinks, showMenu, setLanguage, setContext, clear, prepareAllForClose };
 }

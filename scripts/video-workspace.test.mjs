@@ -235,3 +235,19 @@ test('each window folds its own tools without reloading content, then restores t
   toggle.click(); assert.equal(tools.hidden, false); assert.equal(toggle.getAttribute('aria-expanded'), 'true');
   assert.equal(first.querySelector('iframe'), frame);
 });
+
+test('an opted-in Quiz sheet link opens one real HTML sheet in a pair without replacing Quiz working', () => {
+  const h=harness();
+  h.workspace.openContent({...context,toolKind:'quiz',contentId:'slit-review',source:'https://school.test/learning-hub/content/p/quiz.html'});
+  const quiz=h.document.querySelector('iframe'),owner=quiz.closest('.workspace-window');
+  const child=dom('<html><body><textarea>Keep this working</textarea><button data-hub-html data-html-pair="true" data-content-id="slit-sheet" data-html-src="../../content/p/sheet.html" data-title-th="ใบเรียนรู้">Review</button></body></html>','pages/tools/quiz-player.html');
+  h.load(quiz,child);
+  child.document.querySelector('button').click();
+  const sheet=h.document.querySelector('[data-tool-id="content-html-slit-sheet"]');
+  assert.ok(sheet);assert.equal(owner.dataset.windowSnap,'left');assert.equal(sheet.dataset.windowSnap,'right');
+  assert.equal(quiz.contentDocument.querySelector('textarea').textContent,'Keep this working');
+  assert.match(sheet.querySelector('iframe').src,/content\/p\/sheet.html$/);
+  child.document.querySelector('button').click();
+  assert.equal(h.document.querySelectorAll('iframe').length,2);
+  assert.equal(h.document.querySelector('[data-tool-id="topic-review-library"]'),null);
+});

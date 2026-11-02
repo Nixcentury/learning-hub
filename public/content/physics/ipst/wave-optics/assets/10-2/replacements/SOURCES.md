@@ -1,9 +1,9 @@
-# Original replacement diagrams — proposal only
+# Original replacement diagrams — worksheet revision 2026-11-02-1
 
 Prepared 2026-11-02 for the existing 10.2 bank `b-21460452889578f11c3a8bac`.
 All ten SVGs are newly authored vector diagrams, not edited/traced/cropped IPST
-images. Only generic physical concepts are shared. None is linked from the live
-learning sheet yet. The existing 15 JPEG crops remain untouched for future Quiz.
+images. Only generic physical concepts are shared. The revised learning sheet now uses these diagrams, with model captions and
+matching U/V/O/C/P point names. The existing 15 JPEG crops remain untouched for future Quiz.
 
 - 01: front views; a is opening width and d is centre separation. Dimensions
   follow the drawn opening edges/centres, not a supposed experiment scale.

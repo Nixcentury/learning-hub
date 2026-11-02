@@ -1,17 +1,17 @@
 # 10.2 — ร่างโจทย์และภาพทดแทน / Replacement proposal
 
-**ขั้นเตรียมงาน 2 พฤศจิกายน 2026 — ยังไม่เชื่อมเข้ากับใบเรียนรู้หรือควิซจริง**
+**ข้อเสนอที่อนุมัติแล้ว 2 พฤศจิกายน 2026 — นำไปปรับใบเรียนรู้ฉบับ 2026-11-02-1 ใน PR #110; ควิซต้นฉบับยังเป็นงานถัดไป**
 
 ร่าง 18 ข้อใหญ่ / 27 ข้อย่อย สองภาษา พร้อม SVG ใหม่ 10 ภาพ ชุดนี้เสนอให้แทนส่วนที่อิงโจทย์เดิม ไม่ใช่เพิ่มทั้งหมดต่อท้ายใบเรียนรู้
 
-## ขอบเขตและต้นฉบับที่ต้องเก็บ
+## ขอบเขตในร่างก่อนอนุมัติและต้นฉบับที่ต้องเก็บ
 
-- รักษาเส้นเรื่อง เนื้อหา สูตร การพิสูจน์ และคำถามสั้นที่จำเป็นของใบเดิมไว้; ยังไม่แก้ไฟล์ที่นักเรียนเปิดอยู่
+- รักษาเส้นเรื่อง เนื้อหา สูตร การพิสูจน์ และคำถามสั้นที่จำเป็นของใบเดิมไว้; ในขั้นร่างยังไม่แก้ไฟล์ที่นักเรียนเปิดอยู่ (นำไปปรับแล้วหลังอนุมัติ ดูสถานะด้านบน)
 - เก็บโจทย์/รูป สสวท. ไว้ทำควิซ: ตัวอย่าง 10.1–10.4, ตรวจความเข้าใจ 10.2 ข้อ 1–4, แบบฝึกหัด 10.2 ข้อ 1–3, คำถามท้ายบทข้อ 2, ปัญหาท้ายบท 1–8 และปัญหาท้าทาย 15–20 ตามเลขในหนังสือ
 - คู่มือครูแยกนับปัญหาท้าทาย 15–20 ของหนังสือเป็น 1–6; ปัญหาท้าทาย 21 เชื่อมสลิตเดี่ยว จึงเก็บสำหรับหลังเรียน 10.3
 - คำถามเดิม 21–25 ใช้ข้อมูลตรงกับปัญหาท้ายบท 1–5 จึงมีข้อ F1–F5 เสนอให้แทนด้วย
 - ปัญหาท้ายบท 8: ไฟล์หนังสือใช้ระยะห่างแถบ 10⁻⁷ m แต่คู่มือครูใช้ 10⁻³ m ต้องกำกับฉบับเมื่อสร้างควิซ ไม่ผสมโจทย์กับเฉลยต่างฉบับ; ไม่ได้นำข้อนี้มาใช้เป็นโจทย์ใหม่
-- ต้นฉบับ JPEG 15 ไฟล์และใบ/เมนู/ซิมเดิมมี SHA-256 ใน protected-originals.json เพื่อตรวจว่าไม่ถูกแตะต้อง
+- ต้นฉบับ JPEG 15 ไฟล์และใบ/เมนู/ซิมเดิมมี SHA-256 ใน protected-originals.json เป็นภาพสถานะก่อนปรับ; JPEG และซิมยังต้องเหมือนเดิม ส่วนใบ/เมนูเปลี่ยนตามงานที่อนุมัติ
 
 แหล่งต้นฉบับที่ตรวจในรอบก่อน: [หนังสือ ม.5 เล่ม 3](https://drive.google.com/file/d/1R-jSSONIMji5S-_KRSww1Pl7r_QK3Zpj/view) หน้า 109–126,150–155 และ [คู่มือครู](https://drive.google.com/file/d/1CJ9lV_SpjmvXTmZno8Sgg5vx4YotXQzE/view) ส่วนคำตอบ 10.2 และท้ายบท ไฟล์ PDF ไม่ได้รวมในข้อเสนอนี้
 
@@ -369,7 +369,7 @@ U,V สมมาตรกับแนวกลาง OC และเริ่ม
 
 ## English draft
 
-**Preparation only: these items replace source-derived tasks rather than extending the student workload. The live sheet, source crops and Quiz are unchanged.**
+**Approved proposal: these items are integrated into worksheet revision 2026-11-02-1 in PR #110. They replace source-derived tasks; the original crops and Quiz remain unchanged.**
 
 All tasks use monochromatic coherent sources, initially in phase in one medium, with equal amplitudes when complete darkness is claimed. Angular relations assume far field; screen-position relations use small angles where stated.
 
@@ -677,3 +677,20 @@ To obtain 3.60 mm adjacent bright-fringe spacing, use λ = 480 nm and a screen 1
 - Production build passed and verified 694 public files. No shared engine/config/dependency/Rules change. No unrelated runtime test suite was rerun for unused proposal assets.
 - Limits: this is a preparation draft. No integration, browser/iPad or central-print/PDF test is claimed. The two preview PNGs are renders of the new editable SVGs.
 - External photograph: the creator and CC BY-SA 4.0 license were checked on its Commons page; it is only a linked candidate. Its binary was not materialized for local QA and it has not been integrated. New worksheet drawings are all authored SVGs.
+
+
+## Integration follow-up — 2026-11-02
+
+The teacher approved implementation. The same sheet/content/bank identity now
+uses these replacements and the new diagrams; source JPEGs remain intact.
+Question numbering is 1–37, examples 1–4, with 50 separately spaced question rows
+and 14 headed note areas per language (64 slots total). All 14 notes remain;
+three adjust diagram-specific wording, and the phase derivation is preserved.
+Original source-derived fragments/contexts are archived under
+`docs/quiz/preparation/physics-double-slit-10-2/` rather than left in the student
+sheet. The guide has eight authored steps tied to actual targets. The original
+protected-originals.json is a historical pre-edit snapshot; the worksheet and its menu description
+hashes are expected to change in this approved follow-up.
+
+Browser/print verification is recorded in PHYSICS-DOUBLE-SLIT-10-2-QA.md after the
+final check. The earlier proposal-only limits describe that earlier checkpoint.

@@ -107,6 +107,7 @@ export function createHubNavigation({ pageFrame, navButtons, showSection, notice
         topicId: currentMenu.topicId || null, status: currentMenu.status,
         bank: currentMenu.kind === 'bank', bankKey: currentMenu.bankKey || null,
         bankChapterId: currentMenu.bankChapterId || null,
+        canonicalizeBankFilter: !isActivityRoute(current),
         localNavigation: !catalog } }, location.origin);
   }
   async function navigate(hash, mode = 'push', force = false, alreadyOpen = null) {

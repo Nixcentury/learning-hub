@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveNavigation, routeForSelection } from '../js/hub-navigation.js';
+import { resolveNavigation, routeForSelection, createHubNavigation } from '../js/hub-navigation.js';
+import { parseHTML } from 'linkedom';
 import { activityForRoute, menuForRoute, routeForTool, isActivityRoute } from '../js/hub-activity-routes.js';
 import { catalogFromRepository } from './build-route-catalog.mjs';
 import { toolCatalog } from '../js/legacy-tool-catalog.js';
@@ -16,6 +17,26 @@ const catalog = { schemaVersion: 1, contents: [{ id:'quiz-one', toolKind:'quiz',
   { hash: '#content/quiz-one', aliases: [], kind: 'content', contentId:'quiz-one', subjectId:'physics',chapterId:'1',topicId:'measurement', parentHash: topic.hash },
   { hash: '#tool/physics-c1-notebook', aliases: [], kind: 'legacy-tool', toolId:'physics-c1-notebook', storageContentId:'physics-c1-notebook', parentHash: chapter.hash },
 ] };
+
+test('activity navigation restores its bank menu without allowing automatic filter redirects',async()=>{
+  const keys=['document','location','history','fetch'],previous=keys.map(key=>[key,Object.getOwnPropertyDescriptor(globalThis,key)]);
+  const {document}=parseHTML('<html lang="th"><body><button data-section="physics"></button><button data-section="overview"></button><aside><span data-route-notice-text></span><button data-route-retry></button></aside></body></html>');
+  const location=new URL(hubUrl),commands=[],pageWindow={postMessage:command=>commands.push(command)};
+  Object.defineProperty(document,'baseURI',{value:hubUrl});
+  try{
+    Object.assign(globalThis,{document,location,history:{pushState(_state,_title,hash){location.hash=hash;},replaceState(_state,_title,hash){location.hash=hash;}},fetch:async()=>({ok:true,redirected:false,json:async()=>catalog})});
+    const navigation=createHubNavigation({pageFrame:{contentWindow:pageWindow},navButtons:document.querySelectorAll('[data-section]'),noticeElement:document.querySelector('aside'),showSection(){},canOpenWorkspace:()=>true,openActivity:()=>true});
+    await navigation.openHash('#physics/bank');
+    navigation.handleMessage({source:pageWindow,origin:location.origin,data:{type:'learning-hub-navigation-ready',pageId:'test-menu',subjectId:'physics'}});
+    assert.equal(commands.at(-1).route.canonicalizeBankFilter,true);
+    await navigation.openHash('#physics/review');
+    assert.equal(commands.at(-1).route.bank,true);
+    assert.equal(commands.at(-1).route.canonicalizeBankFilter,false);
+    assert.equal(location.hash,'#physics/review');
+    await navigation.openHash('#physics/bank');
+    assert.equal(commands.at(-1).route.canonicalizeBankFilter,true,'Explicit menu navigation keeps chapter sharing');
+  }finally{for(const[key,descriptor]of previous){if(descriptor)Object.defineProperty(globalThis,key,descriptor);else delete globalThis[key];}}
+});
 
 test('review libraries and topic deep links share the owned Hub player and retain their bank menu', () => {
   const key = 'b-' + 'a'.repeat(24);

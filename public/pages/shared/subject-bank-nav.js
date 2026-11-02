@@ -176,7 +176,7 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
       else status(matches.length ? `พบ ${matches.length} หัวข้อ` : 'ไม่พบหัวข้อที่ค้นหา', matches.length ? `${matches.length} topics` : 'No matching topics.');
     }
   }
-  async function open(bankKey = null, force = false, bankChapterId = null) {
+  async function open(bankKey = null, force = false, bankChapterId = null, { canonicalizeChapter = true } = {}) {
     const version = ++request; currentKey = bankKey; panel.hidden = false; cards.replaceChildren();
     currentChapterId = bankChapterId; missingChapter = false;
     updateHeading();
@@ -219,7 +219,9 @@ export function createSubjectBankNavigation({ root, subject, setStage, requestNa
       updateChapters(); render();
       // A restored filter is visible navigation too. Canonicalize it so the
       // existing Hub Share button and the address bar describe the same chapter.
-      if (!currentKey && !bankChapterId && selectedChapter) requestNavigation(chapterSelection());
+      // The parent also restores this menu behind an open Quiz/review window.
+      // Restoring its filter must not send the Hub back out of that activity.
+      if (canonicalizeChapter && !currentKey && !bankChapterId && selectedChapter) requestNavigation(chapterSelection());
       panel.querySelector('[data-bank-title]').focus({ preventScroll: true }); return true;
     } catch (error) {
       if (version !== request) return false;

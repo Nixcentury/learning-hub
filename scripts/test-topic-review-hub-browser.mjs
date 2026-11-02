@@ -16,8 +16,8 @@ const prefix = '/learning-hub/', built = process.env.QA_BUILT === '1';
 const output = resolve(root, 'qa-output/topic-review-hub'); await mkdir(output, { recursive: true });
 const keyA = 'b-' + 'a'.repeat(24), keyB = 'b-' + 'b'.repeat(24), keyP = 'b-' + 'c'.repeat(24), missing = 'b-' + 'd'.repeat(24);
 const sets = {
-  chemistry: [keyA, keyB].map((bankKey, i) => ({ bankKey, legacyId: `qa-chem-${i}`, title: `เคมี ${i + 1}(Chemistry ${i + 1})`,
-    path: ['Chemistry', 'Hub', 'อะตอม(Atoms)', `เคมี ${i + 1}(Chemistry ${i + 1})`], questionCount: 1 })),
+  chemistry: [keyA, keyB].map((bankKey, i) => ({ bankKey, legacyId: `qa-chem-${i}`, title: `A-level ${2569-i}`,
+    path: ['Chemistry', 'Hub', 'A-level', `A-level ${2569-i}`], questionCount: 1 })),
   physics: [{ bankKey: keyP, legacyId: 'qa-physics', title: 'แรง(Forces)', path: ['Physics', 'Hub', 'กลศาสตร์(Mechanics)', 'แรง(Forces)'], questionCount: 0 }],
 };
 const catalog = await catalogFromRepository(), readings = new Map();
@@ -73,6 +73,8 @@ try {
     await context.addInitScript(() => {
       window.__reviewCommands = [];
       addEventListener('message', event => { if (event.data?.type === 'learning-hub-review-select') window.__reviewCommands.push(event.data); });
+      window.__menuResults = [];
+      addEventListener('message', event => { if (event.data?.type === 'learning-hub-navigation-result') window.__menuResults.push({...event.data,hash:location.hash}); });
     });
     await context.route('**/*', route => {
       const url = new URL(route.request().url());
@@ -167,6 +169,33 @@ try {
   await quiz.locator('[data-reasoning-input]').fill('Keep this quiz reasoning');
   const quizChild = await quizWindow.locator('iframe').elementHandle().then(handle => handle.contentFrame());
   await quizChild.evaluate(() => { LearningHubQuiz.flushLocal(); window.__frameSentinel = 'kept'; });
+  // Returning to a bank with a remembered chapter used to let its automatic
+  // canonicalization immediately minimize the newly opened review library.
+  await page.locator('[data-section="chemistry"]').click();
+  await subject.locator('[data-subject-page][data-navigation-ready="ready"]:not([inert])').waitFor();
+  await subject.locator('[data-bank-chapter]').selectOption(bankChapterKey(sets.chemistry[0]));
+  await page.waitForURL(url => url.hash.includes('#chemistry/bank/chapter/'));
+  await subject.locator('[data-subject-page][data-navigation-ready="ready"]:not([inert])').waitFor();
+  const beforeLibrary=await page.evaluate(()=>window.__menuResults.length);
+  await subject.locator('.bank-review-entry').click();
+  await page.waitForURL(url => url.hash === '#chemistry/review');
+  await review.locator('[data-review-subject]').waitFor();
+  await page.waitForFunction(count=>window.__menuResults.slice(count).some(result=>result.ok&&result.hash==='#chemistry/review'),beforeLibrary);
+  assert.equal(new URL(page.url()).hash,'#chemistry/review','Remembered menu filters cannot replace the active review route');
+  assert.equal(await reviewWindow.isVisible(),true);
+  assert.equal(await reviewWindow.count(),1);
+  assert.equal(await quizChild.evaluate(() => window.__frameSentinel),'kept');
+  assert.ok(Object.keys(await quizChild.evaluate(() => LearningHubQuiz.getState().answers)).length>0);
+  assert.equal(await quiz.locator('[data-reasoning-input]').inputValue(),'Keep this quiz reasoning');
+  await page.locator('[data-section="chemistry"]').click();
+  await subject.locator('[data-subject-page][data-navigation-ready="ready"]:not([inert])').waitFor();
+  const beforeRestore=await page.evaluate(()=>window.__menuResults.length);
+  await subject.locator('.bank-review-entry').click();
+  await page.waitForURL(url => url.hash === '#chemistry/review');
+  await page.waitForFunction(count=>window.__menuResults.slice(count).some(result=>result.ok&&result.hash==='#chemistry/review'),beforeRestore);
+  assert.equal(await reviewWindow.isVisible(),true,'The same minimized review can be restored again');
+  assert.equal(await reviewWindow.count(),1);
+  console.log('PASS a remembered bank chapter cannot steal navigation from review while the original quiz and answers stay open');
   await page.evaluate(hash => { location.hash = hash; }, `#chemistry/review/${keyB}`);
   await review.locator('[data-topic-review-content]').getByText('QA qa-chemistry-review-1 EN', { exact: true }).waitFor();
   await reviewWindow.locator('.is-minimize').click();

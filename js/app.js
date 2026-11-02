@@ -704,7 +704,8 @@ function showSection(sectionId, force = false) {
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
   // Keep cached menu documents and their shared subject palette in sync.
-  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-google-phase1-20261101' : 'bank-chapter-links-20261027');
+  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-google-phase1-20261101'
+    : ['physics', 'chemistry'].includes(sectionId) ? 'review-menu-route-20261102' : 'bank-chapter-links-20261027');
   pageFrameLoading.hidden = false;
   // Child-frame navigations must not add extra entries to the Hub's Back history.
   pageFrame.contentWindow.location.replace(pageUrl.href);

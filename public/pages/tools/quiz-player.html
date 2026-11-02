@@ -16,8 +16,8 @@
     <title>Quiz Engine · Learning Hub</title>
     <script>
       window.MathJax = {
-        loader: { load: ['ui/safe'] },
-        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"], ["$$", "$$"]] },
+        loader: { load: ['[tex]/mhchem', 'ui/safe'] },
+        tex: { packages: { '[+]': ['mhchem'] }, inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"], ["$$", "$$"]] },
         options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] },
       };
     </script>

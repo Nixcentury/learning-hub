@@ -1,3 +1,4 @@
+import { canTeachRoom } from '../public/shared/classroom-room-role.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -9,13 +10,13 @@ const rid = 'r_' + 'a'.repeat(32), aid = 'a_' + 'b'.repeat(32);
 const item = { id: aid, title: '<img src=x onerror=alert(1)> Wave homework', instructions: 'Read\nthen practise', status: 'published', revision: 1, dueAt: 0, targetHash: '#content/wave-quiz', quizTitleTh: 'คลื่น', quizTitleEn: 'Waves', publishedAt: 1 };
 const context = (teacher = true, user = teacher ? 'teacher' : 'student') => ({ language: 'th', identity: { status: 'signed-in', uid: user }, classroom: { uid: user, state: teacher ? 'teacher' : 'student' },
   classroomRooms: { roomStatus: 'ready', selected: { id: rid } }, classroomAssignmentRoute: { roomId: rid, assignmentId: aid },
-  classroomAssignments: { uid: user, connected: true, busy: '', hubUrl: 'https://example.test/learning-hub/', rooms: [{ id: rid, membership: teacher ? 'owner' : 'student', status: 'ready', items: [item], drafts: [], seen: {} }] } });
+  classroomAssignments: { uid: user, connected: true, busy: '', hubUrl: 'https://example.test/learning-hub/', rooms: [{ id: rid, membership: teacher ? 'owner' : 'student', ownerUid: 'teacher', status: 'ready', items: [item], drafts: [], seen: {} }] } });
 async function fixture() {
   const { window, document } = parseHTML('<html><body><section data-classroom-assignments></section></body></html>');
   const downloads = [], messages = [], parent = { postMessage: value => messages.push(value) };
   const scope = vm.createContext({ document, window, parent, location: { origin: 'https://example.test' }, navigator: { clipboard: { writeText: async () => {} } }, crypto,
-    URL: class extends URL { static createObjectURL(blob) { downloads.push(blob); return 'blob:test'; } static revokeObjectURL() {} }, Blob, setTimeout: fn => fn(), Date, setInterval: () => 1, queueMicrotask, ...model });
-  const script = (await readFile(new URL('../public/pages/shared/classroom-assignments-page.js', import.meta.url), 'utf8')).replace(/^import .*?;\n/, '');
+    URL: class extends URL { static createObjectURL(blob) { downloads.push(blob); return 'blob:test'; } static revokeObjectURL() {} }, Blob, setTimeout: fn => fn(), Date, setInterval: () => 1, queueMicrotask, canTeachRoom, ...model });
+  const script = (await readFile(new URL('../public/pages/shared/classroom-assignments-page.js', import.meta.url), 'utf8')).replace(/^import .*?;\n/gm, '');
   const proto = window.HTMLElement.prototype;
   proto.focus = function () {}; proto.reportValidity = () => true;
   Object.defineProperty(proto, 'elements', { configurable: true, get() { return Object.fromEntries([...this.querySelectorAll('[name]')].map(node => [node.getAttribute('name'), node])); } });
@@ -231,4 +232,12 @@ test('overall progress hides old room/account values and stays unavailable for l
   value.classroomSubmissions.progress.roomId='other';f.update(value);assert.equal(summary.hidden,true);assert.equal(summary.textContent,'');
   f.update(context(true));assert.equal(summary.hidden,true);f.update(context(false,'student-b'));assert.equal(summary.hidden,true);
   f.update({identity:{status:'guest'},classroom:{state:'guest'}});assert.equal(summary.textContent,'');
+});
+
+test('co-teacher receives homework tools only in the invited room without global teacher role', async()=>{
+ const f=await fixture(),value=context(false,'friend');value.classroomAssignments.rooms[0].membership='teacher';f.update(value);
+ assert.equal(f.document.querySelector('[data-hw-tools]').hidden,false);
+ assert.equal(f.document.querySelector('[data-hw-new]').hidden,false);
+ value.classroomAssignments.rooms[0].membership='student';f.update(value);
+ assert.equal(f.document.querySelector('[data-hw-tools]').hidden,true);
 });

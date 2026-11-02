@@ -711,7 +711,7 @@ function showSection(sectionId, force = false) {
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
   // Keep cached menu documents and their shared subject palette in sync.
-  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-teachers-20261102'
+  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-room-teachers-20261102'
     : ['physics', 'chemistry'].includes(sectionId) ? 'review-menu-route-20261102' : 'bank-chapter-links-20261027');
   pageFrameLoading.hidden = false;
   // Child-frame navigations must not add extra entries to the Hub's Back history.
@@ -832,6 +832,13 @@ window.addEventListener("message", (event) => {
     if (event.data.action === "retry" && activeSession.status === "signed-in") retryRoleCheck();
     const access = createClassroomAccess(activeSession, activeRole);
     if (event.data.action === "manage-teachers" && access.canManageTeachers) teacherDialog.open(pageFrame);
+    if (event.data.action === "share-room-teacher-link" && access.state === "teacher" && classroomRooms?.selected?.membership === "owner" && classroomRooms.selected.id === event.data.roomId) void openHubShare({
+      getTarget: () => teacherShareTarget(location.href), getLanguage: () => currentLanguage, opener: pageFrame,
+      description: {
+        th: "เพิ่มอีเมลเพื่อนในส่วนครูร่วมของห้องก่อน แล้วส่งลิงก์นี้ให้เพื่อนเข้าสู่ระบบด้วยอีเมลตรงกัน ห้องที่เชิญจะปรากฏในรายการ Classroom อัตโนมัติ",
+        en: "First add your friend’s email under classroom co-teachers, then share this link. Signing in with that email makes the invited classroom appear automatically.",
+      },
+    });
     if (event.data.action === "share-teacher-link" && access.state === "teacher") void openHubShare({
       getTarget: () => teacherShareTarget(location.href), getLanguage: () => currentLanguage, opener: pageFrame,
       description: {

@@ -184,7 +184,7 @@ export function createClassroomMonitor({ io, onChange = () => {}, now = Date.now
     }));
     watch(`@classroom/userRooms/${uid}`, value => {
       const index = value || {};
-      for (const [roomId, stops] of roomStops) if (!index[roomId]) { stop(stops); roomStops.delete(roomId); delete rooms[roomId]; }
+      for (const [roomId, stops] of roomStops) if (!index[roomId] || index[roomId] !== rooms[roomId]?.membership) { stop(stops); roomStops.delete(roomId); delete rooms[roomId]; }
       for (const [roomId, membership] of Object.entries(index)) if (!roomStops.has(roomId)) addRoom(roomId, membership, version);
       refreshLessons();
     }, mainStops, version);

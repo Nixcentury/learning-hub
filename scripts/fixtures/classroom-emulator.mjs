@@ -35,6 +35,10 @@ export async function reset(rules) {
     const baseline = JSON.parse(await readFile(new URL('../../firebase/classroom-links.merged-draft.json', import.meta.url), 'utf8'));
     rules = mergeRosterRules({ rules: { ...baseline.rules, ...rules.rules } });
   }
+  if (process.env.CLASSROOM_TEST_ROOM_TEACHERS === '1' && !rules.rules?.classroomV1?.teachers) {
+    const { mergeRoomTeacherRules } = await import('../build-classroom-room-teacher-rules.mjs');
+    rules = mergeRoomTeacherRules(rules);
+  }
   await good('EMULATOR_ADMIN', 'PUT', '.settings/rules', rules);
   await good('EMULATOR_ADMIN', 'PUT', '', { learningHub: { teacherApprovals: { teacher: true, 'teacher-b': { enabled: true } } } });
 }

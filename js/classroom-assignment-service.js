@@ -1,3 +1,4 @@
+import { canTeachRoom } from '../public/shared/classroom-room-role.js';
 import { createClassroomAccess } from './classroom-access.js';
 import { assignmentIdPattern, assignmentRoomPattern, assignmentError, cleanAssignmentFields, resolveAssignmentQuiz, resolveAssignmentLesson } from './classroom-assignment-model.js';
 
@@ -46,7 +47,7 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
   function roomFor(id, owner = false) {
     const room = rooms.get(id);
     if (!assignmentRoomPattern.test(id) || !room || room.status !== 'ready') throw assignmentError('assignment/room-unavailable');
-    if (owner && (access !== 'teacher' || room.ownerUid !== uid || room.membership !== 'owner')) throw assignmentError('assignment/owner-required');
+    if (owner && !canTeachRoom(room, uid, access === 'teacher')) throw assignmentError('assignment/owner-required');
     return room;
   }
   function addRoom(id, membership, version) {
@@ -62,13 +63,13 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
         room.name = value.name; room.ownerUid = value.ownerUid;
       } else room[kind] = value || {};
       loaded.add(kind);
-      const needed = membership === 'owner' ? ['meta', 'items', 'drafts'] : ['meta', 'items', 'seen'];
+      const needed = ['owner', 'teacher'].includes(membership) ? ['meta', 'items', 'drafts'] : ['meta', 'items', 'seen'];
       if (needed.every(key => loaded.has(key)) && !room.error) room.status = 'ready';
       publish();
     };
     watch('@classroom/rooms/' + id, value => apply('meta', value), list, version, relevant, failed);
     watch('items/' + id, value => apply('items', value), list, version, relevant, failed);
-    if (membership === 'owner' && access === 'teacher') watch('drafts/' + id, value => apply('drafts', value), list, version, relevant, failed);
+    if (membership === 'teacher' || membership === 'owner' && access === 'teacher') watch('drafts/' + id, value => apply('drafts', value), list, version, relevant, failed);
     else watch('seen/' + id + '/' + uid, value => apply('seen', value), list, version, relevant, failed);
   }
   function clear() {
@@ -91,7 +92,7 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
       const index = value || {};
       for (const [id, list] of roomStops) if (!index[id] || index[id] !== rooms.get(id)?.membership) { stop(list); roomStops.delete(id); rooms.delete(id); }
       for (const [id, membership] of Object.entries(index)) {
-        if (assignmentRoomPattern.test(id) && ['owner', 'student'].includes(membership) && !roomStops.has(id)) addRoom(id, membership, version);
+        if (assignmentRoomPattern.test(id) && ['owner', 'student', 'teacher'].includes(membership) && !roomStops.has(id)) addRoom(id, membership, version);
       }
       publish();
     }, stops, version, () => true, failure => {
@@ -151,7 +152,7 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
           : resolveAssignmentQuiz(payload.url, await loadCatalog(), hubUrl);
         guard(user, version); roomFor(roomId, true);
         const status = action === 'close' ? 'closed' : oldItem ? oldItem.status : action === 'publish' ? 'published' : 'draft';
-        const record = { ...fields, ...target, version: 1, ownerUid: user, status,
+        const record = { ...fields, ...target, version: 1, ownerUid: room.ownerUid, status,
           createdAt: previous?.createdAt || io.timestamp(), updatedAt: io.timestamp(),
           publishedAt: oldItem?.publishedAt || (status === 'draft' ? 0 : io.timestamp()), revision: payload.revision + 1 };
         if (status === 'draft') {

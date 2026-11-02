@@ -141,3 +141,12 @@ test('pending save is not successful before acknowledgement; old-account asynchr
   await assert.rejects(operation, { code: 'assignment/session-changed' });
   assert.equal(f.service.getState().busy, '');
 });
+
+test('co-teacher reads drafts and publishes with canonical owner; downgrade stops old listeners and commands',async t=>{
+ const f=fixture(t,'friend',false);f.put(`@classroom/userRooms/friend/${rid}`,'teacher');f.emit();await tick();
+ assert.equal(f.service.getState().rooms[0].membership,'teacher');assert.ok(f.watchers.some(w=>w.active&&w.path===`drafts/${rid}`));
+ await f.service.command('publish',input,'friend');assert.equal(f.get(`items/${rid}/${aid}`).ownerUid,'teacher');
+ const old=f.watchers.filter(w=>w.active&&w.path.startsWith('drafts/'));
+ f.put(`@classroom/userRooms/friend/${rid}`,'student');f.emit();await tick();assert.ok(old.every(w=>!w.active));
+ await assert.rejects(f.service.command('close',{roomId:rid,id:aid,revision:1},'friend'),{code:'assignment/owner-required'});
+});

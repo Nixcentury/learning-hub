@@ -310,3 +310,15 @@ test('progress waits for unknown work and clears on room removal, errors and lat
   watcher.failure({code:'PERMISSION_DENIED'});assert.equal(f.service.getState().progress.status,'error');
   f.service.setContext({status:'signed-out'},null,null,'');watcher.success({[aid]:quiz});assert.equal(f.service.getState().progress,null);
 });
+
+test('co-teacher views grades and quiz preview, then downgrade clears all staff-grade subscriptions',async t=>{
+ const f=fixture(t,'friend');const assignments=f.context('friend');assignments.rooms[0].membership='teacher';
+ const session={status:'signed-in',user:{uid:'friend'}},role={uid:'friend',status:'ready',systemRole:'student',isTeacher:false};
+ f.service.setContext(session,role,assignments,rid);await tick();
+ assert.equal(f.service.getState().progress,null);assert.ok(f.watchers.some(w=>w.active&&w.path===`results/${rid}`));
+ const binding=await f.service.open(aid,'friend');assert.equal(binding.preview,true);
+ await assert.rejects(f.service.quizCommand('submit',binding,{}),{code:'homework/student-required'});
+ const old=f.watchers.filter(w=>w.active&&w.path===`results/${rid}`);
+ assignments.rooms[0].membership='student';f.service.setContext(session,role,assignments,rid);await tick();assert.ok(old.every(w=>!w.active));
+ await assert.rejects(f.service.exportSheet(aid),{code:'homework/owner-required'});
+});

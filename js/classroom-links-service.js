@@ -1,3 +1,4 @@
+import { canTeachRoom } from '../public/shared/classroom-room-role.js';
 import { createClassroomAccess } from './classroom-access.js';
 import { cleanLinkFields, linkIdPattern, linkRoomPattern, linkError } from '../public/shared/classroom-links-model.js';
 
@@ -21,13 +22,13 @@ export function createClassroomLinks({ io, onChange }) {
     const next = ready ? `${access.uid}/${access.state}/${selected.id}/${selected.ownerUid}/${selected.membership}` : '';
     if (next === signature) return;
     signature = next; clear(); uid = ready ? access.uid : ''; roomId = ready ? selected.id : '';
-    owner = ready && access.state === 'teacher' && selected.ownerUid === uid;
+    owner = ready && canTeachRoom(selected, uid, access.state === 'teacher');
     name = String(session?.user?.displayName || session?.user?.email || 'Teacher').slice(0, 120);
     error = ''; status = ready ? 'loading' : 'inactive'; publish();
     if (!ready) return;
     const version = epoch;
     const live = () => version === epoch;
-    let roomReady = false, memberReady = owner, itemsReady = false;
+    let roomReady = false, memberReady = owner && selected.membership !== "teacher", itemsReady = false;
     const timer = setTimeout(() => { if (live() && status === 'loading') fail(linkError('links/read-timeout')); }, 15000);
     timer.unref?.();
     stops.push(() => clearTimeout(timer));
@@ -44,7 +45,7 @@ export function createClassroomLinks({ io, onChange }) {
       if (!room || room.ownerUid !== selected.ownerUid) fail(linkError('links/access-lost'));
       else { roomReady = true; loaded(); }
     });
-    if (!owner) watch(`@classroom/members/${roomId}/${uid}`, member => {
+    if (!owner || selected.membership === "teacher") watch(`@classroom/${selected.membership === "teacher" ? "teachers" : "members"}/${roomId}/${uid}`, member => {
       if (!member) fail(linkError('links/access-lost'));
       else { name = String(member.displayName || 'Student').slice(0, 120); memberReady = true; loaded(); }
     });

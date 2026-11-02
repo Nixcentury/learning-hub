@@ -23,7 +23,7 @@
     'classroom/read-timeout': ['โหลดข้อมูลนานกว่าปกติ ตรวจอินเทอร์เน็ตแล้วกดโหลดอีกครั้ง', 'Loading is taking longer than usual. Check your connection and reload.'],
     created: ['สร้างห้องเรียบร้อยแล้ว ส่งรหัสด้านล่างให้นักเรียนได้เลย', 'Room created. Share the code below with your students.'],
     joined: ['เข้าร่วมห้องแล้ว หากเคยเข้าร่วมอยู่แล้ว ระบบจะเปิดห้องเดิมโดยไม่เพิ่มสมาชิกซ้ำ', 'Classroom opened. Rejoining opens the same room without a duplicate membership.'],
-    'classroom/invalid-email': ['กรุณาใส่อีเมลที่นักเรียนใช้เข้า Hub', 'Enter the email the student uses to sign in to Hub.'],
+    'classroom/invalid-email': ['กรุณาใส่อีเมลที่ใช้เข้า Hub', 'Enter the email used to sign in to Hub.'],
     'classroom/owner-required': ['เฉพาะครูเจ้าของห้องจัดการสมาชิกได้', 'Only the classroom owner can manage members.'],
     'classroom/removed': ['ครูนำคุณออกจากห้องนี้แล้ว กรุณาติดต่อครูเพื่อขอเข้าร่วมอีกครั้ง', 'Your teacher removed you from this room. Contact them to rejoin.'],
     'classroom/roster-unavailable': ['ยังจัดการสมาชิกไม่ได้ กรุณาตรวจ Rules ชุดจัดการสมาชิกกับผู้ดูแลแล้วโหลดใหม่', 'Member management is unavailable. Ask the administrator to apply the roster Rules, then reload.'],

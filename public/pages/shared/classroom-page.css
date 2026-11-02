@@ -360,5 +360,7 @@ body.theme-classroom {
 
 /* Room co-teachers use the same blue, touch-friendly directory as students. */
 .classroom-teachers-details,.classroom-co-teacher-roster{grid-column:1/-1;margin-top:12px;min-width:0}
-.classroom-teachers-details>summary,.classroom-co-teacher-roster>summary{cursor:pointer;font-weight:700;min-height:40px;align-content:center;color:var(--ink)}
+.classroom-teachers-details>summary,.classroom-co-teacher-roster>summary{cursor:pointer;font-weight:700;min-height:44px;align-content:center;color:var(--navy)}
 .classroom-teachers-details>p{font-size:13px;line-height:1.7;color:var(--muted)}
+
+.classroom-teachers-details .classroom-button{min-height:44px}

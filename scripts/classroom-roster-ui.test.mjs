@@ -49,3 +49,10 @@ test('owner adds and removes room teachers; co-teacher only sees the read-only s
  assert.ok(f.document.querySelector('.classroom-co-teacher-roster').textContent.includes('Student'));
  assert.equal(f.document.querySelector('[data-room-action="remove-member"]'),null);
 });
+test('old Rules disable only co-teacher management while student roster controls remain available',async()=>{
+ const f=await fixture(),value=context();value.classroomRooms.teacherRosterStatus='error';value.classroomRooms.teacherRosterError='PERMISSION_DENIED';f.update(value);
+ assert.equal(f.document.querySelector('[data-room-teacher-email]').disabled,true);
+ assert.equal(f.document.querySelector('[data-student-email]').disabled,false);
+ assert.equal(f.document.querySelector('[data-room-action="remove-member"]').disabled,false);
+ assert.ok(f.document.querySelector('.classroom-teachers-details').textContent.includes('Rules'));
+});

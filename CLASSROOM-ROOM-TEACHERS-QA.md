@@ -14,11 +14,11 @@ Base main: 6440e96d2ab4be95f05ef52bc6dce82e99d44f3e, rechecked before editing.
 
 ## Validation
 
-- 655/655 unit tests pass with explicit process isolation, covering the new enrollment/models, owner UI commands, live revocation/re-invitation, account switches/late callbacks, student-index preservation, canonical-owner assignment creation, grade subscription downgrade and co-teacher link management.
+- 656/656 unit tests pass with explicit process isolation, covering the new enrollment/models, owner UI commands, live revocation/re-invitation, account switches/late callbacks, student-index preservation, canonical-owner assignment creation, grade subscription downgrade and co-teacher link management.
 - 69/69 real local RTDB emulator tests pass: the new complete Rules plus all previous teacher, roster, room, link, monitoring, assignment and submission cases. This checks wrong-email/unverified/second-UID claims, atomic pairing/revocation, cross-room/account denial, staff operations and submitted-score preservation.
 - Full Rules are reproducible from the reviewed roster snapshot; unrelated roots and owner-only membership/monitoring Rules are compared structurally. No Rules or database changes have been published to Firebase.
 - Activity/guide validation, TypeScript, production build and Pages artifact verification pass.
-- CI production-Hub/emulator browser coverage adds: owner email invite → pending first sign-in → room-only teacher controls/CSV/link write → 1024 px layout → confirmed owner revoke → live data cleared, with existing submitted results retained. Current-head CI results are reported in the PR after running.
+- The production-Hub/emulator browser flow passed in CI, including: owner email invite → pending first sign-in → room-only teacher controls/CSV/link write → 1024 px layout → confirmed owner revoke → live data cleared, with existing submitted results retained. Current-head CI results and links are reported in the PR.
 - No native iPad/Safari or real Google-account test is claimed.
 
 ## Handoff

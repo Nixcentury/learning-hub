@@ -302,3 +302,9 @@ test("drag AI context describes slots and selections, never object-to-string ans
   assert.doesNotMatch(payload.question, /\[object Object\]/);
   assert.match(payload.referenceSolution, /a: same; b: sum/);
 });
+
+test('assisted PDF uses a human classroom label without changing student notebook keys',async()=>{
+ const h=harness();h.manager.exportContext=()=> 'Classroom assignment';
+ const before=h.manager.notebookKey('q1');const cover=await h.manager.buildCoverPage({title:'Student · Homework',results:[],part:1,partCount:1});
+ assert.ok(cover.textContent.includes('Classroom assignment'));assert.equal(cover.textContent.includes('quiz-one'),false);assert.equal(h.manager.notebookKey('q1'),before);
+});

@@ -3,7 +3,7 @@ export const submissionRoot = 'classroomSubmissionsV1';
 export const quizRevisionPattern = /^[a-f0-9]{64}$/;
 export const failSubmission = code => Object.assign(new Error(code), { code });
 export function homeworkStorageKey(uid, homework) {
-  return `learning-hub-homework:v1:${uid}:${homework.roomId}:${homework.id}:${homework.quizRevision}`;
+  return `learning-hub-homework:v1:${uid}:${homework.roomId}:${homework.id}:${homework.quizRevision}${homework.assistId ? ':assist:' + homework.assistId : ''}`;
 }
 const map = value => value && typeof value === 'object' && !Array.isArray(value);
 export function gradeHomework(questions, answers = {}, giveUps = {}, { draft = false } = {}) {

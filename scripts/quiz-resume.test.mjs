@@ -1,4 +1,5 @@
 import { gradeHomework, homeworkStorageKey } from '../public/shared/classroom-submission-model.js';
+import { assistLive } from '../public/shared/classroom-assist-model.js';
 import { requiresReasoning } from "../public/shared/quiz-question-model.js";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
@@ -152,7 +153,7 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
     fetch: async () => ({ ok: true, text: async () => "<test-content>" }),
     QuizEvidenceManager: EvidenceStub,
     createNotebookBackupUi: () => ({ busy: false, open() {}, invalidate() {} }),
-    gradeHomework, homeworkStorageKey, readHomeworkQuiz: () => ({ root }),
+    assistLive, gradeHomework, homeworkStorageKey, readHomeworkQuiz: () => ({ root }),
     requiresReasoning, readQuizContent, hasAnswer, isCorrectAnswer, isStoredAnswer, parseNumericAnswer, MAX_ANSWER_LENGTH, dragAnswerSummary, readBankSelection, resolveAuthoredPdfLinks,
     warmQuizEngine: async () => 'https://example.test/quiz-player.html?quizRefresh=test',
     receiveTemporaryQuiz: async () => ({ root, language: "en" }),
@@ -850,7 +851,7 @@ test("temporary practice supports skip without writing a saved attempt or sendin
 
 const homeworkBinding={uid:'student',roomId:'r_'+'a'.repeat(32),id:'a_'+'b'.repeat(32),quizRevision:'c'.repeat(64),contentId:'sample-quiz',title:'Homework'};
 async function loadHomework(h, result = null, extra = {}, binding = homeworkBinding) {
-  h.applyHubContext({identity:{status:'signed-in',uid:'student'},homework:binding});
+  h.applyHubContext({identity:{status:'signed-in',uid:binding.actorUid || 'student'},homework:binding});
   const loading=h.loadContent();await h.settle();const request=h.messages.findLast(message=>message.type==='learning-hub-homework-load');
   assert.ok(request);h.response(request,{ok:true,action:'load',quiz:{contentId:'sample-quiz'},value:null,storageRevision:0,result:result?{submissionId:'a'.repeat(32),...result}:null,grade:result?{score:1,maxScore:2,submissionRevision:1,rows:[{id:'q1',correct:true},{id:'q2',correct:false}]}:null,closed:false,...extra});
   await loading;await h.settle();
@@ -991,4 +992,22 @@ test('homework fallback review keeps its pinned subject, bank and question conte
   assert.equal(h.state.answers.q1,'A');assert.equal(h.state.currentIndex,1);
   assert.equal(h.state.latestScore,null);
   assert.equal(h.messages.some(message=>message.type==='learning-hub-quiz-save'),false);
+});
+
+test('assisted homework keeps the real Hub actor separate from student cloud/local ownership',async()=>{
+ const binding={...homeworkBinding,actorUid:'teacher',assistId:'e_'+'d'.repeat(32),studentName:'Student',actorName:'Teacher'};
+ const h=makeHarness({homeworkBinding:binding});await loadHomework(h,null,{assistEpoch:binding.assistId},binding);
+ assert.equal(h.state.identityKey,'student');assert.ok(h.storageKey().endsWith(':assist:'+binding.assistId));
+ h.selectAnswer('q1','A');const saving=h.saveCloudNow();await h.settle();const req=h.messages.findLast(v=>v.type==='learning-hub-homework-save');
+ assert.equal(req.uid,'student');assert.equal(req.value.identityKey,'student');assert.equal(req.assistEpoch,binding.assistId);
+ h.response(req,{ok:true,action:'save',storageRevision:1});await saving;
+ h.applyHubContext({identity:{status:'signed-in',uid:'teacher'},homework:binding,homeworkStatus:{active:false}});
+ const before=h.messages.length;await h.saveCloudNow();assert.equal(h.messages.length,before,'Ended assistance cannot issue another save');
+});
+test('a newer assistance epoch loads authoritative cloud work instead of uploading an old local draft',async()=>{
+ const h=makeHarness({homeworkBinding}),epoch='e_'+'f'.repeat(32);
+ h.storage.set(homeworkStorageKey('student',homeworkBinding),JSON.stringify(baseline({answers:{q1:'B'},localSync:{dirty:true}})));
+ await loadHomework(h,null,{assistEpoch:epoch,value:baseline({identityKey:'student',contentId:'sample-quiz',answers:{q1:'A'},currentQuestionId:'q2',homeworkAssistEpoch:epoch})});
+ assert.deepEqual(plain(h.state.answers),{q1:'A'});assert.equal(h.state.currentIndex,1);assert.equal(h.snapshot().homeworkAssistEpoch,epoch);
+ assert.equal(h.messages.filter(v=>v.type==='learning-hub-homework-save').length,0);
 });

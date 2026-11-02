@@ -67,7 +67,7 @@ function modal(node, open) {
 let context, uid = '', roomId = '', pending = null, editor = null, preview = null, feedback = '', feedbackError = false, listSignature = '', detailSignature = '';
 const seenAttempts = new Set();
 let overallSignature = '';
-let historyView = null, selectedId = '', routeKey = '', inspectMode = '', nextSignature = '';
+let studentWorkId = '', historyView = null, selectedId = '', routeKey = '', inspectMode = '', nextSignature = '';
 const t = (th, en) => context?.language === 'en' ? en : th;
 const el = (tag, text, cls) => { const node = document.createElement(tag); node.textContent = text; if (cls) node.className = cls; return node; };
 const snapshot = () => context?.classroomAssignments?.uid === uid ? context.classroomAssignments : null;
@@ -95,6 +95,8 @@ function errorText(code) {
     'assignment/lesson-unavailable': ['ยังไม่พบทางลัดบทเรียนของงานนี้ เปิดบทเรียนผ่านเมนูวิชาได้', 'No lesson shortcut is available for this assignment. Browse the subject menu.'],
     'assignment/room-unavailable': ['ยังเปิดการบ้านไม่ได้ ตรวจว่าคุณเป็นสมาชิกห้องนี้และลองอีกครั้ง', 'Homework is unavailable. Check your classroom membership and retry.'],
     'assignment/read-timeout': ['โหลดการบ้านนานกว่าปกติ ตรวจการเชื่อมต่อแล้วลองอีกครั้ง', 'Homework is taking longer than usual. Check your connection and retry.'],
+    'homework/assist-busy': ['งานนี้กำลังใช้เครื่องครูอีกเครื่องอยู่ ให้นักเรียนรับกลับหรือรอสิทธิ์หมดอายุ', 'This work is active on another teacher device. Let the student reclaim it or wait for expiry.'],
+    'homework/assist-unavailable': ['ยังเปิดงานนักเรียนไม่ได้ ตรวจสิทธิ์และ Rules ชุดช่วยนักเรียน แล้วลองใหม่', 'Student work is unavailable. Check your role and the assistance Rules, then retry.'],
     'homework/not-ready': ['ครูยังไม่ได้เปิดรับการส่งงาน ให้ครูเปิดการบ้านนี้แล้วกดเปิดรับการส่งงานก่อน', 'Your teacher needs to enable submissions for this assignment first.'],
     'homework/prerequisite-locked': ['ต้องส่งงานที่กำหนดให้ได้มากกว่า 50% ก่อนเปิดงานนี้', 'Submit the required assignment with more than 50% before opening this work.'],
     'homework/invalid-quiz': ['เตรียมชุดคำถามไม่ได้ ให้ครูตรวจเนื้อหา Quiz แล้วลองอีกครั้ง', 'Could not prepare the question set. Ask your teacher to check the quiz and retry.'],
@@ -191,7 +193,7 @@ function renderResults(item, isOwner) {
     for (const row of rows) {
       const line = document.createElement('tr'); line.dataset.resultUid = row.uid;
       const score = !row.submitted ? '—' : row.grade?.error || !row.grade ? t('ยังตรวจผลไม่ได้', 'Result unavailable') : `${row.grade.score}/${row.grade.maxScore} (${row.grade.percent}%)`;
-      for (const value of [row.name, sentLabel(row), score, row.grade?.submittedAt ? resultTime(row.grade.submittedAt) : '—']) line.append(el('td', value));
+      for (const value of [row.name, sentLabel(row)+(row.assistedByUid ? t(' · ส่งผ่านเครื่องครู',' · Submitted on teacher device') : ''), score, row.grade?.submittedAt ? resultTime(row.grade.submittedAt) : '—']) line.append(el('td', value));
       const historyCell = el('td', '');
       if (row.submitted) { const view = button(t(`ครั้งที่ ${row.grade?.submissionRevision || 1} · ดูประวัติ`, `Submission ${row.grade?.submissionRevision || 1} · History`), 'history', item.id); view.dataset.studentUid = row.uid; historyCell.append(view); }
       line.append(historyCell);
@@ -390,7 +392,7 @@ function paint() {
   const nextRoom = nextUid && context.classroomRooms?.roomStatus === 'ready' ? selected?.id || '' : '';
   if (uid !== nextUid || roomId !== nextRoom) {
     uid = nextUid; roomId = nextRoom; pending = null; closeEditor(); feedback = ''; feedbackError = false;
-    seenAttempts.clear(); historyView = null; selectedId = routeKey = inspectMode = nextSignature = ''; closeDetail();
+    seenAttempts.clear(); historyView = null; studentWorkId = ''; selectedId = routeKey = inspectMode = nextSignature = ''; closeDetail();
     listSignature = detailSignature = ''; list.replaceChildren(); detail.replaceChildren(); nextList.replaceChildren(); draftList.replaceChildren(); toolActions.replaceChildren();
     root.querySelector('[data-hw-tools]').hidden = true; root.querySelector('[data-hw-selection]').textContent = '';
   }
@@ -445,7 +447,7 @@ function paint() {
   detail.hidden = !inspectMode;
   root.querySelector('[data-hw-detail-title]').textContent = inspectMode === 'scores' ? t('ผลการส่งงาน','Submission results') : t('รายละเอียดงาน','Assignment details');
   root.querySelector('[data-hw-detail-close]').textContent = t('ปิด','Close');
-  const nextDetail = JSON.stringify([context.language, id, item, item && assignmentStatus(item), room?.status, submissions(), historyView, busy(), data?.connected, inspectMode, isOwner]);
+  const nextDetail = JSON.stringify([studentWorkId, context.language, id, item, item && assignmentStatus(item), room?.status, submissions(), historyView, busy(), data?.connected, inspectMode, isOwner]);
   if (nextDetail !== detailSignature) {
     detailSignature = nextDetail; detail.replaceChildren();
     if (id && !item && room?.status === 'ready') detail.append(el('p', t('ไม่พบการบ้านนี้ หรือคุณไม่มีสิทธิ์เปิดงานร่าง ตรวจลิงก์กับครูอีกครั้ง', 'This assignment was not found or its draft is private. Check the link with your teacher.')));
@@ -454,7 +456,21 @@ function paint() {
       if (inspectMode !== 'scores') {
         detail.append(el('span', statusLabel(item), 'homework-tag'), el('p', dueText(item)), el('p', item.instructions || t('ไม่มีคำชี้แจงเพิ่มเติม', 'No additional instructions.'), 'homework-instructions'),
           el('p', t('Quiz: ', 'Quiz: ') + (context.language === 'en' ? item.quizTitleEn : item.quizTitleTh)));
-        const launch = launchButton(item,isOwner); if (launch) detail.append(launch);
+        const actions=el('div','','homework-actions');
+        const launch = launchButton(item,isOwner); if (launch) actions.append(launch);
+        if(isOwner && item.status!=='draft') actions.append(button(t('งานนักเรียน','Student work'),'student-work',item.id));
+        detail.append(actions);
+        if(isOwner && studentWorkId===item.id) {
+          const panel=el('section','','homework-student-work');panel.dataset.studentWork='';panel.append(el('h4',t('เลือกนักเรียนเพื่อทำต่อบนเครื่องครู','Choose a student to continue on the teacher’s device')));
+          const rows=submissions()?.grades?.[item.id]?.rows || [];
+          for(const row of rows) {
+            const entry=el('div','','homework-student-work-row');entry.append(el('strong',row.name),el('span',sentLabel(row)));
+            const open=button(t('เปิดทำต่อบนเครื่องครู','Continue on teacher device'),'assist-start',item.id);open.dataset.studentUid=row.uid;open.dataset.hwUnavailable=String(item.status!=='published' || !submissions()?.grades?.[item.id]?.ready || row.uid===uid);entry.append(open);panel.append(entry);
+          }
+          if(!rows.length)panel.append(el('p',t('ยังไม่มีนักเรียน หรือกำลังโหลดรายชื่อ','No students yet, or the roster is loading.')));
+          if(item.status==='closed')panel.append(el('p',t('งานปิดแล้ว ดูผลได้ แต่เปิดทำต่อไม่ได้','This assignment is closed. Results remain available.')));
+          detail.append(panel);
+        }
         const note = gateNote(item), required = requiredWorkButton(item); if (note) detail.append(note); if (required) detail.append(required);
       }
       if (item.status !== 'draft') detail.append(renderResults(item, isOwner));
@@ -499,6 +515,11 @@ root.addEventListener('click', async event => {
     selectedId = item.id; inspectMode = action === 'select' ? '' : action === 'scores' ? 'scores' : 'details'; historyView = null;
     if (action === 'scores') { paint(); detail.focus(); }
     else { send('view', {id:item.id}); if (action === 'select') list.querySelector(`[data-assignment-id="${item.id}"]`)?.scrollIntoView?.({block:'nearest',behavior:'smooth'}); }
+  }
+  else if (action === 'student-work') { studentWorkId=studentWorkId===item.id?'':item.id;paint(); }
+  else if (action === 'assist-start') {
+    const student=submissions()?.grades?.[item.id]?.rows.find(row=>row.uid===node.dataset.studentUid);
+    if(student && window.confirm(t(`ให้นักเรียน ${student.name} ทำงาน “${item.title}” ต่อบนเครื่องครูหรือไม่? คำตอบและผลส่งจะเป็นของนักเรียนคนนี้`, `Continue “${item.title}” for ${student.name} on your device? Answers and submissions will belong to this student.`))) send('assist-start',{id:item.id,studentUid:student.uid});
   }
   else if (action === 'edit') edit(item);
   else if (action === 'history') send('history', { id: item.id, studentUid: node.dataset.studentUid });

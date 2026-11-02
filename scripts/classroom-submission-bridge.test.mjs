@@ -26,3 +26,9 @@ test('removed frames and account changes cannot receive late submission results'
 test('permission failures stay failures and do not become successful submissions',async()=>{
   const f=fixture();f.service.quizCommand=async()=>{throw{code:'PERMISSION_DENIED'};};await f.send();assert.equal(f.replies[0].ok,false);assert.equal(f.replies[0].code,'PERMISSION_DENIED');
 });
+test('assisted frames keep the signed-in teacher as actor and accept only the bound student owner',async()=>{
+ const f=fixture();f.binding.actorUid='teacher';f.binding.assistId='e_'+'a'.repeat(32);f.setUid('teacher');
+ await f.send();assert.equal(f.calls.length,1);assert.equal(f.calls[0][1].uid,'student');
+ await f.send({uid:'teacher'});assert.equal(f.calls.length,1);
+ f.setUid('student');await f.send();assert.equal(f.calls.length,1,'Signing in as another account invalidates the teacher binding');
+});

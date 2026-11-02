@@ -357,3 +357,8 @@ body.theme-classroom {
 .homework-overall progress{display:block;width:100%;height:10px;margin-top:4px;accent-color:#275ea5}
 .homework-overall .homework-overall-offline{color:#775a19;font-weight:600}
 @media(max-width:600px){.homework-overall{padding:15px}.homework-overall-values{gap:18px}.homework-overall-metric>strong{font-size:25px}}
+
+/* Room co-teachers use the same blue, touch-friendly directory as students. */
+.classroom-teachers-details,.classroom-co-teacher-roster{grid-column:1/-1;margin-top:12px;min-width:0}
+.classroom-teachers-details>summary,.classroom-co-teacher-roster>summary{cursor:pointer;font-weight:700;min-height:40px;align-content:center;color:var(--ink)}
+.classroom-teachers-details>p{font-size:13px;line-height:1.7;color:var(--muted)}

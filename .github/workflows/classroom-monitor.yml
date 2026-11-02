@@ -49,7 +49,7 @@ jobs:
           curl --fail --location --output work/monitor-qa/firebase-database-emulator.jar https://storage.googleapis.com/firebase-preview-drop/emulator/firebase-database-emulator-v4.11.2.jar
       - name: Verify monitoring and existing classroom Rules
         run: pnpm test:monitor:rules
-      - name: Verify email roster and full handoff Rules
+      - name: Verify email roster, co-teachers and full handoff Rules
         run: pnpm test:classroom:roster
       - name: Install isolated browser tools
         run: |

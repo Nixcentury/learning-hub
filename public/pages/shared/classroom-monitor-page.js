@@ -42,6 +42,8 @@
       });
     }
     if (root.parentElement !== target) target.append(root);
+    root.hidden = room.membership === "teacher";
+    if (root.hidden) { detail.classList.remove("has-monitoring-session"); return; }
     const owner = room.membership === 'owner' && context.classroom?.state === 'teacher';
     const liveRoom = data?.rooms?.find(value => value.id === room.id), session = liveRoom?.session;
     const ready = data?.uid === uid, locked = Boolean(session), busy = Boolean(pending || data?.busy);

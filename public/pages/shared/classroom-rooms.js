@@ -7,9 +7,13 @@
   const detail = area.querySelector('[data-room-detail]');
   const status = area.querySelector('[data-room-list-status]');
   const feedback = area.querySelector('[data-room-feedback]');
-  let context, uid, pending, sequence = 0, rendered = '', feedbackKey = '', feedbackError = false, emailDraft = '', draftRoom = '', confirming = '';
+  let context, uid, pending, sequence = 0, rendered = '', feedbackKey = '', feedbackError = false, emailDraft = '', teacherEmailDraft = '', draftRoom = '', confirming = '';
   const t = (th, en) => context?.language === 'en' ? en : th;
   const messages = {
+    'classroom/teacher-roster-unavailable': ['ยังเพิ่มครูร่วมไม่ได้ ให้ผู้ดูแลวาง Rules ชุดครูร่วมแล้วโหลดห้องใหม่', 'Co-teacher management is unavailable. Ask the administrator to apply the co-teacher Rules and reload.'],
+    'classroom/remove-teacher-first': ['บัญชีนี้เป็นครูร่วมอยู่ กรุณาถอนครูร่วมก่อนจัดการสมาชิกนักเรียน', 'Remove this account’s co-teacher access before managing its student membership.'],
+    'invited-teacher': ['เพิ่มอีเมลครูร่วมแล้ว แชร์ลิงก์ให้เพื่อนเข้า Hub ด้วยอีเมลนี้ ห้องจะขึ้นอัตโนมัติ', 'Co-teacher email saved. Share the link and ask them to sign in with this email; the classroom will appear automatically.'],
+    'removed-teacher': ['ถอนครูร่วมแล้ว งานและคะแนนเดิมยังอยู่', 'Co-teacher access removed. Existing work and scores are retained.'],
     'classroom/invalid-name': ['กรุณาใส่ชื่อห้อง 1–100 ตัวอักษร', 'Enter a room name of 1–100 characters.'],
     'classroom/invalid-code': ['กรุณาใส่รหัสห้อง 8 ตัวที่ได้รับจากครู', 'Enter the 8-character code from your teacher.'],
     'classroom/code-not-found': ['ไม่พบรหัสนี้ ตรวจรหัสกับครูแล้วลองใหม่', 'Code not found. Check it with your teacher.'],
@@ -57,7 +61,7 @@
     const access = context?.classroom, snapshot = context?.classroomRooms;
     const nextUid = parent !== window && context?.identity?.status === 'signed-in' && access?.uid === context.identity.uid && ['teacher', 'student'].includes(access.state) ? access.uid : null;
     if (uid !== nextUid) {
-      uid = nextUid; pending = null; rendered = ''; createForm.reset(); joinForm.reset();
+      uid = nextUid; pending = null; rendered = ''; emailDraft = teacherEmailDraft = ''; confirming = '';  createForm.reset(); joinForm.reset();
       list.replaceChildren(); detail.replaceChildren(); showFeedback('');
       document.body.classList.remove('classroom-has-room');
     }
@@ -68,7 +72,7 @@
     area.classList.toggle('is-in-room', Boolean(data?.selected));
     document.body.classList.toggle('classroom-has-room', Boolean(data?.selected));
     const saving = Boolean(pending || data?.busy);
-    area.querySelectorAll('button,input').forEach(node => { node.disabled = saving || (Boolean(node.closest('.classroom-roster-details')) && node.dataset.roomAction !== 'open' && data?.rosterStatus !== 'ready'); });
+    area.querySelectorAll('button,input').forEach(node => { node.disabled = saving || (Boolean(node.closest('.classroom-roster-details')) && node.dataset.roomAction !== 'open' && data?.rosterStatus !== 'ready') || (Boolean(node.closest('.classroom-teachers-details')) && !['open', 'share-room-teachers'].includes(node.dataset.roomAction) && data?.teacherRosterStatus !== 'ready'); });
     area.setAttribute('aria-busy', String(saving));
     if (saving) {
       feedback.hidden = false; feedback.classList.remove('is-error');
@@ -82,16 +86,18 @@
     if (signature === rendered) return;
     const detailsOpen = detail.querySelector('.classroom-roster-details')?.open;
     const focusedEmail = document.activeElement?.matches('[data-student-email]');
+    const focusedTeacherEmail = document.activeElement?.matches('[data-room-teacher-email]');
+    const teachersOpen = detail.querySelector('.classroom-teachers-details')?.open;
     rendered = signature;
     list.replaceChildren();
     for (const room of data?.rooms || []) {
       const card = element('article', '', 'classroom-room-card');
-      card.append(element('small', room.membership === 'owner' ? t('ห้องที่ฉันสร้าง', 'Created by me') : t('เข้าร่วมแล้ว', 'Joined')),
+      card.append(element('small', room.membership === 'owner' ? t('ห้องที่ฉันสร้าง', 'Created by me') : room.membership === 'teacher' ? t('ครูร่วม', 'Co-teacher') : t('เข้าร่วมแล้ว', 'Joined')),
         element('h3', room.name), button(t('เปิดห้อง', 'Open classroom'), 'open', room.id));
       list.append(card);
     }
     const room = data?.selected;
-    if (draftRoom !== room?.id) { draftRoom = room?.id || ''; emailDraft = ''; confirming = ''; }
+    if (draftRoom !== room?.id) { draftRoom = room?.id || ''; emailDraft = teacherEmailDraft = ''; confirming = ''; }
     detail.hidden = !room; detail.replaceChildren();
     if (room) {
       detail.append(button(t('← กลับรายการห้อง', '← Back to classrooms'), 'back'), element('h2', room.name || t('กำลังเปิดห้อง…', 'Opening classroom…')));
@@ -149,9 +155,40 @@
           }
           members.append(list);
         }
+      } else if (room.membership === 'teacher') {
+        detail.append(element('p', t('คุณเป็นครูร่วมในห้องนี้ จัดการงาน ดูคะแนนและรายชื่อ และจัดการลิงก์ได้', 'You are a co-teacher in this classroom. Manage assignments, view grades and students, and manage links.')));
+        const roster = element('details', '', 'classroom-co-teacher-roster');
+        roster.append(element('summary', t('นักเรียนในห้อง', 'Class students') + ' · ' + data.members.length));
+        const names = element('ul', '', 'classroom-roster');
+        for (const member of data.members) { const row = element('li', ''); row.append(element('strong', member.displayName), element('small', member.email || '')); names.append(row); }
+        roster.append(names); detail.append(roster);
       } else if (room.membership === 'student') detail.append(element('p', t('คุณเข้าร่วมห้องนี้แล้ว ดูโพสต์งานที่ครูมอบหมายได้ด้านล่าง', 'You have joined this classroom. Your assigned homework appears below.')));
+      if (room.membership === 'owner' && data.roomStatus !== 'error') {
+        const teachers = element('details', '', 'classroom-teachers-details classroom-panel'); teachers.open = Boolean(teachersOpen);
+        teachers.append(element('summary', t('ครูร่วมในห้อง', 'Classroom co-teachers') + ' · ' + (data.teachers || []).length));
+        const form = element('form', '', 'classroom-roster-form'); form.dataset.inviteRoomTeacher = '';
+        const label = element('label', t('อีเมลที่ครูใช้เข้าสู่ระบบ Hub', 'The teacher’s Hub sign-in email'));
+        const input = document.createElement('input'); input.type = 'email'; input.name = 'email'; input.required = true; input.maxLength = 254; input.autocomplete = 'off'; input.dataset.roomTeacherEmail = ''; input.value = teacherEmailDraft;
+        label.append(input); const add = element('button', t('เพิ่มครูร่วม', 'Add co-teacher'), 'classroom-button'); add.type = 'submit';
+        form.append(label, add); teachers.append(form, element('p', t('เพิ่มอีเมลแล้วแชร์ลิงก์ให้เพื่อนเข้าสู่ระบบด้วยอีเมลนี้ ห้องจะปรากฏอัตโนมัติ ครูร่วมจัดการงาน คะแนน และลิงก์ได้เฉพาะห้องนี้', 'Add their email, then share the link and ask them to sign in with it. This classroom appears automatically. Co-teachers manage assignments, grades and links in this classroom.')), button(t('แชร์ลิงก์ให้ครูเปิด Classroom', 'Share Classroom link with a teacher'), 'share-room-teachers', room.id));
+        if (data.teacherRosterStatus === 'error') teachers.append(element('p', message('classroom/teacher-roster-unavailable'), 'is-error'), button(t('โหลดห้องอีกครั้ง', 'Reload classroom'), 'open', room.id));
+        else if (data.teacherRosterStatus !== 'ready') teachers.append(element('p', t('กำลังโหลดครูร่วม…', 'Loading co-teachers…')));
+        const people = element('ul', '', 'classroom-roster');
+        for (const teacher of data.teachers || []) {
+          const row = element('li', ''); row.append(element('strong', teacher.displayName), element('small', teacher.email));
+          const remove = button(confirming === 'teacher:' + teacher.uid ? t('ยืนยันถอนครูร่วม', 'Confirm removal') : t('ถอนครูร่วม', 'Remove co-teacher'), 'remove-teacher', room.id); remove.dataset.teacherUid = teacher.uid; row.append(remove);
+          if (confirming === 'teacher:' + teacher.uid) row.append(button(t('ยกเลิก', 'Cancel'), 'cancel-confirmation', room.id));
+          people.append(row);
+        }
+        for (const invitation of (data.teacherInvitations || []).filter(record => !record.acceptedUid)) {
+          const row = element('li', ''); row.append(element('span', invitation.email), element('small', t('รอเข้า Hub', 'Waiting for Hub sign-in')));
+          const cancel = button(t('ยกเลิกคำเชิญ', 'Cancel invitation'), 'cancel-teacher-invite', room.id); cancel.dataset.invitationId = invitation.id; row.append(cancel); people.append(row);
+        }
+        teachers.append(people); detail.append(teachers);
+      }
     }
-    area.querySelectorAll('button,input').forEach(node => { node.disabled = saving || (Boolean(node.closest('.classroom-roster-details')) && node.dataset.roomAction !== 'open' && data?.rosterStatus !== 'ready'); });
+    area.querySelectorAll('button,input').forEach(node => { node.disabled = saving || (Boolean(node.closest('.classroom-roster-details')) && node.dataset.roomAction !== 'open' && data?.rosterStatus !== 'ready') || (Boolean(node.closest('.classroom-teachers-details')) && !['open', 'share-room-teachers'].includes(node.dataset.roomAction) && data?.teacherRosterStatus !== 'ready'); });
+    if (!saving && focusedTeacherEmail) detail.querySelector('[data-room-teacher-email]')?.focus();
     if (!saving && focusedEmail) detail.querySelector('[data-student-email]')?.focus();
   }
   function send(action, payload = {}) {
@@ -162,8 +199,9 @@
   }
   createForm.addEventListener('submit', event => { event.preventDefault(); send('create', { name: createForm.elements.name.value }); });
   joinForm.addEventListener('submit', event => { event.preventDefault(); send('join', { code: joinForm.elements.code.value }); });
-  area.addEventListener('input', event => { if (event.target.matches('[data-student-email]')) emailDraft = event.target.value; });
+  area.addEventListener('input', event => { if (event.target.matches('[data-student-email]')) emailDraft = event.target.value; if (event.target.matches('[data-room-teacher-email]')) teacherEmailDraft = event.target.value; });
   area.addEventListener('submit', event => {
+    if (event.target.matches('[data-invite-room-teacher]')) { event.preventDefault(); send('invite-teacher', { roomId: context.classroomRooms.selected.id, email: teacherEmailDraft }); return; }
     if (!event.target.matches('[data-invite-student]')) return;
     event.preventDefault(); send('invite', { roomId: context.classroomRooms.selected.id, email: emailDraft });
   });
@@ -171,13 +209,15 @@
     const target = event.target.closest('[data-room-action]');
     if (!target || target.disabled) return;
     const action = target.dataset.roomAction;
+    if (action === 'share-room-teachers') { parent.postMessage({ type: 'learning-hub-classroom-action', action: 'share-room-teacher-link', roomId: context.classroomRooms.selected.id }, location.origin); return; }
     if (action === 'copy') {
       const requestUid = uid;
       try { await navigator.clipboard.writeText(context.classroomRooms.selected.joinCode); if (uid === requestUid) showFeedback('copied'); }
       catch { if (uid === requestUid) showFeedback('copy-failed', true); }
     } else if (action === 'cancel-confirmation') { confirming = ''; rendered = ''; paint(); }
     else if (action === 'remove-member' && confirming !== target.dataset.memberUid) { confirming = target.dataset.memberUid; rendered = ''; paint(); }
-    else send(action, { roomId: target.dataset.roomId, memberUid: target.dataset.memberUid, invitationId: target.dataset.invitationId });
+    else if (action === 'remove-teacher' && confirming !== 'teacher:' + target.dataset.teacherUid) { confirming = 'teacher:' + target.dataset.teacherUid; rendered = ''; paint(); }
+    else send(action, { roomId: target.dataset.roomId, memberUid: target.dataset.memberUid, teacherUid: target.dataset.teacherUid, invitationId: target.dataset.invitationId });
   });
   document.addEventListener('hub-page-context', event => { context = event.detail; paint(); });
   window.addEventListener('message', event => {
@@ -187,6 +227,9 @@
       if (action === 'create') { createForm.reset(); showFeedback('created'); }
       else if (action === 'join') { joinForm.reset(); showFeedback('joined'); }
       else if (action === 'invite') { emailDraft = ''; rendered = ''; showFeedback('invited'); }
+      else if (action === 'invite-teacher') { teacherEmailDraft = ''; rendered = ''; showFeedback('invited-teacher'); }
+      else if (action === 'remove-teacher') { confirming = ''; showFeedback('removed-teacher'); }
+      else if (action === 'cancel-teacher-invite') showFeedback('cancelled-invite');
       else if (action === 'remove-member') { confirming = ''; showFeedback('removed-member'); }
       else if (action === 'restore-member') showFeedback('restored-member');
       else if (action === 'cancel-invite') showFeedback('cancelled-invite');

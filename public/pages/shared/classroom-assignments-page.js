@@ -1,3 +1,4 @@
+import { canTeachRoom } from '../../shared/classroom-room-role.js';
 import { newAssignmentId, assignmentUrl, assignmentStatus, thaiDateInput, parseThaiDateInput } from '../../shared/classroom-assignment-model.js';
 
 // DOM presentation only. All authority, catalog resolution and writes live in
@@ -71,7 +72,7 @@ const t = (th, en) => context?.language === 'en' ? en : th;
 const el = (tag, text, cls) => { const node = document.createElement(tag); node.textContent = text; if (cls) node.className = cls; return node; };
 const snapshot = () => context?.classroomAssignments?.uid === uid ? context.classroomAssignments : null;
 const currentRoom = () => snapshot()?.rooms.find(room => room.id === roomId);
-const owner = () => currentRoom()?.membership === 'owner' && context?.classroom?.state === 'teacher';
+const owner = () => canTeachRoom(currentRoom(), context?.identity?.uid, context?.classroom?.state === 'teacher');
 const submissions = () => context?.classroomSubmissions?.uid === uid && context.classroomSubmissions.roomId === roomId ? context.classroomSubmissions : null;
 const busy = () => Boolean(pending || snapshot()?.busy || submissions()?.busy);
 function button(text, action, id) {
@@ -303,7 +304,7 @@ function renderNext(values, isOwner) {
 }
 function renderTools(item, isOwner) {
   root.querySelector('[data-hw-tools]').hidden = !isOwner;
-  root.querySelector('[data-hw-tools-kicker]').textContent = t('สำหรับครูเจ้าของห้อง', 'Room owner');
+  root.querySelector('[data-hw-tools-kicker]').textContent = t('สำหรับครูในห้อง', 'Room teachers');
   root.querySelector('[data-hw-tools-heading]').textContent = t('จัดการงาน', 'Assignment tools');
   root.querySelector('[data-hw-selection-label]').textContent = t('งานที่เลือก', 'Selected assignment');
   root.querySelector('[data-hw-selection]').textContent = item?.title || t('เลือกโพสต์งานเพื่อจัดการ', 'Select an assignment post');
@@ -402,6 +403,7 @@ function paint() {
   root.querySelector('[data-hw-heading]').textContent = t('โพสต์งาน', 'Assignment posts');
   if (!isOwner) { if (editor) closeEditor(); if (inspectMode === 'scores') closeDetail(); }
   root.dataset.owner = String(isOwner);
+  root.querySelector('[data-room-monitor-panel]').hidden = room?.membership === 'teacher';
   root.querySelector('[data-room-monitor-summary]').textContent = isOwner ? t('ติดตามคาบเรียน','Lesson monitoring') : t('คาบเรียนของฉัน','My lesson');
   const newButton = root.querySelector('[data-hw-new]'); newButton.hidden = !isOwner || Boolean(editor); newButton.textContent = t('+ มอบหมายงาน', '+ Assign homework');
   root.querySelector('[data-hw-note]').textContent = t('ทำ Quiz → ตรวจคำตอบ → ดูคะแนน → ส่งงานให้ครู กลับไปแก้และส่งซ้ำได้จนกว่าครูปิดงาน ครูเห็นคะแนนรวมที่ส่งล่าสุด การเปิด Quiz ยังไม่นับเป็นการส่งงาน', 'Complete quiz → Check answers → Review score → Submit to teacher. Edit and resubmit until your teacher closes the assignment. Teachers see the latest submitted total. Opening a quiz is not a submission.');

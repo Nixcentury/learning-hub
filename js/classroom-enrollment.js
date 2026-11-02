@@ -25,6 +25,8 @@ export function createClassroomEnrollment({ io }) {
           try {
             const previous = await io.get('members/' + invite.roomId + '/' + user.uid);
             if (!current() || previous?.email) return;
+            const roomTeacher = await io.get('teachers/' + invite.roomId + '/' + user.uid).catch(() => null);
+            if (!current() || roomTeacher) return;
             const removed = await io.get('removed/' + invite.roomId + '/' + user.uid);
             if (!current() || removed) return;
             const patch = joinRoomUpdates(user.uid, invite.roomId, invite.joinCode, user.displayName || email, io.timestamp(), previous);

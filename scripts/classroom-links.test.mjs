@@ -72,3 +72,13 @@ test('switching room/account while a write waits cannot commit to the old contex
   const task = f.service.command('create', { roomId: rid, id, title: 'A', url: 'https://example.com' });
   f.open('student-b', other); f.ready(); resolve(); await assert.rejects(task, /links\/session-changed/); assert.equal(f.data(), null);
 });
+
+test('co-teacher edits student links without global approval; live revocation clears links and ignores late snapshots',async()=>{
+ const f=fixture();f.service.setContext({status:'signed-in',user:{uid:'friend',displayName:'Friend'}},{uid:'friend',status:'ready',systemRole:'student',isTeacher:false},{uid:'friend',roomStatus:'ready',selected:{id:rid,ownerUid:'teacher',membership:'teacher'}},true);
+ f.ready({[id]:record});f.emit(`@classroom/teachers/${rid}/friend`,{displayName:'Friend'});f.setData(record);
+ assert.equal(f.service.getState().status,'ready');assert.equal(f.service.getState().owner,true);
+ await f.service.command('edit',{roomId:rid,id,revision:1,title:'Teacher fix',url:'https://example.test/'});
+ assert.equal(f.data().authorUid,'student');const old=f.watches.at(-1);
+ f.emit(`@classroom/teachers/${rid}/friend`,null);assert.equal(f.service.getState().status,'error');assert.deepEqual(f.service.getState().items,[]);
+ old.fn({[id]:record});assert.deepEqual(f.service.getState().items,[]);f.service.dispose();
+});

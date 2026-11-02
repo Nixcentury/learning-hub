@@ -1,3 +1,4 @@
+import { canTeachRoom } from '../public/shared/classroom-room-role.js';
 import { summarizeClassroomProgress } from '../public/shared/classroom-progress-model.js';
 import { createClassroomAccess } from './classroom-access.js';
 import { assignmentIdPattern, assignmentRoomPattern } from './classroom-assignment-model.js';
@@ -5,12 +6,12 @@ import { failSubmission, submissionPayload, gradeSubmission } from '../public/sh
 import { createClassroomSheetCsv } from '../public/shared/classroom-sheet-export.js';
 
 export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange = () => {} }) {
-  let session, role, assignments, uid = '', roomId = '', epoch = 0, connected = false, error = '', busy = '', last = '';
+  let session, role, assignments, uid = '', roomId = '', epoch = 0, connected = false, error = '', busy = '', last = '', membership = '';
   let quizzes = {}, results = {}, roster = {}, own = {}, histories = {}, ready = false;
   const stops = [], itemStops = new Map(), parsed = new Map(), loaded = new Set(), resultLoaded = new Set(), submissionsInFlight = new Map();
   const historyStops = new Map(), historyLoaded = new Set(), passed = new Set();
   const room = (selected = roomId) => assignments?.rooms.find(value => value.id === selected);
-  const isOwner = (selected = roomId) => role === 'teacher' && room(selected)?.membership === 'owner' && room(selected)?.ownerUid === uid;
+  const isOwner = (selected = roomId) => canTeachRoom(room(selected), uid, role === 'teacher');
   const live = (version, user = uid) => version === epoch && user === uid && session?.user?.uid === uid;
   const code = failure => String(failure?.code || failure?.message || 'homework/unavailable');
   function questionSet(quiz) {
@@ -90,10 +91,10 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     const verified = createClassroomAccess(identity, access);
     const nextRoom = assignmentState?.uid === verified.uid && assignmentState.rooms.find(value => value.id === selectedRoom && value.status === 'ready');
     const nextUid = ['student','teacher'].includes(verified.state) && assignmentState?.uid === verified.uid ? verified.uid : '';
-    const changed = nextUid !== uid || (nextRoom?.id || '') !== roomId || verified.state !== role;
+    const changed = nextUid !== uid || (nextRoom?.id || '') !== roomId || verified.state !== role || (nextRoom?.membership || '') !== membership;
     session = identity; assignments = assignmentState;
     if (!changed) { syncItems(epoch); publish(); return; }
-    clear(); uid = nextUid; roomId = nextRoom?.id || ''; role = verified.state;
+    clear(); uid = nextUid; roomId = nextRoom?.id || ''; role = verified.state; membership = nextRoom?.membership || "";
     publish(); if (!uid) return;
     const version = epoch;
     stops.push(io.connected(value => { if (live(version)) { connected = value === true; publish(); } }));

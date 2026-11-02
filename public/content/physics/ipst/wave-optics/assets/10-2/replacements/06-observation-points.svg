@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="390" viewBox="0 0 800 390" role="img" aria-labelledby="title desc"><title id="title">Central axis and two observation points</title><desc id="desc">Two coherent in-phase openings U and V are symmetric about O. C lies on the central axis. Points P and R are other positions on the screen. The path difference at R is supplied by the question, not inferred from drawing scale.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#253744"/></marker></defs><rect width="100%" height="100%" fill="white"/><g font-family="DejaVu Sans, sans-serif" fill="#172c3b">
+<text id="text-1" x="400.0" y="34" font-size="24" text-anchor="middle" font-weight="bold">Same slits; different points on the screen</text>
+<path d="M155 90L155 300" fill="none" stroke="#253744" stroke-width="4"/>
+<path d="M650 65L650 305" fill="none" stroke="#253744" stroke-width="4"/>
+<circle cx="155" cy="165" r="4"/>
+<text id="text-2" x="133" y="172" font-size="22" text-anchor="end" font-weight="normal">U</text>
+<path d="M155 165L650 95" fill="none" stroke="#72828d" stroke-width="1.6"/>
+<circle cx="155" cy="255" r="4"/>
+<text id="text-3" x="133" y="262" font-size="22" text-anchor="end" font-weight="normal">V</text>
+<path d="M155 255L650 95" fill="none" stroke="#72828d" stroke-width="1.6"/>
+<path d="M155 210L650 210" fill="none" stroke="#253744" stroke-width="2" stroke-dasharray="6 5"/>
+<text id="text-4" x="133" y="216" font-size="21" text-anchor="end" font-weight="normal">O</text>
+<circle cx="650" cy="95" r="4"/>
+<text id="text-5" x="673" y="102" font-size="22" text-anchor="start" font-weight="normal">P</text>
+<circle cx="650" cy="150" r="4"/>
+<text id="text-6" x="673" y="157" font-size="22" text-anchor="start" font-weight="normal">R</text>
+<circle cx="650" cy="210" r="4"/>
+<text id="text-7" x="673" y="217" font-size="22" text-anchor="start" font-weight="normal">C</text>
+<text id="text-8" x="400" y="285" font-size="21" text-anchor="middle" font-weight="normal">UC = VC at the central axis</text>
+<text id="text-9" x="400" y="326" font-size="19" text-anchor="middle" font-weight="normal">At R, use the path difference given in the question.</text>
+<text id="text-10" x="400.0" y="374" font-size="16" text-anchor="middle" font-weight="normal">The drawing locates the points; it does not encode the numerical path lengths.</text>
+</g></svg>

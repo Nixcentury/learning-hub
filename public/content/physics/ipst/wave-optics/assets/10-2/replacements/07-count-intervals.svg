@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="310" viewBox="0 0 800 310" role="img" aria-labelledby="title desc"><title id="title">Counting intervals between bright-fringe centres</title><desc id="desc">Five consecutive bright-fringe centres have equal separation. The marked length x runs from B minus 1 through the centre C and B1 to B2, spanning three intervals.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#253744"/></marker></defs><rect width="100%" height="100%" fill="white"/><g font-family="DejaVu Sans, sans-serif" fill="#172c3b">
+<text id="text-1" x="400.0" y="34" font-size="24" text-anchor="middle" font-weight="bold">Count intervals, not just the bright bands</text>
+<rect x="125" y="90" width="10" height="70" fill="#63727e" stroke="none" stroke-width="1"/>
+<text id="text-2" x="130" y="193" font-size="20" text-anchor="middle" font-weight="normal">B₋₁</text>
+<rect x="260" y="90" width="10" height="70" fill="#63727e" stroke="none" stroke-width="1"/>
+<text id="text-3" x="265" y="193" font-size="20" text-anchor="middle" font-weight="normal">C</text>
+<rect x="395" y="90" width="10" height="70" fill="#63727e" stroke="none" stroke-width="1"/>
+<text id="text-4" x="400" y="193" font-size="20" text-anchor="middle" font-weight="normal">B₁</text>
+<rect x="530" y="90" width="10" height="70" fill="#63727e" stroke="none" stroke-width="1"/>
+<text id="text-5" x="535" y="193" font-size="20" text-anchor="middle" font-weight="normal">B₂</text>
+<rect x="665" y="90" width="10" height="70" fill="#63727e" stroke="none" stroke-width="1"/>
+<text id="text-6" x="670" y="193" font-size="20" text-anchor="middle" font-weight="normal">B₃</text>
+<path d="M130 72L535 72" fill="none" stroke="#253744" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text id="text-7" x="332.5" y="58" font-size="23" text-anchor="middle" font-weight="normal">x</text>
+<text id="text-8" x="400" y="244" font-size="18" text-anchor="middle" font-weight="normal">Lines mark bright-fringe centres; C is the central bright fringe.</text>
+<text id="text-9" x="400.0" y="294" font-size="16" text-anchor="middle" font-weight="normal">Equal spacing is the small-angle model. Not a photograph.</text>
+</g></svg>

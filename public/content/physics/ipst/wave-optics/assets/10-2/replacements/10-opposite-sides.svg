@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="330" viewBox="0 0 800 330" role="img" aria-labelledby="title desc"><title id="title">Two-sided distance on a screen</title><desc id="desc">Front view of the screen. P and Q are second dark fringes on opposite sides of the central bright fringe C. The total distance is the sum of their positive distances from C. No numerical answer is supplied.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#253744"/></marker></defs><rect width="100%" height="100%" fill="white"/><g font-family="DejaVu Sans, sans-serif" fill="#172c3b">
+<text id="text-1" x="400.0" y="34" font-size="24" text-anchor="middle" font-weight="bold">Front of screen: points on opposite sides</text>
+<path d="M80 170L720 170" fill="none" stroke="#80909b" stroke-width="2" stroke-dasharray="6 4"/>
+<circle cx="170" cy="170" r="4"/>
+<path d="M170 153L170 187" fill="none" stroke="#253744" stroke-width="2"/>
+<text id="text-2" x="170" y="218" font-size="18" text-anchor="middle" font-weight="normal">P: second dark</text>
+<circle cx="400" cy="170" r="4"/>
+<path d="M400 153L400 187" fill="none" stroke="#253744" stroke-width="2"/>
+<text id="text-3" x="400" y="218" font-size="18" text-anchor="middle" font-weight="normal">C: central bright</text>
+<circle cx="630" cy="170" r="4"/>
+<path d="M630 153L630 187" fill="none" stroke="#253744" stroke-width="2"/>
+<text id="text-4" x="630" y="218" font-size="18" text-anchor="middle" font-weight="normal">Q: second dark</text>
+<path d="M170 116L400 116" fill="none" stroke="#253744" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text id="text-5" x="285" y="99" font-size="21" text-anchor="middle" font-weight="normal">xL</text>
+<path d="M400 116L630 116" fill="none" stroke="#253744" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text id="text-6" x="515" y="99" font-size="21" text-anchor="middle" font-weight="normal">xR</text>
+<text id="text-7" x="400" y="267" font-size="18" text-anchor="middle" font-weight="normal">Both distances are measured from C; P and Q are on different sides.</text>
+<text id="text-8" x="400.0" y="314" font-size="16" text-anchor="middle" font-weight="normal">Position sketch, not an intensity graph. Distances are not drawn to scale.</text>
+</g></svg>

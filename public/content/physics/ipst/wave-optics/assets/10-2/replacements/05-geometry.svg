@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="490" viewBox="0 0 800 490" role="img" aria-labelledby="title desc"><title id="title">Geometry of angle and screen displacement</title><desc id="desc">O is the slit midpoint, C is its central-axis intersection with the screen and P is a selected point. Theta is between OC and OP; L is perpendicular screen distance, x is the distance CP.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#253744"/></marker></defs><rect width="100%" height="100%" fill="white"/><g font-family="DejaVu Sans, sans-serif" fill="#172c3b">
+<text id="text-1" x="400.0" y="34" font-size="24" text-anchor="middle" font-weight="bold">One diagram: d, L, x and θ</text>
+<path d="M170 105L170 390" fill="none" stroke="#253744" stroke-width="4"/>
+<path d="M650 65L650 385" fill="none" stroke="#253744" stroke-width="4"/>
+<circle cx="170" cy="255" r="4"/>
+<text id="text-2" x="150" y="262" font-size="22" text-anchor="end" font-weight="normal">U</text>
+<path d="M170 255L650 105" fill="none" stroke="#8c9aa3" stroke-width="1.6"/>
+<circle cx="170" cy="335" r="4"/>
+<text id="text-3" x="150" y="342" font-size="22" text-anchor="end" font-weight="normal">V</text>
+<path d="M170 335L650 105" fill="none" stroke="#8c9aa3" stroke-width="1.6"/>
+<circle cx="170" cy="295" r="4"/>
+<circle cx="650" cy="105" r="4"/>
+<circle cx="650" cy="295" r="4"/>
+<path d="M170 295L650 295" fill="none" stroke="#253744" stroke-width="2" stroke-dasharray="7 5"/>
+<path d="M170 295L650 105" fill="none" stroke="#253744" stroke-width="2"/>
+<path d="M270 295A100 100 0 0 0 262.981 258.195" stroke="#253744" stroke-width="2" fill="none"/>
+<text id="text-4" x="295" y="278" font-size="24" text-anchor="start" font-weight="normal">θ</text>
+<text id="text-5" x="150" y="300" font-size="21" text-anchor="end" font-weight="normal">O</text>
+<text id="text-6" x="665" y="103" font-size="21" text-anchor="start" font-weight="normal">P</text>
+<text id="text-7" x="665" y="318" font-size="21" text-anchor="start" font-weight="normal">C</text>
+<path d="M110 255L110 335" fill="none" stroke="#253744" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text id="text-8" x="88" y="302" font-size="22" text-anchor="middle" font-weight="normal">d</text>
+<path d="M705 105L705 295" fill="none" stroke="#253744" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text id="text-9" x="730" y="207" font-size="22" text-anchor="start" font-weight="normal">x</text>
+<path d="M170 410L650 410" fill="none" stroke="#253744" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text id="text-10" x="410" y="438" font-size="22" text-anchor="middle" font-weight="normal">L</text>
+<text id="text-11" x="400.0" y="474" font-size="16" text-anchor="middle" font-weight="normal">θ is measured from OC, not between UP and VP. Not to scale.</text>
+</g></svg>

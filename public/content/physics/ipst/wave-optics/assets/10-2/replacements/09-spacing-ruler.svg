@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300" role="img" aria-labelledby="title desc"><title id="title">Average adjacent bright-fringe spacing</title><desc id="desc">Five consecutive bright-fringe centres are marked above a 0.1 cm ruler. Read the span between the first and fifth centres, then divide by four intervals. No numerical answer is printed.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#253744"/></marker></defs><rect width="100%" height="100%" fill="white"/><g font-family="DejaVu Sans, sans-serif" fill="#172c3b">
+<text id="text-1" x="400.0" y="34" font-size="24" text-anchor="middle" font-weight="bold">Measure several intervals on one ruler</text>
+<path d="M146.0 91L146.0 153" fill="none" stroke="#253744" stroke-width="3"/>
+<path d="M258.0 91L258.0 153" fill="none" stroke="#253744" stroke-width="3"/>
+<path d="M370.0 91L370.0 153" fill="none" stroke="#253744" stroke-width="3"/>
+<path d="M482.0 91L482.0 153" fill="none" stroke="#253744" stroke-width="3"/>
+<path d="M594.0 91L594.0 153" fill="none" stroke="#253744" stroke-width="3"/>
+<path d="M90 161L650 161" fill="none" stroke="#253744" stroke-width="2"/>
+<path d="M90.0 161L90.0 181" fill="none" stroke="#253744" stroke-width="1"/>
+<text id="text-2" x="90.0" y="207" font-size="18" text-anchor="middle" font-weight="normal">0</text>
+<path d="M104.0 161L104.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M118.0 161L118.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M132.0 161L132.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M146.0 161L146.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M160.0 161L160.0 175" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M174.0 161L174.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M188.0 161L188.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M202.0 161L202.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M216.0 161L216.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M230.0 161L230.0 181" fill="none" stroke="#253744" stroke-width="1"/>
+<text id="text-3" x="230.0" y="207" font-size="18" text-anchor="middle" font-weight="normal">1</text>
+<path d="M244.0 161L244.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M258.0 161L258.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M272.0 161L272.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M286.0 161L286.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M300.0 161L300.0 175" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M314.0 161L314.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M328.0 161L328.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M342.0 161L342.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M356.0 161L356.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M370.0 161L370.0 181" fill="none" stroke="#253744" stroke-width="1"/>
+<text id="text-4" x="370.0" y="207" font-size="18" text-anchor="middle" font-weight="normal">2</text>
+<path d="M384.0 161L384.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M398.0 161L398.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M412.0 161L412.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M426.0 161L426.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M440.0 161L440.0 175" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M454.0 161L454.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M468.0 161L468.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M482.0 161L482.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M496.0 161L496.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M510.0 161L510.0 181" fill="none" stroke="#253744" stroke-width="1"/>
+<text id="text-5" x="510.0" y="207" font-size="18" text-anchor="middle" font-weight="normal">3</text>
+<path d="M524.0 161L524.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M538.0 161L538.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M552.0 161L552.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M566.0 161L566.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M580.0 161L580.0 175" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M594.0 161L594.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M608.0 161L608.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M622.0 161L622.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M636.0 161L636.0 169" fill="none" stroke="#253744" stroke-width="1"/>
+<path d="M650.0 161L650.0 181" fill="none" stroke="#253744" stroke-width="1"/>
+<text id="text-6" x="650.0" y="207" font-size="18" text-anchor="middle" font-weight="normal">4</text>
+<text id="text-7" x="670" y="207" font-size="18" text-anchor="start" font-weight="normal">cm</text>
+<text id="text-8" x="400" y="244" font-size="19" text-anchor="middle" font-weight="normal">Vertical lines mark consecutive bright-fringe centres.</text>
+<text id="text-9" x="400.0" y="284" font-size="16" text-anchor="middle" font-weight="normal">Original schematic. Ruler divisions are 0.1 cm; not measured experimental data.</text>
+</g></svg>

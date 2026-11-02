@@ -40,6 +40,8 @@
         <h2 tabindex="-1" data-th="พื้นที่จัดการห้องเรียน" data-en="Classroom management">พื้นที่จัดการห้องเรียน</h2>
         <p  data-th="ยืนยันสิทธิ์ครูแล้ว พื้นที่จัดการจะแยกจากมุมมองนักเรียน" data-en="Teacher access is verified. Your management workspace is separate from the student view.">ยืนยันสิทธิ์ครูแล้ว พื้นที่จัดการจะแยกจากมุมมองนักเรียน</p>
         <button class="classroom-button" data-classroom-action="account" data-th="สิทธิ์บัญชีของฉัน" data-en="My account access">สิทธิ์บัญชีของฉัน</button>
+        <button class="classroom-button is-primary" data-classroom-action="manage-teachers" data-manage-teachers hidden data-th="เพิ่ม / จัดการครู" data-en="Add / manage teachers">เพิ่ม / จัดการครู</button>
+        <button class="classroom-button" data-classroom-action="share-teacher-link" data-th="แชร์ลิงก์ให้ครู" data-en="Share link with a teacher">แชร์ลิงก์ให้ครู</button>
       </section>
       <section class="classroom-welcome surface" data-classroom-state="error" hidden>
         <h2 tabindex="-1" data-th="ตรวจสอบสิทธิ์ไม่สำเร็จ" data-en="Could not verify your access">ตรวจสอบสิทธิ์ไม่สำเร็จ</h2>
@@ -90,7 +92,7 @@
       <noscript>กรุณาเปิด JavaScript เพื่อให้ตรวจสอบบัญชีและสิทธิ์ได้ / Enable JavaScript to check your account.</noscript>
     </main>
     <script src="../shared/learning-hub-tools.js"></script>
-    <script src="shared/classroom-page.js"></script>
+    <script src="shared/classroom-page.js?v=teacher-management-20261102"></script>
     <script type="module" src="shared/classroom-google-page.js?v=google-phase1-20261101"></script>
     <script src="shared/classroom-rooms.js?v=three-column-20261031"></script>
     <script src="shared/classroom-monitor-page.js?v=three-column-20261031"></script>

@@ -93,7 +93,7 @@ const origin = `http://127.0.0.1:${server.address().port}`, errors = [];
 let browser;
 try {
   browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH } : process.env.PLAYWRIGHT_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHANNEL } : {}) });
-  async function client(uid, mobile = false) {
+  async function client(uid, mobile = false, openRoom = true) {
     const context = await browser.newContext({ viewport: mobile ? { width: 390, height: 844 } : { width: 1360, height: 1000 }, hasTouch: mobile });
     await context.addInitScript(uid => {
       if (!localStorage.getItem('monitor-qa-user')) localStorage.setItem('monitor-qa-user', uid);
@@ -128,6 +128,7 @@ try {
     });
     const page = await context.newPage(); page.on('pageerror', error => errors.push(error.message)); page.setDefaultTimeout(18000);
     await page.goto(origin + prefix + '#classroom'); const frame = page.frameLocator('#hub-page-frame');
+    if (!openRoom) { await frame.locator('[data-rooms-workspace]').waitFor(); return { context, page, frame }; }
     await frame.locator('[data-room-list] button').waitFor(); await frame.locator('[data-room-list] button').first().click();
     // Narrow layouts keep the lesson panel collapsed until requested.
     const panel = frame.locator('[data-room-monitor-panel]');
@@ -572,6 +573,41 @@ try {
   assert.equal(await added.frame.locator('html').evaluate(node=>node.scrollWidth<=innerWidth),true);
   await added.context.close();
   console.log('PASS email roster: pending first login → auto-enroll → owner removal → live access cleared → code rejoin denied → restore → mobile/student isolation');
+  // Teacher management belongs to the Classroom overview, outside any room.
+  await teacher.frame.locator('[data-room-action="back"]').click();
+  await teacher.frame.locator('[data-room-detail]').waitFor({state:'hidden'});
+  // Production parent/dialog/role watchers against real emulator Rules.
+  assert.equal(await teacher.frame.locator('[data-manage-teachers]').isVisible(), false);
+  await teacher.frame.locator('[data-classroom-action="share-teacher-link"]').click();
+  await teacher.page.locator('.hub-share-dialog[open]').waitFor();
+  assert.equal(await teacher.page.locator('#hub-share-url').inputValue(), origin + prefix + '#classroom');
+  assert.ok((await teacher.page.locator('.hub-share-description').textContent()).includes('ไม่ให้สิทธิ์ครู'));
+  await teacher.page.locator('[data-share-close]').click();
+  const friend = await client('teacher-friend', true, false);
+  assert.equal(await friend.frame.locator('[data-create-room]').isVisible(), false);
+  await friend.frame.locator('body').evaluate(() => parent.postMessage({type:'learning-hub-classroom-action', action:'manage-teachers'}, location.origin));
+  assert.equal(await friend.page.locator('[data-teacher-dialog][open]').count(), 0);
+  await good('EMULATOR_ADMIN', 'PUT', 'learningHub/admins/teacher', true);
+  await teacher.frame.locator('[data-manage-teachers]').waitFor();
+  await teacher.frame.locator('[data-manage-teachers]').click();
+  await teacher.page.locator('[data-teacher-dialog][open]').waitFor();
+  await teacher.page.locator('#teacher-email:not([disabled])').waitFor();
+  await teacher.page.locator('#teacher-email').fill('teacher-friend@example.test');
+  await teacher.page.locator('[data-teacher-find]').click();
+  await teacher.page.locator('[data-teacher-result] [data-teacher-action="approve"][data-uid="teacher-friend"]').click();
+  await teacher.page.locator('[data-teacher-feedback]').filter({hasText:'อนุมัติครูแล้ว'}).waitFor();
+  assert.equal((await good('teacher-friend', 'GET', 'learningHub/teacherApprovals/teacher-friend')).enabled, true);
+  assert.equal(await good('teacher', 'GET', 'learningHub/teacherRequests/teacher-friend'), null);
+  await friend.frame.locator('[data-create-room]').waitFor();
+  assert.equal(await teacher.page.locator('#teacher-share-url').inputValue(), origin + prefix + '#classroom');
+  await teacher.page.screenshot({path:resolve(output,'classroom-monitor-teachers-approved.png'),fullPage:true});
+  await teacher.page.locator('[data-teacher-list] [data-teacher-action="revoke"][data-uid="teacher-friend"]').click();
+  await teacher.page.locator('[data-teacher-confirm-revoke]').click();
+  await teacher.page.locator('[data-teacher-feedback]').filter({hasText:'ถอนสิทธิ์ครูแล้ว'}).waitFor();
+  await friend.frame.locator('[data-create-room]').waitFor({state:'hidden'});
+  await teacher.page.locator('[data-teacher-close]').click();
+  await friend.context.close();
+  console.log('PASS teacher management: first login → email preview → admin approval → live teacher access → confirmed revoke; share link and student spoof denial');
   assert.deepEqual(errors, []);
 } catch (failure) {
   const output = resolve(root, 'qa-output'); await mkdir(output, { recursive: true });

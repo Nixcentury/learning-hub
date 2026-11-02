@@ -1,7 +1,7 @@
 let activeDialog = null;
 
 // Keep a selectable link when the browser denies clipboard access.
-export async function openHubShare({ getTarget, getLanguage, opener }) {
+export async function openHubShare({ getTarget, getLanguage, opener, description = null }) {
   activeDialog?.close();
   const english = getLanguage() === 'en';
   const label = (th, en) => english ? en : th;
@@ -19,7 +19,7 @@ export async function openHubShare({ getTarget, getLanguage, opener }) {
   const status = dialog.querySelector('.hub-share-status');
   dialog.querySelector('h2').textContent = label('แชร์ลิงก์', 'Share link');
   dialog.querySelector('label').textContent = label('ลิงก์ไปยังหน้านี้', 'Link to this location');
-  dialog.querySelector('.hub-share-description').textContent = label(
+  dialog.querySelector('.hub-share-description').textContent = (english ? description?.en : description?.th) || label(
     'เปิดหน้าเดียวกันบนเครื่องผู้รับ โดยใช้บัญชีและงานที่บันทึกของผู้รับ ไม่ส่งคำตอบหรือคะแนนของคุณ',
     'Opens the same location using the recipient’s own account and saved work. Your answers and scores are not shared.');
   copy.textContent = label('คัดลอกลิงก์', 'Copy link');
@@ -34,7 +34,7 @@ export async function openHubShare({ getTarget, getLanguage, opener }) {
     try {
       if (!navigator.clipboard?.writeText) throw Error('Clipboard unavailable');
       await navigator.clipboard.writeText(input.value);
-      status.textContent = label('คัดลอกแล้ว ส่งลิงก์นี้ให้ผู้เรียนได้เลย', 'Copied. You can send this link to learners.');
+      status.textContent = label('คัดลอกแล้ว ส่งลิงก์นี้ต่อได้เลย', 'Copied. You can share this link.');
     } catch {
       input.focus(); input.select();
       status.textContent = label('เบราว์เซอร์ไม่อนุญาตให้คัดลอกอัตโนมัติ กดค้างหรือกด Ctrl+C เพื่อคัดลอกลิงก์ที่เลือกไว้',

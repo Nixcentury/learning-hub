@@ -58,7 +58,7 @@ const origin='http://127.0.0.1:'+server.address().port, output=resolve(root,'qa-
 let browser, page;
 try {
   browser=await chromium.launch({headless:true,...(process.env.PLAYWRIGHT_EXECUTABLE_PATH?{executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH}:process.env.PLAYWRIGHT_CHANNEL?{channel:process.env.PLAYWRIGHT_CHANNEL}:{})});
-  const browserContext=await browser.newContext({viewport:{width:1440,height:1100},acceptDownloads:true});
+  const browserContext=await browser.newContext({viewport:{width:1440,height:1100},hasTouch:true,acceptDownloads:true});
   await browserContext.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort());
   page=await browserContext.newPage();page.setDefaultTimeout(15000);page.on('pageerror',e=>errors.push(e.message));
   await page.goto(origin+prefix+'__layout');const frame=page.frameLocator('#room');
@@ -87,6 +87,26 @@ try {
   const download=await downloadPromise;assert.equal(download.suggestedFilename(),'hub-homework-'+aid.slice(2)+'.csv');
   console.log('PASS Classroom layout: desktop columns, top-right selected-work tools, modal scores/edit and CSV');
 
+  for(const [width,height] of [[960,720],[1024,768],[1080,810],[1180,820]]){
+    await page.setViewportSize({width,height});
+    await frame.locator('[data-hw-next-panel][open]').waitFor({state:'attached'});
+    const layout=await frame.locator('[data-classroom-assignments]').evaluate(node=>{
+      const box=selector=>{const r=node.querySelector(selector).getBoundingClientRect();return {x:r.x,right:r.right,width:r.width,bottom:r.bottom};};
+      return {left:box('[data-hw-left]'),feed:box('[data-hw-feed]'),right:box('[data-hw-right]'),
+        fits:document.documentElement.scrollWidth<=innerWidth,
+        targetHeights:[...node.querySelectorAll('[data-hw-tools] button,.homework-lesson-shortcut,.classroom-monitor-person>.classroom-button')].filter(button=>button.getBoundingClientRect().width>0).map(button=>button.getBoundingClientRect().height)};
+    });
+    assert.ok(layout.left.right<layout.feed.x&&layout.feed.right<layout.right.x,'Three tablet columns at '+width);
+    assert.ok(layout.feed.width>=400,'Readable center feed at '+width);
+    assert.ok(layout.fits,'No horizontal page overflow at '+width);
+    assert.ok(layout.targetHeights.every(height=>height>=44),'Touch actions remain at least 44px');
+    assert.equal(await frame.locator('[data-hw-links-panel]').evaluate(node=>node.open),true);
+    assert.equal(await frame.locator('[data-room-monitor-panel]').evaluate(node=>node.open),true);
+    assert.equal(await frame.locator('[data-hw-tools] [data-homework-action="scores"]').getAttribute('data-id'),aid);
+    await page.screenshot({path:resolve(output,'classroom-monitor-layout-teacher-tablet-'+width+'.png'),fullPage:true});
+  }
+  console.log('PASS Classroom layout: 960/1024/1080/1180 landscape keeps three columns, readable feed and touch targets');
+
   await page.evaluate(value=>qa.replace(value),context(false));
   await frame.locator('[data-hw-tools]').waitFor({state:'hidden'});
   await frame.locator('[data-hw-overall-percent]').filter({hasText:'33.33%'}).waitFor();
@@ -112,22 +132,22 @@ try {
   await page.screenshot({path:resolve(output,'classroom-monitor-layout-student-path.png'),fullPage:true});
   await frame.locator('[data-hw-left]').screenshot({path:resolve(output,'classroom-monitor-layout-left-sidebar.png')});
   assert.equal(await frame.locator('[data-room-monitor-slot] [data-monitor-inbox-open]').isVisible(),true);
-  for(const [width,height,name,language] of [[1024,900,'student-ipad-landscape','th'],[768,1024,'student-ipad-portrait','th'],[390,844,'student-mobile-en','en']]){
+  for(const [width,height,name,language,expanded] of [[1024,768,'student-ipad-landscape','th',true],[1024,1366,'student-large-ipad-portrait','th',false],[768,1024,'student-ipad-portrait','th',false],[820,1180,'student-ipad-air-portrait','th',false],[959,720,'student-narrow-landscape','th',false],[674,810,'student-split-view','th',false],[390,844,'student-mobile-en','en',false]]){
     await page.setViewportSize({width,height});await page.evaluate(value=>qa.replace(value),context(false,'student',language));
     await frame.locator('[data-hw-heading]').filter({hasText:language==='en'?'Assignment posts':'โพสต์งาน'}).waitFor();
-    await frame.locator('[data-hw-next-panel]:not([open])').waitFor({state:'attached'});
-    assert.equal(await frame.locator('[data-hw-next-panel]').evaluate(node=>node.open),false);
-    assert.equal(await frame.locator('[data-room-monitor-panel]').evaluate(node=>node.open),false);
+    await frame.locator('[data-hw-next-panel]'+(expanded?'[open]':':not([open])')).waitFor({state:'attached'});
+    assert.equal(await frame.locator('[data-hw-next-panel]').evaluate(node=>node.open),expanded);
+    assert.equal(await frame.locator('[data-room-monitor-panel]').evaluate(node=>node.open),expanded);
     assert.equal(await frame.locator('html').evaluate(node=>node.scrollWidth<=innerWidth),true,'No horizontal overflow at '+width);
     assert.equal(await frame.locator('[data-hw-overall-percent]').textContent(),'33.33%');
     assert.equal(await frame.locator('[data-hw-overall-count]').textContent(),'2/3');
-    await frame.locator('[data-hw-next-panel]>summary').click();await frame.locator('[data-next-assignment]').first().waitFor();
+    if(!expanded)await frame.locator('[data-hw-next-panel]>summary').click();await frame.locator('[data-next-assignment]').first().waitFor();
     await frame.locator('[data-next-assignment]').first().click();
     assert.equal(await frame.locator('[data-hw-detail-dialog]').evaluate(node=>node.open),false);
     await frame.locator('[data-hw-next-panel]>summary').click();
     await page.screenshot({path:resolve(output,'classroom-monitor-layout-'+name+'.png'),fullPage:true});
   }
-  console.log('PASS Classroom layout: student-only data, collapsible side panels, TH/EN at 1024/768/390');
+  console.log('PASS Classroom layout: student-only data, landscape columns, portrait/split-view stacking and TH/EN');
 
   await page.setViewportSize({width:1440,height:1100});await page.evaluate(value=>qa.replace(value),context());
   await frame.locator('[data-hw-new]').click();await frame.locator('[data-hw-editor-dialog][open]').waitFor();

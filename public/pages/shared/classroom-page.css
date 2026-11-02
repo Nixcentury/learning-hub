@@ -245,7 +245,17 @@ body.theme-classroom {
 .homework-modal .homework-results{margin-top:22px}
 .homework-modal .homework-share input{font-size:11px}
 .homework-modal .homework-instructions{white-space:pre-wrap}
-@media(max-width:1179px){
+/* Landscape tablets keep the same three-column workspace as desktop. */
+@media(min-width:960px) and (max-width:1179px) and (orientation:landscape){
+  [data-classroom-page] .page-shell{padding-inline:16px}
+  .classroom-workspace{grid-template-columns:clamp(192px,20vw,224px) minmax(0,1fr) clamp(208px,22vw,248px);gap:12px}
+  .classroom-panel>summary{padding-inline:12px}
+  .classroom-next-content{padding-inline:8px}
+  .classroom-links-content,.homework-teacher-tools{padding:14px 12px}
+  .classroom-feed .homework-card{padding:20px}
+}
+/* Match this query in classroom-assignments-page.js for panel defaults. */
+@media(max-width:959px), (max-width:1179px) and (orientation:portrait){
   .classroom-workspace{display:flex;flex-direction:column;gap:14px}
   .classroom-workspace>:not(dialog){width:100%}
   .classroom-right{order:0}
@@ -260,6 +270,12 @@ body.theme-classroom {
   .classroom-monitor-panel .classroom-monitor-people{max-height:440px}
   .homework-step-list{max-height:480px}
   .classroom-workspace .homework-next-item{margin:0}
+}
+@media(pointer:coarse), (min-width:960px) and (max-width:1179px) and (orientation:landscape){
+  .classroom-workspace .homework-required-work,
+  .classroom-workspace .homework-lesson-shortcut,
+  .classroom-workspace .classroom-monitor-person>.classroom-button,
+  .classroom-workspace .homework-tool-actions>.classroom-button{min-height:44px}
 }
 @media(max-width:600px){
   [data-classroom-page] .page-shell{padding:18px 12px 32px}
@@ -284,7 +300,7 @@ body.theme-classroom {
 .classroom-has-room .page-heading h1{font-size:20px}
 .classroom-has-room .classroom-phase{display:none}
 .classroom-room-detail>p{font-size:12px;line-height:1.7;margin:8px 0}
-@media(min-width:1180px){
+@media(min-width:1180px), (min-width:960px) and (orientation:landscape){
   .classroom-room-detail{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px 18px;padding:14px 20px}
   .classroom-room-detail h2{margin:0;font-size:22px;min-width:0}
   .classroom-room-detail>.classroom-button{margin:0}

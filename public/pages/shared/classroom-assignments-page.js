@@ -51,7 +51,9 @@ const overall = document.createElement('section'); overall.className = 'homework
 const form = root.querySelector('form'), list = root.querySelector('[data-hw-list]'), detail = root.querySelector('[data-hw-detail]');
 const editorDialog = root.querySelector('[data-hw-editor-dialog]'), detailDialog = root.querySelector('[data-hw-detail-dialog]');
 const nextList = root.querySelector('[data-hw-next]'), draftList = root.querySelector('[data-hw-drafts]'), toolActions = root.querySelector('[data-hw-tool-actions]');
-const media = window.matchMedia?.('(max-width: 1179px)');
+// Use the iframe's available width/orientation, including iPad Split View.
+// Keep in sync with the stacked-workspace query in classroom-page.css.
+const media = window.matchMedia?.('(max-width: 959px), (max-width: 1179px) and (orientation: portrait)');
 function setPanelDefaults() {
   for (const selector of ['[data-hw-next-panel]', '[data-hw-links-panel]', '[data-room-monitor-panel]']) root.querySelector(selector).open = !media?.matches;
 }

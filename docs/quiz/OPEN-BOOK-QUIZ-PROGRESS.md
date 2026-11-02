@@ -5,7 +5,7 @@ The user works on several topics in parallel. Use at most 50 questions per set; 
 | Topic | Completed / current work | Next pending | Detailed handoff |
 | --- | --- | --- | --- |
 | 19.1 Sheet 1: blackbody / Planck, ID `b-0f490c3358e9212cee2e2a43` | Set 1 (20 questions), PR #81, merged into main before this work | Set 2: Planck hypothesis and both model-data activities; Sets 3–4 remain | `BLACKBODY-19-1-CONTINUATION.md` |
-| 10.1 Wave model of light, ID `b-08c93bb5cd14a7bc7de0a8e0` | Two complete review sets authored: Set 1 = 48; Set 2 = 41. Expands merged PR #82’s original twenty items and adds the remaining sheet coverage | No further 10.1 set planned; inspect the coverage map and QA record before adding work | `WAVE-MODEL-10-1-CONTINUATION.md` |
+| 10.1 Wave model of light, ID `b-08c93bb5cd14a7bc7de0a8e0` | Two complete review sets authored: Set 1 = 46; Set 2 = 41 (the user removed two Set 1 items). Expands merged PR #82’s original twenty items and adds the remaining sheet coverage | No further 10.1 set planned; inspect the coverage map and QA record before adding work | `WAVE-MODEL-10-1-CONTINUATION.md` |
 
 Recheck GitHub/main and the linked sheet before resuming; an open PR may contain the latest authored set. Never infer that an entire topic is finished from a completed Set 1.
 

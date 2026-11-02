@@ -573,6 +573,9 @@ try {
   assert.equal(await added.frame.locator('html').evaluate(node=>node.scrollWidth<=innerWidth),true);
   await added.context.close();
   console.log('PASS email roster: pending first login → auto-enroll → owner removal → live access cleared → code rejoin denied → restore → mobile/student isolation');
+  // Teacher management belongs to the Classroom overview, outside any room.
+  await teacher.frame.locator('[data-room-action="back"]').click();
+  await teacher.frame.locator('[data-room-detail]').waitFor({state:'hidden'});
   // Production parent/dialog/role watchers against real emulator Rules.
   assert.equal(await teacher.frame.locator('[data-manage-teachers]').isVisible(), false);
   await teacher.frame.locator('[data-classroom-action="share-teacher-link"]').click();

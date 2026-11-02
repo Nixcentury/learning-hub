@@ -56,3 +56,23 @@ Revision checks: full suite 312/312 passes; content/routes/build pass; 76 paired
 ## Section 1 summary note, 22 October 2026
 
 The teacher requested writing space in the electromagnetic overview. Its completed summary is now the answer to one TH/EN note slot (`em-fields-summary`), with 28 mm minimum writing height. A short prompt asks students to relate E, B and propagation and identify the wave type. The fully labelled field diagram, stellar review and all other sections are retained. There are 83 paired note slots. Content/build, language/reveal controls and all four printed editions are checked; first-page layout is visually reviewed.
+
+## Mechanical-wave calculations and Huygens, 2 November 2026
+
+Base: main at 7450f7150bf866e714b9e453f74bc262c2ba2a65. This revision follows the teacher's request to add straightforward mechanical-wave word problems and a Huygens summary to the existing 10.1 sheet.
+
+- Added Huygens's principle, secondary-wavelet radius r = v Δt, the forward-envelope construction, and one original, geometrically drawn SVG (assets/10-1/18-huygens-wavefront.svg). Representative points and the forward semicircles are identified in the TH/EN captions.
+- Added four worked examples (6–9) and eight separately numbered mechanical-wave questions (1–8), in TH/EN: reflection angles and sonar depth; water-wave wavelength, depth/speed ratio and refraction angle; path differences for in-phase/opposite-phase sources; and first-minimum diffraction angles or wavelengths.
+- Echo times are explicitly round trips. Refraction angles are measured from the normal and frequency is unchanged at a stationary boundary. The shallow-water approximation states its depth, amplitude and surface-tension assumptions. Single-slit minima are limited to normally incident, uniform, coherent linear waves in the far field; the first-minimum formula is not generalized to every obstacle or aperture.
+- All 83 original semantic answer slots and their contents are preserved in each language. Nineteen paired slots were added (one Huygens note, four worked solutions and fourteen question-part solutions), giving **102 paired slots**, nine worked examples total and eight new mechanical-wave questions. Each new subpart has its own writing space.
+- Parsed sections 1–5 and 9–10 are unchanged. Existing experimental images, IPST understanding questions, content ID, bank menu, Quiz sets, shared engines and database configuration are unchanged. These original problems supplement the IPST material; they are not described as textbook reproductions. This remains an existing unguided sheet.
+- Sources consulted: [OpenStax, Huygens's principle](https://openstax.org/books/university-physics-volume-3/pages/1-6-huygenss-principle), [OpenStax, single-slit diffraction](https://openstax.org/books/university-physics-volume-3/pages/4-1-single-slit-diffraction), and [Institute of Physics, water-wave speed](https://spark.iop.org/speed-water-waves). New numerical problems and the SVG were authored for the sheet.
+
+Verification for this revision:
+
+- Independently recomputed every new numerical solution, including depth 150/300 m, wavelengths 0.10/0.20/0.30/1.0 m, refraction angle approximately 14.5°, first-minimum angles 30°, and frequency 5.0 Hz. Checked source-phase interference conditions and units.
+- Learning-sheet model validation passes; old-slot equality, TH/EN key order, example/question numbering, local image paths, unique HTML IDs and prohibited-element checks pass. There are 324 formulas across both language blocks, below the shared renderer's 500-formula limit.
+- Relevant unit tests: **23/23 pass** (learning-sheet, html-math, html-print). Content validation, guide validation, route generation, TypeScript, Vite build and Pages artifact verification pass.
+- A local browser fixture uses the actual shared learning-sheet controller, math renderer and central print preview with the authored sheet inside the normal scripts-disabled iframe. Math state is ready with zero formula errors, all 66 source image nodes load, and TH/EN reveal controls work. Both languages fit a 390 px outer frame (373 px content width) without horizontal document overflow.
+- All four central A4 previews pass: TH blank/answers **30 pages**, EN blank/answers **31 pages**. Each contains 102 slots, eight new question headings and the Huygens figure; blanks contain **zero answer nodes**, and answer editions contain 102. No page-body overflow or broken images was observed. The Huygens diagram and representative refraction/diffraction answer views were visually inspected.
+- These are Chromium shared-component/preview checks. No native iPad/Safari print dialog, exported PDF or post-merge deployment is claimed.

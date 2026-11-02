@@ -11,3 +11,7 @@
 [หนังสือ](https://drive.google.com/file/d/1R-jSSONIMji5S-_KRSww1Pl7r_QK3Zpj/view) · [คู่มือครู](https://drive.google.com/file/d/1CJ9lV_SpjmvXTmZno8Sgg5vx4YotXQzE/view)
 
 ชุดใหม่ภายหลังต้องใช้ engine กลาง TH/EN, ข้อกา/คำนวณมีเหตุผลหรือวิธีทำ, คะแนนแยกจาก AI, พิมพ์ได้ และกำหนดจำนวนไม่เกิน 50 ข้อต่อชุดตามข้อตกลงเดิม
+
+## Quiz ที่จัดทำต่อจากคลังต้นฉบับ
+
+จัดทำชุดทบทวน 50 ข้อแล้วใน `public/content/physics/ipst/wave-optics/10-2-double-slit-quiz-set-1.html` พร้อมแผนผังและผล QA ที่ `docs/quiz/DOUBLE-SLIT-10-2-REVIEW.md` แฟ้มแช่แข็งนี้ยังเก็บเดิมเพื่อเทียบย้อนหลัง ตรวจสถานะ PR ก่อนอ้างว่าเผยแพร่แล้ว

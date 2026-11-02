@@ -1128,7 +1128,11 @@ export function createWorkspace({
       }
       doc.querySelector("[data-html-link-error]")?.remove();
       const opened = records.get(tool.id);
-      if (opened && opened !== ownerRecord) opened.htmlOpener = { node, record: ownerRecord };
+      if (opened && opened !== ownerRecord) {
+        opened.htmlOpener = { node, record: ownerRecord };
+        if (!isPdf && !isVideo && node.dataset.htmlPair === 'true' && ownerRecord?.tool.context.toolKind === 'quiz')
+          pairWindows(ownerRecord, opened, opened);
+      }
     });
   }
 

@@ -1,3 +1,4 @@
+import { configureQuizReviewLink } from './quiz-review-link.js?v=sheet-review-20261102';
 import { gradeHomework, homeworkStorageKey } from './classroom-submission-model.js';
 import { readHomeworkQuiz } from './classroom-submission-quiz.js';
 import { captureVariantSource, receiveTemporaryQuiz } from './quiz-variant-model.js?v=practice-20261028';
@@ -1494,7 +1495,11 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
   function bindExamActions() {
     const actions = document.querySelector('[data-action-dock-panel]');
     actions?.addEventListener('toggle', () => { if (actions.isConnected) actionsExpanded = actions.open; });
-    document.querySelector("[data-topic-review-open]")?.addEventListener("click", openTopicReview);
+    const reviewButton = document.querySelector('[data-topic-review-open]');
+    if (!configureQuizReviewLink(reviewButton, contentRoot, {
+      documentUrl: location.href, standalone: parent === window,
+      openExternal: url => window.open(url, '_blank', 'noopener'),
+    })) reviewButton?.addEventListener('click', openTopicReview);
     document.querySelector("[data-hint-button]")?.addEventListener("click", revealHint);
     document.querySelector("[data-giveup-button]")?.addEventListener("click", giveUp);
     document.querySelector("[data-previous-button]")?.addEventListener("click", () => requestNavigation(state.currentIndex - 1));

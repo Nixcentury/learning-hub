@@ -6,9 +6,12 @@ The user works on several topics in parallel. Use at most 50 questions per set; 
 | --- | --- | --- | --- |
 | 19.1 Sheet 1: blackbody / Planck, ID `b-0f490c3358e9212cee2e2a43` | Set 1 (20 questions), PR #81, merged into main before this work | Set 2: Planck hypothesis and both model-data activities; Sets 3–4 remain | `BLACKBODY-19-1-CONTINUATION.md` |
 | 10.1 Wave model of light, ID `b-08c93bb5cd14a7bc7de0a8e0` | Two complete review sets authored: Set 1 = 46; Set 2 = 41 (the user removed two Set 1 items). Expands merged PR #82’s original twenty items and adds the remaining sheet coverage | No further 10.1 set planned; inspect the coverage map and QA record before adding work | `WAVE-MODEL-10-1-CONTINUATION.md` |
+| 10.2 Double-slit interference, ID `b-21460452889578f11c3a8bac` | Single 50-question mixed review: all 14 headed sheet topics, IPST examples/understanding/Exercise 10.2 and double-slit chapter-end tasks | Quiz authored; submit PR and recheck merge/deployment before calling it live. Single-slit/grating tasks remain separate | `DOUBLE-SLIT-10-2-REVIEW.md` |
 
 Recheck GitHub/main and the linked sheet before resuming; an open PR may contain the latest authored set. Never infer that an entire topic is finished from a completed Set 1.
 
 For 10.1, the user explicitly confirmed a light review at the source sheet's level. Keep the approved direction: readable passages, short questions and direct calculations; no added depth or derivation-heavy expansion.
 
 The 50-question cap supersedes older approximately-20-question planning counts when a topic is resumed. Consolidate future sets after reviewing that topic; no blackbody content is modified by the 10.1 work.
+
+QA preference updated 2 November 2026: prioritize factual content, supplied data, solutions and readable wording for new sets. Recheck shared systems when a change touches them or a concrete issue is reported, rather than repeating broad system QA for each content batch.

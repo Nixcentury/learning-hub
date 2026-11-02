@@ -11,7 +11,7 @@ try {
  let ready=false;
  for(let i=0;i<120;i++) {if(exited)throw Error(log);try{await fetch(origin+'/.json?ns=demo-classroom-phase1',{signal:AbortSignal.timeout(500)});ready=true;break;}catch{}await new Promise(done=>setTimeout(done,200));}
  if(!ready)throw Error('Emulator not reachable: '+log);
- const tests=['scripts/classroom-roster-rules.test.mjs','scripts/classroom-rules.test.mjs','scripts/classroom-links-rules.test.mjs','scripts/classroom-monitor-rules.test.mjs','scripts/classroom-assignment-rules.test.mjs','scripts/classroom-submission-rules.test.mjs'];
+ const tests=['scripts/classroom-teachers-rules.test.mjs','scripts/classroom-roster-rules.test.mjs','scripts/classroom-rules.test.mjs','scripts/classroom-links-rules.test.mjs','scripts/classroom-monitor-rules.test.mjs','scripts/classroom-assignment-rules.test.mjs','scripts/classroom-submission-rules.test.mjs'];
  for(const file of tests){
   const child=spawn(process.execPath,['--test',file],{stdio:'inherit',env:{...process.env,CLASSROOM_EMULATOR_ORIGIN:origin,CLASSROOM_TEST_ROSTER:'1'}});
   const code=await new Promise((done,reject)=>{child.on('error',reject);child.on('exit',done);});if(code)throw Error('QA failed: '+file);

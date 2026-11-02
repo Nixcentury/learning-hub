@@ -15,5 +15,6 @@ export function createClassroomAccess(session, role) {
     state: teacher ? "teacher" : "student",
     requestStatus: ["pending", "rejected", "revoked"].includes(role.requestStatus) ? role.requestStatus : "none",
     warning: Boolean(role.error),
+    canManageTeachers: teacher && role.systemRole === "admin" && role.isAdmin === true,
   };
 }

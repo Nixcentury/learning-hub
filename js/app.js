@@ -22,6 +22,9 @@ import {
   subscribeRoles,
 } from "./roles.js";
 import { createClassroomAccess } from "./classroom-access.js";
+import { createFirebaseClassroomTeachers } from "./classroom-teacher-firebase.js";
+import { createClassroomTeacherDialog } from "./classroom-teacher-view.js";
+import { teacherShareTarget } from "../public/shared/classroom-teacher-model.js";
 import { createGoogleClassroomConnection } from './classroom-google-service.js';
 import { createGoogleClassroomProvider } from './classroom-google-provider.js';
 import { createGoogleClassroomDialog } from './classroom-google-view.js';
@@ -132,6 +135,9 @@ const googleClassroom = createGoogleClassroomConnection({ provider: createGoogle
   googleClassroomState = snapshot; googleClassroomDialog?.update(snapshot); postContextToPage();
 } });
 googleClassroomDialog = createGoogleClassroomDialog({ service: googleClassroom, language: () => currentLanguage, configuredClientId: googleClassroomClientId });
+let teacherDialog = null;
+const classroomTeachers = createFirebaseClassroomTeachers(snapshot => { teacherDialog?.update(snapshot); });
+teacherDialog = createClassroomTeacherDialog({ service: classroomTeachers, language: () => currentLanguage });
 let classroomLinksState = null;
 const classroomLinks = createFirebaseClassroomLinks(snapshot => { classroomLinksState = snapshot; postContextToPage(); });
 function syncClassroomLinks() {
@@ -169,6 +175,7 @@ const classrooms = createFirebaseClassrooms(snapshot => {
 });
 
 function syncClassrooms() {
+  classroomTeachers.setContext(activeSession, activeRole, activeSectionId === "classroom");
   googleClassroom.setContext(activeSession, activeRole, activeSectionId === 'classroom');
   classrooms.setContext(activeSession, activeRole, activeSectionId === "classroom");
   syncClassroomLinks();
@@ -704,7 +711,7 @@ function showSection(sectionId, force = false) {
   const pageUrl = new URL(activeButton.dataset.pageSrc, location.href);
   pageUrl.searchParams.set("lang", currentLanguage);
   // Keep cached menu documents and their shared subject palette in sync.
-  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-google-phase1-20261101'
+  pageUrl.searchParams.set("v", sectionId === 'classroom' ? 'classroom-teachers-20261102'
     : ['physics', 'chemistry'].includes(sectionId) ? 'review-menu-route-20261102' : 'bank-chapter-links-20261027');
   pageFrameLoading.hidden = false;
   // Child-frame navigations must not add extra entries to the Hub's Back history.
@@ -823,6 +830,15 @@ window.addEventListener("message", (event) => {
     if (event.data.action === "sign-in" && activeSession.status === "guest") googleButton.click();
     if (event.data.action === "account" && activeSession.status === "signed-in") openRolePanel();
     if (event.data.action === "retry" && activeSession.status === "signed-in") retryRoleCheck();
+    const access = createClassroomAccess(activeSession, activeRole);
+    if (event.data.action === "manage-teachers" && access.canManageTeachers) teacherDialog.open(pageFrame);
+    if (event.data.action === "share-teacher-link" && access.state === "teacher") void openHubShare({
+      getTarget: () => teacherShareTarget(location.href), getLanguage: () => currentLanguage, opener: pageFrame,
+      description: {
+        th: "ส่งลิงก์ให้เพื่อนเปิดและเข้าสู่ระบบด้วยอีเมลที่จะใช้เป็นครู แอดมิน Hub จึงค้นหาและอนุมัติบัญชีได้ ลิงก์นี้ไม่ให้สิทธิ์ครูด้วยตัวเอง",
+        en: "Ask your friend to open this link and sign in with their teacher email, so a Hub administrator can find and approve the account. The link itself does not grant teacher access.",
+      },
+    });
     return;
   }
   if (event.data?.type === 'learning-hub-google-classroom-action' && activeSectionId === 'classroom') {

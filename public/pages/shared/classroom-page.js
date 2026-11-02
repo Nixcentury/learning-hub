@@ -39,6 +39,7 @@
       if (state === "loading") timer = setTimeout(() => { delayed.hidden = false; }, 10000);
       if (focusedPanel?.hidden) panels.find(panel => !panel.hidden)?.querySelector("h2")?.focus();
     }
+    document.querySelector("[data-manage-teachers]").hidden = state !== "teacher" || access?.canManageTeachers !== true;
     currentState = state;
     document.body.dataset.classroomAccess = state;
   }

@@ -1,3 +1,5 @@
+> Revision 3 November 2026: this file records the initial worksheet provenance. The original 21 example/official task blocks and original table are now archived in `docs/quiz/preparation/chemistry-conjugate-10-2/source-fragments.json` and represented in the new 50-question review. Their worksheet counterparts are adapted tasks with fresh `adapted-*` slot IDs. The 12 theory notes, main proton-transfer/sequence diagrams and other guided questions are retained (Q14 now refers to nitrite to match its adapted example). See `docs/quiz/CHEMISTRY-CONJUGATE-10-2-REVIEW.md` for current placements. Original SVGs remain unchanged.
+
 # Chemistry 10.2 — sources and coverage
 
 The teacher supplied the sources through Drive folder `1G3kXVDl9bAjNozwlzaJ_bTlhSTlA5NUJ`. Source PDFs are unchanged and are not included in this repository.

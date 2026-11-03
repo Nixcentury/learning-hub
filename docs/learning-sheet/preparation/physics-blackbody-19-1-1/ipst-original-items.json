@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Verified original tasks reserved for a later Quiz. No new Quiz is included in the worksheet PR.",
+  "source": {
+    "url": "https://drive.google.com/file/d/1claSYEw2Laz0zWRXjNcI9jhbt7A2sGMd/view",
+    "fileName": "715651982-ฟิสิกส-สสวท-เล-ม-6.pdf",
+    "fileSizeBytes": 32281665,
+    "verification": "Visually read printed pp.54–58, 80, 108–109; PDF page = printed page + 13.",
+    "constants": {
+      "hJs": 6.626e-34,
+      "cMs": 300000000,
+      "joulePerEv": 1.6e-19
+    },
+    "sha256": "030721e189fdf04ed10d595b69f3c52d97410109914cb7db81221d228fc652dc"
+  },
+  "items": [
+    {
+      "id": "ipst-think-55",
+      "printedPage": 55,
+      "prompt": {
+        "th": "ในวิชาศิลปะ เรามักบอกว่า สีโทนเย็นคือสีฟ้า สีน้ำเงิน ส่วนสีโทนร้อนคือสีส้ม สีแดง นักเรียนคิดว่า เปลวไฟจากแก๊สหุงต้มที่ใช้ตามครัวเรือน ส่วนของเปลวไฟที่เป็นสีฟ้าน้ำเงิน หรือส่วนที่เป็นสีส้มแดง ส่วนใดจะร้อนมากกว่ากัน",
+        "en": "Art describes blue as cool and orange/red as warm. In the stated household gas-flame situation, which part is hotter: blue or orange-red?"
+      },
+      "outputs": [
+        "Compare the two parts in the specified gas-flame situation; distinguish artistic colour labels from physical temperature."
+      ],
+      "pdfPage": 68,
+      "associatedProblemFigures": []
+    },
+    {
+      "id": "ipst-understanding-1",
+      "printedPage": 80,
+      "prompt": {
+        "th": "จงอธิบายเลขควอนตัม และยกตัวอย่างประกอบ",
+        "en": "Explain the quantum number and give an example."
+      },
+      "outputs": [
+        "Explain n as a whole-quantum count in Planck’s hypothesis, with an example."
+      ],
+      "pdfPage": 93,
+      "associatedProblemFigures": []
+    },
+    {
+      "id": "ipst-example-19-1",
+      "printedPage": 57,
+      "prompt": {
+        "th": "จงหาควอนตัมของพลังงานของคลื่นแม่เหล็กไฟฟ้าที่มีความถี่ 6.50 × 10¹⁴ เฮิรตซ์",
+        "en": "Find the energy quantum of electromagnetic radiation with frequency 6.50 × 10¹⁴ Hz."
+      },
+      "given": {
+        "frequencyHz": 650000000000000
+      },
+      "outputs": [
+        "Energy in J; the following textbook explanation also converts this result to eV."
+      ],
+      "answers": {
+        "energyJ": 4.3069e-19,
+        "energyEv": 2.6918125
+      },
+      "pdfPage": 70,
+      "associatedProblemFigures": []
+    },
+    {
+      "id": "ipst-example-19-2",
+      "printedPage": 57,
+      "prompt": {
+        "th": "แสงมีควอนตัมของพลังงาน 2.5 อิเล็กตรอนโวลต์ มีความถี่เท่าใด",
+        "en": "Light has an energy quantum of 2.5 eV. What is its frequency?"
+      },
+      "given": {
+        "energyEv": 2.5
+      },
+      "outputs": [
+        "Frequency"
+      ],
+      "answers": {
+        "frequencyHz": 603682463024449.1
+      },
+      "pdfPage": 70,
+      "associatedProblemFigures": []
+    },
+    {
+      "id": "ipst-example-19-3",
+      "printedPage": 58,
+      "prompt": {
+        "th": "แสงความถี่หนึ่งมีพลังงานต่ำที่สุด เท่ากับ 21.76 × 10⁻¹⁹ จูล จงหาพลังงานของแสงเมื่อมีจำนวนควอนตัมเป็น 2 และ 3",
+        "en": "At a specified frequency the energy quantum is 21.76 × 10⁻¹⁹ J. Find the total energy for 2 and 3 quanta."
+      },
+      "given": {
+        "quantumJ": 2.176e-18,
+        "counts": [
+          2,
+          3
+        ]
+      },
+      "outputs": [
+        "Total energy for 2 quanta",
+        "Total energy for 3 quanta"
+      ],
+      "answers": {
+        "twoQuantaJ": 4.352e-18,
+        "threeQuantaJ": 6.528e-18
+      },
+      "pdfPage": 71,
+      "associatedProblemFigures": []
+    },
+    {
+      "id": "ipst-exercise-19-1-q1",
+      "printedPage": 80,
+      "prompt": {
+        "th": "แสงที่มีความถี่ 5.0 × 10¹⁴ เฮิรตซ์ ควอนตัมของพลังงานมีค่าเท่าใด",
+        "en": "What is the energy quantum of light with frequency 5.0 × 10¹⁴ Hz?"
+      },
+      "given": {
+        "frequencyHz": 500000000000000
+      },
+      "outputs": [
+        "Energy quantum in J; the archived sheet adds an eV conversion as scaffolding."
+      ],
+      "answers": {
+        "energyJ": 3.313e-19
+      },
+      "pdfPage": 93,
+      "associatedProblemFigures": []
+    },
+    {
+      "id": "ipst-exercise-19-1-q2",
+      "printedPage": 80,
+      "prompt": {
+        "th": "พลังงาน 1.0 × 10⁻³ จูล ได้จากแสงความยาวคลื่น 650 นาโนเมตร มีจำนวนควอนตัมพลังงานของแสงเท่าใด",
+        "en": "An energy of 1.0 × 10⁻³ J is supplied by light of wavelength 650 nm. How many energy quanta does it contain?"
+      },
+      "given": {
+        "totalEnergyJ": 0.001,
+        "wavelengthNm": 650
+      },
+      "outputs": [
+        "Photon/quantum count; frequency and energy per photon are useful scaffolded steps, not extra outputs explicitly requested in the original."
+      ],
+      "answers": {
+        "frequencyHz": 461538461538461.5,
+        "photonEnergyJ": 3.058153846153846e-19,
+        "photonCount": 3269946674715766.5
+      },
+      "pdfPage": 93,
+      "associatedProblemFigures": []
+    },
+    {
+      "id": "ipst-chapter-end-q11",
+      "printedPage": 108,
+      "prompt": {
+        "th": "คนที่อยู่กลางแดดในตอนกลางวันเป็นเวลานาน ๆ จะทำให้ผิวหนังคล้ำ จากการศึกษาพบว่าพลังงานโฟตอนของแสงแดดที่ทำให้ผิวหนังคล้ำ มีค่าประมาณ 3.50 อิเล็กตรอนโวลต์ จงหาความถี่ของโฟตอนและความยาวคลื่นของโฟตอนที่คำนวณได้นี้ อยู่ในช่วงรังสีชนิดใดในสเปกตรัมคลื่นแม่เหล็กไฟฟ้า",
+        "en": "In the stated sunlight/skin-darkening context, the photon energy is approximately 3.50 eV. Find the frequency and wavelength, and identify the electromagnetic spectral region."
+      },
+      "given": {
+        "energyEv": 3.5
+      },
+      "outputs": [
+        "Frequency",
+        "Wavelength",
+        "Spectral region"
+      ],
+      "answers": {
+        "frequencyHz": 845155448234228.9,
+        "wavelengthM": 3.549642857142857e-07,
+        "band": "ultraviolet"
+      },
+      "note": "The old sheet included wavelength and band but omitted a separate frequency response. Preserve all three original outputs when authoring the Quiz.",
+      "pdfPage": 121,
+      "associatedProblemFigures": []
+    },
+    {
+      "id": "ipst-chapter-end-q18",
+      "printedPage": 109,
+      "prompt": {
+        "th": "ร่างกายมนุษย์สามารถแผ่รังสีอินฟราเรดได้ ถ้าความยาวคลื่นสูงสุดของอินฟราเรดที่แผ่ออกมามีค่า 9350 นาโนเมตร ควอนตัมของพลังงานของอินฟราเรดที่ร่างกายมนุษย์แผ่ออกมามีพลังงานเท่าใด",
+        "en": "The textbook specifies a 9350 nm infrared wavelength for radiation emitted by the human body and asks for its energy quantum."
+      },
+      "given": {
+        "wavelengthNm": 9350
+      },
+      "outputs": [
+        "Energy quantum; the archived sheet adds an eV conversion."
+      ],
+      "answers": {
+        "energyJ": 2.125989304812834e-20,
+        "energyEv": 0.13287433155080214
+      },
+      "note": "The Thai source uses “ความยาวคลื่นสูงสุด”. Do not teach this as a hard longest-wavelength cutoff of body radiation; state clearly that the calculation concerns photons at 9350 nm.",
+      "pdfPage": 122,
+      "associatedProblemFigures": []
+    }
+  ]
+}

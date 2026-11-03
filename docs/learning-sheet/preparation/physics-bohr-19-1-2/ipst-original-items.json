@@ -1,0 +1,411 @@
+{
+  "source": {
+    "driveId": "1claSYEw2Laz0zWRXjNcI9jhbt7A2sGMd",
+    "title": "715651982-ฟิสิกส-สสวท-เล-ม-6.pdf",
+    "printedPagesRead": "59–80 and 105–110",
+    "pdfOffset": 13
+  },
+  "status": "Prepared source material for a later companion-quiz task; no new quiz is claimed in this worksheet PR.",
+  "items": [
+    {
+      "id": "magnet-end",
+      "printedPage": 61,
+      "kind": "activity-question",
+      "prompt": {
+        "th": "การเคลื่อนที่ของแม่เหล็ก B เป็นอย่างไร ขณะเคลื่อนที่เข้าหาแม่เหล็ก A ในแต่ละแนว",
+        "en": "Describe the motion of magnet B as it approaches A along each path."
+      },
+      "subparts": [
+        "path 1",
+        "path 2",
+        "path 3"
+      ],
+      "figureSource": "Book pp.60–61; existing 03-magnet-analogy.png",
+      "note": "Use the initial-path image in a question and reserve the resulting-path image for its explanation.",
+      "pdfPage": 74
+    },
+    {
+      "id": "activity-19-1-q1",
+      "printedPage": 64,
+      "kind": "activity-question",
+      "prompt": {
+        "th": "สเปกตรัมจากหลอดบรรจุแก๊สมีลักษณะเหมือนกับสเปกตรัมจากหลอดไฟฟ้าทั่วไปหรือไม่ อย่างไร",
+        "en": "How does a gas-tube spectrum compare with the ordinary lamp in the activity?"
+      },
+      "note": "Clarify that the comparison source is the incandescent filament lamp, not all modern lamp technologies.",
+      "pdfPage": 77
+    },
+    {
+      "id": "activity-19-1-q2",
+      "printedPage": 64,
+      "kind": "activity-question",
+      "prompt": {
+        "th": "สเปกตรัมจากหลอดบรรจุแก๊สแต่ละชนิดมีลักษณะเหมือนหรือต่างกันอย่างไร",
+        "en": "How are the spectra of the different gas tubes similar or different?"
+      },
+      "pdfPage": 77
+    },
+    {
+      "id": "activity-19-1-q3",
+      "printedPage": 64,
+      "kind": "activity-question",
+      "prompt": {
+        "th": "สเปกตรัมจากหลอดบรรจุแก๊สไฮโดรเจน ประกอบด้วยแสงที่มีความยาวคลื่นเท่าใดบ้าง",
+        "en": "What wavelengths occur in the hydrogen-tube spectrum?"
+      },
+      "note": "Requires the activity readings or an explicitly labelled model-data set; do not present sample results as student measurements.",
+      "pdfPage": 77
+    },
+    {
+      "id": "example-19-4",
+      "printedPage": 76,
+      "kind": "example",
+      "prompt": {
+        "th": "เมื่ออิเล็กตรอนในอะตอมไฮโดรเจนเปลี่ยนระดับพลังงานจาก n = 4 มายัง n = 2 จงคำนวณความยาวคลื่นและพลังงานของคลื่นแม่เหล็กไฟฟ้าที่แผ่ออกมา",
+        "en": "For hydrogen changing from n = 4 to n = 2, calculate the emitted wavelength and photon energy."
+      },
+      "subparts": [
+        "wavelength",
+        "energy in J and eV"
+      ],
+      "given": {
+        "upper": 4,
+        "lower": 2,
+        "R_H_per_m": 10974000.0
+      },
+      "referenceAnswer": {
+        "wavelength_nm": 485.997,
+        "energy_J": 4.09e-19,
+        "energy_eV": 2.56
+      },
+      "note": "Book p.76 has a printed exponent typo: 485.99 nm is 4.8599e-7 m, not e-9 m. Preserve the problem, correct the explanation. Rounded hydrogen levels give about 2.55 eV.",
+      "pdfPage": 89
+    },
+    {
+      "id": "think-77",
+      "printedPage": 77,
+      "kind": "think",
+      "prompt": {
+        "th": "นักเรียนสามารถมองเห็นสเปกตรัมแบบเส้นที่เกิดจากการเปลี่ยนระดับพลังงานจาก n = 7 ไปยัง n = 2 ของอะตอมไฮโดรเจนได้หรือไม่ เพราะเหตุใด",
+        "en": "Can the hydrogen n = 7 to n = 2 line be seen? Explain."
+      },
+      "given": {
+        "upper": 7,
+        "lower": 2
+      },
+      "referenceAnswer": {
+        "wavelength_nm": 397
+      },
+      "note": "State the chapter convention of visible light as approximately 400–700 nm. Do not claim a universal sharp physiological boundary at 400 nm.",
+      "pdfPage": 90
+    },
+    {
+      "id": "understanding-19-1-q1",
+      "printedPage": 80,
+      "kind": "understanding",
+      "prompt": {
+        "th": "จงอธิบายเลขควอนตัม และยกตัวอย่างประกอบ",
+        "en": "Explain the quantum number and give an example."
+      },
+      "note": "In this topic n is a positive-integer Bohr state label.",
+      "pdfPage": 93
+    },
+    {
+      "id": "understanding-19-1-q2",
+      "printedPage": 80,
+      "kind": "understanding",
+      "prompt": {
+        "th": "จงอธิบายความแตกต่างระหว่างแบบจำลองอะตอมของทอมสันกับแบบจำลองอะตอมของรัทเทอร์ฟอร์ด",
+        "en": "Explain the difference between Thomson’s and Rutherford’s atomic models."
+      },
+      "pdfPage": 93
+    },
+    {
+      "id": "understanding-19-1-q3",
+      "printedPage": 80,
+      "kind": "understanding",
+      "prompt": {
+        "th": "จงอธิบายความแตกต่างระหว่างสเปกตรัมแบบเส้นและสเปกตรัมต่อเนื่อง พร้อมกับยกตัวอย่างปรากฏการณ์ของการเกิดสเปกตรัมในแต่ละแบบ",
+        "en": "Explain line and continuous spectra and give an example of each."
+      },
+      "pdfPage": 93
+    },
+    {
+      "id": "exercise-19-1-q3",
+      "printedPage": 80,
+      "kind": "exercise",
+      "prompt": {
+        "th": "จงหาอัตราเร็วของอิเล็กตรอนในวงโคจรที่ n",
+        "en": "Find the electron speed in the nth orbit."
+      },
+      "referenceAnswer": {
+        "speed_m_per_s": "approximately 2.19e6 / n for hydrogen"
+      },
+      "pdfPage": 93
+    },
+    {
+      "id": "exercise-19-1-q4",
+      "printedPage": 80,
+      "kind": "exercise",
+      "prompt": {
+        "th": "จะต้องใช้พลังงานอย่างน้อยที่สุดกี่อิเล็กตรอนโวลต์ในการทำให้อิเล็กตรอนในวงโคจรที่สอง (n = 2) หลุดออกจากอะตอมไฮโดรเจนเป็นอิเล็กตรอนอิสระ",
+        "en": "Find the minimum energy in eV to ionize hydrogen from n = 2."
+      },
+      "referenceAnswer": {
+        "energy_eV": 3.4
+      },
+      "pdfPage": 93
+    },
+    {
+      "id": "exercise-19-1-q5",
+      "printedPage": 80,
+      "kind": "exercise",
+      "prompt": {
+        "th": "ถ้าอะตอมอยู่ในสถานะถูกกระตุ้น n = 2 จะสามารถปล่อยโฟตอนที่มีพลังงานเท่าใด",
+        "en": "If the atom is initially excited at n = 2, what photon energy can it emit?"
+      },
+      "given": {
+        "energies_eV": {
+          "1": -7,
+          "2": -3,
+          "3": -1
+        },
+        "initial": 2
+      },
+      "image": "quiz-source-images/exercise-19-1-q5.png",
+      "referenceAnswer": {
+        "energy_eV": 4
+      },
+      "note": "Hypothetical atom, not hydrogen. Do not include transitions beginning at n = 3 for this initial state.",
+      "pdfPage": 93
+    },
+    {
+      "id": "exercise-19-1-q6",
+      "printedPage": 80,
+      "kind": "exercise",
+      "prompt": {
+        "th": "อิเล็กตรอนตัวหนึ่งโคจรรอบนิวเคลียสของอะตอมไฮโดรเจน โดยมี n = 3 จงหารัศมีวงโคจร และถ้ากลับสู่สถานะพื้นจะปล่อยคลื่นแม่เหล็กไฟฟ้าที่มีความยาวคลื่นเท่าใด",
+        "en": "For hydrogen initially at n = 3, find the orbital radius and the wavelengths that can occur on returning to the ground state."
+      },
+      "subparts": [
+        "a radius",
+        "b direct/cascade wavelengths"
+      ],
+      "given": {
+        "initial": 3
+      },
+      "referenceAnswer": {
+        "radius_m": 4.761e-10,
+        "transitions": [
+          "3 -> 1",
+          "3 -> 2",
+          "2 -> 1"
+        ],
+        "wavelengths_nm": [
+          102.6,
+          656,
+          121.6
+        ]
+      },
+      "note": "Distinguish one atom following one path from an ensemble covering possible paths.",
+      "pdfPage": 93
+    },
+    {
+      "id": "chapter-question-2",
+      "printedPage": 105,
+      "kind": "chapter-question",
+      "prompt": {
+        "th": "จากการทดลองปล่อยอนุภาคแอลฟาซึ่งมีประจุบวกไปยังแผ่นทองคำบาง พบว่าอนุภาคแอลฟาบางส่วนเบี่ยงเบนไปจากแนวเดิม และบางส่วนสะท้อนกลับออกมา เพราะเหตุใด",
+        "en": "Why do some positive alpha particles deflect and some scatter backward from thin gold foil?"
+      },
+      "pdfPage": 118
+    },
+    {
+      "id": "chapter-question-3",
+      "printedPage": 105,
+      "kind": "chapter-question",
+      "prompt": {
+        "th": "จงบอกจำนวนเส้นสเปกตรัมทั้งหมดที่อะตอมนี้สามารถเปล่งออกมาได้ เมื่ออะตอมอยู่ในสถานะถูกกระตุ้น",
+        "en": "Find the total number of spectral lines possible for the excited atom shown."
+      },
+      "given": {
+        "levels": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "image": "quiz-source-images/chapter-question-3.png",
+      "referenceAnswer": {
+        "distinctLines": 6
+      },
+      "note": "For a standalone quiz, state that many atoms can populate the highest shown state and all downward paths in the model are considered; this is not six photons from one atom in a single decay.",
+      "pdfPage": 118
+    },
+    {
+      "id": "chapter-problem-2",
+      "printedPage": 106,
+      "kind": "chapter-problem",
+      "prompt": {
+        "th": "เมื่อถูกกระตุ้นแล้ว อะตอมปลดปล่อยพลังงานทำให้เกิดสเปกตรัมแบบเส้น 3 เส้น จงระบุค่าความยาวคลื่นทั้งสามเส้น",
+        "en": "Find the wavelengths of the three emitted lines from the atom shown."
+      },
+      "given": {
+        "energies_eV": {
+          "1": -5,
+          "2": -4,
+          "3": -2
+        }
+      },
+      "image": "quiz-source-images/chapter-problem-2.png",
+      "referenceAnswer": {
+        "energyGaps_eV": [
+          1,
+          2,
+          3
+        ],
+        "wavelengthsWith1240_nm": [
+          1240,
+          620,
+          413.333333
+        ]
+      },
+      "note": "With the book’s rounded h,c,e constants, hc is 1242.375 eV nm and the corresponding values are about 1242, 621, 414 nm. Specify the chosen constant and tolerance in a quiz.",
+      "pdfPage": 119
+    },
+    {
+      "id": "chapter-problem-3",
+      "printedPage": 107,
+      "kind": "chapter-problem",
+      "prompt": {
+        "th": "ถ้าอิเล็กตรอนในแบบจำลองอะตอมไฮโดรเจนของโบร์อยู่ห่างจากนิวเคลียสเป็นระยะ 25 เท่าของรัศมีโบร์ แสดงว่าอิเล็กตรอนอยู่ที่ระดับพลังงานเท่าใด",
+        "en": "In Bohr hydrogen, an electron is 25 Bohr radii from the nucleus. Find its level."
+      },
+      "referenceAnswer": {
+        "n": 5
+      },
+      "pdfPage": 120
+    },
+    {
+      "id": "chapter-problem-4",
+      "printedPage": 107,
+      "kind": "chapter-problem",
+      "prompt": {
+        "th": "ถ้าต้องการกระตุ้นอะตอมตามรูปจากสถานะพื้นไปยังสถานะถูกกระตุ้นสูงสุด จะต้องใช้คลื่นแม่เหล็กไฟฟ้าที่มีความยาวคลื่นเท่าใด",
+        "en": "What wavelength excites the atom shown from its ground state to the highest shown excited state?"
+      },
+      "given": {
+        "energies_eV": {
+          "1": -5,
+          "2": -4,
+          "3": -2
+        },
+        "emissionLines_nm": [
+          414,
+          621,
+          1242
+        ]
+      },
+      "image": "quiz-source-images/chapter-problem-4.png",
+      "referenceAnswer": {
+        "wavelength_nm": 414
+      },
+      "pdfPage": 120
+    },
+    {
+      "id": "chapter-problem-5",
+      "printedPage": 107,
+      "kind": "chapter-problem",
+      "prompt": {
+        "th": "จงหาความถี่ของคลื่นแม่เหล็กไฟฟ้าที่ถูกดูดกลืนหรือเปล่งออกมาจากอะตอมไฮโดรเจน เมื่อเปลี่ยนจาก n = 1 ไป n = 3 และจาก n = 6 ไป n = 3",
+        "en": "Find the absorbed or emitted frequencies for hydrogen 1 -> 3 and 6 -> 3."
+      },
+      "subparts": [
+        "1 -> 3 absorption",
+        "6 -> 3 emission"
+      ],
+      "referenceAnswer": {
+        "energyGaps_eV": [
+          12.0888888889,
+          1.1333333333
+        ]
+      },
+      "note": "Specify h and the J/eV conversion when assigning numerical answer tolerances.",
+      "pdfPage": 120
+    },
+    {
+      "id": "chapter-problem-19",
+      "printedPage": 109,
+      "kind": "chapter-problem",
+      "prompt": {
+        "th": "อิเล็กตรอนในอะตอมไฮโดรเจนอยู่ในสถานะพื้น มีพลังงาน −13.6 eV พลังงานจลน์และพลังงานศักย์ไฟฟ้ามีค่าเท่าใด",
+        "en": "For ground-state hydrogen with total energy −13.6 eV, find kinetic and electric potential energy."
+      },
+      "referenceAnswer": {
+        "K_eV": 13.6,
+        "U_eV": -27.2
+      },
+      "pdfPage": 122
+    }
+  ],
+  "images": [
+    {
+      "file": "exercise-19-1-q5.png",
+      "printedPage": 80,
+      "pdfPage": 93,
+      "normalizedCrop": [
+        0.31,
+        0.59,
+        0.68,
+        0.75
+      ],
+      "width": 551,
+      "height": 330,
+      "sha256": "8409738d5e48bc37d67bacc0a8595d87c0f12024cdbb9b3bbb4610f1924cb3a7"
+    },
+    {
+      "file": "chapter-question-3.png",
+      "printedPage": 105,
+      "pdfPage": 118,
+      "normalizedCrop": [
+        0.22,
+        0.59,
+        0.79,
+        0.758
+      ],
+      "width": 849,
+      "height": 346,
+      "sha256": "bd9729b3831f5e3f9865d2145a2cee0b1ac6767c9ed2b08eab4b755b864c92b3"
+    },
+    {
+      "file": "chapter-problem-2.png",
+      "printedPage": 106,
+      "pdfPage": 119,
+      "normalizedCrop": [
+        0.28,
+        0.68,
+        0.78,
+        0.81
+      ],
+      "width": 745,
+      "height": 268,
+      "sha256": "858b796b8803283e1aa445df89fe572cee30e9069c0759777f5b13a9b97cd9bc"
+    },
+    {
+      "file": "chapter-problem-4.png",
+      "printedPage": 107,
+      "pdfPage": 120,
+      "normalizedCrop": [
+        0.08,
+        0.22,
+        0.88,
+        0.42
+      ],
+      "width": 1191,
+      "height": 411,
+      "sha256": "53ee0b8ee0e3793f597df5c53d72764b24ea90cb426d8017c2d61b91a95a6768"
+    }
+  ],
+  "outsideScope": "Exercises 19.1 Q1–2 and the Planck/blackbody tasks remain with the separate blackbody bank ID. Photoelectric and de Broglie tasks remain outside this Bohr worksheet."
+}

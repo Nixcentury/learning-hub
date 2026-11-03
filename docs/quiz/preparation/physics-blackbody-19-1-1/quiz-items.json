@@ -1,0 +1,2967 @@
+{
+  "schemaVersion": 1,
+  "topic": "b-0f490c3358e9212cee2e2a43",
+  "sheetId": "physics-ipst-atomic-19-1-1-sheet",
+  "baseCommit": "68b3aceca83c223a7d2bf2449982ee6695c06f9e",
+  "editions": [
+    {
+      "edition": 1,
+      "id": "physics-ipst-atomic-19-1-1-alevel-review",
+      "file": "19-1-1-blackbody-alevel-review.html",
+      "count": 50,
+      "counts": {
+        "drag-drop": 21,
+        "choice": 8,
+        "number": 21
+      },
+      "title": {
+        "th": "19.1 ทบทวนแก่น A-Level · วัตถุดำและพลังค์",
+        "en": "19.1 A-Level core review · Blackbodies and Planck"
+      },
+      "description": {
+        "th": "50 ข้อ: ลากเติม 21 ข้อ ข้อกา 8 ข้อ เติมตัวเลข 21 ข้อ พร้อมคำใบ้ เฉลย TH/EN และใบเรียนรู้อ่านคู่",
+        "en": "50 questions: 21 drag-fill, 8 choices, 21 numeric; TH/EN hints and solutions with a paired learning sheet."
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "infrared-information",
+      "type": "drag-drop",
+      "section": 1,
+      "prompt": {
+        "th": "เติมคำอธิบายภาพอินฟราเรด",
+        "en": "Complete the infrared-image explanation."
+      },
+      "body": {
+        "th": "เครื่องชงกาแฟที่ไม่เรืองแสงยังแผ่ {radiation} ซึ่งเป็น {wave} กล้องใช้สัญญาณประเมิน {quantity} ของผิว",
+        "en": "A coffee maker without a visible glow still emits {radiation}, which is {wave}. The camera uses the signal to estimate the surface {quantity}."
+      },
+      "items": [
+        {
+          "id": "radiation",
+          "th": "รังสีอินฟราเรด",
+          "en": "infrared radiation"
+        },
+        {
+          "id": "wave",
+          "th": "คลื่นแม่เหล็กไฟฟ้า",
+          "en": "electromagnetic radiation"
+        },
+        {
+          "id": "quantity",
+          "th": "อุณหภูมิ",
+          "en": "temperature"
+        },
+        {
+          "id": "decoy-a",
+          "th": "มวล",
+          "en": "mass"
+        },
+        {
+          "id": "decoy-b",
+          "th": "คลื่นเสียง",
+          "en": "sound waves"
+        }
+      ],
+      "slots": [
+        "radiation",
+        "wave",
+        "quantity"
+      ],
+      "solution": {
+        "th": "อินฟราเรดเป็นคลื่นแม่เหล็กไฟฟ้าที่ตาไม่เห็นโดยตรง กล้องช่วยประเมินอุณหภูมิผิว แม้วัตถุไม่เรืองแสง ค่าที่กล้องแสดงเป็นค่าประมาณ",
+        "en": "Infrared is electromagnetic radiation invisible to our eyes. The camera estimates surface temperature even without a visible glow; its reported temperatures are estimates."
+      },
+      "cover": [
+        "ir-observation",
+        "ir-radiation"
+      ],
+      "figure": "<figure><img src=\"assets/19-1-1/thermal-coffee-maker.jpg\" width=\"1472\" height=\"450\" alt=\"Infrared and visible photographs of the same coffee maker\"><figcaption><span data-th=\"ภาพอินฟราเรดและภาพแสงที่มองเห็นของเครื่องชงกาแฟเดียวกัน\" data-en=\"Infrared and visible-light views of the same coffee maker\">ภาพอินฟราเรดและภาพแสงที่มองเห็นของเครื่องชงกาแฟเดียวกัน</span> · Torsten Henning · Public domain</figcaption></figure>",
+      "edition": 1,
+      "number": 1,
+      "sources": [],
+      "bridge": {
+        "th": "เริ่มจากภาพวัตถุเดียวกันสองแบบ แล้วแยกสิ่งที่ตาเห็นออกจากข้อมูลที่เครื่องมือช่วยให้รู้",
+        "en": "Begin with two images of the same object, distinguishing what our eyes see from what the instrument helps us infer."
+      },
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 1 วัตถุร้อนแผ่รังสีอย่างไร → คำถาม 1 · จากภาพทั้งสอง กล้องอินฟราเรดให้ข้อมูลอะไรเพิ่มเติมจากภาพที่ตามองเห็น?",
+        "en": "Open the learning sheet alongside · section 1 How do objects emit thermal radiation? → Question 1 · What additional information does the infrared image provide?"
+      },
+      "readingKeys": [
+        "ir-observation"
+      ]
+    },
+    {
+      "id": "thermal-radiation-condition",
+      "type": "drag-drop",
+      "section": 1,
+      "prompt": {
+        "th": "เติมเงื่อนไขของการแผ่รังสีความร้อน",
+        "en": "Complete the condition for thermal radiation."
+      },
+      "body": {
+        "th": "วัตถุที่มีอุณหภูมิ {temperature} แผ่พลังงานเป็น {form} เรียกกระบวนการนี้ว่า {name}",
+        "en": "An object at a temperature {temperature} emits energy as {form}; this is called {name}."
+      },
+      "items": [
+        {
+          "id": "temperature",
+          "th": "สูงกว่า 0 K",
+          "en": "above 0 K"
+        },
+        {
+          "id": "form",
+          "th": "คลื่นแม่เหล็กไฟฟ้า",
+          "en": "electromagnetic waves"
+        },
+        {
+          "id": "name",
+          "th": "การแผ่รังสีความร้อน",
+          "en": "thermal radiation"
+        },
+        {
+          "id": "decoy-a",
+          "th": "สูงกว่า 0 °C เท่านั้น",
+          "en": "only above 0 °C"
+        },
+        {
+          "id": "decoy-b",
+          "th": "การนำความร้อน",
+          "en": "heat conduction"
+        }
+      ],
+      "slots": [
+        "temperature",
+        "form",
+        "name"
+      ],
+      "solution": {
+        "th": "ใช้เงื่อนไขสูงกว่า 0 K ไม่ใช่ 0 °C และไม่จำเป็นต้องเรืองแสง การแผ่รังสีต่างจากการนำความร้อน",
+        "en": "The threshold is above 0 K, not 0 °C. A visible glow is unnecessary, and radiation differs from conduction."
+      },
+      "cover": [
+        "thermal-definition"
+      ],
+      "edition": 1,
+      "number": 2,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 1 วัตถุร้อนแผ่รังสีอย่างไร → การแผ่รังสีความร้อน",
+        "en": "Open the learning sheet alongside · section 1 How do objects emit thermal radiation? → Thermal radiation"
+      },
+      "readingKeys": [
+        "thermal-definition"
+      ]
+    },
+    {
+      "id": "hot-metal-colours",
+      "type": "drag-drop",
+      "section": 1,
+      "prompt": {
+        "th": "เติมลำดับสีของเหล็กที่ร้อนขึ้น",
+        "en": "Complete the colour sequence of increasingly hot iron."
+      },
+      "body": {
+        "th": "เมื่อเหล็กร้อนขึ้น สีที่เห็นโดยทั่วไปเปลี่ยนจากแดงคล้ำเป็น {orange} แล้วเป็น {white} วัตถุยังแผ่รังสี {range}",
+        "en": "As iron gets hotter, its typical glow changes from dull red to {orange}, then to {white}. It still emits {range}."
+      },
+      "items": [
+        {
+          "id": "orange",
+          "th": "ส้ม",
+          "en": "orange"
+        },
+        {
+          "id": "white",
+          "th": "เหลืองจนขาว",
+          "en": "yellow to white"
+        },
+        {
+          "id": "range",
+          "th": "หลายความยาวคลื่น",
+          "en": "many wavelengths"
+        },
+        {
+          "id": "decoy-a",
+          "th": "ความยาวคลื่นเดียว",
+          "en": "one wavelength"
+        },
+        {
+          "id": "decoy-b",
+          "th": "น้ำเงินแล้วเย็นลงเสมอ",
+          "en": "blue and always cooler"
+        }
+      ],
+      "slots": [
+        "orange",
+        "white",
+        "range"
+      ],
+      "solution": {
+        "th": "แนวโน้มของเหล็กร้อนคือแดงคล้ำ → ส้ม → เหลือง → ขาว สีที่เห็นมาจากสัดส่วนของแสงหลายช่วง",
+        "en": "For hot iron the typical progression is dull red → orange → yellow → white. The observed colour combines contributions from many wavelengths."
+      },
+      "cover": [
+        "hot-metal-temperature-colour",
+        "hot-iron-colour"
+      ],
+      "figure": "<figure><img src=\"assets/19-1-1/hot-metal-bar.jpg\" width=\"2592\" height=\"1944\" alt=\"A heated metal bar near a heating coil\"><figcaption><span data-th=\"เปรียบเทียบสีของแท่งโลหะบริเวณใกล้ขดลวดและไกลออกไป\" data-en=\"Compare the glowing metal near the coil and farther away\">เปรียบเทียบสีของแท่งโลหะบริเวณใกล้ขดลวดและไกลออกไป</span> · C Paice / Vector1 nz · <a href=\"https://creativecommons.org/licenses/by-sa/3.0/\" target=\"_blank\" rel=\"noopener\">CC BY-SA 3.0</a></figcaption></figure>",
+      "edition": 1,
+      "number": 3,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 1 วัตถุร้อนแผ่รังสีอย่างไร → อุณหภูมิกับสีของแสงที่แผ่ออกมา",
+        "en": "Open the learning sheet alongside · section 1 How do objects emit thermal radiation? → Temperature and the colour of emitted light"
+      },
+      "readingKeys": [
+        "hot-metal-temperature-colour"
+      ]
+    },
+    {
+      "id": "spectrum-axes",
+      "type": "drag-drop",
+      "section": 2,
+      "prompt": {
+        "th": "เติมปริมาณและหน่วยบนกราฟ",
+        "en": "Complete the spectrum axes and units."
+      },
+      "body": {
+        "th": "แกนนอนคือ {quantity} หน่วย {unit} แกนตั้งคือ {vertical} ทุกเส้นใช้มาตราส่วนร่วมกัน",
+        "en": "The horizontal axis is {quantity} in {unit}; the vertical axis is {vertical}. All curves use a common scale."
+      },
+      "items": [
+        {
+          "id": "quantity",
+          "th": "ความยาวคลื่น",
+          "en": "wavelength"
+        },
+        {
+          "id": "unit",
+          "th": "nm",
+          "en": "nm"
+        },
+        {
+          "id": "vertical",
+          "th": "ความเข้มต่อช่วงความยาวคลื่น",
+          "en": "intensity per wavelength interval"
+        },
+        {
+          "id": "decoy-a",
+          "th": "อุณหภูมิ",
+          "en": "temperature"
+        },
+        {
+          "id": "decoy-b",
+          "th": "Hz",
+          "en": "Hz"
+        }
+      ],
+      "slots": [
+        "quantity",
+        "unit",
+        "vertical"
+      ],
+      "solution": {
+        "th": "อ่านแกนก่อนเทียบเส้น: แกนนอนเป็น λ หน่วย nm แกนตั้งเป็นความเข้มต่อช่วงความยาวคลื่นบนมาตราส่วนสัมพัทธ์เดียวกัน",
+        "en": "Read the axes first: wavelength in nm horizontally, intensity per wavelength interval on a common relative scale vertically."
+      },
+      "cover": [
+        "graph-axes"
+      ],
+      "figure": "<figure><img src=\"assets/19-1-1/blackbody-spectra.svg\" width=\"6120\" height=\"3672\" alt=\"Blackbody spectra for 3000, 4000, 5000 and 6000 K; wavelength axis in nm\"><figcaption><span data-th=\"ทุกเส้นใช้มาตราส่วนเดียวกัน จุดกลมคือยอดกราฟ แถบสีคือช่วงที่ตามองเห็น\" data-en=\"All curves use one scale. Dots mark peaks; the coloured band marks visible wavelengths.\">ทุกเส้นใช้มาตราส่วนเดียวกัน จุดกลมคือยอดกราฟ แถบสีคือช่วงที่ตามองเห็น</span></figcaption></figure>",
+      "edition": 1,
+      "number": 4,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 2 อ่านกราฟการแผ่รังสีที่อุณหภูมิต่างกัน → คำถาม 2 · แกนนอนและแกนตั้งแสดงปริมาณใด?",
+        "en": "Open the learning sheet alongside · section 2 Read spectra at different temperatures → Question 2 · What quantities are shown on the horizontal and vertical axes?"
+      },
+      "readingKeys": [
+        "graph-axes"
+      ]
+    },
+    {
+      "id": "core-graph-peaks",
+      "type": "choice",
+      "section": 2,
+      "prompt": {
+        "th": "อ่านกราฟ: ยอดของเส้น 3000 K และ 6000 K อยู่ใกล้ความยาวคลื่นคู่ใดตามลำดับ?",
+        "en": "Read the graph: which pair approximates the peak wavelengths at 3000 K and 6000 K, respectively?"
+      },
+      "correct": {
+        "th": "970 nm และ 480 nm",
+        "en": "970 nm and 480 nm"
+      },
+      "decoys": [
+        {
+          "th": "480 nm และ 970 nm",
+          "en": "480 nm and 970 nm"
+        },
+        {
+          "th": "970 nm และ 970 nm",
+          "en": "970 nm and 970 nm"
+        },
+        {
+          "th": "480 nm และ 480 nm",
+          "en": "480 nm and 480 nm"
+        },
+        {
+          "th": "3000 nm และ 6000 nm",
+          "en": "3000 nm and 6000 nm"
+        }
+      ],
+      "solution": {
+        "th": "อ่านแกนนอนที่จุดยอดแต่ละเส้น: 3000 K อยู่ใกล้ 970 nm ส่วน 6000 K อยู่ใกล้ 480 nm เมื่อร้อนขึ้นยอดเลื่อนไป λ สั้นลง ไม่ต้องใช้สูตรที่อยู่นอกใบเรียนรู้",
+        "en": "Read the horizontal coordinates of the peaks: about 970 nm at 3000 K and 480 nm at 6000 K. The hotter curve peaks at a shorter wavelength; no additional formula is needed."
+      },
+      "cover": [
+        "graph-peak",
+        "graph-peak-6000"
+      ],
+      "figure": "<figure><img src=\"assets/19-1-1/blackbody-spectra.svg\" width=\"6120\" height=\"3672\" alt=\"Blackbody spectra for 3000, 4000, 5000 and 6000 K; wavelength axis in nm\"><figcaption><span data-th=\"ทุกเส้นใช้มาตราส่วนเดียวกัน จุดกลมคือยอดกราฟ แถบสีคือช่วงที่ตามองเห็น\" data-en=\"All curves use one scale. Dots mark peaks; the coloured band marks visible wavelengths.\">ทุกเส้นใช้มาตราส่วนเดียวกัน จุดกลมคือยอดกราฟ แถบสีคือช่วงที่ตามองเห็น</span></figcaption></figure>",
+      "edition": 1,
+      "number": 5,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 2 อ่านกราฟการแผ่รังสีที่อุณหภูมิต่างกัน → คำถาม 3 · ก. อุณหภูมิ 3000 K / คำถาม 3 · ข. อุณหภูมิ 6000 K",
+        "en": "Open the learning sheet alongside · section 2 Read spectra at different temperatures → Question 3 · (a) Temperature 3000 K / Question 3 · (b) Temperature 6000 K"
+      },
+      "readingKeys": [
+        "graph-peak",
+        "graph-peak-6000"
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": {
+            "th": "970 nm และ 970 nm",
+            "en": "970 nm and 970 nm"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "th": "3000 nm และ 6000 nm",
+            "en": "3000 nm and 6000 nm"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "th": "970 nm และ 480 nm",
+            "en": "970 nm and 480 nm"
+          }
+        },
+        {
+          "id": "d",
+          "text": {
+            "th": "480 nm และ 970 nm",
+            "en": "480 nm and 970 nm"
+          }
+        },
+        {
+          "id": "e",
+          "text": {
+            "th": "480 nm และ 480 nm",
+            "en": "480 nm and 480 nm"
+          }
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "continuous-spectrum",
+      "type": "drag-drop",
+      "section": 2,
+      "prompt": {
+        "th": "เติมความหมายของสเปกตรัมต่อเนื่อง",
+        "en": "Complete the meaning of a continuous spectrum."
+      },
+      "body": {
+        "th": "กราฟวัตถุดำแสดงรังสี {range} ตำแหน่งยอดคือช่วงที่ {peak} จึง {conclusion}",
+        "en": "A blackbody spectrum contains {range}. Its peak marks the {peak}, so it {conclusion}."
+      },
+      "items": [
+        {
+          "id": "range",
+          "th": "หลายความยาวคลื่นต่อเนื่องกัน",
+          "en": "a continuous range of wavelengths"
+        },
+        {
+          "id": "peak",
+          "th": "มีความเข้มสูงสุด",
+          "en": "greatest intensity"
+        },
+        {
+          "id": "conclusion",
+          "th": "ไม่ได้แผ่เฉพาะความยาวคลื่นที่ยอด",
+          "en": "does not emit only at the peak wavelength"
+        },
+        {
+          "id": "decoy-a",
+          "th": "เส้นเดี่ยวความยาวคลื่นเดียว",
+          "en": "one isolated wavelength"
+        },
+        {
+          "id": "decoy-b",
+          "th": "ไม่มีรังสีนอกยอด",
+          "en": "has no radiation away from the peak"
+        }
+      ],
+      "slots": [
+        "range",
+        "peak",
+        "conclusion"
+      ],
+      "solution": {
+        "th": "ยอดบอกตำแหน่งที่เข้มที่สุด ไม่ใช่ขอบเขตทั้งหมดของรังสี วัตถุดำยังแผ่ที่ความยาวคลื่นอื่น",
+        "en": "The peak locates maximum spectral intensity, not the complete spectral extent. Other wavelengths are still emitted."
+      },
+      "cover": [
+        "graph-continuous"
+      ],
+      "edition": 1,
+      "number": 6,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 2 อ่านกราฟการแผ่รังสีที่อุณหภูมิต่างกัน → สเปกตรัมต่อเนื่อง",
+        "en": "Open the learning sheet alongside · section 2 Read spectra at different temperatures → Continuous spectrum"
+      },
+      "readingKeys": [
+        "graph-continuous"
+      ]
+    },
+    {
+      "id": "temperature-spectrum-trend",
+      "type": "drag-drop",
+      "section": 2,
+      "prompt": {
+        "th": "เติมแนวโน้มเมื่อวัตถุดำร้อนขึ้น",
+        "en": "Complete the trends as a blackbody gets hotter."
+      },
+      "body": {
+        "th": "เมื่ออุณหภูมิสูงขึ้น ยอดเลื่อนไปทางความยาวคลื่น {peak} และพื้นที่ใต้กราฟทั้งหมด {area}",
+        "en": "As temperature rises, the peak moves to {peak} wavelengths and the total area under the spectrum {area}."
+      },
+      "items": [
+        {
+          "id": "peak",
+          "th": "สั้นลง",
+          "en": "shorter"
+        },
+        {
+          "id": "area",
+          "th": "เพิ่มขึ้น",
+          "en": "increases"
+        },
+        {
+          "id": "decoy-a",
+          "th": "ยาวขึ้น",
+          "en": "longer"
+        },
+        {
+          "id": "decoy-b",
+          "th": "ลดลง",
+          "en": "decreases"
+        }
+      ],
+      "slots": [
+        "peak",
+        "area"
+      ],
+      "solution": {
+        "th": "อุณหภูมิสูงขึ้นสัมพันธ์กับยอดที่ λ สั้นลงและอัตราแผ่พลังงานรวมต่อหน่วยพื้นที่เพิ่มขึ้น",
+        "en": "Higher temperature shifts the peak to shorter wavelengths and increases total emitted power per unit area."
+      },
+      "cover": [
+        "graph-trend"
+      ],
+      "edition": 1,
+      "number": 7,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 2 อ่านกราฟการแผ่รังสีที่อุณหภูมิต่างกัน → ผลของอุณหภูมิต่อสเปกตรัม",
+        "en": "Open the learning sheet alongside · section 2 Read spectra at different temperatures → How temperature affects the spectrum"
+      },
+      "readingKeys": [
+        "graph-trend"
+      ]
+    },
+    {
+      "id": "area-under-spectrum",
+      "type": "drag-drop",
+      "section": 2,
+      "prompt": {
+        "th": "เติมวิธีตีความพื้นที่ใต้กราฟ",
+        "en": "Complete the interpretation of the area under the spectrum."
+      },
+      "body": {
+        "th": "พื้นที่ใต้สเปกตรัมตลอดทุกความยาวคลื่นเกี่ยวข้องกับ {quantity} จึงต้องพิจารณา {range} ไม่ใช่เฉพาะ {peak}",
+        "en": "The area over all wavelengths represents {quantity}. Consider {range}, not just the {peak}."
+      },
+      "items": [
+        {
+          "id": "quantity",
+          "th": "พลังงานที่แผ่ต่อหน่วยพื้นที่ต่อเวลา",
+          "en": "emitted energy per unit area per time"
+        },
+        {
+          "id": "range",
+          "th": "ทั้งสเปกตรัม",
+          "en": "the entire spectrum"
+        },
+        {
+          "id": "peak",
+          "th": "ความสูงของยอด",
+          "en": "peak height"
+        },
+        {
+          "id": "decoy-a",
+          "th": "มวลของวัตถุ",
+          "en": "the object’s mass"
+        },
+        {
+          "id": "decoy-b",
+          "th": "จุดเดียวที่ยอด",
+          "en": "only the peak point"
+        }
+      ],
+      "slots": [
+        "quantity",
+        "range",
+        "peak"
+      ],
+      "solution": {
+        "th": "พื้นที่รวมบอกอัตราแผ่พลังงานต่อหน่วยพื้นที่ ความสูงของยอดเพียงค่าเดียวไม่แทนพื้นที่ทั้งหมด",
+        "en": "The full area represents emitted power per unit area. A single peak height is not the full area."
+      },
+      "cover": [
+        "graph-trend"
+      ],
+      "edition": 1,
+      "number": 8,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 2 อ่านกราฟการแผ่รังสีที่อุณหภูมิต่างกัน → ผลของอุณหภูมิต่อสเปกตรัม",
+        "en": "Open the learning sheet alongside · section 2 Read spectra at different temperatures → How temperature affects the spectrum"
+      },
+      "readingKeys": [
+        "graph-trend"
+      ]
+    },
+    {
+      "id": "ipst-flame-think",
+      "type": "choice",
+      "section": 2,
+      "prompt": {
+        "th": "ชวนคิด สสวท.: ในสถานการณ์เตาแก๊สหุงต้ม ส่วนสีฟ้าน้ำเงินหรือสีส้มแดงร้อนกว่า และชื่อโทนสีในศิลปะใช้ตัดสินได้หรือไม่?",
+        "en": "IPST Think: in the stated household gas-flame situation, which part is hotter, blue or orange-red? Can artistic warm/cool colour labels decide this?"
+      },
+      "correct": {
+        "th": "ส่วนสีฟ้าน้ำเงินร้อนกว่าในสถานการณ์ที่ระบุ ชื่อโทนสีในศิลปะใช้ตัดสินอุณหภูมิจริงไม่ได้",
+        "en": "The blue part is hotter in the stated situation; artistic colour labels do not determine physical temperature."
+      },
+      "decoys": [
+        {
+          "th": "ส่วนสีส้มแดงร้อนกว่าเสมอ เพราะเป็นสีโทนร้อน",
+          "en": "Orange-red is always hotter because it is an artistic warm colour."
+        },
+        {
+          "th": "สีน้ำเงินเย็นกว่าเสมอในทุกวัตถุ",
+          "en": "Blue is always cooler for every object."
+        },
+        {
+          "th": "ภาพสีอย่างเดียวบอกอุณหภูมิแน่นอนทุกตำแหน่งได้",
+          "en": "The colour photograph gives an exact temperature everywhere."
+        },
+        {
+          "th": "อุณหภูมิเท่ากันเพราะใช้เชื้อเพลิงเดียวกัน",
+          "en": "The temperatures are equal because the fuel is the same."
+        }
+      ],
+      "solution": {
+        "th": "ตอบตามสถานการณ์เตาแก๊สในโจทย์ว่า ส่วนสีฟ้าน้ำเงินร้อนกว่า แต่ไม่สรุปเป็นกฎใช้สีวัดอุณหภูมิของทุกวัตถุหรือทุกเปลวไฟ ภาพตะเกียงบุนเสนเป็นภาพประกอบ ไม่ใช่แผนที่อุณหภูมิ",
+        "en": "For the specified gas-flame context, blue is hotter. This is not a universal colour thermometer for all objects or flames. The Bunsen photograph is illustrative, not a measured temperature map."
+      },
+      "cover": [
+        "parallel-think-evidence"
+      ],
+      "sources": [
+        "ipst-think-55"
+      ],
+      "figure": "<figure><img src=\"assets/19-1-1/bunsen-flame-types.jpg\" width=\"1668\" height=\"1500\" alt=\"Four numbered Bunsen-burner flames\"><figcaption><span data-th=\"ดูเปลวไฟหมายเลข 2: ส่วนล่างสีฟ้าน้ำเงินและส่วนบนสีส้ม\" data-en=\"Inspect flame 2: its blue lower region and orange upper region.\">ดูเปลวไฟหมายเลข 2: ส่วนล่างสีฟ้าน้ำเงินและส่วนบนสีส้ม</span> · <a href=\"https://commons.wikimedia.org/wiki/File:Bunsen_burner_flame_types.jpg\" target=\"_blank\" rel=\"noopener\">Garett / WarX / Julo</a> · <a href=\"https://creativecommons.org/licenses/by-sa/3.0/\" target=\"_blank\" rel=\"noopener\">CC BY-SA 3.0</a></figcaption></figure>",
+      "edition": 1,
+      "number": 9,
+      "context": {
+        "th": "ในวิชาศิลปะ เรามักบอกว่า สีโทนเย็นคือสีฟ้า สีน้ำเงิน ส่วนสีโทนร้อนคือสีส้ม สีแดง นักเรียนคิดว่า เปลวไฟจากแก๊สหุงต้มที่ใช้ตามครัวเรือน ส่วนของเปลวไฟที่เป็นสีฟ้าน้ำเงิน หรือส่วนที่เป็นสีส้มแดง ส่วนใดจะร้อนมากกว่ากัน",
+        "en": "Art describes blue as cool and orange/red as warm. In the stated household gas-flame situation, which part is hotter: blue or orange-red?"
+      },
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 2 อ่านกราฟการแผ่รังสีที่อุณหภูมิต่างกัน → ชวนคิด · ชวนคิด: หลักฐานกับชื่อสี",
+        "en": "Open the learning sheet alongside · section 2 Read spectra at different temperatures → Think · Think: evidence and colour names"
+      },
+      "readingKeys": [
+        "parallel-think-evidence"
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": {
+            "th": "ส่วนสีฟ้าน้ำเงินร้อนกว่าในสถานการณ์ที่ระบุ ชื่อโทนสีในศิลปะใช้ตัดสินอุณหภูมิจริงไม่ได้",
+            "en": "The blue part is hotter in the stated situation; artistic colour labels do not determine physical temperature."
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "th": "ส่วนสีส้มแดงร้อนกว่าเสมอ เพราะเป็นสีโทนร้อน",
+            "en": "Orange-red is always hotter because it is an artistic warm colour."
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "th": "อุณหภูมิเท่ากันเพราะใช้เชื้อเพลิงเดียวกัน",
+            "en": "The temperatures are equal because the fuel is the same."
+          }
+        },
+        {
+          "id": "d",
+          "text": {
+            "th": "ภาพสีอย่างเดียวบอกอุณหภูมิแน่นอนทุกตำแหน่งได้",
+            "en": "The colour photograph gives an exact temperature everywhere."
+          }
+        },
+        {
+          "id": "e",
+          "text": {
+            "th": "สีน้ำเงินเย็นกว่าเสมอในทุกวัตถุ",
+            "en": "Blue is always cooler for every object."
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "blackbody-definition",
+      "type": "drag-drop",
+      "section": 3,
+      "prompt": {
+        "th": "เติมนิยามวัตถุดำ",
+        "en": "Complete the blackbody definition."
+      },
+      "body": {
+        "th": "วัตถุดำเป็นวัตถุ {model} ที่ดูดกลืนรังสีตกกระทบ {absorption} จึงไม่มีส่วนตกกระทบที่ {remainder}",
+        "en": "A blackbody is an {model} object absorbing incident radiation {absorption}, leaving none {remainder}."
+      },
+      "items": [
+        {
+          "id": "model",
+          "th": "อุดมคติ",
+          "en": "ideal"
+        },
+        {
+          "id": "absorption",
+          "th": "ทุกความยาวคลื่นได้ทั้งหมด",
+          "en": "completely at all wavelengths"
+        },
+        {
+          "id": "remainder",
+          "th": "สะท้อนหรือส่งผ่าน",
+          "en": "reflected or transmitted"
+        },
+        {
+          "id": "decoy-a",
+          "th": "เฉพาะสีดำ",
+          "en": "only black light"
+        },
+        {
+          "id": "decoy-b",
+          "th": "สะท้อนทั้งหมด",
+          "en": "all reflected"
+        }
+      ],
+      "slots": [
+        "model",
+        "absorption",
+        "remainder"
+      ],
+      "solution": {
+        "th": "วัตถุดำดูดกลืนทั้งหมดทุกความยาวคลื่น คำว่า “ดำ” อ้างสมบัติการดูดกลืน ไม่ได้ห้ามการแผ่รังสี",
+        "en": "A blackbody absorbs all incident wavelengths. Its name concerns absorption and does not prohibit emission."
+      },
+      "cover": [
+        "blackbody-definition"
+      ],
+      "edition": 1,
+      "number": 10,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 3 วัตถุดำและแนวคิดของพลังค์ → สมบัติของวัตถุดำ",
+        "en": "Open the learning sheet alongside · section 3 Blackbodies and Planck’s idea → Properties of a blackbody"
+      },
+      "readingKeys": [
+        "blackbody-definition"
+      ]
+    },
+    {
+      "id": "blackbody-emission",
+      "type": "drag-drop",
+      "section": 3,
+      "prompt": {
+        "th": "เติมความสัมพันธ์ระหว่างการดูดกลืนกับการแผ่รังสี",
+        "en": "Complete the absorption–emission relationship."
+      },
+      "body": {
+        "th": "ที่อุณหภูมิเดียวกันต่อหน่วยพื้นที่ วัตถุดำเป็นทั้ง {absorber} และ {emitter} เมื่อร้อนพอจึง {appearance}",
+        "en": "At the same temperature per unit area, a blackbody is both a {absorber} and an {emitter}; when sufficiently hot it {appearance}."
+      },
+      "items": [
+        {
+          "id": "absorber",
+          "th": "ตัวดูดกลืนสมบูรณ์",
+          "en": "perfect absorber"
+        },
+        {
+          "id": "emitter",
+          "th": "ตัวแผ่รังสีที่ดีเยี่ยม",
+          "en": "ideal emitter"
+        },
+        {
+          "id": "decoy-a",
+          "th": "วัตถุที่ไม่แผ่รังสี",
+          "en": "non-emitting object"
+        },
+        {
+          "id": "decoy-b",
+          "th": "ตัวสะท้อนสมบูรณ์",
+          "en": "perfect reflector"
+        },
+        {
+          "id": "appearance",
+          "th": "เรืองแสงที่มองเห็นได้",
+          "en": "can glow visibly"
+        }
+      ],
+      "slots": [
+        "absorber",
+        "emitter",
+        "appearance"
+      ],
+      "solution": {
+        "th": "วัตถุดำดูดกลืนได้สมบูรณ์และแผ่รังสีได้ดีเยี่ยม ณ อุณหภูมิเดียวกันต่อหน่วยพื้นที่ ชื่ออ้างการดูดกลืน ไม่ได้บังคับให้ดำทุกอุณหภูมิ เมื่อร้อนพออาจเรืองแสงที่ตาเห็น",
+        "en": "A blackbody is a perfect absorber and ideal emitter at a given temperature per unit area. Its name concerns absorption; it need not look black at every temperature and can glow when hot."
+      },
+      "cover": [
+        "blackbody-definition",
+        "blackbody-colour"
+      ],
+      "edition": 1,
+      "number": 11,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 3 วัตถุดำและแนวคิดของพลังค์ → สมบัติของวัตถุดำ",
+        "en": "Open the learning sheet alongside · section 3 Blackbodies and Planck’s idea → Properties of a blackbody"
+      },
+      "readingKeys": [
+        "blackbody-definition"
+      ]
+    },
+    {
+      "id": "cavity-radiator",
+      "type": "drag-drop",
+      "section": 3,
+      "prompt": {
+        "th": "เติมเหตุผลที่ใช้รูเล็กของโพรงเป็นแบบจำลอง",
+        "en": "Complete why a small cavity opening models a blackbody."
+      },
+      "body": {
+        "th": "รังสีที่เข้ารูเล็กอาจ {path} ภายใน จึงมีโอกาสถูก {absorb} มาก เมื่อผนังร้อน ผนังยัง {emit} รังสีออกทางรูได้",
+        "en": "Radiation entering a small opening can {path} inside, making {absorb} likely. Hot walls also {emit} radiation through the opening."
+      },
+      "items": [
+        {
+          "id": "path",
+          "th": "สะท้อนหลายครั้ง",
+          "en": "reflect repeatedly"
+        },
+        {
+          "id": "absorb",
+          "th": "ดูดกลืน",
+          "en": "absorption"
+        },
+        {
+          "id": "emit",
+          "th": "แผ่",
+          "en": "emit"
+        },
+        {
+          "id": "decoy-a",
+          "th": "ผ่านตรงออกทั้งหมด",
+          "en": "all pass straight through"
+        },
+        {
+          "id": "decoy-b",
+          "th": "หยุดแผ่",
+          "en": "stop emitting"
+        }
+      ],
+      "slots": [
+        "path",
+        "absorb",
+        "emit"
+      ],
+      "solution": {
+        "th": "การสะท้อนหลายครั้งเพิ่มโอกาสดูดกลืนรังสีที่เข้าไป ผนังร้อนยังแผ่รังสีบางส่วนออกทางรู",
+        "en": "Repeated reflections promote absorption of incoming radiation; the hot walls still emit radiation through the hole."
+      },
+      "cover": [
+        "blackbody-definition"
+      ],
+      "figure": "<figure><img src=\"assets/19-1-1/cavity-radiator.svg\" width=\"9000\" height=\"3400\" alt=\"A small hole, multiply reflected incoming ray, and radiation emitted from heated cavity walls\"><figcaption><span data-th=\"รังสีตกกระทบผ่านรูเล็กเข้าสู่โพรง และผนังร้อนแผ่รังสีออกมาทางรูได้\" data-en=\"Incoming radiation enters a small hole; heated cavity walls can emit radiation through it.\">รังสีตกกระทบผ่านรูเล็กเข้าสู่โพรง และผนังร้อนแผ่รังสีออกมาทางรูได้</span></figcaption></figure>",
+      "edition": 1,
+      "number": 12,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 3 วัตถุดำและแนวคิดของพลังค์ → ภาพแบบจำลองโพรงที่มีรูเล็ก",
+        "en": "Open the learning sheet alongside · section 3 Blackbodies and Planck’s idea → Small-opening cavity model figure"
+      },
+      "readingKeys": [
+        "anchor:cavity-model"
+      ]
+    },
+    {
+      "id": "planck-contribution",
+      "type": "drag-drop",
+      "section": 3,
+      "prompt": {
+        "th": "เติมแนวคิดของพลังค์ที่เชื่อมสู่ควอนตัม",
+        "en": "Complete Planck’s key idea."
+      },
+      "body": {
+        "th": "พลังค์เสนอให้ตัวสั่นในวัตถุแลกเปลี่ยนพลังงานเป็น {units} แนวคิดนี้นำไปสู่สเปกตรัมที่ {evidence}",
+        "en": "Planck proposed energy exchange by oscillators in {units}, leading to a spectrum that {evidence}."
+      },
+      "items": [
+        {
+          "id": "units",
+          "th": "หน่วยไม่ต่อเนื่อง",
+          "en": "discrete units"
+        },
+        {
+          "id": "evidence",
+          "th": "สอดคล้องกับผลทดลอง",
+          "en": "agrees with experiment"
+        },
+        {
+          "id": "decoy-a",
+          "th": "ปริมาณต่อเนื่องเท่าใดก็ได้",
+          "en": "any continuous amount"
+        },
+        {
+          "id": "decoy-b",
+          "th": "ทำให้รังสีมีเพียงสีเดียว",
+          "en": "contains only one colour"
+        }
+      ],
+      "slots": [
+        "units",
+        "evidence"
+      ],
+      "solution": {
+        "th": "การแลกเปลี่ยนพลังงานเป็นหน่วยเป็นสมมติฐานสำคัญที่ช่วยอธิบายสเปกตรัมวัตถุดำ โดยไม่ต้องเพิ่มการพิสูจน์สูตรสเปกตรัมในใบนี้",
+        "en": "Discrete energy exchange is the key hypothesis used to explain blackbody spectra. This sheet does not require derivation of the full spectrum law."
+      },
+      "cover": [
+        "planck-contribution"
+      ],
+      "edition": 1,
+      "number": 13,
+      "sources": [],
+      "bridge": {
+        "th": "หัวข้อก่อนหน้าใช้อ่านลักษณะของสเปกตรัม ต่อจากนี้พิจารณาแนวคิดที่ช่วยอธิบายสเปกตรัมนั้น แล้วใช้กิจกรรมจำลองฝึกอ่านความสัมพันธ์",
+        "en": "The preceding questions describe spectra. Next consider the idea used to explain them, then use simulated activities to explore the relationships."
+      },
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 3 วัตถุดำและแนวคิดของพลังค์ → แนวคิดของพลังค์",
+        "en": "Open the learning sheet alongside · section 3 Blackbodies and Planck’s idea → Planck’s contribution"
+      },
+      "readingKeys": [
+        "planck-contribution"
+      ]
+    },
+    {
+      "id": "quantization-fixed-frequency",
+      "type": "drag-drop",
+      "section": 4,
+      "prompt": {
+        "th": "เติมความหมายของพลังงานเป็นหน่วย",
+        "en": "Complete quantization at fixed frequency."
+      },
+      "body": {
+        "th": "เมื่อความถี่คงที่ พลังงานหนึ่งควอนตัมมีค่า {unit} พลังงานรวมที่ถ่ายโอนเป็น {multiple} ของหน่วยนั้น",
+        "en": "At fixed frequency, each quantum has a {unit} energy. Transferred total energy is a {multiple} of that unit."
+      },
+      "items": [
+        {
+          "id": "unit",
+          "th": "คงที่",
+          "en": "fixed"
+        },
+        {
+          "id": "multiple",
+          "th": "จำนวนเต็มเท่า",
+          "en": "whole-number multiple"
+        },
+        {
+          "id": "decoy-a",
+          "th": "เปลี่ยนตามจำนวนโฟตอนเสมอ",
+          "en": "value always changed by photon count"
+        },
+        {
+          "id": "decoy-b",
+          "th": "เศษส่วนใดก็ได้",
+          "en": "arbitrary fractional multiple"
+        }
+      ],
+      "slots": [
+        "unit",
+        "multiple"
+      ],
+      "solution": {
+        "th": "ที่ความถี่เดียวกัน หนึ่งหน่วยมีพลังงาน ε คงที่ และ E = nε โดยนับ n เป็นหน่วยเต็ม",
+        "en": "At one frequency ε stays fixed, and E = nε with a whole-number count n."
+      },
+      "cover": [
+        "quantum-definition",
+        "energy-counting"
+      ],
+      "edition": 1,
+      "number": 14,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 4 กิจกรรมที่ 1 คงความถี่ แล้วนับหน่วยพลังงาน → ควอนตัมของพลังงาน",
+        "en": "Open the learning sheet alongside · section 4 Activity 1: Fixed frequency, count energy units → An energy quantum"
+      },
+      "readingKeys": [
+        "quantum-definition"
+      ]
+    },
+    {
+      "id": "activity-one-trial-3",
+      "type": "number",
+      "section": 4,
+      "prompt": {
+        "th": "กิจกรรม 1 ครั้งที่ 3: พลังงานรวม 9.9 × 10⁻¹⁹ J เท่ากับกี่ควอนตัม?",
+        "en": "Activity 1, trial 3: how many quanta are in 9.9 × 10⁻¹⁹ J?"
+      },
+      "answer": "3",
+      "tolerance": 0,
+      "unit": {
+        "th": "ควอนตัม",
+        "en": "quanta"
+      },
+      "solution": {
+        "th": "n = E/ε = (9.9 × 10⁻¹⁹)/(3.3 × 10⁻¹⁹) = 3 นับเป็นหน่วยเต็ม",
+        "en": "n = E/ε = (9.9 × 10⁻¹⁹)/(3.3 × 10⁻¹⁹) = 3 whole quanta."
+      },
+      "cover": [
+        "count-3"
+      ],
+      "context": {
+        "th": "ข้อมูลจำลอง ไม่ใช่ผลทดลองจริงของพลังค์: ที่ความถี่คงที่ เครื่องตรวจรับอุดมคติได้พลังงานครั้งที่ 1–5 เป็น 6.6, 3.3, 9.9, 6.6 และ 13.2 × 10⁻¹⁹ J ตามลำดับ หนึ่งควอนตัมในแบบจำลองนี้มีพลังงาน 3.3 × 10⁻¹⁹ J",
+        "en": "Simulated data, not Planck’s historical measurements: at fixed frequency an ideal detector records 6.6, 3.3, 9.9, 6.6 and 13.2 × 10⁻¹⁹ J in trials 1–5. One model quantum has energy 3.3 × 10⁻¹⁹ J."
+      },
+      "integer": true,
+      "calculation": {
+        "kind": "ratio",
+        "numerator": 9.9,
+        "denominator": 3.3
+      },
+      "hint": {
+        "th": "หารพลังงานรวมด้วยพลังงานต่อหนึ่งควอนตัม",
+        "en": "Divide total energy by energy per quantum."
+      },
+      "edition": 1,
+      "number": 15,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 4 กิจกรรมที่ 1 คงความถี่ แล้วนับหน่วยพลังงาน → จำนวนหน่วยครั้งที่ 3",
+        "en": "Open the learning sheet alongside · section 4 Activity 1: Fixed frequency, count energy units → Units in detection 3"
+      },
+      "readingKeys": [
+        "count-3"
+      ]
+    },
+    {
+      "id": "activity-two-ratio-3",
+      "type": "number",
+      "section": 5,
+      "prompt": {
+        "th": "กิจกรรม 2 แถว 3: หาค่า ε/f",
+        "en": "Activity 2, row 3: calculate ε/f."
+      },
+      "answer": "6.6e-34",
+      "tolerance": 5e-36,
+      "unit": {
+        "th": "J·s",
+        "en": "J·s"
+      },
+      "solution": {
+        "th": "หารพลังงานแถว 3 ด้วยความถี่แถวเดียวกัน ได้ ε/f = 6.6 × 10⁻³⁴ J·s ใช้ค่าปัดเศษของกิจกรรม",
+        "en": "Divide row 3 energy by its own frequency: ε/f = 6.6 × 10⁻³⁴ J·s, using the activity’s rounded data."
+      },
+      "cover": [
+        "ratio-3"
+      ],
+      "context": {
+        "th": "ข้อมูลจำลองตาม ε = hf ใช้ค่าปัดเศษเพื่อดูรูปแบบ: (f, ε) = (1×10¹⁴ Hz, 6.6×10⁻²⁰ J), (2×10¹⁴ Hz, 13.2×10⁻²⁰ J), (3×10¹⁴ Hz, 19.8×10⁻²⁰ J), (5×10¹⁴ Hz, 33×10⁻²⁰ J)",
+        "en": "Simulated ε = hf data rounded to show the pattern: (f, ε) = (1×10¹⁴ Hz, 6.6×10⁻²⁰ J), (2×10¹⁴ Hz, 13.2×10⁻²⁰ J), (3×10¹⁴ Hz, 19.8×10⁻²⁰ J), (5×10¹⁴ Hz, 33×10⁻²⁰ J)."
+      },
+      "sig": 2,
+      "calculation": {
+        "kind": "ratio",
+        "numerator": 1.98e-19,
+        "denominator": 300000000000000
+      },
+      "edition": 1,
+      "number": 16,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 5 กิจกรรมที่ 2 เปลี่ยนความถี่ แล้วเปรียบเทียบพลังงานต่อหน่วย → อัตราส่วนแถวที่ 3",
+        "en": "Open the learning sheet alongside · section 5 Activity 2: Change frequency, compare energy per unit → Ratio in row 3"
+      },
+      "readingKeys": [
+        "ratio-3"
+      ]
+    },
+    {
+      "id": "planck-constant",
+      "type": "drag-drop",
+      "section": 5,
+      "prompt": {
+        "th": "เติมความหมายและหน่วยของ h",
+        "en": "Complete the meaning and unit of h."
+      },
+      "body": {
+        "th": "อัตราส่วน ε/f ที่คงที่เรียกว่า {name} เขียนเป็น {symbol} มีหน่วย {unit}",
+        "en": "The constant ratio ε/f is the {name}, written {symbol}, with unit {unit}."
+      },
+      "items": [
+        {
+          "id": "name",
+          "th": "ค่าคงตัวของพลังค์",
+          "en": "Planck constant"
+        },
+        {
+          "id": "symbol",
+          "th": "h",
+          "en": "h"
+        },
+        {
+          "id": "unit",
+          "th": "J·s",
+          "en": "J·s"
+        },
+        {
+          "id": "decoy-a",
+          "th": "J/s",
+          "en": "J/s"
+        },
+        {
+          "id": "decoy-b",
+          "th": "ความเร็วแสง",
+          "en": "speed of light"
+        }
+      ],
+      "slots": [
+        "name",
+        "symbol",
+        "unit"
+      ],
+      "solution": {
+        "th": "h = ε/f หน่วย J/Hz = J·s กิจกรรมใช้ 6.6 × 10⁻³⁴ ส่วนโจทย์คำนวณใช้ 6.626 × 10⁻³⁴ J·s",
+        "en": "h = ε/f has unit J/Hz = J·s. The activities use rounded 6.6 × 10⁻³⁴; calculations use 6.626 × 10⁻³⁴ J·s."
+      },
+      "cover": [
+        "planck-relation",
+        "symbol-5"
+      ],
+      "edition": 1,
+      "number": 17,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 5 กิจกรรมที่ 2 เปลี่ยนความถี่ แล้วเปรียบเทียบพลังงานต่อหน่วย → พลังงานหนึ่งควอนตัมกับความถี่",
+        "en": "Open the learning sheet alongside · section 5 Activity 2: Change frequency, compare energy per unit → Energy per quantum and frequency"
+      },
+      "readingKeys": [
+        "planck-relation"
+      ]
+    },
+    {
+      "id": "core-formula-relations",
+      "type": "drag-drop",
+      "section": 6,
+      "prompt": {
+        "th": "เติมสูตรหลักทั้งสาม โดยแยกหนึ่งควอนตัมออกจากพลังงานรวม",
+        "en": "Complete the three core formulas, distinguishing one quantum from total energy."
+      },
+      "body": {
+        "th": "หนึ่งควอนตัม: ε = {one}; รวม n ควอนตัมที่ความถี่เดียวกัน: E = {total}; แทน ε แล้วได้ E = {combined}",
+        "en": "One quantum: ε = {one}; n quanta at one frequency: E = {total}; substituting ε gives E = {combined}."
+      },
+      "items": [
+        {
+          "id": "one",
+          "th": "hf",
+          "en": "hf"
+        },
+        {
+          "id": "total",
+          "th": "nε",
+          "en": "nε"
+        },
+        {
+          "id": "combined",
+          "th": "nhf",
+          "en": "nhf"
+        },
+        {
+          "id": "decoy-a",
+          "th": "h/f",
+          "en": "h/f"
+        },
+        {
+          "id": "decoy-b",
+          "th": "ε/n",
+          "en": "ε/n"
+        }
+      ],
+      "slots": [
+        "one",
+        "total",
+        "combined"
+      ],
+      "solution": {
+        "th": "ใช้ ε = hf ต่อหนึ่งควอนตัม และ E = nε = nhf สำหรับพลังงานรวมที่ความถี่เดียวกัน โดย n เป็นจำนวนหน่วยเต็ม",
+        "en": "Use ε = hf per quantum and E = nε = nhf for the total at one frequency, with n a whole-number count."
+      },
+      "cover": [
+        "formula-quantum",
+        "formula-count",
+        "formula-combined",
+        "energy-counting"
+      ],
+      "edition": 1,
+      "number": 18,
+      "sources": [],
+      "bridge": {
+        "th": "เริ่มจากพลังงานหนึ่งหน่วยก่อน แล้วจึงรวมหลายหน่วยที่ความถี่เดียวกัน ตรวจทุกครั้งว่าสัญลักษณ์ใดแทนหนึ่งหน่วยและสัญลักษณ์ใดแทนทั้งชุด",
+        "en": "Begin with one energy unit, then combine multiple units at the same frequency. Check which symbol denotes one unit and which denotes the entire set."
+      },
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 6 สรุปสูตร สัญลักษณ์ และหน่วย → พลังงานหนึ่งควอนตัม / พลังงานรวมจาก n หน่วย / รวมสองความสัมพันธ์",
+        "en": "Open the learning sheet alongside · section 6 Equations, symbols and units → Energy of one quantum / Total energy of n units / Combine the relationships"
+      },
+      "readingKeys": [
+        "formula-quantum",
+        "formula-count",
+        "formula-combined"
+      ]
+    },
+    {
+      "id": "symbol-meanings",
+      "type": "drag-drop",
+      "section": 6,
+      "prompt": {
+        "th": "จับคู่สัญลักษณ์ทั้งห้า",
+        "en": "Match the five symbols."
+      },
+      "body": {
+        "th": "ε คือ {epsilon}; E คือ {total}; n คือ {count}; f คือ {frequency}; h คือ {constant}",
+        "en": "ε is {epsilon}; E is {total}; n is {count}; f is {frequency}; h is {constant}."
+      },
+      "items": [
+        {
+          "id": "epsilon",
+          "th": "พลังงานหนึ่งควอนตัม หน่วย J",
+          "en": "energy per quantum in J"
+        },
+        {
+          "id": "total",
+          "th": "พลังงานรวม หน่วย J",
+          "en": "total energy in J"
+        },
+        {
+          "id": "count",
+          "th": "จำนวนควอนตัม ไม่มีหน่วย",
+          "en": "dimensionless quantum count"
+        },
+        {
+          "id": "frequency",
+          "th": "ความถี่ หน่วย Hz",
+          "en": "frequency in Hz"
+        },
+        {
+          "id": "constant",
+          "th": "ค่าคงตัวของพลังค์ หน่วย J·s",
+          "en": "Planck constant in J·s"
+        },
+        {
+          "id": "decoy-a",
+          "th": "ความยาวคลื่น หน่วย m",
+          "en": "wavelength in m"
+        },
+        {
+          "id": "decoy-b",
+          "th": "กำลัง หน่วย W",
+          "en": "power in W"
+        }
+      ],
+      "slots": [
+        "epsilon",
+        "total",
+        "count",
+        "frequency",
+        "constant"
+      ],
+      "solution": {
+        "th": "ε และ E ต่างมีหน่วยพลังงานแต่หมายถึงต่อหนึ่งหน่วยกับรวมทั้งชุด n เป็นจำนวนไม่มีหน่วย ส่วน f เป็น Hz และ h เป็น J·s",
+        "en": "ε and E are both energies but mean per quantum and total. n is dimensionless, f is in Hz, and h is in J·s."
+      },
+      "cover": [
+        "symbol-1",
+        "symbol-2",
+        "symbol-3",
+        "symbol-4",
+        "symbol-5"
+      ],
+      "edition": 1,
+      "number": 19,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 6 สรุปสูตร สัญลักษณ์ และหน่วย → ตารางสัญลักษณ์ ε, E, n, f, h และหน่วย SI",
+        "en": "Open the learning sheet alongside · section 6 Equations, symbols and units → Symbol table ε, E, n, f, h and SI units"
+      },
+      "readingKeys": [
+        "symbol-1",
+        "symbol-2",
+        "symbol-3",
+        "symbol-4",
+        "symbol-5"
+      ]
+    },
+    {
+      "id": "ipst-quantum-number",
+      "type": "choice",
+      "section": 6,
+      "prompt": {
+        "th": "ตรวจสอบความเข้าใจ สสวท. 19.1 ข้อ 1: เลขควอนตัมในสมมติฐานของพลังค์หมายถึงอะไร และตัวอย่างใดถูกต้อง?",
+        "en": "IPST Understanding 19.1 Q1: what is the quantum number in Planck’s hypothesis, and which example is correct?"
+      },
+      "correct": {
+        "th": "นับจำนวนเต็มเท่าของ hf เช่น n = 3 ให้ E = 3hf ที่ความถี่คงที่",
+        "en": "It counts whole multiples of hf: n = 3 gives E = 3hf at fixed frequency."
+      },
+      "decoys": [
+        {
+          "th": "เป็นความถี่ เช่น n = 3 หมายถึง f = 3 Hz",
+          "en": "It is frequency: n = 3 means f = 3 Hz."
+        },
+        {
+          "th": "เป็นอุณหภูมิ เช่น n = 3 หมายถึง 3 K",
+          "en": "It is temperature: n = 3 means 3 K."
+        },
+        {
+          "th": "เป็นเศษส่วนใดก็ได้ เช่นตรวจรับครึ่งควอนตัมที่ f เดิม",
+          "en": "It may be any fraction, including half a quantum at the same f."
+        },
+        {
+          "th": "n = 3 หมายถึงพลังงานของหนึ่งควอนตัมเป็น 3hf",
+          "en": "n = 3 means that one quantum has energy 3hf."
+        }
+      ],
+      "solution": {
+        "th": "n บอกจำนวนหน่วยเต็มของ hf เช่น 2 หน่วยให้ 2hf และ 3 หน่วยให้ 3hf ในแบบจำลองตรวจรับ n = 0 หมายถึงยังไม่มีพลังงานถูกตรวจรับ ไม่ใช่เศษส่วนของหน่วย",
+        "en": "n counts whole hf units: two give 2hf and three give 3hf. In the detector model n = 0 means none detected, not a fractional quantum."
+      },
+      "cover": [
+        "parallel-quantum-count"
+      ],
+      "sources": [
+        "ipst-understanding-1"
+      ],
+      "edition": 1,
+      "number": 20,
+      "context": {
+        "th": "จงอธิบายเลขควอนตัม และยกตัวอย่างประกอบ",
+        "en": "Explain the quantum number and give an example."
+      },
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 6 สรุปสูตร สัญลักษณ์ และหน่วย → คำถาม · นับหน่วยพลังงานที่ความถี่คงที่ · นับควอนตัมโดยไม่เปลี่ยนความถี่",
+        "en": "Open the learning sheet alongside · section 6 Equations, symbols and units → Question · Count energy units at fixed frequency · Count quanta without changing frequency"
+      },
+      "readingKeys": [
+        "parallel-quantum-count"
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": {
+            "th": "เป็นเศษส่วนใดก็ได้ เช่นตรวจรับครึ่งควอนตัมที่ f เดิม",
+            "en": "It may be any fraction, including half a quantum at the same f."
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "th": "นับจำนวนเต็มเท่าของ hf เช่น n = 3 ให้ E = 3hf ที่ความถี่คงที่",
+            "en": "It counts whole multiples of hf: n = 3 gives E = 3hf at fixed frequency."
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "th": "เป็นอุณหภูมิ เช่น n = 3 หมายถึง 3 K",
+            "en": "It is temperature: n = 3 means 3 K."
+          }
+        },
+        {
+          "id": "d",
+          "text": {
+            "th": "n = 3 หมายถึงพลังงานของหนึ่งควอนตัมเป็น 3hf",
+            "en": "n = 3 means that one quantum has energy 3hf."
+          }
+        },
+        {
+          "id": "e",
+          "text": {
+            "th": "เป็นความถี่ เช่น n = 3 หมายถึง f = 3 Hz",
+            "en": "It is frequency: n = 3 means f = 3 Hz."
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "electric-work",
+      "type": "drag-drop",
+      "section": 6,
+      "prompt": {
+        "th": "เติมความสัมพันธ์พลังงานจากการเร่งประจุ",
+        "en": "Complete the energy relation for accelerating a charge."
+      },
+      "body": {
+        "th": "เมื่อใช้ขนาดของประจุ q และความต่างศักย์ V พลังงานที่ได้รับคือ W = {formula}; q มีหน่วย {charge} และ W มีหน่วย {energy}",
+        "en": "Using charge magnitude q and potential-difference magnitude V, gained energy is W = {formula}; q is in {charge} and W is in {energy}."
+      },
+      "items": [
+        {
+          "id": "formula",
+          "th": "qV",
+          "en": "qV"
+        },
+        {
+          "id": "charge",
+          "th": "C",
+          "en": "C"
+        },
+        {
+          "id": "energy",
+          "th": "J",
+          "en": "J"
+        },
+        {
+          "id": "decoy-a",
+          "th": "q/V",
+          "en": "q/V"
+        },
+        {
+          "id": "decoy-b",
+          "th": "Hz",
+          "en": "Hz"
+        }
+      ],
+      "slots": [
+        "formula",
+        "charge",
+        "energy"
+      ],
+      "solution": {
+        "th": "W = qV ใช้ขนาดของปริมาณในการเร่งตามกรณีนี้ C·V = J โดย V ที่เป็นตัวแปรคือความต่างศักย์",
+        "en": "For this acceleration case use magnitudes: W = qV, with C·V = J. The variable V denotes potential difference."
+      },
+      "cover": [
+        "electric-work-review"
+      ],
+      "edition": 1,
+      "number": 21,
+      "sources": [],
+      "bridge": {
+        "th": "eV เป็นหน่วยพลังงานที่ใช้ระบุพลังงานโฟตอนได้ด้วย จึงเริ่มทวนความหมายของหน่วยนี้จากงานของแรงไฟฟ้าตามหัวข้อ 6 ในใบเรียนรู้",
+        "en": "Photon energy can also be expressed in eV. Review the meaning of this unit through electrical work, as introduced in sheet section 6."
+      },
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 6 สรุปสูตร สัญลักษณ์ และหน่วย → ทวนงานของแรงไฟฟ้า",
+        "en": "Open the learning sheet alongside · section 6 Equations, symbols and units → Review: work done by an electric field"
+      },
+      "readingKeys": [
+        "electric-work-review"
+      ]
+    },
+    {
+      "id": "electronvolt-definition",
+      "type": "drag-drop",
+      "section": 6,
+      "prompt": {
+        "th": "เติมนิยามอิเล็กตรอนโวลต์",
+        "en": "Complete the electronvolt definition."
+      },
+      "body": {
+        "th": "1 eV คือพลังงานที่ {particle} ได้รับเมื่อถูกเร่งผ่าน {voltage} จึงเท่ากับ {joule}",
+        "en": "1 eV is the energy gained by an {particle} accelerated through {voltage}, equal to {joule}."
+      },
+      "items": [
+        {
+          "id": "particle",
+          "th": "อิเล็กตรอน",
+          "en": "electron"
+        },
+        {
+          "id": "voltage",
+          "th": "1 V",
+          "en": "1 V"
+        },
+        {
+          "id": "joule",
+          "th": "1.60 × 10⁻¹⁹ J",
+          "en": "1.60 × 10⁻¹⁹ J"
+        },
+        {
+          "id": "decoy-a",
+          "th": "1.60 × 10¹⁹ J",
+          "en": "1.60 × 10¹⁹ J"
+        },
+        {
+          "id": "decoy-b",
+          "th": "โฟตอนที่มีความถี่ 1 Hz",
+          "en": "photon with frequency 1 Hz"
+        }
+      ],
+      "slots": [
+        "particle",
+        "voltage",
+        "joule"
+      ],
+      "solution": {
+        "th": "ใช้ e = 1.60 × 10⁻¹⁹ C และ W = eV เมื่อ V = 1 V ได้ 1 eV = 1.60 × 10⁻¹⁹ J",
+        "en": "With e = 1.60 × 10⁻¹⁹ C, W = eV at 1 V gives 1 eV = 1.60 × 10⁻¹⁹ J."
+      },
+      "cover": [
+        "joule-ev",
+        "electric-work-review"
+      ],
+      "edition": 1,
+      "number": 22,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 6 สรุปสูตร สัญลักษณ์ และหน่วย → หน่วยพลังงาน: จูลและอิเล็กตรอนโวลต์",
+        "en": "Open the learning sheet alongside · section 6 Equations, symbols and units → Energy units: joules and electronvolts"
+      },
+      "readingKeys": [
+        "joule-ev"
+      ]
+    },
+    {
+      "id": "energy-conversion-direction",
+      "type": "drag-drop",
+      "section": 6,
+      "prompt": {
+        "th": "เติมทิศทางการแปลงหน่วยพลังงาน",
+        "en": "Complete the directions for energy-unit conversion."
+      },
+      "body": {
+        "th": "จาก eV เป็น J ต้อง {forward} ด้วย 1.60 × 10⁻¹⁹ ส่วนจาก J เป็น eV ต้อง {reverse} ด้วยค่านี้",
+        "en": "To convert eV to J, {forward} by 1.60 × 10⁻¹⁹; to convert J to eV, {reverse} by that value."
+      },
+      "items": [
+        {
+          "id": "forward",
+          "th": "คูณ",
+          "en": "multiply"
+        },
+        {
+          "id": "reverse",
+          "th": "หาร",
+          "en": "divide"
+        },
+        {
+          "id": "decoy-a",
+          "th": "บวก",
+          "en": "add"
+        },
+        {
+          "id": "decoy-b",
+          "th": "ลบ",
+          "en": "subtract"
+        }
+      ],
+      "slots": [
+        "forward",
+        "reverse"
+      ],
+      "solution": {
+        "th": "ใช้ 1 eV = 1.60 × 10⁻¹⁹ J ตรวจหน่วยเพื่อตัดสินทิศคูณ–หาร",
+        "en": "Use 1 eV = 1.60 × 10⁻¹⁹ J and cancel units to decide the operation."
+      },
+      "cover": [
+        "joule-ev"
+      ],
+      "edition": 1,
+      "number": 23,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 6 สรุปสูตร สัญลักษณ์ และหน่วย → หน่วยพลังงาน: จูลและอิเล็กตรอนโวลต์",
+        "en": "Open the learning sheet alongside · section 6 Equations, symbols and units → Energy units: joules and electronvolts"
+      },
+      "readingKeys": [
+        "joule-ev"
+      ]
+    },
+    {
+      "id": "wavelength-frequency",
+      "type": "drag-drop",
+      "section": 6,
+      "prompt": {
+        "th": "เติมสูตรคลื่นแม่เหล็กไฟฟ้าในสุญญากาศ",
+        "en": "Complete the vacuum electromagnetic-wave relations."
+      },
+      "body": {
+        "th": "จาก c = fλ ได้ f = {frequency}; เมื่อนำไปแทนใน ε = hf ได้ ε = {energy} โดยต้องแปลง λ เป็น {unit}",
+        "en": "From c = fλ, f = {frequency}; substituting in ε = hf gives ε = {energy}, with λ in {unit}."
+      },
+      "items": [
+        {
+          "id": "frequency",
+          "th": "c/λ",
+          "en": "c/λ"
+        },
+        {
+          "id": "energy",
+          "th": "hc/λ",
+          "en": "hc/λ"
+        },
+        {
+          "id": "unit",
+          "th": "m",
+          "en": "m"
+        },
+        {
+          "id": "decoy-a",
+          "th": "cλ",
+          "en": "cλ"
+        },
+        {
+          "id": "decoy-b",
+          "th": "hλ/c",
+          "en": "hλ/c"
+        }
+      ],
+      "slots": [
+        "frequency",
+        "energy",
+        "unit"
+      ],
+      "solution": {
+        "th": "ความถี่กับความยาวคลื่นแปรผกผันในสุญญากาศ และพลังงานต่อโฟตอน ε = hc/λ ใช้ λ เป็นเมตร",
+        "en": "In vacuum frequency is inversely proportional to wavelength. Use λ in metres in ε = hc/λ."
+      },
+      "cover": [
+        "wavelength-review"
+      ],
+      "edition": 1,
+      "number": 24,
+      "sources": [],
+      "bridge": {
+        "th": "บางโจทย์ให้ความยาวคลื่นแทนความถี่ จึงต้องเชื่อมปริมาณทั้งสองและตรวจหน่วยก่อนใช้สูตรพลังงานโฟตอน",
+        "en": "Some problems give wavelength rather than frequency. Connect the two quantities and check units before calculating photon energy."
+      },
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 6 สรุปสูตร สัญลักษณ์ และหน่วย → ความยาวคลื่นกับความถี่",
+        "en": "Open the learning sheet alongside · section 6 Equations, symbols and units → Wavelength and frequency"
+      },
+      "readingKeys": [
+        "wavelength-review"
+      ]
+    },
+    {
+      "id": "photon-energy-wavelength",
+      "type": "drag-drop",
+      "section": 6,
+      "prompt": {
+        "th": "เติมความสัมพันธ์พลังงานโฟตอนกับความยาวคลื่น",
+        "en": "Complete the energy–wavelength relation."
+      },
+      "body": {
+        "th": "ที่ c และ h คงที่ ε = hc/λ แสดงว่า ε แปรผัน {relation} กับ λ ดังนั้น λ สั้นลงให้พลังงานต่อโฟตอน {trend}",
+        "en": "With fixed h and c, ε = hc/λ means ε is {relation} to λ; a shorter λ gives {trend} photon energy."
+      },
+      "items": [
+        {
+          "id": "relation",
+          "th": "ผกผัน",
+          "en": "inversely proportional"
+        },
+        {
+          "id": "trend",
+          "th": "มากขึ้น",
+          "en": "greater"
+        },
+        {
+          "id": "decoy-a",
+          "th": "ตรง",
+          "en": "directly proportional"
+        },
+        {
+          "id": "decoy-b",
+          "th": "น้อยลง",
+          "en": "smaller"
+        }
+      ],
+      "slots": [
+        "relation",
+        "trend"
+      ],
+      "solution": {
+        "th": "ตรวจจาก λ อยู่ในตัวหารของ hc/λ อย่าสับสนกับ ε = hf ที่แปรผันตรงกับ f",
+        "en": "Wavelength is in the denominator. This differs from the direct proportionality between ε and f."
+      },
+      "cover": [
+        "wavelength-review"
+      ],
+      "edition": 1,
+      "number": 25,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 6 สรุปสูตร สัญลักษณ์ และหน่วย → ความยาวคลื่นกับความถี่",
+        "en": "Open the learning sheet alongside · section 6 Equations, symbols and units → Wavelength and frequency"
+      },
+      "readingKeys": [
+        "wavelength-review"
+      ]
+    },
+    {
+      "id": "convert-ev-joule",
+      "type": "number",
+      "section": 6,
+      "prompt": {
+        "th": "พลังงาน 2.00 eV คิดเป็นกี่จูล?",
+        "en": "Convert 2.00 eV to joules."
+      },
+      "answer": "3.2e-19",
+      "tolerance": 5e-22,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "solution": {
+        "th": "E = (2.00)(1.60 × 10⁻¹⁹) = 3.20 × 10⁻¹⁹ J",
+        "en": "E = (2.00)(1.60 × 10⁻¹⁹) = 3.20 × 10⁻¹⁹ J."
+      },
+      "cover": [
+        "ev-to-joule"
+      ],
+      "calculation": {
+        "kind": "multiply",
+        "values": [
+          2,
+          1.6e-19
+        ]
+      },
+      "edition": 1,
+      "number": 26,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 6 สรุปสูตร สัญลักษณ์ และหน่วย → คำถาม 8 · พลังงาน \\(2.00\\ \\mathrm{eV}\\) คิดเป็นกี่จูล?",
+        "en": "Open the learning sheet alongside · section 6 Equations, symbols and units → Question 8 · Convert an energy of \\(2.00\\ \\mathrm{eV}\\) to joules."
+      },
+      "readingKeys": [
+        "ev-to-joule"
+      ]
+    },
+    {
+      "id": "convert-joule-ev",
+      "type": "number",
+      "section": 6,
+      "prompt": {
+        "th": "พลังงาน 4.80 × 10⁻¹⁹ J คิดเป็นกี่ eV?",
+        "en": "Convert 4.80 × 10⁻¹⁹ J to eV."
+      },
+      "answer": "3",
+      "tolerance": 0.005,
+      "unit": {
+        "th": "eV",
+        "en": "eV"
+      },
+      "solution": {
+        "th": "E = (4.80 × 10⁻¹⁹)/(1.60 × 10⁻¹⁹) = 3.00 eV",
+        "en": "E = (4.80 × 10⁻¹⁹)/(1.60 × 10⁻¹⁹) = 3.00 eV."
+      },
+      "cover": [
+        "joule-to-ev"
+      ],
+      "calculation": {
+        "kind": "ratio",
+        "numerator": 4.8e-19,
+        "denominator": 1.6e-19
+      },
+      "edition": 1,
+      "number": 27,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 6 สรุปสูตร สัญลักษณ์ และหน่วย → คำถาม 9 · พลังงาน \\(4.80\\times10^{-19}\\ \\mathrm J\\) คิดเป็นกี่อิเล็กตรอนโวลต์?",
+        "en": "Open the learning sheet alongside · section 6 Equations, symbols and units → Question 9 · Convert an energy of \\(4.80\\times10^{-19}\\ \\mathrm J\\) to electronvolts."
+      },
+      "readingKeys": [
+        "joule-to-ev"
+      ]
+    },
+    {
+      "id": "ipst-example-one-joule",
+      "type": "number",
+      "section": 7,
+      "prompt": {
+        "th": "ตัวอย่าง สสวท. 19.1: หาพลังงานหนึ่งควอนตัมในหน่วย J",
+        "en": "IPST Example 19.1: find the energy quantum in J."
+      },
+      "answer": "4.3068999999999997e-19",
+      "tolerance": 5e-22,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "solution": {
+        "th": "ε = hf = (6.626 × 10⁻³⁴)(6.50 × 10¹⁴) = 4.3069 × 10⁻¹⁹ J ≈ 4.31 × 10⁻¹⁹ J",
+        "en": "ε = hf = (6.626 × 10⁻³⁴)(6.50 × 10¹⁴) = 4.3069 × 10⁻¹⁹ J ≈ 4.31 × 10⁻¹⁹ J."
+      },
+      "cover": [
+        "parallel-example-1"
+      ],
+      "context": {
+        "th": "จงหาควอนตัมของพลังงานของคลื่นแม่เหล็กไฟฟ้าที่มีความถี่ 6.50 × 10¹⁴ เฮิรตซ์",
+        "en": "Find the energy quantum of electromagnetic radiation with frequency 6.50 × 10¹⁴ Hz."
+      },
+      "sources": [
+        "ipst-example-19-1"
+      ],
+      "calculation": {
+        "kind": "hf",
+        "frequency": 650000000000000
+      },
+      "edition": 1,
+      "number": 28,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 7 ตัวอย่างคำนวณ → ตัวอย่าง 1 · ความถี่กับพลังงานหนึ่งควอนตัม · ก. หาพลังงานหนึ่งควอนตัมในหน่วย J",
+        "en": "Open the learning sheet alongside · section 7 Worked examples → Example 1 · Frequency and energy per quantum · (a) Find the energy per quantum in J."
+      },
+      "readingKeys": [
+        "parallel-example-1"
+      ]
+    },
+    {
+      "id": "ipst-example-one-ev",
+      "type": "number",
+      "section": 7,
+      "prompt": {
+        "th": "ตัวอย่าง สสวท. 19.1 พร้อมข้อความเรื่อง eV ที่ตามมา: พลังงานหนึ่งควอนตัมเป็นกี่ eV?",
+        "en": "IPST Example 19.1 and its following eV explanation: what is the energy quantum in eV?"
+      },
+      "answer": "2.6918125",
+      "tolerance": 0.005,
+      "unit": {
+        "th": "eV",
+        "en": "eV"
+      },
+      "solution": {
+        "th": "ε = hf = 4.3069 × 10⁻¹⁹ J แล้วหาร 1.60 × 10⁻¹⁹ ได้ 2.6918125 eV ≈ 2.69 eV เก็บค่าที่ยังไม่ปัดระหว่างขั้น",
+        "en": "First ε = hf = 4.3069 × 10⁻¹⁹ J; dividing by 1.60 × 10⁻¹⁹ gives 2.6918125 eV ≈ 2.69 eV. Retain unrounded intermediate values."
+      },
+      "cover": [
+        "parallel-example-1-ev"
+      ],
+      "context": {
+        "th": "จงหาควอนตัมของพลังงานของคลื่นแม่เหล็กไฟฟ้าที่มีความถี่ 6.50 × 10¹⁴ เฮิรตซ์",
+        "en": "Find the energy quantum of electromagnetic radiation with frequency 6.50 × 10¹⁴ Hz."
+      },
+      "sources": [
+        "ipst-example-19-1"
+      ],
+      "calculation": {
+        "kind": "hf-ev",
+        "frequency": 650000000000000
+      },
+      "edition": 1,
+      "number": 29,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 7 ตัวอย่างคำนวณ → ตัวอย่าง 1 · ความถี่กับพลังงานหนึ่งควอนตัม · ข. แปลงพลังงานจากข้อ ก เป็น eV",
+        "en": "Open the learning sheet alongside · section 7 Worked examples → Example 1 · Frequency and energy per quantum · (b) Convert the result of (a) to eV."
+      },
+      "readingKeys": [
+        "parallel-example-1-ev"
+      ]
+    },
+    {
+      "id": "ipst-example-two-frequency",
+      "type": "number",
+      "section": 7,
+      "prompt": {
+        "th": "ตัวอย่าง สสวท. 19.2: หาความถี่ของแสง",
+        "en": "IPST Example 19.2: find the light frequency."
+      },
+      "answer": "603682463024449.1",
+      "tolerance": 5000000000000,
+      "unit": {
+        "th": "Hz",
+        "en": "Hz"
+      },
+      "solution": {
+        "th": "แปลง ε = (2.5)(1.60 × 10⁻¹⁹) = 4.0 × 10⁻¹⁹ J แล้ว f = ε/h = 6.0368… × 10¹⁴ Hz ≈ 6.04 × 10¹⁴ Hz หรือ 6.0 × 10¹⁴ Hz เมื่อปัด 2 เลขนัยสำคัญ",
+        "en": "Convert ε = (2.5)(1.60 × 10⁻¹⁹) = 4.0 × 10⁻¹⁹ J. Then f = ε/h = 6.0368… × 10¹⁴ Hz ≈ 6.04 × 10¹⁴ Hz, or 6.0 × 10¹⁴ Hz to two significant figures."
+      },
+      "cover": [
+        "parallel-example-2"
+      ],
+      "context": {
+        "th": "แสงมีควอนตัมของพลังงาน 2.5 อิเล็กตรอนโวลต์ มีความถี่เท่าใด",
+        "en": "Light has an energy quantum of 2.5 eV. What is its frequency?"
+      },
+      "sources": [
+        "ipst-example-19-2"
+      ],
+      "sig": 2,
+      "calculation": {
+        "kind": "ev-frequency",
+        "energyEv": 2.5
+      },
+      "edition": 1,
+      "number": 30,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 7 ตัวอย่างคำนวณ → ตัวอย่าง 2 · พลังงานหนึ่งควอนตัมกับความถี่ · ตัวอย่าง 2 · วิธีทำและคำตอบ",
+        "en": "Open the learning sheet alongside · section 7 Worked examples → Example 2 · Energy per quantum and frequency · Example 2: solution"
+      },
+      "readingKeys": [
+        "parallel-example-2"
+      ]
+    },
+    {
+      "id": "ipst-example-three-2",
+      "type": "number",
+      "section": 7,
+      "prompt": {
+        "th": "ตัวอย่าง สสวท. 19.3: หาพลังงานรวมของ 2 ควอนตัม",
+        "en": "IPST Example 19.3: find the total energy of 2 quanta."
+      },
+      "answer": "4.352e-18",
+      "tolerance": 5e-22,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "solution": {
+        "th": "E = nε = 2(21.76 × 10⁻¹⁹) = 4.352 × 10⁻¹⁸ J",
+        "en": "E = nε = 2(21.76 × 10⁻¹⁹) = 4.352 × 10⁻¹⁸ J."
+      },
+      "cover": [
+        "parallel-example-3"
+      ],
+      "context": {
+        "th": "แสงความถี่หนึ่งมีพลังงานต่ำที่สุด เท่ากับ 21.76 × 10⁻¹⁹ จูล จงหาพลังงานของแสงเมื่อมีจำนวนควอนตัมเป็น 2 และ 3",
+        "en": "At a specified frequency the energy quantum is 21.76 × 10⁻¹⁹ J. Find the total energy for 2 and 3 quanta."
+      },
+      "sources": [
+        "ipst-example-19-3"
+      ],
+      "sig": 4,
+      "calculation": {
+        "kind": "multiply",
+        "values": [
+          2,
+          2.176e-18
+        ]
+      },
+      "edition": 1,
+      "number": 31,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 7 ตัวอย่างคำนวณ → ตัวอย่าง 3 · จำนวนควอนตัมกับพลังงานรวม · ก. หาพลังงานรวมของ 4 ควอนตัม",
+        "en": "Open the learning sheet alongside · section 7 Worked examples → Example 3 · Number of quanta and total energy · (a) Find the total energy of 4 quanta."
+      },
+      "readingKeys": [
+        "parallel-example-3"
+      ]
+    },
+    {
+      "id": "ipst-example-three-3",
+      "type": "number",
+      "section": 7,
+      "prompt": {
+        "th": "ตัวอย่าง สสวท. 19.3: หาพลังงานรวมของ 3 ควอนตัม",
+        "en": "IPST Example 19.3: find the total energy of 3 quanta."
+      },
+      "answer": "6.5279999999999995e-18",
+      "tolerance": 5e-22,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "solution": {
+        "th": "E = nε = 3(21.76 × 10⁻¹⁹) = 6.528 × 10⁻¹⁸ J",
+        "en": "E = nε = 3(21.76 × 10⁻¹⁹) = 6.528 × 10⁻¹⁸ J."
+      },
+      "cover": [
+        "parallel-example-3-b"
+      ],
+      "context": {
+        "th": "แสงความถี่หนึ่งมีพลังงานต่ำที่สุด เท่ากับ 21.76 × 10⁻¹⁹ จูล จงหาพลังงานของแสงเมื่อมีจำนวนควอนตัมเป็น 2 และ 3",
+        "en": "At a specified frequency the energy quantum is 21.76 × 10⁻¹⁹ J. Find the total energy for 2 and 3 quanta."
+      },
+      "sources": [
+        "ipst-example-19-3"
+      ],
+      "sig": 4,
+      "calculation": {
+        "kind": "multiply",
+        "values": [
+          3,
+          2.176e-18
+        ]
+      },
+      "edition": 1,
+      "number": 32,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 7 ตัวอย่างคำนวณ → ตัวอย่าง 3 · จำนวนควอนตัมกับพลังงานรวม · ข. หาพลังงานรวมของ 6 ควอนตัม",
+        "en": "Open the learning sheet alongside · section 7 Worked examples → Example 3 · Number of quanta and total energy · (b) Find the total energy of 6 quanta."
+      },
+      "readingKeys": [
+        "parallel-example-3-b"
+      ]
+    },
+    {
+      "id": "ipst-exercise-one-joule",
+      "type": "number",
+      "section": 8,
+      "prompt": {
+        "th": "แบบฝึกหัด สสวท. 19.1 ข้อ 1: หาพลังงานหนึ่งควอนตัม",
+        "en": "IPST Exercise 19.1 Q1: find the energy quantum."
+      },
+      "answer": "3.3129999999999997e-19",
+      "tolerance": 5e-21,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "solution": {
+        "th": "ε = hf = (6.626 × 10⁻³⁴)(5.0 × 10¹⁴) = 3.313 × 10⁻¹⁹ J ≈ 3.3 × 10⁻¹⁹ J",
+        "en": "ε = hf = (6.626 × 10⁻³⁴)(5.0 × 10¹⁴) = 3.313 × 10⁻¹⁹ J ≈ 3.3 × 10⁻¹⁹ J."
+      },
+      "cover": [
+        "parallel-practice-1"
+      ],
+      "context": {
+        "th": "แสงที่มีความถี่ 5.0 × 10¹⁴ เฮิรตซ์ ควอนตัมของพลังงานมีค่าเท่าใด",
+        "en": "What is the energy quantum of light with frequency 5.0 × 10¹⁴ Hz?"
+      },
+      "sources": [
+        "ipst-exercise-19-1-q1"
+      ],
+      "sig": 2,
+      "calculation": {
+        "kind": "hf",
+        "frequency": 500000000000000
+      },
+      "edition": 1,
+      "number": 33,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → แบบฝึกฝน 1 · ความถี่กับพลังงานต่อโฟตอน · ก. หาพลังงานต่อโฟตอนในหน่วย J",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Practice 1 · Frequency and energy per photon · (a) Find the energy per photon in J."
+      },
+      "readingKeys": [
+        "parallel-practice-1"
+      ]
+    },
+    {
+      "id": "ipst-exercise-two-frequency",
+      "type": "number",
+      "section": 8,
+      "prompt": {
+        "th": "แบบฝึกหัด สสวท. ข้อ 2 ขั้นเตรียม: หาความถี่",
+        "en": "IPST Exercise Q2, scaffold: find the frequency."
+      },
+      "answer": "461538461538461.5",
+      "tolerance": 500000000000,
+      "unit": {
+        "th": "Hz",
+        "en": "Hz"
+      },
+      "solution": {
+        "th": "λ = 650 × 10⁻⁹ m แล้ว f = c/λ = 4.61538… × 10¹⁴ Hz ≈ 4.62 × 10¹⁴ Hz",
+        "en": "Convert λ = 650 × 10⁻⁹ m; f = c/λ = 4.61538… × 10¹⁴ Hz ≈ 4.62 × 10¹⁴ Hz."
+      },
+      "cover": [
+        "parallel-practice-2"
+      ],
+      "context": {
+        "th": "พลังงาน 1.0 × 10⁻³ จูล ได้จากแสงความยาวคลื่น 650 นาโนเมตร มีจำนวนควอนตัมพลังงานของแสงเท่าใด",
+        "en": "An energy of 1.0 × 10⁻³ J is supplied by light of wavelength 650 nm. How many energy quanta does it contain?"
+      },
+      "sources": [
+        "ipst-exercise-19-1-q2"
+      ],
+      "calculation": {
+        "kind": "wavelength-frequency",
+        "wavelengthNm": 650
+      },
+      "scaffold": true,
+      "edition": 1,
+      "number": 34,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → แบบฝึกฝน 2 · พลังงานของแสงเลเซอร์ · ก. หาความถี่ของแสง",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Practice 2 · Laser-light energy · (a) Find the light frequency."
+      },
+      "readingKeys": [
+        "parallel-practice-2"
+      ]
+    },
+    {
+      "id": "ipst-exercise-two-photon",
+      "type": "number",
+      "section": 8,
+      "prompt": {
+        "th": "แบบฝึกหัด สสวท. ข้อ 2 ขั้นเตรียม: หาพลังงานต่อโฟตอน",
+        "en": "IPST Exercise Q2, scaffold: find energy per photon."
+      },
+      "answer": "3.058153846153846e-19",
+      "tolerance": 5e-22,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "solution": {
+        "th": "ε = hc/λ = (6.626 × 10⁻³⁴)(3.00 × 10⁸)/(650 × 10⁻⁹) = 3.0581538… × 10⁻¹⁹ J ≈ 3.06 × 10⁻¹⁹ J",
+        "en": "ε = hc/λ = (6.626 × 10⁻³⁴)(3.00 × 10⁸)/(650 × 10⁻⁹) = 3.0581538… × 10⁻¹⁹ J ≈ 3.06 × 10⁻¹⁹ J."
+      },
+      "cover": [
+        "parallel-practice-2-b"
+      ],
+      "context": {
+        "th": "พลังงาน 1.0 × 10⁻³ จูล ได้จากแสงความยาวคลื่น 650 นาโนเมตร มีจำนวนควอนตัมพลังงานของแสงเท่าใด",
+        "en": "An energy of 1.0 × 10⁻³ J is supplied by light of wavelength 650 nm. How many energy quanta does it contain?"
+      },
+      "sources": [
+        "ipst-exercise-19-1-q2"
+      ],
+      "calculation": {
+        "kind": "wavelength-energy",
+        "wavelengthNm": 650
+      },
+      "scaffold": true,
+      "edition": 1,
+      "number": 35,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → แบบฝึกฝน 2 · พลังงานของแสงเลเซอร์ · ข. หาพลังงานต่อโฟตอน",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Practice 2 · Laser-light energy · (b) Find the energy per photon."
+      },
+      "readingKeys": [
+        "parallel-practice-2-b"
+      ]
+    },
+    {
+      "id": "ipst-exercise-two-count",
+      "type": "number",
+      "section": 8,
+      "prompt": {
+        "th": "แบบฝึกหัด สสวท. 19.1 ข้อ 2: แสงนี้มีกี่ควอนตัม?",
+        "en": "IPST Exercise 19.1 Q2: how many quanta does this light contain?"
+      },
+      "answer": "3269946674715766.5",
+      "tolerance": 50000000000000,
+      "unit": {
+        "th": "โฟตอน",
+        "en": "photons"
+      },
+      "solution": {
+        "th": "หา ε = hc/λ = 3.0581538… × 10⁻¹⁹ J ก่อน แล้ว n = E/ε = (1.0 × 10⁻³)/ε = 3.269945… × 10¹⁵ ≈ 3.3 × 10¹⁵ โฟตอน เป็นจำนวนโดยประมาณของโฟตอนจำนวนมาก",
+        "en": "First ε = hc/λ = 3.0581538… × 10⁻¹⁹ J. Then n = E/ε = (1.0 × 10⁻³)/ε = 3.269945… × 10¹⁵ ≈ 3.3 × 10¹⁵ photons, an approximate macroscopic count."
+      },
+      "cover": [
+        "parallel-practice-2-c"
+      ],
+      "context": {
+        "th": "พลังงาน 1.0 × 10⁻³ จูล ได้จากแสงความยาวคลื่น 650 นาโนเมตร มีจำนวนควอนตัมพลังงานของแสงเท่าใด",
+        "en": "An energy of 1.0 × 10⁻³ J is supplied by light of wavelength 650 nm. How many energy quanta does it contain?"
+      },
+      "sources": [
+        "ipst-exercise-19-1-q2"
+      ],
+      "sig": 2,
+      "calculation": {
+        "kind": "photon-count",
+        "wavelengthNm": 650,
+        "totalEnergyJ": 0.001
+      },
+      "edition": 1,
+      "number": 36,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → แบบฝึกฝน 2 · พลังงานของแสงเลเซอร์ · ค. หาจำนวนโฟตอนโดยประมาณ",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Practice 2 · Laser-light energy · (c) Estimate the number of photons."
+      },
+      "readingKeys": [
+        "parallel-practice-2-c"
+      ]
+    },
+    {
+      "id": "compare-photon-energy",
+      "type": "choice",
+      "section": 8,
+      "prompt": {
+        "th": "พลังงานต่อโฟตอน εB เทียบกับ εA เป็นอย่างไร?",
+        "en": "How does energy per photon εB compare with εA?"
+      },
+      "correct": {
+        "th": "εB = 2εA",
+        "en": "εB = 2εA"
+      },
+      "decoys": [
+        {
+          "th": "εB = εA/2",
+          "en": "εB = εA/2"
+        },
+        {
+          "th": "εB = εA",
+          "en": "εB = εA"
+        },
+        {
+          "th": "εB = 4εA",
+          "en": "εB = 4εA"
+        },
+        {
+          "th": "εB = εA/4",
+          "en": "εB = εA/4"
+        }
+      ],
+      "solution": {
+        "th": "εB = h(2f) = 2hf = 2εA ใช้ความถี่ตัดสินพลังงานต่อโฟตอน",
+        "en": "εB = h(2f) = 2hf = 2εA; energy per photon depends on frequency."
+      },
+      "cover": [
+        "question-3",
+        "frequency-trend"
+      ],
+      "context": {
+        "th": "แสง A มีความถี่ f และแสง B มีความถี่ 2f ทั้งสองชุดมีจำนวนโฟตอนเท่ากัน",
+        "en": "Light A has frequency f and B has frequency 2f. The two sets contain equal photon counts."
+      },
+      "edition": 1,
+      "number": 37,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 10 · ก. เปรียบเทียบพลังงานต่อโฟตอนของ B กับ A",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 10 · (a) Compare the energy per photon of B with A."
+      },
+      "readingKeys": [
+        "question-3"
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": {
+            "th": "εB = εA/4",
+            "en": "εB = εA/4"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "th": "εB = 2εA",
+            "en": "εB = 2εA"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "th": "εB = εA/2",
+            "en": "εB = εA/2"
+          }
+        },
+        {
+          "id": "d",
+          "text": {
+            "th": "εB = 4εA",
+            "en": "εB = 4εA"
+          }
+        },
+        {
+          "id": "e",
+          "text": {
+            "th": "εB = εA",
+            "en": "εB = εA"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "compare-total-energy",
+      "type": "choice",
+      "section": 8,
+      "prompt": {
+        "th": "พลังงานรวม EB เทียบกับ EA เป็นอย่างไร?",
+        "en": "How does total energy EB compare with EA?"
+      },
+      "correct": {
+        "th": "EB = 2EA",
+        "en": "EB = 2EA"
+      },
+      "decoys": [
+        {
+          "th": "EB = EA/2",
+          "en": "EB = EA/2"
+        },
+        {
+          "th": "EB = EA",
+          "en": "EB = EA"
+        },
+        {
+          "th": "ยังสรุปไม่ได้แม้กำหนดจำนวนเท่ากัน",
+          "en": "It cannot be inferred even with equal counts."
+        },
+        {
+          "th": "EB = 4EA",
+          "en": "EB = 4EA"
+        }
+      ],
+      "solution": {
+        "th": "จำนวนโฟตอน n เท่ากัน และ εB = 2εA ดังนั้น EB = nεB = 2nεA = 2EA",
+        "en": "Equal n and εB = 2εA give EB = nεB = 2nεA = 2EA."
+      },
+      "cover": [
+        "question-3-b"
+      ],
+      "context": {
+        "th": "แสง A มีความถี่ f และแสง B มีความถี่ 2f ทั้งสองชุดมีจำนวนโฟตอนเท่ากัน",
+        "en": "Light A has frequency f and B has frequency 2f. The two sets contain equal photon counts."
+      },
+      "edition": 1,
+      "number": 38,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 10 · ข. เปรียบเทียบพลังงานรวมของ B กับ A พร้อมเหตุผล",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 10 · (b) Compare the total energies of B and A. Explain."
+      },
+      "readingKeys": [
+        "question-3-b"
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": {
+            "th": "EB = EA",
+            "en": "EB = EA"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "th": "ยังสรุปไม่ได้แม้กำหนดจำนวนเท่ากัน",
+            "en": "It cannot be inferred even with equal counts."
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "th": "EB = 4EA",
+            "en": "EB = 4EA"
+          }
+        },
+        {
+          "id": "d",
+          "text": {
+            "th": "EB = 2EA",
+            "en": "EB = 2EA"
+          }
+        },
+        {
+          "id": "e",
+          "text": {
+            "th": "EB = EA/2",
+            "en": "EB = EA/2"
+          }
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "whole-quantum-count",
+      "type": "number",
+      "section": 8,
+      "prompt": {
+        "th": "ที่ความถี่คงที่ ε = 2.0 × 10⁻¹⁹ J และ E = 6.0 × 10⁻¹⁹ J มีกี่ควอนตัม?",
+        "en": "At fixed frequency, ε = 2.0 × 10⁻¹⁹ J and E = 6.0 × 10⁻¹⁹ J. How many quanta are there?"
+      },
+      "answer": "3",
+      "tolerance": 0,
+      "unit": {
+        "th": "ควอนตัม",
+        "en": "quanta"
+      },
+      "solution": {
+        "th": "n = E/ε = 6.0/2.0 = 3 เป็นจำนวนเต็ม จึงสอดคล้องกับ 3 ควอนตัม",
+        "en": "n = E/ε = 6.0/2.0 = 3, a whole number consistent with three quanta."
+      },
+      "cover": [
+        "question-4"
+      ],
+      "integer": true,
+      "calculation": {
+        "kind": "ratio",
+        "numerator": 6e-19,
+        "denominator": 2e-19
+      },
+      "edition": 1,
+      "number": 39,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 11 · ก. พลังงานรวม \\(6.0\\times10^{-19}\\ \\mathrm J\\)",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 11 · (a) Total energy \\(6.0\\times10^{-19}\\ \\mathrm J\\)"
+      },
+      "readingKeys": [
+        "question-4"
+      ]
+    },
+    {
+      "id": "fractional-quantum-reject",
+      "type": "choice",
+      "section": 8,
+      "prompt": {
+        "th": "ที่ความถี่คงที่ ε = 2.0 × 10⁻¹⁹ J ถ้าระบุ E = 5.0 × 10⁻¹⁹ J ข้อใดอธิบายถูก?",
+        "en": "At fixed frequency ε = 2.0 × 10⁻¹⁹ J. How should E = 5.0 × 10⁻¹⁹ J be assessed?"
+      },
+      "correct": {
+        "th": "E/ε = 2.5 จึงไม่สอดคล้องกับการตรวจรับควอนตัมเต็มหน่วยที่ความถี่นี้",
+        "en": "E/ε = 2.5, so it is not consistent with whole detected quanta at this frequency."
+      },
+      "decoys": [
+        {
+          "th": "เป็น 2 ควอนตัมโดยปัดทิ้งได้เสมอ",
+          "en": "It is always two quanta after truncation."
+        },
+        {
+          "th": "เป็นครึ่งควอนตัมที่ความถี่เดิมได้ตามใจ",
+          "en": "Arbitrary half quanta at the same f are allowed."
+        },
+        {
+          "th": "เป็น 5 ควอนตัม เพราะ E มีเลข 5",
+          "en": "It is five quanta because E starts with 5."
+        },
+        {
+          "th": "เป็น 3 ควอนตัมได้โดยปัดขึ้นเสมอ",
+          "en": "It is always three quanta after rounding up."
+        }
+      ],
+      "solution": {
+        "th": "คำนวณ n ได้ 2.5 ซึ่งไม่ใช่จำนวนเต็ม ไม่แก้ข้อขัดแย้งด้วยการปัดให้เป็นจำนวนเต็ม",
+        "en": "n = 2.5 is not an integer. Arbitrary rounding to an integer does not resolve the model inconsistency."
+      },
+      "cover": [
+        "question-4-b"
+      ],
+      "edition": 1,
+      "number": 40,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 11 · ข. พลังงานรวม \\(5.0\\times10^{-19}\\ \\mathrm J\\)",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 11 · (b) Total energy \\(5.0\\times10^{-19}\\ \\mathrm J\\)"
+      },
+      "readingKeys": [
+        "question-4-b"
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": {
+            "th": "เป็น 5 ควอนตัม เพราะ E มีเลข 5",
+            "en": "It is five quanta because E starts with 5."
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "th": "E/ε = 2.5 จึงไม่สอดคล้องกับการตรวจรับควอนตัมเต็มหน่วยที่ความถี่นี้",
+            "en": "E/ε = 2.5, so it is not consistent with whole detected quanta at this frequency."
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "th": "เป็นครึ่งควอนตัมที่ความถี่เดิมได้ตามใจ",
+            "en": "Arbitrary half quanta at the same f are allowed."
+          }
+        },
+        {
+          "id": "d",
+          "text": {
+            "th": "เป็น 2 ควอนตัมโดยปัดทิ้งได้เสมอ",
+            "en": "It is always two quanta after truncation."
+          }
+        },
+        {
+          "id": "e",
+          "text": {
+            "th": "เป็น 3 ควอนตัมได้โดยปัดขึ้นเสมอ",
+            "en": "It is always three quanta after rounding up."
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "ipst-end-eleven-frequency",
+      "type": "number",
+      "section": 8,
+      "prompt": {
+        "th": "ท้ายบท สสวท. ข้อ 11: หาความถี่ของโฟตอน",
+        "en": "IPST chapter-end Q11: find the photon frequency."
+      },
+      "answer": "845155448234228.9",
+      "tolerance": 500000000000,
+      "unit": {
+        "th": "Hz",
+        "en": "Hz"
+      },
+      "solution": {
+        "th": "ε = (3.50)(1.60 × 10⁻¹⁹) = 5.60 × 10⁻¹⁹ J แล้ว f = ε/h = 8.45155… × 10¹⁴ Hz ≈ 8.45 × 10¹⁴ Hz",
+        "en": "ε = (3.50)(1.60 × 10⁻¹⁹) = 5.60 × 10⁻¹⁹ J; f = ε/h = 8.45155… × 10¹⁴ Hz ≈ 8.45 × 10¹⁴ Hz."
+      },
+      "cover": [
+        "parallel-photon-frequency"
+      ],
+      "context": {
+        "th": "คนที่อยู่กลางแดดในตอนกลางวันเป็นเวลานาน ๆ จะทำให้ผิวหนังคล้ำ จากการศึกษาพบว่าพลังงานโฟตอนของแสงแดดที่ทำให้ผิวหนังคล้ำ มีค่าประมาณ 3.50 อิเล็กตรอนโวลต์ จงหาความถี่ของโฟตอนและความยาวคลื่นของโฟตอนที่คำนวณได้นี้ อยู่ในช่วงรังสีชนิดใดในสเปกตรัมคลื่นแม่เหล็กไฟฟ้า",
+        "en": "In the stated sunlight/skin-darkening context, the photon energy is approximately 3.50 eV. Find the frequency and wavelength, and identify the electromagnetic spectral region."
+      },
+      "sources": [
+        "ipst-chapter-end-q11"
+      ],
+      "calculation": {
+        "kind": "ev-frequency",
+        "energyEv": 3.5
+      },
+      "edition": 1,
+      "number": 41,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 13 · ก. หาความถี่ของรังสี",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 13 · (a) Find the frequency."
+      },
+      "readingKeys": [
+        "parallel-photon-frequency"
+      ]
+    },
+    {
+      "id": "ipst-end-eleven-wavelength",
+      "type": "number",
+      "section": 8,
+      "prompt": {
+        "th": "ท้ายบท สสวท. ข้อ 11: หาความยาวคลื่น ตอบเป็น nm",
+        "en": "IPST chapter-end Q11: find the wavelength in nm."
+      },
+      "answer": "354.9642857142857",
+      "tolerance": 0.5,
+      "unit": {
+        "th": "nm",
+        "en": "nm"
+      },
+      "solution": {
+        "th": "ε = 5.60 × 10⁻¹⁹ J ใช้ λ = hc/ε = 3.549642857… × 10⁻⁷ m = 354.9642857… nm ≈ 355 nm",
+        "en": "With ε = 5.60 × 10⁻¹⁹ J, λ = hc/ε = 3.549642857… × 10⁻⁷ m = 354.9642857… nm ≈ 355 nm."
+      },
+      "cover": [
+        "parallel-photon-wavelength"
+      ],
+      "context": {
+        "th": "คนที่อยู่กลางแดดในตอนกลางวันเป็นเวลานาน ๆ จะทำให้ผิวหนังคล้ำ จากการศึกษาพบว่าพลังงานโฟตอนของแสงแดดที่ทำให้ผิวหนังคล้ำ มีค่าประมาณ 3.50 อิเล็กตรอนโวลต์ จงหาความถี่ของโฟตอนและความยาวคลื่นของโฟตอนที่คำนวณได้นี้ อยู่ในช่วงรังสีชนิดใดในสเปกตรัมคลื่นแม่เหล็กไฟฟ้า",
+        "en": "In the stated sunlight/skin-darkening context, the photon energy is approximately 3.50 eV. Find the frequency and wavelength, and identify the electromagnetic spectral region."
+      },
+      "sources": [
+        "ipst-chapter-end-q11"
+      ],
+      "calculation": {
+        "kind": "ev-wavelength-nm",
+        "energyEv": 3.5
+      },
+      "edition": 1,
+      "number": 42,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 13 · ข. หาความยาวคลื่นของรังสี",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 13 · (b) Find the wavelength."
+      },
+      "readingKeys": [
+        "parallel-photon-wavelength"
+      ]
+    },
+    {
+      "id": "ipst-end-eleven-band",
+      "type": "choice",
+      "section": 8,
+      "prompt": {
+        "th": "ท้ายบท สสวท. ข้อ 11: รังสีของโฟตอนพลังงาน 3.50 eV อยู่ในช่วงใด?",
+        "en": "IPST chapter-end Q11: which spectral band contains photons of energy 3.50 eV?"
+      },
+      "correct": {
+        "th": "อัลตราไวโอเลต",
+        "en": "Ultraviolet"
+      },
+      "decoys": [
+        {
+          "th": "อินฟราเรด",
+          "en": "Infrared"
+        },
+        {
+          "th": "ไมโครเวฟ",
+          "en": "Microwaves"
+        },
+        {
+          "th": "แสงสีแดง",
+          "en": "Red visible light"
+        },
+        {
+          "th": "รังสีแกมมา",
+          "en": "Gamma rays"
+        }
+      ],
+      "solution": {
+        "th": "คำนวณ λ = hc/ε ≈ 355 nm ซึ่งสั้นกว่าช่วงมองเห็นโดยประมาณ 400–700 nm จึงเป็นอัลตราไวโอเลต",
+        "en": "λ = hc/ε ≈ 355 nm, shorter than the approximate visible range of 400–700 nm, so it is ultraviolet."
+      },
+      "cover": [
+        "parallel-photon-band"
+      ],
+      "context": {
+        "th": "คนที่อยู่กลางแดดในตอนกลางวันเป็นเวลานาน ๆ จะทำให้ผิวหนังคล้ำ จากการศึกษาพบว่าพลังงานโฟตอนของแสงแดดที่ทำให้ผิวหนังคล้ำ มีค่าประมาณ 3.50 อิเล็กตรอนโวลต์ จงหาความถี่ของโฟตอนและความยาวคลื่นของโฟตอนที่คำนวณได้นี้ อยู่ในช่วงรังสีชนิดใดในสเปกตรัมคลื่นแม่เหล็กไฟฟ้า",
+        "en": "In the stated sunlight/skin-darkening context, the photon energy is approximately 3.50 eV. Find the frequency and wavelength, and identify the electromagnetic spectral region."
+      },
+      "sources": [
+        "ipst-chapter-end-q11"
+      ],
+      "edition": 1,
+      "number": 43,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 13 · ค. รังสีนี้อยู่ในช่วงใดของสเปกตรัมคลื่นแม่เหล็กไฟฟ้า?",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 13 · (c) Which region of the electromagnetic spectrum is this?"
+      },
+      "readingKeys": [
+        "parallel-photon-band"
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": {
+            "th": "อินฟราเรด",
+            "en": "Infrared"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "th": "รังสีแกมมา",
+            "en": "Gamma rays"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "th": "อัลตราไวโอเลต",
+            "en": "Ultraviolet"
+          }
+        },
+        {
+          "id": "d",
+          "text": {
+            "th": "ไมโครเวฟ",
+            "en": "Microwaves"
+          }
+        },
+        {
+          "id": "e",
+          "text": {
+            "th": "แสงสีแดง",
+            "en": "Red visible light"
+          }
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "ipst-end-eighteen-joule",
+      "type": "number",
+      "section": 8,
+      "prompt": {
+        "th": "ท้ายบท สสวท. ข้อ 18: พลังงานของโฟตอนอินฟราเรดที่ 9350 nm เป็นกี่ J?",
+        "en": "IPST chapter-end Q18: what is the energy of an infrared photon at 9350 nm in J?"
+      },
+      "answer": "2.125989304812834e-20",
+      "tolerance": 5e-23,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "solution": {
+        "th": "λ = 9350 × 10⁻⁹ = 9.350 × 10⁻⁶ m แล้ว ε = hc/λ = 2.1259893… × 10⁻²⁰ J ≈ 2.13 × 10⁻²⁰ J คำนวณเฉพาะโฟตอนที่ความยาวคลื่นนี้ ไม่ได้หมายถึงร่างกายแผ่ได้เพียงช่วงเดียว",
+        "en": "λ = 9350 × 10⁻⁹ = 9.350 × 10⁻⁶ m; ε = hc/λ = 2.1259893… × 10⁻²⁰ J ≈ 2.13 × 10⁻²⁰ J. This concerns photons at that wavelength, not radiation restricted to one band."
+      },
+      "cover": [
+        "parallel-ir-energy"
+      ],
+      "context": {
+        "th": "ร่างกายมนุษย์สามารถแผ่รังสีอินฟราเรดได้ ถ้าความยาวคลื่นสูงสุดของอินฟราเรดที่แผ่ออกมามีค่า 9350 นาโนเมตร ควอนตัมของพลังงานของอินฟราเรดที่ร่างกายมนุษย์แผ่ออกมามีพลังงานเท่าใด",
+        "en": "The textbook specifies a 9350 nm infrared wavelength for radiation emitted by the human body and asks for its energy quantum."
+      },
+      "sources": [
+        "ipst-chapter-end-q18"
+      ],
+      "calculation": {
+        "kind": "wavelength-energy",
+        "wavelengthNm": 9350
+      },
+      "edition": 1,
+      "number": 44,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 14 · ก. หาพลังงานต่อโฟตอนในหน่วย J",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 14 · (a) Find the energy per photon in J."
+      },
+      "readingKeys": [
+        "parallel-ir-energy"
+      ]
+    },
+    {
+      "id": "ipst-end-eighteen-ev-extension",
+      "type": "number",
+      "section": 8,
+      "prompt": {
+        "th": "ฝึกต่อจากท้ายบท สสวท. ข้อ 18: พลังงานโฟตอนที่ 9350 nm เป็นกี่ eV?",
+        "en": "Extension to IPST chapter-end Q18: what is the 9350 nm photon energy in eV?"
+      },
+      "answer": "0.13287433155080214",
+      "tolerance": 0.0005,
+      "unit": {
+        "th": "eV",
+        "en": "eV"
+      },
+      "solution": {
+        "th": "ε = hc/λ = 2.1259893… × 10⁻²⁰ J แล้วหาร 1.60 × 10⁻¹⁹ ได้ 0.1328743… eV ≈ 0.133 eV",
+        "en": "Compute ε = hc/λ = 2.1259893… × 10⁻²⁰ J; dividing by 1.60 × 10⁻¹⁹ gives 0.1328743… eV ≈ 0.133 eV."
+      },
+      "cover": [
+        "parallel-ir-energy-ev"
+      ],
+      "context": {
+        "th": "ร่างกายมนุษย์สามารถแผ่รังสีอินฟราเรดได้ ถ้าความยาวคลื่นสูงสุดของอินฟราเรดที่แผ่ออกมามีค่า 9350 นาโนเมตร ควอนตัมของพลังงานของอินฟราเรดที่ร่างกายมนุษย์แผ่ออกมามีพลังงานเท่าใด",
+        "en": "The textbook specifies a 9350 nm infrared wavelength for radiation emitted by the human body and asks for its energy quantum."
+      },
+      "sources": [
+        "ipst-chapter-end-q18"
+      ],
+      "calculation": {
+        "kind": "wavelength-energy-ev",
+        "wavelengthNm": 9350
+      },
+      "extension": true,
+      "edition": 1,
+      "number": 45,
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 14 · ข. แปลงพลังงานต่อโฟตอนเป็น eV",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 14 · (b) Convert the energy per photon to eV."
+      },
+      "readingKeys": [
+        "parallel-ir-energy-ev"
+      ]
+    },
+    {
+      "id": "equal-total-energy",
+      "type": "choice",
+      "section": 8,
+      "prompt": {
+        "th": "แสง A ที่ 400 nm กับ B ที่ 800 nm มีพลังงานรวมเท่ากัน ชุดใดมีจำนวนโฟตอนมากกว่าและกี่เท่า?",
+        "en": "A at 400 nm and B at 800 nm have equal total energy. Which has more photons, and by what factor?"
+      },
+      "correct": {
+        "th": "B มีจำนวนโฟตอนเป็น 2 เท่าของ A",
+        "en": "B has twice as many photons as A."
+      },
+      "decoys": [
+        {
+          "th": "A มีจำนวนโฟตอนเป็น 2 เท่าของ B",
+          "en": "A has twice as many as B."
+        },
+        {
+          "th": "จำนวนเท่ากันเพราะพลังงานรวมเท่ากัน",
+          "en": "Counts are equal because total energies are equal."
+        },
+        {
+          "th": "B มีจำนวนโฟตอนครึ่งหนึ่งของ A",
+          "en": "B has half as many as A."
+        },
+        {
+          "th": "A มีจำนวนโฟตอนเป็น 4 เท่าของ B",
+          "en": "A has four times as many photons as B."
+        }
+      ],
+      "solution": {
+        "th": "ε = hc/λ ดังนั้น εB = εA/2 เมื่อ E เท่ากัน nB = E/εB = 2E/εA = 2nA",
+        "en": "ε = hc/λ gives εB = εA/2. At equal E, nB = E/εB = 2E/εA = 2nA."
+      },
+      "cover": [
+        "equal-total-energy"
+      ],
+      "edition": 1,
+      "number": 46,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 15 · จำนวนโฟตอนเมื่อพลังงานรวมเท่ากัน",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 15 · Photon numbers at equal total energy"
+      },
+      "readingKeys": [
+        "equal-total-energy"
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": {
+            "th": "B มีจำนวนโฟตอนเป็น 2 เท่าของ A",
+            "en": "B has twice as many photons as A."
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "th": "จำนวนเท่ากันเพราะพลังงานรวมเท่ากัน",
+            "en": "Counts are equal because total energies are equal."
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "th": "A มีจำนวนโฟตอนเป็น 2 เท่าของ B",
+            "en": "A has twice as many as B."
+          }
+        },
+        {
+          "id": "d",
+          "text": {
+            "th": "B มีจำนวนโฟตอนครึ่งหนึ่งของ A",
+            "en": "B has half as many as A."
+          }
+        },
+        {
+          "id": "e",
+          "text": {
+            "th": "A มีจำนวนโฟตอนเป็น 4 เท่าของ B",
+            "en": "A has four times as many photons as B."
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "power-total-energy",
+      "type": "number",
+      "section": 8,
+      "prompt": {
+        "th": "หาพลังงานรวมของแสงที่ปล่อยออกมา",
+        "en": "Find the total emitted light energy."
+      },
+      "answer": "0.006",
+      "tolerance": 0.000005,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "solution": {
+        "th": "แปลง P = 3.00 × 10⁻³ W แล้ว E = Pt = (3.00 × 10⁻³)(2.00) = 6.00 × 10⁻³ J",
+        "en": "Convert P = 3.00 × 10⁻³ W; E = Pt = (3.00 × 10⁻³)(2.00) = 6.00 × 10⁻³ J."
+      },
+      "cover": [
+        "power-total-energy"
+      ],
+      "context": {
+        "th": "แหล่งกำเนิดแสงความยาวคลื่นในสุญญากาศ 600 nm มีกำลังแสง 3.00 mW และปล่อยแสงเป็นเวลา 2.00 s ใช้ λ = 600 nm เป็นข้อมูล 3 เลขนัยสำคัญ",
+        "en": "A source emits 600 nm light in vacuum at optical power 3.00 mW for 2.00 s. Treat λ = 600 nm as three significant figures."
+      },
+      "calculation": {
+        "kind": "power-time",
+        "powerMw": 3,
+        "timeS": 2
+      },
+      "edition": 1,
+      "number": 47,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 16 · ก. หาพลังงานรวมของแสงที่ปล่อยออกมา",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 16 · (a) Find the total emitted light energy."
+      },
+      "readingKeys": [
+        "power-total-energy"
+      ]
+    },
+    {
+      "id": "power-photon-energy",
+      "type": "number",
+      "section": 8,
+      "prompt": {
+        "th": "หาพลังงานต่อโฟตอนของแหล่งกำเนิดนี้",
+        "en": "Find the source’s energy per photon."
+      },
+      "answer": "3.313e-19",
+      "tolerance": 5e-22,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "solution": {
+        "th": "ε = hc/λ = (6.626 × 10⁻³⁴)(3.00 × 10⁸)/(600 × 10⁻⁹) = 3.313 × 10⁻¹⁹ J ≈ 3.31 × 10⁻¹⁹ J",
+        "en": "ε = hc/λ = (6.626 × 10⁻³⁴)(3.00 × 10⁸)/(600 × 10⁻⁹) = 3.313 × 10⁻¹⁹ J ≈ 3.31 × 10⁻¹⁹ J."
+      },
+      "cover": [
+        "power-photon-energy"
+      ],
+      "context": {
+        "th": "แหล่งกำเนิดแสงความยาวคลื่นในสุญญากาศ 600 nm มีกำลังแสง 3.00 mW และปล่อยแสงเป็นเวลา 2.00 s ใช้ λ = 600 nm เป็นข้อมูล 3 เลขนัยสำคัญ",
+        "en": "A source emits 600 nm light in vacuum at optical power 3.00 mW for 2.00 s. Treat λ = 600 nm as three significant figures."
+      },
+      "calculation": {
+        "kind": "wavelength-energy",
+        "wavelengthNm": 600
+      },
+      "edition": 1,
+      "number": 48,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 16 · ข. หาพลังงานต่อโฟตอน",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 16 · (b) Find the energy per photon."
+      },
+      "readingKeys": [
+        "power-photon-energy"
+      ]
+    },
+    {
+      "id": "power-photon-count",
+      "type": "number",
+      "section": 8,
+      "prompt": {
+        "th": "หาจำนวนโฟตอนที่ปล่อยออกมาโดยประมาณ",
+        "en": "Estimate the number of emitted photons."
+      },
+      "answer": "18110473890733470",
+      "tolerance": 50000000000000,
+      "unit": {
+        "th": "โฟตอน",
+        "en": "photons"
+      },
+      "solution": {
+        "th": "E = Pt = 6.00 × 10⁻³ J และ ε = hc/λ = 3.313 × 10⁻¹⁹ J จึงได้ n = E/ε = 1.811047… × 10¹⁶ ≈ 1.81 × 10¹⁶ โฟตอน",
+        "en": "E = Pt = 6.00 × 10⁻³ J and ε = hc/λ = 3.313 × 10⁻¹⁹ J, so n = E/ε = 1.811047… × 10¹⁶ ≈ 1.81 × 10¹⁶ photons."
+      },
+      "cover": [
+        "power-photon-count"
+      ],
+      "context": {
+        "th": "แหล่งกำเนิดแสงความยาวคลื่นในสุญญากาศ 600 nm มีกำลังแสง 3.00 mW และปล่อยแสงเป็นเวลา 2.00 s ใช้ λ = 600 nm เป็นข้อมูล 3 เลขนัยสำคัญ",
+        "en": "A source emits 600 nm light in vacuum at optical power 3.00 mW for 2.00 s. Treat λ = 600 nm as three significant figures."
+      },
+      "calculation": {
+        "kind": "power-count",
+        "powerMw": 3,
+        "timeS": 2,
+        "wavelengthNm": 600
+      },
+      "edition": 1,
+      "number": 49,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 8 คำถามและแบบฝึกหัด → คำถาม 16 · ค. หาจำนวนโฟตอนที่ปล่อยออกมาโดยประมาณ",
+        "en": "Open the learning sheet alongside · section 8 Questions and exercises → Question 16 · (c) Estimate the number of emitted photons."
+      },
+      "readingKeys": [
+        "power-photon-count"
+      ]
+    },
+    {
+      "id": "summary-relations",
+      "type": "drag-drop",
+      "section": 9,
+      "prompt": {
+        "th": "เติมสรุปภาพรวมของใบเรียนรู้",
+        "en": "Complete the learning-sheet summary."
+      },
+      "body": {
+        "th": "วัตถุดำร้อนขึ้น: ยอดเลื่อนไป λ {short} และพลังงานรวมต่อพื้นที่ต่อเวลา {power}; ต่อหนึ่งควอนตัม ε = {one}; ที่ความถี่เดียวกัน E = {total}",
+        "en": "Hotter blackbody: peak λ becomes {short}, emitted power per area {power}; one quantum has ε = {one}; at fixed frequency E = {total}."
+      },
+      "items": [
+        {
+          "id": "short",
+          "th": "สั้นลง",
+          "en": "shorter"
+        },
+        {
+          "id": "power",
+          "th": "เพิ่มขึ้น",
+          "en": "increases"
+        },
+        {
+          "id": "one",
+          "th": "hf",
+          "en": "hf"
+        },
+        {
+          "id": "total",
+          "th": "nhf",
+          "en": "nhf"
+        },
+        {
+          "id": "decoy-a",
+          "th": "h/f",
+          "en": "h/f"
+        },
+        {
+          "id": "decoy-b",
+          "th": "ยาวขึ้น",
+          "en": "longer"
+        }
+      ],
+      "slots": [
+        "short",
+        "power",
+        "one",
+        "total"
+      ],
+      "solution": {
+        "th": "เชื่อมแนวโน้มกราฟกับพลังงานควอนตัม โดยไม่สับสนพื้นที่ใต้สเปกตรัม พลังงานต่อโฟตอน และพลังงานรวมของชุดโฟตอน",
+        "en": "Connect spectral trends with quantum energy without confusing spectral area, energy per photon and total photon-set energy."
+      },
+      "cover": [
+        "final-summary"
+      ],
+      "edition": 1,
+      "number": 50,
+      "sources": [],
+      "reading": {
+        "th": "เปิดใบเรียนรู้อ่านคู่ · หัวข้อ 9 สรุปความสัมพันธ์สำคัญ → ความสัมพันธ์สำคัญ",
+        "en": "Open the learning sheet alongside · section 9 Key relationships → Key relationships"
+      },
+      "readingKeys": [
+        "final-summary"
+      ]
+    }
+  ]
+}

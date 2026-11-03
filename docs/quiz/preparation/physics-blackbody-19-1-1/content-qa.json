@@ -1,0 +1,535 @@
+{
+  "date": "2026-11-03",
+  "scope": "One 50-question core review within 19.1 Sheet 1; not a full A-Level Physics mock exam",
+  "activityId": "physics-ipst-atomic-19-1-1-alevel-review",
+  "questions": 50,
+  "counts": {
+    "drag-drop": 21,
+    "choice": 8,
+    "number": 21
+  },
+  "dragSlots": 61,
+  "originalTasks": 9,
+  "worksheetSkillAreas": 67,
+  "directSkills": 57,
+  "representativeSkills": 10,
+  "allKeysGradeCorrect": true,
+  "allWrongAndBlankChecksPassed": true,
+  "pairReviewLink": "actual authored data passed through shared configureQuizReviewLink; correct sheet, paired flag and standalone fallback",
+  "worksheetAndGuideUnchanged": true,
+  "legacyArchiveSha256": "48f307a01627cc2df01bd1f54866d7c4dd614f55dce431e0b8593fe5ca747b27",
+  "calculations": [
+    {
+      "id": "activity-one-trial-3",
+      "number": 15,
+      "answer": "3",
+      "tolerance": 0,
+      "unit": {
+        "th": "ควอนตัม",
+        "en": "quanta"
+      },
+      "calculation": {
+        "kind": "ratio",
+        "numerator": 9.9,
+        "denominator": 3.3
+      },
+      "significantFigures": 3,
+      "integer": true
+    },
+    {
+      "id": "activity-two-ratio-3",
+      "number": 16,
+      "answer": "6.6e-34",
+      "tolerance": 5e-36,
+      "unit": {
+        "th": "J·s",
+        "en": "J·s"
+      },
+      "calculation": {
+        "kind": "ratio",
+        "numerator": 1.98e-19,
+        "denominator": 300000000000000
+      },
+      "significantFigures": 2,
+      "integer": false
+    },
+    {
+      "id": "convert-ev-joule",
+      "number": 26,
+      "answer": "3.2e-19",
+      "tolerance": 5e-22,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "calculation": {
+        "kind": "multiply",
+        "values": [
+          2,
+          1.6e-19
+        ]
+      },
+      "significantFigures": 3,
+      "integer": false
+    },
+    {
+      "id": "convert-joule-ev",
+      "number": 27,
+      "answer": "3",
+      "tolerance": 0.005,
+      "unit": {
+        "th": "eV",
+        "en": "eV"
+      },
+      "calculation": {
+        "kind": "ratio",
+        "numerator": 4.8e-19,
+        "denominator": 1.6e-19
+      },
+      "significantFigures": 3,
+      "integer": false
+    },
+    {
+      "id": "ipst-example-one-joule",
+      "number": 28,
+      "answer": "4.3068999999999997e-19",
+      "tolerance": 5e-22,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "calculation": {
+        "kind": "hf",
+        "frequency": 650000000000000
+      },
+      "significantFigures": 3,
+      "integer": false
+    },
+    {
+      "id": "ipst-example-one-ev",
+      "number": 29,
+      "answer": "2.6918125",
+      "tolerance": 0.005,
+      "unit": {
+        "th": "eV",
+        "en": "eV"
+      },
+      "calculation": {
+        "kind": "hf-ev",
+        "frequency": 650000000000000
+      },
+      "significantFigures": 3,
+      "integer": false
+    },
+    {
+      "id": "ipst-example-two-frequency",
+      "number": 30,
+      "answer": "603682463024449.1",
+      "tolerance": 5000000000000,
+      "unit": {
+        "th": "Hz",
+        "en": "Hz"
+      },
+      "calculation": {
+        "kind": "ev-frequency",
+        "energyEv": 2.5
+      },
+      "significantFigures": 2,
+      "integer": false
+    },
+    {
+      "id": "ipst-example-three-2",
+      "number": 31,
+      "answer": "4.352e-18",
+      "tolerance": 5e-22,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "calculation": {
+        "kind": "multiply",
+        "values": [
+          2,
+          2.176e-18
+        ]
+      },
+      "significantFigures": 4,
+      "integer": false
+    },
+    {
+      "id": "ipst-example-three-3",
+      "number": 32,
+      "answer": "6.5279999999999995e-18",
+      "tolerance": 5e-22,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "calculation": {
+        "kind": "multiply",
+        "values": [
+          3,
+          2.176e-18
+        ]
+      },
+      "significantFigures": 4,
+      "integer": false
+    },
+    {
+      "id": "ipst-exercise-one-joule",
+      "number": 33,
+      "answer": "3.3129999999999997e-19",
+      "tolerance": 5e-21,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "calculation": {
+        "kind": "hf",
+        "frequency": 500000000000000
+      },
+      "significantFigures": 2,
+      "integer": false
+    },
+    {
+      "id": "ipst-exercise-two-frequency",
+      "number": 34,
+      "answer": "461538461538461.5",
+      "tolerance": 500000000000,
+      "unit": {
+        "th": "Hz",
+        "en": "Hz"
+      },
+      "calculation": {
+        "kind": "wavelength-frequency",
+        "wavelengthNm": 650
+      },
+      "significantFigures": 3,
+      "integer": false
+    },
+    {
+      "id": "ipst-exercise-two-photon",
+      "number": 35,
+      "answer": "3.058153846153846e-19",
+      "tolerance": 5e-22,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "calculation": {
+        "kind": "wavelength-energy",
+        "wavelengthNm": 650
+      },
+      "significantFigures": 3,
+      "integer": false
+    },
+    {
+      "id": "ipst-exercise-two-count",
+      "number": 36,
+      "answer": "3269946674715766.5",
+      "tolerance": 50000000000000,
+      "unit": {
+        "th": "โฟตอน",
+        "en": "photons"
+      },
+      "calculation": {
+        "kind": "photon-count",
+        "wavelengthNm": 650,
+        "totalEnergyJ": 0.001
+      },
+      "significantFigures": 2,
+      "integer": false
+    },
+    {
+      "id": "whole-quantum-count",
+      "number": 39,
+      "answer": "3",
+      "tolerance": 0,
+      "unit": {
+        "th": "ควอนตัม",
+        "en": "quanta"
+      },
+      "calculation": {
+        "kind": "ratio",
+        "numerator": 6e-19,
+        "denominator": 2e-19
+      },
+      "significantFigures": 3,
+      "integer": true
+    },
+    {
+      "id": "ipst-end-eleven-frequency",
+      "number": 41,
+      "answer": "845155448234228.9",
+      "tolerance": 500000000000,
+      "unit": {
+        "th": "Hz",
+        "en": "Hz"
+      },
+      "calculation": {
+        "kind": "ev-frequency",
+        "energyEv": 3.5
+      },
+      "significantFigures": 3,
+      "integer": false
+    },
+    {
+      "id": "ipst-end-eleven-wavelength",
+      "number": 42,
+      "answer": "354.9642857142857",
+      "tolerance": 0.5,
+      "unit": {
+        "th": "nm",
+        "en": "nm"
+      },
+      "calculation": {
+        "kind": "ev-wavelength-nm",
+        "energyEv": 3.5
+      },
+      "significantFigures": 3,
+      "integer": false
+    },
+    {
+      "id": "ipst-end-eighteen-joule",
+      "number": 44,
+      "answer": "2.125989304812834e-20",
+      "tolerance": 5e-23,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "calculation": {
+        "kind": "wavelength-energy",
+        "wavelengthNm": 9350
+      },
+      "significantFigures": 3,
+      "integer": false
+    },
+    {
+      "id": "ipst-end-eighteen-ev-extension",
+      "number": 45,
+      "answer": "0.13287433155080214",
+      "tolerance": 0.0005,
+      "unit": {
+        "th": "eV",
+        "en": "eV"
+      },
+      "calculation": {
+        "kind": "wavelength-energy-ev",
+        "wavelengthNm": 9350
+      },
+      "significantFigures": 3,
+      "integer": false
+    },
+    {
+      "id": "power-total-energy",
+      "number": 47,
+      "answer": "0.006",
+      "tolerance": 5e-06,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "calculation": {
+        "kind": "power-time",
+        "powerMw": 3,
+        "timeS": 2
+      },
+      "significantFigures": 3,
+      "integer": false
+    },
+    {
+      "id": "power-photon-energy",
+      "number": 48,
+      "answer": "3.313e-19",
+      "tolerance": 5e-22,
+      "unit": {
+        "th": "J",
+        "en": "J"
+      },
+      "calculation": {
+        "kind": "wavelength-energy",
+        "wavelengthNm": 600
+      },
+      "significantFigures": 3,
+      "integer": false
+    },
+    {
+      "id": "power-photon-count",
+      "number": 49,
+      "answer": "18110473890733470",
+      "tolerance": 50000000000000,
+      "unit": {
+        "th": "โฟตอน",
+        "en": "photons"
+      },
+      "calculation": {
+        "kind": "power-count",
+        "powerMw": 3,
+        "timeS": 2,
+        "wavelengthNm": 600
+      },
+      "significantFigures": 3,
+      "integer": false
+    }
+  ],
+  "independentNumericalAudit": {
+    "method": "Python Decimal, 50-digit precision; independent recomputation from supplied problem data and sheet constants",
+    "count": 21,
+    "checks": [
+      {
+        "id": "activity-one-trial-3",
+        "independentDecimalResult": "3",
+        "authoredAnswer": "3",
+        "unit": "quanta",
+        "passed": true
+      },
+      {
+        "id": "activity-two-ratio-3",
+        "independentDecimalResult": "6.6E-34",
+        "authoredAnswer": "6.6e-34",
+        "unit": "J·s",
+        "passed": true
+      },
+      {
+        "id": "convert-ev-joule",
+        "independentDecimalResult": "3.2E-19",
+        "authoredAnswer": "3.2e-19",
+        "unit": "J",
+        "passed": true
+      },
+      {
+        "id": "convert-joule-ev",
+        "independentDecimalResult": "3",
+        "authoredAnswer": "3",
+        "unit": "eV",
+        "passed": true
+      },
+      {
+        "id": "ipst-example-one-joule",
+        "independentDecimalResult": "4.306900000000000000E-19",
+        "authoredAnswer": "4.3068999999999997e-19",
+        "unit": "J",
+        "passed": true
+      },
+      {
+        "id": "ipst-example-one-ev",
+        "independentDecimalResult": "2.6918125000000000",
+        "authoredAnswer": "2.6918125",
+        "unit": "eV",
+        "passed": true
+      },
+      {
+        "id": "ipst-example-two-frequency",
+        "independentDecimalResult": "603682463024449.13975249019015997585270147902203441",
+        "authoredAnswer": "603682463024449.1",
+        "unit": "Hz",
+        "passed": true
+      },
+      {
+        "id": "ipst-example-three-2",
+        "independentDecimalResult": "4.352E-18",
+        "authoredAnswer": "4.352e-18",
+        "unit": "J",
+        "passed": true
+      },
+      {
+        "id": "ipst-example-three-3",
+        "independentDecimalResult": "6.528E-18",
+        "authoredAnswer": "6.5279999999999995e-18",
+        "unit": "J",
+        "passed": true
+      },
+      {
+        "id": "ipst-exercise-one-joule",
+        "independentDecimalResult": "3.313000000000000000E-19",
+        "authoredAnswer": "3.3129999999999997e-19",
+        "unit": "J",
+        "passed": true
+      },
+      {
+        "id": "ipst-exercise-two-frequency",
+        "independentDecimalResult": "461538461538461.53846153846153846153846153846153846",
+        "authoredAnswer": "461538461538461.5",
+        "unit": "Hz",
+        "passed": true
+      },
+      {
+        "id": "ipst-exercise-two-photon",
+        "independentDecimalResult": "3.0581538461538461538461538461538461538461538461538E-19",
+        "authoredAnswer": "3.058153846153846e-19",
+        "unit": "J",
+        "passed": true
+      },
+      {
+        "id": "ipst-exercise-two-count",
+        "independentDecimalResult": "3269946674715766.1736593218633665358687996780360197",
+        "authoredAnswer": "3269946674715766.5",
+        "unit": "photons",
+        "passed": true
+      },
+      {
+        "id": "whole-quantum-count",
+        "independentDecimalResult": "3",
+        "authoredAnswer": "3",
+        "unit": "quanta",
+        "passed": true
+      },
+      {
+        "id": "ipst-end-eleven-frequency",
+        "independentDecimalResult": "845155448234228.79565348626622396619378207063084817",
+        "authoredAnswer": "845155448234228.9",
+        "unit": "Hz",
+        "passed": true
+      },
+      {
+        "id": "ipst-end-eleven-wavelength",
+        "independentDecimalResult": "354.96428571428571428571428571428571428571428571429",
+        "authoredAnswer": "354.9642857142857",
+        "unit": "nm",
+        "passed": true
+      },
+      {
+        "id": "ipst-end-eighteen-joule",
+        "independentDecimalResult": "2.1259893048128342245989304812834224598930481283422E-20",
+        "authoredAnswer": "2.125989304812834e-20",
+        "unit": "J",
+        "passed": true
+      },
+      {
+        "id": "ipst-end-eighteen-ev-extension",
+        "independentDecimalResult": "0.13287433155080213903743315508021390374331550802139",
+        "authoredAnswer": "0.13287433155080214",
+        "unit": "eV",
+        "passed": true
+      },
+      {
+        "id": "power-total-energy",
+        "independentDecimalResult": "0.006",
+        "authoredAnswer": "0.006",
+        "unit": "J",
+        "passed": true
+      },
+      {
+        "id": "power-photon-energy",
+        "independentDecimalResult": "3.313E-19",
+        "authoredAnswer": "3.313e-19",
+        "unit": "J",
+        "passed": true
+      },
+      {
+        "id": "power-photon-count",
+        "independentDecimalResult": "18110473890733474.192574705704799275581044370661032",
+        "authoredAnswer": "18110473890733470",
+        "unit": "photons",
+        "passed": true
+      }
+    ]
+  },
+  "readingPositions": {
+    "verifiedForAll50Questions": true,
+    "details": "Real section headings, question/subpart labels, table rows or figure; targets checked in TH/EN",
+    "pairedOpenerReference": "Deployed Chemistry 10.1 quiz-set-1, exact source-file match",
+    "referenceSha256": "9e802e39f07fd0bfc311ff051d7115937746c6fbf064a4727c8f6f12b8881bea"
+  }
+}

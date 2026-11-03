@@ -1,5 +1,15 @@
 # 19.1 Sheet 1 — open-book quiz continuation
 
+## Current handoff — 3 November 2026
+
+The user now wants the old twenty-question Quiz replaced with complete editions of **at most 50 questions**, covering recall, IPST worked examples, IPST exercises and all sheet skills. Recall mainly uses drag/tap word or formula placement with at least two unused distractors; numerical calculations use numeric entry or choices when typing is unsuitable; conceptual questions use choices. The review button must open the learning sheet using the existing paired-sheet mechanism.
+
+The user then explicitly requested **one task at a time: learning sheet first**. This worksheet revision swaps nine IPST task groups to new parallel-skill contexts/data, preserves the original questions for the later Quiz and does not change the current Quiz. The source sheet revision is now `2026-11-03-2`. The original source inventory, exact pre-swap TH/EN fragments, new-data map and calculation audit are in [`../learning-sheet/preparation/physics-blackbody-19-1-1/README.md`](../learning-sheet/preparation/physics-blackbody-19-1-1/README.md). Inspect the worksheet PR/merge status before calling the new sheet live.
+
+Next: finish/review the worksheet, then author the complete Quiz editions. Re-count coverage before fixing edition counts; the old plan for four approximately-20-question sets below is historical and superseded. Keep all required outputs: original chapter-end Q11 includes frequency, wavelength and band; original Exercise Q2 asks for quantum count, while frequency/photon-energy steps are useful scaffolding. Do not mistake an old adapted sheet fragment for the verbatim textbook prompt.
+
+The original Set 1 description and QA below remain a record of the existing unchanged twenty-question set.
+
 Topic menu: `public/content/bank/physics/b-0f490c3358e9212cee2e2a43.html`.
 Source: `public/content/physics/ipst/atomic-physics/19-1-1-blackbody-planck-learning-sheet.html`, revision `2026-10-29-1`.
 

@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "revision": "2026-11-03-2",
+  "slotMap": {
+    "ipst-think-55": "parallel-think-evidence",
+    "ipst-understanding-1": "parallel-quantum-count",
+    "example-1": "parallel-example-1",
+    "example-1-ev": "parallel-example-1-ev",
+    "example-2": "parallel-example-2",
+    "example-3": "parallel-example-3",
+    "example-3-b": "parallel-example-3-b",
+    "question-1": "parallel-practice-1",
+    "question-1-ev": "parallel-practice-1-ev",
+    "question-2": "parallel-practice-2",
+    "question-2-b": "parallel-practice-2-b",
+    "question-2-c": "parallel-practice-2-c",
+    "photon-wavelength": "parallel-photon-wavelength",
+    "photon-band": "parallel-photon-band",
+    "body-ir-energy": "parallel-ir-energy",
+    "body-ir-energy-ev": "parallel-ir-energy-ev"
+  },
+  "newSlot": "parallel-photon-frequency",
+  "items": [
+    {
+      "originalId": "ipst-think-55",
+      "oldGroupKey": "ipst-think-55",
+      "replacement": "Hypothetical instrument readings at two coloured positions; reject artistic colour labels as temperature evidence."
+    },
+    {
+      "originalId": "ipst-understanding-1",
+      "oldGroupKey": "ipst-understanding-1",
+      "replacement": "Explain a fixed-frequency detection E = 4hf, n = 4 and zero detected energy."
+    },
+    {
+      "originalId": "ipst-example-19-1",
+      "oldGroupKey": "example-1",
+      "replacement": "f = 5.50e14 Hz; energy in J and eV."
+    },
+    {
+      "originalId": "ipst-example-19-2",
+      "oldGroupKey": "example-2",
+      "replacement": "epsilon = 3.20 eV; find frequency."
+    },
+    {
+      "originalId": "ipst-example-19-3",
+      "oldGroupKey": "example-3",
+      "replacement": "epsilon = 4.20e-19 J; n = 4 and 6."
+    },
+    {
+      "originalId": "ipst-exercise-19-1-q1",
+      "oldGroupKey": "question-1",
+      "replacement": "f = 4.00e14 Hz; energy in J and eV."
+    },
+    {
+      "originalId": "ipst-exercise-19-1-q2",
+      "oldGroupKey": "question-2",
+      "replacement": "lambda = 520 nm (3 significant figures), total E = 2.00e-3 J; f, epsilon and photon count."
+    },
+    {
+      "originalId": "ipst-chapter-end-q11",
+      "oldGroupKey": "photon-wavelength",
+      "replacement": "epsilon = 4.00 eV; frequency, wavelength and band. Add the previously unseparated frequency step."
+    },
+    {
+      "originalId": "ipst-chapter-end-q18",
+      "oldGroupKey": "body-ir-energy",
+      "replacement": "Photons at 1.00e4 nm from a warm surface; energy in J and eV without implying a spectral cutoff."
+    }
+  ]
+}

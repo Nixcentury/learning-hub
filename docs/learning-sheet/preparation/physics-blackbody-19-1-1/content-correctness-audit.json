@@ -1,0 +1,152 @@
+{
+  "date": "2026-11-03",
+  "sourceRevision": "2026-11-03-2",
+  "baseCommit": "2e068d278fb95ab0700308c3bc662c8068913f9b",
+  "scope": "Worksheet only; old Quiz and all shared systems unchanged",
+  "preservation": [
+    {
+      "language": "th",
+      "sections": 9,
+      "originalSlots": 66,
+      "currentSlots": 67,
+      "unchangedSlots": 50,
+      "changedOldSlots": 16,
+      "addedSlots": 1,
+      "archivedTaskFragments": 9
+    },
+    {
+      "language": "en",
+      "sections": 9,
+      "originalSlots": 66,
+      "currentSlots": 67,
+      "unchangedSlots": 50,
+      "changedOldSlots": 16,
+      "addedSlots": 1,
+      "archivedTaskFragments": 9
+    }
+  ],
+  "calculations": [
+    {
+      "key": "parallel-example-1",
+      "method": "epsilon = h f",
+      "computed": 3.6443e-19,
+      "threeSignificantFigures": 3.64e-19,
+      "unit": "J",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-example-1-ev",
+      "method": "epsilon / joulePerEv",
+      "computed": 2.2776875000000003,
+      "threeSignificantFigures": 2.28,
+      "unit": "eV",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-example-2",
+      "method": "f = epsilon / h",
+      "computed": 772713552671294.9,
+      "threeSignificantFigures": 773000000000000,
+      "unit": "Hz",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-example-3",
+      "method": "E = 4 epsilon",
+      "computed": 1.68e-18,
+      "threeSignificantFigures": 1.68e-18,
+      "unit": "J",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-example-3-b",
+      "method": "E = 6 epsilon",
+      "computed": 2.5199999999999997e-18,
+      "threeSignificantFigures": 2.52e-18,
+      "unit": "J",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-practice-1",
+      "method": "epsilon = h f",
+      "computed": 2.6504e-19,
+      "threeSignificantFigures": 2.65e-19,
+      "unit": "J",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-practice-1-ev",
+      "method": "epsilon / joulePerEv",
+      "computed": 1.6565,
+      "threeSignificantFigures": 1.66,
+      "unit": "eV",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-practice-2",
+      "method": "f = c / lambda",
+      "computed": 576923076923076.9,
+      "threeSignificantFigures": 577000000000000,
+      "unit": "Hz",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-practice-2-b",
+      "method": "epsilon = h c / lambda",
+      "computed": 3.8226923076923077e-19,
+      "threeSignificantFigures": 3.82e-19,
+      "unit": "J",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-practice-2-c",
+      "method": "n = E / (h c / lambda)",
+      "computed": 5231914679545226,
+      "threeSignificantFigures": 5230000000000000,
+      "unit": "photons",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-photon-frequency",
+      "method": "f = epsilon / h",
+      "computed": 965891940839118.6,
+      "threeSignificantFigures": 966000000000000,
+      "unit": "Hz",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-photon-wavelength",
+      "method": "lambda = h c / epsilon",
+      "computed": 3.1059375000000003e-7,
+      "threeSignificantFigures": 3.11e-7,
+      "unit": "m",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-ir-energy",
+      "method": "epsilon = h c / lambda",
+      "computed": 1.9878e-20,
+      "threeSignificantFigures": 1.99e-20,
+      "unit": "J",
+      "verifiedInBothLanguageAnswers": true
+    },
+    {
+      "key": "parallel-ir-energy-ev",
+      "method": "epsilon / joulePerEv",
+      "computed": 0.1242375,
+      "threeSignificantFigures": 0.124,
+      "unit": "eV",
+      "verifiedInBothLanguageAnswers": true
+    }
+  ],
+  "scientificReview": [
+    "New examples retain h = 6.626e-34 J s, c = 3.00e8 m/s and 1 eV = 1.60e-19 J; the two original model-data activities remain unchanged with their separately stated rounded h.",
+    "All revised numerical final answers use three significant figures. The trailing-zero wavelength 520 nm is explicitly declared to have three significant figures.",
+    "Frequency, wavelength and photon count calculations carry unrounded intermediate values. Photon count is an approximate macroscopic count, not a claim of a fractional individual photon.",
+    "Q13 now requests frequency, wavelength and band separately. The independently calculated 310.59375 nm lies below the stated approximately 400–700 nm visible band, so the ultraviolet classification is consistent.",
+    "Q14 concerns photons at 1.00e4 nm from a warm surface; it does not make that wavelength a hard emission cutoff.",
+    "Think uses explicitly hypothetical instrument readings. Its retained image is labelled as an illustration and is not a measured temperature map; artistic colour labels do not override the supplied readings.",
+    "The new conceptual question distinguishes n = 4 detected quanta from frequency 4f. Zero detection means no detected energy in the sheet model, not half a quantum.",
+    "Original book prompts were read visually from scanned PDF pages. They are not inferred from the old adapted worksheet. The book source identifies no required diagram attached to these nine selected tasks."
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "2e068d278fb95ab0700308c3bc662c8068913f9b",
+  "sourceFile": "public/content/physics/ipst/atomic-physics/19-1-1-blackbody-planck-learning-sheet.html",
+  "sourceSha256": "20092e8cf3858c7409db54170f999253b81dd9f78d13f9e8127d3ac3358012db",
+  "purpose": "Exact pre-swap bilingual task fragments. Original textbook prompts are separately verified in ipst-original-items.json; existing sheet wording includes adaptations/scaffolding.",
+  "fragments": [
+    {
+      "language": "th",
+      "sourceKey": "ipst-think-55",
+      "slotKeys": [
+        "ipst-think-55"
+      ],
+      "html": "<div class=\"question-item official\"><div data-print-keep=\"\"><h3>ชวนคิด</h3><p>เปลวไฟจากเตาแก๊สหุงต้ม ส่วนสีฟ้าน้ำเงินกับส่วนสีส้มแดง ส่วนใดร้อนกว่า? ชื่อสีโทนร้อน–เย็นในวิชาศิลปะบอกอุณหภูมิจริงได้หรือไม่?</p>\n<figure class=\"flame-figure\" data-print-keep=\"\"><img src=\"assets/19-1-1/bunsen-flame-types.jpg\" width=\"1668\" height=\"1500\" alt=\"ภาพเปลวไฟจากตะเกียงบุนเสน 4 รูป หมายเลข 1–4\"><figcaption>ภาพประกอบจากตะเกียงบุนเสน: พิจารณาเปลวไฟหมายเลข 2 ซึ่งมีส่วนล่างสีฟ้าน้ำเงินและส่วนบนสีส้ม • <a href=\"https://commons.wikimedia.org/wiki/File:Bunsen_burner_flame_types.jpg\">Garett / WarX / Julo</a>, <a href=\"https://creativecommons.org/licenses/by-sa/3.0/\">CC BY-SA 3.0</a></figcaption></figure>\n</div>\n<div class=\"response-item\" data-print-keep=\"\"><div data-sheet-slot=\"ipst-think-55\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ชวนคิดเรื่องสีเปลวไฟ\" data-sheet-label-en=\"Think: flame colours\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer=\"\">ในสถานการณ์ของเตาแก๊สตามคำถาม ส่วนสีฟ้าน้ำเงินร้อนกว่าส่วนสีส้มแดง คำว่าโทนร้อน–เย็นในงานศิลปะจึงใช้ตัดสินอุณหภูมิจริงไม่ได้</div></div></div></div>"
+    },
+    {
+      "language": "th",
+      "sourceKey": "ipst-understanding-1",
+      "slotKeys": [
+        "ipst-understanding-1"
+      ],
+      "html": "<div class=\"question-item official\"><div data-print-keep=\"\"><h3>คำถาม · เลขควอนตัมในสมมติฐานของพลังค์</h3><p>อธิบายเลขควอนตัมในสมมติฐานของพลังค์ และยกตัวอย่างประกอบ</p>\n<div class=\"response-item\" data-print-keep=\"\"><div data-sheet-slot=\"ipst-understanding-1\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ความหมายเลขควอนตัมในสมมติฐานของพลังค์\" data-sheet-label-en=\"Quantum number in Planck’s hypothesis\" style=\"--sheet-print-height:36mm\"><div data-sheet-answer=\"\">ในสูตร \\(E=nhf\\) ค่า \\(n\\) บอกว่าพลังงานเป็นกี่เท่าของ \\(hf\\) โดยนับเป็นหน่วยเต็ม เช่น เมื่อความถี่คงที่ \\(n=2\\) ให้ \\(E=2hf\\) และ \\(n=3\\) ให้ \\(E=3hf\\) ในแบบจำลองตรวจรับพลังงานของใบนี้ \\(n=0\\) หมายถึงยังไม่มีพลังงานถูกตรวจรับ ไม่ใช่ครึ่งหน่วยของควอนตัม</div></div></div></div></div>"
+    },
+    {
+      "language": "th",
+      "sourceKey": "example-1",
+      "slotKeys": [
+        "example-1",
+        "example-1-ev"
+      ],
+      "html": "<div class=\"question-item\"><div data-print-keep=\"\"><h3>ตัวอย่าง 1 · ความถี่กับพลังงานหนึ่งควอนตัม</h3><p>รังสีมีความถี่ \\(6.50\\times10^{14}\\ \\mathrm{Hz}\\)</p>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ก. หาพลังงานหนึ่งควอนตัมในหน่วย J</p><div data-sheet-slot=\"example-1\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ตัวอย่าง 1 ก · พลังงานในหน่วย J\" data-sheet-label-en=\"Example 1(a): energy in J\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer=\"\"><p>\\(\\varepsilon=hf=(6.626\\times10^{-34})(6.50\\times10^{14})\\)</p><p>\\(\\varepsilon=4.3069\\times10^{-19}\\ \\mathrm J\\approx4.31\\times10^{-19}\\ \\mathrm J\\)</p></div></div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ข. แปลงพลังงานจากข้อ ก เป็น eV</p><div data-sheet-slot=\"example-1-ev\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ตัวอย่าง 1 ข · พลังงานในหน่วย eV\" data-sheet-label-en=\"Example 1(b): energy in eV\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer=\"\">\\(\\varepsilon=\\dfrac{4.3069\\times10^{-19}}{1.60\\times10^{-19}}\\approx2.69\\ \\mathrm{eV}\\)</div></div></div></div>"
+    },
+    {
+      "language": "th",
+      "sourceKey": "example-2",
+      "slotKeys": [
+        "example-2"
+      ],
+      "html": "<div class=\"question-item\"><div data-print-keep=\"\"><h3>ตัวอย่าง 2 · พลังงานหนึ่งควอนตัมกับความถี่</h3><p>รังสีมีพลังงานหนึ่งควอนตัม \\(2.5\\ \\mathrm{eV}\\) จงหาความถี่</p>\n<div class=\"response-item\" data-print-keep=\"\"><div data-sheet-slot=\"example-2\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ตัวอย่าง 2 · วิธีทำและคำตอบ\" data-sheet-label-en=\"Example 2: solution\" style=\"--sheet-print-height:46mm\"><div data-sheet-answer=\"\"><p>แปลงหน่วย: \\(\\varepsilon=(2.5)(1.60\\times10^{-19})=4.0\\times10^{-19}\\ \\mathrm J\\)</p><p>\\(f=\\varepsilon/h=\\dfrac{4.0\\times10^{-19}}{6.626\\times10^{-34}}\\approx6.04\\times10^{14}\\ \\mathrm{Hz}\\)</p><p>ตอบ \\(6.0\\times10^{14}\\ \\mathrm{Hz}\\) เมื่อปัดตามข้อมูลที่กำหนด</p></div></div></div></div></div>"
+    },
+    {
+      "language": "th",
+      "sourceKey": "example-3",
+      "slotKeys": [
+        "example-3",
+        "example-3-b"
+      ],
+      "html": "<div class=\"question-item\"><div data-print-keep=\"\"><h3>ตัวอย่าง 3 · จำนวนควอนตัมกับพลังงานรวม</h3><p>รังสีความถี่เดียวกันมีพลังงานต่อควอนตัม \\(21.76\\times10^{-19}\\ \\mathrm J\\)</p>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ก. หาพลังงานรวมของ 2 ควอนตัม</p><div data-sheet-slot=\"example-3\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ตัวอย่าง 3 ก · 2 ควอนตัม\" data-sheet-label-en=\"Example 3(a): 2 quanta\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">\\(E=n\\varepsilon=2(21.76\\times10^{-19})=4.352\\times10^{-18}\\ \\mathrm J\\)</div></div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ข. หาพลังงานรวมของ 3 ควอนตัม</p><div data-sheet-slot=\"example-3-b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ตัวอย่าง 3 ข · 3 ควอนตัม\" data-sheet-label-en=\"Example 3(b): 3 quanta\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">\\(E=n\\varepsilon=3(21.76\\times10^{-19})=6.528\\times10^{-18}\\ \\mathrm J\\)</div></div></div></div>"
+    },
+    {
+      "language": "th",
+      "sourceKey": "question-1",
+      "slotKeys": [
+        "question-1",
+        "question-1-ev"
+      ],
+      "html": "<div class=\"question-item official\"><div data-print-keep=\"\"><h3>แบบฝึกหัด 19.1 · ข้อ 1</h3><p>แสงมีความถี่ \\(5.0\\times10^{14}\\ \\mathrm{Hz}\\)</p>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ก. หาพลังงานต่อโฟตอนในหน่วย J</p><div data-sheet-slot=\"question-1\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แบบฝึกหัด 19.1 ข้อ 1 ก\" data-sheet-label-en=\"Exercise 19.1 Q1(a)\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer=\"\">\\(\\varepsilon=hf=(6.626\\times10^{-34})(5.0\\times10^{14})=3.313\\times10^{-19}\\ \\mathrm J\\approx3.3\\times10^{-19}\\ \\mathrm J\\)</div></div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ข. แปลงคำตอบเป็น eV</p><div data-sheet-slot=\"question-1-ev\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แบบฝึกหัด 19.1 ข้อ 1 ข\" data-sheet-label-en=\"Exercise 19.1 Q1(b)\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer=\"\">\\(\\varepsilon=\\dfrac{3.313\\times10^{-19}}{1.60\\times10^{-19}}=2.0706\\ \\mathrm{eV}\\approx2.1\\ \\mathrm{eV}\\)</div></div></div></div>"
+    },
+    {
+      "language": "th",
+      "sourceKey": "question-2",
+      "slotKeys": [
+        "question-2",
+        "question-2-b",
+        "question-2-c"
+      ],
+      "html": "<div class=\"question-item official\"><div data-print-keep=\"\"><h3>แบบฝึกหัด 19.1 · ข้อ 2</h3><p>เลเซอร์ปล่อยแสงความยาวคลื่นในสุญญากาศ \\(650\\ \\mathrm{nm}\\) มีพลังงานรวม \\(1.00\\times10^{-3}\\ \\mathrm J\\)</p>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ก. หาความถี่ของแสง</p><div data-sheet-slot=\"question-2\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แบบฝึกหัด 19.1 ข้อ 2 ก\" data-sheet-label-en=\"Exercise 19.1 Q2(a)\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer=\"\"><p>\\(\\lambda=650\\times10^{-9}\\ \\mathrm m\\)</p><p>\\(f=c/\\lambda=\\dfrac{3.00\\times10^8}{650\\times10^{-9}}\\approx4.62\\times10^{14}\\ \\mathrm{Hz}\\)</p></div></div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ข. หาพลังงานต่อโฟตอน</p><div data-sheet-slot=\"question-2-b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แบบฝึกหัด 19.1 ข้อ 2 ข\" data-sheet-label-en=\"Exercise 19.1 Q2(b)\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">\\(\\varepsilon=hf\\approx3.05815\\times10^{-19}\\ \\mathrm J\\approx3.06\\times10^{-19}\\ \\mathrm J\\)</div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ค. หาจำนวนโฟตอนโดยประมาณ</p><div data-sheet-slot=\"question-2-c\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แบบฝึกหัด 19.1 ข้อ 2 ค\" data-sheet-label-en=\"Exercise 19.1 Q2(c)\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer=\"\">\\(n=E/\\varepsilon\\approx\\dfrac{1.00\\times10^{-3}}{3.05815\\times10^{-19}}\\approx3.27\\times10^{15}\\) โฟตอน</div></div></div></div>"
+    },
+    {
+      "language": "th",
+      "sourceKey": "photon-wavelength",
+      "slotKeys": [
+        "photon-wavelength",
+        "photon-band"
+      ],
+      "html": "<div class=\"question-item numbered-question\"><div data-print-keep=\"\"><p class=\"question-label\">คำถาม 13</p><p>โฟตอนของรังสีชนิดหนึ่งมีพลังงาน \\(3.50\\ \\mathrm{eV}\\)</p>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ก. หาความยาวคลื่นของรังสี</p><div data-sheet-slot=\"photon-wavelength\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ความยาวคลื่นจาก 3.50 eV\" data-sheet-label-en=\"Wavelength from 3.50 eV\" style=\"--sheet-print-height:42mm\"><div data-sheet-answer=\"\"><p>\\(\\varepsilon=(3.50)(1.60\\times10^{-19})=5.60\\times10^{-19}\\ \\mathrm J\\)</p><p>\\(\\lambda=hc/\\varepsilon=\\dfrac{(6.626\\times10^{-34})(3.00\\times10^8)}{5.60\\times10^{-19}}\\approx3.55\\times10^{-7}\\ \\mathrm m=355\\ \\mathrm{nm}\\)</p></div></div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ข. รังสีนี้อยู่ในช่วงใดของสเปกตรัมคลื่นแม่เหล็กไฟฟ้า?</p><div data-sheet-slot=\"photon-band\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ระบุช่วงรังสี\" data-sheet-label-en=\"Identify the spectral region\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer=\"\">ประมาณ 355 nm อยู่ในช่วงอัลตราไวโอเลต สั้นกว่าช่วงแสงที่ตามองเห็นประมาณ 400–700 nm</div></div></div></div>"
+    },
+    {
+      "language": "th",
+      "sourceKey": "body-ir-energy",
+      "slotKeys": [
+        "body-ir-energy",
+        "body-ir-energy-ev"
+      ],
+      "html": "<div class=\"question-item numbered-question\"><div data-print-keep=\"\"><p class=\"question-label\">คำถาม 14</p><p>ร่างกายมนุษย์แผ่รังสีอินฟราเรด พิจารณารังสีที่มีความยาวคลื่น \\(9350\\ \\mathrm{nm}\\)</p>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ก. หาพลังงานต่อโฟตอนในหน่วย J</p><div data-sheet-slot=\"body-ir-energy\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"พลังงานโฟตอนอินฟราเรดในหน่วย J\" data-sheet-label-en=\"Infrared photon energy in J\" style=\"--sheet-print-height:42mm\"><div data-sheet-answer=\"\"><p>\\(\\lambda=9350\\times10^{-9}\\ \\mathrm m=9.350\\times10^{-6}\\ \\mathrm m\\)</p><p>\\(\\varepsilon=hc/\\lambda=\\dfrac{(6.626\\times10^{-34})(3.00\\times10^8)}{9.350\\times10^{-6}}\\approx2.13\\times10^{-20}\\ \\mathrm J\\)</p></div></div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">ข. แปลงพลังงานต่อโฟตอนเป็น eV</p><div data-sheet-slot=\"body-ir-energy-ev\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"พลังงานโฟตอนอินฟราเรดในหน่วย eV\" data-sheet-label-en=\"Infrared photon energy in eV\" style=\"--sheet-print-height:25mm\"><div data-sheet-answer=\"\">\\(\\varepsilon=\\dfrac{2.12599\\times10^{-20}}{1.60\\times10^{-19}}\\approx0.133\\ \\mathrm{eV}\\)</div></div></div></div>"
+    },
+    {
+      "language": "en",
+      "sourceKey": "ipst-think-55",
+      "slotKeys": [
+        "ipst-think-55"
+      ],
+      "html": "<div class=\"question-item official\"><div data-print-keep=\"\"><h3>Think</h3><p>For a household gas flame, which part is hotter: blue or orange-red? Do artistic descriptions of warm and cool colours tell us the physical temperature?</p>\n<figure class=\"flame-figure\" data-print-keep=\"\"><img src=\"assets/19-1-1/bunsen-flame-types.jpg\" width=\"1668\" height=\"1500\" alt=\"Four Bunsen-burner flames numbered 1–4\"><figcaption>Illustrative Bunsen-burner flames: look at flame 2, which is blue below and orange above. • <a href=\"https://commons.wikimedia.org/wiki/File:Bunsen_burner_flame_types.jpg\">Garett / WarX / Julo</a>, <a href=\"https://creativecommons.org/licenses/by-sa/3.0/\">CC BY-SA 3.0</a></figcaption></figure>\n</div>\n<div class=\"response-item\" data-print-keep=\"\"><div data-sheet-slot=\"ipst-think-55\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ชวนคิดเรื่องสีเปลวไฟ\" data-sheet-label-en=\"Think: flame colours\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer=\"\">For the gas-flame situation in this question, the blue part is hotter than the orange-red part. Artistic descriptions of warm and cool colours do not give the physical temperature.</div></div></div></div>"
+    },
+    {
+      "language": "en",
+      "sourceKey": "ipst-understanding-1",
+      "slotKeys": [
+        "ipst-understanding-1"
+      ],
+      "html": "<div class=\"question-item official\"><div data-print-keep=\"\"><h3>Question · quantum number in Planck’s hypothesis</h3><p>Explain the quantum number in Planck’s hypothesis and give an example.</p>\n<div class=\"response-item\" data-print-keep=\"\"><div data-sheet-slot=\"ipst-understanding-1\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ความหมายเลขควอนตัมในสมมติฐานของพลังค์\" data-sheet-label-en=\"Quantum number in Planck’s hypothesis\" style=\"--sheet-print-height:36mm\"><div data-sheet-answer=\"\">In \\(E=nhf\\), \\(n\\) counts how many whole units of \\(hf\\) are involved. At a fixed frequency, \\(n=2\\) gives \\(E=2hf\\), and \\(n=3\\) gives \\(E=3hf\\). In this sheet’s detector model, \\(n=0\\) means no energy has been detected; it does not represent a fraction of a quantum.</div></div></div></div></div>"
+    },
+    {
+      "language": "en",
+      "sourceKey": "example-1",
+      "slotKeys": [
+        "example-1",
+        "example-1-ev"
+      ],
+      "html": "<div class=\"question-item\"><div data-print-keep=\"\"><h3>Example 1 · Frequency and energy per quantum</h3><p>Radiation has frequency \\(6.50\\times10^{14}\\ \\mathrm{Hz}\\).</p>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(a) Find the energy per quantum in J.</p><div data-sheet-slot=\"example-1\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ตัวอย่าง 1 ก · พลังงานในหน่วย J\" data-sheet-label-en=\"Example 1(a): energy in J\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer=\"\"><p>\\(\\varepsilon=hf=(6.626\\times10^{-34})(6.50\\times10^{14})\\)</p><p>\\(\\varepsilon=4.3069\\times10^{-19}\\ \\mathrm J\\approx4.31\\times10^{-19}\\ \\mathrm J\\)</p></div></div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(b) Convert the result of (a) to eV.</p><div data-sheet-slot=\"example-1-ev\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ตัวอย่าง 1 ข · พลังงานในหน่วย eV\" data-sheet-label-en=\"Example 1(b): energy in eV\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer=\"\">\\(\\varepsilon=\\dfrac{4.3069\\times10^{-19}}{1.60\\times10^{-19}}\\approx2.69\\ \\mathrm{eV}\\)</div></div></div></div>"
+    },
+    {
+      "language": "en",
+      "sourceKey": "example-2",
+      "slotKeys": [
+        "example-2"
+      ],
+      "html": "<div class=\"question-item\"><div data-print-keep=\"\"><h3>Example 2 · Energy per quantum and frequency</h3><p>One quantum has energy \\(2.5\\ \\mathrm{eV}\\). Find its frequency.</p>\n<div class=\"response-item\" data-print-keep=\"\"><div data-sheet-slot=\"example-2\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ตัวอย่าง 2 · วิธีทำและคำตอบ\" data-sheet-label-en=\"Example 2: solution\" style=\"--sheet-print-height:46mm\"><div data-sheet-answer=\"\"><p>Convert units: \\(\\varepsilon=(2.5)(1.60\\times10^{-19})=4.0\\times10^{-19}\\ \\mathrm J\\).</p><p>\\(f=\\varepsilon/h=\\dfrac{4.0\\times10^{-19}}{6.626\\times10^{-34}}\\approx6.04\\times10^{14}\\ \\mathrm{Hz}\\)</p><p>To the precision of the given data: \\(6.0\\times10^{14}\\ \\mathrm{Hz}\\).</p></div></div></div></div></div>"
+    },
+    {
+      "language": "en",
+      "sourceKey": "example-3",
+      "slotKeys": [
+        "example-3",
+        "example-3-b"
+      ],
+      "html": "<div class=\"question-item\"><div data-print-keep=\"\"><h3>Example 3 · Number of quanta and total energy</h3><p>At one frequency, each quantum has energy \\(21.76\\times10^{-19}\\ \\mathrm J\\).</p>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(a) Find the total energy of 2 quanta.</p><div data-sheet-slot=\"example-3\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ตัวอย่าง 3 ก · 2 ควอนตัม\" data-sheet-label-en=\"Example 3(a): 2 quanta\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">\\(E=n\\varepsilon=2(21.76\\times10^{-19})=4.352\\times10^{-18}\\ \\mathrm J\\)</div></div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(b) Find the total energy of 3 quanta.</p><div data-sheet-slot=\"example-3-b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ตัวอย่าง 3 ข · 3 ควอนตัม\" data-sheet-label-en=\"Example 3(b): 3 quanta\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">\\(E=n\\varepsilon=3(21.76\\times10^{-19})=6.528\\times10^{-18}\\ \\mathrm J\\)</div></div></div></div>"
+    },
+    {
+      "language": "en",
+      "sourceKey": "question-1",
+      "slotKeys": [
+        "question-1",
+        "question-1-ev"
+      ],
+      "html": "<div class=\"question-item official\"><div data-print-keep=\"\"><h3>IPST Exercise 19.1 · Q1</h3><p>Light has frequency \\(5.0\\times10^{14}\\ \\mathrm{Hz}\\).</p>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(a) Find the energy per photon in J.</p><div data-sheet-slot=\"question-1\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แบบฝึกหัด 19.1 ข้อ 1 ก\" data-sheet-label-en=\"Exercise 19.1 Q1(a)\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer=\"\">\\(\\varepsilon=hf=(6.626\\times10^{-34})(5.0\\times10^{14})=3.313\\times10^{-19}\\ \\mathrm J\\approx3.3\\times10^{-19}\\ \\mathrm J\\)</div></div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(b) Convert the answer to eV.</p><div data-sheet-slot=\"question-1-ev\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แบบฝึกหัด 19.1 ข้อ 1 ข\" data-sheet-label-en=\"Exercise 19.1 Q1(b)\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer=\"\">\\(\\varepsilon=\\dfrac{3.313\\times10^{-19}}{1.60\\times10^{-19}}=2.0706\\ \\mathrm{eV}\\approx2.1\\ \\mathrm{eV}\\)</div></div></div></div>"
+    },
+    {
+      "language": "en",
+      "sourceKey": "question-2",
+      "slotKeys": [
+        "question-2",
+        "question-2-b",
+        "question-2-c"
+      ],
+      "html": "<div class=\"question-item official\"><div data-print-keep=\"\"><h3>IPST Exercise 19.1 · Q2</h3><p>A laser emits light of vacuum wavelength \\(650\\ \\mathrm{nm}\\), with total energy \\(1.00\\times10^{-3}\\ \\mathrm J\\).</p>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(a) Find the light frequency.</p><div data-sheet-slot=\"question-2\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แบบฝึกหัด 19.1 ข้อ 2 ก\" data-sheet-label-en=\"Exercise 19.1 Q2(a)\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer=\"\"><p>\\(\\lambda=650\\times10^{-9}\\ \\mathrm m\\)</p><p>\\(f=c/\\lambda=\\dfrac{3.00\\times10^8}{650\\times10^{-9}}\\approx4.62\\times10^{14}\\ \\mathrm{Hz}\\)</p></div></div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(b) Find the energy per photon.</p><div data-sheet-slot=\"question-2-b\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แบบฝึกหัด 19.1 ข้อ 2 ข\" data-sheet-label-en=\"Exercise 19.1 Q2(b)\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">\\(\\varepsilon=hf\\approx3.05815\\times10^{-19}\\ \\mathrm J\\approx3.06\\times10^{-19}\\ \\mathrm J\\)</div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(c) Estimate the number of photons.</p><div data-sheet-slot=\"question-2-c\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แบบฝึกหัด 19.1 ข้อ 2 ค\" data-sheet-label-en=\"Exercise 19.1 Q2(c)\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer=\"\">\\(n=E/\\varepsilon\\approx\\dfrac{1.00\\times10^{-3}}{3.05815\\times10^{-19}}\\approx3.27\\times10^{15}\\) photons.</div></div></div></div>"
+    },
+    {
+      "language": "en",
+      "sourceKey": "photon-wavelength",
+      "slotKeys": [
+        "photon-wavelength",
+        "photon-band"
+      ],
+      "html": "<div class=\"question-item numbered-question\"><div data-print-keep=\"\"><p class=\"question-label\">Question 13</p><p>A photon of radiation has energy \\(3.50\\ \\mathrm{eV}\\).</p>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(a) Find its wavelength.</p><div data-sheet-slot=\"photon-wavelength\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ความยาวคลื่นจาก 3.50 eV\" data-sheet-label-en=\"Wavelength from 3.50 eV\" style=\"--sheet-print-height:42mm\"><div data-sheet-answer=\"\"><p>\\(\\varepsilon=(3.50)(1.60\\times10^{-19})=5.60\\times10^{-19}\\ \\mathrm J\\)</p><p>\\(\\lambda=hc/\\varepsilon=\\dfrac{(6.626\\times10^{-34})(3.00\\times10^8)}{5.60\\times10^{-19}}\\approx3.55\\times10^{-7}\\ \\mathrm m=355\\ \\mathrm{nm}\\)</p></div></div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(b) Which region of the electromagnetic spectrum is this?</p><div data-sheet-slot=\"photon-band\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ระบุช่วงรังสี\" data-sheet-label-en=\"Identify the spectral region\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer=\"\">About 355 nm is ultraviolet, shorter than the approximate visible range of 400–700 nm.</div></div></div></div>"
+    },
+    {
+      "language": "en",
+      "sourceKey": "body-ir-energy",
+      "slotKeys": [
+        "body-ir-energy",
+        "body-ir-energy-ev"
+      ],
+      "html": "<div class=\"question-item numbered-question\"><div data-print-keep=\"\"><p class=\"question-label\">Question 14</p><p>The human body emits infrared radiation. Consider radiation with wavelength \\(9350\\ \\mathrm{nm}\\).</p>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(a) Find the energy per photon in J.</p><div data-sheet-slot=\"body-ir-energy\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"พลังงานโฟตอนอินฟราเรดในหน่วย J\" data-sheet-label-en=\"Infrared photon energy in J\" style=\"--sheet-print-height:42mm\"><div data-sheet-answer=\"\"><p>\\(\\lambda=9350\\times10^{-9}\\ \\mathrm m=9.350\\times10^{-6}\\ \\mathrm m\\)</p><p>\\(\\varepsilon=hc/\\lambda=\\dfrac{(6.626\\times10^{-34})(3.00\\times10^8)}{9.350\\times10^{-6}}\\approx2.13\\times10^{-20}\\ \\mathrm J\\)</p></div></div></div></div>\n<div class=\"response-item\" data-print-keep=\"\"><p class=\"subquestion\">(b) Convert the energy per photon to eV.</p><div data-sheet-slot=\"body-ir-energy-ev\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"พลังงานโฟตอนอินฟราเรดในหน่วย eV\" data-sheet-label-en=\"Infrared photon energy in eV\" style=\"--sheet-print-height:25mm\"><div data-sheet-answer=\"\">\\(\\varepsilon=\\dfrac{2.12599\\times10^{-20}}{1.60\\times10^{-19}}\\approx0.133\\ \\mathrm{eV}\\)</div></div></div></div>"
+    }
+  ]
+}

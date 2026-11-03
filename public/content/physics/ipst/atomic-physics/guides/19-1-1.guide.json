@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-atomic-19-1-1-sheet",
-    "revision": "2026-10-29-1",
-    "sha256": "20092e8cf3858c7409db54170f999253b81dd9f78d13f9e8127d3ac3358012db"
+    "revision": "2026-11-03-2",
+    "sha256": "ca0c1c4340b0ab6b1dce1f3cb1cd2881b41a6cbbec41fb5a2e4b8ac75f8a910b"
   },
   "title": {
     "th": "จากวัตถุร้อนไปสู่พลังงานเป็นหน่วย ๆ",
@@ -168,8 +168,8 @@
         }
       ],
       "after": {
-        "th": "คำถามชวนคิดเรื่องเปลวไฟเป็นกรณีตามสถานการณ์ที่ระบุ ภาพไม่ได้วัดอุณหภูมิ และสีอย่างเดียวไม่ใช่เกณฑ์วัดอุณหภูมิทั่วไป",
-        "en": "The flame question concerns its stated situation. The photograph is not a temperature measurement, and colour alone is not a universal thermometer."
+        "th": "คำถามชวนคิดใหม่ใช้ค่าอุณหภูมิที่โจทย์สมมติให้เป็นหลักฐาน ภาพเปลวไฟเป็นภาพประกอบเท่านั้น ไม่ใช่ที่มาของตัวเลข และสีอย่างเดียวไม่ใช่เครื่องวัดอุณหภูมิทั่วไป",
+        "en": "The revised Think task uses explicitly hypothetical temperature readings as evidence. The flame photograph only illustrates the discussion; it is not the source of the numbers or a universal thermometer."
       }
     },
     {
@@ -491,12 +491,12 @@
         "en": "Find photon energy with ε = hf or hc/λ, then count photons with n = E/ε.\nIf optical power and time are given, first use E = Pt. Do not substitute total energy E as the energy of one photon."
       },
       "story": {
-        "th": "พาดูตัวอย่าง 1 แล้วถามทุกครั้งว่า “โจทย์กำลังถามพลังงานหนึ่งตัว หรือพลังงานทั้งชุด?” จากนั้นให้ลองแบบฝึกหัด 19.1 ข้อ 2 โดยเรียง λ → f → ε → n และให้เด็กอธิบายเองว่าแต่ละขั้นหาอะไร",
-        "en": "Use Example 1 and ask: “Does the problem ask about one photon or the whole set?” Then try Exercise 19.1 Q2 using λ → f → ε → n, explaining the quantity found at each step."
+        "th": "พาดูตัวอย่าง 1 แล้วถามทุกครั้งว่า “โจทย์กำลังถามพลังงานหนึ่งตัว หรือพลังงานทั้งชุด?” จากนั้นให้ลองแบบฝึกฝน 2 โดยเรียง λ → f → ε → n และให้เด็กอธิบายเองว่าแต่ละขั้นหาอะไร",
+        "en": "Use Example 1 and ask: “Does the problem ask about one photon or the whole set?” Then try Practice 2 using λ → f → ε → n, explaining the quantity found at each step."
       },
       "action": {
-        "th": "พาทำตัวอย่าง 1 ก–ข เป็นแนว แล้วให้ลองแบบฝึกหัด 19.1 ข้อ 2 ก–ค ตรวจหน่วยและเก็บค่าทศนิยมระหว่างข้อย่อยไว้ก่อนปัดคำตอบสุดท้าย",
-        "en": "Work through Example 1(a)–(b), then try Exercise 19.1 Q2(a)–(c). Check units and retain unrounded values between parts before rounding final answers."
+        "th": "พาทำตัวอย่าง 1 ก–ข เป็นแนว แล้วให้ลองแบบฝึกฝน 2 ก–ค ตรวจหน่วยและเก็บค่าทศนิยมระหว่างข้อย่อยไว้ก่อนปัดคำตอบสุดท้าย",
+        "en": "Work through Example 1(a)–(b), then try Practice 2(a)–(c). Check units and retain unrounded values between parts before rounding final answers."
       },
       "links": [
         {
@@ -506,24 +506,24 @@
           },
           "target": {
             "kind": "slot",
-            "key": "example-1"
+            "key": "parallel-example-1"
           }
         },
         {
           "label": {
-            "th": "แบบฝึกหัด 19.1 · ข้อ 2 ก–ค",
-            "en": "Exercise 19.1 · Q2(a)–(c)"
+            "th": "แบบฝึกฝน 2 ก–ค",
+            "en": "Practice 2(a)–(c)"
           },
           "target": {
             "kind": "slot",
-            "key": "question-2"
+            "key": "parallel-practice-2"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "เลเซอร์ 650 nm มีพลังงานรวม 1.00 × 10⁻³ J ต้องใช้พลังงานนี้เป็น ε โดยตรงหรือไม่? หาจำนวนโฟตอนอย่างไร?",
-          "en": "For 650 nm laser light with total energy 1.00 × 10⁻³ J, is that total directly ε? How do you find photon count?"
+          "th": "เลเซอร์ 520 nm มีพลังงานรวม 2.00 × 10⁻³ J ต้องใช้พลังงานนี้เป็น ε โดยตรงหรือไม่? หาจำนวนโฟตอนอย่างไร?",
+          "en": "For 520 nm laser light with total energy 2.00 × 10⁻³ J, is that total directly ε? How do you find photon count?"
         },
         "answer": {
           "th": "ไม่ใช่ ต้องหา ε = hc/λ ≈ 3.06 × 10⁻¹⁹ J ก่อน แล้ว n = E/ε ≈ 3.27 × 10¹⁵ โฟตอน",
@@ -543,8 +543,8 @@
         }
       ],
       "after": {
-        "th": "งานต่อเองเลือกตามที่ยังติด: แบบฝึกหัดข้อ 1 สำหรับ J/eV, คำถาม 11 สำหรับหน่วยเต็ม, ข้อ 12–14 สำหรับกลับสูตรและช่วงคลื่น, ข้อ 15 สำหรับพลังงานรวมเท่ากัน และข้อ 16 สำหรับ E = Pt ไม่จำเป็นต้องสั่งทุกข้อในคาบเดียว",
-        "en": "Choose follow-up by need: Exercise Q1 for J/eV; Question 11 for whole units; Questions 12–14 for rearranging equations and spectral bands; Question 15 for equal total energy; Question 16 for E = Pt. They need not all be assigned in one lesson."
+        "th": "เลือกงานต่อเองตามที่ยังติด: แบบฝึกฝน 1 สำหรับ J/eV, คำถาม 11 สำหรับหน่วยเต็ม, ข้อ 12–14 สำหรับกลับสูตรและช่วงคลื่น โดยข้อ 13 มีความถี่ ความยาวคลื่น และช่วงรังสีแยกกัน ข้อ 15 สำหรับพลังงานรวมเท่ากัน และข้อ 16 สำหรับ E = Pt ไม่จำเป็นต้องสั่งทุกข้อในคาบเดียว",
+        "en": "Choose follow-up by need: Practice 1 for J/eV; Question 11 for whole units; Questions 12–14 for rearranging equations and spectral bands, with separate frequency, wavelength and band areas in Q13; Question 15 for equal total energy; Question 16 for E = Pt. They need not all be assigned in one lesson."
       }
     }
   ],

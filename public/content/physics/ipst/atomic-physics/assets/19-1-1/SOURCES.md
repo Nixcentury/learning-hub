@@ -1,5 +1,15 @@
 # Physics 19.1.1 Sheet 1: source and adaptation record
 
+## Current revision — 3 November 2026
+
+The user approved swapping original IPST tasks out of the sheet for parallel-skill problems, then explicitly limited this implementation to the **learning sheet first**. Revision `2026-11-03-2` supersedes the task wording/data in the historical mapping below. All original instructional content, simulated activities, images and supplementary questions are retained. The existing 20-question Quiz is unchanged.
+
+Nine task groups have revised contexts/data: the Think task, Understanding Q1, Examples 19.1–19.3, Exercise Q1–2, and chapter-end Q11/Q18. Exact pre-swap TH/EN blocks and separately transcribed original book prompts are reserved in [`docs/learning-sheet/preparation/physics-blackbody-19-1-1/`](../../../../../../../docs/learning-sheet/preparation/physics-blackbody-19-1-1/README.md). The actual student-book scans on pp.54–58, 80, 108–109 were inspected again for this revision. None of these selected problem statements has an attached problem diagram.
+
+The revised sheet uses new values and new `parallel-` slot IDs for changed questions. It retains 50 unchanged answer areas per language and adds a separate frequency area to Q13, giving 67 areas per language. Q13 now covers frequency, wavelength and spectral region, matching all three skills required by original chapter-end Q11. The guide is updated to the revised data and source fingerprint.
+
+The following record describes the earlier 27 October revision and is retained as provenance.
+
 Revised 27 October 2026 after the teacher finished reviewing Sheet 1. Only the four agreed changes were applied; Sheets 2–3 are outside this revision. Page references below are **printed page numbers**, not PDF viewer indices. Source files remain in the teacher's Drive; copyrighted PDFs are not copied into this repository.
 
 ## Sources actually inspected

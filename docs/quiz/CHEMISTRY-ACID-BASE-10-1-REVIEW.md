@@ -23,6 +23,7 @@
 - เพิ่มเครื่องมือ `quiz-set-1` และ `quiz-set-2` ในเมนู HTML เดิม
 - contentId: `chemistry-ipst-acid-base-10-1-quiz-set-1` และ `chemistry-ipst-acid-base-10-1-quiz-set-2`
 - คงใบเรียนรู้ `learning-sheet` และ Quiz คลังหลัก `quiz` เดิม
+- ปุ่ม “ทวนเนื้อหา” ใต้โจทย์ของทั้งสองชุดเปิดใบเรียนรู้ 10.1 ในหน้าคู่กับ Quiz ผ่าน `data-quiz-review-link` และตัวเปิด HTML เดิมของ Hub (เพิ่ม 3 พฤศจิกายน 2026) ใช้ contentId ของใบเรียนรู้เดิมร่วมกัน; เมื่อเปิด Quiz นอก Hub ใช้ลิงก์หน้าใบเรียนรู้เป็นทางเลือกสำรอง
 
 ## บัญชีโจทย์ สสวท.
 

@@ -1,0 +1,982 @@
+{
+  "schemaVersion": 1,
+  "worksheetRevision": "2026-11-03-2",
+  "scope": "19.1 Sheet 1 only, not later Bohr sheets",
+  "worksheetSkills": [
+    {
+      "sheetSlot": "ir-observation",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 1,
+          "id": "infrared-information"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "ir-radiation",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 1,
+          "id": "infrared-information"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "thermal-definition",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 2,
+          "id": "thermal-radiation-condition"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "hot-metal-temperature-colour",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 3,
+          "id": "hot-metal-colours"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "graph-axes",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 4,
+          "id": "spectrum-axes"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "graph-continuous",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 6,
+          "id": "continuous-spectrum"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "graph-peak",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 5,
+          "id": "core-graph-peaks"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "graph-peak-6000",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 5,
+          "id": "core-graph-peaks"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "graph-trend",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 7,
+          "id": "temperature-spectrum-trend"
+        },
+        {
+          "edition": 1,
+          "number": 8,
+          "id": "area-under-spectrum"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "hot-iron-colour",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 3,
+          "id": "hot-metal-colours"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-think-evidence",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 9,
+          "id": "ipst-flame-think"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "blackbody-definition",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 10,
+          "id": "blackbody-definition"
+        },
+        {
+          "edition": 1,
+          "number": 11,
+          "id": "blackbody-emission"
+        },
+        {
+          "edition": 1,
+          "number": 12,
+          "id": "cavity-radiator"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "blackbody-colour",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 11,
+          "id": "blackbody-emission"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "planck-contribution",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 13,
+          "id": "planck-contribution"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "count-1",
+      "treatment": "representative activity row; other supplied rows are not independently graded",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 15,
+          "id": "activity-one-trial-3"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "count-2",
+      "treatment": "representative activity row; other supplied rows are not independently graded",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 15,
+          "id": "activity-one-trial-3"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "count-3",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 15,
+          "id": "activity-one-trial-3"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "count-4",
+      "treatment": "representative activity row; other supplied rows are not independently graded",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 15,
+          "id": "activity-one-trial-3"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "count-5",
+      "treatment": "representative activity row; other supplied rows are not independently graded",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 15,
+          "id": "activity-one-trial-3"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "quantum-unit",
+      "treatment": "representative activity row; other supplied rows are not independently graded",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 15,
+          "id": "activity-one-trial-3"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "quantum-definition",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 14,
+          "id": "quantization-fixed-frequency"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "energy-counting",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 14,
+          "id": "quantization-fixed-frequency"
+        },
+        {
+          "edition": 1,
+          "number": 18,
+          "id": "core-formula-relations"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "ratio-1",
+      "treatment": "representative activity row; other supplied rows are not independently graded",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 16,
+          "id": "activity-two-ratio-3"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "ratio-2",
+      "treatment": "representative activity row; other supplied rows are not independently graded",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 16,
+          "id": "activity-two-ratio-3"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "ratio-3",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 16,
+          "id": "activity-two-ratio-3"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "ratio-4",
+      "treatment": "representative activity row; other supplied rows are not independently graded",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 16,
+          "id": "activity-two-ratio-3"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "frequency-trend",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 37,
+          "id": "compare-photon-energy"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "planck-relation",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 17,
+          "id": "planck-constant"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "formula-quantum",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 18,
+          "id": "core-formula-relations"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "formula-count",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 18,
+          "id": "core-formula-relations"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "formula-combined",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 18,
+          "id": "core-formula-relations"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "symbol-1",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 19,
+          "id": "symbol-meanings"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "symbol-2",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 19,
+          "id": "symbol-meanings"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "symbol-3",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 19,
+          "id": "symbol-meanings"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "symbol-4",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 19,
+          "id": "symbol-meanings"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "symbol-5",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 17,
+          "id": "planck-constant"
+        },
+        {
+          "edition": 1,
+          "number": 19,
+          "id": "symbol-meanings"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "electric-work-review",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 21,
+          "id": "electric-work"
+        },
+        {
+          "edition": 1,
+          "number": 22,
+          "id": "electronvolt-definition"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "joule-ev",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 22,
+          "id": "electronvolt-definition"
+        },
+        {
+          "edition": 1,
+          "number": 23,
+          "id": "energy-conversion-direction"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "ev-to-joule",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 26,
+          "id": "convert-ev-joule"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "joule-to-ev",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 27,
+          "id": "convert-joule-ev"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "wavelength-review",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 24,
+          "id": "wavelength-frequency"
+        },
+        {
+          "edition": 1,
+          "number": 25,
+          "id": "photon-energy-wavelength"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-quantum-count",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 20,
+          "id": "ipst-quantum-number"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-example-1",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 28,
+          "id": "ipst-example-one-joule"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-example-1-ev",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 29,
+          "id": "ipst-example-one-ev"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-example-2",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 30,
+          "id": "ipst-example-two-frequency"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-example-3",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 31,
+          "id": "ipst-example-three-2"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-example-3-b",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 32,
+          "id": "ipst-example-three-3"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-practice-1",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 33,
+          "id": "ipst-exercise-one-joule"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-practice-1-ev",
+      "treatment": "same calculation skill with different supplied values",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 29,
+          "id": "ipst-example-one-ev"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-practice-2",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 34,
+          "id": "ipst-exercise-two-frequency"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-practice-2-b",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 35,
+          "id": "ipst-exercise-two-photon"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-practice-2-c",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 36,
+          "id": "ipst-exercise-two-count"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "question-3",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 37,
+          "id": "compare-photon-energy"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "question-3-b",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 38,
+          "id": "compare-total-energy"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "question-4",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 39,
+          "id": "whole-quantum-count"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "question-4-b",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 40,
+          "id": "fractional-quantum-reject"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "energy-to-frequency",
+      "treatment": "same calculation skill with different supplied values",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 30,
+          "id": "ipst-example-two-frequency"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-photon-frequency",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 41,
+          "id": "ipst-end-eleven-frequency"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-photon-wavelength",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 42,
+          "id": "ipst-end-eleven-wavelength"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-photon-band",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 43,
+          "id": "ipst-end-eleven-band"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-ir-energy",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 44,
+          "id": "ipst-end-eighteen-joule"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "parallel-ir-energy-ev",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 45,
+          "id": "ipst-end-eighteen-ev-extension"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "equal-total-energy",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 46,
+          "id": "equal-total-energy"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "power-total-energy",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 47,
+          "id": "power-total-energy"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "power-photon-energy",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 48,
+          "id": "power-photon-energy"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "power-photon-count",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 49,
+          "id": "power-photon-count"
+        }
+      ]
+    },
+    {
+      "sheetSlot": "final-summary",
+      "treatment": "direct skill check",
+      "questions": [
+        {
+          "edition": 1,
+          "number": 50,
+          "id": "summary-relations"
+        }
+      ]
+    }
+  ],
+  "originalTasks": [
+    {
+      "sourceTask": "ipst-think-55",
+      "printedPage": 55,
+      "outputs": [
+        "Compare the two parts in the specified gas-flame situation; distinguish artistic colour labels from physical temperature."
+      ],
+      "questions": [
+        {
+          "edition": 1,
+          "number": 9,
+          "id": "ipst-flame-think",
+          "extension": false,
+          "scaffold": false
+        }
+      ]
+    },
+    {
+      "sourceTask": "ipst-understanding-1",
+      "printedPage": 80,
+      "outputs": [
+        "Explain n as a whole-quantum count in Planck’s hypothesis, with an example."
+      ],
+      "questions": [
+        {
+          "edition": 1,
+          "number": 20,
+          "id": "ipst-quantum-number",
+          "extension": false,
+          "scaffold": false
+        }
+      ]
+    },
+    {
+      "sourceTask": "ipst-example-19-1",
+      "printedPage": 57,
+      "outputs": [
+        "Energy in J; the following textbook explanation also converts this result to eV."
+      ],
+      "questions": [
+        {
+          "edition": 1,
+          "number": 28,
+          "id": "ipst-example-one-joule",
+          "extension": false,
+          "scaffold": false
+        },
+        {
+          "edition": 1,
+          "number": 29,
+          "id": "ipst-example-one-ev",
+          "extension": false,
+          "scaffold": false
+        }
+      ]
+    },
+    {
+      "sourceTask": "ipst-example-19-2",
+      "printedPage": 57,
+      "outputs": [
+        "Frequency"
+      ],
+      "questions": [
+        {
+          "edition": 1,
+          "number": 30,
+          "id": "ipst-example-two-frequency",
+          "extension": false,
+          "scaffold": false
+        }
+      ]
+    },
+    {
+      "sourceTask": "ipst-example-19-3",
+      "printedPage": 58,
+      "outputs": [
+        "Total energy for 2 quanta",
+        "Total energy for 3 quanta"
+      ],
+      "questions": [
+        {
+          "edition": 1,
+          "number": 31,
+          "id": "ipst-example-three-2",
+          "extension": false,
+          "scaffold": false
+        },
+        {
+          "edition": 1,
+          "number": 32,
+          "id": "ipst-example-three-3",
+          "extension": false,
+          "scaffold": false
+        }
+      ]
+    },
+    {
+      "sourceTask": "ipst-exercise-19-1-q1",
+      "printedPage": 80,
+      "outputs": [
+        "Energy quantum in J; the archived sheet adds an eV conversion as scaffolding."
+      ],
+      "questions": [
+        {
+          "edition": 1,
+          "number": 33,
+          "id": "ipst-exercise-one-joule",
+          "extension": false,
+          "scaffold": false
+        }
+      ]
+    },
+    {
+      "sourceTask": "ipst-exercise-19-1-q2",
+      "printedPage": 80,
+      "outputs": [
+        "Photon/quantum count; frequency and energy per photon are useful scaffolded steps, not extra outputs explicitly requested in the original."
+      ],
+      "questions": [
+        {
+          "edition": 1,
+          "number": 34,
+          "id": "ipst-exercise-two-frequency",
+          "extension": false,
+          "scaffold": true
+        },
+        {
+          "edition": 1,
+          "number": 35,
+          "id": "ipst-exercise-two-photon",
+          "extension": false,
+          "scaffold": true
+        },
+        {
+          "edition": 1,
+          "number": 36,
+          "id": "ipst-exercise-two-count",
+          "extension": false,
+          "scaffold": false
+        }
+      ]
+    },
+    {
+      "sourceTask": "ipst-chapter-end-q11",
+      "printedPage": 108,
+      "outputs": [
+        "Frequency",
+        "Wavelength",
+        "Spectral region"
+      ],
+      "questions": [
+        {
+          "edition": 1,
+          "number": 41,
+          "id": "ipst-end-eleven-frequency",
+          "extension": false,
+          "scaffold": false
+        },
+        {
+          "edition": 1,
+          "number": 42,
+          "id": "ipst-end-eleven-wavelength",
+          "extension": false,
+          "scaffold": false
+        },
+        {
+          "edition": 1,
+          "number": 43,
+          "id": "ipst-end-eleven-band",
+          "extension": false,
+          "scaffold": false
+        }
+      ]
+    },
+    {
+      "sourceTask": "ipst-chapter-end-q18",
+      "printedPage": 109,
+      "outputs": [
+        "Energy quantum; the archived sheet adds an eV conversion."
+      ],
+      "questions": [
+        {
+          "edition": 1,
+          "number": 44,
+          "id": "ipst-end-eighteen-joule",
+          "extension": false,
+          "scaffold": false
+        },
+        {
+          "edition": 1,
+          "number": 45,
+          "id": "ipst-end-eighteen-ev-extension",
+          "extension": true,
+          "scaffold": false
+        }
+      ]
+    }
+  ]
+}

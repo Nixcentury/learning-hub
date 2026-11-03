@@ -1,0 +1,645 @@
+{
+  "numericalChecks": [
+    {
+      "case": "new HCl amount",
+      "recalculated": 0.15,
+      "displayReference": 0.15,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new dilution OH moles",
+      "recalculated": 0.01,
+      "displayReference": 0.01,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new dilution Ba moles",
+      "recalculated": 0.005,
+      "displayReference": 0.005,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new final Ba concentration",
+      "recalculated": 0.005,
+      "displayReference": 0.005,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new final OH concentration",
+      "recalculated": 0.01,
+      "displayReference": 0.01,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new preparation mass",
+      "recalculated": 0.6854,
+      "displayReference": 0.6854,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new HA percentage",
+      "recalculated": 2.0,
+      "displayReference": 2.0,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new weak-acid approximation",
+      "recalculated": 0.0018973665961010276,
+      "displayReference": 0.0019,
+      "relativeTolerance": 0.002
+    },
+    {
+      "case": "new weak-acid exact root",
+      "recalculated": 0.0018883879413551675,
+      "displayReference": 0.00189,
+      "relativeTolerance": 0.002
+    },
+    {
+      "case": "new quadratic root",
+      "recalculated": 0.00019024984394500785,
+      "displayReference": 0.00019025,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new NH3 ion concentration",
+      "recalculated": 0.0018,
+      "displayReference": 0.0018,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new NH3 percentage",
+      "recalculated": 1.0,
+      "displayReference": 1.0,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new Y anion OH",
+      "recalculated": 0.00031622776601683794,
+      "displayReference": 0.000316,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new methylammonium",
+      "recalculated": 0.02137755832643195,
+      "displayReference": 0.0214,
+      "relativeTolerance": 0.002
+    },
+    {
+      "case": "new methylamine percentage",
+      "recalculated": 2.1377558326431947,
+      "displayReference": 2.14,
+      "relativeTolerance": 0.002
+    },
+    {
+      "case": "new percentage A",
+      "recalculated": 1.0,
+      "displayReference": 1.0,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new percentage B",
+      "recalculated": 0.5,
+      "displayReference": 0.5,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "retained reverse Ka revised context",
+      "recalculated": 4.081632653061224e-05,
+      "displayReference": 4.08e-05,
+      "relativeTolerance": 0.002
+    },
+    {
+      "case": "new conjugate-base constant",
+      "recalculated": 2.4999999999999996e-10,
+      "displayReference": 2.5e-10,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new conjugate-acid constant",
+      "recalculated": 3.9999999999999994e-09,
+      "displayReference": 4e-09,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "retained HCl amount",
+      "recalculated": 0.05,
+      "displayReference": 0.05,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "retained hydroxide after dilution",
+      "recalculated": 0.02,
+      "displayReference": 0.02,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "retained other ion 1",
+      "recalculated": 9.999999999999999e-10,
+      "displayReference": 1e-09,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "retained other ion 2",
+      "recalculated": 4.9999999999999995e-11,
+      "displayReference": 5e-11,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "retained acetate constant",
+      "recalculated": 5.555555555555555e-10,
+      "displayReference": 5.56e-10,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new graph percentage C=0.04",
+      "recalculated": 1.5811388300841895,
+      "displayReference": 1.5811388300841898,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new graph percentage C=0.1",
+      "recalculated": 1.0,
+      "displayReference": 1.0,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new graph percentage C=0.4",
+      "recalculated": 0.5,
+      "displayReference": 0.5,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new graph percentage C=0.02",
+      "recalculated": 2.23606797749979,
+      "displayReference": 2.23606797749979,
+      "relativeTolerance": 0.001
+    },
+    {
+      "case": "new HB from 4.00 percent",
+      "recalculated": 3.333333333333333e-05,
+      "displayReference": 3.33e-05,
+      "relativeTolerance": 0.002
+    },
+    {
+      "case": "qualitative pH order at 25 C: HCl",
+      "recalculated": 1.6989700043360187,
+      "purpose": "independent verification only; logarithms are not required in the worksheet"
+    },
+    {
+      "case": "qualitative pH order at 25 C: CH3COOH",
+      "recalculated": 3.2283629225789903,
+      "purpose": "independent verification only; logarithms are not required in the worksheet"
+    },
+    {
+      "case": "qualitative pH order at 25 C: NH3",
+      "recalculated": 10.77163707742101,
+      "purpose": "independent verification only; logarithms are not required in the worksheet"
+    },
+    {
+      "case": "qualitative pH order at 25 C: NaOH",
+      "recalculated": 12.301029995663981,
+      "purpose": "independent verification only; logarithms are not required in the worksheet"
+    }
+  ],
+  "knowledgeAreas": 26,
+  "retainedAuthoredQuestions": 33,
+  "archivedOriginalAreas": 39,
+  "languageNumberDifferences": [
+    {
+      "key": "q-02",
+      "th": [
+        "3"
+      ],
+      "en": []
+    },
+    {
+      "key": "q-03",
+      "th": [
+        "3"
+      ],
+      "en": []
+    },
+    {
+      "key": "strong-acids-list",
+      "th": [
+        "3",
+        "4",
+        "2",
+        "4",
+        "3"
+      ],
+      "en": [
+        "3",
+        "4",
+        "2",
+        "4"
+      ]
+    },
+    {
+      "key": "strong-bases-list",
+      "th": [
+        "2",
+        "2",
+        "2",
+        "2",
+        "1",
+        "2"
+      ],
+      "en": [
+        "2",
+        "2",
+        "2",
+        "1",
+        "2",
+        "2"
+      ]
+    },
+    {
+      "key": "q-08",
+      "th": [
+        "250",
+        "0.250",
+        "3",
+        "0.20",
+        "0.20",
+        "0.250",
+        "0.050"
+      ],
+      "en": [
+        "250",
+        "0.250",
+        "0.20",
+        "0.20",
+        "0.250",
+        "0.050"
+      ]
+    },
+    {
+      "key": "prepare-solution",
+      "th": [
+        "1",
+        "1",
+        "2",
+        "1",
+        "2",
+        "2",
+        "2",
+        "2"
+      ],
+      "en": [
+        "1",
+        "2",
+        "2",
+        "2",
+        "2",
+        "2"
+      ]
+    },
+    {
+      "key": "weak-q-06",
+      "th": [
+        "3",
+        "0.098",
+        "0.002",
+        "0.002",
+        "0.100",
+        "0.002",
+        "0.002",
+        "1",
+        "1",
+        "1"
+      ],
+      "en": [
+        "3",
+        "0.098",
+        "0.002",
+        "0.002",
+        "0.002",
+        "0.002",
+        "1",
+        "1",
+        "1"
+      ]
+    },
+    {
+      "key": "weak-q-12",
+      "th": [
+        "10",
+        "4",
+        "1000",
+        "2",
+        "0.10",
+        "1.0",
+        "-5",
+        "0.10",
+        "1.0",
+        "-3",
+        "3",
+        "1.0",
+        "-3"
+      ],
+      "en": [
+        "10",
+        "4",
+        "1000",
+        "2",
+        "0.10",
+        "1.0",
+        "-5",
+        "0.10",
+        "1.0",
+        "-3"
+      ]
+    },
+    {
+      "key": "weak-stepwise",
+      "th": [
+        "2",
+        "4",
+        "2",
+        "1.0",
+        "-2"
+      ],
+      "en": [
+        "2",
+        "1.0",
+        "-2"
+      ]
+    },
+    {
+      "key": "practice-stepwise",
+      "th": [
+        "2"
+      ],
+      "en": [
+        "1",
+        "2",
+        "2"
+      ]
+    },
+    {
+      "key": "weak-dilution-weak",
+      "th": [
+        "3"
+      ],
+      "en": []
+    },
+    {
+      "key": "water-water-ionization",
+      "th": [
+        "3"
+      ],
+      "en": []
+    },
+    {
+      "key": "water-q-01",
+      "th": [
+        "3"
+      ],
+      "en": []
+    },
+    {
+      "key": "water-example-water",
+      "th": [
+        "1",
+        "1",
+        "2",
+        "1.0",
+        "-14",
+        "1.0",
+        "-14",
+        "1.0",
+        "-7",
+        "3",
+        "1.0",
+        "-7"
+      ],
+      "en": [
+        "1",
+        "1",
+        "2",
+        "1.0",
+        "-14",
+        "1.0",
+        "-14",
+        "1.0",
+        "-7",
+        "1.0",
+        "-7"
+      ]
+    },
+    {
+      "key": "water-q-07",
+      "th": [
+        "3",
+        "3"
+      ],
+      "en": [
+        "3"
+      ]
+    }
+  ],
+  "languageNumberDifferencesReviewed": "15 differences manually checked: chemical names versus formula notation, written-out step numbers, and equivalent wording; no different problem data or results.",
+  "graphApproximationCheck": [
+    {
+      "C": 0.02,
+      "Ka": 1e-05,
+      "ratio": 1999.9999999999998,
+      "passes": true
+    },
+    {
+      "C": 0.04,
+      "Ka": 1e-05,
+      "ratio": 3999.9999999999995,
+      "passes": true
+    },
+    {
+      "C": 0.1,
+      "Ka": 1e-05,
+      "ratio": 10000.0,
+      "passes": true
+    },
+    {
+      "C": 0.4,
+      "Ka": 1e-05,
+      "ratio": 40000.0,
+      "passes": true
+    }
+  ],
+  "balancedReactionForms": [
+    {
+      "reaction": "A-(aq) + H2O(l) <=> HA(aq) + OH-(aq)",
+      "atoms": {
+        "A": 1,
+        "H": 2,
+        "O": 1
+      },
+      "charge": -1,
+      "balanced": true
+    },
+    {
+      "reaction": "Ba(OH)2(aq) -> Ba^2+(aq) + 2OH-(aq)",
+      "atoms": {
+        "Ba": 1,
+        "O": 2,
+        "H": 2
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "Ba(OH)2(aq)->Ba^2+(aq)+2OH-(aq)",
+      "atoms": {
+        "Ba": 1,
+        "O": 2,
+        "H": 2
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "CH3COOH + H2O <=> CH3COO- + H3O+",
+      "atoms": {
+        "C": 2,
+        "H": 6,
+        "O": 3
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "CH3NH2 + H2O <=> CH3NH3+ + OH-",
+      "atoms": {
+        "C": 1,
+        "H": 7,
+        "N": 1,
+        "O": 1
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "H2O(l) + H2O(l) <=> H3O+(aq) + OH-(aq)",
+      "atoms": {
+        "H": 4,
+        "O": 2
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "H2SO4(aq) + H2O(l) -> H3O+(aq) + HSO4-(aq)",
+      "atoms": {
+        "H": 4,
+        "S": 1,
+        "O": 5
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "HA + H2O <=> H3O+ + A-",
+      "atoms": {
+        "H": 3,
+        "A": 1,
+        "O": 1
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "HA(aq) + H2O(l) <=> H3O+(aq) + A-(aq)",
+      "atoms": {
+        "H": 3,
+        "A": 1,
+        "O": 1
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "HCl(aq) + H2O(l) -> H3O+(aq) + Cl-(aq)",
+      "atoms": {
+        "H": 3,
+        "Cl": 1,
+        "O": 1
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "HCl(aq)+H2O(l)->H3O+(aq)+Cl-(aq)",
+      "atoms": {
+        "H": 3,
+        "Cl": 1,
+        "O": 1
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "HSO4-(aq) + H2O(l) <=> H3O+(aq) + SO4^2-(aq)",
+      "atoms": {
+        "H": 3,
+        "S": 1,
+        "O": 5
+      },
+      "charge": -1,
+      "balanced": true
+    },
+    {
+      "reaction": "NH3 + H2O <=> NH4+ + OH-",
+      "atoms": {
+        "N": 1,
+        "H": 5,
+        "O": 1
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "NH3(aq) + H2O(l) <=> NH4+(aq) + OH-(aq)",
+      "atoms": {
+        "N": 1,
+        "H": 5,
+        "O": 1
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "NaOH(aq) -> Na+(aq) + OH-(aq)",
+      "atoms": {
+        "Na": 1,
+        "O": 1,
+        "H": 1
+      },
+      "charge": 0,
+      "balanced": true
+    },
+    {
+      "reaction": "Y- + H2O <=> HY + OH-",
+      "atoms": {
+        "Y": 1,
+        "H": 2,
+        "O": 1
+      },
+      "charge": -1,
+      "balanced": true
+    }
+  ],
+  "finalCounts": {
+    "th": {
+      "slots": 81,
+      "questions": 46,
+      "exampleAreas": 9,
+      "knowledgeAreas": 26
+    },
+    "en": {
+      "slots": 81,
+      "questions": 46,
+      "exampleAreas": 9,
+      "knowledgeAreas": 26
+    }
+  }
+}

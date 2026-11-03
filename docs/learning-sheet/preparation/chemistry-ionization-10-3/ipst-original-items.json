@@ -1,0 +1,739 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "debb5fed7db2247d5910c62e271edfd60d9bf4b8",
+  "purpose": "Reserved original IPST tasks for a later parallel Quiz; not a runnable Quiz. Original full sheets and original assets remain unchanged.",
+  "items": [
+    {
+      "sheet": 1,
+      "language": "th",
+      "key": "ipst-ph-order",
+      "label": "ตรวจสอบความเข้าใจ · ลำดับ pH",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจสอบความเข้าใจ · ลำดับ pH</p><div class=\"question-prompt\">เรียงลำดับ pH จากน้อยไปมากของสารละลายทั้งสี่ในภาพ โดยไม่ต้องคำนวณ</div><div data-sheet-label-en=\"IPST understanding · pH order\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · ลำดับ pH\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-ph-order\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer=\"\">\\(\\mathrm{HCl}&lt;\\mathrm{CH_3COOH}&lt;\\mathrm{NH_3}&lt;\\mathrm{NaOH}\\)<p>กรดมี pH ต่ำกว่า 7 และเบสมี pH สูงกว่า 7 ที่ 25 °C เมื่อความเข้มข้นเท่ากัน กรดที่แตกตัวได้มากกว่ามี pH ต่ำกว่า ส่วนเบสที่เกิด <span class=\"chem\">OH<sup>-</sup></span> ได้มากกว่ามี pH สูงกว่า</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "th",
+      "key": "ipst-barium-bars",
+      "label": "ตรวจสอบความเข้าใจ · แผนภูมิแท่ง",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจสอบความเข้าใจ · แผนภูมิแท่ง</p><div class=\"question-prompt\">แสดงแผนภูมิแท่งความเข้มข้นก่อนและหลังการแตกตัวของ <span class=\"chem\">Ba(OH)<sub>2</sub></span> เช่นเดียวกับกรณีกรดแก่ ใช้ความเข้มข้นเริ่มต้น 1.0 mol/L และตรวจอัตราส่วนความสูงของแท่ง</div><div data-sheet-label-en=\"IPST understanding · Bar chart\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · แผนภูมิแท่ง\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-barium-bars\" style=\"--sheet-print-height:65mm\"><div data-sheet-answer=\"\"><figure data-print-keep=\"\"><img alt=\"แท่งก่อนแตกตัวและไอออนหลังแตกตัวใช้แกนความเข้มข้นเดียวกัน\" height=\"350\" src=\"assets/10-3/barium-bars.svg\" width=\"900\"/><figcaption>แท่งก่อนแตกตัวและไอออนหลังแตกตัวใช้แกนความเข้มข้นเดียวกัน</figcaption></figure><p>ก่อนแตกตัวใช้ 1.0 mol/L เป็นค่าตั้งต้น หลังแตกตัว <span class=\"chem\">Ba(OH)<sub>2</sub></span> เหลือประมาณ 0, <span class=\"chem\">Ba<sup>2+</sup></span> = 1.0 และ <span class=\"chem\">OH<sup>-</sup></span> = 2.0 mol/L แท่งของ <span class=\"chem\">OH<sup>-</sup></span> จึงสูงเป็นสองเท่าของ <span class=\"chem\">Ba<sup>2+</sup></span></p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "th",
+      "key": "ipst-example-2",
+      "label": "ตัวอย่าง 2 (สสวท.) · แก๊ส HBr",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 2 (สสวท.) · แก๊ส HBr</p><div class=\"question-prompt\">ต้องใช้แก๊ส HBr กี่โมล จึงเตรียมสารละลาย 2.0 L ที่มี <span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span> และ <span class=\"chem\">Br<sup>-</sup></span> เข้มข้นชนิดละ 0.60 mol/L?</div><div data-sheet-label-en=\"Example 2 (IPST) · HBr gas\" data-sheet-label-th=\"ตัวอย่าง 2 (สสวท.) · แก๊ส HBr\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-example-2\" style=\"--sheet-print-height:43mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{HBr(g) + H2O(l) -&gt; H3O+(aq) + Br-(aq)}\\]</div><p>อัตราส่วน 1 : 1 : 1 จึงต้องมีความเข้มข้นตั้งต้นของ HBr เท่ากับ 0.60 mol/L</p><div class=\"equation\">\\[n(\\ce{HBr})=CV=(0.60)(2.0)=1.2\\ \\mathrm{mol}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "th",
+      "key": "ipst-hi-moles",
+      "label": "ตรวจสอบความเข้าใจ · HI",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจสอบความเข้าใจ · HI</p><div class=\"question-prompt\">สารละลาย HI ปริมาตร 500 mL มี <span class=\"chem\">I<sup>-</sup></span> เข้มข้น 0.2 mol/L จะมี <span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span> กี่โมล?</div><div data-sheet-label-en=\"IPST understanding · HI\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · HI\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-hi-moles\" style=\"--sheet-print-height:38mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{HI(aq) + H2O(l) -&gt; H3O+(aq) + I-(aq)}\\]</div><p>ไอออนทั้งสองมีจำนวนโมลเท่ากัน</p><div class=\"equation\">\\[n(\\ce{H3O+})=(0.2)(0.500)=0.1\\ \\mathrm{mol}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "th",
+      "key": "ipst-example-3a",
+      "label": "ตัวอย่าง 3 (สสวท.) · ก · จำนวนโมล",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 3 (สสวท.) · ก · จำนวนโมล</p><div class=\"question-prompt\">หาโมลของ <span class=\"chem\">Sr<sup>2+</sup></span> และ <span class=\"chem\">OH<sup>-</sup></span> ก่อนและหลังเติมน้ำ</div><div data-sheet-label-en=\"Example 3 (IPST)(a) · Amounts\" data-sheet-label-th=\"ตัวอย่าง 3 (สสวท.) · ก · จำนวนโมล\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-example-3a\" style=\"--sheet-print-height:47mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{Sr(OH)2(aq) -&gt; Sr^2+(aq) + 2OH-(aq)}\\]</div><div class=\"equation\">\\[n(\\ce{OH-})=(1.0)(0.40)=0.40\\ \\mathrm{mol}\\]</div><div class=\"equation\">\\[n(\\ce{Sr^2+})=0.40/2=0.20\\ \\mathrm{mol}\\]</div><p>หลังเติมน้ำ จำนวนโมลของแต่ละไอออนยังเท่าเดิม</p></div></div></div>",
+      "precedingContextHtml": [
+        "<p><strong>ตัวอย่าง 3 (สสวท.)</strong> สารละลาย <span class=\"chem\">Sr(OH)<sub>2</sub></span> 0.40 L มี <span class=\"chem\">OH<sup>-</sup></span> 1.0 mol/L เติมน้ำจนปริมาตรรวมเป็น 2.00 L</p>"
+      ]
+    },
+    {
+      "sheet": 1,
+      "language": "th",
+      "key": "ipst-example-3b",
+      "label": "ตัวอย่าง 3 (สสวท.) · ข · ความเข้มข้นใหม่",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 3 (สสวท.) · ข · ความเข้มข้นใหม่</p><div class=\"question-prompt\">หาความเข้มข้นของไอออนทั้งสองหลังเติมน้ำ</div><div data-sheet-label-en=\"Example 3 (IPST)(b) · Final concentrations\" data-sheet-label-th=\"ตัวอย่าง 3 (สสวท.) · ข · ความเข้มข้นใหม่\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-example-3b\" style=\"--sheet-print-height:35mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[[\\ce{Sr^2+}]=\\frac{0.20}{2.00}=0.10\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[[\\ce{OH-}]=\\frac{0.40}{2.00}=0.20\\ \\mathrm{mol/L}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "th",
+      "key": "ipst-koh-mass",
+      "label": "ตรวจสอบความเข้าใจ · KOH",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจสอบความเข้าใจ · KOH</p><div class=\"question-prompt\">ต้องใช้ KOH กี่กรัม เพื่อเตรียมสารละลาย 250.00 mL ที่มี <span class=\"chem\">OH<sup>-</sup></span> 0.50 mol/L? ให้มวลโมลาร์ KOH = 56.11 g/mol</div><div data-sheet-label-en=\"IPST understanding · KOH\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · KOH\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-koh-mass\" style=\"--sheet-print-height:47mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{KOH(aq) -&gt; K+(aq) + OH-(aq)}\\]</div><div class=\"equation\">\\[n(\\ce{OH-})=(0.50)(0.25000)=0.125\\ \\mathrm{mol}\\]</div><p>อัตราส่วน 1 : 1 ต้องใช้ KOH 0.125 mol</p><div class=\"equation\">\\[m=(0.125)(56.11)=7.01375\\approx7.0\\ \\mathrm{g}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "th",
+      "key": "ipst-exercise-1",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 1",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 1</p><div class=\"question-prompt\">ต้องใช้ <span class=\"chem\">Ba(OH)<sub>2</sub></span> กี่กรัม เพื่อเตรียมสารละลาย 100.0 mL ที่มี <span class=\"chem\">OH<sup>-</sup></span> 1.0 mol/L? ให้มวลโมลาร์ <span class=\"chem\">Ba(OH)<sub>2</sub></span> = 171.35 g/mol</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q1\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 1\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-1\" style=\"--sheet-print-height:52mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{Ba(OH)2(aq) -&gt; Ba^2+(aq) + 2OH-(aq)}\\]</div><div class=\"equation\">\\[n(\\ce{OH-})=(1.0)(0.1000)=0.100\\ \\mathrm{mol}\\]</div><div class=\"equation\">\\[n(\\ce{Ba(OH)2})=0.100/2=0.0500\\ \\mathrm{mol}\\]</div><div class=\"equation\">\\[m=(0.0500)(171.35)=8.5675\\approx8.6\\ \\mathrm{g}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "en",
+      "key": "ipst-ph-order",
+      "label": "IPST understanding · pH order",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST understanding · pH order</p><div class=\"question-prompt\">Order the four solutions by increasing pH without calculating pH.</div><div data-sheet-label-en=\"IPST understanding · pH order\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · ลำดับ pH\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-ph-order\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer=\"\">\\(\\mathrm{HCl}&lt;\\mathrm{CH_3COOH}&lt;\\mathrm{NH_3}&lt;\\mathrm{NaOH}\\)<p>At 25 °C, acidic solutions have pH below 7 and basic solutions have pH above 7. At equal concentration, greater acid ionization lowers pH, while greater hydroxide formation raises pH.</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "en",
+      "key": "ipst-barium-bars",
+      "label": "IPST understanding · Bar chart",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST understanding · Bar chart</p><div class=\"question-prompt\">Show the before-and-after concentration bars for 1.0 mol/L <span class=\"chem\">Ba(OH)<sub>2</sub></span>, as for a strong acid, and check their height ratio.</div><div data-sheet-label-en=\"IPST understanding · Bar chart\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · แผนภูมิแท่ง\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-barium-bars\" style=\"--sheet-print-height:65mm\"><div data-sheet-answer=\"\"><figure data-print-keep=\"\"><img alt=\"Initial solute and final ions use the same concentration scale.\" height=\"350\" src=\"assets/10-3/barium-bars.svg\" width=\"900\"/><figcaption>Initial solute and final ions use the same concentration scale.</figcaption></figure><p>Use 1.0 mol/L as the initial concentration. After dissociation, undissociated solute is approximately zero, barium is 1.0 mol/L and hydroxide is 2.0 mol/L, so the hydroxide bar is twice as high.</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "en",
+      "key": "ipst-example-2",
+      "label": "Example 2 (IPST) · HBr gas",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 2 (IPST) · HBr gas</p><div class=\"question-prompt\">How many moles of HBr gas are needed to make 2.0 L of solution containing 0.60 mol/L each of hydronium and bromide?</div><div data-sheet-label-en=\"Example 2 (IPST) · HBr gas\" data-sheet-label-th=\"ตัวอย่าง 2 (สสวท.) · แก๊ส HBr\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-example-2\" style=\"--sheet-print-height:43mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{HBr(g) + H2O(l) -&gt; H3O+(aq) + Br-(aq)}\\]</div><p>The 1 : 1 : 1 ratio requires an initial HBr concentration of 0.60 mol/L.</p><div class=\"equation\">\\[n(\\ce{HBr})=CV=(0.60)(2.0)=1.2\\ \\mathrm{mol}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "en",
+      "key": "ipst-hi-moles",
+      "label": "IPST understanding · HI",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST understanding · HI</p><div class=\"question-prompt\">A 500 mL HI solution contains 0.2 mol/L iodide. How many moles of hydronium are present?</div><div data-sheet-label-en=\"IPST understanding · HI\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · HI\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-hi-moles\" style=\"--sheet-print-height:38mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{HI(aq) + H2O(l) -&gt; H3O+(aq) + I-(aq)}\\]</div><p>The two ions are formed in equal amounts.</p><div class=\"equation\">\\[n(\\ce{H3O+})=(0.2)(0.500)=0.1\\ \\mathrm{mol}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "en",
+      "key": "ipst-example-3a",
+      "label": "Example 3 (IPST)(a) · Amounts",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 3 (IPST)(a) · Amounts</p><div class=\"question-prompt\">Find the amounts of strontium and hydroxide before and after dilution.</div><div data-sheet-label-en=\"Example 3 (IPST)(a) · Amounts\" data-sheet-label-th=\"ตัวอย่าง 3 (สสวท.) · ก · จำนวนโมล\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-example-3a\" style=\"--sheet-print-height:47mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{Sr(OH)2(aq) -&gt; Sr^2+(aq) + 2OH-(aq)}\\]</div><div class=\"equation\">\\[n(\\ce{OH-})=(1.0)(0.40)=0.40\\ \\mathrm{mol}\\]</div><div class=\"equation\">\\[n(\\ce{Sr^2+})=0.40/2=0.20\\ \\mathrm{mol}\\]</div><p>Each ion has the same amount after dilution.</p></div></div></div>",
+      "precedingContextHtml": [
+        "<p><strong>IPST Example 3.</strong> A 0.40 L <span class=\"chem\">Sr(OH)<sub>2</sub></span> solution contains 1.0 mol/L hydroxide. Add water to make a final volume of 2.00 L.</p>"
+      ]
+    },
+    {
+      "sheet": 1,
+      "language": "en",
+      "key": "ipst-example-3b",
+      "label": "Example 3 (IPST)(b) · Final concentrations",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 3 (IPST)(b) · Final concentrations</p><div class=\"question-prompt\">Find both ion concentrations after dilution.</div><div data-sheet-label-en=\"Example 3 (IPST)(b) · Final concentrations\" data-sheet-label-th=\"ตัวอย่าง 3 (สสวท.) · ข · ความเข้มข้นใหม่\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-example-3b\" style=\"--sheet-print-height:35mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[[\\ce{Sr^2+}]=\\frac{0.20}{2.00}=0.10\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[[\\ce{OH-}]=\\frac{0.40}{2.00}=0.20\\ \\mathrm{mol/L}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "en",
+      "key": "ipst-koh-mass",
+      "label": "IPST understanding · KOH",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST understanding · KOH</p><div class=\"question-prompt\">What mass of KOH makes 250.00 mL of solution with 0.50 mol/L hydroxide? Use M(KOH) = 56.11 g/mol.</div><div data-sheet-label-en=\"IPST understanding · KOH\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · KOH\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-koh-mass\" style=\"--sheet-print-height:47mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{KOH(aq) -&gt; K+(aq) + OH-(aq)}\\]</div><div class=\"equation\">\\[n(\\ce{OH-})=(0.50)(0.25000)=0.125\\ \\mathrm{mol}\\]</div><p>The 1 : 1 ratio requires 0.125 mol KOH.</p><div class=\"equation\">\\[m=(0.125)(56.11)=7.01375\\approx7.0\\ \\mathrm{g}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 1,
+      "language": "en",
+      "key": "ipst-exercise-1",
+      "label": "IPST Exercise 10.3 · Q1",
+      "sourceFile": "10-3-1-strong-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q1</p><div class=\"question-prompt\">What mass of <span class=\"chem\">Ba(OH)<sub>2</sub></span> makes 100.0 mL of solution with 1.0 mol/L hydroxide? Use molar mass 171.35 g/mol.</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q1\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 1\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-1\" style=\"--sheet-print-height:52mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{Ba(OH)2(aq) -&gt; Ba^2+(aq) + 2OH-(aq)}\\]</div><div class=\"equation\">\\[n(\\ce{OH-})=(1.0)(0.1000)=0.100\\ \\mathrm{mol}\\]</div><div class=\"equation\">\\[n(\\ce{Ba(OH)2})=0.100/2=0.0500\\ \\mathrm{mol}\\]</div><div class=\"equation\">\\[m=(0.0500)(171.35)=8.5675\\approx8.6\\ \\mathrm{g}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-example-4",
+      "label": "ตัวอย่าง 4 (สสวท.) · ร้อยละจากความเข้มข้น",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 4 (สสวท.) · ร้อยละจากความเข้มข้น</p><div class=\"question-prompt\">HF 0.5 mol/L แตกตัวให้ <span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span> 0.02 mol/L จงหาร้อยละการแตกตัว</div><div data-sheet-label-en=\"Example 4 (IPST) · Percent from concentration\" data-sheet-label-th=\"ตัวอย่าง 4 (สสวท.) · ร้อยละจากความเข้มข้น\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-example-4\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{HF(aq) + H2O(l) &lt;=&gt; H3O+(aq) + F-(aq)}\\]</div><div class=\"equation\">\\[\\%\\text{การแตกตัว}=\\frac{0.02}{0.5}\\times100=4\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-exercise-3",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 3",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 3</p><div class=\"question-prompt\"><span class=\"chem\">HNO<sub>2</sub></span> กับ HF มีความเข้มข้นและปริมาตรเท่ากัน สารละลายใดมี <span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span> เข้มข้นมากกว่า เพราะเหตุใด? ใช้ค่า \\(K_a\\) ในตารางข้างบน</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q3\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 3\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-3\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">HF เพราะ \\(6.31\\times10^{-4}&gt;5.62\\times10^{-4}\\) จึงแตกตัวได้มากกว่าเมื่อความเข้มข้นเริ่มต้นเท่ากัน</div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-example-5",
+      "label": "ตัวอย่าง 5 (สสวท.) · ใช้การประมาณ",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 5 (สสวท.) · ใช้การประมาณ</p><div class=\"question-prompt\"><span class=\"chem\">CH<sub>3</sub>COOH</span> 0.50 mol/L มี <span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span> เข้มข้นเท่าใด? ให้ \\(K_a=1.80\\times10^{-5}\\)</div><div data-sheet-label-en=\"Example 5 (IPST) · Using the approximation\" data-sheet-label-th=\"ตัวอย่าง 5 (สสวท.) · ใช้การประมาณ\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-example-5\" style=\"--sheet-print-height:100mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{CH3COOH(aq) + H2O(l) &lt;=&gt; H3O+(aq) + CH3COO-(aq)}\\]</div><table><thead><tr><th>mol/L</th><th><span class=\"chem\">CH<sub>3</sub>COOH</span></th><th><span class=\"chem\">CH<sub>3</sub>COO<sup>-</sup></span></th><th><span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span></th></tr></thead><tbody><tr><td>เริ่มต้น</td><td>\\(0.50\\)</td><td>0</td><td>0</td></tr><tr><td>เปลี่ยนไป</td><td>\\(-x\\)</td><td>\\(+x\\)</td><td>\\(+x\\)</td></tr><tr><td>สมดุล</td><td>\\(0.50-x\\)</td><td>\\(x\\)</td><td>\\(x\\)</td></tr></tbody></table><div class=\"equation\">\\[1.80\\times10^{-5}=\\frac{x^2}{0.50-x}\\]</div><p>ตรวจ \\(C/K_a=0.50/(1.80\\times10^{-5})=2.78\\times10^4&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(0.50)}=3.0\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><p>ตรวจกลับ x/C×100 = 0.60% ซึ่งเล็กเมื่อเทียบกับ 100% ค่า <span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span> จึงประมาณ \\(3.0\\times10^{-3}\\) mol/L; แก้สมการเต็มได้ \\(2.991\\times10^{-3}\\) mol/L ซึ่งใกล้กัน</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-quadratic",
+      "label": "ตรวจสอบความเข้าใจ · HA",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจสอบความเข้าใจ · HA</p><div class=\"question-prompt\">HA \\(1.00\\times10^{-3}\\) mol/L มี \\(K_a=1.00\\times10^{-5}\\) จงหา <span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span> โดยตรวจการประมาณและเลือกรากที่เหมาะสม</div><div data-sheet-label-en=\"IPST understanding · HA\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · HA\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-quadratic\" style=\"--sheet-print-height:75mm\"><div data-sheet-answer=\"\"><p>\\(C/K_a=100\\) ไม่ผ่านเกณฑ์ &gt;1000</p><div class=\"equation\">\\[1.00\\times10^{-5}=\\frac{x^2}{1.00\\times10^{-3}-x}\\]</div><div class=\"equation\">\\[x^2+(1.00\\times10^{-5})x-1.00\\times10^{-8}=0\\]</div><div class=\"equation\">\\[x=\\frac{-1.00\\times10^{-5}+\\sqrt{(1.00\\times10^{-5})^2+4.00\\times10^{-8}}}{2}\\]</div><p>รากบวก = \\(9.51249\\times10^{-5}\\) และรากลบ = \\(-1.051249\\times10^{-4}\\) mol/L เลือกรากบวก จึงได้ <span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span> = \\(9.51\\times10^{-5}\\) mol/L</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-sulfuric",
+      "label": "ตรวจสอบความเข้าใจ · H 2 SO 4",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจสอบความเข้าใจ · <span class=\"chem\">H<sub>2</sub>SO<sub>4</sub></span></p><div class=\"question-prompt\"><span class=\"chem\">H<sub>2</sub>SO<sub>4</sub></span> 1 mol/L มี <span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span> ที่สมดุลเท่ากับ 2 mol/L ใช่หรือไม่ เพราะเหตุใด?</div><div data-sheet-label-en=\"IPST understanding · H2SO4\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · H2SO4\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-sulfuric\" style=\"--sheet-print-height:29mm\"><div data-sheet-answer=\"\">ไม่ใช่ ขั้นแรกให้ <span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span> ประมาณ 1 mol/L ส่วนขั้นที่สองแตกตัวเพียงบางส่วน จึงได้มากกว่า 1 แต่ไม่ถึง 2 mol/L ตามแบบจำลองความเข้มข้นในบทนี้</div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-exercise-2",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 2",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 2</p><div class=\"question-prompt\"><span class=\"chem\">H<sub>2</sub>SO<sub>3</sub></span> มี \\(K_{a1}=1.41\\times10^{-2}\\) และ \\(K_{a2}=6.31\\times10^{-8}\\) จงเปรียบเทียบความเข้มข้นของไอออนต่าง ๆ ในสารละลาย</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q2\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 2\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-2\" style=\"--sheet-print-height:57mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{H2SO3(aq) + H2O(l) &lt;=&gt; H3O+(aq) + HSO3-(aq)}\\]</div><div class=\"equation\">\\[\\ce{HSO3-(aq) + H2O(l) &lt;=&gt; H3O+(aq) + SO3^2-(aq)}\\]</div><p>ขั้นแรกแตกตัวได้มากกว่าขั้นที่สองมาก ทั้งสองขั้นให้ <span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span> แต่ขั้นที่สองใช้ <span class=\"chem\">HSO<sub>3</sub><sup>-</sup></span> ไปบางส่วน จึงได้</p><div class=\"equation\">\\[[\\ce{H3O+}]&gt;[\\ce{HSO3-}]&gt;[\\ce{SO3^2-}]\\]</div><p>พิจารณาไอออนจากกรด; <span class=\"chem\">OH<sup>-</sup></span> จากน้ำมีน้อยมากในสารละลายกรดนี้</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-example-6",
+      "label": "ตัวอย่าง 6 (สสวท.) · แอมโมเนีย",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">ตัวอย่าง 6 (สสวท.) · แอมโมเนีย</p><div class=\"question-prompt\">สารละลาย <span class=\"chem\">NH<sub>3</sub></span> 0.20 mol/L มีร้อยละการแตกตัวเท่าใด? ใช้ \\(K_b\\) จากตาราง</div><div data-sheet-label-en=\"Example 6 (IPST) · Ammonia\" data-sheet-label-th=\"ตัวอย่าง 6 (สสวท.) · แอมโมเนีย\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-example-6\" style=\"--sheet-print-height:78mm\"><div data-sheet-answer=\"\"><table><thead><tr><th>mol/L</th><th><span class=\"chem\">NH<sub>3</sub></span></th><th><span class=\"chem\">NH<sub>4</sub><sup>+</sup></span></th><th><span class=\"chem\">OH<sup>-</sup></span></th></tr></thead><tbody><tr><td>เริ่มต้น</td><td>\\(0.20\\)</td><td>0</td><td>0</td></tr><tr><td>เปลี่ยนไป</td><td>\\(-x\\)</td><td>\\(+x\\)</td><td>\\(+x\\)</td></tr><tr><td>สมดุล</td><td>\\(0.20-x\\)</td><td>\\(x\\)</td><td>\\(x\\)</td></tr></tbody></table><p>\\(C/K_b=0.20/(1.80\\times10^{-5})=1.11\\times10^4&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(0.20)}=1.897\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{การแตกตัว}=\\frac{1.897\\times10^{-3}}{0.20}\\times100\\approx0.95\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-exercise-4",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 4",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 4</p><div class=\"question-prompt\">NaX แตกตัวให้ <span class=\"chem\">X<sup>-</sup></span> ในจำนวนโมลเท่ากัน และมีสมดุล \\(\\ce{X-(aq) + H2O(l) &lt;=&gt; HX(aq) + OH-(aq)}\\) ให้ \\(K_b=1.0\\times10^{-4}\\) จงหา <span class=\"chem\">OH<sup>-</sup></span> ใน NaX 2.0 mol/L</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q4\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 4\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-4\" style=\"--sheet-print-height:58mm\"><div data-sheet-answer=\"\"><p>เริ่มต้น <span class=\"chem\">X<sup>-</sup></span> = 2.0 mol/L ไม่ใช่ 0 เพราะ NaX ให้ไอออนนี้ก่อน</p><div class=\"equation\">\\[1.0\\times10^{-4}=\\frac{x^2}{2.0-x}\\]</div><p>\\(C/K_b=2.0\\times10^4&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.0\\times10^{-4})(2.0)}=1.4\\times10^{-2}\\ \\mathrm{mol/L}\\]</div><p>ค่านี้คือความเข้มข้น <span class=\"chem\">OH<sup>-</sup></span> ที่สมดุล</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-exercise-5a",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 5 ก",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 5 ก</p><div class=\"question-prompt\">หา <span class=\"chem\">CH<sub>3</sub>NH<sub>3</sub><sup>+</sup></span> ที่สมดุล</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q5(a)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 5 ก\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-5a\" style=\"--sheet-print-height:58mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{CH3NH2(aq) + H2O(l) &lt;=&gt; CH3NH3+(aq) + OH-(aq)}\\]</div><div class=\"equation\">\\[4.57\\times10^{-4}=\\frac{x^2}{0.50-x}\\]</div><p>\\(C/K_b=1.094\\times10^3&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(4.57\\times10^{-4})(0.50)}=1.512\\times10^{-2}\\ \\mathrm{mol/L}\\]</div><p>จึงได้ <span class=\"chem\">CH<sub>3</sub>NH<sub>3</sub><sup>+</sup></span> ≈ \\(1.5\\times10^{-2}\\) mol/L</p></div></div></div>",
+      "precedingContextHtml": [
+        "<p><strong>แบบฝึกหัด 10.3 · ข้อ 5</strong> เมทิลเอมีน <span class=\"chem\">CH<sub>3</sub>NH<sub>2</sub></span> 0.50 mol/L ใช้ \\(K_b\\) จากตาราง</p>"
+      ]
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-exercise-5b",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 5 ข",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 5 ข</p><div class=\"question-prompt\">หาร้อยละการแตกตัวของเมทิลเอมีน</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q5(b)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 5 ข\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-5b\" style=\"--sheet-print-height:27mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\%\\text{การแตกตัว}\\approx\\frac{1.512\\times10^{-2}}{0.50}\\times100=3.0\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "activity-1-ethylamine",
+      "label": "กิจกรรม 10.1 · ตอนที่ 1 · เอทิลเอมีน",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">กิจกรรม 10.1 · ตอนที่ 1 · เอทิลเอมีน</p><div class=\"question-prompt\">คำนวณร้อยละการแตกตัวของ <span class=\"chem\">C<sub>2</sub>H<sub>5</sub>NH<sub>2</sub></span> 0.50 mol/L</div><div data-sheet-label-en=\"Activity 10.1 · Part 1 · Ethylamine\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 1 · เอทิลเอมีน\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-1-ethylamine\" style=\"--sheet-print-height:70mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{C2H5NH2(aq) + H2O(l) &lt;=&gt; C2H5NH3+(aq) + OH-(aq)}\\]</div><p>ที่สมดุล เบสเหลือ 0.50−x และไอออนผลิตภัณฑ์แต่ละชนิดเท่ากับ x mol/L</p><div class=\"equation\">\\[4.47\\times10^{-4}=\\frac{x^2}{0.50-x}\\]</div><p>\\(C/K_b=1.12\\times10^3&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(4.47\\times10^{-4})(0.50)}=1.495\\times10^{-2}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{การแตกตัว}\\approx\\frac{1.495\\times10^{-2}}{0.50}\\times100=3.0\\%\\]</div></div></div></div>",
+      "precedingContextHtml": [
+        "<div data-print-keep=\"\"><h2><span>6</span> กิจกรรม 10.1 ร้อยละการแตกตัวของกรดและเบส</h2><p>ใช้ค่าคงที่ที่ 25 °C จากตาราง ทำเป็นกิจกรรมคำนวณและอ่านกราฟ ทุกความเข้มข้นมีพื้นที่คำนวณแยกกัน</p></div>",
+        "<p><strong>ตอนที่ 1</strong> คำนวณและเปรียบเทียบร้อยละการแตกตัวของเบสทั้งสามชนิดที่มีความเข้มข้นชนิดละ 0.50 mol/L</p>"
+      ]
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "activity-1-ammonia",
+      "label": "กิจกรรม 10.1 · ตอนที่ 1 · แอมโมเนีย",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">กิจกรรม 10.1 · ตอนที่ 1 · แอมโมเนีย</p><div class=\"question-prompt\">คำนวณร้อยละการแตกตัวของ <span class=\"chem\">NH<sub>3</sub></span> 0.50 mol/L</div><div data-sheet-label-en=\"Activity 10.1 · Part 1 · Ammonia\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 1 · แอมโมเนีย\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-1-ammonia\" style=\"--sheet-print-height:70mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{NH3(aq) + H2O(l) &lt;=&gt; NH4+(aq) + OH-(aq)}\\]</div><p>ที่สมดุล เบสเหลือ 0.50−x และไอออนผลิตภัณฑ์แต่ละชนิดเท่ากับ x mol/L</p><div class=\"equation\">\\[1.80\\times10^{-5}=\\frac{x^2}{0.50-x}\\]</div><p>\\(C/K_b=2.78\\times10^4&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(0.50)}=3.00\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{การแตกตัว}\\approx\\frac{3.00\\times10^{-3}}{0.50}\\times100=0.60\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "activity-1-aniline",
+      "label": "กิจกรรม 10.1 · ตอนที่ 1 · ฟีนิลเอมีน",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">กิจกรรม 10.1 · ตอนที่ 1 · ฟีนิลเอมีน</p><div class=\"question-prompt\">คำนวณร้อยละการแตกตัวของ <span class=\"chem\">C<sub>6</sub>H<sub>5</sub>NH<sub>2</sub></span> 0.50 mol/L</div><div data-sheet-label-en=\"Activity 10.1 · Part 1 · Phenylamine\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 1 · ฟีนิลเอมีน\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-1-aniline\" style=\"--sheet-print-height:70mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{C6H5NH2(aq) + H2O(l) &lt;=&gt; C6H5NH3+(aq) + OH-(aq)}\\]</div><p>ที่สมดุล เบสเหลือ 0.50−x และไอออนผลิตภัณฑ์แต่ละชนิดเท่ากับ x mol/L</p><div class=\"equation\">\\[7.41\\times10^{-10}=\\frac{x^2}{0.50-x}\\]</div><p>\\(C/K_b=6.75\\times10^8&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(7.41\\times10^{-10})(0.50)}=1.925\\times10^{-5}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{การแตกตัว}\\approx\\frac{1.925\\times10^{-5}}{0.50}\\times100=3.8\\times10^{-3}\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "activity-1-compare",
+      "label": "กิจกรรม 10.1 · ตอนที่ 1 · เปรียบเทียบ",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">กิจกรรม 10.1 · ตอนที่ 1 · เปรียบเทียบ</p><div class=\"question-prompt\">เรียงลำดับร้อยละการแตกตัวของเบสทั้งสามจากมากไปน้อย</div><div data-sheet-label-en=\"Activity 10.1 · Part 1 · Compare\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 1 · เปรียบเทียบ\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-1-compare\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">\\(\\ce{C2H5NH2}&gt;\\ce{NH3}&gt;\\ce{C6H5NH2}\\)<p>ประมาณ 3.0%, 0.60% และ \\(3.8\\times10^{-3}\\%\\) ตามลำดับ</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "activity-2-0050",
+      "label": "กิจกรรม 10.1 · ตอนที่ 2 · 0.050 mol/L",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">กิจกรรม 10.1 · ตอนที่ 2 · 0.050 mol/L</p><div class=\"question-prompt\">หาร้อยละการแตกตัวที่ความเข้มข้น 0.050 mol/L</div><div data-sheet-label-en=\"Activity 10.1 · Part 2 · 0.050 mol/L\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 2 · 0.050 mol/L\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-2-0050\" style=\"--sheet-print-height:50mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[1.80\\times10^{-5}=\\frac{x^2}{0.050-x}\\]</div><p>\\(C/K_a=2.78\\times10^3&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(0.050)}=9.487\\times10^{-4}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{การแตกตัว}\\approx\\frac{9.487\\times10^{-4}}{0.050}\\times100\\approx1.9\\%\\]</div></div></div></div>",
+      "precedingContextHtml": [
+        "<p><strong>ตอนที่ 2 · ข้อ 1</strong> กรดแอซีติก <span class=\"chem\">CH<sub>3</sub>COOH</span> ชนิดเดิม แต่เปลี่ยนความเข้มข้น ใช้ \\(K_a=1.80\\times10^{-5}\\)</p>"
+      ]
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "activity-2-010",
+      "label": "กิจกรรม 10.1 · ตอนที่ 2 · 0.10 mol/L",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">กิจกรรม 10.1 · ตอนที่ 2 · 0.10 mol/L</p><div class=\"question-prompt\">หาร้อยละการแตกตัวที่ความเข้มข้น 0.10 mol/L</div><div data-sheet-label-en=\"Activity 10.1 · Part 2 · 0.10 mol/L\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 2 · 0.10 mol/L\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-2-010\" style=\"--sheet-print-height:50mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[1.80\\times10^{-5}=\\frac{x^2}{0.10-x}\\]</div><p>\\(C/K_a=5.56\\times10^3&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(0.10)}=1.342\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{การแตกตัว}\\approx\\frac{1.342\\times10^{-3}}{0.10}\\times100\\approx1.3\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "activity-2-050",
+      "label": "กิจกรรม 10.1 · ตอนที่ 2 · 0.50 mol/L",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">กิจกรรม 10.1 · ตอนที่ 2 · 0.50 mol/L</p><div class=\"question-prompt\">หาร้อยละการแตกตัวที่ความเข้มข้น 0.50 mol/L</div><div data-sheet-label-en=\"Activity 10.1 · Part 2 · 0.50 mol/L\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 2 · 0.50 mol/L\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-2-050\" style=\"--sheet-print-height:50mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[1.80\\times10^{-5}=\\frac{x^2}{0.50-x}\\]</div><p>\\(C/K_a=2.78\\times10^4&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(0.50)}=3.00\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{การแตกตัว}\\approx\\frac{3.00\\times10^{-3}}{0.50}\\times100\\approx0.60\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "activity-2-100",
+      "label": "กิจกรรม 10.1 · ตอนที่ 2 · 1.0 mol/L",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">กิจกรรม 10.1 · ตอนที่ 2 · 1.0 mol/L</p><div class=\"question-prompt\">หาร้อยละการแตกตัวที่ความเข้มข้น 1.0 mol/L</div><div data-sheet-label-en=\"Activity 10.1 · Part 2 · 1.0 mol/L\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 2 · 1.0 mol/L\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-2-100\" style=\"--sheet-print-height:50mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[1.80\\times10^{-5}=\\frac{x^2}{1.0-x}\\]</div><p>\\(C/K_a=5.56\\times10^4&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(1.0)}=4.243\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{การแตกตัว}\\approx\\frac{4.243\\times10^{-3}}{1.0}\\times100\\approx0.42\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "activity-2-graph",
+      "label": "กิจกรรม 10.1 · ตอนที่ 2 · ข้อ 2",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">กิจกรรม 10.1 · ตอนที่ 2 · ข้อ 2</p><div class=\"question-prompt\">แสดงกราฟร้อยละการแตกตัวกับความเข้มข้นทั้งสี่ค่า ระบุปริมาณบนแกนและแนวโน้ม ใช้กราฟในเฉลยประกอบการตรวจผลได้</div><div data-sheet-label-en=\"Activity 10.1 · Part 2 · Q2\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 2 · ข้อ 2\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-2-graph\" style=\"--sheet-print-height:85mm\"><div data-sheet-answer=\"\"><figure data-print-keep=\"\"><img alt=\"กราฟคำนวณจาก \\(x\\approx\\sqrt{K_aC}\\) ที่ \\(K_a=1.80\\times10^{-5}\\); จุดทั้งสี่คือความเข้มข้นในกิจกรรม\" height=\"480\" src=\"assets/10-3/dilution-graph.svg\" width=\"900\"/><figcaption>กราฟคำนวณจาก \\(x\\approx\\sqrt{K_aC}\\) ที่ \\(K_a=1.80\\times10^{-5}\\); จุดทั้งสี่คือความเข้มข้นในกิจกรรม</figcaption></figure><p>แกนนอน: ความเข้มข้นเริ่มต้น (mol/L) แกนตั้ง: ร้อยละการแตกตัว ความเข้มข้นเพิ่มขึ้น ร้อยละการแตกตัวลดลง ใช้กราฟนี้ประกอบการอธิบายได้โดยไม่ต้องวาดอุปกรณ์ใหม่</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "activity-end-1",
+      "label": "คำถามท้ายกิจกรรม 10.1 · ข้อ 1",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">คำถามท้ายกิจกรรม 10.1 · ข้อ 1</p><div class=\"question-prompt\">ร้อยละการแตกตัวของเบสในสารละลายมีแนวโน้มเดียวกับค่า \\(K_b\\) หรือไม่ อย่างไร?</div><div data-sheet-label-en=\"Activity 10.1 questions · Q1\" data-sheet-label-th=\"คำถามท้ายกิจกรรม 10.1 · ข้อ 1\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-end-1\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer=\"\">มี เมื่อเปรียบเทียบที่ความเข้มข้นและอุณหภูมิเดียวกัน เบสที่มี \\(K_b\\) มากกว่ามีร้อยละการแตกตัวมากกว่า เช่น เอทิลเอมีน &gt; แอมโมเนีย &gt; ฟีนิลเอมีน</div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "activity-end-2",
+      "label": "คำถามท้ายกิจกรรม 10.1 · ข้อ 2",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">คำถามท้ายกิจกรรม 10.1 · ข้อ 2</p><div class=\"question-prompt\">ร้อยละการแตกตัวของกรดในสารละลายขึ้นกับความเข้มข้นของกรดหรือไม่ อย่างไร?</div><div data-sheet-label-en=\"Activity 10.1 questions · Q2\" data-sheet-label-th=\"คำถามท้ายกิจกรรม 10.1 · ข้อ 2\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-end-2\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer=\"\">ขึ้นกับความเข้มข้น สำหรับกรดแอซีติกชนิดเดิมที่อุณหภูมิคงที่ ความเข้มข้นเริ่มต้นลดลงแล้วร้อยละการแตกตัวเพิ่มขึ้น แต่ \\(K_a\\) คงเดิม</div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-exercise-7",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 7",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 7</p><div class=\"question-prompt\">หา \\(K_a\\) ของ HA 0.80 mol/L ซึ่งแตกตัว 0.42%</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q7\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 7\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-7\" style=\"--sheet-print-height:55mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[x=0.80\\frac{0.42}{100}=0.00336\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[[\\ce{HA}]=0.80-0.00336=0.79664\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[K_a=\\frac{(0.00336)^2}{0.79664}=1.417\\times10^{-5}\\approx1.4\\times10^{-5}\\]</div><p>เก็บตัวเลขระหว่างคำนวณไว้ก่อน แล้วปัดคำตอบสุดท้าย</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-compare-ha",
+      "label": "ตรวจสอบความเข้าใจ · ก · HA",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจสอบความเข้าใจ · ก · HA</p><div class=\"question-prompt\">หา \\(K_a\\) ของ HA</div><div data-sheet-label-en=\"IPST understanding · (a) HA\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · ก · HA\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-compare-ha\" style=\"--sheet-print-height:35mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[x=(0.20)(10/100)=0.020\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[K_a(\\ce{HA})=\\frac{(0.020)^2}{0.20-0.020}=2.2\\times10^{-3}\\]</div></div></div></div>",
+      "precedingContextHtml": [
+        "<p><strong>ตรวจสอบความเข้าใจ · เปรียบเทียบ HA และ HB</strong> HA 0.20 mol/L แตกตัว 10% ส่วน HB 0.020 mol/L แตกตัว 20% ข้อสรุปว่า HB แรงกว่า HA ถูกหรือไม่? หาค่าต่อไปนี้ประกอบเหตุผล</p>"
+      ]
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-compare-hb",
+      "label": "ตรวจสอบความเข้าใจ · ข · HB",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจสอบความเข้าใจ · ข · HB</p><div class=\"question-prompt\">หา \\(K_a\\) ของ HB</div><div data-sheet-label-en=\"IPST understanding · (b) HB\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · ข · HB\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-compare-hb\" style=\"--sheet-print-height:35mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[x=(0.020)(20/100)=0.0040\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[K_a(\\ce{HB})=\\frac{(0.0040)^2}{0.020-0.0040}=1.0\\times10^{-3}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-compare-conclusion",
+      "label": "ตรวจสอบความเข้าใจ · ค · ข้อสรุป",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">ตรวจสอบความเข้าใจ · ค · ข้อสรุป</p><div class=\"question-prompt\">HB เป็นกรดแรงกว่า HA ใช่หรือไม่ เพราะเหตุใด?</div><div data-sheet-label-en=\"IPST understanding · (c) Conclusion\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · ค · ข้อสรุป\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-compare-conclusion\" style=\"--sheet-print-height:27mm\"><div data-sheet-answer=\"\">ไม่ใช่ HA มี \\(K_a\\) มากกว่าจึงแรงกว่า การเปรียบเทียบร้อยละเพียงอย่างเดียวใช้ไม่ได้เมื่อความเข้มข้นเริ่มต้นไม่เท่ากัน</div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-exercise-6a",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 6 ก",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 6 ก</p><div class=\"question-prompt\">คำนวณร้อยละการแตกตัวที่ 0.25 mol/L</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q6(a)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 6 ก\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-6a\" style=\"--sheet-print-height:50mm\"><div data-sheet-answer=\"\"><p>\\(C/K_a=4.35\\times10^3&gt;1000\\)</p><div class=\"equation\">\\[5.75\\times10^{-5}=\\frac{x^2}{0.25-x}\\]</div><div class=\"equation\">\\[x\\approx\\sqrt{(5.75\\times10^{-5})(0.25)}=3.791\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{การแตกตัว}\\approx\\frac{3.791\\times10^{-3}}{0.25}\\times100\\approx1.5\\%\\]</div></div></div></div>",
+      "precedingContextHtml": [
+        "<p><strong>แบบฝึกหัด 10.3 · ข้อ 6</strong> กรดเบนโซอิก <span class=\"chem\">C<sub>6</sub>H<sub>5</sub>COOH</span> มี \\(K_a=5.75\\times10^{-5}\\) คำนวณและเปรียบเทียบร้อยละการแตกตัวในสองสารละลาย</p>"
+      ]
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-exercise-6b",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 6 ข",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 6 ข</p><div class=\"question-prompt\">คำนวณร้อยละการแตกตัวที่ 0.40 mol/L</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q6(b)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 6 ข\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-6b\" style=\"--sheet-print-height:50mm\"><div data-sheet-answer=\"\"><p>\\(C/K_a=6.96\\times10^3&gt;1000\\)</p><div class=\"equation\">\\[5.75\\times10^{-5}=\\frac{x^2}{0.40-x}\\]</div><div class=\"equation\">\\[x\\approx\\sqrt{(5.75\\times10^{-5})(0.40)}=4.796\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{การแตกตัว}\\approx\\frac{4.796\\times10^{-3}}{0.40}\\times100\\approx1.2\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "th",
+      "key": "ipst-exercise-6c",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 6 ค",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 6 ค</p><div class=\"question-prompt\">สารละลายใดมีร้อยละการแตกตัวมากกว่า?</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q6(c)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 6 ค\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-6c\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer=\"\">สารละลาย 0.25 mol/L มีร้อยละการแตกตัวประมาณ 1.5% มากกว่าของ 0.40 mol/L ซึ่งประมาณ 1.2% เป็นกรดชนิดเดิมที่มี \\(K_a\\) เท่ากัน</div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-example-4",
+      "label": "Example 4 (IPST) · Percent from concentration",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 4 (IPST) · Percent from concentration</p><div class=\"question-prompt\">A 0.5 mol/L HF solution forms 0.02 mol/L hydronium. Find its percent ionization.</div><div data-sheet-label-en=\"Example 4 (IPST) · Percent from concentration\" data-sheet-label-th=\"ตัวอย่าง 4 (สสวท.) · ร้อยละจากความเข้มข้น\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-example-4\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{HF(aq) + H2O(l) &lt;=&gt; H3O+(aq) + F-(aq)}\\]</div><div class=\"equation\">\\[\\%\\text{ ionization}=\\frac{0.02}{0.5}\\times100=4\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-exercise-3",
+      "label": "IPST Exercise 10.3 · Q3",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q3</p><div class=\"question-prompt\">Equal-concentration, equal-volume solutions of <span class=\"chem\">HNO<sub>2</sub></span> and HF are compared. Which has the larger hydronium concentration, and why? Use the table above.</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q3\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 3\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-3\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">HF. Its \\(K_a\\) is \\(6.31\\times10^{-4}\\), larger than \\(5.62\\times10^{-4}\\) for nitrous acid, so it ionizes more at the same initial concentration.</div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-example-5",
+      "label": "Example 5 (IPST) · Using the approximation",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 5 (IPST) · Using the approximation</p><div class=\"question-prompt\">Find hydronium in 0.50 mol/L acetic acid with \\(K_a=1.80\\times10^{-5}\\).</div><div data-sheet-label-en=\"Example 5 (IPST) · Using the approximation\" data-sheet-label-th=\"ตัวอย่าง 5 (สสวท.) · ใช้การประมาณ\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-example-5\" style=\"--sheet-print-height:100mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{CH3COOH(aq) + H2O(l) &lt;=&gt; H3O+(aq) + CH3COO-(aq)}\\]</div><table><thead><tr><th>mol/L</th><th><span class=\"chem\">CH<sub>3</sub>COOH</span></th><th><span class=\"chem\">CH<sub>3</sub>COO<sup>-</sup></span></th><th><span class=\"chem\">H<sub>3</sub>O<sup>+</sup></span></th></tr></thead><tbody><tr><td>Initial</td><td>\\(0.50\\)</td><td>0</td><td>0</td></tr><tr><td>Change</td><td>\\(-x\\)</td><td>\\(+x\\)</td><td>\\(+x\\)</td></tr><tr><td>Equilibrium</td><td>\\(0.50-x\\)</td><td>\\(x\\)</td><td>\\(x\\)</td></tr></tbody></table><div class=\"equation\">\\[1.80\\times10^{-5}=\\frac{x^2}{0.50-x}\\]</div><p>Check \\(C/K_a=0.50/(1.80\\times10^{-5})=2.78\\times10^4&gt;1000\\).</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(0.50)}=3.0\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><p>Checking x/C×100 gives 0.60%, small compared with 100%. The hydronium concentration is approximately \\(3.0\\times10^{-3}\\) mol/L. The full equation gives \\(2.991\\times10^{-3}\\) mol/L, a close result.</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-quadratic",
+      "label": "IPST understanding · HA",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST understanding · HA</p><div class=\"question-prompt\">Find hydronium in \\(1.00\\times10^{-3}\\) mol/L HA with \\(K_a=1.00\\times10^{-5}\\). Check the approximation and select the physical root.</div><div data-sheet-label-en=\"IPST understanding · HA\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · HA\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-quadratic\" style=\"--sheet-print-height:75mm\"><div data-sheet-answer=\"\"><p>\\(C/K_a=100\\) fails the &gt;1000 criterion.</p><div class=\"equation\">\\[1.00\\times10^{-5}=\\frac{x^2}{1.00\\times10^{-3}-x}\\]</div><div class=\"equation\">\\[x^2+(1.00\\times10^{-5})x-1.00\\times10^{-8}=0\\]</div><div class=\"equation\">\\[x=\\frac{-1.00\\times10^{-5}+\\sqrt{(1.00\\times10^{-5})^2+4.00\\times10^{-8}}}{2}\\]</div><p>The roots are \\(9.51249\\times10^{-5}\\) and \\(-1.051249\\times10^{-4}\\) mol/L. Select the positive root: hydronium is \\(9.51\\times10^{-5}\\) mol/L.</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-sulfuric",
+      "label": "IPST understanding · H 2 SO 4",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST understanding · <span class=\"chem\">H<sub>2</sub>SO<sub>4</sub></span></p><div class=\"question-prompt\">Does 1 mol/L sulfuric acid have 2 mol/L hydronium at equilibrium? Explain.</div><div data-sheet-label-en=\"IPST understanding · H2SO4\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · H2SO4\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-sulfuric\" style=\"--sheet-print-height:29mm\"><div data-sheet-answer=\"\">No. The first step gives approximately 1 mol/L hydronium, while the second step is partial. In this chapter’s concentration model, the result is greater than 1 but less than 2 mol/L.</div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-exercise-2",
+      "label": "IPST Exercise 10.3 · Q2",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q2</p><div class=\"question-prompt\"><span class=\"chem\">H<sub>2</sub>SO<sub>3</sub></span> has \\(K_{a1}=1.41\\times10^{-2}\\) and \\(K_{a2}=6.31\\times10^{-8}\\). Compare the ion concentrations in its solution.</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q2\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 2\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-2\" style=\"--sheet-print-height:57mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{H2SO3(aq) + H2O(l) &lt;=&gt; H3O+(aq) + HSO3-(aq)}\\]</div><div class=\"equation\">\\[\\ce{HSO3-(aq) + H2O(l) &lt;=&gt; H3O+(aq) + SO3^2-(aq)}\\]</div><p>The first step is much more extensive than the second. Both steps form hydronium, while the second consumes some hydrogen sulfite. Thus:</p><div class=\"equation\">\\[[\\ce{H3O+}]&gt;[\\ce{HSO3-}]&gt;[\\ce{SO3^2-}]\\]</div><p>This compares the acid-derived ions; water supplies only a tiny hydroxide concentration in this acidic solution.</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-example-6",
+      "label": "Example 6 (IPST) · Ammonia",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item example\" data-print-keep=\"\"><p class=\"question-label\">Example 6 (IPST) · Ammonia</p><div class=\"question-prompt\">Find the percent ionization of 0.20 mol/L ammonia, using the table.</div><div data-sheet-label-en=\"Example 6 (IPST) · Ammonia\" data-sheet-label-th=\"ตัวอย่าง 6 (สสวท.) · แอมโมเนีย\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-example-6\" style=\"--sheet-print-height:78mm\"><div data-sheet-answer=\"\"><table><thead><tr><th>mol/L</th><th><span class=\"chem\">NH<sub>3</sub></span></th><th><span class=\"chem\">NH<sub>4</sub><sup>+</sup></span></th><th><span class=\"chem\">OH<sup>-</sup></span></th></tr></thead><tbody><tr><td>Initial</td><td>\\(0.20\\)</td><td>0</td><td>0</td></tr><tr><td>Change</td><td>\\(-x\\)</td><td>\\(+x\\)</td><td>\\(+x\\)</td></tr><tr><td>Equilibrium</td><td>\\(0.20-x\\)</td><td>\\(x\\)</td><td>\\(x\\)</td></tr></tbody></table><p>\\(C/K_b=0.20/(1.80\\times10^{-5})=1.11\\times10^4&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(0.20)}=1.897\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{ ionization}=\\frac{1.897\\times10^{-3}}{0.20}\\times100\\approx0.95\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-exercise-4",
+      "label": "IPST Exercise 10.3 · Q4",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q4</p><div class=\"question-prompt\">NaX supplies an equal molar amount of X−, which reacts by \\(\\ce{X-(aq) + H2O(l) &lt;=&gt; HX(aq) + OH-(aq)}\\). Given \\(K_b=1.0\\times10^{-4}\\), find hydroxide in 2.0 mol/L NaX.</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q4\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 4\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-4\" style=\"--sheet-print-height:58mm\"><div data-sheet-answer=\"\"><p>Initially X− is 2.0 mol/L, not zero, because NaX supplies it first.</p><div class=\"equation\">\\[1.0\\times10^{-4}=\\frac{x^2}{2.0-x}\\]</div><p>\\(C/K_b=2.0\\times10^4&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.0\\times10^{-4})(2.0)}=1.4\\times10^{-2}\\ \\mathrm{mol/L}\\]</div><p>This is the equilibrium hydroxide concentration.</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-exercise-5a",
+      "label": "IPST Exercise 10.3 · Q5(a)",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q5(a)</p><div class=\"question-prompt\">Find the equilibrium methylammonium concentration.</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q5(a)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 5 ก\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-5a\" style=\"--sheet-print-height:58mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{CH3NH2(aq) + H2O(l) &lt;=&gt; CH3NH3+(aq) + OH-(aq)}\\]</div><div class=\"equation\">\\[4.57\\times10^{-4}=\\frac{x^2}{0.50-x}\\]</div><p>\\(C/K_b=1.094\\times10^3&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(4.57\\times10^{-4})(0.50)}=1.512\\times10^{-2}\\ \\mathrm{mol/L}\\]</div><p>Thus methylammonium is approximately \\(1.5\\times10^{-2}\\) mol/L.</p></div></div></div>",
+      "precedingContextHtml": [
+        "<p><strong>IPST Exercise 10.3 · Q5.</strong> Use the table for 0.50 mol/L methylamine, <span class=\"chem\">CH<sub>3</sub>NH<sub>2</sub></span>.</p>"
+      ]
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-exercise-5b",
+      "label": "IPST Exercise 10.3 · Q5(b)",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q5(b)</p><div class=\"question-prompt\">Find the percent ionization of methylamine.</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q5(b)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 5 ข\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-5b\" style=\"--sheet-print-height:27mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\%\\text{ ionization}\\approx\\frac{1.512\\times10^{-2}}{0.50}\\times100=3.0\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "activity-1-ethylamine",
+      "label": "Activity 10.1 · Part 1 · Ethylamine",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Activity 10.1 · Part 1 · Ethylamine</p><div class=\"question-prompt\">Calculate percent ionization of 0.50 mol/L <span class=\"chem\">C<sub>2</sub>H<sub>5</sub>NH<sub>2</sub></span>.</div><div data-sheet-label-en=\"Activity 10.1 · Part 1 · Ethylamine\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 1 · เอทิลเอมีน\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-1-ethylamine\" style=\"--sheet-print-height:70mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{C2H5NH2(aq) + H2O(l) &lt;=&gt; C2H5NH3+(aq) + OH-(aq)}\\]</div><p>At equilibrium the base is 0.50−x and each product ion is x mol/L.</p><div class=\"equation\">\\[4.47\\times10^{-4}=\\frac{x^2}{0.50-x}\\]</div><p>\\(C/K_b=1.12\\times10^3&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(4.47\\times10^{-4})(0.50)}=1.495\\times10^{-2}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{ ionization}\\approx\\frac{1.495\\times10^{-2}}{0.50}\\times100=3.0\\%\\]</div></div></div></div>",
+      "precedingContextHtml": [
+        "<div data-print-keep=\"\"><h2><span>6</span> Activity 10.1 Percent Ionization</h2><p>Use the constants at 25 °C from the tables. This is a calculation and graph activity, with a separate working area for each concentration.</p></div>",
+        "<p><strong>Part 1.</strong> Calculate and compare percent ionization for the three bases, each at 0.50 mol/L.</p>"
+      ]
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "activity-1-ammonia",
+      "label": "Activity 10.1 · Part 1 · Ammonia",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Activity 10.1 · Part 1 · Ammonia</p><div class=\"question-prompt\">Calculate percent ionization of 0.50 mol/L <span class=\"chem\">NH<sub>3</sub></span>.</div><div data-sheet-label-en=\"Activity 10.1 · Part 1 · Ammonia\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 1 · แอมโมเนีย\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-1-ammonia\" style=\"--sheet-print-height:70mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{NH3(aq) + H2O(l) &lt;=&gt; NH4+(aq) + OH-(aq)}\\]</div><p>At equilibrium the base is 0.50−x and each product ion is x mol/L.</p><div class=\"equation\">\\[1.80\\times10^{-5}=\\frac{x^2}{0.50-x}\\]</div><p>\\(C/K_b=2.78\\times10^4&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(0.50)}=3.00\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{ ionization}\\approx\\frac{3.00\\times10^{-3}}{0.50}\\times100=0.60\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "activity-1-aniline",
+      "label": "Activity 10.1 · Part 1 · Phenylamine",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Activity 10.1 · Part 1 · Phenylamine</p><div class=\"question-prompt\">Calculate percent ionization of 0.50 mol/L <span class=\"chem\">C<sub>6</sub>H<sub>5</sub>NH<sub>2</sub></span>.</div><div data-sheet-label-en=\"Activity 10.1 · Part 1 · Phenylamine\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 1 · ฟีนิลเอมีน\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-1-aniline\" style=\"--sheet-print-height:70mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[\\ce{C6H5NH2(aq) + H2O(l) &lt;=&gt; C6H5NH3+(aq) + OH-(aq)}\\]</div><p>At equilibrium the base is 0.50−x and each product ion is x mol/L.</p><div class=\"equation\">\\[7.41\\times10^{-10}=\\frac{x^2}{0.50-x}\\]</div><p>\\(C/K_b=6.75\\times10^8&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(7.41\\times10^{-10})(0.50)}=1.925\\times10^{-5}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{ ionization}\\approx\\frac{1.925\\times10^{-5}}{0.50}\\times100=3.8\\times10^{-3}\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "activity-1-compare",
+      "label": "Activity 10.1 · Part 1 · Compare",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Activity 10.1 · Part 1 · Compare</p><div class=\"question-prompt\">Rank the three bases by decreasing percent ionization.</div><div data-sheet-label-en=\"Activity 10.1 · Part 1 · Compare\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 1 · เปรียบเทียบ\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-1-compare\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\">\\(\\ce{C2H5NH2}&gt;\\ce{NH3}&gt;\\ce{C6H5NH2}\\)<p>Approximately 3.0%, 0.60% and \\(3.8\\times10^{-3}\\%\\), respectively.</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "activity-2-0050",
+      "label": "Activity 10.1 · Part 2 · 0.050 mol/L",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Activity 10.1 · Part 2 · 0.050 mol/L</p><div class=\"question-prompt\">Find the percent ionization at 0.050 mol/L.</div><div data-sheet-label-en=\"Activity 10.1 · Part 2 · 0.050 mol/L\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 2 · 0.050 mol/L\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-2-0050\" style=\"--sheet-print-height:50mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[1.80\\times10^{-5}=\\frac{x^2}{0.050-x}\\]</div><p>\\(C/K_a=2.78\\times10^3&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(0.050)}=9.487\\times10^{-4}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{ ionization}\\approx\\frac{9.487\\times10^{-4}}{0.050}\\times100\\approx1.9\\%\\]</div></div></div></div>",
+      "precedingContextHtml": [
+        "<p><strong>Part 2 · Q1.</strong> Use acetic acid at different concentrations, with \\(K_a=1.80\\times10^{-5}\\).</p>"
+      ]
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "activity-2-010",
+      "label": "Activity 10.1 · Part 2 · 0.10 mol/L",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Activity 10.1 · Part 2 · 0.10 mol/L</p><div class=\"question-prompt\">Find the percent ionization at 0.10 mol/L.</div><div data-sheet-label-en=\"Activity 10.1 · Part 2 · 0.10 mol/L\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 2 · 0.10 mol/L\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-2-010\" style=\"--sheet-print-height:50mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[1.80\\times10^{-5}=\\frac{x^2}{0.10-x}\\]</div><p>\\(C/K_a=5.56\\times10^3&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(0.10)}=1.342\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{ ionization}\\approx\\frac{1.342\\times10^{-3}}{0.10}\\times100\\approx1.3\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "activity-2-050",
+      "label": "Activity 10.1 · Part 2 · 0.50 mol/L",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Activity 10.1 · Part 2 · 0.50 mol/L</p><div class=\"question-prompt\">Find the percent ionization at 0.50 mol/L.</div><div data-sheet-label-en=\"Activity 10.1 · Part 2 · 0.50 mol/L\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 2 · 0.50 mol/L\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-2-050\" style=\"--sheet-print-height:50mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[1.80\\times10^{-5}=\\frac{x^2}{0.50-x}\\]</div><p>\\(C/K_a=2.78\\times10^4&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(0.50)}=3.00\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{ ionization}\\approx\\frac{3.00\\times10^{-3}}{0.50}\\times100\\approx0.60\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "activity-2-100",
+      "label": "Activity 10.1 · Part 2 · 1.0 mol/L",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Activity 10.1 · Part 2 · 1.0 mol/L</p><div class=\"question-prompt\">Find the percent ionization at 1.0 mol/L.</div><div data-sheet-label-en=\"Activity 10.1 · Part 2 · 1.0 mol/L\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 2 · 1.0 mol/L\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-2-100\" style=\"--sheet-print-height:50mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[1.80\\times10^{-5}=\\frac{x^2}{1.0-x}\\]</div><p>\\(C/K_a=5.56\\times10^4&gt;1000\\)</p><div class=\"equation\">\\[x\\approx\\sqrt{(1.80\\times10^{-5})(1.0)}=4.243\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{ ionization}\\approx\\frac{4.243\\times10^{-3}}{1.0}\\times100\\approx0.42\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "activity-2-graph",
+      "label": "Activity 10.1 · Part 2 · Q2",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Activity 10.1 · Part 2 · Q2</p><div class=\"question-prompt\">Show the graph of percent ionization against the four concentrations. Identify the axes and trend. Use the prepared solution graph to compare your results.</div><div data-sheet-label-en=\"Activity 10.1 · Part 2 · Q2\" data-sheet-label-th=\"กิจกรรม 10.1 · ตอนที่ 2 · ข้อ 2\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-2-graph\" style=\"--sheet-print-height:85mm\"><div data-sheet-answer=\"\"><figure data-print-keep=\"\"><img alt=\"Calculated using \\(x\\approx\\sqrt{K_aC}\\) and \\(K_a=1.80\\times10^{-5}\\). The four points are the activity concentrations.\" height=\"480\" src=\"assets/10-3/dilution-graph.svg\" width=\"900\"/><figcaption>Calculated using \\(x\\approx\\sqrt{K_aC}\\) and \\(K_a=1.80\\times10^{-5}\\). The four points are the activity concentrations.</figcaption></figure><p>Horizontal axis: initial concentration in mol/L. Vertical axis: percent ionization. Percent ionization falls as initial concentration rises. The prepared graph can be used for discussion.</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "activity-end-1",
+      "label": "Activity 10.1 questions · Q1",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Activity 10.1 questions · Q1</p><div class=\"question-prompt\">Does percent ionization of the bases follow the same trend as \\(K_b\\)? Explain.</div><div data-sheet-label-en=\"Activity 10.1 questions · Q1\" data-sheet-label-th=\"คำถามท้ายกิจกรรม 10.1 · ข้อ 1\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-end-1\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer=\"\">Yes, when concentration and temperature are the same. A larger \\(K_b\\) gives a higher percent ionization: ethylamine &gt; ammonia &gt; phenylamine.</div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "activity-end-2",
+      "label": "Activity 10.1 questions · Q2",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">Activity 10.1 questions · Q2</p><div class=\"question-prompt\">Does the acid’s percent ionization depend on its concentration? Explain.</div><div data-sheet-label-en=\"Activity 10.1 questions · Q2\" data-sheet-label-th=\"คำถามท้ายกิจกรรม 10.1 · ข้อ 2\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"activity-end-2\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer=\"\">Yes. For the same acetic acid at fixed temperature, lowering initial concentration increases percent ionization, while \\(K_a\\) remains unchanged.</div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-exercise-7",
+      "label": "IPST Exercise 10.3 · Q7",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q7</p><div class=\"question-prompt\">Find \\(K_a\\) for 0.80 mol/L HA with 0.42% ionization.</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q7\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 7\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-7\" style=\"--sheet-print-height:55mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[x=0.80\\frac{0.42}{100}=0.00336\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[[\\ce{HA}]=0.80-0.00336=0.79664\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[K_a=\\frac{(0.00336)^2}{0.79664}=1.417\\times10^{-5}\\approx1.4\\times10^{-5}\\]</div><p>Retain intermediate digits and round the final result.</p></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-compare-ha",
+      "label": "IPST understanding · (a) HA",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST understanding · (a) HA</p><div class=\"question-prompt\">Find \\(K_a\\) for HA.</div><div data-sheet-label-en=\"IPST understanding · (a) HA\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · ก · HA\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-compare-ha\" style=\"--sheet-print-height:35mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[x=(0.20)(10/100)=0.020\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[K_a(\\ce{HA})=\\frac{(0.020)^2}{0.20-0.020}=2.2\\times10^{-3}\\]</div></div></div></div>",
+      "precedingContextHtml": [
+        "<p><strong>IPST understanding · Compare HA and HB.</strong> HA is 0.20 mol/L and 10% ionized; HB is 0.020 mol/L and 20% ionized. Is HB stronger? Find the following quantities to support your answer.</p>"
+      ]
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-compare-hb",
+      "label": "IPST understanding · (b) HB",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST understanding · (b) HB</p><div class=\"question-prompt\">Find \\(K_a\\) for HB.</div><div data-sheet-label-en=\"IPST understanding · (b) HB\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · ข · HB\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-compare-hb\" style=\"--sheet-print-height:35mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[x=(0.020)(20/100)=0.0040\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[K_a(\\ce{HB})=\\frac{(0.0040)^2}{0.020-0.0040}=1.0\\times10^{-3}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-compare-conclusion",
+      "label": "IPST understanding · (c) Conclusion",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST understanding · (c) Conclusion</p><div class=\"question-prompt\">Is HB stronger than HA? Explain.</div><div data-sheet-label-en=\"IPST understanding · (c) Conclusion\" data-sheet-label-th=\"ตรวจสอบความเข้าใจ · ค · ข้อสรุป\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-compare-conclusion\" style=\"--sheet-print-height:27mm\"><div data-sheet-answer=\"\">No. HA has the larger \\(K_a\\) and is stronger. Percentages alone cannot establish strength when initial concentrations differ.</div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-exercise-6a",
+      "label": "IPST Exercise 10.3 · Q6(a)",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q6(a)</p><div class=\"question-prompt\">Find percent ionization at 0.25 mol/L.</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q6(a)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 6 ก\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-6a\" style=\"--sheet-print-height:50mm\"><div data-sheet-answer=\"\"><p>\\(C/K_a=4.35\\times10^3&gt;1000\\)</p><div class=\"equation\">\\[5.75\\times10^{-5}=\\frac{x^2}{0.25-x}\\]</div><div class=\"equation\">\\[x\\approx\\sqrt{(5.75\\times10^{-5})(0.25)}=3.791\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{ ionization}\\approx\\frac{3.791\\times10^{-3}}{0.25}\\times100\\approx1.5\\%\\]</div></div></div></div>",
+      "precedingContextHtml": [
+        "<p><strong>IPST Exercise 10.3 · Q6.</strong> Benzoic acid, <span class=\"chem\">C<sub>6</sub>H<sub>5</sub>COOH</span>, has \\(K_a=5.75\\times10^{-5}\\). Calculate and compare percent ionization in two solutions.</p>"
+      ]
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-exercise-6b",
+      "label": "IPST Exercise 10.3 · Q6(b)",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q6(b)</p><div class=\"question-prompt\">Find percent ionization at 0.40 mol/L.</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q6(b)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 6 ข\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-6b\" style=\"--sheet-print-height:50mm\"><div data-sheet-answer=\"\"><p>\\(C/K_a=6.96\\times10^3&gt;1000\\)</p><div class=\"equation\">\\[5.75\\times10^{-5}=\\frac{x^2}{0.40-x}\\]</div><div class=\"equation\">\\[x\\approx\\sqrt{(5.75\\times10^{-5})(0.40)}=4.796\\times10^{-3}\\ \\mathrm{mol/L}\\]</div><div class=\"equation\">\\[\\%\\text{ ionization}\\approx\\frac{4.796\\times10^{-3}}{0.40}\\times100\\approx1.2\\%\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 2,
+      "language": "en",
+      "key": "ipst-exercise-6c",
+      "label": "IPST Exercise 10.3 · Q6(c)",
+      "sourceFile": "10-3-2-weak-acids-bases-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q6(c)</p><div class=\"question-prompt\">Which solution has the higher percent ionization?</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q6(c)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 6 ค\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-6c\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer=\"\">The 0.25 mol/L solution is about 1.5% ionized, more than the approximately 1.2% for 0.40 mol/L. Both contain the same acid with the same \\(K_a\\).</div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 3,
+      "language": "th",
+      "key": "ipst-exercise-8a",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 8 ก",
+      "sourceFile": "10-3-3-water-and-conjugate-constants-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 8 ก</p><div class=\"question-prompt\">ระบุคู่เบสของ HY</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q8(a)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 8 ก\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-8a\" style=\"--sheet-print-height:19mm\"><div data-sheet-answer=\"\"><span class=\"chem\">Y<sup>-</sup></span> ได้จาก HY ให้โปรตอนหนึ่งตัว</div></div></div>",
+      "precedingContextHtml": [
+        "<p><strong>แบบฝึกหัด 10.3 · ข้อ 8</strong> HY มี \\(K_a=2.0\\times10^{-6}\\) ใช้ \\(K_w\\) ที่ 25 °C</p>"
+      ]
+    },
+    {
+      "sheet": 3,
+      "language": "th",
+      "key": "ipst-exercise-8b",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 8 ข",
+      "sourceFile": "10-3-3-water-and-conjugate-constants-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 8 ข</p><div class=\"question-prompt\">หา \\(K_b\\) ของคู่เบสนี้</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q8(b)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 8 ข\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-8b\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[K_b=\\frac{1.0\\times10^{-14}}{2.0\\times10^{-6}}=5.0\\times10^{-9}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 3,
+      "language": "th",
+      "key": "ipst-exercise-9",
+      "label": "แบบฝึกหัด 10.3 · ข้อ 9",
+      "sourceFile": "10-3-3-water-and-conjugate-constants-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">แบบฝึกหัด 10.3 · ข้อ 9</p><div class=\"question-prompt\">เบสอ่อนมี \\(K_b=5.0\\times10^{-10}\\) จงหา \\(K_a\\) ของคู่กรดที่ 25 °C</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q9\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 9\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-9\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[K_a=\\frac{1.0\\times10^{-14}}{5.0\\times10^{-10}}=2.0\\times10^{-5}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 3,
+      "language": "en",
+      "key": "ipst-exercise-8a",
+      "label": "IPST Exercise 10.3 · Q8(a)",
+      "sourceFile": "10-3-3-water-and-conjugate-constants-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q8(a)</p><div class=\"question-prompt\">Identify the conjugate base of HY.</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q8(a)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 8 ก\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-8a\" style=\"--sheet-print-height:19mm\"><div data-sheet-answer=\"\"><span class=\"chem\">Y<sup>-</sup></span>, formed when HY donates one proton.</div></div></div>",
+      "precedingContextHtml": [
+        "<p><strong>IPST Exercise 10.3 · Q8.</strong> HY has \\(K_a=2.0\\times10^{-6}\\). Use \\(K_w\\) at 25 °C.</p>"
+      ]
+    },
+    {
+      "sheet": 3,
+      "language": "en",
+      "key": "ipst-exercise-8b",
+      "label": "IPST Exercise 10.3 · Q8(b)",
+      "sourceFile": "10-3-3-water-and-conjugate-constants-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q8(b)</p><div class=\"question-prompt\">Find \\(K_b\\) for this conjugate base.</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q8(b)\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 8 ข\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-8b\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[K_b=\\frac{1.0\\times10^{-14}}{2.0\\times10^{-6}}=5.0\\times10^{-9}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    },
+    {
+      "sheet": 3,
+      "language": "en",
+      "key": "ipst-exercise-9",
+      "label": "IPST Exercise 10.3 · Q9",
+      "sourceFile": "10-3-3-water-and-conjugate-constants-learning-sheet.html",
+      "html": "<div class=\"question-item ipst\" data-print-keep=\"\"><p class=\"question-label\">IPST Exercise 10.3 · Q9</p><div class=\"question-prompt\">A weak base has \\(K_b=5.0\\times10^{-10}\\). Find the \\(K_a\\) of its conjugate acid at 25 °C.</div><div data-sheet-label-en=\"IPST Exercise 10.3 · Q9\" data-sheet-label-th=\"แบบฝึกหัด 10.3 · ข้อ 9\" data-sheet-layout=\"block\" data-sheet-size=\"medium\" data-sheet-slot=\"ipst-exercise-9\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer=\"\"><div class=\"equation\">\\[K_a=\\frac{1.0\\times10^{-14}}{5.0\\times10^{-10}}=2.0\\times10^{-5}\\]</div></div></div></div>",
+      "precedingContextHtml": []
+    }
+  ]
+}

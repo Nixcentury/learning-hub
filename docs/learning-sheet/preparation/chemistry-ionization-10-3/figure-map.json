@@ -1,0 +1,98 @@
+{
+  "sourceDriveId": "18HV75L5ndjm-Wpk1rcMFAOgd59TCmepY",
+  "sourcePdfPages": 176,
+  "crops": [
+    {
+      "file": "quiz-source-images/p14-conductivity.png",
+      "printedPage": 14,
+      "pdfPage": 24,
+      "pixelCrop": [
+        86,
+        765,
+        1134,
+        1156
+      ]
+    },
+    {
+      "file": "quiz-source-images/p15-complete-ionization.png",
+      "printedPage": 15,
+      "pdfPage": 25,
+      "pixelCrop": [
+        740,
+        459,
+        1147,
+        1071
+      ]
+    },
+    {
+      "file": "quiz-source-images/p19-partial-ionization.png",
+      "printedPage": 19,
+      "pdfPage": 29,
+      "pixelCrop": [
+        740,
+        672,
+        1147,
+        1343
+      ]
+    },
+    {
+      "file": "quiz-source-images/p21-acid-constants.png",
+      "printedPage": 21,
+      "pdfPage": 31,
+      "pixelCrop": [
+        92,
+        178,
+        1159,
+        1326
+      ]
+    },
+    {
+      "file": "quiz-source-images/p24-base-constants.png",
+      "printedPage": 24,
+      "pdfPage": 34,
+      "pixelCrop": [
+        92,
+        1037,
+        1159,
+        1445
+      ]
+    },
+    {
+      "file": "quiz-source-images/p28-conjugate-constants.png",
+      "printedPage": 28,
+      "pdfPage": 38,
+      "pixelCrop": [
+        92,
+        1020,
+        1159,
+        1649
+      ]
+    }
+  ],
+  "originalAuthoredFigures": [
+    {
+      "file": "public/content/chemistry/ipst/acid-base/assets/10-3/conductivity.svg",
+      "sha256": "85ff8d0eec57618ccdacde17054f10742b1942c1ba3cf2d884dd693b74f5eb35"
+    },
+    {
+      "file": "public/content/chemistry/ipst/acid-base/assets/10-3/particles-complete.svg",
+      "sha256": "10d0d9194b944986230ba0a2aba002a5f63a9c70019812917456ec00287f9bd7"
+    },
+    {
+      "file": "public/content/chemistry/ipst/acid-base/assets/10-3/particles-partial.svg",
+      "sha256": "61b162db3b996eea2dfd6d88b35734bf83a9b1b8a50573163fb3f75a8206c0e8"
+    },
+    {
+      "file": "public/content/chemistry/ipst/acid-base/assets/10-3/barium-bars.svg",
+      "sha256": "bfb1e8c05fde034fbe0db15d6b9ebfde6c21ae0b825d12d2c28e638c6ed2cf50"
+    },
+    {
+      "file": "public/content/chemistry/ipst/acid-base/assets/10-3/weak-bars.svg",
+      "sha256": "2ac5e795718c1f435f4a01124ef6477048c6ac9a485d53fe07eca972d1e03437"
+    },
+    {
+      "file": "public/content/chemistry/ipst/acid-base/assets/10-3/dilution-graph.svg",
+      "sha256": "6e0c72399e1d6615b99f670dd25a84ae4fd86f04c3f9671f0629051dd8ad56c9"
+    }
+  ]
+}

@@ -1,0 +1,662 @@
+[
+  {
+    "language": "th",
+    "oldSheet": 1,
+    "oldKey": "q-01",
+    "oldPrompt": "กรด HCl กับกรด CH 3 COOH ชนิดใดนำไฟฟ้าได้ดีกว่าในภาพ?",
+    "newKey": "q-01",
+    "newLabel": "คำถาม 1",
+    "newPrompt": "กรด HCl กับกรด CH 3 COOH ชนิดใดนำไฟฟ้าได้ดีกว่าในภาพ?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 1,
+    "oldKey": "q-02",
+    "oldPrompt": "NaOH กับ NH 3 ชนิดใดเกิดไอออนในน้ำได้มากกว่าเมื่อเปรียบเทียบตามภาพ?",
+    "newKey": "q-02",
+    "newLabel": "คำถาม 2",
+    "newPrompt": "NaOH กับ NH 3 ชนิดใดเกิดไอออนในน้ำได้มากกว่าเมื่อเปรียบเทียบตามภาพ?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 1,
+    "oldKey": "q-03",
+    "oldPrompt": "HCl 0.001 mol/L กับ CH 3 COOH 1.0 mol/L ชนิดใดเป็นกรดแก่ และชนิดใดมีความเข้มข้นเริ่มต้นสูงกว่า?",
+    "newKey": "q-03",
+    "newLabel": "คำถาม 4",
+    "newPrompt": "HCl 0.001 mol/L กับ CH 3 COOH 1.0 mol/L ชนิดใดเป็นกรดแก่ และชนิดใดมีความเข้มข้นเริ่มต้นสูงกว่า?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 1,
+    "oldKey": "q-04",
+    "oldPrompt": "HF มี H ในสูตร จึงต้องเป็นกรดแก่ ข้อความนี้ถูกหรือไม่?",
+    "newKey": "q-04",
+    "newLabel": "คำถาม 5",
+    "newPrompt": "HF มี H ในสูตร จึงต้องเป็นกรดแก่ ข้อความนี้ถูกหรือไม่?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 1,
+    "oldKey": "q-05",
+    "oldPrompt": "NaOH 0.10 mol/L ให้ Na + และ OH - เข้มข้นชนิดละเท่าใด?",
+    "newKey": "q-05",
+    "newLabel": "คำถาม 6",
+    "newPrompt": "NaOH 0.10 mol/L ให้ Na + และ OH - เข้มข้นชนิดละเท่าใด?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 1,
+    "oldKey": "q-06",
+    "oldPrompt": "เขียนสมการการแตกตัวของ Ba(OH) 2 ในน้ำให้ดุล",
+    "newKey": "q-06",
+    "newLabel": "คำถาม 7",
+    "newPrompt": "เขียนสมการการแตกตัวของ Ba(OH) 2 ในน้ำให้ดุล",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 1,
+    "oldKey": "q-07",
+    "oldPrompt": "Ba(OH) 2 0.10 mol/L ให้ Ba 2+ และ OH - เข้มข้นเท่าใด?",
+    "newKey": "q-07",
+    "newLabel": "คำถาม 8",
+    "newPrompt": "Ba(OH) 2 0.10 mol/L ให้ Ba 2+ และ OH - เข้มข้นเท่าใด?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 1,
+    "oldKey": "q-08",
+    "oldPrompt": "HCl 0.20 mol/L ปริมาตร 250 mL มี H 3 O + กี่โมล?",
+    "newKey": "q-08",
+    "newLabel": "คำถาม 9",
+    "newPrompt": "HCl 0.20 mol/L ปริมาตร 250 mL มี H 3 O + กี่โมล?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 1,
+    "oldKey": "q-09",
+    "oldPrompt": "Ca(OH) 2 0.040 mol/L ปริมาตร 250 mL เติมน้ำจนได้ 1.00 L หลังเติมน้ำ OH - เข้มข้นเท่าใด?",
+    "newKey": "q-09",
+    "newLabel": "คำถาม 10",
+    "newPrompt": "Ba(OH) 2 0.040 mol/L ปริมาตร 250 mL เติมน้ำจนได้ 1.00 L หลังเติมน้ำ OH - เข้มข้นเท่าใด?",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "th",
+    "oldSheet": 1,
+    "oldKey": "q-10",
+    "oldPrompt": "ถ้านำ 0.100 mol ของ OH - จากข้อข้างบนไปคูณ 171.35 g/mol ทันที จะผิดตรงไหน?",
+    "newKey": "q-10",
+    "newLabel": "คำถาม 12",
+    "newPrompt": "ถ้านำ 0.00800 mol ของ OH⁻ จากโจทย์เตรียมสารละลายไปคูณ 171.35 g/mol ทันที จะผิดตรงไหน?",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-01",
+    "oldPrompt": "ชุดใดแตกตัวสมบูรณ์ และชุดใดยังมี HA เหลืออยู่?",
+    "newKey": "weak-q-01",
+    "newLabel": "คำถาม 13",
+    "newPrompt": "ชุดใดแตกตัวสมบูรณ์ และชุดใดยังมี HA เหลืออยู่?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-02",
+    "oldPrompt": "ในชุด B มี HA แตกตัวกี่โมเลกุล และเหลือ HA กี่โมเลกุล?",
+    "newKey": "weak-q-02",
+    "newLabel": "คำถาม 14",
+    "newPrompt": "ในชุด B มี HA แตกตัวกี่โมเลกุล และเหลือ HA กี่โมเลกุล?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-03",
+    "oldPrompt": "HA ในชุด B แตกตัวร้อยละเท่าใด?",
+    "newKey": "weak-q-03",
+    "newLabel": "คำถาม 15",
+    "newPrompt": "HA ในชุด B แตกตัวร้อยละเท่าใด?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-04",
+    "oldPrompt": "HA 0.20 mol/L แตกตัว 5.0% จะมี H 3 O + เท่าใด?",
+    "newKey": "weak-q-04",
+    "newLabel": "คำถาม 16",
+    "newPrompt": "HA 0.20 mol/L แตกตัว 5.0% จะมี H 3 O + เท่าใด?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-05",
+    "oldPrompt": "จากภาพ ถ้า HA แตกตัว 0.05 mol/L เหตุใด HA ที่เหลือจึงไม่ใช่ 0.05 mol/L?",
+    "newKey": "weak-q-05",
+    "newLabel": "คำถาม 17",
+    "newPrompt": "จากภาพ ถ้า HA เริ่มต้น 0.200 mol/L และแตกตัว 0.010 mol/L เหตุใด HA ที่เหลือจึงไม่ใช่ 0.010 mol/L?",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-06",
+    "oldPrompt": "HA เริ่มต้น 0.100 mol/L แตกตัว 0.002 mol/L จงระบุความเข้มข้นสมดุลของ HA, H 3 O + และ A -",
+    "newKey": "weak-q-06",
+    "newLabel": "คำถาม 18",
+    "newPrompt": "HA เริ่มต้น 0.100 mol/L แตกตัว 0.002 mol/L จงระบุความเข้มข้นสมดุลของ HA, H 3 O + และ A -",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-07",
+    "oldPrompt": "สารละลายกรดอ่อนหนึ่งโปรตอน HA มีความเข้มข้นเริ่มต้น 0.100 mol/L เมื่อถึงสมดุล HA แตกตัวไป 0.002 mol/L จงคำนวณ \\(K_a\\) โดยละเลยไอออนจากการแตกตัวของน้ำ",
+    "newKey": "weak-q-07",
+    "newLabel": "คำถาม 19",
+    "newPrompt": "กรดอ่อนหนึ่งโปรตอน HA เริ่มต้น 0.100 mol/L และแตกตัว 2.0% จงคำนวณ \\(K_a\\) โดยละเลยไอออนจากน้ำ",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-08",
+    "oldPrompt": "จากตาราง HCOOH กับ CH 3 COOH กรดใดแรงกว่า?",
+    "newKey": "weak-q-08",
+    "newLabel": "คำถาม 20",
+    "newPrompt": "จากตาราง HCOOH กับ CH₃COOH กรดใดแรงกว่า? ถ้าความเข้มข้นเริ่มต้นเท่ากันที่อุณหภูมิเดียวกัน สารละลายใดมี H₃O⁺ มากกว่า เพราะเหตุใด?",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-09",
+    "oldPrompt": "HA 0.10 mol/L มี \\(K_a=1.0\\times10^{-5}\\) ใช้การประมาณตามเกณฑ์หนังสือได้หรือไม่?",
+    "newKey": "weak-q-09",
+    "newLabel": "คำถาม 21",
+    "newPrompt": "HA 0.200 mol/L มี \\(K_a=2.00\\times10^{-5}\\) ใช้การประมาณตามเกณฑ์หนังสือได้หรือไม่?",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-10",
+    "oldPrompt": "ถ้าเป็น HA 0.001 mol/L แต่ \\(K_a\\) เท่าเดิม ใช้เกณฑ์เดียวกันได้หรือไม่?",
+    "newKey": "weak-q-10",
+    "newLabel": "คำถาม 22",
+    "newPrompt": "ถ้า C ลดเหลือ 0.00200 mol/L แต่ \\(K_a\\) เท่าเดิม ยังใช้เกณฑ์ประมาณเดียวกันได้หรือไม่?",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-11",
+    "oldPrompt": "เมื่อละเลย x ใน C−x แล้ว จะตัด x² ในเศษด้วยได้ไหม?",
+    "newKey": "weak-q-11",
+    "newLabel": "คำถาม 23",
+    "newPrompt": "เมื่อละเลย x ใน C−x แล้ว จะตัด x² ในเศษด้วยได้ไหม?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-12",
+    "oldPrompt": "คำนวณ H 3 O + ใน HA 0.10 mol/L ที่มี \\(K_a=1.0\\times10^{-5}\\) พร้อมตรวจเกณฑ์ก่อนแทนค่า",
+    "newKey": "weak-q-12",
+    "newLabel": "คำถาม 24",
+    "newPrompt": "คำนวณ H 3 O + ใน HA 0.10 mol/L ที่มี \\(K_a=1.0\\times10^{-5}\\) พร้อมตรวจเกณฑ์ก่อนแทนค่า",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-13",
+    "oldPrompt": "เหตุใดสูตร \\(K_b\\) ของ NH 3 จึงไม่ใส่ความเข้มข้นของน้ำ?",
+    "newKey": "weak-q-13",
+    "newLabel": "คำถาม 27",
+    "newPrompt": "เหตุใดสูตร \\(K_b\\) ของ NH 3 จึงไม่ใส่ความเข้มข้นของน้ำ?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-14",
+    "oldPrompt": "ที่อุณหภูมิเดียวกัน เบส A มี \\(K_b=4.0\\times10^{-10}\\) และเบส B มี \\(K_b=5.0\\times10^{-4}\\) ชนิดใดแรงกว่า?",
+    "newKey": "weak-q-14",
+    "newLabel": "คำถาม 28",
+    "newPrompt": "ที่อุณหภูมิเดียวกัน เบส A มี \\(K_b=4.0\\times10^{-10}\\) และเบส B มี \\(K_b=5.0\\times10^{-4}\\) ชนิดใดแรงกว่า?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 2,
+    "oldKey": "q-15",
+    "oldPrompt": "กรดแอซีติก 0.50 กับ 0.050 mol/L จากกิจกรรม สารละลายใดมี H 3 O + เข้มข้นกว่า และสารละลายใดมีร้อยละการแตกตัวมากกว่า?",
+    "newKey": "weak-q-15",
+    "newLabel": "คำถาม 34",
+    "newPrompt": "เปรียบเทียบสารละลาย A และ B ข้างต้น: สารละลายใดมี H₃O⁺ มากกว่า และสารละลายใดมีร้อยละการแตกตัวมากกว่า? อธิบายว่าผลสองอย่างนี้ต่างกันได้อย่างไร",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "th",
+    "oldSheet": 3,
+    "oldKey": "q-01",
+    "oldPrompt": "น้ำ 2 โมเลกุลในสมการทำหน้าที่กรดหรือเบสเหมือนกันหรือไม่?",
+    "newKey": "water-q-01",
+    "newLabel": "คำถาม 37",
+    "newPrompt": "น้ำ 2 โมเลกุลในสมการทำหน้าที่กรดหรือเบสเหมือนกันหรือไม่?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 3,
+    "oldKey": "q-02",
+    "oldPrompt": "น้ำบริสุทธิ์เป็นกลางเพราะไม่มี H 3 O + และ OH - เลย ใช่หรือไม่?",
+    "newKey": "water-q-02",
+    "newLabel": "คำถาม 38",
+    "newPrompt": "น้ำบริสุทธิ์เป็นกลางเพราะไม่มี H 3 O + และ OH - เลย ใช่หรือไม่?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 3,
+    "oldKey": "q-03",
+    "oldPrompt": "ที่ 25 °C สารละลายมี H 3 O + = \\(1.0\\times10^{-5}\\) mol/L จะมี OH - เท่าใด?",
+    "newKey": "water-q-03",
+    "newLabel": "คำถาม 39",
+    "newPrompt": "ที่ 25 °C สารละลายมี H 3 O + = \\(1.0\\times10^{-5}\\) mol/L จะมี OH - เท่าใด?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 3,
+    "oldKey": "q-04",
+    "oldPrompt": "ที่ 25 °C สารละลายมี OH - = \\(2.0\\times10^{-4}\\) mol/L จงหา H 3 O +",
+    "newKey": "water-q-04",
+    "newLabel": "คำถาม 40",
+    "newPrompt": "ที่ 25 °C สารละลายมี OH - = \\(2.0\\times10^{-4}\\) mol/L จงหา H 3 O +",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 3,
+    "oldKey": "q-05",
+    "oldPrompt": "ถ้าอุณหภูมิเปลี่ยน น้ำที่เป็นกลางจำเป็นต้องมี H 3 O + = \\(1.0\\times10^{-7}\\) mol/L เสมอหรือไม่?",
+    "newKey": "water-q-05",
+    "newLabel": "คำถาม 41",
+    "newPrompt": "ถ้าอุณหภูมิเปลี่ยน น้ำที่เป็นกลางจำเป็นต้องมี H 3 O + = \\(1.0\\times10^{-7}\\) mol/L เสมอหรือไม่?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 3,
+    "oldKey": "q-06",
+    "oldPrompt": "\\(K_a\\) ของ HF ใช้คูณกับ \\(K_b\\) ของ NH 3 ให้เท่ากับ \\(K_w\\) ได้หรือไม่?",
+    "newKey": "water-q-06",
+    "newLabel": "คำถาม 42",
+    "newPrompt": "\\(K_a\\) ของ HF ใช้คูณกับ \\(K_b\\) ของ NH 3 ให้เท่ากับ \\(K_w\\) ได้หรือไม่?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 3,
+    "oldKey": "q-07",
+    "oldPrompt": "จากตาราง HCOO - กับ CH 3 COO - ชนิดใดเป็นเบสแรงกว่า?",
+    "newKey": "water-q-07",
+    "newLabel": "คำถาม 45",
+    "newPrompt": "จากตาราง HCOO - กับ CH 3 COO - ชนิดใดเป็นเบสแรงกว่า?",
+    "decision": "retained"
+  },
+  {
+    "language": "th",
+    "oldSheet": 3,
+    "oldKey": "q-08",
+    "oldPrompt": "โจทย์ให้ “ความเข้มข้นเริ่มต้นของกรดอ่อนกับ \\(K_a\\)” แล้วถาม H 3 O + ใช้ \\(K_b=K_w/K_a\\) เป็นขั้นหลักได้เลยหรือไม่?",
+    "newKey": "water-q-08",
+    "newLabel": "คำถาม 46",
+    "newPrompt": "โจทย์ให้ “ความเข้มข้นเริ่มต้นของกรดอ่อนกับ \\(K_a\\)” แล้วถาม H 3 O + ใช้ \\(K_b=K_w/K_a\\) เป็นขั้นหลักได้เลยหรือไม่?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 1,
+    "oldKey": "q-01",
+    "oldPrompt": "Which acid conducts better in the diagram: HCl or CH 3 COOH ?",
+    "newKey": "q-01",
+    "newLabel": "Question 1",
+    "newPrompt": "Which acid conducts better in the diagram: HCl or CH 3 COOH ?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 1,
+    "oldKey": "q-02",
+    "oldPrompt": "Which forms ions more extensively in water in this comparison: NaOH or NH 3 ?",
+    "newKey": "q-02",
+    "newLabel": "Question 2",
+    "newPrompt": "Which forms ions more extensively in water in this comparison: NaOH or NH 3 ?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 1,
+    "oldKey": "q-03",
+    "oldPrompt": "For 0.001 mol/L HCl and 1.0 mol/L CH 3 COOH , which is strong and which has the higher initial concentration?",
+    "newKey": "q-03",
+    "newLabel": "Question 4",
+    "newPrompt": "For 0.001 mol/L HCl and 1.0 mol/L CH 3 COOH , which is strong and which has the higher initial concentration?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 1,
+    "oldKey": "q-04",
+    "oldPrompt": "“HF contains H, so it must be a strong acid.” Is this correct?",
+    "newKey": "q-04",
+    "newLabel": "Question 5",
+    "newPrompt": "“HF contains H, so it must be a strong acid.” Is this correct?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 1,
+    "oldKey": "q-05",
+    "oldPrompt": "What are the sodium and hydroxide concentrations in 0.10 mol/L NaOH?",
+    "newKey": "q-05",
+    "newLabel": "Question 6",
+    "newPrompt": "What are the sodium and hydroxide concentrations in 0.10 mol/L NaOH?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 1,
+    "oldKey": "q-06",
+    "oldPrompt": "Write the balanced dissociation equation for aqueous Ba(OH) 2 .",
+    "newKey": "q-06",
+    "newLabel": "Question 7",
+    "newPrompt": "Write the balanced dissociation equation for aqueous Ba(OH) 2 .",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 1,
+    "oldKey": "q-07",
+    "oldPrompt": "Find the barium and hydroxide concentrations in 0.10 mol/L Ba(OH) 2 .",
+    "newKey": "q-07",
+    "newLabel": "Question 8",
+    "newPrompt": "Find the barium and hydroxide concentrations in 0.10 mol/L Ba(OH) 2 .",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 1,
+    "oldKey": "q-08",
+    "oldPrompt": "How many moles of hydronium are in 250 mL of 0.20 mol/L HCl?",
+    "newKey": "q-08",
+    "newLabel": "Question 9",
+    "newPrompt": "How many moles of hydronium are in 250 mL of 0.20 mol/L HCl?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 1,
+    "oldKey": "q-09",
+    "oldPrompt": "Dilute 250 mL of 0.040 mol/L Ca(OH) 2 to 1.00 L. Find the final hydroxide concentration.",
+    "newKey": "q-09",
+    "newLabel": "Question 10",
+    "newPrompt": "Dilute 250 mL of 0.040 mol/L Ba(OH) 2 to 1.00 L. Find the final hydroxide concentration.",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "en",
+    "oldSheet": 1,
+    "oldKey": "q-10",
+    "oldPrompt": "Why is it wrong to multiply 0.100 mol of hydroxide directly by 171.35 g/mol in the preceding problem?",
+    "newKey": "q-10",
+    "newLabel": "Question 12",
+    "newPrompt": "Why is it wrong to multiply the 0.00800 mol OH⁻ in the preparation problem directly by 171.35 g/mol?",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-01",
+    "oldPrompt": "Which set shows complete ionization, and which still contains HA?",
+    "newKey": "weak-q-01",
+    "newLabel": "Question 13",
+    "newPrompt": "Which set shows complete ionization, and which still contains HA?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-02",
+    "oldPrompt": "In set B, how many HA molecules ionize and how many remain?",
+    "newKey": "weak-q-02",
+    "newLabel": "Question 14",
+    "newPrompt": "In set B, how many HA molecules ionize and how many remain?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-03",
+    "oldPrompt": "What is the percent ionization of HA in set B?",
+    "newKey": "weak-q-03",
+    "newLabel": "Question 15",
+    "newPrompt": "What is the percent ionization of HA in set B?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-04",
+    "oldPrompt": "A 0.20 mol/L HA solution is 5.0% ionized. Find the hydronium concentration.",
+    "newKey": "weak-q-04",
+    "newLabel": "Question 16",
+    "newPrompt": "A 0.20 mol/L HA solution is 5.0% ionized. Find the hydronium concentration.",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-05",
+    "oldPrompt": "Why is the remaining HA concentration not 0.05 mol/L in the diagram?",
+    "newKey": "weak-q-05",
+    "newLabel": "Question 17",
+    "newPrompt": "In the diagram HA starts at 0.200 mol/L and 0.010 mol/L ionizes. Why is the remaining HA not 0.010 mol/L?",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-06",
+    "oldPrompt": "Initially HA is 0.100 mol/L and 0.002 mol/L ionizes. State the equilibrium concentrations of HA, hydronium and A−.",
+    "newKey": "weak-q-06",
+    "newLabel": "Question 18",
+    "newPrompt": "Initially HA is 0.100 mol/L and 0.002 mol/L ionizes. State the equilibrium concentrations of HA, hydronium and A−.",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-07",
+    "oldPrompt": "A solution of the weak monoprotic acid HA has an initial concentration of 0.100 mol/L. At equilibrium, 0.002 mol/L of HA has ionized. Calculate \\(K_a\\), neglecting ions from water.",
+    "newKey": "weak-q-07",
+    "newLabel": "Question 19",
+    "newPrompt": "Monoprotic weak acid HA starts at 0.100 mol/L and is 2.0% ionized. Calculate \\(K_a\\), neglecting ions from water.",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-08",
+    "oldPrompt": "Using the table, which acid is stronger: formic acid or acetic acid?",
+    "newKey": "weak-q-08",
+    "newLabel": "Question 20",
+    "newPrompt": "Using the table, which is stronger, HCOOH or CH₃COOH? At equal initial concentration and the same temperature, which has more H₃O⁺, and why?",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-09",
+    "oldPrompt": "For HA with C = 0.10 mol/L and \\(K_a=1.0\\times10^{-5}\\), does the textbook approximation criterion pass?",
+    "newKey": "weak-q-09",
+    "newLabel": "Question 21",
+    "newPrompt": "For 0.200 mol/L HA with \\(K_a=2.00\\times10^{-5}\\), is approximation allowed by the stated criterion?",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-10",
+    "oldPrompt": "If C is instead 0.001 mol/L with the same \\(K_a\\), does it still pass?",
+    "newKey": "weak-q-10",
+    "newLabel": "Question 22",
+    "newPrompt": "If C falls to 0.00200 mol/L with the same \\(K_a\\), does it still meet the approximation criterion?",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-11",
+    "oldPrompt": "After neglecting x in C−x, may we also remove x² from the numerator?",
+    "newKey": "weak-q-11",
+    "newLabel": "Question 23",
+    "newPrompt": "After neglecting x in C−x, may we also remove x² from the numerator?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-12",
+    "oldPrompt": "Calculate hydronium in 0.10 mol/L HA with \\(K_a=1.0\\times10^{-5}\\). Check the criterion first.",
+    "newKey": "weak-q-12",
+    "newLabel": "Question 24",
+    "newPrompt": "Calculate hydronium in 0.10 mol/L HA with \\(K_a=1.0\\times10^{-5}\\). Check the criterion first.",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-13",
+    "oldPrompt": "Why is water concentration omitted from the \\(K_b\\) expression for ammonia?",
+    "newKey": "weak-q-13",
+    "newLabel": "Question 27",
+    "newPrompt": "Why is water concentration omitted from the \\(K_b\\) expression for ammonia?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-14",
+    "oldPrompt": "At the same temperature, base A has \\(K_b=4.0\\times10^{-10}\\) and base B has \\(K_b=5.0\\times10^{-4}\\). Which is stronger?",
+    "newKey": "weak-q-14",
+    "newLabel": "Question 28",
+    "newPrompt": "At the same temperature, base A has \\(K_b=4.0\\times10^{-10}\\) and base B has \\(K_b=5.0\\times10^{-4}\\). Which is stronger?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 2,
+    "oldKey": "q-15",
+    "oldPrompt": "Compare the 0.50 and 0.050 mol/L acetic acid solutions. Which has more concentrated hydronium and which has higher percent ionization?",
+    "newKey": "weak-q-15",
+    "newLabel": "Question 34",
+    "newPrompt": "Compare solutions A and B above: which has more H₃O⁺, and which has the greater percent ionization? Explain why the two comparisons differ.",
+    "decision": "retained with revised context/data"
+  },
+  {
+    "language": "en",
+    "oldSheet": 3,
+    "oldKey": "q-01",
+    "oldPrompt": "Do the two water molecules have the same acid–base role in the equation?",
+    "newKey": "water-q-01",
+    "newLabel": "Question 37",
+    "newPrompt": "Do the two water molecules have the same acid–base role in the equation?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 3,
+    "oldKey": "q-02",
+    "oldPrompt": "Is pure water neutral because it contains no hydronium or hydroxide?",
+    "newKey": "water-q-02",
+    "newLabel": "Question 38",
+    "newPrompt": "Is pure water neutral because it contains no hydronium or hydroxide?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 3,
+    "oldKey": "q-03",
+    "oldPrompt": "At 25 °C, hydronium is \\(1.0\\times10^{-5}\\) mol/L. Find hydroxide.",
+    "newKey": "water-q-03",
+    "newLabel": "Question 39",
+    "newPrompt": "At 25 °C, hydronium is \\(1.0\\times10^{-5}\\) mol/L. Find hydroxide.",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 3,
+    "oldKey": "q-04",
+    "oldPrompt": "At 25 °C, hydroxide is \\(2.0\\times10^{-4}\\) mol/L. Find hydronium.",
+    "newKey": "water-q-04",
+    "newLabel": "Question 40",
+    "newPrompt": "At 25 °C, hydroxide is \\(2.0\\times10^{-4}\\) mol/L. Find hydronium.",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 3,
+    "oldKey": "q-05",
+    "oldPrompt": "After a temperature change, must neutral water still have hydronium \\(1.0\\times10^{-7}\\) mol/L?",
+    "newKey": "water-q-05",
+    "newLabel": "Question 41",
+    "newPrompt": "After a temperature change, must neutral water still have hydronium \\(1.0\\times10^{-7}\\) mol/L?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 3,
+    "oldKey": "q-06",
+    "oldPrompt": "Can \\(K_a\\) for HF be multiplied by \\(K_b\\) for ammonia to obtain \\(K_w\\)?",
+    "newKey": "water-q-06",
+    "newLabel": "Question 42",
+    "newPrompt": "Can \\(K_a\\) for HF be multiplied by \\(K_b\\) for ammonia to obtain \\(K_w\\)?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 3,
+    "oldKey": "q-07",
+    "oldPrompt": "From the table, which is the stronger base: formate or acetate?",
+    "newKey": "water-q-07",
+    "newLabel": "Question 45",
+    "newPrompt": "From the table, which is the stronger base: formate or acetate?",
+    "decision": "retained"
+  },
+  {
+    "language": "en",
+    "oldSheet": 3,
+    "oldKey": "q-08",
+    "oldPrompt": "A problem gives initial weak-acid concentration and \\(K_a\\) and asks for hydronium. Is \\(K_b=K_w/K_a\\) the main calculation?",
+    "newKey": "water-q-08",
+    "newLabel": "Question 46",
+    "newPrompt": "A problem gives initial weak-acid concentration and \\(K_a\\) and asks for hydronium. Is \\(K_b=K_w/K_a\\) the main calculation?",
+    "decision": "retained"
+  }
+]

@@ -1,3 +1,9 @@
+# Unified Bohr learning sheet — 3 November 2026
+
+The three prior worksheets now share one main menu entry and the original Sheet 2 content ID. All existing explanatory images below remain in the combined document. The new `adapted-hypothetical-levels.svg` is an authored, energy-proportional diagram for the adapted −10/−4/−1 eV problem. Original IPST task fragments and four original problem diagrams are preserved separately for the next quiz task under `docs/learning-sheet/preparation/physics-bohr-19-1-2/`; they are not replaced by the adapted figure. See that README for the 93-area preservation map, source inventory, guide and QA scope.
+
+The following dated notes describe the earlier split and remain as historical provenance.
+
 # Physics 19.1 Sheet 2 visual sources
 
 ## Two print parts — 29 October 2026

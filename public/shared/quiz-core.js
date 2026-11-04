@@ -724,7 +724,10 @@ import { createTopicReviewBrowser } from "./topic-review.js?v=exam-review-202610
       if (index === state.currentIndex) button.dataset.current = "true";
       button.setAttribute("aria-label", label(`ไปข้อ ${index + 1}`, `Go to question ${index + 1}`));
       if (questionStatus(question) === "skipped") button.setAttribute("aria-description", label("ข้ามไว้ก่อน", "Skipped for now"));
-      button.addEventListener("click", () => requestNavigation(index));
+      // A numbered jump browses the quiz without checking or marking the current answer.
+      button.addEventListener("click", () => {
+        if (!navigationBusy() && !pendingNavigation) goTo(index);
+      });
       navigation.append(button);
     });
   }

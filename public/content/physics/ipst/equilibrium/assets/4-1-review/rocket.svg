@@ -1,0 +1,18 @@
+<svg font-family="Tahoma,Arial,sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 250" role="img" aria-labelledby="rocket-th-title">
+<title id="rocket-th-title">Rocket rising vertically at constant velocity with thrust and weight arrows</title>
+<defs>
+<marker id="rocket-th-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 Z" fill="context-stroke" />
+</marker>
+</defs>
+<path d="M 180 86 Q 155 108 157 162 H 203 Q 205 108 180 86 Z" fill="#f1f4f3" stroke="#273c51" stroke-width="2" />
+<path d="M 157 140 L 142 172 L 157 165 M 203 140 L 218 172 L 203 165" fill="#dce9e3" stroke="#273c51" stroke-width="2" />
+<line x1="180" y1="130" x2="180" y2="38" stroke="#273c51" stroke-width="3" stroke-linecap="round" marker-end="url(#rocket-th-arrow)" />
+<circle cx="204" cy="40" r="13" fill="white" stroke="#273c51" stroke-width="1.4" />
+<text x="204" y="45" text-anchor="middle" font-size="17" fill="#152c3b">1</text>
+<line x1="180" y1="130" x2="180" y2="223" stroke="#273c51" stroke-width="3" stroke-linecap="round" marker-end="url(#rocket-th-arrow)" />
+<circle cx="204" cy="222" r="13" fill="white" stroke="#273c51" stroke-width="1.4" />
+<text x="204" y="227" text-anchor="middle" font-size="17" fill="#152c3b">2</text>
+<line x1="278" y1="163" x2="278" y2="77" stroke="#39765f" stroke-width="3" stroke-linecap="round" marker-end="url(#rocket-th-arrow)" stroke-dasharray="7 5" />
+<text x="278" y="57" text-anchor="middle" font-size="12" fill="#273c51">v constant</text>
+</svg>

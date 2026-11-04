@@ -1,0 +1,16 @@
+<svg font-family="Tahoma,Arial,sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 250" role="img" aria-labelledby="stack-a-th-title">
+<title id="stack-a-th-title">Isolated upper block A has two vertical forces and no horizontal force</title>
+<defs>
+<marker id="stack-a-th-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 Z" fill="context-stroke" />
+</marker>
+</defs>
+<rect x="153" y="105" width="54" height="48" rx="4" fill="#f3f6f6" stroke="#273c51" stroke-width="2" />
+<text x="180.0" y="134.0" text-anchor="middle" font-size="15" fill="#273c51">A</text>
+<line x1="180" y1="128" x2="180" y2="37" stroke="#273c51" stroke-width="3" stroke-linecap="round" marker-end="url(#stack-a-th-arrow)" />
+<circle cx="202" cy="38" r="13" fill="white" stroke="#273c51" stroke-width="1.4" />
+<text x="202" y="43" text-anchor="middle" font-size="17" fill="#152c3b">1</text>
+<line x1="180" y1="128" x2="180" y2="220" stroke="#273c51" stroke-width="3" stroke-linecap="round" marker-end="url(#stack-a-th-arrow)" />
+<circle cx="202" cy="220" r="13" fill="white" stroke="#273c51" stroke-width="1.4" />
+<text x="202" y="225" text-anchor="middle" font-size="17" fill="#152c3b">2</text>
+</svg>

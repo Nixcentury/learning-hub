@@ -1,0 +1,25 @@
+<svg font-family="Tahoma,Arial,sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 250" role="img" aria-labelledby="incline-th-title">
+<title id="incline-th-title">Block sliding down a rough incline at constant velocity with three force arrows</title>
+<defs>
+<marker id="incline-th-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 Z" fill="context-stroke" />
+</marker>
+</defs>
+<path d="M 40 210 L 320 48 L 320 210 Z" fill="#f1f4f3" stroke="#83938f" stroke-width="2" />
+<g transform="rotate(-30 180 128)">
+<rect x="144" y="100" width="72" height="50" rx="4" fill="#f3f6f6" stroke="#273c51" stroke-width="2" />
+<text x="180.0" y="130.0" text-anchor="middle" font-size="15" fill="#273c51">m</text>
+</g>
+<circle cx="180" cy="125" r="5" fill="#273c51" />
+<line x1="180" y1="125" x2="137" y2="50" stroke="#273c51" stroke-width="3" stroke-linecap="round" marker-end="url(#incline-th-arrow)" />
+<circle cx="121" cy="48" r="13" fill="white" stroke="#273c51" stroke-width="1.4" />
+<text x="121" y="53" text-anchor="middle" font-size="17" fill="#152c3b">1</text>
+<line x1="180" y1="125" x2="223" y2="100" stroke="#273c51" stroke-width="3" stroke-linecap="round" marker-end="url(#incline-th-arrow)" />
+<circle cx="240" cy="92" r="13" fill="white" stroke="#273c51" stroke-width="1.4" />
+<text x="240" y="97" text-anchor="middle" font-size="17" fill="#152c3b">2</text>
+<line x1="180" y1="125" x2="180" y2="225" stroke="#273c51" stroke-width="3" stroke-linecap="round" marker-end="url(#incline-th-arrow)" />
+<circle cx="201" cy="226" r="13" fill="white" stroke="#273c51" stroke-width="1.4" />
+<text x="201" y="231" text-anchor="middle" font-size="17" fill="#152c3b">3</text>
+<line x1="125" y1="170" x2="67" y2="204" stroke="#39765f" stroke-width="3" stroke-linecap="round" marker-end="url(#incline-th-arrow)" stroke-dasharray="7 5" />
+<text x="81" y="151" text-anchor="middle" font-size="12" fill="#273c51">v constant</text>
+</svg>

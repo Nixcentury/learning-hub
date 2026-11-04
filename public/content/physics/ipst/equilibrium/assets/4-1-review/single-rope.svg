@@ -1,0 +1,19 @@
+<svg font-family="Tahoma,Arial,sans-serif" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 250" role="img" aria-labelledby="single-rope-th-title">
+<title id="single-rope-th-title">Suspended mass rising at constant velocity with two force arrows</title>
+<defs>
+<marker id="single-rope-th-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 Z" fill="context-stroke" />
+</marker>
+</defs>
+<path d="M 105 30 H 255 M 180 30 V 115" stroke="#83938f" stroke-width="3" />
+<rect x="140" y="115" width="80" height="50" rx="4" fill="#f3f6f6" stroke="#273c51" stroke-width="2" />
+<text x="180.0" y="145.0" text-anchor="middle" font-size="15" fill="#273c51">m</text>
+<line x1="180" y1="140" x2="180" y2="49" stroke="#273c51" stroke-width="3" stroke-linecap="round" marker-end="url(#single-rope-th-arrow)" />
+<circle cx="202" cy="52" r="13" fill="white" stroke="#273c51" stroke-width="1.4" />
+<text x="202" y="57" text-anchor="middle" font-size="17" fill="#152c3b">1</text>
+<line x1="180" y1="140" x2="180" y2="230" stroke="#273c51" stroke-width="3" stroke-linecap="round" marker-end="url(#single-rope-th-arrow)" />
+<circle cx="202" cy="227" r="13" fill="white" stroke="#273c51" stroke-width="1.4" />
+<text x="202" y="232" text-anchor="middle" font-size="17" fill="#152c3b">2</text>
+<line x1="282" y1="158" x2="282" y2="70" stroke="#39765f" stroke-width="3" stroke-linecap="round" marker-end="url(#single-rope-th-arrow)" stroke-dasharray="7 5" />
+<text x="282" y="52" text-anchor="middle" font-size="13" fill="#273c51">v constant</text>
+</svg>

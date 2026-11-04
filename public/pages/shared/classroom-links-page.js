@@ -6,6 +6,7 @@ const content = panel.querySelector('.classroom-links-content');
 content.innerHTML = `<p id="homework-links-note" data-hw-links-note></p>
   <button type="button" class="classroom-button" data-hw-add-link></button>
   <p class="room-links-feedback" data-links-feedback role="status" aria-live="polite"></p>
+  <label class="room-link-copy-fallback" data-links-copy-fallback hidden><span data-links-copy-label></span><input type="url" readonly data-links-copy-value data-allow-selection></label>
   <button type="button" class="classroom-button" data-links-retry hidden></button>
   <form class="room-links-form" data-links-form hidden>
     <h3 data-links-form-title></h3>
@@ -18,6 +19,7 @@ content.innerHTML = `<p id="homework-links-note" data-hw-links-note></p>
 content.dataset.roomLinks = '';
 const form = content.querySelector('form'), list = content.querySelector('[data-links-list]');
 let context, uid = '', roomId = '', pending = null, editor = null, feedback = '', failed = false, signature = '';
+let copyUrl = '', copySequence = 0;
 const t = (th, en) => context?.language === 'en' ? en : th;
 const node = (tag, text, cls) => { const el = document.createElement(tag); el.textContent = text; if (cls) el.className = cls; return el; };
 const snapshot = () => context?.classroomLinks?.uid === uid && context.classroomLinks.roomId === roomId ? context.classroomLinks : null;
@@ -32,6 +34,8 @@ function message(code) {
     'links/session-changed': ['บัญชีหรือห้องเปลี่ยนแล้ว ลองเปิดห้องใหม่', 'Your account or classroom changed. Reopen the room.'],
     'links/read-timeout': ['โหลดลิงก์นานกว่าปกติ ตรวจอินเทอร์เน็ตแล้วลองเชื่อมต่ออีกครั้ง', 'Loading is taking longer than usual. Check your connection and retry.'],
     saved: ['บันทึกลิงก์แล้ว', 'Link saved.'], deleted: ['ลบลิงก์แล้ว', 'Link deleted.'],
+    copied: ['คัดลอกลิงก์แล้ว', 'Link copied.'],
+    'links/copy-blocked': ['คัดลอกอัตโนมัติไม่ได้ กดค้างหรือ Ctrl+C เพื่อคัดลอกลิงก์ที่เลือกไว้', 'Automatic copy is unavailable. Long-press or press Ctrl+C to copy the selected link.'],
   };
   return text[code] ? t(...text[code]) : t('ดำเนินการไม่สำเร็จ ระบบยังไม่ยืนยัน กรุณาลองใหม่', 'The request has not been confirmed. Please retry.');
 }
@@ -42,11 +46,17 @@ function paint() {
   const nextRoom = nextUid && context?.classroomRooms?.roomStatus === 'ready' ? context.classroomRooms.selected?.id || '' : '';
   if (uid !== nextUid || roomId !== nextRoom) {
     uid = nextUid; roomId = nextRoom; pending = null; closeEditor(); feedback = ''; failed = false; signature = ''; list.replaceChildren();
+    copyUrl = ''; copySequence++;
   }
   panel.querySelector('[data-hw-links-heading]').textContent = t('ลิงก์ของห้อง', 'Classroom links');
   content.querySelector('[data-hw-links-note]').textContent = t('สมุดจดและสื่อที่ใช้ในคาบ', 'Notebooks and lesson resources');
   const data = snapshot(), saving = Boolean(pending || data?.busy);
   const ready = Boolean(uid && roomId && data?.status === 'ready' && data.connected);
+  const student = access?.state === 'student';
+  if (!student || !data?.items.some(item => item.url === copyUrl)) copyUrl = '';
+  content.querySelector('[data-links-copy-fallback]').hidden = !copyUrl;
+  content.querySelector('[data-links-copy-label]').textContent = t('ลิงก์สำหรับคัดลอก', 'Link to copy');
+  content.querySelector('[data-links-copy-value]').value = copyUrl;
   content.querySelector('[data-hw-add-link]').textContent = t('+ ลิงก์อื่น', '+ Add a link');
   content.querySelector('[data-hw-add-link]').hidden = Boolean(editor);
   content.querySelector('[data-links-form-title]').textContent = editor?.revision ? t('แก้ไขลิงก์', 'Edit link') : t('เพิ่มลิงก์', 'Add link');
@@ -64,7 +74,7 @@ function paint() {
     : feedback ? message(feedback) : data.items.length ? '' : t('ยังไม่มีลิงก์ในห้อง เพิ่มลิงก์แรกได้เลย', 'No links yet. Add the first classroom link.');
   status.classList.toggle('is-error', Boolean(failure));
   const retry = content.querySelector('[data-links-retry]'); retry.hidden = !failure; retry.textContent = t('ลองเชื่อมต่อลิงก์อีกครั้ง', 'Reconnect classroom links');
-  const next = JSON.stringify([context?.language, data?.items, data?.owner]);
+  const next = JSON.stringify([context?.language, access?.state, data?.items, data?.owner]);
   if (next !== signature) {
     signature = next; list.replaceChildren();
     for (const item of data?.items || []) {
@@ -75,6 +85,16 @@ function paint() {
       anchor.title = safe.url;
       const date = new Date(item.createdAt).toLocaleDateString(context?.language === 'en' ? 'en-GB' : 'th-TH', { timeZone: 'Asia/Bangkok' });
       row.append(anchor, node('small', `${item.authorName} · ${date}`), node('small', new URL(safe.url).hostname, 'room-link-host'));
+      if (student) {
+        const quick = node('div', '', 'room-link-quick-actions');
+        const copy = node('button', t('คัดลอกลิงก์', 'Copy link'), 'classroom-button');
+        copy.type = 'button'; copy.dataset.linksCopy = ''; copy.dataset.id = item.id;
+        copy.setAttribute('aria-label', `${copy.textContent}: ${safe.title}`);
+        const open = node('a', t('เปิดในแท็บใหม่', 'Open in new tab'), 'classroom-button');
+        open.href = safe.url; open.target = '_blank'; open.rel = 'noopener noreferrer'; open.dataset.external = 'true'; open.dataset.linksOpen = '';
+        open.setAttribute('aria-label', `${open.textContent}: ${safe.title}`);
+        quick.append(copy, open); row.append(quick);
+      }
       if (data.owner || item.authorUid === uid) {
         const actions = node('div', '', 'room-links-actions');
         for (const [action, label] of [['edit', t('แก้ไข','Edit')], ['delete', t('ลบ','Delete')]]) {
@@ -86,7 +106,10 @@ function paint() {
       list.append(row);
     }
   }
-  content.querySelectorAll('button,input').forEach(el => { el.disabled = !ready || saving; });
+  content.querySelectorAll('button,input').forEach(el => {
+    el.disabled = el.matches('[data-links-copy],[data-links-copy-value]')
+      ? !uid || !roomId || data?.status !== 'ready' : !ready || saving;
+  });
   retry.disabled = saving || !uid || !roomId;
   content.querySelector('[data-links-cancel]').disabled = false;
   content.setAttribute('aria-busy', String(saving));
@@ -106,7 +129,28 @@ form.addEventListener('submit', event => {
   try { const fields = cleanLinkFields({ title: form.elements.linkTitle.value, url: form.elements.linkUrl.value }); send(editor.revision ? 'edit' : 'create', { ...editor, ...fields }); }
   catch (failure) { feedback = failure.code; failed = true; paint(); }
 });
+async function copyLink(button) {
+  const item = snapshot()?.items.find(value => value.id === button.dataset.id);
+  if (!item || context?.classroom?.state !== 'student') return;
+  let safe;
+  try { safe = cleanLinkFields(item); } catch { return; }
+  const requestUid = uid, requestRoom = roomId, sequence = ++copySequence;
+  const current = () => sequence === copySequence && uid === requestUid && roomId === requestRoom
+    && context?.classroom?.state === 'student' && snapshot()?.items.some(value => value.id === item.id && value.url === item.url);
+  copyUrl = ''; feedback = ''; failed = false; paint();
+  try {
+    await navigator.clipboard.writeText(safe.url);
+    if (!current()) return;
+    feedback = 'copied'; paint();
+  } catch {
+    if (!current()) return;
+    copyUrl = safe.url; feedback = 'links/copy-blocked'; paint();
+    const field = content.querySelector('[data-links-copy-value]'); field.focus(); field.select();
+  }
+}
 list.addEventListener('click', event => {
+  const copy = event.target.closest('[data-links-copy]');
+  if (copy) { if (!copy.disabled) void copyLink(copy); return; }
   const button = event.target.closest('[data-link-action]'); if (!button || button.disabled) return;
   const item = snapshot()?.items.find(value => value.id === button.dataset.id); if (!item) return;
   if (button.dataset.linkAction === 'edit') {

@@ -315,6 +315,11 @@ body.theme-classroom {
 .room-link > small { display: block; margin-top: .25rem; color: #475b73; overflow-wrap: anywhere; }
 .room-links-actions { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .5rem; }
 .room-links-actions .classroom-button { padding: .35rem .6rem; font-size: .85rem; }
+.room-link-quick-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .6rem; }
+.room-link-quick-actions .classroom-button { min-height: 34px; margin: 0; padding: .3rem .55rem; font-size: 12px; line-height: 1.4; }
+.room-link-copy-fallback { display: grid; gap: .3rem; margin: .5rem 0; font-size: 12px; color: #475b73; }
+.room-link-copy-fallback[hidden] { display: none; }
+.room-link-copy-fallback input { box-sizing: border-box; min-width: 0; width: 100%; padding: .5rem; border: 1px solid #93afd2; font: inherit; }
 .room-links-form { display: grid; gap: .65rem; margin-top: .8rem; padding: .7rem; background: #eef5ff; border: 1px solid #b7cfee; min-width: 0; }
 .room-links-form[hidden] { display: none; }
 .room-links-form h3 { margin: 0; font-size: 1rem; }
@@ -322,6 +327,7 @@ body.theme-classroom {
 .room-links-form input { box-sizing: border-box; width: 100%; min-width: 0; border: 1px solid #93afd2; border-radius: 3px; padding: .5rem; font: inherit; color: #18324e; background: #fff; }
 .room-links-form small, .room-links-feedback { font-size: .85rem; color: #475b73; overflow-wrap: anywhere; }
 .room-links-feedback:empty { display: none; }
+.room-links-feedback:not(:empty) { margin-top: .75rem; }
 .room-links-feedback.is-error { color: #a71d31; }
 
 .classroom-google-panel { margin: 0 0 18px; padding: 18px; }

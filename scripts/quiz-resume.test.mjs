@@ -57,7 +57,7 @@ function node(dataset = {}, selectors = {}) {
   };
 }
 
-function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
+function makeHarness({ homeworkBinding = null, temporary = false, renderQuestionNumbers = false } = {}) {
   let now = 1_700_000_000_000;
   let serial = 0;
   let storageFails = false;
@@ -68,6 +68,7 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
   const listeners = new Map();
   const documentListeners = new Map();
   const status = node();
+  const questionNavigation = node();
   const navigationNodes = Object.fromEntries(["kicker", "title", "copy", "body", "content", "confirm", "back", "skip", "close"].map(name => [`[data-navigation-${name}]`, node()]));
   navigationNodes["[data-navigation-confirm]"].hidden = true;
   navigationNodes["[data-navigation-back], [data-navigation-close]"] = [navigationNodes["[data-navigation-back]"], navigationNodes["[data-navigation-close]"]];
@@ -94,6 +95,7 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
     ["[data-quiz-error]", node()],
     ["[data-quiz-print-source]", node()],
     ["[data-quiz-storage-status]", status],
+    ["[data-question-navigation]", questionNavigation],
     ["[data-navigation-dialog]", navigationDialog],
     ["[data-topic-review-dialog]", topicReviewDialog],
   ]);
@@ -182,7 +184,7 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
     .replace(/  void loadContent\(\);\s*\}\)\(\);\s*$/, `
       render = () => {};
       renderQuestion = () => {};
-      renderNavigation = () => {};
+      ${renderQuestionNumbers ? "" : "renderNavigation = () => {};"}
       renderStats = () => {};
       globalThis.__quizTest = {
         state, loadContent, applyHubContext, submitHomework,
@@ -191,7 +193,7 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
         storageKey, pendingStorageRequests, renderStorageStatus,
         persistNavigation, retrySync, resolveCloudConflict,
         giveUp, canAnswerQuestion, editAnswers, startRetry, restart, selectAnswer, submitAll, resultFor, goTo, cloneInto,
-        requestNavigation, returnToQuestion, openTopicReview, skipCurrentQuestion, confirmNavigationReview, closeNavigationDialog, progressSignature,
+        renderNavigation, requestNavigation, returnToQuestion, openTopicReview, skipCurrentQuestion, confirmNavigationReview, closeNavigationDialog, progressSignature,
         navigationState: () => pendingNavigation,
         evidence: () => evidenceManager,
         setContentReady: (ready) => { contentRoot = ready ? {} : null; },
@@ -213,7 +215,7 @@ function makeHarness({ homeworkBinding = null, temporary = false } = {}) {
     ...result,
   }, options);
   return {
-    ...api, storage, writes, timers, messages, parent, window, status, root, navigationDialog, navigationNodes, topicReviewDialog, reviewOpens,
+    ...api, storage, writes, timers, messages, parent, window, status, root, questionNavigation, navigationDialog, navigationNodes, topicReviewDialog, reviewOpens,
     settle, dispatch, response,
     time: () => now,
     setTime(value) { now = value; },
@@ -735,6 +737,29 @@ test("public jumps cannot bypass a drag check, while skip and backward navigatio
   h.requestNavigation(0); assert.equal(h.state.currentIndex, 0);
   h.state.answers.q1 = { one: "a", two: "b" }; h.requestNavigation(1); h.confirmNavigationReview();
   assert.deepEqual(plain(h.state.skippedIds), []);
+});
+
+test("clicking question 10 jumps directly from question 1 without checking or discarding an unfinished drag answer", async () => {
+  const h = makeHarness({ renderQuestionNumbers: true }); await h.load(); makeDragQuestion(h);
+  for (let i = 3; i <= 10; i++) h.state.questions.push({ ...h.state.questions[1], id: `q${i}` });
+  h.state.answers.q1 = { one: "b" };
+  h.evidence().data = { entries: { q1: { text: "My working" } } };
+  h.renderNavigation();
+
+  h.questionNavigation.children[9].dispatch("click");
+  assert.equal(h.state.currentIndex, 9);
+  assert.equal(h.navigationState(), null);
+  assert.deepEqual(plain(h.state.answers.q1), { one: "b" });
+  assert.deepEqual(plain(h.state.skippedIds), []);
+  assert.equal(h.state.latestScore, null);
+  assert.equal(h.evidence().data.entries.q1.text, "My working");
+
+  h.questionNavigation.children[0].dispatch("click");
+  assert.equal(h.state.currentIndex, 0);
+  h.requestNavigation(1);
+  assert.equal(h.state.currentIndex, 0);
+  assert.equal(h.navigationDialog.open, true);
+  assert.equal(h.navigationState().correct, false);
 });
 
 test("the final drag check and final skip open an overview without grading or auto-submitting", async () => {

@@ -1,0 +1,599 @@
+{
+  "schemaVersion": 1,
+  "revision": "2026-11-04",
+  "slotMap": {
+    "cyu-rest": "parallel-cyu-rest",
+    "cyu-free-fall": "parallel-cyu-free-fall",
+    "cyu-smooth-rod": "parallel-cyu-smooth-rod",
+    "tail-concept-one": "parallel-tail-concept-one",
+    "ex-three-components": "parallel-ex-three-components",
+    "ex-three-answer": "parallel-ex-three-answer",
+    "tail-one-third-force": "parallel-tail-one-third-force",
+    "example-one-equations": "parallel-example-one-equations",
+    "example-one-results": "parallel-example-one-results",
+    "parallel-one-rope": "parallel-parallel-one-rope",
+    "ex-four-tension": "parallel-ex-four-tension",
+    "ex-four-weight": "parallel-ex-four-weight",
+    "raised-geometry": "parallel-raised-geometry",
+    "raised-force": "parallel-raised-force",
+    "traffic-light-body": "parallel-traffic-light-body",
+    "traffic-geometry": "parallel-traffic-geometry",
+    "traffic-knot-equations": "parallel-traffic-knot-equations",
+    "traffic-tensions": "parallel-traffic-tensions",
+    "tail-two-tensions": "parallel-tail-two-tensions",
+    "cyu-sagging-rope": "parallel-cyu-sagging-rope",
+    "thought-rope-breaks": "parallel-thought-rope-breaks",
+    "ex-one-friction": "parallel-ex-one-friction",
+    "tail-five-normal": "parallel-tail-five-normal",
+    "tail-five-mu": "parallel-tail-five-mu",
+    "ex-two-incline": "parallel-ex-two-incline",
+    "tail-three-incline": "parallel-tail-three-incline",
+    "tail-four-friction-directions": "parallel-tail-four-friction-directions",
+    "tail-four-up": "parallel-tail-four-up",
+    "tail-four-down": "parallel-tail-four-down",
+    "challenge-twenty-one": "parallel-challenge-twenty-one",
+    "tail-six-block": "parallel-tail-six-block",
+    "tail-six-knot": "parallel-tail-six-knot",
+    "tail-seven-directions": "parallel-tail-seven-directions",
+    "tail-seven-mu": "parallel-tail-seven-mu",
+    "challenge-rope-relations": "parallel-challenge-rope-relations",
+    "challenge-rope-max": "parallel-challenge-rope-max",
+    "kite-independent": "parallel-kite-independent"
+  },
+  "policy": "Quiz items derive from the current adapted worksheet, not unmodified archived originals.",
+  "items": [
+    {
+      "oldSlot": "cyu-rest",
+      "newSlot": "parallel-cyu-rest",
+      "adaptedPrompt": [
+        "รถทดลองถูกยึดให้อยู่นิ่งตลอดช่วงสังเกต จงระบุเงื่อนไขของแรงลัพธ์และความเร็ว",
+        "A lab cart remains at rest throughout observation. State the conditions on net force and velocity."
+      ],
+      "adaptedSolution": [
+        "\\(\\sum\\vec F=0\\) และ \\(\\vec v=0\\) ตลอดช่วงนั้น",
+        "\\(\\sum\\vec F=0\\) and \\(\\vec v=0\\) throughout the interval."
+      ],
+      "sourceIds": [
+        "cyu-4-3-1"
+      ]
+    },
+    {
+      "oldSlot": "cyu-free-fall",
+      "newSlot": "parallel-cyu-free-fall",
+      "adaptedPrompt": [
+        "ปล่อยก้อนหินให้ตกจากหยุดนิ่ง โดยไม่คิดแรงต้านอากาศ ระหว่างตกอยู่ในสมดุลต่อการเลื่อนที่หรือไม่?",
+        "A pebble is released from rest; neglect air resistance. Is it in translational equilibrium during the fall?"
+      ],
+      "adaptedSolution": [
+        "ไม่อยู่ มีน้ำหนัก \\(mg\\) ลงเพียงแรงเดียว จึงมีความเร่ง \\(g\\) ลง แม้ความเร็วตอนปล่อยเป็นศูนย์",
+        "No. The only force is weight \\(mg\\) downward, so acceleration is \\(g\\) downward even though release velocity is zero."
+      ],
+      "sourceIds": [
+        "cyu-4-3-2"
+      ]
+    },
+    {
+      "oldSlot": "cyu-smooth-rod",
+      "newSlot": "parallel-cyu-smooth-rod",
+      "adaptedPrompt": [
+        "บันไดแข็งพิงกำแพงเรียบและพื้นเรียบในรูป โดยปลายบนยังแตะกำแพงและไม่มีเชือกยึด จะอยู่นิ่งในท่าเอียงนี้ได้หรือไม่?",
+        "A rigid ladder leans against a smooth wall on a smooth floor, with its top touching the wall and no tie. Can it remain at rest in this inclined position?"
+      ],
+      "adaptedSolution": [
+        "ไม่ได้ หากกำแพงดันบันได แรงนั้นไม่มีแรงแนวระดับอื่นหักล้าง จึงไม่เป็นสมดุลในท่านี้",
+        "No. The wall force has no other horizontal force to balance it, so this leaning configuration cannot remain in equilibrium."
+      ],
+      "sourceIds": [
+        "cyu-4-3-3"
+      ]
+    },
+    {
+      "oldSlot": "tail-concept-one",
+      "newSlot": "parallel-tail-concept-one",
+      "adaptedPrompt": [
+        "แท่งเสาอากาศวางปลายล่างบนแพที่เลื่อนแนวระดับได้อิสระ ปลายบนผูกเชือกเบากับเพดาน ไม่มีแรงน้ำแนวระดับหรือแรงภายนอกแนวระดับอื่น ถ้าระบบอยู่นิ่ง แนวเชือกต้องเป็นอย่างไร?",
+        "An antenna rod rests at its lower end on a freely translating raft; its upper end is tied to a ceiling by a light rope. There is no horizontal water force or other horizontal external force. If the system is at rest, what is the rope direction?"
+      ],
+      "adaptedSolution": [
+        "เชือกต้องอยู่แนวดิ่ง พิจารณาแท่งรวมแพ: แรงน้ำหนักและแรงพยุงเป็นแนวดิ่ง ถ้าเชือกเอียงจะมีองค์ประกอบแนวระดับที่ไม่มีแรงอื่นหักล้าง",
+        "The rope must be vertical. For rod plus raft, weight and buoyancy are vertical. An inclined rope would provide an unbalanced horizontal component."
+      ],
+      "sourceIds": [
+        "chapter-concept-1"
+      ]
+    },
+    {
+      "oldSlot": "ex-three-components",
+      "newSlot": "parallel-ex-three-components",
+      "adaptedPrompt": [
+        "กำหนด +x ไปขวา +y ขึ้น แรง 30 N ชี้ซ้าย และแรง 40 N ชี้ขวาลงทำมุม 60° ใต้ +x จงหาองค์ประกอบของแรงลัพธ์สองแรง",
+        "Take +x right and +y up. One force is 30 N left; another is 40 N at 60° below +x. Find the resultant components."
+      ],
+      "adaptedSolution": [
+        "\\(R_x=-30+40\\cos60^\\circ=-10\\ \\mathrm{N}\\), \\(R_y=-40\\sin60^\\circ=-20\\sqrt3\\ \\mathrm{N}\\)",
+        "\\(R_x=-30+40\\cos60^\\circ=-10\\ \\mathrm{N}\\), \\(R_y=-40\\sin60^\\circ=-20\\sqrt3\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "exercise-4-3-3"
+      ]
+    },
+    {
+      "oldSlot": "ex-three-answer",
+      "newSlot": "parallel-ex-three-answer",
+      "adaptedPrompt": [
+        "จากสองแรงข้างบน จงหาองค์ประกอบ ขนาด และทิศของแรงที่สามที่ทำให้สมดุล ระบุมุมเหนือแนว +x",
+        "For the two forces above, find the equilibrant components, magnitude and direction measured above +x."
+      ],
+      "adaptedSolution": [
+        "\\(\\vec F_3=-\\vec R=(10,20\\sqrt3)\\ \\mathrm{N}\\)\\(F_3=\\sqrt{10^2+(20\\sqrt3)^2}=10\\sqrt{13}\\approx36.06\\ \\mathrm{N}\\)\\(\\theta=\\tan^{-1}(2\\sqrt3)\\approx73.9^\\circ\\) เหนือ +x",
+        "\\(\\vec F_3=-\\vec R=(10,20\\sqrt3)\\ \\mathrm{N}\\).\\(F_3=10\\sqrt{13}\\approx36.06\\ \\mathrm{N}\\), \\(\\theta=\\tan^{-1}(2\\sqrt3)\\approx73.9^\\circ\\) above +x."
+      ],
+      "sourceIds": [
+        "exercise-4-3-3"
+      ]
+    },
+    {
+      "oldSlot": "tail-one-third-force",
+      "newSlot": "parallel-tail-one-third-force",
+      "adaptedPrompt": [
+        "แรง 60 N ชี้ขวา และแรง 30 N ชี้ซ้ายขึ้นทำมุม 60° เหนือแนวซ้าย จงหาแรงที่สามทั้งองค์ประกอบ ขนาด และทิศ",
+        "A 60 N force points right; a 30 N force points upper-left at 60° above the leftward horizontal. Find the equilibrant components, magnitude and direction."
+      ],
+      "adaptedSolution": [
+        "\\(\\vec R=(45,15\\sqrt3)\\ \\mathrm{N}\\) จึง \\(\\vec F_3=(-45,-15\\sqrt3)\\ \\mathrm{N}\\)\\(F_3=30\\sqrt3\\approx51.96\\ \\mathrm{N}\\) ชี้ซ้ายลง 30° ใต้แนวซ้าย",
+        "\\(\\vec R=(45,15\\sqrt3)\\ \\mathrm{N}\\), hence \\(\\vec F_3=(-45,-15\\sqrt3)\\ \\mathrm{N}\\).Magnitude \\(30\\sqrt3\\approx51.96\\ \\mathrm{N}\\), 30° below the leftward horizontal."
+      ],
+      "sourceIds": [
+        "chapter-problem-1"
+      ]
+    },
+    {
+      "oldSlot": "example-one-equations",
+      "newSlot": "parallel-example-one-equations",
+      "adaptedPrompt": [
+        "ป้ายหนัก 12 N อยู่นิ่ง ถูกดึงแนวระดับไปขวา 5 N เชือกชี้ซ้ายขึ้นและทำมุม θ กับแนวดิ่ง เขียนสมการสองแกน",
+        "A 12 N sign is held at rest by a 5 N horizontal rightward pull and an upper-left rope at θ to vertical. Write the two equilibrium equations."
+      ],
+      "adaptedSolution": [
+        "\\(5-T\\sin\\theta=0\\), \\(T\\cos\\theta-12=0\\)",
+        "\\(5-T\\sin\\theta=0\\), \\(T\\cos\\theta-12=0\\)."
+      ],
+      "sourceIds": [
+        "example-4-1"
+      ]
+    },
+    {
+      "oldSlot": "example-one-results",
+      "newSlot": "parallel-example-one-results",
+      "adaptedPrompt": [
+        "จากป้ายหนัก 12 N กับแรงดึง 5 N จงหา T และ θ (มุมกับแนวดิ่ง)",
+        "For the 12 N sign and 5 N pull, find T and θ (from vertical)."
+      ],
+      "adaptedSolution": [
+        "\\(T=\\sqrt{12^2+5^2}=13\\ \\mathrm{N}\\)\\(\\theta=\\tan^{-1}(5/12)\\approx22.62^\\circ\\)",
+        "\\(T=13\\ \\mathrm{N}\\), \\(\\theta=\\tan^{-1}(5/12)\\approx22.62^\\circ\\)."
+      ],
+      "sourceIds": [
+        "example-4-1"
+      ]
+    },
+    {
+      "oldSlot": "parallel-one-rope",
+      "newSlot": "parallel-parallel-one-rope",
+      "adaptedPrompt": [
+        "ป้ายอีกอันหนัก 24 N ถูกดึงไปขวา 7 N แล้วอยู่นิ่งด้วยเชือกเอียงเส้นเดียว จงหา T และมุม θ กับแนวดิ่ง",
+        "Another sign weighs 24 N and is held at rest by a 7 N rightward pull and one inclined rope. Find T and its angle θ from vertical."
+      ],
+      "adaptedSolution": [
+        "\\(T=\\sqrt{24^2+7^2}=25\\ \\mathrm{N}\\), \\(\\theta=\\tan^{-1}(7/24)\\approx16.26^\\circ\\)",
+        "\\(T=25\\ \\mathrm{N}\\), \\(\\theta=\\tan^{-1}(7/24)\\approx16.26^\\circ\\)."
+      ],
+      "sourceIds": []
+    },
+    {
+      "oldSlot": "ex-four-tension",
+      "newSlot": "parallel-ex-four-tension",
+      "adaptedPrompt": [
+        "จุดต่อเบาอยู่นิ่ง เชือกแนวระดับดึงซ้าย 24 N และเชือกเอียงดึงขวาขึ้น 60° เหนือแนวระดับ จงหาแรงตึงเชือกเอียง",
+        "A light knot is at rest. The horizontal rope pulls left with 24 N; the inclined rope pulls upper-right at 60° above horizontal. Find the inclined tension."
+      ],
+      "adaptedSolution": [
+        "\\(T\\cos60^\\circ=24\\Rightarrow T=48\\ \\mathrm{N}\\)",
+        "\\(T\\cos60^\\circ=24\\Rightarrow T=48\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "exercise-4-3-4"
+      ]
+    },
+    {
+      "oldSlot": "ex-four-weight",
+      "newSlot": "parallel-ex-four-weight",
+      "adaptedPrompt": [
+        "จากจุดต่อ 24 N และเชือกเอียง 60° จงหาน้ำหนัก W ที่แขวนด้วยเชือกแนวดิ่ง",
+        "For the 24 N knot with a 60° inclined rope, find the load weight W on the vertical cord."
+      ],
+      "adaptedSolution": [
+        "\\(W=T\\sin60^\\circ=24\\sqrt3\\approx41.57\\ \\mathrm{N}\\)",
+        "\\(W=T\\sin60^\\circ=24\\sqrt3\\approx41.57\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "exercise-4-3-4"
+      ]
+    },
+    {
+      "oldSlot": "raised-geometry",
+      "newSlot": "parallel-raised-geometry",
+      "adaptedPrompt": [
+        "เชือกเบายาว 125 cm แขวนวัตถุหนัก 64 N ดึงแนวระดับจนสูงจากตำแหน่งต่ำสุด 25 cm แล้วอยู่นิ่ง จงหาระยะดิ่งจากจุดแขวนและระยะเยื้องแนวระดับ",
+        "A 64 N load hangs from a light 125 cm rope. A horizontal pull raises it 25 cm above its lowest position and holds it at rest. Find the vertical separation from the support and the horizontal displacement."
+      ],
+      "adaptedSolution": [
+        "ระยะดิ่ง \\(125-25=100\\ \\mathrm{cm}\\); ระยะระดับ \\(\\sqrt{125^2-100^2}=75\\ \\mathrm{cm}\\)",
+        "Vertical separation \\(125-25=100\\ \\mathrm{cm}\\); horizontal displacement \\(\\sqrt{125^2-100^2}=75\\ \\mathrm{cm}\\)."
+      ],
+      "sourceIds": [
+        "exercise-4-3-5"
+      ]
+    },
+    {
+      "oldSlot": "raised-force",
+      "newSlot": "parallel-raised-force",
+      "adaptedPrompt": [
+        "จากเชือกยาว 125 cm และน้ำหนัก 64 N ที่ยกขึ้น 25 cm จงหาแรงดึงแนวระดับ F และแรงตึง T",
+        "For the 125 cm rope and 64 N load raised 25 cm, find horizontal pull F and tension T."
+      ],
+      "adaptedSolution": [
+        "\\(F/64=75/100\\Rightarrow F=48\\ \\mathrm{N}\\)\\(T(100/125)=64\\Rightarrow T=80\\ \\mathrm{N}\\)",
+        "\\(F/64=75/100\\Rightarrow F=48\\ \\mathrm{N}\\).\\(T(100/125)=64\\Rightarrow T=80\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "exercise-4-3-5"
+      ]
+    },
+    {
+      "oldSlot": "traffic-light-body",
+      "newSlot": "parallel-traffic-light-body",
+      "adaptedPrompt": [
+        "ป้ายมวล 10 kg อยู่นิ่งที่ใต้จุด B เชือกแนวดิ่งมีแรงตึง T₃ ใช้ g = 9.8 m/s² จงหา T₃",
+        "A 10 kg sign rests below B on a vertical cord of tension T₃. Use g = 9.8 m/s². Find T₃."
+      ],
+      "adaptedSolution": [
+        "\\(T_3=mg=10(9.8)=98\\ \\mathrm{N}\\)",
+        "\\(T_3=mg=10(9.8)=98\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "example-4-2"
+      ]
+    },
+    {
+      "oldSlot": "traffic-geometry",
+      "newSlot": "parallel-traffic-geometry",
+      "adaptedPrompt": [
+        "เชือก AB = 6 m, BC = 8 m, ∠ABC = 90° และ A,C อยู่ระดับเดียวกัน มุม θ₁ ที่ A (เชือก AB) และ θ₂ ที่ C (เชือก BC) วัดจากแนวระดับ จงหา AC และ sin,cos ของทั้งสองมุม",
+        "AB = 6 m, BC = 8 m, ∠ABC = 90°, and A,C have equal height. θ₁ at A (rope AB) and θ₂ at C (rope BC) are measured from horizontal. Find AC and the sines and cosines."
+      ],
+      "adaptedSolution": [
+        "\\(AC=10\\ \\mathrm{m}\\); \\(\\sin\\theta_1=4/5,\\cos\\theta_1=3/5\\)\\(\\sin\\theta_2=3/5,\\cos\\theta_2=4/5\\)",
+        "\\(AC=10\\ \\mathrm{m}\\); \\(\\sin\\theta_1=4/5,\\cos\\theta_1=3/5\\); \\(\\sin\\theta_2=3/5,\\cos\\theta_2=4/5\\)."
+      ],
+      "sourceIds": [
+        "example-4-2"
+      ]
+    },
+    {
+      "oldSlot": "traffic-knot-equations",
+      "newSlot": "parallel-traffic-knot-equations",
+      "adaptedPrompt": [
+        "ป้าย 10 kg กับเชือก AB = 6 m, BC = 8 m ข้างบน เขียนสมการของจุดต่อ B โดย +x ขวา +y ขึ้น กำหนด T₁ ใน AB และ T₂ ใน BC",
+        "For the 10 kg sign with AB = 6 m and BC = 8 m above, write B’s equilibrium equations, +x right and +y up, with T₁ in AB and T₂ in BC."
+      ],
+      "adaptedSolution": [
+        "\\((4/5)T_2-(3/5)T_1=0\\)\\((4/5)T_1+(3/5)T_2-98=0\\)",
+        "\\((4/5)T_2-(3/5)T_1=0\\); \\((4/5)T_1+(3/5)T_2-98=0\\)."
+      ],
+      "sourceIds": [
+        "example-4-2"
+      ]
+    },
+    {
+      "oldSlot": "traffic-tensions",
+      "newSlot": "parallel-traffic-tensions",
+      "adaptedPrompt": [
+        "แก้สมการจุดต่อป้าย 10 kg เพื่อหา T₁ ใน AB และ T₂ ใน BC",
+        "Solve the 10 kg sign’s knot equations for T₁ in AB and T₂ in BC."
+      ],
+      "adaptedSolution": [
+        "\\(T_2=3T_1/4\\); แทนแนวดิ่งได้ \\(T_1=78.4\\ \\mathrm{N},T_2=58.8\\ \\mathrm{N}\\)",
+        "\\(T_2=3T_1/4\\); substitution gives \\(T_1=78.4\\ \\mathrm{N},T_2=58.8\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "example-4-2"
+      ]
+    },
+    {
+      "oldSlot": "tail-two-tensions",
+      "newSlot": "parallel-tail-two-tensions",
+      "adaptedPrompt": [
+        "วัตถุหนัก W อยู่นิ่งที่จุดต่อ เชือกซ้าย T₁ ทำมุม 30° กับแนวดิ่ง เชือกขวา T₂ ทำมุม 60° กับแนวดิ่ง จงหาแรงตึงในรูป W",
+        "A weight W rests at a knot. Left rope T₁ is 30° from vertical; right rope T₂ is 60° from vertical. Find both tensions in terms of W."
+      ],
+      "adaptedSolution": [
+        "\\(T_1\\sin30^\\circ=T_2\\sin60^\\circ\\), \\(T_1\\cos30^\\circ+T_2\\cos60^\\circ=W\\)\\(T_1=\\sqrt3W/2,\\ T_2=W/2\\)",
+        "\\(T_1\\sin30^\\circ=T_2\\sin60^\\circ\\), \\(T_1\\cos30^\\circ+T_2\\cos60^\\circ=W\\).\\(T_1=\\sqrt3W/2,\\ T_2=W/2\\)."
+      ],
+      "sourceIds": [
+        "chapter-problem-2"
+      ]
+    },
+    {
+      "oldSlot": "cyu-sagging-rope",
+      "newSlot": "parallel-cyu-sagging-rope",
+      "adaptedPrompt": [
+        "แขวนป้ายตรงกลางเชือกเบาที่ปลายสองข้างอยู่ระดับเดียวกัน ทำไมเชือกที่รับน้ำหนักจึงไม่เป็นเส้นตรงแนวระดับพอดี?",
+        "A sign hangs at the midpoint of a light rope whose endpoints have equal height. Why can a loaded rope not remain perfectly horizontal?"
+      ],
+      "adaptedSolution": [
+        "ต้องมีองค์ประกอบแรงตึงขึ้นมาสมดุลน้ำหนัก ถ้าแนวระดับพอดี องค์ประกอบแนวดิ่งเป็นศูนย์ จึงรับน้ำหนักที่ไม่เป็นศูนย์ไม่ได้",
+        "Upward tension components must balance the weight. A perfectly horizontal rope has zero vertical component and cannot support a nonzero load."
+      ],
+      "sourceIds": [
+        "cyu-4-3-4"
+      ]
+    },
+    {
+      "oldSlot": "thought-rope-breaks",
+      "newSlot": "parallel-thought-rope-breaks",
+      "adaptedPrompt": [
+        "ป้ายสองอันหนักเท่ากัน ใช้เชือกชนิดเดียวกัน: ก (ภาพ A) แต่ละด้านทำมุม 30° กับแนวระดับ; ข (ภาพ B) ทำมุม 60° ถ้าเพิ่มน้ำหนักเท่ากัน กรณีใดถึงแรงตึงขาดก่อน?",
+        "Equal signs use identical ropes. Case A has each side at 30° above horizontal; case B at 60°. If equal weight is added, which reaches the breaking tension first?"
+      ],
+      "adaptedSolution": [
+        "ก (ภาพ A) เพราะ \\(T=W/(2\\sin\\alpha)\\) ให้ \\(T_\\text{ก}=W>T_\\text{ข}=W/\\sqrt3\\)",
+        "A: \\(T=W/(2\\sin\\alpha)\\), so \\(T_A=W>T_B=W/\\sqrt3\\)."
+      ],
+      "sourceIds": [
+        "thought-p20"
+      ]
+    },
+    {
+      "oldSlot": "ex-one-friction",
+      "newSlot": "parallel-ex-one-friction",
+      "adaptedPrompt": [
+        "กล่องเลื่อนไปขวาบนพื้นระดับด้วยความเร็วคงตัว ถูกดึง 80 N ทำมุม 60° เหนือแนวระดับ จงหาแรงเสียดทานและทิศ",
+        "A box slides right on a horizontal floor at constant velocity, pulled by 80 N at 60° above horizontal. Find friction and its direction."
+      ],
+      "adaptedSolution": [
+        "\\(f_k=80\\cos60^\\circ=40\\ \\mathrm{N}\\) ชี้ซ้าย ต้านการเลื่อน",
+        "\\(f_k=80\\cos60^\\circ=40\\ \\mathrm{N}\\), leftward, opposing sliding."
+      ],
+      "sourceIds": [
+        "exercise-4-3-1"
+      ]
+    },
+    {
+      "oldSlot": "tail-five-normal",
+      "newSlot": "parallel-tail-five-normal",
+      "adaptedPrompt": [
+        "กล่องหนัก 80 N ถูกกดด้วยแรง 40 N ชี้ขวาลง 30° ใต้แนวระดับ เลื่อนไปขวาด้วยความเร็วคงตัว จงหาแรงที่กล่องกดพื้นในแนวตั้งฉาก",
+        "An 80 N box is pushed by 40 N at 30° below the rightward horizontal and slides right at constant velocity. Find the normal force exerted by the box on the floor."
+      ],
+      "adaptedSolution": [
+        "\\(N=80+40\\sin30^\\circ=100\\ \\mathrm{N}\\) ขึ้นบนกล่อง; แรงที่กล่องกดพื้นขนาด 100 N ลง ตามกฎข้อสาม",
+        "\\(N=80+40\\sin30^\\circ=100\\ \\mathrm{N}\\) upward on the box. The box exerts an equal 100 N downward normal force on the floor (Newton’s third law)."
+      ],
+      "sourceIds": [
+        "chapter-problem-5"
+      ]
+    },
+    {
+      "oldSlot": "tail-five-mu",
+      "newSlot": "parallel-tail-five-mu",
+      "adaptedPrompt": [
+        "สำหรับกล่องหนัก 80 N ถูกกด 40 N ที่ 30° ใต้แนวระดับและเลื่อนด้วยความเร็วคงตัว จงหา μₖ",
+        "For the 80 N box pushed by 40 N at 30° below horizontal at constant velocity, find μₖ."
+      ],
+      "adaptedSolution": [
+        "\\(f_k=40\\cos30^\\circ=20\\sqrt3\\ \\mathrm{N}\\)\\(\\mu_k=f_k/100=\\sqrt3/5\\approx0.3464\\)",
+        "\\(f_k=40\\cos30^\\circ=20\\sqrt3\\ \\mathrm{N}\\); \\(\\mu_k=\\sqrt3/5\\approx0.3464\\)."
+      ],
+      "sourceIds": [
+        "chapter-problem-5"
+      ]
+    },
+    {
+      "oldSlot": "ex-two-incline",
+      "newSlot": "parallel-ex-two-incline",
+      "adaptedPrompt": [
+        "กล่องหนัก 80 N อยู่นิ่งบนพื้นเอียง 30° ไม่มีแรงดึงอื่น จงหา N และแรงเสียดทานสถิตพร้อมทิศ",
+        "An 80 N box rests on a 30° incline with no other pull. Find N and static friction, including direction."
+      ],
+      "adaptedSolution": [
+        "\\(N=80\\cos30^\\circ=40\\sqrt3\\approx69.28\\ \\mathrm{N}\\)\\(f_s=80\\sin30^\\circ=40\\ \\mathrm{N}\\) ขึ้นตามพื้นเอียง",
+        "\\(N=40\\sqrt3\\approx69.28\\ \\mathrm{N}\\); \\(f_s=40\\ \\mathrm{N}\\) upslope."
+      ],
+      "sourceIds": [
+        "exercise-4-3-2"
+      ]
+    },
+    {
+      "oldSlot": "tail-three-incline",
+      "newSlot": "parallel-tail-three-incline",
+      "adaptedPrompt": [
+        "พื้นเอียงยาวตามผิว 1.00 m สูง 0.60 m วัตถุไถลลงด้วยความเร็วคงตัว ไม่มีแรงดึงอื่น จงหา μₖ",
+        "An incline has surface length 1.00 m and height 0.60 m. A block slides down at constant velocity with no other pull. Find μₖ."
+      ],
+      "adaptedSolution": [
+        "\\(\\sin\\theta=0.60,\\cos\\theta=0.80\\); \\(\\mu_k=\\tan\\theta=0.60/0.80=0.75\\)",
+        "\\(\\sin\\theta=0.60,\\cos\\theta=0.80\\); \\(\\mu_k=\\tan\\theta=0.75\\)."
+      ],
+      "sourceIds": [
+        "chapter-problem-3"
+      ]
+    },
+    {
+      "oldSlot": "tail-four-friction-directions",
+      "newSlot": "parallel-tail-four-friction-directions",
+      "adaptedPrompt": [
+        "กล่องหนัก 40 N บนพื้นเอียง 37° มี μₖ = 0.25 ให้ sin 37° = 0.6, cos 37° = 0.8 แรง F ขนานพื้นและชี้ขึ้นทั้งสองกรณี ก เคลื่อนขึ้น ข เคลื่อนลง แรงเสียดทานชี้ทางใด?",
+        "A 40 N box is on a 37° incline, μₖ = 0.25; use sin 37° = 0.6, cos 37° = 0.8. F acts upslope in both cases. A moves up, B moves down. Which way is friction?"
+      ],
+      "adaptedSolution": [
+        "ก แรงเสียดทานจลน์ลงตามพื้น; ข แรงเสียดทานจลน์ขึ้นตามพื้น เพราะต้านการเลื่อนสัมพัทธ์ ไม่ได้ต้าน F เสมอ",
+        "A: kinetic friction is downslope. B: it is upslope. Friction opposes relative sliding, not necessarily the applied force F."
+      ],
+      "sourceIds": [
+        "chapter-problem-4"
+      ]
+    },
+    {
+      "oldSlot": "tail-four-up",
+      "newSlot": "parallel-tail-four-up",
+      "adaptedPrompt": [
+        "กรณี ก กล่องหนัก 40 N เคลื่อนขึ้นพื้นเอียง 37° ด้วยความเร็วคงตัว มี μₖ = 0.25 จงหา F ที่ชี้ขึ้นตามพื้น ใช้ sin = 0.6, cos = 0.8",
+        "Case A: a 40 N box moves up a 37° slope at constant velocity, μₖ = 0.25. Find the upslope force F, using sin = 0.6, cos = 0.8."
+      ],
+      "adaptedSolution": [
+        "\\(N=40(0.8)=32\\), \\(f_k=0.25(32)=8\\ \\mathrm{N}\\)\\(F=40(0.6)+8=32\\ \\mathrm{N}\\)",
+        "\\(N=32\\ \\mathrm{N}, f_k=8\\ \\mathrm{N}\\); \\(F=24+8=32\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "chapter-problem-4"
+      ]
+    },
+    {
+      "oldSlot": "tail-four-down",
+      "newSlot": "parallel-tail-four-down",
+      "adaptedPrompt": [
+        "กรณี ข กล่องเดิมเลื่อนลงด้วยความเร็วคงตัว แต่ F ยังชี้ขึ้นตามพื้นเอียง จงหา F",
+        "Case B: the same box slides down at constant velocity, while F still points upslope. Find F."
+      ],
+      "adaptedSolution": [
+        "แนวลง: \\(40(0.6)-F-8=0\\Rightarrow F=16\\ \\mathrm{N}\\)",
+        "Downslope: \\(24-F-8=0\\Rightarrow F=16\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "chapter-problem-4"
+      ]
+    },
+    {
+      "oldSlot": "challenge-twenty-one",
+      "newSlot": "parallel-challenge-twenty-one",
+      "adaptedPrompt": [
+        "ค่อย ๆ เพิ่มมุมพื้นเอียงจาก 20° จนวัตถุเพิ่งเริ่มจะไถลลงที่ 45° ไม่มีแรงดึงอื่น แรงเสียดทานสถิตช่วงก่อนเริ่มเลื่อนเปลี่ยนอย่างไร และมีค่าเท่าใดที่ขอบเขต?",
+        "Slowly raise an incline from 20° until a block is just about to slide down at 45°, with no other pull. How does static friction change before sliding, and what is it at the threshold?"
+      ],
+      "adaptedSolution": [
+        "ช่วงยังนิ่ง \\(f_s=mg\\sin\\theta\\) เพิ่มตามมุม จนที่ 45° มี \\(f_s=mg/\\sqrt2=f_{s,\\max}\\); ไม่ใช่ \\(\\mu_sN\\) ตลอดช่วง",
+        "While at rest, \\(f_s=mg\\sin\\theta\\) increases with angle. At 45°, \\(f_s=mg/\\sqrt2=f_{s,\\max}\\); it is not equal to \\(\\mu_sN\\) throughout."
+      ],
+      "sourceIds": [
+        "chapter-challenge-21"
+      ]
+    },
+    {
+      "oldSlot": "tail-six-block",
+      "newSlot": "parallel-tail-six-block",
+      "adaptedPrompt": [
+        "กล่องหนัก 60 N อยู่บนโต๊ะระดับ มี μₛ = 0.50 เชือก T₁ ดึงแนวระดับเข้าหาจุดต่อ จงหา T₁ มากที่สุดที่ยังอยู่นิ่ง",
+        "A 60 N box rests on a horizontal table with μₛ = 0.50. Rope T₁ pulls horizontally toward a knot. Find the largest T₁ for rest."
+      ],
+      "adaptedSolution": [
+        "\\(N=60\\ \\mathrm{N}\\), \\(T_{1,\\max}=f_{s,\\max}=0.50(60)=30\\ \\mathrm{N}\\)",
+        "\\(N=60\\ \\mathrm{N}\\), \\(T_{1,\\max}=0.50(60)=30\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "chapter-problem-6"
+      ]
+    },
+    {
+      "oldSlot": "tail-six-knot",
+      "newSlot": "parallel-tail-six-knot",
+      "adaptedPrompt": [
+        "ที่จุดต่อเดิม T₁ ชี้ซ้าย T₂ = W ชี้ลง T₃ ชี้ขวาขึ้น 45° กับแนวระดับ จงหา W มากที่สุดและ T₃ เมื่อกล่อง 60 N ใกล้เริ่มเลื่อน",
+        "At that knot T₁ points left, T₂ = W down and T₃ upper-right at 45° to horizontal. Find maximum W and T₃ when the 60 N box is about to move."
+      ],
+      "adaptedSolution": [
+        "\\(T_3\\cos45^\\circ=T_1=30\\), \\(W=T_3\\sin45^\\circ\\)\\(W_{\\max}=30\\ \\mathrm{N}\\), \\(T_3=30\\sqrt2\\approx42.43\\ \\mathrm{N}\\)",
+        "\\(T_3\\cos45^\\circ=30\\), \\(W=T_3\\sin45^\\circ\\). Thus \\(W_{\\max}=30\\ \\mathrm{N}\\), \\(T_3=30\\sqrt2\\approx42.43\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "chapter-problem-6"
+      ]
+    },
+    {
+      "oldSlot": "tail-seven-directions",
+      "newSlot": "parallel-tail-seven-directions",
+      "adaptedPrompt": [
+        "น้ำหนักแขวน 36 N ต่อเชือกเบาผ่านรอกลื่นกับกล่องหนัก 40 N บนพื้นเอียง 30° ขณะกล่องใกล้เริ่มเคลื่อนขึ้น จงระบุทิศแรงเสียดทานและ T",
+        "A 36 N hanging load is connected by a light rope over a frictionless pulley to a 40 N box on a 30° slope. At impending upslope motion, state friction direction and T."
+      ],
+      "adaptedSolution": [
+        "แรงเสียดทานสถิตชี้ลงตามพื้นเอียง และน้ำหนักแขวนยังสมดุลจึง \\(T=36\\ \\mathrm{N}\\)",
+        "Static friction is downslope. The hanging load is still in equilibrium, so \\(T=36\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "chapter-problem-7"
+      ]
+    },
+    {
+      "oldSlot": "tail-seven-mu",
+      "newSlot": "parallel-tail-seven-mu",
+      "adaptedPrompt": [
+        "สำหรับระบบ 36 N กับกล่อง 40 N ที่ใกล้เริ่มเคลื่อนขึ้นพื้น 30° จงหา μₛ",
+        "For the 36 N load and 40 N box at impending upslope motion on 30°, find μₛ."
+      ],
+      "adaptedSolution": [
+        "\\(N=40\\cos30^\\circ=20\\sqrt3\\), \\(f_{s,\\max}=36-40\\sin30^\\circ=16\\ \\mathrm{N}\\)\\(\\mu_s=16/(20\\sqrt3)\\approx0.4619\\)",
+        "\\(N=20\\sqrt3\\ \\mathrm{N}\\), \\(f_{s,\\max}=36-20=16\\ \\mathrm{N}\\). Hence \\(\\mu_s=16/(20\\sqrt3)\\approx0.4619\\)."
+      ],
+      "sourceIds": [
+        "chapter-problem-7"
+      ]
+    },
+    {
+      "oldSlot": "challenge-rope-relations",
+      "newSlot": "parallel-challenge-rope-relations",
+      "adaptedPrompt": [
+        "จุด B ผูกเชือก AB แนวระดับไปซ้าย เชือก BC ทำมุม 45° กับแนวดิ่งไปขวาขึ้น และแขวน W แนวดิ่ง เชือกแต่ละเส้นทนแรงตึง 40 N จงเขียนแรงตึงในรูป W และระบุเส้นที่ถึงขีดจำกัดก่อน",
+        "At B, AB runs horizontally left, BC runs upper-right at 45° from vertical, and a vertical cord supports W. Each cord tolerates 40 N. Express tensions in W and identify the first limiting cord."
+      ],
+      "adaptedSolution": [
+        "\\(T_{BC}\\cos45^\\circ=W\\Rightarrow T_{BC}=\\sqrt2W\\)\\(T_{AB}=T_{BC}\\sin45^\\circ=W\\); เชือกแนวดิ่งตึง W ดังนั้น BC ถึงขีดจำกัดก่อน",
+        "\\(T_{BC}=W/\\cos45^\\circ=\\sqrt2W\\), \\(T_{AB}=T_{BC}\\sin45^\\circ=W\\), vertical tension = W. BC reaches its limit first."
+      ],
+      "sourceIds": [
+        "chapter-challenge-26"
+      ]
+    },
+    {
+      "oldSlot": "challenge-rope-max",
+      "newSlot": "parallel-challenge-rope-max",
+      "adaptedPrompt": [
+        "จากระบบ AB–BC ข้างบนที่เชือกทุกเส้นทน 40 N จงหา W มากที่สุด และตรวจอีกสองเส้น",
+        "For the AB–BC system above, with all cords rated at 40 N, find maximum W and check the other cords."
+      ],
+      "adaptedSolution": [
+        "\\(W_{\\max}=40/\\sqrt2=20\\sqrt2\\approx28.28\\ \\mathrm{N}\\)\\(T_{AB}=T_{\\mathrm{vertical}}=20\\sqrt2<40\\ \\mathrm{N}\\)",
+        "\\(W_{\\max}=20\\sqrt2\\approx28.28\\ \\mathrm{N}\\). Both \\(T_{AB}\\) and the vertical tension are \\(20\\sqrt2<40\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "chapter-challenge-26"
+      ]
+    },
+    {
+      "oldSlot": "kite-independent",
+      "newSlot": "parallel-kite-independent",
+      "adaptedPrompt": [
+        "จุดต่อสายว่าวอยู่นิ่ง ถูกดึงแนวระดับไปซ้าย 12 N สายบนดึงขวาขึ้นทำมุม 30° กับแนวดิ่ง สายล่างดึงขวาลง 60° กับแนวดิ่ง จงหาแรงตึงบนและล่าง",
+        "A kite-bridle knot is at rest with a 12 N horizontal left pull. The upper cord pulls upper-right at 30° to vertical; the lower cord pulls lower-right at 60° to vertical. Find upper and lower tensions."
+      ],
+      "adaptedSolution": [
+        "\\(T_u\\sin30^\\circ+T_l\\sin60^\\circ=12\\)\\(T_u\\cos30^\\circ=T_l\\cos60^\\circ\\Rightarrow T_l=\\sqrt3T_u\\)\\(T_u=6\\ \\mathrm{N},\\ T_l=6\\sqrt3\\approx10.39\\ \\mathrm{N}\\)",
+        "\\(T_u\\sin30^\\circ+T_l\\sin60^\\circ=12\\), \\(T_u\\cos30^\\circ=T_l\\cos60^\\circ\\). Thus \\(T_l=\\sqrt3T_u\\), \\(T_u=6\\ \\mathrm{N},T_l=6\\sqrt3\\approx10.39\\ \\mathrm{N}\\)."
+      ],
+      "sourceIds": [
+        "chapter-challenge-25"
+      ]
+    }
+  ]
+}

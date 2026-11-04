@@ -1,0 +1,655 @@
+{
+  "schemaVersion": 1,
+  "checkedDate": "2026-11-04",
+  "sources": {
+    "student": {
+      "url": "https://drive.google.com/file/d/1uuLqtGLGlKg3mS82C_H32HzJZreBFcRb/view",
+      "pages": 297,
+      "sha256": "5c91757ace42c91090898a9a101fa6ab064453b778bc5e35d33e7ffa36cacded"
+    },
+    "teacher": {
+      "url": "https://drive.google.com/file/d/1ZnEcfIp4mXi3x0wOhwfzqlnYuiWE-n_S/view",
+      "pages": 412,
+      "sha256": "78ac3d69ddc67bd1e91cf885bfddd1c996a60e9011b83c2861b128ead49f6768",
+      "checkedPdfPages": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ]
+    }
+  },
+  "transcriptionPolicy": "Source summaries and original numerical data, not a claim of verbatim transcription. Exact pre-change worksheet fragments are stored separately; original image assets remain at their recorded paths.",
+  "items": [
+    {
+      "id": "activity-4-1",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 14,
+      "pdfPage": 27,
+      "sourceSummary": "Three spring balances hold a plate at rest; compare directions, resultants and head-to-tail vectors.",
+      "originalDataAndResults": {
+        "resultant": "zero",
+        "lines": "concurrent for nonparallel coplanar forces in nonrotating equilibrium",
+        "polygon": "closed triangle"
+      },
+      "worksheetSlotsBefore": [
+        "activity-resultant",
+        "activity-lines",
+        "activity-third-opposite",
+        "activity-triangle",
+        "three-force-conclusion"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/experiment-apparatus.png"
+      ],
+      "preservedSkills": [
+        "vector sum",
+        "concurrency conditions",
+        "equilibrant",
+        "closed polygon"
+      ]
+    },
+    {
+      "id": "example-4-1",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 17,
+      "pdfPage": 30,
+      "sourceSummary": "A 4 N load is held at rest by an inclined rope and a 3 N horizontal force.",
+      "originalDataAndResults": {
+        "weight_N": 4,
+        "pull_N": 3,
+        "angleReference": "vertical",
+        "tension_N": 5,
+        "angle_deg": 36.86989765
+      },
+      "worksheetSlotsBefore": [
+        "example-one-equations",
+        "example-one-results"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/example-one-rope.png"
+      ],
+      "preservedSkills": [
+        "two-axis equations",
+        "rope components",
+        "tension",
+        "angle"
+      ]
+    },
+    {
+      "id": "example-4-2",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 18,
+      "pdfPage": 31,
+      "sourceSummary": "A 5 kg traffic light is suspended at B; AB and BC form a right angle with supports at equal height.",
+      "originalDataAndResults": {
+        "mass_kg": 5,
+        "g_m_s2": 9.8,
+        "AB_m": 4,
+        "BC_m": 3,
+        "AC_m": 5,
+        "angleReference": "horizontal",
+        "T1_N": 29.4,
+        "T2_N": 39.2,
+        "T3_N": 49
+      },
+      "worksheetSlotsBefore": [
+        "traffic-light-body",
+        "traffic-geometry",
+        "traffic-knot-equations",
+        "traffic-tensions"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/example-traffic-light.png"
+      ],
+      "preservedSkills": [
+        "separate load and knot",
+        "right-triangle ratios",
+        "two-axis equations",
+        "three tensions"
+      ]
+    },
+    {
+      "id": "thought-p20",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 20,
+      "pdfPage": 33,
+      "sourceSummary": "Compare identical symmetric ropes with equal loads; the shallower rope reaches breaking tension earlier.",
+      "originalDataAndResults": {
+        "caseA": "steeper",
+        "caseB": "shallower",
+        "limitingCase": "B",
+        "relation": "T = W/(2 sin alpha), alpha from horizontal"
+      },
+      "worksheetSlotsBefore": [
+        "thought-rope-breaks"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/thought-two-ropes.png"
+      ],
+      "preservedSkills": [
+        "vertical components",
+        "tension versus angle",
+        "equal-load comparison"
+      ]
+    },
+    {
+      "id": "example-4-3",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 21,
+      "pdfPage": 34,
+      "sourceSummary": "A mass m rests on a rough incline at angle theta, with no applied pull.",
+      "originalDataAndResults": {
+        "normal": "mg cos theta",
+        "staticFriction": "mg sin theta upslope",
+        "limitingEquality": "fs = mu_s N only at impending sliding"
+      },
+      "worksheetSlotsBefore": [
+        "incline-weight-components",
+        "incline-example-results",
+        "incline-static-not-maximum"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/example-incline.png"
+      ],
+      "preservedSkills": [
+        "weight components",
+        "normal",
+        "actual static friction",
+        "static versus maximum"
+      ]
+    },
+    {
+      "id": "cyu-4-3-1",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 23,
+      "pdfPage": 36,
+      "sourceSummary": "Conditions for translational equilibrium and rest.",
+      "originalDataAndResults": {
+        "netForce": "zero",
+        "velocity": "zero"
+      },
+      "worksheetSlotsBefore": [
+        "cyu-rest"
+      ],
+      "originalFigures": [],
+      "preservedSkills": [
+        "net force versus velocity"
+      ]
+    },
+    {
+      "id": "cyu-4-3-2",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 23,
+      "pdfPage": 36,
+      "sourceSummary": "Is free fall without air resistance translational equilibrium?",
+      "originalDataAndResults": {
+        "answer": "no",
+        "acceleration": "g downward"
+      },
+      "worksheetSlotsBefore": [
+        "cyu-free-fall"
+      ],
+      "originalFigures": [],
+      "preservedSkills": [
+        "rest at an instant versus equilibrium"
+      ]
+    },
+    {
+      "id": "cyu-4-3-3",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 23,
+      "pdfPage": 36,
+      "sourceSummary": "A uniform rod leans on a smooth wall and smooth floor; can it remain in equilibrium?",
+      "originalDataAndResults": {
+        "answer": "no",
+        "reason": "no horizontal force balances a nonzero wall reaction"
+      },
+      "worksheetSlotsBefore": [
+        "cyu-smooth-rod"
+      ],
+      "originalFigures": [],
+      "preservedSkills": [
+        "free-body diagram",
+        "force balance on smooth contacts"
+      ]
+    },
+    {
+      "id": "cyu-4-3-4",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 23,
+      "pdfPage": 36,
+      "sourceSummary": "Why does a rope supporting a central load sag instead of remaining perfectly horizontal?",
+      "originalDataAndResults": {
+        "reason": "nonzero upward tension components required"
+      },
+      "worksheetSlotsBefore": [
+        "cyu-sagging-rope"
+      ],
+      "originalFigures": [],
+      "preservedSkills": [
+        "vertical component of tension"
+      ]
+    },
+    {
+      "id": "exercise-4-3-1",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 23,
+      "pdfPage": 36,
+      "sourceSummary": "A 100 N pull at 30 degrees above horizontal moves a box uniformly; find friction.",
+      "originalDataAndResults": {
+        "pull_N": 100,
+        "angle_deg": 30,
+        "friction_N": 86.60254037844386,
+        "direction": "opposes sliding"
+      },
+      "worksheetSlotsBefore": [
+        "ex-one-friction"
+      ],
+      "originalFigures": [],
+      "preservedSkills": [
+        "constant velocity",
+        "horizontal components",
+        "kinetic friction"
+      ]
+    },
+    {
+      "id": "exercise-4-3-2",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 23,
+      "pdfPage": 36,
+      "sourceSummary": "A 50 N object rests on a 30-degree incline; find normal and friction.",
+      "originalDataAndResults": {
+        "weight_N": 50,
+        "angle_deg": 30,
+        "normal_N": 43.30127018922193,
+        "staticFriction_N": 25,
+        "direction": "upslope"
+      },
+      "worksheetSlotsBefore": [
+        "ex-two-incline"
+      ],
+      "originalFigures": [],
+      "preservedSkills": [
+        "normal",
+        "static friction magnitude and direction"
+      ]
+    },
+    {
+      "id": "exercise-4-3-3",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 23,
+      "pdfPage": 36,
+      "sourceSummary": "Forces 20 N left and 30 N at 60 degrees below right act on a point; find the equilibrant.",
+      "originalDataAndResults": {
+        "F1_N": 20,
+        "F2_N": 30,
+        "angle_deg": 60,
+        "equilibrant_xy_N": [
+          5,
+          25.980762113533157
+        ],
+        "magnitude_N": 26.457513110645905,
+        "angleAboveRight_deg": 79.1066053508691
+      },
+      "worksheetSlotsBefore": [
+        "ex-three-components",
+        "ex-three-answer"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/exercise-third-force.png"
+      ],
+      "preservedSkills": [
+        "signed components",
+        "opposite resultant",
+        "magnitude",
+        "direction"
+      ]
+    },
+    {
+      "id": "exercise-4-3-4",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 24,
+      "pdfPage": 37,
+      "sourceSummary": "A light knot has a 30 N leftward rope and a rope 60 degrees above horizontal; find supported W.",
+      "originalDataAndResults": {
+        "horizontalTension_N": 30,
+        "angle_deg": 60,
+        "inclinedTension_N": 60,
+        "weight_N": 51.96152422706631
+      },
+      "worksheetSlotsBefore": [
+        "ex-four-tension",
+        "ex-four-weight"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/exercise-knot.png"
+      ],
+      "preservedSkills": [
+        "knot equilibrium",
+        "horizontal and vertical tension components"
+      ]
+    },
+    {
+      "id": "exercise-4-3-5",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 24,
+      "pdfPage": 37,
+      "sourceSummary": "A 40 N load on a 100 cm rope is pulled horizontally until raised 20 cm; find the horizontal force.",
+      "originalDataAndResults": {
+        "weight_N": 40,
+        "rope_cm": 100,
+        "rise_cm": 20,
+        "vertical_cm": 80,
+        "horizontal_cm": 60,
+        "pull_N": 30,
+        "tension_N": 50
+      },
+      "worksheetSlotsBefore": [
+        "raised-geometry",
+        "raised-force"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/exercise-raised-mass.png"
+      ],
+      "preservedSkills": [
+        "rise versus separation",
+        "Pythagoras",
+        "force ratio",
+        "tension extension"
+      ]
+    },
+    {
+      "id": "chapter-concept-1",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 47,
+      "pdfPage": 60,
+      "sourceSummary": "A rod end is tied to a rope and its lower end rests on a floating board. Explain why the rope is vertical whatever the rod angle.",
+      "originalDataAndResults": {
+        "ropeDirection": "vertical",
+        "model": "no horizontal external water force on rod plus raft"
+      },
+      "worksheetSlotsBefore": [
+        "tail-concept-one"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/chapter-floating-board.png"
+      ],
+      "preservedSkills": [
+        "choose combined body",
+        "horizontal external force balance"
+      ]
+    },
+    {
+      "id": "chapter-problem-1",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 49,
+      "pdfPage": 62,
+      "sourceSummary": "40 N right and 20 N upper-left at 60 degrees above left; find the equilibrant magnitude.",
+      "originalDataAndResults": {
+        "resultant_xy_N": [
+          30,
+          17.32050807568877
+        ],
+        "equilibrant_xy_N": [
+          -30,
+          -17.32050807568877
+        ],
+        "magnitude_N": 34.64101615137754
+      },
+      "worksheetSlotsBefore": [
+        "tail-one-third-force"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/chapter-third-force.png"
+      ],
+      "preservedSkills": [
+        "signed vector addition",
+        "equilibrant magnitude",
+        "direction extension"
+      ]
+    },
+    {
+      "id": "chapter-problem-2",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 50,
+      "pdfPage": 63,
+      "sourceSummary": "Weight W supported by two ropes at 60 degrees left and 30 degrees right, measured from vertical.",
+      "originalDataAndResults": {
+        "leftFromVertical_deg": 60,
+        "rightFromVertical_deg": 30,
+        "T1": "W/2",
+        "T2": "sqrt(3) W/2"
+      },
+      "worksheetSlotsBefore": [
+        "tail-two-tensions"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/ropes-vertical-angles.svg"
+      ],
+      "preservedSkills": [
+        "vertical-reference angles",
+        "symbolic tensions"
+      ]
+    },
+    {
+      "id": "chapter-problem-3",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 50,
+      "pdfPage": 63,
+      "sourceSummary": "A block slides down uniformly on an incline 0.60 m long and 0.30 m high; find kinetic friction coefficient.",
+      "originalDataAndResults": {
+        "length_m": 0.6,
+        "height_m": 0.3,
+        "angle_deg": 30,
+        "mu_k": 0.5773502691896258
+      },
+      "worksheetSlotsBefore": [
+        "tail-three-incline"
+      ],
+      "originalFigures": [],
+      "preservedSkills": [
+        "incline geometry",
+        "constant-speed friction coefficient"
+      ]
+    },
+    {
+      "id": "chapter-problem-4",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 50,
+      "pdfPage": 63,
+      "sourceSummary": "A 20 N block on a 45-degree slope with mu_k = 0.30 is pulled upslope. Find F for uniform upslope and downslope motion.",
+      "originalDataAndResults": {
+        "weight_N": 20,
+        "angle_deg": 45,
+        "mu_k": 0.3,
+        "F_up_N": 18.38477631085024,
+        "F_down_N": 9.899494936611665
+      },
+      "worksheetSlotsBefore": [
+        "tail-four-friction-directions",
+        "tail-four-up",
+        "tail-four-down"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/chapter-pull-incline.png"
+      ],
+      "preservedSkills": [
+        "kinetic friction reverses with sliding",
+        "both subparts",
+        "F remains upslope"
+      ]
+    },
+    {
+      "id": "chapter-problem-5",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 50,
+      "pdfPage": 63,
+      "sourceSummary": "A 50 N box is pushed by 20 N at 30 degrees below horizontal; find its force on the floor and mu for uniform sliding.",
+      "originalDataAndResults": {
+        "weight_N": 50,
+        "push_N": 20,
+        "angleBelowHorizontal_deg": 30,
+        "normal_N": 60,
+        "mu_k": 0.28867513459481287
+      },
+      "worksheetSlotsBefore": [
+        "tail-five-normal",
+        "tail-five-mu"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/chapter-push-box.png"
+      ],
+      "preservedSkills": [
+        "normal with downward push",
+        "third-law normal pair",
+        "kinetic coefficient"
+      ]
+    },
+    {
+      "id": "chapter-problem-6",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 51,
+      "pdfPage": 64,
+      "sourceSummary": "A 40 N table block with mu_s = 0.4 is linked to a knot with an inclined 30-degree support rope; find maximum hanging W.",
+      "originalDataAndResults": {
+        "blockWeight_N": 40,
+        "mu_s": 0.4,
+        "supportAboveHorizontal_deg": 30,
+        "T1max_N": 16,
+        "Wmax_N": 9.237604307034013,
+        "T3_N": 18.475208614068027
+      },
+      "worksheetSlotsBefore": [
+        "tail-six-block",
+        "tail-six-knot"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/chapter-friction-knot.png"
+      ],
+      "preservedSkills": [
+        "separate block and knot",
+        "limiting static friction",
+        "maximum weight"
+      ]
+    },
+    {
+      "id": "chapter-problem-7",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 51,
+      "pdfPage": 64,
+      "sourceSummary": "A 20 N hanging load over a frictionless pulley is connected to a 25 N block on a 30-degree incline, just moving up; find static coefficient.",
+      "originalDataAndResults": {
+        "hangingWeight_N": 20,
+        "blockWeight_N": 25,
+        "angle_deg": 30,
+        "friction": "downslope at impending up",
+        "mu_s": 0.3464101615137754
+      },
+      "worksheetSlotsBefore": [
+        "tail-seven-directions",
+        "tail-seven-mu"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/chapter-incline-pulley.png"
+      ],
+      "preservedSkills": [
+        "same rope tension",
+        "impending direction",
+        "static coefficient"
+      ]
+    },
+    {
+      "id": "chapter-challenge-21",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 56,
+      "pdfPage": 69,
+      "sourceSummary": "Increase an incline from 30 degrees until impending slide at 60 degrees; describe static friction change.",
+      "originalDataAndResults": {
+        "start_deg": 30,
+        "threshold_deg": 60,
+        "friction": "mg sin theta increases while at rest",
+        "thresholdFriction": "sqrt(3) mg/2"
+      },
+      "worksheetSlotsBefore": [
+        "challenge-twenty-one"
+      ],
+      "originalFigures": [],
+      "preservedSkills": [
+        "actual static friction changes",
+        "maximum only at threshold"
+      ]
+    },
+    {
+      "id": "chapter-challenge-25",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 57,
+      "pdfPage": 70,
+      "sourceSummary": "A kite bridle has a 10 N horizontal tie, upper cord 45 degrees and lower cord 30 degrees from vertical; find both tensions.",
+      "originalDataAndResults": {
+        "horizontal_N": 10,
+        "upperFromVertical_deg": 45,
+        "lowerFromVertical_deg": 30,
+        "upperTension_N": 8.965754721680534,
+        "lowerTension_N": 7.320508075688772
+      },
+      "worksheetSlotsBefore": [
+        "kite-independent"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/chapter-kite.png"
+      ],
+      "preservedSkills": [
+        "different cord tensions",
+        "vertical-reference components",
+        "both requested tensions"
+      ]
+    },
+    {
+      "id": "chapter-challenge-26",
+      "sourceBook": "IPST Physics Book 2, Chapter 4",
+      "printedPage": 58,
+      "pdfPage": 71,
+      "sourceSummary": "Weight W hangs at B with AB horizontal and BC 60 degrees from vertical; each rope withstands 30 N. Find maximum W.",
+      "originalDataAndResults": {
+        "BC_fromVertical_deg": 60,
+        "ropeLimit_N": 30,
+        "TBC": "2W",
+        "TAB": "sqrt(3) W",
+        "Wmax_N": 15
+      },
+      "worksheetSlotsBefore": [
+        "challenge-rope-relations",
+        "challenge-rope-max"
+      ],
+      "originalFigures": [
+        "public/content/physics/ipst/equilibrium/assets/4-3-sheet/chapter-rope-limit.png"
+      ],
+      "preservedSkills": [
+        "limiting cord",
+        "maximum load",
+        "check other cords"
+      ]
+    }
+  ]
+}

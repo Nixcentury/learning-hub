@@ -1,0 +1,423 @@
+{
+  "revision": "2026-11-04",
+  "content": {
+    "totalQuestions": 87,
+    "editions": [
+      {
+        "edition": 1,
+        "questions": 44,
+        "types": {
+          "drag-drop": 11,
+          "choice": 7,
+          "number": 26
+        },
+        "bytes": 206882
+      },
+      {
+        "edition": 2,
+        "questions": 43,
+        "types": {
+          "drag-drop": 7,
+          "choice": 9,
+          "number": 27
+        },
+        "bytes": 196833
+      }
+    ],
+    "dragGaps": 62,
+    "worksheetSlotsCovered": 79,
+    "selectedSourceGroups": 25,
+    "adaptedSlotPairs": 37,
+    "visualFiles": 28,
+    "adapterAndGrading": "PASS: every correct key, every wrong choice, each drag decoy/empty, numeric wrong/empty",
+    "pairedReviewConfig": "PASS under /learning-hub/",
+    "bilingualParity": "PASS",
+    "originalSourceFigures": "UNCHANGED",
+    "simulation": "UNCHANGED"
+  },
+  "mathematics": {
+    "status": "PASS",
+    "checks": [
+      {
+        "check": "10 kg sign: T1",
+        "residual": 0.0
+      },
+      {
+        "check": "10 kg sign: T2",
+        "residual": -7.105427357601002e-15
+      },
+      {
+        "check": "6-8-10 triangle",
+        "residual": 0
+      },
+      {
+        "check": "support vectors perpendicular",
+        "residual": 0.0
+      },
+      {
+        "check": "single rope 12 N: horizontal",
+        "residual": 0.0
+      },
+      {
+        "check": "single rope 12 N: vertical",
+        "residual": 0.0
+      },
+      {
+        "check": "single rope 24 N: horizontal",
+        "residual": 8.881784197001252e-16
+      },
+      {
+        "check": "single rope 24 N: vertical",
+        "residual": 0.0
+      },
+      {
+        "check": "raised geometry",
+        "residual": 0
+      },
+      {
+        "check": "raised force x",
+        "residual": 0.0
+      },
+      {
+        "check": "raised force y",
+        "residual": 0.0
+      },
+      {
+        "check": "third-force x",
+        "residual": 3.552713678800501e-15
+      },
+      {
+        "check": "third-force y",
+        "residual": 0.0
+      },
+      {
+        "check": "chapter equilibrant x",
+        "residual": 0.0
+      },
+      {
+        "check": "chapter equilibrant y",
+        "residual": 0.0
+      },
+      {
+        "check": "push normal",
+        "residual": 3.552713678800501e-15
+      },
+      {
+        "check": "push kinetic x",
+        "residual": 0.0
+      },
+      {
+        "check": "upward pull normal",
+        "residual": 0.0
+      },
+      {
+        "check": "upward pull friction",
+        "residual": 0.0
+      },
+      {
+        "check": "incline up at constant velocity",
+        "residual": 0.0
+      },
+      {
+        "check": "incline down at constant velocity",
+        "residual": 0.0
+      },
+      {
+        "check": "incline 1.00 x .60 constant velocity",
+        "residual": -1.1102230246251565e-16
+      },
+      {
+        "check": "friction knot at limit",
+        "residual": 0.0
+      },
+      {
+        "check": "friction knot horizontal",
+        "residual": 3.552713678800501e-15
+      },
+      {
+        "check": "friction knot vertical",
+        "residual": 0.0
+      },
+      {
+        "check": "impending upslope",
+        "residual": -3.552713678800501e-15
+      },
+      {
+        "check": "cord limit vertical",
+        "residual": 0.0
+      },
+      {
+        "check": "cord limit horizontal",
+        "residual": -3.552713678800501e-15
+      },
+      {
+        "check": "kite upper",
+        "residual": -8.881784197001252e-16
+      },
+      {
+        "check": "kite lower",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-normal-unpressed-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-normal-pressed-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-collinear-three-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-components-horizontal-1 independently computed key",
+        "residual": -1.7763568394002505e-15
+      },
+      {
+        "check": "te43-components-horizontal-2 independently computed key",
+        "residual": 8.881784197001252e-16
+      },
+      {
+        "check": "te43-components-vertical-1 independently computed key",
+        "residual": 8.881784197001252e-16
+      },
+      {
+        "check": "te43-components-vertical-2 independently computed key",
+        "residual": -1.7763568394002505e-15
+      },
+      {
+        "check": "te43-bridge-one-angle-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-bridge-one-equation-1 independently computed key",
+        "residual": -3.552713678800501e-15
+      },
+      {
+        "check": "te43-bridge-two-equation-1 independently computed key",
+        "residual": -7.105427357601002e-15
+      },
+      {
+        "check": "te43-bridge-two-equation-2 independently computed key",
+        "residual": -1.4210854715202004e-14
+      },
+      {
+        "check": "te43-ex-three-components-1 independently computed key",
+        "residual": -3.552713678800501e-15
+      },
+      {
+        "check": "te43-ex-three-components-2 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-ex-three-answer-2 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-ex-three-answer-3 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-tail-one-third-force-2 independently computed key",
+        "residual": -7.105427357601002e-15
+      },
+      {
+        "check": "te43-example-one-results-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-example-one-results-2 independently computed key",
+        "residual": 3.552713678800501e-15
+      },
+      {
+        "check": "te43-parallel-one-rope-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-parallel-one-rope-2 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-ex-four-tension-1 independently computed key",
+        "residual": 7.105427357601002e-15
+      },
+      {
+        "check": "te43-ex-four-weight-1 independently computed key",
+        "residual": 1.4210854715202004e-14
+      },
+      {
+        "check": "te43-raised-geometry-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-raised-geometry-2 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-raised-force-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-raised-force-2 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-symmetric-comparison-1 independently computed key",
+        "residual": -7.105427357601002e-15
+      },
+      {
+        "check": "te43-symmetric-comparison-2 independently computed key",
+        "residual": -7.105427357601002e-15
+      },
+      {
+        "check": "te43-traffic-light-body-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-traffic-geometry-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-traffic-tensions-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-traffic-tensions-2 independently computed key",
+        "residual": 7.105427357601002e-15
+      },
+      {
+        "check": "te43-unequal-rope-practice-1 independently computed key",
+        "residual": -7.105427357601002e-15
+      },
+      {
+        "check": "te43-unequal-rope-practice-2 independently computed key",
+        "residual": -1.4210854715202004e-14
+      },
+      {
+        "check": "te43-ex-one-friction-1 independently computed key",
+        "residual": -7.105427357601002e-15
+      },
+      {
+        "check": "te43-horizontal-pull-normal-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-horizontal-pull-mu-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-horizontal-pull-mu-2 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-tail-five-normal-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-tail-five-mu-1 independently computed key",
+        "residual": -5.551115123125783e-17
+      },
+      {
+        "check": "te43-ex-two-incline-1 independently computed key",
+        "residual": -1.4210854715202004e-14
+      },
+      {
+        "check": "te43-ex-two-incline-2 independently computed key",
+        "residual": 7.105427357601002e-15
+      },
+      {
+        "check": "te43-tail-three-incline-1 independently computed key",
+        "residual": 1.1102230246251565e-16
+      },
+      {
+        "check": "te43-tail-four-up-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-tail-four-down-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-pulley-basic-limit-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-tail-six-block-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-tail-six-knot-1 independently computed key",
+        "residual": 3.552713678800501e-15
+      },
+      {
+        "check": "te43-tail-six-knot-2 independently computed key",
+        "residual": 7.105427357601002e-15
+      },
+      {
+        "check": "te43-tail-seven-mu-1 independently computed key",
+        "residual": 1.1102230246251565e-16
+      },
+      {
+        "check": "te43-challenge-rope-max-1 independently computed key",
+        "residual": 0.0
+      },
+      {
+        "check": "te43-kite-independent-1 independently computed key",
+        "residual": 8.881784197001252e-16
+      },
+      {
+        "check": "te43-kite-independent-2 independently computed key",
+        "residual": 0.0
+      }
+    ],
+    "inequalities": [
+      "static 100 N, 30 deg: actual friction 50 < maximum 60.62 N",
+      "cord AB and vertical remain below 40 N",
+      "static friction increases on 20–45 degree interval"
+    ]
+  },
+  "sharedTests": {
+    "passed": 219,
+    "failed": 0,
+    "suites": [
+      "quiz drag",
+      "numeric model",
+      "quiz review links",
+      "quiz resume",
+      "reasoning evidence resume",
+      "learning sheet",
+      "topic review",
+      "topic review print",
+      "question-bank adapter",
+      "bank menu",
+      "hub routes"
+    ]
+  },
+  "browser": {
+    "environment": "Managed static preview; standalone quiz player",
+    "checked": [
+      "Both editions load fully: 44 and 43 questions",
+      "TH/EN prompt, context, choices and reading-position labels",
+      "Edition 1 Q1: four drag/tap gaps accepted; Next shows correct read-confirmation",
+      "Edition 1 Q2: choice selection retained on language switch",
+      "Edition 1 Q6: MathLive typed 20, reload restored three answered items",
+      "Submission marked the three sampled drag/choice/numeric answers correct; unanswered items remain unanswered",
+      "Numeric solution renders MathJax after grading",
+      "Edition 2 Q43 accessible with kite diagram and scalar answer field",
+      "All sixteen new SVGs inspected through browser gallery; clarified generic theta and sign-rope angle labels"
+    ],
+    "limits": [
+      "Full Hub paired-pane interaction cannot be verified under the HTTP preview because the existing Hub requires secure-context crypto.randomUUID. Standalone Review uses its normal production-link fallback; paired-sheet metadata and production /learning-hub/ URL resolution pass adapter/shared unit checks.",
+      "Browser sampling covers representative interactions, not manual entry of all 87 answers; automated adapter tests grade all authored keys and reject wrong inputs."
+    ]
+  },
+  "sourceChecks": {
+    "sourceGroups": 25,
+    "exactWorksheetFragments": 158,
+    "originalSourceFiguresUnchanged": true,
+    "changedSlotKeysPerLanguage": 37
+  },
+  "build": "pnpm build: PASS; content validator, typecheck, Vite, Pages artifact verifier",
+  "scope": "Physics 4.3 worksheet, two authored quiz editions, topic menu, diagrams and preparation records. Shared engine and simulation unchanged."
+}

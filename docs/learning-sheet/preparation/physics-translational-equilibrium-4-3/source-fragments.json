@@ -1,0 +1,956 @@
+{
+  "baseCommit": "61eee18c4faa4b0cce57409d81a6d5fe6129480d",
+  "sourceFile": "public/content/physics/ipst/equilibrium/4-3-translational-equilibrium-learning-sheet.html",
+  "sha256": "62460ab34ba9fe01cc50c33ced66372a501b227b4dfdb67792198de92f245a90",
+  "note": "Exact pre-change worksheet fragments. These include scaffolding and translations, and are not claimed to be verbatim IPST book text.",
+  "items": [
+    {
+      "language": "th",
+      "section": 1,
+      "slot": "monitor-forces",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 1</p><p class=\"question-prompt\">จอคอมพิวเตอร์อยู่นิ่ง แปลว่าไม่มีแรงกระทำเลยหรือไม่? ระบุแรงสองแรงในรูป A</p><div data-sheet-slot=\"monitor-forces\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 1\" data-sheet-label-en=\"Question 1\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>ไม่ใช่ มีน้ำหนัก \\(W\\) ลง และแรงปฏิกิริยาตั้งฉากจากโต๊ะ \\(N\\) ขึ้น</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 1,
+      "slot": "cart-keeps-moving",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 2</p><p class=\"question-prompt\">ถ้าแรงลัพธ์แนวระดับของรถเป็นศูนย์ รถที่กำลังวิ่งจะหยุดทันทีหรือเคลื่อนที่อย่างไร?</p><div data-sheet-slot=\"cart-keeps-moving\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 2\" data-sheet-label-en=\"Question 2\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>ยังเคลื่อนที่ด้วยความเร็วเดิม ทั้งขนาดและทิศทาง</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 1,
+      "slot": "equilibrium-condition",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">สมดุลต่อการเลื่อนที่</p><div data-sheet-slot=\"equilibrium-condition\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"สมดุลต่อการเลื่อนที่\" data-sheet-label-en=\"Translational equilibrium\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>แรงลัพธ์ที่กระทำต่อวัตถุเป็นศูนย์ จึงมีความเร่งเป็นศูนย์ และความเร็วคงตัว (อาจเป็นศูนย์)<br>\\[\\sum\\vec F=0\\quad\\Rightarrow\\quad\\vec a=0,\\quad\\vec v=\\text{คงตัว}\\]</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 1,
+      "slot": "cyu-rest",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 3</p><p class=\"question-prompt\">วัตถุจะอยู่ในสมดุลต่อการเลื่อนที่และอยู่นิ่ง ต้องมีเงื่อนไขสองข้อใด?</p><div data-sheet-slot=\"cyu-rest\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 3\" data-sheet-label-en=\"Question 3\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>\\(\\sum\\vec F=0\\) และ \\(\\vec v=0\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 1,
+      "slot": "cyu-free-fall",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 4</p><p class=\"question-prompt\">วัตถุที่ตกอย่างเสรี โดยไม่คิดแรงต้านอากาศ อยู่ในสมดุลต่อการเลื่อนที่หรือไม่ เพราะอะไร?</p><div data-sheet-slot=\"cyu-free-fall\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 4\" data-sheet-label-en=\"Question 4\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>ไม่อยู่ เพราะมีแรงลัพธ์คือน้ำหนัก ทำให้มีความเร่ง \\(g\\) ลง</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 2,
+      "slot": "force-names",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">แรงที่ใช้บ่อย</p><div data-sheet-slot=\"force-names\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"แรงที่ใช้บ่อย\" data-sheet-label-en=\"Common forces\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer>\\(W=mg\\): น้ำหนัก ชี้ลง<br>\\(N\\): แรงปฏิกิริยาตั้งฉากกับผิวสัมผัส<br>\\(T\\): แรงตึงเชือก ดึงตามแนวเชือกออกจากวัตถุ<br>\\(f\\): แรงเสียดทาน ขนานผิว ต้านการเลื่อนหรือแนวโน้มการเลื่อนสัมพัทธ์ระหว่างผิว</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 2,
+      "slot": "fbd-object",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 5</p><p class=\"question-prompt\">เมื่อวิเคราะห์ก้อนวัตถุที่ผูกเชือก เราควรใส่แรงที่ก้อนวัตถุดึงเชือกลงในแผนภาพแรงของก้อนวัตถุหรือไม่?</p><div data-sheet-slot=\"fbd-object\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 5\" data-sheet-label-en=\"Question 5\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>ไม่ใส่ ใส่เฉพาะแรงที่กระทำต่อก้อนวัตถุ</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 2,
+      "slot": "normal-unpressed",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 6</p><p class=\"question-prompt\">รูป A แรงจากโต๊ะมีขนาดเท่าใด?</p><div data-sheet-slot=\"normal-unpressed\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 6\" data-sheet-label-en=\"Question 6\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>\\(N-W=0\\Rightarrow N=20\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 2,
+      "slot": "normal-pressed",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 7</p><p class=\"question-prompt\">รูป B แรงจากโต๊ะมีขนาดเท่าใด? เขียนสมการแนวดิ่งหนึ่งสมการ</p><div data-sheet-slot=\"normal-pressed\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 7\" data-sheet-label-en=\"Question 7\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>\\(N-W-P=0\\Rightarrow N=20+10=30\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 2,
+      "slot": "collinear-three",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 8</p><p class=\"question-prompt\">มีแรง 8 N ไปทางขวา และแรง 3 N ไปทางซ้าย ต้องเพิ่มแรงที่สามเท่าใดและทิศใดให้สมดุล?</p><div data-sheet-slot=\"collinear-three\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 8\" data-sheet-label-en=\"Question 8\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>5 N ไปทางซ้าย</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 2,
+      "slot": "two-force-equilibrium",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">สมดุลเมื่อมีสองแรง</p><div data-sheet-slot=\"two-force-equilibrium\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"สมดุลเมื่อมีสองแรง\" data-sheet-label-en=\"Equilibrium under two forces\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>สองแรงต้องมีขนาดเท่ากันและทิศตรงข้าม สำหรับวัตถุที่อยู่นิ่งโดยไม่หมุน แนวแรงต้องอยู่ในแนวเส้นตรงเดียวกันด้วย</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 2,
+      "slot": "cyu-smooth-rod",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 9</p><p class=\"question-prompt\">แท่งในรูปอยู่นิ่งได้หรือไม่? พิจารณาว่ามีแรงใดหักล้างแรงจากกำแพงในแนวระดับ</p><div data-sheet-slot=\"cyu-smooth-rod\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 9\" data-sheet-label-en=\"Question 9\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>ไม่ได้ ไม่มีแรงแนวระดับอีกแรงหักล้างแรงจากกำแพง</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 3,
+      "slot": "activity-resultant",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 10</p><p class=\"question-prompt\">ขณะแผ่นวัสดุอยู่นิ่ง แรงลัพธ์ที่กระทำต่อแผ่นวัสดุเป็นเท่าใด?</p><div data-sheet-slot=\"activity-resultant\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 10\" data-sheet-label-en=\"Question 10\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>เป็นศูนย์</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 3,
+      "slot": "activity-lines",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 11</p><p class=\"question-prompt\">เมื่อต่อแนวแรงทั้งสามในกรณีทดลองนี้ แนวแรงพบกันอย่างไร?</p><div data-sheet-slot=\"activity-lines\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 11\" data-sheet-label-en=\"Question 11\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>ตัดกันที่จุดเดียวกัน</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 3,
+      "slot": "activity-third-opposite",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 12</p><p class=\"question-prompt\">ถ้ารวมแรงสองแรงแรก แรงที่สามต้องมีขนาดและทิศอย่างไรเมื่อเทียบกับแรงลัพธ์นั้น?</p><div data-sheet-slot=\"activity-third-opposite\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 12\" data-sheet-label-en=\"Question 12\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>ขนาดเท่ากัน ทิศตรงข้าม</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 3,
+      "slot": "activity-triangle",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 13</p><p class=\"question-prompt\">ลูกศรสามแรงต่อหัวกับหางแล้วเป็นรูปปิดหรือไม่? แรงลัพธ์เป็นเท่าใด?</p><div data-sheet-slot=\"activity-triangle\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 13\" data-sheet-label-en=\"Question 13\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>เป็นสามเหลี่ยมปิด แรงลัพธ์เป็นศูนย์</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 3,
+      "slot": "three-force-conclusion",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">แรงสามแรงในสมดุล</p><div data-sheet-slot=\"three-force-conclusion\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แรงสามแรงในสมดุล\" data-sheet-label-en=\"Three forces in equilibrium\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>สำหรับสามแรงที่ไม่ขนานกันในระนาบเดียวกัน เมื่อวัตถุอยู่นิ่งโดยไม่หมุน แนวแรงตัดกันที่จุดเดียว และลูกศรแรงต่อหัวกับหางเป็นสามเหลี่ยมปิด</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 3,
+      "slot": "four-force-polygon",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 14</p><p class=\"question-prompt\">สี่แรงในรูป B ต่อเป็นรูปใด? แรงทุกแรงจำเป็นต้องเท่ากันหรือไม่?</p><div data-sheet-slot=\"four-force-polygon\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 14\" data-sheet-label-en=\"Question 14\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>รูปสี่เหลี่ยมปิด ไม่จำเป็นต้องเท่ากัน</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 3,
+      "slot": "four-force-groups",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 15</p><p class=\"question-prompt\">ถ้าจับคู่ \\(\\vec R_{12}=\\vec F_1+\\vec F_2\\) และ \\(\\vec R_{34}=\\vec F_3+\\vec F_4\\) ผลรวมสองกลุ่มต้องสัมพันธ์กันอย่างไร?</p><div data-sheet-slot=\"four-force-groups\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 15\" data-sheet-label-en=\"Question 15\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>\\(\\vec R_{12}=-\\vec R_{34}\\): ขนาดเท่ากัน ทิศตรงข้าม</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 3,
+      "slot": "many-force-conclusion",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">เงื่อนไขร่วมของสมดุลต่อการเลื่อนที่</p><div data-sheet-slot=\"many-force-conclusion\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"เงื่อนไขร่วมของสมดุลต่อการเลื่อนที่\" data-sheet-label-en=\"The shared condition for translational equilibrium\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>ไม่ว่าจะมีสามแรง สี่แรง หรือมากกว่า ต้องรวมแบบเวกเตอร์ได้ศูนย์ ไม่ใช่บวกเฉพาะขนาดแรง<br>\\[\\sum\\vec F=0\\]</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 4,
+      "slot": "components-rule",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">ด้านประชิดมุมกับด้านตรงข้ามมุม</p><div data-sheet-slot=\"components-rule\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ด้านประชิดมุมกับด้านตรงข้ามมุม\" data-sheet-label-en=\"Adjacent and opposite components\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>องค์ประกอบด้านประชิดมุมใช้ \\(F\\cos\\theta\\) ด้านตรงข้ามมุมใช้ \\(F\\sin\\theta\\)<br>มุมจากแกน \\(x\\): \\(F_x=F\\cos\\theta,\\ F_y=F\\sin\\theta\\)<br>ใส่เครื่องหมายบวกหรือลบตามทิศขององค์ประกอบแต่ละแกน</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 4,
+      "slot": "components-horizontal",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 16</p><p class=\"question-prompt\">รูป A จงหา \\(F_x,F_y\\)</p><div data-sheet-slot=\"components-horizontal\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 16\" data-sheet-label-en=\"Question 16\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>\\(F_x=10\\cos30^\\circ=5\\sqrt3\\approx8.66\\ \\mathrm{N}\\), \\(F_y=10\\sin30^\\circ=5\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 4,
+      "slot": "components-vertical",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 17</p><p class=\"question-prompt\">รูป B จงหา \\(F_x,F_y\\)</p><div data-sheet-slot=\"components-vertical\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 17\" data-sheet-label-en=\"Question 17\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>\\(F_x=10\\sin30^\\circ=5\\ \\mathrm{N}\\), \\(F_y=10\\cos30^\\circ=5\\sqrt3\\approx8.66\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 4,
+      "slot": "axis-equilibrium",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">สมดุลในสองมิติ</p><div data-sheet-slot=\"axis-equilibrium\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"สมดุลในสองมิติ\" data-sheet-label-en=\"Equilibrium in two dimensions\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>เลือกแกนและทิศบวก แล้วเขียนแยกสองสมการ\\[\\sum F_x=0\\qquad\\sum F_y=0\\]แกนไม่จำเป็นต้องเป็นแนวระดับ–แนวดิ่ง เช่น บนพื้นเอียงอาจใช้แกนขนานและตั้งฉากกับพื้นเอียง</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 4,
+      "slot": "tail-concept-one",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 18</p><p class=\"question-prompt\">เมื่อระบบอยู่นิ่ง เชือกควรอยู่ในแนวดิ่งหรือแนวเอียง? เพราะเหตุใด? ไม่คิดแรงต้านน้ำและแรงเสียดทานแนวระดับ</p><div data-sheet-slot=\"tail-concept-one\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 18\" data-sheet-label-en=\"Question 18\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>แนวดิ่ง เพราะไม่มีแรงภายนอกแนวระดับมาหักล้างองค์ประกอบแนวระดับของแรงตึงเชือก</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 5,
+      "slot": "sine-rule",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">กฎไซน์</p><div data-sheet-slot=\"sine-rule\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"กฎไซน์\" data-sheet-label-en=\"Sine rule\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer>ลากความสูงจาก C จะได้ \\(h=b\\sin A=a\\sin B\\)<br>จึงได้ \\(\\dfrac a{\\sin A}=\\dfrac b{\\sin B}\\) และทำแบบเดียวกันกับอีกความสูง\\[\\boxed{\\frac a{\\sin A}=\\frac b{\\sin B}=\\frac c{\\sin C}}\\]</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 5,
+      "slot": "cosine-rule",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">กฎโคไซน์</p><div data-sheet-slot=\"cosine-rule\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"กฎโคไซน์\" data-sheet-label-en=\"Cosine rule\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer>\\[\\begin{aligned}c^2&amp;=(a-b\\cos C)^2+(b\\sin C)^2\\\\&amp;=a^2-2ab\\cos C+b^2(\\cos^2 C+\\sin^2 C)\\\\\\therefore\\ c^2&amp;=a^2+b^2-2ab\\cos C\\end{aligned}\\]ใช้เมื่อรู้สองด้านและมุมระหว่างสองด้านนั้น</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 5,
+      "slot": "bridge-one-sides",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 19</p><p class=\"question-prompt\">ด้าน u, v, w แทนขนาดแรงใดตามลำดับ?</p><div data-sheet-slot=\"bridge-one-sides\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 19\" data-sheet-label-en=\"Question 19\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>\\(u=F_1=30\\ \\mathrm{N},\\ v=F_2=20\\ \\mathrm{N},\\ w=F_3\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 5,
+      "slot": "bridge-one-angle",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 20</p><p class=\"question-prompt\">มุมภายใน C ในสามเหลี่ยมมีค่าเท่าใด? เทียบกับมุม 120° ในรูปแรง</p><div data-sheet-slot=\"bridge-one-angle\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 20\" data-sheet-label-en=\"Question 20\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>\\(C=180^\\circ-120^\\circ=60^\\circ\\) เพราะย้ายแรงมาต่อหัวกับหาง</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 5,
+      "slot": "bridge-one-equation",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 21</p><p class=\"question-prompt\">เลือกกฎที่ใช้หา \\(F_3\\) แล้วเขียนสมการและคำตอบ</p><div data-sheet-slot=\"bridge-one-equation\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 21\" data-sheet-label-en=\"Question 21\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>กฎโคไซน์: \\(F_3^2=30^2+20^2-2(30)(20)\\cos60^\\circ=700\\)<br>\\(F_3=10\\sqrt7\\approx26.5\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 5,
+      "slot": "bridge-two-forces",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 22</p><p class=\"question-prompt\">ระบุแรงสามแรงที่กระทำต่อจุดต่อ แล้วจับคู่ด้าน u, v, w</p><div data-sheet-slot=\"bridge-two-forces\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 22\" data-sheet-label-en=\"Question 22\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>แรงตึงซ้าย \\(T_1\\), แรงตึงขวา \\(T_2\\), แรงดึงลง \\(W\\); \\(u=T_1,v=T_2,w=W=60\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 5,
+      "slot": "bridge-two-angles",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 23</p><p class=\"question-prompt\">จงหามุมภายใน A, B และ C ของสามเหลี่ยมด้านขวา</p><div data-sheet-slot=\"bridge-two-angles\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 23\" data-sheet-label-en=\"Question 23\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>\\(A=45^\\circ,\\ B=60^\\circ,\\ C=75^\\circ\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 5,
+      "slot": "bridge-two-equation",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 24</p><p class=\"question-prompt\">เขียนกฎไซน์ให้ตรงคู่ด้าน–มุม แล้วหาแรงตึงเชือกสองเส้น</p><div data-sheet-slot=\"bridge-two-equation\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 24\" data-sheet-label-en=\"Question 24\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer>\\[\\frac{T_1}{\\sin45^\\circ}=\\frac{T_2}{\\sin60^\\circ}=\\frac{60}{\\sin75^\\circ}\\]\\(T_1\\approx43.9\\ \\mathrm{N},\\ T_2\\approx53.8\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 6,
+      "slot": "ex-three-components",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 25</p><p class=\"question-prompt\">กำหนดขวาและขึ้นเป็นบวก จงหาองค์ประกอบแรงลัพธ์ของสองแรงที่ให้มา</p><div data-sheet-slot=\"ex-three-components\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 25\" data-sheet-label-en=\"Question 25\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>\\(R_x=-20+30\\cos60^\\circ=-5\\ \\mathrm{N}\\)<br>\\(R_y=-30\\sin60^\\circ=-15\\sqrt3\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 6,
+      "slot": "ex-three-answer",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 26</p><p class=\"question-prompt\">แรงที่สามต้องมีขนาดและทิศใด? ระบุมุมโดยวัดจากแนวระดับไปขวา</p><div data-sheet-slot=\"ex-three-answer\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 26\" data-sheet-label-en=\"Question 26\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer>\\(\\vec F_3=-\\vec R\\): \\(F_{3x}=5,F_{3y}=15\\sqrt3\\ \\mathrm{N}\\)<br>\\(F_3=\\sqrt{5^2+(15\\sqrt3)^2}=\\sqrt{700}\\approx26.5\\ \\mathrm{N}\\)<br>ทำมุม \\(\\tan^{-1}(15\\sqrt3/5)\\approx79.1^\\circ\\) เหนือแนวระดับไปขวา</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 6,
+      "slot": "tail-one-third-force",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 27</p><p class=\"question-prompt\">จงหาแรงที่สามให้สมดุล ทั้งขนาดและทิศทาง</p><div data-sheet-slot=\"tail-one-third-force\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 27\" data-sheet-label-en=\"Question 27\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer>\\(R_x=40-20\\cos60^\\circ=30,\\ R_y=20\\sin60^\\circ=10\\sqrt3\\ \\mathrm{N}\\)<br>แรงที่สามมีองค์ประกอบ \\((-30,-10\\sqrt3)\\ \\mathrm{N}\\) จึงมีขนาด \\(20\\sqrt3\\approx34.6\\ \\mathrm{N}\\) ทำมุม \\(30^\\circ\\) ต่ำกว่าแนวระดับไปซ้าย</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 7,
+      "slot": "example-one-equations",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 28</p><p class=\"question-prompt\">เขียนสมการสมดุลแนวระดับและแนวดิ่ง</p><div data-sheet-slot=\"example-one-equations\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 28\" data-sheet-label-en=\"Question 28\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>\\(T\\sin\\theta=3\\), \\(T\\cos\\theta=4\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 7,
+      "slot": "example-one-results",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 29</p><p class=\"question-prompt\">จงหา \\(T\\) และ \\(\\theta\\)</p><div data-sheet-slot=\"example-one-results\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 29\" data-sheet-label-en=\"Question 29\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(T=\\sqrt{3^2+4^2}=5\\ \\mathrm{N}\\)<br>\\(\\tan\\theta=3/4\\Rightarrow\\theta\\approx36.9^\\circ\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 7,
+      "slot": "parallel-one-rope",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 30</p><p class=\"question-prompt\">จัดเหมือนตัวอย่าง 1 แต่เปลี่ยนน้ำหนักเป็น 12 N และแรงดึงแนวระดับเป็น 5 N จงหาแรงตึงเชือกและมุมจากแนวดิ่ง</p><div data-sheet-slot=\"parallel-one-rope\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 30\" data-sheet-label-en=\"Question 30\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(T=\\sqrt{5^2+12^2}=13\\ \\mathrm{N}\\), \\(\\theta=\\tan^{-1}(5/12)\\approx22.6^\\circ\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 7,
+      "slot": "ex-four-tension",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 31</p><p class=\"question-prompt\">จงหาแรงตึงในเชือกเอียง</p><div data-sheet-slot=\"ex-four-tension\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 31\" data-sheet-label-en=\"Question 31\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>\\(T\\cos60^\\circ=30\\Rightarrow T=60\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 7,
+      "slot": "ex-four-weight",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 32</p><p class=\"question-prompt\">จงหาน้ำหนัก W ที่แขวน</p><div data-sheet-slot=\"ex-four-weight\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 32\" data-sheet-label-en=\"Question 32\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>\\(W=T\\sin60^\\circ=30\\sqrt3\\approx52.0\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 7,
+      "slot": "raised-geometry",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 33</p><p class=\"question-prompt\">หลังยกสูงขึ้น ระยะในแนวดิ่งจากจุดแขวนถึงวัตถุ และระยะที่เยื้องในแนวระดับเป็นเท่าใด?</p><div data-sheet-slot=\"raised-geometry\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 33\" data-sheet-label-en=\"Question 33\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>แนวดิ่ง \\(100-20=80\\ \\mathrm{cm}\\)<br>แนวระดับ \\(\\sqrt{100^2-80^2}=60\\ \\mathrm{cm}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 7,
+      "slot": "raised-force",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 34</p><p class=\"question-prompt\">จงหาแรงดึงแนวระดับ F และแรงตึงเชือก T</p><div data-sheet-slot=\"raised-force\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 34\" data-sheet-label-en=\"Question 34\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer>\\(\\tan\\theta=60/80\\), \\(F/40=60/80\\Rightarrow F=30\\ \\mathrm{N}\\)<br>\\(T(80/100)=40\\Rightarrow T=50\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 8,
+      "slot": "symmetric-equation",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 35</p><p class=\"question-prompt\">แรงตึงซ้ายและขวาเท่ากันเป็น \\(T\\) จงเขียนสมการแนวดิ่ง เมื่อแต่ละเชือกทำมุม \\(\\alpha\\) กับแนวระดับ</p><div data-sheet-slot=\"symmetric-equation\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 35\" data-sheet-label-en=\"Question 35\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>\\(2T\\sin\\alpha=W\\Rightarrow T=\\dfrac W{2\\sin\\alpha}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 8,
+      "slot": "symmetric-comparison",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 36</p><p class=\"question-prompt\">ถ้า W = 60 N แต่ละเชือกใน A และ B มีแรงตึงเท่าใด? กรณีใดตึงกว่า?</p><div data-sheet-slot=\"symmetric-comparison\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 36\" data-sheet-label-en=\"Question 36\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>A: \\(T=60\\ \\mathrm{N}\\); B: \\(T=20\\sqrt3\\approx34.6\\ \\mathrm{N}\\) จึงตึงกว่าใน A</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 8,
+      "slot": "traffic-light-body",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 37</p><p class=\"question-prompt\">พิจารณาเฉพาะสัญญาณไฟ จงหา T₃</p><div data-sheet-slot=\"traffic-light-body\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 37\" data-sheet-label-en=\"Question 37\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>\\(T_3=mg=5(9.8)=49\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 8,
+      "slot": "traffic-geometry",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 38</p><p class=\"question-prompt\">จากสามเหลี่ยม ABC จงหา \\(AC,\\sin\\theta_1,\\cos\\theta_1,\\sin\\theta_2,\\cos\\theta_2\\)</p><div data-sheet-slot=\"traffic-geometry\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 38\" data-sheet-label-en=\"Question 38\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>\\(AC=5\\ \\mathrm{m}\\); \\(\\sin\\theta_1=3/5,\\cos\\theta_1=4/5\\)<br>\\(\\sin\\theta_2=4/5,\\cos\\theta_2=3/5\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 8,
+      "slot": "traffic-knot-equations",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 39</p><p class=\"question-prompt\">พิจารณาจุดต่อ B เขียนสมการสมดุลสองแกน</p><div data-sheet-slot=\"traffic-knot-equations\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 39\" data-sheet-label-en=\"Question 39\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>\\(T_2(3/5)-T_1(4/5)=0\\)<br>\\(T_1(3/5)+T_2(4/5)-49=0\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 8,
+      "slot": "traffic-tensions",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 40</p><p class=\"question-prompt\">แก้สมการหา T₁ และ T₂</p><div data-sheet-slot=\"traffic-tensions\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 40\" data-sheet-label-en=\"Question 40\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>สมการแรกให้ \\(T_2=4T_1/3\\) แทนสมการที่สองได้<br>\\(T_1=29.4\\ \\mathrm{N},\\ T_2=39.2\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 8,
+      "slot": "unequal-rope-practice",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 41</p><p class=\"question-prompt\">วัตถุหนัก 80 N แขวนอยู่นิ่งด้วยเชือกซ้ายทำมุม 30° และเชือกขวา 60° กับแนวระดับ จงหาแรงตึงสองเส้น</p><div data-sheet-slot=\"unequal-rope-practice\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 41\" data-sheet-label-en=\"Question 41\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer>\\(T_R\\cos60^\\circ=T_L\\cos30^\\circ\\), \\(T_L\\sin30^\\circ+T_R\\sin60^\\circ=80\\)<br>\\(T_L=40\\ \\mathrm{N},\\ T_R=40\\sqrt3\\approx69.3\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 8,
+      "slot": "tail-two-tensions",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 42</p><p class=\"question-prompt\">จงหา T₁ และ T₂ ในรูปของ W</p><div data-sheet-slot=\"tail-two-tensions\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 42\" data-sheet-label-en=\"Question 42\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer>\\(T_1\\sin60^\\circ=T_2\\sin30^\\circ\\)<br>\\(T_1\\cos60^\\circ+T_2\\cos30^\\circ=W\\)<br>\\(T_1=W/2,\\quad T_2=\\sqrt3W/2\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 8,
+      "slot": "cyu-sagging-rope",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 43</p><p class=\"question-prompt\">ทำไมเมื่อแขวนน้ำหนักตรงกลางเชือก เชือกจึงต้องหย่อนลงเล็กน้อย แทนที่จะเป็นเส้นตรงแนวระดับพอดี?</p><div data-sheet-slot=\"cyu-sagging-rope\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 43\" data-sheet-label-en=\"Question 43\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>ต้องมีองค์ประกอบแรงตึงเชือกขึ้นมารับน้ำหนัก ถ้าเชือกแนวระดับพอดีจะไม่มีองค์ประกอบขึ้น</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 8,
+      "slot": "thought-rope-breaks",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 44</p><p class=\"question-prompt\">หากเพิ่มมวลที่แขวนอย่างเท่ากัน เชือกกรณี ก หรือ ข มีแนวโน้มขาดก่อน? เพราะอะไร?</p><div data-sheet-slot=\"thought-rope-breaks\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 44\" data-sheet-label-en=\"Question 44\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>ข เพราะเชือกเกือบแนวระดับกว่า ต้องใช้แรงตึงมากกว่าเพื่อให้องค์ประกอบแนวดิ่งรับน้ำหนักเท่ากัน</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 9,
+      "slot": "friction-model",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">แรงเสียดทานสถิตและจลน์</p><div data-sheet-slot=\"friction-model\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"แรงเสียดทานสถิตและจลน์\" data-sheet-label-en=\"Static and kinetic friction\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer>ยังไม่เลื่อน: \\(0\\le f_s\\le\\mu_sN\\) ปรับขนาดตามที่ต้องใช้รักษาการอยู่นิ่ง<br>ใกล้เริ่มเลื่อน: \\(f_s=f_{s,\\max}=\\mu_sN\\)<br>กำลังเลื่อน: \\(f_k=\\mu_kN\\) ต้านการเลื่อนสัมพัทธ์<br>หาค่า \\(N\\) จากสมการตั้งฉากกับผิวก่อน ไม่แทน \\(N=mg\\) ทุกกรณี</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 9,
+      "slot": "ex-one-friction",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 45</p><p class=\"question-prompt\">ดึงกล่องบนพื้นระดับด้วยแรง 100 N ทำมุม 30° เหนือแนวระดับ กล่องเคลื่อนที่ด้วยความเร็วคงตัว จงหาแรงเสียดทานและทิศ</p><div data-sheet-slot=\"ex-one-friction\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 45\" data-sheet-label-en=\"Question 45\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(f_k=100\\cos30^\\circ=50\\sqrt3\\approx86.6\\ \\mathrm{N}\\) ทิศตรงข้ามการเคลื่อนที่</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 9,
+      "slot": "horizontal-pull-normal",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 46</p><p class=\"question-prompt\">กล่องหนัก 100 N ถูกดึง 50 N ที่มุม 37° เหนือแนวระดับ และเลื่อนด้วยความเร็วคงตัว ให้ sin 37° = 0.6, cos 37° = 0.8 จงหา N</p><div data-sheet-slot=\"horizontal-pull-normal\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 46\" data-sheet-label-en=\"Question 46\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>\\(N+50(0.6)-100=0\\Rightarrow N=70\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 9,
+      "slot": "horizontal-pull-mu",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 47</p><p class=\"question-prompt\">จากกรณีกล่องหนัก 100 N ข้างบน จงหาแรงเสียดทานและ μₖ</p><div data-sheet-slot=\"horizontal-pull-mu\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 47\" data-sheet-label-en=\"Question 47\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>\\(f_k=50(0.8)=40\\ \\mathrm{N}\\)<br>\\(\\mu_k=f_k/N=40/70=4/7\\approx0.571\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 9,
+      "slot": "tail-five-normal",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 48</p><p class=\"question-prompt\">จงหาแรงที่กล่องกดพื้นในแนวตั้งฉาก มีขนาดเท่าใด?</p><div data-sheet-slot=\"tail-five-normal\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 48\" data-sheet-label-en=\"Question 48\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>\\(N=50+20\\sin30^\\circ=60\\ \\mathrm{N}\\) แรงที่กล่องกดพื้นมีขนาดเท่ากัน คือ 60 N ลง</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 9,
+      "slot": "tail-five-mu",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 49</p><p class=\"question-prompt\">จงหาสัมประสิทธิ์ความเสียดทานจลน์</p><div data-sheet-slot=\"tail-five-mu\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 49\" data-sheet-label-en=\"Question 49\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>\\(f_k=20\\cos30^\\circ=10\\sqrt3\\ \\mathrm{N}\\)<br>\\(\\mu_k=10\\sqrt3/60=\\sqrt3/6\\approx0.289\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 10,
+      "slot": "incline-weight-components",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 50</p><p class=\"question-prompt\">องค์ประกอบของน้ำหนักตามพื้นเอียงและตั้งฉากกับพื้นเอียงเป็นเท่าใด?</p><div data-sheet-slot=\"incline-weight-components\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 50\" data-sheet-label-en=\"Question 50\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>ตามพื้นเอียงลง: \\(mg\\sin\\theta\\)<br>ตั้งฉากกดเข้าพื้น: \\(mg\\cos\\theta\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 10,
+      "slot": "incline-example-results",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 51</p><p class=\"question-prompt\">จงหาแรงเสียดทานสถิตและแรงปฏิกิริยาตั้งฉาก ในรูปของ m, g, θ</p><div data-sheet-slot=\"incline-example-results\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 51\" data-sheet-label-en=\"Question 51\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>\\(f_s-mg\\sin\\theta=0\\Rightarrow f_s=mg\\sin\\theta\\) ขึ้นตามพื้นเอียง<br>\\(N-mg\\cos\\theta=0\\Rightarrow N=mg\\cos\\theta\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 10,
+      "slot": "incline-static-not-maximum",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 52</p><p class=\"question-prompt\">วัตถุอยู่นิ่งบนพื้นเอียง แปลว่าใช้ \\(f_s=\\mu_sN\\) ได้เสมอหรือไม่?</p><div data-sheet-slot=\"incline-static-not-maximum\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 52\" data-sheet-label-en=\"Question 52\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>ไม่ได้ เท่ากันเฉพาะเมื่อใกล้เริ่มเลื่อน ต้องหาค่าแรงเสียดทานที่ต้องใช้แล้วเทียบกับค่าสูงสุด</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 10,
+      "slot": "ex-two-incline",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 53</p><p class=\"question-prompt\">วัตถุหนัก 50 N อยู่นิ่งบนพื้นเอียง 30° จงหา N และแรงเสียดทาน พร้อมทิศ</p><div data-sheet-slot=\"ex-two-incline\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 53\" data-sheet-label-en=\"Question 53\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(N=50\\cos30^\\circ=25\\sqrt3\\approx43.3\\ \\mathrm{N}\\)<br>\\(f_s=50\\sin30^\\circ=25\\ \\mathrm{N}\\) ขึ้นตามพื้นเอียง</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 10,
+      "slot": "incline-static-test",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 54</p><p class=\"question-prompt\">วัตถุหนัก 100 N เริ่มวางนิ่งบนพื้นเอียง 30° ที่มี μₛ = 0.70 จงตรวจว่าอยู่นิ่งได้หรือไม่ และแรงเสียดทานจริงเท่าใด</p><div data-sheet-slot=\"incline-static-test\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 54\" data-sheet-label-en=\"Question 54\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer>\\(N=100\\cos30^\\circ\\approx86.6\\ \\mathrm{N}\\)<br>ต้องใช้ \\(f_s=100\\sin30^\\circ=50\\ \\mathrm{N}\\)<br>\\(f_{s,\\max}=0.70(86.6)\\approx60.6\\ \\mathrm{N}&gt;50\\ \\mathrm{N}\\) จึงอยู่นิ่งได้ และแรงจริงคือ 50 N ขึ้นตามพื้นเอียง</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 10,
+      "slot": "tail-three-incline",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 55</p><p class=\"question-prompt\">วัตถุไถลลงด้วยความเร็วคงตัวบนพื้นเอียงยาว 0.60 m สูง 0.30 m จงหามุมเอียงและ μₖ</p><div data-sheet-slot=\"tail-three-incline\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 55\" data-sheet-label-en=\"Question 55\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer>\\(\\sin\\theta=0.30/0.60=1/2\\Rightarrow\\theta=30^\\circ\\)<br>\\(\\mu_kN=W\\sin\\theta,\\ N=W\\cos\\theta\\)<br>\\(\\mu_k=\\tan30^\\circ=1/\\sqrt3\\approx0.577\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 10,
+      "slot": "tail-four-friction-directions",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 56</p><p class=\"question-prompt\">แรงเสียดทานชี้ทิศใดใน A และ B?</p><div data-sheet-slot=\"tail-four-friction-directions\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 56\" data-sheet-label-en=\"Question 56\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>A ลงตามพื้นเอียง · B ขึ้นตามพื้นเอียง</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 10,
+      "slot": "tail-four-up",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 57</p><p class=\"question-prompt\">ก. ต้องใช้ F เท่าใดให้เลื่อนขึ้นด้วยความเร็วคงตัว?</p><div data-sheet-slot=\"tail-four-up\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 57\" data-sheet-label-en=\"Question 57\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(N=20\\cos45^\\circ\\), \\(f_k=0.30N\\)<br>\\(F=20\\sin45^\\circ+0.30(20\\cos45^\\circ)\\approx18.4\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 10,
+      "slot": "tail-four-down",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 58</p><p class=\"question-prompt\">ข. ต้องใช้ F เท่าใดให้เลื่อนลงด้วยความเร็วคงตัว?</p><div data-sheet-slot=\"tail-four-down\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 58\" data-sheet-label-en=\"Question 58\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(F+f_k=20\\sin45^\\circ\\)<br>\\(F=20\\sin45^\\circ-0.30(20\\cos45^\\circ)\\approx9.90\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 10,
+      "slot": "challenge-twenty-one",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 59</p><p class=\"question-prompt\">ค่อย ๆ เพิ่มมุมพื้นเอียงจาก 30° จนถึง 60° ซึ่งวัตถุใกล้เริ่มไถลลงพอดี ระหว่างที่ยังอยู่นิ่ง แรงเสียดทานสถิตเพิ่มหรือลด? เปรียบเทียบค่าเริ่มและค่าสุดท้ายในรูป mg</p><div data-sheet-slot=\"challenge-twenty-one\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 59\" data-sheet-label-en=\"Question 59\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>เพิ่ม เพราะ \\(f_s=mg\\sin\\theta\\)<br>จาก \\(mg/2\\) เป็น \\(\\sqrt3mg/2\\); ค่าสุดท้ายจึงเท่ากับแรงเสียดทานสถิตสูงสุด</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 11,
+      "slot": "separate-bodies",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">ระบบเชือกและรอก</p><div data-sheet-slot=\"separate-bodies\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ระบบเชือกและรอก\" data-sheet-label-en=\"Ropes and pulleys\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>วิเคราะห์แต่ละวัตถุหรือแต่ละจุดต่อแยกกัน เชือกเบาเส้นเดียวผ่านรอกลื่นมีแรงตึงขนาดเท่ากันตลอดเส้น แต่เชือกคนละเส้นที่มาพบกันที่จุดต่อไม่จำเป็นต้องตึงเท่ากัน</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 11,
+      "slot": "pulley-basic-limit",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 60</p><p class=\"question-prompt\">จงหาน้ำหนัก W มากที่สุดที่ยังทำให้ระบบอยู่นิ่ง</p><div data-sheet-slot=\"pulley-basic-limit\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 60\" data-sheet-label-en=\"Question 60\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer>ก้อนบนโต๊ะ: \\(N=50\\ \\mathrm{N},\\ f_{s,\\max}=0.40(50)=20\\ \\mathrm{N}\\)<br>ที่ขีดจำกัด \\(T=20\\ \\mathrm{N}\\); วัตถุแขวนมี \\(W=T\\)<br>จึงได้ \\(W_{\\max}=20\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 11,
+      "slot": "tail-six-block",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 61</p><p class=\"question-prompt\">เมื่อ W มากที่สุดที่ระบบยังนิ่ง แรงตึง T₁ เป็นเท่าใด?</p><div data-sheet-slot=\"tail-six-block\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 61\" data-sheet-label-en=\"Question 61\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>\\(T_1=f_{s,\\max}=\\mu_sN=0.40(40)=16\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 11,
+      "slot": "tail-six-knot",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 62</p><p class=\"question-prompt\">ใช้สมดุลของจุดต่อ จงหา W มากที่สุด และ T₃</p><div data-sheet-slot=\"tail-six-knot\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 62\" data-sheet-label-en=\"Question 62\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer>\\(T_3\\cos30^\\circ=16\\Rightarrow T_3=32/\\sqrt3\\approx18.5\\ \\mathrm{N}\\)<br>\\(W=T_2=T_3\\sin30^\\circ=16/\\sqrt3\\approx9.24\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 11,
+      "slot": "tail-seven-directions",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 63</p><p class=\"question-prompt\">ขณะใกล้เริ่มเลื่อนขึ้น แรงเสียดทานบนก้อน 25 N ชี้ทิศใด และแรงตึงเชือกเท่าใด?</p><div data-sheet-slot=\"tail-seven-directions\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 63\" data-sheet-label-en=\"Question 63\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>แรงเสียดทานลงตามพื้นเอียง; \\(T=20\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 11,
+      "slot": "tail-seven-mu",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 64</p><p class=\"question-prompt\">จงหาสัมประสิทธิ์ความเสียดทานสถิต</p><div data-sheet-slot=\"tail-seven-mu\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 64\" data-sheet-label-en=\"Question 64\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer>\\(f_{s,\\max}=20-25\\sin30^\\circ=7.5\\ \\mathrm{N}\\)<br>\\(N=25\\cos30^\\circ\\)<br>\\(\\mu_s=7.5/(25\\cos30^\\circ)\\approx0.346\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 11,
+      "slot": "challenge-rope-relations",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 65</p><p class=\"question-prompt\">จงเขียนแรงตึง AB และ BC ในรูปของ W แล้วระบุเชือกที่จะถึงขีดจำกัดก่อน</p><div data-sheet-slot=\"challenge-rope-relations\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 65\" data-sheet-label-en=\"Question 65\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(T_{BC}\\cos60^\\circ=W\\Rightarrow T_{BC}=2W\\)<br>\\(T_{AB}=T_{BC}\\sin60^\\circ=\\sqrt3W\\); เชือกแนวดิ่งตึง \\(W\\)<br>ดังนั้น BC ถึงขีดจำกัดก่อน</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 11,
+      "slot": "challenge-rope-max",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 66</p><p class=\"question-prompt\">จงหา W มากที่สุดที่เชือกทุกเส้นยังรับได้</p><div data-sheet-slot=\"challenge-rope-max\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 66\" data-sheet-label-en=\"Question 66\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(2W\\le30\\Rightarrow W_{\\max}=15\\ \\mathrm{N}\\)<br>ตรวจ: \\(T_{AB}=15\\sqrt3\\approx26.0\\ \\mathrm{N}&lt;30\\), เชือกแนวดิ่งตึง 15 N</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 11,
+      "slot": "kite-independent",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">คำถาม 67</p><p class=\"question-prompt\">ให้ Tᵤ เป็นแรงตึงเส้นบน และ Tₗ เส้นล่าง จงหาแรงตึงทั้งสอง โดยเขียนสมการเอง</p><div data-sheet-slot=\"kite-independent\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 67\" data-sheet-label-en=\"Question 67\" style=\"--sheet-print-height:36mm\"><div data-sheet-answer>\\(T_u\\sin45^\\circ+T_l\\sin30^\\circ=10\\)<br>\\(T_u\\cos45^\\circ-T_l\\cos30^\\circ=0\\)<br>\\(T_u\\approx8.97\\ \\mathrm{N},\\quad T_l\\approx7.32\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "th",
+      "section": 11,
+      "slot": "final-method",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">ลำดับการแก้โจทย์สมดุลต่อการเลื่อนที่</p><div data-sheet-slot=\"final-method\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ลำดับการแก้โจทย์สมดุลต่อการเลื่อนที่\" data-sheet-label-en=\"A sequence for equilibrium problems\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>เลือกวัตถุ → ระบุแรงที่กระทำ → เลือกแกนและอ่านมุม → ตั้งสมการแรงลัพธ์ศูนย์ → แก้สมการ → ตรวจทิศ หน่วย และเงื่อนไขแรงเสียดทานหรือเชือก</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 1,
+      "slot": "monitor-forces",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 1</p><p class=\"question-prompt\">Does the stationary monitor have no forces on it? Name the two forces in A.</p><div data-sheet-slot=\"monitor-forces\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 1\" data-sheet-label-en=\"Question 1\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>No. Its weight \\(W\\) acts downward and the table’s normal force \\(N\\) acts upward.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 1,
+      "slot": "cart-keeps-moving",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 2</p><p class=\"question-prompt\">If the cart’s horizontal resultant is zero, how does the moving cart continue?</p><div data-sheet-slot=\"cart-keeps-moving\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 2\" data-sheet-label-en=\"Question 2\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>It keeps the same velocity: the same speed and direction.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 1,
+      "slot": "equilibrium-condition",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">Translational equilibrium</p><div data-sheet-slot=\"equilibrium-condition\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"สมดุลต่อการเลื่อนที่\" data-sheet-label-en=\"Translational equilibrium\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>The resultant force is zero, so acceleration is zero and velocity is constant (possibly zero).\\[\\sum\\vec F=0\\quad\\Rightarrow\\quad\\vec a=0,\\quad\\vec v=\\text{constant}\\]</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 1,
+      "slot": "cyu-rest",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 3</p><p class=\"question-prompt\">Which two conditions describe translational equilibrium at rest?</p><div data-sheet-slot=\"cyu-rest\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 3\" data-sheet-label-en=\"Question 3\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>\\(\\sum\\vec F=0\\) and \\(\\vec v=0\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 1,
+      "slot": "cyu-free-fall",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 4</p><p class=\"question-prompt\">Is an object in free fall, with no air resistance, in translational equilibrium? Why?</p><div data-sheet-slot=\"cyu-free-fall\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 4\" data-sheet-label-en=\"Question 4\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>No. Its weight is a nonzero resultant, producing downward acceleration \\(g\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 2,
+      "slot": "force-names",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">Common forces</p><div data-sheet-slot=\"force-names\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"แรงที่ใช้บ่อย\" data-sheet-label-en=\"Common forces\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer>\\(W=mg\\): weight, downward.<br>\\(N\\): normal force, perpendicular to the contact surface.<br>\\(T\\): tension, pulling away from the object along the rope.<br>\\(f\\): friction, along the surface, opposing relative sliding or its tendency.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 2,
+      "slot": "fbd-object",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 5</p><p class=\"question-prompt\">Should the force exerted by the block on the rope appear in the block’s force diagram?</p><div data-sheet-slot=\"fbd-object\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 5\" data-sheet-label-en=\"Question 5\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>No. Include only forces acting on the block.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 2,
+      "slot": "normal-unpressed",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 6</p><p class=\"question-prompt\">What is the normal force in A?</p><div data-sheet-slot=\"normal-unpressed\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 6\" data-sheet-label-en=\"Question 6\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>\\(N-W=0\\Rightarrow N=20\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 2,
+      "slot": "normal-pressed",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 7</p><p class=\"question-prompt\">What is the normal force in B? Write one vertical equation.</p><div data-sheet-slot=\"normal-pressed\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 7\" data-sheet-label-en=\"Question 7\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>\\(N-W-P=0\\Rightarrow N=20+10=30\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 2,
+      "slot": "collinear-three",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 8</p><p class=\"question-prompt\">Forces of 8 N right and 3 N left act. What third force gives equilibrium?</p><div data-sheet-slot=\"collinear-three\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 8\" data-sheet-label-en=\"Question 8\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>5 N to the left.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 2,
+      "slot": "two-force-equilibrium",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">Equilibrium under two forces</p><div data-sheet-slot=\"two-force-equilibrium\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"สมดุลเมื่อมีสองแรง\" data-sheet-label-en=\"Equilibrium under two forces\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>The two forces must have equal magnitudes and opposite directions. For a rigid body to remain at rest without rotating, their lines of action must also coincide.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 2,
+      "slot": "cyu-smooth-rod",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 9</p><p class=\"question-prompt\">Can this rod remain at rest? Is there a horizontal force balancing the wall’s normal force?</p><div data-sheet-slot=\"cyu-smooth-rod\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 9\" data-sheet-label-en=\"Question 9\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>No. No other horizontal force balances the wall’s normal force.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 3,
+      "slot": "activity-resultant",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 10</p><p class=\"question-prompt\">While the sheet is at rest, what is the resultant force on it?</p><div data-sheet-slot=\"activity-resultant\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 10\" data-sheet-label-en=\"Question 10\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>Zero.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 3,
+      "slot": "activity-lines",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 11</p><p class=\"question-prompt\">How do the three lines of action meet in this experiment?</p><div data-sheet-slot=\"activity-lines\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 11\" data-sheet-label-en=\"Question 11\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>They meet at one point.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 3,
+      "slot": "activity-third-opposite",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 12</p><p class=\"question-prompt\">How must the third force compare with the resultant of the first two?</p><div data-sheet-slot=\"activity-third-opposite\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 12\" data-sheet-label-en=\"Question 12\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>Equal magnitude and opposite direction.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 3,
+      "slot": "activity-triangle",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 13</p><p class=\"question-prompt\">Do the three head-to-tail arrows close? What is their resultant?</p><div data-sheet-slot=\"activity-triangle\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 13\" data-sheet-label-en=\"Question 13\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>They form a closed triangle. The resultant is zero.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 3,
+      "slot": "three-force-conclusion",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">Three forces in equilibrium</p><div data-sheet-slot=\"three-force-conclusion\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"แรงสามแรงในสมดุล\" data-sheet-label-en=\"Three forces in equilibrium\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>For three nonparallel coplanar forces maintaining a rigid body at rest, the lines of action meet at one point and the force arrows form a closed head-to-tail triangle.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 3,
+      "slot": "four-force-polygon",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 14</p><p class=\"question-prompt\">What shape do the four arrows form in B? Must all four magnitudes be equal?</p><div data-sheet-slot=\"four-force-polygon\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 14\" data-sheet-label-en=\"Question 14\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>A closed quadrilateral. The magnitudes need not be equal.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 3,
+      "slot": "four-force-groups",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 15</p><p class=\"question-prompt\">Let \\(\\vec R_{12}=\\vec F_1+\\vec F_2\\) and \\(\\vec R_{34}=\\vec F_3+\\vec F_4\\). How are these two resultants related?</p><div data-sheet-slot=\"four-force-groups\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 15\" data-sheet-label-en=\"Question 15\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>\\(\\vec R_{12}=-\\vec R_{34}\\): equal magnitudes, opposite directions.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 3,
+      "slot": "many-force-conclusion",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">The shared condition for translational equilibrium</p><div data-sheet-slot=\"many-force-conclusion\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"เงื่อนไขร่วมของสมดุลต่อการเลื่อนที่\" data-sheet-label-en=\"The shared condition for translational equilibrium\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>With three, four, or more forces, the vector sum must be zero. Adding magnitudes alone is insufficient.\\[\\sum\\vec F=0\\]</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 4,
+      "slot": "components-rule",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">Adjacent and opposite components</p><div data-sheet-slot=\"components-rule\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ด้านประชิดมุมกับด้านตรงข้ามมุม\" data-sheet-label-en=\"Adjacent and opposite components\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>The adjacent component is \\(F\\cos\\theta\\); the opposite component is \\(F\\sin\\theta\\).<br>For an angle from \\(x\\): \\(F_x=F\\cos\\theta,\\ F_y=F\\sin\\theta\\).<br>Assign each sign from its direction along the chosen axis.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 4,
+      "slot": "components-horizontal",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 16</p><p class=\"question-prompt\">Find \\(F_x,F_y\\) in A.</p><div data-sheet-slot=\"components-horizontal\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 16\" data-sheet-label-en=\"Question 16\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>\\(F_x=10\\cos30^\\circ=5\\sqrt3\\approx8.66\\ \\mathrm{N}\\), \\(F_y=10\\sin30^\\circ=5\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 4,
+      "slot": "components-vertical",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 17</p><p class=\"question-prompt\">Find \\(F_x,F_y\\) in B.</p><div data-sheet-slot=\"components-vertical\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 17\" data-sheet-label-en=\"Question 17\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>\\(F_x=10\\sin30^\\circ=5\\ \\mathrm{N}\\), \\(F_y=10\\cos30^\\circ=5\\sqrt3\\approx8.66\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 4,
+      "slot": "axis-equilibrium",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">Equilibrium in two dimensions</p><div data-sheet-slot=\"axis-equilibrium\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"สมดุลในสองมิติ\" data-sheet-label-en=\"Equilibrium in two dimensions\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>Choose the axes and positive directions, then write two separate equations.\\[\\sum F_x=0\\qquad\\sum F_y=0\\]Axes can be tilted: on a slope, parallel and perpendicular axes are often convenient.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 4,
+      "slot": "tail-concept-one",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 18</p><p class=\"question-prompt\">When this system is at rest, should the rope be vertical or inclined? Ignore horizontal friction and water resistance.</p><div data-sheet-slot=\"tail-concept-one\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 18\" data-sheet-label-en=\"Question 18\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>Vertical. No external horizontal force can balance a horizontal component of tension.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 5,
+      "slot": "sine-rule",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">Sine rule</p><div data-sheet-slot=\"sine-rule\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"กฎไซน์\" data-sheet-label-en=\"Sine rule\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer>The altitude from C gives \\(h=b\\sin A=a\\sin B\\). Thus \\(\\dfrac a{\\sin A}=\\dfrac b{\\sin B}\\); using another altitude completes the rule.\\[\\boxed{\\frac a{\\sin A}=\\frac b{\\sin B}=\\frac c{\\sin C}}\\]</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 5,
+      "slot": "cosine-rule",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">Cosine rule</p><div data-sheet-slot=\"cosine-rule\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"กฎโคไซน์\" data-sheet-label-en=\"Cosine rule\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer>\\[\\begin{aligned}c^2&amp;=(a-b\\cos C)^2+(b\\sin C)^2\\\\&amp;=a^2-2ab\\cos C+b^2(\\cos^2 C+\\sin^2 C)\\\\\\therefore\\ c^2&amp;=a^2+b^2-2ab\\cos C\\end{aligned}\\]Use it when two sides and their included angle are known.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 5,
+      "slot": "bridge-one-sides",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 19</p><p class=\"question-prompt\">Which force magnitudes correspond to sides u, v and w?</p><div data-sheet-slot=\"bridge-one-sides\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 19\" data-sheet-label-en=\"Question 19\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>\\(u=F_1=30\\ \\mathrm{N},\\ v=F_2=20\\ \\mathrm{N},\\ w=F_3\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 5,
+      "slot": "bridge-one-angle",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 20</p><p class=\"question-prompt\">What is internal angle C? Relate it to the 120° common-tail angle.</p><div data-sheet-slot=\"bridge-one-angle\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 20\" data-sheet-label-en=\"Question 20\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>\\(C=180^\\circ-120^\\circ=60^\\circ\\), because the vectors are now arranged head to tail.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 5,
+      "slot": "bridge-one-equation",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 21</p><p class=\"question-prompt\">Choose a rule to find \\(F_3\\). Write the equation and result.</p><div data-sheet-slot=\"bridge-one-equation\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 21\" data-sheet-label-en=\"Question 21\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>Cosine rule: \\(F_3^2=30^2+20^2-2(30)(20)\\cos60^\\circ=700\\).<br>\\(F_3=10\\sqrt7\\approx26.5\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 5,
+      "slot": "bridge-two-forces",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 22</p><p class=\"question-prompt\">Name the three forces at the junction and match sides u, v and w.</p><div data-sheet-slot=\"bridge-two-forces\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 22\" data-sheet-label-en=\"Question 22\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>Left tension \\(T_1\\), right tension \\(T_2\\), and downward force \\(W\\); \\(u=T_1,v=T_2,w=W=60\\ \\mathrm{N}\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 5,
+      "slot": "bridge-two-angles",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 23</p><p class=\"question-prompt\">Find internal angles A, B and C in the right-hand triangle.</p><div data-sheet-slot=\"bridge-two-angles\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 23\" data-sheet-label-en=\"Question 23\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>\\(A=45^\\circ,\\ B=60^\\circ,\\ C=75^\\circ\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 5,
+      "slot": "bridge-two-equation",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 24</p><p class=\"question-prompt\">Write the sine rule using matching opposite sides and angles, then find both tensions.</p><div data-sheet-slot=\"bridge-two-equation\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 24\" data-sheet-label-en=\"Question 24\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer>\\[\\frac{T_1}{\\sin45^\\circ}=\\frac{T_2}{\\sin60^\\circ}=\\frac{60}{\\sin75^\\circ}\\]\\(T_1\\approx43.9\\ \\mathrm{N},\\ T_2\\approx53.8\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 6,
+      "slot": "ex-three-components",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 25</p><p class=\"question-prompt\">Take right and up as positive. Find the resultant components of the two given forces.</p><div data-sheet-slot=\"ex-three-components\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 25\" data-sheet-label-en=\"Question 25\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>\\(R_x=-20+30\\cos60^\\circ=-5\\ \\mathrm{N}\\)<br>\\(R_y=-30\\sin60^\\circ=-15\\sqrt3\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 6,
+      "slot": "ex-three-answer",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 26</p><p class=\"question-prompt\">Find the third force’s magnitude and direction. Measure its angle from the rightward horizontal.</p><div data-sheet-slot=\"ex-three-answer\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 26\" data-sheet-label-en=\"Question 26\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer>\\(\\vec F_3=-\\vec R\\): \\(F_{3x}=5,F_{3y}=15\\sqrt3\\ \\mathrm{N}\\).<br>\\(F_3=\\sqrt{700}\\approx26.5\\ \\mathrm{N}\\), at \\(\\tan^{-1}(15\\sqrt3/5)\\approx79.1^\\circ\\) above the rightward horizontal.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 6,
+      "slot": "tail-one-third-force",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 27</p><p class=\"question-prompt\">Find the third force for equilibrium, including its direction.</p><div data-sheet-slot=\"tail-one-third-force\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 27\" data-sheet-label-en=\"Question 27\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer>\\(R_x=30,\\ R_y=10\\sqrt3\\ \\mathrm{N}\\). The third force is \\((-30,-10\\sqrt3)\\ \\mathrm{N}\\), magnitude \\(20\\sqrt3\\approx34.6\\ \\mathrm{N}\\), directed \\(30^\\circ\\) below the leftward horizontal.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 7,
+      "slot": "example-one-equations",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 28</p><p class=\"question-prompt\">Write horizontal and vertical equilibrium equations.</p><div data-sheet-slot=\"example-one-equations\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 28\" data-sheet-label-en=\"Question 28\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>\\(T\\sin\\theta=3\\), \\(T\\cos\\theta=4\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 7,
+      "slot": "example-one-results",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 29</p><p class=\"question-prompt\">Find \\(T\\) and \\(\\theta\\).</p><div data-sheet-slot=\"example-one-results\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 29\" data-sheet-label-en=\"Question 29\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(T=\\sqrt{3^2+4^2}=5\\ \\mathrm{N}\\).<br>\\(\\tan\\theta=3/4\\Rightarrow\\theta\\approx36.9^\\circ\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 7,
+      "slot": "parallel-one-rope",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 30</p><p class=\"question-prompt\">Use example 1’s arrangement with weight 12 N and horizontal pull 5 N. Find tension and the angle from vertical.</p><div data-sheet-slot=\"parallel-one-rope\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 30\" data-sheet-label-en=\"Question 30\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(T=\\sqrt{5^2+12^2}=13\\ \\mathrm{N}\\), \\(\\theta=\\tan^{-1}(5/12)\\approx22.6^\\circ\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 7,
+      "slot": "ex-four-tension",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 31</p><p class=\"question-prompt\">Find the inclined rope’s tension.</p><div data-sheet-slot=\"ex-four-tension\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 31\" data-sheet-label-en=\"Question 31\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>\\(T\\cos60^\\circ=30\\Rightarrow T=60\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 7,
+      "slot": "ex-four-weight",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 32</p><p class=\"question-prompt\">Find the hanging weight W.</p><div data-sheet-slot=\"ex-four-weight\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 32\" data-sheet-label-en=\"Question 32\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>\\(W=T\\sin60^\\circ=30\\sqrt3\\approx52.0\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 7,
+      "slot": "raised-geometry",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 33</p><p class=\"question-prompt\">After raising the load, find its vertical distance below the support and its horizontal displacement.</p><div data-sheet-slot=\"raised-geometry\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 33\" data-sheet-label-en=\"Question 33\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>Vertical: \\(100-20=80\\ \\mathrm{cm}\\).<br>Horizontal: \\(\\sqrt{100^2-80^2}=60\\ \\mathrm{cm}\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 7,
+      "slot": "raised-force",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 34</p><p class=\"question-prompt\">Find horizontal pull F and tension T.</p><div data-sheet-slot=\"raised-force\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 34\" data-sheet-label-en=\"Question 34\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer>\\(F/40=60/80\\Rightarrow F=30\\ \\mathrm{N}\\).<br>\\(T(80/100)=40\\Rightarrow T=50\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 8,
+      "slot": "symmetric-equation",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 35</p><p class=\"question-prompt\">Both tensions are \\(T\\). Write vertical equilibrium when each rope is at angle \\(\\alpha\\) to horizontal.</p><div data-sheet-slot=\"symmetric-equation\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 35\" data-sheet-label-en=\"Question 35\" style=\"--sheet-print-height:22mm\"><div data-sheet-answer>\\(2T\\sin\\alpha=W\\Rightarrow T=\\dfrac W{2\\sin\\alpha}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 8,
+      "slot": "symmetric-comparison",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 36</p><p class=\"question-prompt\">For W = 60 N, find the tension in each rope in A and B. Which arrangement has higher tension?</p><div data-sheet-slot=\"symmetric-comparison\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 36\" data-sheet-label-en=\"Question 36\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>A: \\(T=60\\ \\mathrm{N}\\); B: \\(T=20\\sqrt3\\approx34.6\\ \\mathrm{N}\\). A has higher tension.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 8,
+      "slot": "traffic-light-body",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 37</p><p class=\"question-prompt\">Consider the traffic light alone. Find T₃.</p><div data-sheet-slot=\"traffic-light-body\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 37\" data-sheet-label-en=\"Question 37\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>\\(T_3=mg=5(9.8)=49\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 8,
+      "slot": "traffic-geometry",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 38</p><p class=\"question-prompt\">From triangle ABC find \\(AC,\\sin\\theta_1,\\cos\\theta_1,\\sin\\theta_2,\\cos\\theta_2\\).</p><div data-sheet-slot=\"traffic-geometry\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 38\" data-sheet-label-en=\"Question 38\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>\\(AC=5\\ \\mathrm{m}\\); \\(\\sin\\theta_1=3/5,\\cos\\theta_1=4/5\\).<br>\\(\\sin\\theta_2=4/5,\\cos\\theta_2=3/5\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 8,
+      "slot": "traffic-knot-equations",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 39</p><p class=\"question-prompt\">Consider junction B. Write its two equilibrium equations.</p><div data-sheet-slot=\"traffic-knot-equations\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 39\" data-sheet-label-en=\"Question 39\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>\\(T_2(3/5)-T_1(4/5)=0\\)<br>\\(T_1(3/5)+T_2(4/5)-49=0\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 8,
+      "slot": "traffic-tensions",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 40</p><p class=\"question-prompt\">Solve for T₁ and T₂.</p><div data-sheet-slot=\"traffic-tensions\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 40\" data-sheet-label-en=\"Question 40\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>The first equation gives \\(T_2=4T_1/3\\). Substitute into the second:<br>\\(T_1=29.4\\ \\mathrm{N},\\ T_2=39.2\\ \\mathrm{N}\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 8,
+      "slot": "unequal-rope-practice",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 41</p><p class=\"question-prompt\">An 80 N load rests on two ropes: left 30° and right 60° to horizontal. Find both tensions.</p><div data-sheet-slot=\"unequal-rope-practice\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 41\" data-sheet-label-en=\"Question 41\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer>\\(T_R\\cos60^\\circ=T_L\\cos30^\\circ\\), \\(T_L\\sin30^\\circ+T_R\\sin60^\\circ=80\\).<br>\\(T_L=40\\ \\mathrm{N},\\ T_R=40\\sqrt3\\approx69.3\\ \\mathrm{N}\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 8,
+      "slot": "tail-two-tensions",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 42</p><p class=\"question-prompt\">Find T₁ and T₂ in terms of W.</p><div data-sheet-slot=\"tail-two-tensions\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 42\" data-sheet-label-en=\"Question 42\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer>\\(T_1\\sin60^\\circ=T_2\\sin30^\\circ\\)<br>\\(T_1\\cos60^\\circ+T_2\\cos30^\\circ=W\\)<br>\\(T_1=W/2,\\quad T_2=\\sqrt3W/2\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 8,
+      "slot": "cyu-sagging-rope",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 43</p><p class=\"question-prompt\">Why must a rope sag when a weight is hung at its midpoint, rather than remain perfectly horizontal?</p><div data-sheet-slot=\"cyu-sagging-rope\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 43\" data-sheet-label-en=\"Question 43\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>The tensions need upward components to support the weight. Perfectly horizontal tensions have no upward component.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 8,
+      "slot": "thought-rope-breaks",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 44</p><p class=\"question-prompt\">If the hanging masses increase equally, which arrangement, ก (left) or ข (right), tends to break first? Why?</p><div data-sheet-slot=\"thought-rope-breaks\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 44\" data-sheet-label-en=\"Question 44\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>ข (right). Its flatter ropes need greater tension to supply the same upward support.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 9,
+      "slot": "friction-model",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">Static and kinetic friction</p><div data-sheet-slot=\"friction-model\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"แรงเสียดทานสถิตและจลน์\" data-sheet-label-en=\"Static and kinetic friction\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer>No sliding: \\(0\\le f_s\\le\\mu_sN\\); static friction adjusts to maintain rest.<br>On the verge of sliding: \\(f_s=f_{s,\\max}=\\mu_sN\\).<br>Sliding: \\(f_k=\\mu_kN\\), opposing relative sliding.<br>Find \\(N\\) from perpendicular equilibrium first; it is not always \\(mg\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 9,
+      "slot": "ex-one-friction",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 45</p><p class=\"question-prompt\">A 100 N pull at 30° above horizontal moves a box at constant velocity along a level floor. Find friction and its direction.</p><div data-sheet-slot=\"ex-one-friction\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 45\" data-sheet-label-en=\"Question 45\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(f_k=100\\cos30^\\circ=50\\sqrt3\\approx86.6\\ \\mathrm{N}\\), opposite the motion.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 9,
+      "slot": "horizontal-pull-normal",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 46</p><p class=\"question-prompt\">A 100 N box is pulled by 50 N at 37° above horizontal and slides at constant velocity. Use sin 37° = 0.6 and cos 37° = 0.8. Find N.</p><div data-sheet-slot=\"horizontal-pull-normal\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 46\" data-sheet-label-en=\"Question 46\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>\\(N+50(0.6)-100=0\\Rightarrow N=70\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 9,
+      "slot": "horizontal-pull-mu",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 47</p><p class=\"question-prompt\">For the 100 N box above, find friction and μₖ.</p><div data-sheet-slot=\"horizontal-pull-mu\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 47\" data-sheet-label-en=\"Question 47\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>\\(f_k=50(0.8)=40\\ \\mathrm{N}\\).<br>\\(\\mu_k=f_k/N=40/70=4/7\\approx0.571\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 9,
+      "slot": "tail-five-normal",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 48</p><p class=\"question-prompt\">What is the magnitude of the force the box exerts perpendicular to the floor?</p><div data-sheet-slot=\"tail-five-normal\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 48\" data-sheet-label-en=\"Question 48\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>\\(N=50+20\\sin30^\\circ=60\\ \\mathrm{N}\\). The box exerts an equal 60 N downward force on the floor.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 9,
+      "slot": "tail-five-mu",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 49</p><p class=\"question-prompt\">Find the coefficient of kinetic friction.</p><div data-sheet-slot=\"tail-five-mu\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 49\" data-sheet-label-en=\"Question 49\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>\\(f_k=20\\cos30^\\circ=10\\sqrt3\\ \\mathrm{N}\\).<br>\\(\\mu_k=\\sqrt3/6\\approx0.289\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 10,
+      "slot": "incline-weight-components",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 50</p><p class=\"question-prompt\">What are the weight components along and perpendicular to the slope?</p><div data-sheet-slot=\"incline-weight-components\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 50\" data-sheet-label-en=\"Question 50\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>Down the slope: \\(mg\\sin\\theta\\).<br>Into the slope: \\(mg\\cos\\theta\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 10,
+      "slot": "incline-example-results",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 51</p><p class=\"question-prompt\">Find static friction and normal force in terms of m, g and θ.</p><div data-sheet-slot=\"incline-example-results\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 51\" data-sheet-label-en=\"Question 51\" style=\"--sheet-print-height:26mm\"><div data-sheet-answer>\\(f_s=mg\\sin\\theta\\), up the slope.<br>\\(N=mg\\cos\\theta\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 10,
+      "slot": "incline-static-not-maximum",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 52</p><p class=\"question-prompt\">Does rest on a slope always imply \\(f_s=\\mu_sN\\)?</p><div data-sheet-slot=\"incline-static-not-maximum\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 52\" data-sheet-label-en=\"Question 52\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>No. Equality holds only at impending sliding. Find the required friction and compare it with the maximum.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 10,
+      "slot": "ex-two-incline",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 53</p><p class=\"question-prompt\">A 50 N block rests on a 30° incline. Find N and friction, including its direction.</p><div data-sheet-slot=\"ex-two-incline\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 53\" data-sheet-label-en=\"Question 53\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(N=25\\sqrt3\\approx43.3\\ \\mathrm{N}\\).<br>\\(f_s=25\\ \\mathrm{N}\\), up the slope.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 10,
+      "slot": "incline-static-test",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 54</p><p class=\"question-prompt\">A 100 N block is initially at rest on a 30° slope with μₛ = 0.70. Can it stay at rest? Find the actual friction.</p><div data-sheet-slot=\"incline-static-test\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 54\" data-sheet-label-en=\"Question 54\" style=\"--sheet-print-height:34mm\"><div data-sheet-answer>\\(N\\approx86.6\\ \\mathrm{N}\\). Required friction is \\(100\\sin30^\\circ=50\\ \\mathrm{N}\\).<br>\\(f_{s,\\max}=0.70N\\approx60.6\\ \\mathrm{N}&gt;50\\ \\mathrm{N}\\). It stays at rest; actual friction is 50 N up the slope.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 10,
+      "slot": "tail-three-incline",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 55</p><p class=\"question-prompt\">A block slides down at constant velocity on a slope 0.60 m long and 0.30 m high. Find the slope angle and μₖ.</p><div data-sheet-slot=\"tail-three-incline\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 55\" data-sheet-label-en=\"Question 55\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer>\\(\\sin\\theta=0.30/0.60=1/2\\Rightarrow\\theta=30^\\circ\\).<br>\\(\\mu_kW\\cos\\theta=W\\sin\\theta\\Rightarrow\\mu_k=\\tan30^\\circ\\approx0.577\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 10,
+      "slot": "tail-four-friction-directions",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 56</p><p class=\"question-prompt\">Which way does friction act in A and B?</p><div data-sheet-slot=\"tail-four-friction-directions\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 56\" data-sheet-label-en=\"Question 56\" style=\"--sheet-print-height:16mm\"><div data-sheet-answer>A Down the slope. B Up the slope.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 10,
+      "slot": "tail-four-up",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 57</p><p class=\"question-prompt\">a. Find F for sliding up at constant velocity.</p><div data-sheet-slot=\"tail-four-up\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 57\" data-sheet-label-en=\"Question 57\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(N=20\\cos45^\\circ\\), \\(f_k=0.30N\\).<br>\\(F=20\\sin45^\\circ+0.30(20\\cos45^\\circ)\\approx18.4\\ \\mathrm{N}\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 10,
+      "slot": "tail-four-down",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 58</p><p class=\"question-prompt\">b. Find F for sliding down at constant velocity.</p><div data-sheet-slot=\"tail-four-down\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 58\" data-sheet-label-en=\"Question 58\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(F+f_k=20\\sin45^\\circ\\).<br>\\(F=20\\sin45^\\circ-0.30(20\\cos45^\\circ)\\approx9.90\\ \\mathrm{N}\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 10,
+      "slot": "challenge-twenty-one",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 59</p><p class=\"question-prompt\">A slope is slowly tilted from 30° to 60°, where the block is just about to slide down. While it remains at rest, does static friction increase or decrease? Give its initial and final values in terms of mg.</p><div data-sheet-slot=\"challenge-twenty-one\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 59\" data-sheet-label-en=\"Question 59\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>It increases, since \\(f_s=mg\\sin\\theta\\): from \\(mg/2\\) to \\(\\sqrt3mg/2\\). Only the final value equals the maximum static friction.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 11,
+      "slot": "separate-bodies",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">Ropes and pulleys</p><div data-sheet-slot=\"separate-bodies\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ระบบเชือกและรอก\" data-sheet-label-en=\"Ropes and pulleys\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>Analyze each body or junction separately. One light rope over a frictionless pulley has the same tension throughout. Different ropes meeting at a knot need not have equal tensions.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 11,
+      "slot": "pulley-basic-limit",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 60</p><p class=\"question-prompt\">Find the largest W that keeps the system at rest.</p><div data-sheet-slot=\"pulley-basic-limit\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 60\" data-sheet-label-en=\"Question 60\" style=\"--sheet-print-height:32mm\"><div data-sheet-answer>On the table: \\(N=50\\ \\mathrm{N},\\ f_{s,\\max}=20\\ \\mathrm{N}\\).<br>At the limit \\(T=20\\ \\mathrm{N}\\); for the hanging load \\(W=T\\). Thus \\(W_{\\max}=20\\ \\mathrm{N}\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 11,
+      "slot": "tail-six-block",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 61</p><p class=\"question-prompt\">At the largest W for rest, what is T₁?</p><div data-sheet-slot=\"tail-six-block\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 61\" data-sheet-label-en=\"Question 61\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>\\(T_1=f_{s,\\max}=0.40(40)=16\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 11,
+      "slot": "tail-six-knot",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 62</p><p class=\"question-prompt\">Use the knot’s equilibrium to find the largest W and T₃.</p><div data-sheet-slot=\"tail-six-knot\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 62\" data-sheet-label-en=\"Question 62\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer>\\(T_3\\cos30^\\circ=16\\Rightarrow T_3=32/\\sqrt3\\approx18.5\\ \\mathrm{N}\\).<br>\\(W=T_2=T_3\\sin30^\\circ=16/\\sqrt3\\approx9.24\\ \\mathrm{N}\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 11,
+      "slot": "tail-seven-directions",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 63</p><p class=\"question-prompt\">At impending upward sliding, which way does friction act on the 25 N block, and what is the tension?</p><div data-sheet-slot=\"tail-seven-directions\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 63\" data-sheet-label-en=\"Question 63\" style=\"--sheet-print-height:20mm\"><div data-sheet-answer>Friction acts down the slope; \\(T=20\\ \\mathrm{N}\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 11,
+      "slot": "tail-seven-mu",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 64</p><p class=\"question-prompt\">Find the coefficient of static friction.</p><div data-sheet-slot=\"tail-seven-mu\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 64\" data-sheet-label-en=\"Question 64\" style=\"--sheet-print-height:30mm\"><div data-sheet-answer>\\(f_{s,\\max}=20-25\\sin30^\\circ=7.5\\ \\mathrm{N}\\).<br>\\(N=25\\cos30^\\circ\\), so \\(\\mu_s\\approx0.346\\).</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 11,
+      "slot": "challenge-rope-relations",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 65</p><p class=\"question-prompt\">Express tensions in AB and BC in terms of W. Which cord reaches its limit first?</p><div data-sheet-slot=\"challenge-rope-relations\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 65\" data-sheet-label-en=\"Question 65\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(T_{BC}\\cos60^\\circ=W\\Rightarrow T_{BC}=2W\\).<br>\\(T_{AB}=\\sqrt3W\\); the vertical cord has tension \\(W\\). BC reaches its limit first.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 11,
+      "slot": "challenge-rope-max",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 66</p><p class=\"question-prompt\">Find the largest W that all cords can support.</p><div data-sheet-slot=\"challenge-rope-max\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 66\" data-sheet-label-en=\"Question 66\" style=\"--sheet-print-height:28mm\"><div data-sheet-answer>\\(2W\\le30\\Rightarrow W_{\\max}=15\\ \\mathrm{N}\\).<br>Check: \\(T_{AB}=15\\sqrt3\\approx26.0\\ \\mathrm{N}&lt;30\\); vertical tension is 15 N.</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 11,
+      "slot": "kite-independent",
+      "html": "<div data-print-keep class=\"question-item\"><p class=\"question-label\">Question 67</p><p class=\"question-prompt\">Let Tᵤ and Tₗ be the upper and lower tensions. Write the equations and find both tensions.</p><div data-sheet-slot=\"kite-independent\" data-sheet-size=\"large\" data-sheet-layout=\"block\" data-sheet-label-th=\"คำถาม 67\" data-sheet-label-en=\"Question 67\" style=\"--sheet-print-height:36mm\"><div data-sheet-answer>\\(T_u\\sin45^\\circ+T_l\\sin30^\\circ=10\\)<br>\\(T_u\\cos45^\\circ-T_l\\cos30^\\circ=0\\)<br>\\(T_u\\approx8.97\\ \\mathrm{N},\\quad T_l\\approx7.32\\ \\mathrm{N}\\)</div></div></div>\n"
+    },
+    {
+      "language": "en",
+      "section": 11,
+      "slot": "final-method",
+      "html": "<div data-print-keep class=\"note-block\"><p class=\"question-label\">A sequence for equilibrium problems</p><div data-sheet-slot=\"final-method\" data-sheet-size=\"medium\" data-sheet-layout=\"block\" data-sheet-label-th=\"ลำดับการแก้โจทย์สมดุลต่อการเลื่อนที่\" data-sheet-label-en=\"A sequence for equilibrium problems\" style=\"--sheet-print-height:24mm\"><div data-sheet-answer>Choose the body → identify its forces → choose axes and read angles → set the resultant to zero → solve → check directions, units, and friction or rope limits.</div></div></div>\n"
+    }
+  ]
+}

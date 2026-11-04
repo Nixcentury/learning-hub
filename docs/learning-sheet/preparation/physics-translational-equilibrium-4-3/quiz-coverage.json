@@ -1,0 +1,1226 @@
+{
+  "schemaVersion": 1,
+  "totalQuestions": 87,
+  "sheetSlots": 79,
+  "coverage": {
+    "monitor-forces": [
+      {
+        "edition": 1,
+        "question": 1,
+        "id": "te43-monitor-forces-1"
+      }
+    ],
+    "cart-keeps-moving": [
+      {
+        "edition": 1,
+        "question": 2,
+        "id": "te43-cart-keeps-moving-1"
+      }
+    ],
+    "equilibrium-condition": [
+      {
+        "edition": 1,
+        "question": 1,
+        "id": "te43-monitor-forces-1"
+      }
+    ],
+    "parallel-cyu-rest": [
+      {
+        "edition": 1,
+        "question": 1,
+        "id": "te43-monitor-forces-1"
+      }
+    ],
+    "parallel-cyu-free-fall": [
+      {
+        "edition": 1,
+        "question": 3,
+        "id": "te43-cyu-free-fall-1"
+      }
+    ],
+    "force-names": [
+      {
+        "edition": 1,
+        "question": 4,
+        "id": "te43-force-names-1"
+      }
+    ],
+    "fbd-object": [
+      {
+        "edition": 1,
+        "question": 5,
+        "id": "te43-fbd-object-1"
+      }
+    ],
+    "normal-unpressed": [
+      {
+        "edition": 1,
+        "question": 6,
+        "id": "te43-normal-unpressed-1"
+      }
+    ],
+    "normal-pressed": [
+      {
+        "edition": 1,
+        "question": 7,
+        "id": "te43-normal-pressed-1"
+      }
+    ],
+    "collinear-three": [
+      {
+        "edition": 1,
+        "question": 8,
+        "id": "te43-collinear-three-1"
+      }
+    ],
+    "two-force-equilibrium": [
+      {
+        "edition": 1,
+        "question": 9,
+        "id": "te43-two-force-equilibrium-1"
+      },
+      {
+        "edition": 1,
+        "question": 10,
+        "id": "te43-two-force-equilibrium-2"
+      }
+    ],
+    "parallel-cyu-smooth-rod": [
+      {
+        "edition": 1,
+        "question": 9,
+        "id": "te43-two-force-equilibrium-1"
+      }
+    ],
+    "activity-resultant": [
+      {
+        "edition": 1,
+        "question": 11,
+        "id": "te43-activity-resultant-1"
+      }
+    ],
+    "activity-lines": [
+      {
+        "edition": 1,
+        "question": 11,
+        "id": "te43-activity-resultant-1"
+      }
+    ],
+    "activity-third-opposite": [
+      {
+        "edition": 1,
+        "question": 11,
+        "id": "te43-activity-resultant-1"
+      }
+    ],
+    "activity-triangle": [
+      {
+        "edition": 1,
+        "question": 11,
+        "id": "te43-activity-resultant-1"
+      }
+    ],
+    "three-force-conclusion": [
+      {
+        "edition": 1,
+        "question": 11,
+        "id": "te43-activity-resultant-1"
+      }
+    ],
+    "four-force-polygon": [
+      {
+        "edition": 1,
+        "question": 12,
+        "id": "te43-four-force-polygon-1"
+      }
+    ],
+    "four-force-groups": [
+      {
+        "edition": 1,
+        "question": 12,
+        "id": "te43-four-force-polygon-1"
+      }
+    ],
+    "many-force-conclusion": [
+      {
+        "edition": 1,
+        "question": 12,
+        "id": "te43-four-force-polygon-1"
+      }
+    ],
+    "components-rule": [
+      {
+        "edition": 1,
+        "question": 13,
+        "id": "te43-components-rule-1"
+      }
+    ],
+    "components-horizontal": [
+      {
+        "edition": 1,
+        "question": 14,
+        "id": "te43-components-horizontal-1"
+      },
+      {
+        "edition": 1,
+        "question": 15,
+        "id": "te43-components-horizontal-2"
+      }
+    ],
+    "components-vertical": [
+      {
+        "edition": 1,
+        "question": 16,
+        "id": "te43-components-vertical-1"
+      },
+      {
+        "edition": 1,
+        "question": 17,
+        "id": "te43-components-vertical-2"
+      }
+    ],
+    "axis-equilibrium": [
+      {
+        "edition": 1,
+        "question": 13,
+        "id": "te43-components-rule-1"
+      }
+    ],
+    "parallel-tail-concept-one": [
+      {
+        "edition": 1,
+        "question": 18,
+        "id": "te43-tail-concept-one-1"
+      }
+    ],
+    "sine-rule": [
+      {
+        "edition": 1,
+        "question": 19,
+        "id": "te43-sine-rule-1"
+      }
+    ],
+    "cosine-rule": [
+      {
+        "edition": 1,
+        "question": 20,
+        "id": "te43-cosine-rule-1"
+      }
+    ],
+    "bridge-one-sides": [
+      {
+        "edition": 1,
+        "question": 21,
+        "id": "te43-bridge-one-sides-1"
+      }
+    ],
+    "bridge-one-angle": [
+      {
+        "edition": 1,
+        "question": 22,
+        "id": "te43-bridge-one-angle-1"
+      }
+    ],
+    "bridge-one-equation": [
+      {
+        "edition": 1,
+        "question": 23,
+        "id": "te43-bridge-one-equation-1"
+      }
+    ],
+    "bridge-two-forces": [
+      {
+        "edition": 1,
+        "question": 24,
+        "id": "te43-bridge-two-forces-1"
+      }
+    ],
+    "bridge-two-angles": [
+      {
+        "edition": 1,
+        "question": 24,
+        "id": "te43-bridge-two-forces-1"
+      }
+    ],
+    "bridge-two-equation": [
+      {
+        "edition": 1,
+        "question": 25,
+        "id": "te43-bridge-two-equation-1"
+      },
+      {
+        "edition": 1,
+        "question": 26,
+        "id": "te43-bridge-two-equation-2"
+      }
+    ],
+    "parallel-ex-three-components": [
+      {
+        "edition": 1,
+        "question": 27,
+        "id": "te43-ex-three-components-1"
+      },
+      {
+        "edition": 1,
+        "question": 28,
+        "id": "te43-ex-three-components-2"
+      }
+    ],
+    "parallel-ex-three-answer": [
+      {
+        "edition": 1,
+        "question": 29,
+        "id": "te43-ex-three-answer-1"
+      },
+      {
+        "edition": 1,
+        "question": 30,
+        "id": "te43-ex-three-answer-2"
+      },
+      {
+        "edition": 1,
+        "question": 31,
+        "id": "te43-ex-three-answer-3"
+      }
+    ],
+    "parallel-tail-one-third-force": [
+      {
+        "edition": 1,
+        "question": 32,
+        "id": "te43-tail-one-third-force-1"
+      },
+      {
+        "edition": 1,
+        "question": 33,
+        "id": "te43-tail-one-third-force-2"
+      }
+    ],
+    "parallel-example-one-equations": [
+      {
+        "edition": 1,
+        "question": 34,
+        "id": "te43-example-one-equations-1"
+      }
+    ],
+    "parallel-example-one-results": [
+      {
+        "edition": 1,
+        "question": 35,
+        "id": "te43-example-one-results-1"
+      },
+      {
+        "edition": 1,
+        "question": 36,
+        "id": "te43-example-one-results-2"
+      }
+    ],
+    "parallel-parallel-one-rope": [
+      {
+        "edition": 1,
+        "question": 37,
+        "id": "te43-parallel-one-rope-1"
+      },
+      {
+        "edition": 1,
+        "question": 38,
+        "id": "te43-parallel-one-rope-2"
+      }
+    ],
+    "parallel-ex-four-tension": [
+      {
+        "edition": 1,
+        "question": 39,
+        "id": "te43-ex-four-tension-1"
+      }
+    ],
+    "parallel-ex-four-weight": [
+      {
+        "edition": 1,
+        "question": 40,
+        "id": "te43-ex-four-weight-1"
+      }
+    ],
+    "parallel-raised-geometry": [
+      {
+        "edition": 1,
+        "question": 41,
+        "id": "te43-raised-geometry-1"
+      },
+      {
+        "edition": 1,
+        "question": 42,
+        "id": "te43-raised-geometry-2"
+      }
+    ],
+    "parallel-raised-force": [
+      {
+        "edition": 1,
+        "question": 43,
+        "id": "te43-raised-force-1"
+      },
+      {
+        "edition": 1,
+        "question": 44,
+        "id": "te43-raised-force-2"
+      }
+    ],
+    "symmetric-equation": [
+      {
+        "edition": 2,
+        "question": 1,
+        "id": "te43-symmetric-equation-1"
+      }
+    ],
+    "symmetric-comparison": [
+      {
+        "edition": 2,
+        "question": 2,
+        "id": "te43-symmetric-comparison-1"
+      },
+      {
+        "edition": 2,
+        "question": 3,
+        "id": "te43-symmetric-comparison-2"
+      }
+    ],
+    "parallel-traffic-light-body": [
+      {
+        "edition": 2,
+        "question": 4,
+        "id": "te43-traffic-light-body-1"
+      }
+    ],
+    "parallel-traffic-geometry": [
+      {
+        "edition": 2,
+        "question": 5,
+        "id": "te43-traffic-geometry-1"
+      },
+      {
+        "edition": 2,
+        "question": 6,
+        "id": "te43-traffic-geometry-2"
+      }
+    ],
+    "parallel-traffic-knot-equations": [
+      {
+        "edition": 2,
+        "question": 7,
+        "id": "te43-traffic-knot-equations-1"
+      }
+    ],
+    "parallel-traffic-tensions": [
+      {
+        "edition": 2,
+        "question": 8,
+        "id": "te43-traffic-tensions-1"
+      },
+      {
+        "edition": 2,
+        "question": 9,
+        "id": "te43-traffic-tensions-2"
+      }
+    ],
+    "unequal-rope-practice": [
+      {
+        "edition": 2,
+        "question": 10,
+        "id": "te43-unequal-rope-practice-1"
+      },
+      {
+        "edition": 2,
+        "question": 11,
+        "id": "te43-unequal-rope-practice-2"
+      }
+    ],
+    "parallel-tail-two-tensions": [
+      {
+        "edition": 2,
+        "question": 12,
+        "id": "te43-tail-two-tensions-1"
+      }
+    ],
+    "parallel-cyu-sagging-rope": [
+      {
+        "edition": 2,
+        "question": 13,
+        "id": "te43-cyu-sagging-rope-1"
+      }
+    ],
+    "parallel-thought-rope-breaks": [
+      {
+        "edition": 2,
+        "question": 13,
+        "id": "te43-cyu-sagging-rope-1"
+      }
+    ],
+    "friction-model": [
+      {
+        "edition": 2,
+        "question": 14,
+        "id": "te43-friction-model-1"
+      }
+    ],
+    "parallel-ex-one-friction": [
+      {
+        "edition": 2,
+        "question": 15,
+        "id": "te43-ex-one-friction-1"
+      },
+      {
+        "edition": 2,
+        "question": 16,
+        "id": "te43-ex-one-friction-2"
+      }
+    ],
+    "horizontal-pull-normal": [
+      {
+        "edition": 2,
+        "question": 17,
+        "id": "te43-horizontal-pull-normal-1"
+      }
+    ],
+    "horizontal-pull-mu": [
+      {
+        "edition": 2,
+        "question": 18,
+        "id": "te43-horizontal-pull-mu-1"
+      },
+      {
+        "edition": 2,
+        "question": 19,
+        "id": "te43-horizontal-pull-mu-2"
+      }
+    ],
+    "parallel-tail-five-normal": [
+      {
+        "edition": 2,
+        "question": 20,
+        "id": "te43-tail-five-normal-1"
+      }
+    ],
+    "parallel-tail-five-mu": [
+      {
+        "edition": 2,
+        "question": 21,
+        "id": "te43-tail-five-mu-1"
+      }
+    ],
+    "incline-weight-components": [
+      {
+        "edition": 2,
+        "question": 22,
+        "id": "te43-incline-weight-components-1"
+      }
+    ],
+    "incline-example-results": [
+      {
+        "edition": 2,
+        "question": 22,
+        "id": "te43-incline-weight-components-1"
+      }
+    ],
+    "incline-static-not-maximum": [
+      {
+        "edition": 2,
+        "question": 22,
+        "id": "te43-incline-weight-components-1"
+      },
+      {
+        "edition": 2,
+        "question": 23,
+        "id": "te43-incline-static-not-maximum-1"
+      }
+    ],
+    "parallel-ex-two-incline": [
+      {
+        "edition": 2,
+        "question": 24,
+        "id": "te43-ex-two-incline-1"
+      },
+      {
+        "edition": 2,
+        "question": 25,
+        "id": "te43-ex-two-incline-2"
+      }
+    ],
+    "incline-static-test": [
+      {
+        "edition": 2,
+        "question": 26,
+        "id": "te43-incline-static-test-1"
+      }
+    ],
+    "parallel-tail-three-incline": [
+      {
+        "edition": 2,
+        "question": 27,
+        "id": "te43-tail-three-incline-1"
+      }
+    ],
+    "parallel-tail-four-friction-directions": [
+      {
+        "edition": 2,
+        "question": 28,
+        "id": "te43-tail-four-friction-directions-1"
+      }
+    ],
+    "parallel-tail-four-up": [
+      {
+        "edition": 2,
+        "question": 29,
+        "id": "te43-tail-four-up-1"
+      }
+    ],
+    "parallel-tail-four-down": [
+      {
+        "edition": 2,
+        "question": 30,
+        "id": "te43-tail-four-down-1"
+      }
+    ],
+    "parallel-challenge-twenty-one": [
+      {
+        "edition": 2,
+        "question": 31,
+        "id": "te43-challenge-twenty-one-1"
+      }
+    ],
+    "separate-bodies": [
+      {
+        "edition": 2,
+        "question": 32,
+        "id": "te43-separate-bodies-1"
+      }
+    ],
+    "pulley-basic-limit": [
+      {
+        "edition": 2,
+        "question": 33,
+        "id": "te43-pulley-basic-limit-1"
+      }
+    ],
+    "parallel-tail-six-block": [
+      {
+        "edition": 2,
+        "question": 34,
+        "id": "te43-tail-six-block-1"
+      }
+    ],
+    "parallel-tail-six-knot": [
+      {
+        "edition": 2,
+        "question": 35,
+        "id": "te43-tail-six-knot-1"
+      },
+      {
+        "edition": 2,
+        "question": 36,
+        "id": "te43-tail-six-knot-2"
+      }
+    ],
+    "parallel-tail-seven-directions": [
+      {
+        "edition": 2,
+        "question": 37,
+        "id": "te43-tail-seven-directions-1"
+      }
+    ],
+    "parallel-tail-seven-mu": [
+      {
+        "edition": 2,
+        "question": 38,
+        "id": "te43-tail-seven-mu-1"
+      }
+    ],
+    "parallel-challenge-rope-relations": [
+      {
+        "edition": 2,
+        "question": 39,
+        "id": "te43-challenge-rope-relations-1"
+      }
+    ],
+    "parallel-challenge-rope-max": [
+      {
+        "edition": 2,
+        "question": 40,
+        "id": "te43-challenge-rope-max-1"
+      },
+      {
+        "edition": 2,
+        "question": 41,
+        "id": "te43-challenge-rope-max-2"
+      }
+    ],
+    "parallel-kite-independent": [
+      {
+        "edition": 2,
+        "question": 42,
+        "id": "te43-kite-independent-1"
+      },
+      {
+        "edition": 2,
+        "question": 43,
+        "id": "te43-kite-independent-2"
+      }
+    ],
+    "final-method": [
+      {
+        "edition": 2,
+        "question": 32,
+        "id": "te43-separate-bodies-1"
+      }
+    ]
+  },
+  "sourceItems": [
+    {
+      "sourceId": "activity-4-1",
+      "originalSlots": [
+        "activity-resultant",
+        "activity-lines",
+        "activity-third-opposite",
+        "activity-triangle",
+        "three-force-conclusion"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 1,
+          "question": 11
+        }
+      ],
+      "preservedSkills": [
+        "vector sum",
+        "concurrency conditions",
+        "equilibrant",
+        "closed polygon"
+      ]
+    },
+    {
+      "sourceId": "example-4-1",
+      "originalSlots": [
+        "example-one-equations",
+        "example-one-results"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 1,
+          "question": 34
+        },
+        {
+          "edition": 1,
+          "question": 35
+        },
+        {
+          "edition": 1,
+          "question": 36
+        }
+      ],
+      "preservedSkills": [
+        "two-axis equations",
+        "rope components",
+        "tension",
+        "angle"
+      ]
+    },
+    {
+      "sourceId": "example-4-2",
+      "originalSlots": [
+        "traffic-light-body",
+        "traffic-geometry",
+        "traffic-knot-equations",
+        "traffic-tensions"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 4
+        },
+        {
+          "edition": 2,
+          "question": 5
+        },
+        {
+          "edition": 2,
+          "question": 6
+        },
+        {
+          "edition": 2,
+          "question": 7
+        },
+        {
+          "edition": 2,
+          "question": 8
+        },
+        {
+          "edition": 2,
+          "question": 9
+        }
+      ],
+      "preservedSkills": [
+        "separate load and knot",
+        "right-triangle ratios",
+        "two-axis equations",
+        "three tensions"
+      ]
+    },
+    {
+      "sourceId": "thought-p20",
+      "originalSlots": [
+        "thought-rope-breaks"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 13
+        }
+      ],
+      "preservedSkills": [
+        "vertical components",
+        "tension versus angle",
+        "equal-load comparison"
+      ]
+    },
+    {
+      "sourceId": "example-4-3",
+      "originalSlots": [
+        "incline-weight-components",
+        "incline-example-results",
+        "incline-static-not-maximum"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 22
+        },
+        {
+          "edition": 2,
+          "question": 23
+        }
+      ],
+      "preservedSkills": [
+        "weight components",
+        "normal",
+        "actual static friction",
+        "static versus maximum"
+      ]
+    },
+    {
+      "sourceId": "cyu-4-3-1",
+      "originalSlots": [
+        "cyu-rest"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 1,
+          "question": 1
+        }
+      ],
+      "preservedSkills": [
+        "net force versus velocity"
+      ]
+    },
+    {
+      "sourceId": "cyu-4-3-2",
+      "originalSlots": [
+        "cyu-free-fall"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 1,
+          "question": 3
+        }
+      ],
+      "preservedSkills": [
+        "rest at an instant versus equilibrium"
+      ]
+    },
+    {
+      "sourceId": "cyu-4-3-3",
+      "originalSlots": [
+        "cyu-smooth-rod"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 1,
+          "question": 9
+        }
+      ],
+      "preservedSkills": [
+        "free-body diagram",
+        "force balance on smooth contacts"
+      ]
+    },
+    {
+      "sourceId": "cyu-4-3-4",
+      "originalSlots": [
+        "cyu-sagging-rope"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 13
+        }
+      ],
+      "preservedSkills": [
+        "vertical component of tension"
+      ]
+    },
+    {
+      "sourceId": "exercise-4-3-1",
+      "originalSlots": [
+        "ex-one-friction"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 15
+        },
+        {
+          "edition": 2,
+          "question": 16
+        }
+      ],
+      "preservedSkills": [
+        "constant velocity",
+        "horizontal components",
+        "kinetic friction"
+      ]
+    },
+    {
+      "sourceId": "exercise-4-3-2",
+      "originalSlots": [
+        "ex-two-incline"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 24
+        },
+        {
+          "edition": 2,
+          "question": 25
+        }
+      ],
+      "preservedSkills": [
+        "normal",
+        "static friction magnitude and direction"
+      ]
+    },
+    {
+      "sourceId": "exercise-4-3-3",
+      "originalSlots": [
+        "ex-three-components",
+        "ex-three-answer"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 1,
+          "question": 27
+        },
+        {
+          "edition": 1,
+          "question": 28
+        },
+        {
+          "edition": 1,
+          "question": 29
+        },
+        {
+          "edition": 1,
+          "question": 30
+        },
+        {
+          "edition": 1,
+          "question": 31
+        }
+      ],
+      "preservedSkills": [
+        "signed components",
+        "opposite resultant",
+        "magnitude",
+        "direction"
+      ]
+    },
+    {
+      "sourceId": "exercise-4-3-4",
+      "originalSlots": [
+        "ex-four-tension",
+        "ex-four-weight"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 1,
+          "question": 39
+        },
+        {
+          "edition": 1,
+          "question": 40
+        }
+      ],
+      "preservedSkills": [
+        "knot equilibrium",
+        "horizontal and vertical tension components"
+      ]
+    },
+    {
+      "sourceId": "exercise-4-3-5",
+      "originalSlots": [
+        "raised-geometry",
+        "raised-force"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 1,
+          "question": 41
+        },
+        {
+          "edition": 1,
+          "question": 42
+        },
+        {
+          "edition": 1,
+          "question": 43
+        },
+        {
+          "edition": 1,
+          "question": 44
+        }
+      ],
+      "preservedSkills": [
+        "rise versus separation",
+        "Pythagoras",
+        "force ratio",
+        "tension extension"
+      ]
+    },
+    {
+      "sourceId": "chapter-concept-1",
+      "originalSlots": [
+        "tail-concept-one"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 1,
+          "question": 18
+        }
+      ],
+      "preservedSkills": [
+        "choose combined body",
+        "horizontal external force balance"
+      ]
+    },
+    {
+      "sourceId": "chapter-problem-1",
+      "originalSlots": [
+        "tail-one-third-force"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 1,
+          "question": 32
+        },
+        {
+          "edition": 1,
+          "question": 33
+        }
+      ],
+      "preservedSkills": [
+        "signed vector addition",
+        "equilibrant magnitude",
+        "direction extension"
+      ]
+    },
+    {
+      "sourceId": "chapter-problem-2",
+      "originalSlots": [
+        "tail-two-tensions"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 12
+        }
+      ],
+      "preservedSkills": [
+        "vertical-reference angles",
+        "symbolic tensions"
+      ]
+    },
+    {
+      "sourceId": "chapter-problem-3",
+      "originalSlots": [
+        "tail-three-incline"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 27
+        }
+      ],
+      "preservedSkills": [
+        "incline geometry",
+        "constant-speed friction coefficient"
+      ]
+    },
+    {
+      "sourceId": "chapter-problem-4",
+      "originalSlots": [
+        "tail-four-friction-directions",
+        "tail-four-up",
+        "tail-four-down"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 28
+        },
+        {
+          "edition": 2,
+          "question": 29
+        },
+        {
+          "edition": 2,
+          "question": 30
+        }
+      ],
+      "preservedSkills": [
+        "kinetic friction reverses with sliding",
+        "both subparts",
+        "F remains upslope"
+      ]
+    },
+    {
+      "sourceId": "chapter-problem-5",
+      "originalSlots": [
+        "tail-five-normal",
+        "tail-five-mu"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 20
+        },
+        {
+          "edition": 2,
+          "question": 21
+        }
+      ],
+      "preservedSkills": [
+        "normal with downward push",
+        "third-law normal pair",
+        "kinetic coefficient"
+      ]
+    },
+    {
+      "sourceId": "chapter-problem-6",
+      "originalSlots": [
+        "tail-six-block",
+        "tail-six-knot"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 34
+        },
+        {
+          "edition": 2,
+          "question": 35
+        },
+        {
+          "edition": 2,
+          "question": 36
+        }
+      ],
+      "preservedSkills": [
+        "separate block and knot",
+        "limiting static friction",
+        "maximum weight"
+      ]
+    },
+    {
+      "sourceId": "chapter-problem-7",
+      "originalSlots": [
+        "tail-seven-directions",
+        "tail-seven-mu"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 37
+        },
+        {
+          "edition": 2,
+          "question": 38
+        }
+      ],
+      "preservedSkills": [
+        "same rope tension",
+        "impending direction",
+        "static coefficient"
+      ]
+    },
+    {
+      "sourceId": "chapter-challenge-21",
+      "originalSlots": [
+        "challenge-twenty-one"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 31
+        }
+      ],
+      "preservedSkills": [
+        "actual static friction changes",
+        "maximum only at threshold"
+      ]
+    },
+    {
+      "sourceId": "chapter-challenge-25",
+      "originalSlots": [
+        "kite-independent"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 42
+        },
+        {
+          "edition": 2,
+          "question": 43
+        }
+      ],
+      "preservedSkills": [
+        "different cord tensions",
+        "vertical-reference components",
+        "both requested tensions"
+      ]
+    },
+    {
+      "sourceId": "chapter-challenge-26",
+      "originalSlots": [
+        "challenge-rope-relations",
+        "challenge-rope-max"
+      ],
+      "quizQuestions": [
+        {
+          "edition": 2,
+          "question": 39
+        },
+        {
+          "edition": 2,
+          "question": 40
+        },
+        {
+          "edition": 2,
+          "question": 41
+        }
+      ],
+      "preservedSkills": [
+        "limiting cord",
+        "maximum load",
+        "check other cords"
+      ]
+    }
+  ]
+}

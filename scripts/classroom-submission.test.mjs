@@ -192,6 +192,40 @@ test('a lost acknowledgement recovers the existing server result rather than cre
   const saved=await f.service.quizCommand('submit',binding,{value:progress({choice:'a'}),submissionId:'e'.repeat(32)});
   assert.equal(saved.grade.score,1);assert.equal(f.writes.length,1);
 });
+test('duplicate-tab submission recovers after the SDK listener briefly returns stale cached results',async t=>{
+  const f=fixture(t);await tick();const binding=await f.service.open(aid),original={...f.io};
+  let committed=false,staleReads=0;
+  f.io.update=async values=>{await original.update(values);committed=true;throw Object.assign(Error('duplicate write denied'),{code:'PERMISSION_DENIED'});};
+  f.io.get=async path=>{
+    if(committed&&path===`results/${rid}/${aid}/student`&&staleReads<2){staleReads++;return null;}
+    return original.get(path);
+  };
+  const saved=await f.service.quizCommand('submit',binding,{value:progress({choice:'a'}),submissionId:'e'.repeat(32)});
+  assert.equal(saved.result.submissionId,'e'.repeat(32));assert.equal(saved.grade.score,1);
+  assert.equal(staleReads,2);assert.equal(f.writes.length,1,'Readback must never repeat a submission write');
+});
+test('readback never claims success for a genuinely rejected submission',async t=>{
+  const f=fixture(t);await tick();const binding=await f.service.open(aid);
+  f.io.update=async()=>{throw Object.assign(Error('denied'),{code:'PERMISSION_DENIED'});};
+  await assert.rejects(f.service.quizCommand('submit',binding,{value:progress({choice:'a'}),submissionId:'e'.repeat(32)}),{code:'PERMISSION_DENIED'});
+  assert.equal(f.writes.length,0);assert.equal(f.get(`results/${rid}/${aid}/student`),null);
+});
+test('switching accounts while awaiting duplicate-submission readback stops further private reads',async t=>{
+  const f=fixture(t);await tick();const binding=await f.service.open(aid),original={...f.io};
+  let committed=false,readsAfterSwitch=0,timer;
+  t.after(()=>clearTimeout(timer));
+  f.io.update=async values=>{await original.update(values);committed=true;throw Error('lost acknowledgement');};
+  f.io.get=async path=>{
+    if(committed&&path===`results/${rid}/${aid}/student`){
+      if(f.service.getState().uid!=='student')readsAfterSwitch++;
+      if(!timer)timer=setTimeout(()=>f.context('student-b'),25);
+      return null;
+    }
+    return original.get(path);
+  };
+  await assert.rejects(f.service.quizCommand('submit',binding,{value:progress({choice:'a'}),submissionId:'e'.repeat(32)}),{code:'homework/session-changed'});
+  assert.equal(readsAfterSwitch,0);assert.equal(f.writes.length,1);
+});
 test('closing blocks new submissions but retains submitted results and does not discard the saved draft',async t=>{
   const f=fixture(t);await tick();const binding=await f.service.open(aid);
   await f.service.quizCommand('save',binding,{value:progress({choice:'b'}),storageRevision:0});

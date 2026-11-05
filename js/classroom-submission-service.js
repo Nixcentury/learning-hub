@@ -328,10 +328,15 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     } catch (failure) {
       // A committed write may lose its acknowledgement. Only this operation's
       // ID proves success; another tab's result must not masquerade as ours.
-      result = await read(finalPath); guard(actor, version, assisted, selected);
-      if (result?.submissionId !== payload.submissionId) {
+      // RTDB get() can briefly return the active listener's older server cache
+      // when another tab wins the same operation. Re-read without writing again.
+      for (let attempt = 0; attempt < 4; attempt += 1) {
+        result = await read(finalPath); guard(actor, version, assisted, selected);
+        if (result?.submissionId === payload.submissionId) break;
         if ((result?.submissionId || '') !== (payload.previousSubmissionId || '')) throw failSubmission('homework/conflict');
-        throw failure;
+        if (attempt === 3) throw failure;
+        await new Promise(resolve => setTimeout(resolve, 125));
+        guard(actor, version, assisted, selected);
       }
     }
     guard(actor, version, assisted, selected); result = await read(finalPath); guard(actor, version, assisted, selected);

@@ -15,6 +15,7 @@ import { buildAssignmentRules } from './build-classroom-assignment-rules.mjs';
 import { createRoomUpdates, joinRoomUpdates } from '../js/classroom-model.js';
 import { catalogFromRepository } from './build-route-catalog.mjs';
 import { buildFirebaseBrowserFixture } from './build-firebase-browser-fixture.mjs';
+import { createHomeworkBrowserQuiz } from './fixtures/classroom-homework-quiz.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url)), prefix = '/learning-hub/', built = process.env.QA_BUILT === '1';
 const qaRequire=createRequire(process.env.PLAYWRIGHT_MODULE ? resolve(process.env.PLAYWRIGHT_MODULE,'package.json') : import.meta.url);
 const { chromium } = qaRequire('playwright');
@@ -30,7 +31,9 @@ for (const uid of ['student','student-b']) await good(uid, 'PATCH', 'classroomV1
 const catalog = await catalogFromRepository();
 // A QA-only placement of the repository's two-question template makes exactly
 // 50% reachable. Production navigation, freezing, grading and Rules stay intact.
-const qaLocation = catalog.contents.find(content => content.source.endsWith('equilibrium/4-1-equilibrium-quiz.html')).placements[0];
+const { qaLocation, homeworkHtml, homeworkContent, homeworkQuizRoute } = createHomeworkBrowserQuiz(catalog,
+  await readFile(resolve(root, 'public/content/templates/quiz-template.html'), 'utf8'));
+catalog.contents.push(homeworkContent); catalog.routes.push(homeworkQuizRoute);
 const reviewBank = qaLocation.topicId;
 // A small owned reading keeps this integration deterministic and independent of
 // the public bank service. Production readers and homework bridges run unchanged.
@@ -88,6 +91,7 @@ const server = createServer(async (req, res) => {
     if (!resolve(directory, name).startsWith(directory.replace(/[\\/]$/, '') + sep)) throw Error('Outside root');
     let data;
     if (name === 'route-catalog.v1.json') data = JSON.stringify(catalog);
+    else if (name === 'content/qa-homework-quiz.html') data = homeworkHtml;
     else if (name === 'content/qa-homework-review.html') data = `<main data-topic-review-document data-review-quiz-bank="${reviewBank}"><section data-review-exam-question="1"><h2>ทวนข้อ 1 · Review question 1</h2><p>แยกแรงและพิจารณาแรงลัพธ์ / Identify forces and their resultant.</p></section></main>`;
     else { try { data = await readFile(resolve(directory, name)); } catch { if (built) throw Error('Missing built resource'); data = await readFile(resolve(root, 'public', name)); } }
     if (name === 'index.html') data = data.toString().replaceAll('%BASE_URL%', prefix);
@@ -214,9 +218,6 @@ try {
   await teacher.frame.locator('[data-links-list] a').waitFor({state:'hidden'});
   assert.equal(await good('teacher','GET',`classroomLinksV1/items/${roomId}/${linkId}`),null);
   console.log('PASS live classroom links: student adds → teacher sees/edits → attribution retained → author deletes');
-  const homeworkQuizRoute = catalog.routes.find(route => route.kind === 'content' && route.status === 'ready' &&
-    catalog.contents.find(item => item.id === route.contentId)?.source.endsWith('equilibrium/4-1-equilibrium-quiz.html'));
-  assert.ok(homeworkQuizRoute, 'An authored, available quiz is needed for assignment integration');
   await teacher.frame.locator('[data-hw-new]').click();
   await teacher.frame.locator('[data-hw-editor] [name="title"]').fill('ทวนคลื่น — การบ้านทดลอง');
   await teacher.frame.locator('[data-hw-editor] [name="url"]').fill(origin + prefix + homeworkQuizRoute.hash);
@@ -598,7 +599,13 @@ try {
   await teacher.frame.locator('[data-classroom-monitor]').scrollIntoViewIfNeeded();
   await teacher.page.screenshot({ path: resolve(output, 'classroom-monitor-teacher.png'), fullPage: true });
   await student.page.locator('[data-monitor-open]').click(); await student.page.screenshot({ path: resolve(output, 'classroom-monitor-student-mobile.png'), fullPage: true });
-  assert.ok(await student.page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  for (const width of [360,390]) {
+    await student.page.setViewportSize({width,height:844});
+    assert.ok(await student.page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),'Hub fits the '+width+'px mobile viewport');
+    assert.ok(await student.page.locator('.hub-topbar').evaluate(node => [...node.querySelectorAll('button,a')].every(control => {
+      const rect=control.getBoundingClientRect();return !rect.width || rect.left>=0 && rect.right<=innerWidth;
+    })),'All visible header controls fit the '+width+'px viewport');
+  }
   await student.page.locator('[data-monitor-close]').click();
   await teacher.page.locator('#hub-view [data-language="en"]').click();
   await teacher.frame.locator('[data-monitor-lock]').filter({ hasText: 'Unlock' }).waitFor();

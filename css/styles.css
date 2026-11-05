@@ -2414,7 +2414,7 @@ body.has-maximized-workspace .hub-taskbar {
   .hub-topbar :is(.role-button, .presence-button, .icon-button) { width: 34px; flex-shrink: 0; }
   .hub-topbar .hub-share-button { min-width: 34px; padding: 6px; }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .hub-actions { gap: 3px; }
   .hub-topbar { padding-inline: 8px; }
   .hub-topbar .brand-icon { width: 32px; height: 32px; }
@@ -2487,7 +2487,7 @@ body.is-subject-menu-collapsed { --workspace-top: 74px; }
 @media (max-width: 700px) {
   .hub-brand-group { gap: 6px; }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .hub-brand-group { gap: 4px; }
 }
 

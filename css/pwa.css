@@ -39,7 +39,7 @@
   .hub-topbar .hub-check-update { width: 34px; min-width: 34px; padding: 0; font-size: 0; flex-shrink: 0; }
   .hub-check-update::before { content: '↻'; font-size: 22px; }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .hub-topbar .hub-check-update { width: 30px; min-width: 30px; }
 }
 

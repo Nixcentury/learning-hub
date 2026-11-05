@@ -46,6 +46,7 @@ async function until(predicate, label) {
   while (Date.now() < deadline) { if (predicate()) return; await new Promise(done => setTimeout(done,30)); }
   throw Error('SDK timeout: ' + label + '; states=' + JSON.stringify(clients.map(value => value.state)));
 }
+let phase = 'room discovery';
 try {
   const teacher = client('teacher',true), student = client('student',false);
   await until(()=>teacher.state.connected && student.state.connected && teacher.state.rooms[0]?.ownerUid && student.state.rooms[0]?.ownerUid,'room discovery');
@@ -66,6 +67,7 @@ try {
   try {
     const teacherWork=homeworkClient(teacher,'teacher',true),studentWork=homeworkClient(student,'student',false);
     await until(()=>teacherWork.getState().connected&&studentWork.getState().connected,'homework connection');
+    phase = 'prepare/open homework';
     await teacherWork.prepare(assignmentId);const binding=await studentWork.open(assignmentId);
     const progress={version:2,identityKey:'student',contentId:'sdk-quiz',answers:{one:'a'},giveUps:{},masteredIds:[],elapsedMs:1234};
     await studentWork.quizCommand('save',binding,{value:progress,storageRevision:0});
@@ -74,6 +76,7 @@ try {
     const raceDb=sdk.getDatabase(raceApp),endpoint=new URL(emulatorOrigin);sdk.connectDatabaseEmulator(raceDb,endpoint.hostname,Number(endpoint.port),{mockUserToken:mockToken('student')});
     clients.push({app:raceApp,db:raceDb,service:{dispose(){}}});const otherStudentWork=homeworkClient({db:raceDb},'student',false);
     await until(()=>otherStudentWork.getState().connected,'second homework tab');
+    phase = 'same submission from two tabs';
     const outcomes=await Promise.all([studentWork.quizCommand('submit',binding,{value:progress,submissionId:'d'.repeat(32)}),studentWork.quizCommand('submit',binding,{value:progress,submissionId:'d'.repeat(32)}),otherStudentWork.quizCommand('submit',binding,{value:progress,submissionId:'d'.repeat(32)})]);
     assert.equal(outcomes[0].grade.score,1);for(const outcome of outcomes)assert.equal(outcomes[0].result.submittedAt,outcome.result.submittedAt);
     await until(()=>teacherWork.getState().grades[assignmentId]?.rows[0]?.grade?.score===1,'teacher homework score');
@@ -82,12 +85,14 @@ try {
     await studentWork.quizCommand('save',binding,{value:{...progress,answers:{one:'b'}},storageRevision:2,previousSubmissionId:first.submissionId});
     assert.equal((await studentWork.quizCommand('load',binding)).value.answers.one,'b');
     assert.equal((await good('student','GET',`classroomSubmissionsV1/results/${roomId}/${assignmentId}/student`)).submissionRevision,1);
+    phase = 'competing second submissions';
     const competing=await Promise.allSettled([
       studentWork.quizCommand('submit',binding,{value:progress,submissionId:'e'.repeat(32),previousSubmissionId:first.submissionId}),
       otherStudentWork.quizCommand('submit',binding,{value:{...progress,answers:{one:'b'}},submissionId:'f'.repeat(32),previousSubmissionId:first.submissionId}),
     ]);
     assert.equal(competing.filter(outcome=>outcome.status==='fulfilled').length,1,'Only one competing revision can commit');
     const second=competing.find(outcome=>outcome.status==='fulfilled').value.result;
+    phase = 'third submission after competing tabs';
     const third=await studentWork.quizCommand('submit',binding,{value:progress,submissionId:'1'.repeat(32),previousSubmissionId:second.submissionId});
     assert.equal(third.grade.submissionRevision,3);assert.equal(third.grade.score,1);
     await until(()=>teacherWork.getState().grades[assignmentId]?.rows[0]?.grade?.submissionRevision===3,'teacher latest submission revision');
@@ -95,29 +100,36 @@ try {
     await assert.rejects(otherStudentWork.quizCommand('save',binding,{value:progress,storageRevision:3,previousSubmissionId:first.submissionId}),{code:'homework/conflict'});
     console.log('PASS real SDK homework: retry acknowledgement, post-submission autosave, atomic competing submissions, immutable history and latest teacher score');
   } finally {for(const service of homeworkServices)service.dispose();}
+  phase = 'monitor join/presence';
   teacher.service.selectRoom(roomId); await teacher.service.command('lock',{roomId});
   await until(()=>student.state.lesson,'lesson available'); await student.service.command('join',{roomId});
   await until(()=>teacher.state.rows[0]?.status === 'visible','first online connection');
   assert.deepEqual(student.order.slice(0,3),['prepare-offline','register-disconnect','online']);
   console.log('PASS real SDK prepares full offline record before registering onDisconnect, then reports online');
+  phase = 'monitor message receipt';
   await teacher.service.command('nudge',{roomId,targetUid:'student',text:'SDK nudge'});
   await until(()=>student.state.selfNotices.length === 1,'message delivery');
   const id = student.state.selfNotices[0].id;
   await student.service.command('ack',{roomId,id});
   await until(()=>teacher.state.rows[0]?.notices[0]?.ackAt,'receipt update');
   console.log('PASS real SDK transactions and receipt updates obey production Rules');
+  phase = 'monitor disconnect/reconnect';
   sdk.goOffline(student.db);
   await until(()=>teacher.state.rows[0]?.status === 'disconnected','server onDisconnect update');
   sdk.goOnline(student.db);
   await until(()=>teacher.state.rows[0]?.status === 'visible','SDK reconnection');
   assert.deepEqual(errors,[]);
   console.log('PASS server executes onDisconnect after socket closure; reconnect reports online again');
+  phase = 'monitor unlock';
   await teacher.service.command('unlock',{roomId});
   await until(()=>student.state.lesson === null,'unlock stops lesson');
   // Permission cancellation is expected when an active-only read closes. No
   // first-connection/receipt write error may have been reported before unlock.
   assert.equal(student.state.selfNotices.length,0);
   console.log('PASS real SDK unlock clears student lesson and messages');
+} catch (failure) {
+  console.error('SDK failure during: ' + phase);
+  throw failure;
 } finally {
   for (const value of clients) value.service.dispose();
   for (const value of clients) { sdk.goOffline(value.db); await deleteApp(value.app); }

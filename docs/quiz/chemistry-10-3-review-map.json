@@ -1,0 +1,841 @@
+{
+  "schemaVersion": 1,
+  "activityId": "chemistry-ipst-acid-base-10-3-review",
+  "contentFile": "public/content/chemistry/ipst/acid-base/10-3-ionization-review-quiz.html",
+  "questionCount": 60,
+  "formats": {
+    "drag-drop": 20,
+    "choice": 13,
+    "number": 27
+  },
+  "readingSheet": {
+    "contentId": "chemistry-ipst-acid-base-10-3-1-sheet",
+    "source": "public/content/chemistry/ipst/acid-base/10-3-ionization-learning-sheet.html",
+    "sha256": "85ff339fda2c3258c68dd9db714067420d8cb213fbee9e007cfb01dcdf0e5452"
+  },
+  "sourceCoverage": {
+    "activity-1-ammonia": [
+      34
+    ],
+    "activity-1-aniline": [
+      34
+    ],
+    "activity-1-compare": [
+      34
+    ],
+    "activity-1-ethylamine": [
+      34
+    ],
+    "activity-2-0050": [
+      35
+    ],
+    "activity-2-010": [
+      37
+    ],
+    "activity-2-050": [
+      36
+    ],
+    "activity-2-100": [
+      37
+    ],
+    "activity-2-graph": [
+      37
+    ],
+    "activity-end-1": [
+      38
+    ],
+    "activity-end-2": [
+      38
+    ],
+    "ipst-barium-bars": [
+      6
+    ],
+    "ipst-compare-conclusion": [
+      43
+    ],
+    "ipst-compare-ha": [
+      43
+    ],
+    "ipst-compare-hb": [
+      43
+    ],
+    "ipst-example-2": [
+      8
+    ],
+    "ipst-example-3a": [
+      10
+    ],
+    "ipst-example-3b": [
+      11
+    ],
+    "ipst-example-4": [
+      18
+    ],
+    "ipst-example-5": [
+      22
+    ],
+    "ipst-example-6": [
+      30
+    ],
+    "ipst-exercise-1": [
+      14
+    ],
+    "ipst-exercise-2": [
+      27
+    ],
+    "ipst-exercise-3": [
+      21
+    ],
+    "ipst-exercise-4": [
+      31
+    ],
+    "ipst-exercise-5a": [
+      32
+    ],
+    "ipst-exercise-5b": [
+      33
+    ],
+    "ipst-exercise-6a": [
+      39
+    ],
+    "ipst-exercise-6b": [
+      40
+    ],
+    "ipst-exercise-6c": [
+      41
+    ],
+    "ipst-exercise-7": [
+      42
+    ],
+    "ipst-exercise-8a": [
+      47
+    ],
+    "ipst-exercise-8b": [
+      48
+    ],
+    "ipst-exercise-9": [
+      49
+    ],
+    "ipst-hi-moles": [
+      9
+    ],
+    "ipst-koh-mass": [
+      13
+    ],
+    "ipst-ph-order": [
+      4
+    ],
+    "ipst-quadratic": [
+      24
+    ],
+    "ipst-sulfuric": [
+      26
+    ]
+  },
+  "questions": [
+    {
+      "type": "drag-drop",
+      "id": "mobile-ions",
+      "reading": "conductivity",
+      "sources": [],
+      "number": 1,
+      "readingSection": 1,
+      "readingSlot": "ions-and-conductivity"
+    },
+    {
+      "type": "drag-drop",
+      "id": "complete-and-partial",
+      "reading": "strong",
+      "sources": [],
+      "number": 2,
+      "readingSection": 1,
+      "readingSlot": "strong-acids-list"
+    },
+    {
+      "type": "drag-drop",
+      "id": "strength-is-not-concentration",
+      "reading": "strength",
+      "sources": [],
+      "number": 3,
+      "readingSection": 1,
+      "readingSlot": "concentration-strength"
+    },
+    {
+      "type": "choice",
+      "id": "ipst-ph-order",
+      "reading": "conductivity",
+      "sources": [
+        "ipst-ph-order"
+      ],
+      "correct": 0,
+      "number": 4,
+      "readingSection": 1,
+      "readingSlot": "ions-and-conductivity"
+    },
+    {
+      "type": "drag-drop",
+      "id": "ion-coefficients",
+      "reading": "stoich",
+      "sources": [],
+      "number": 5,
+      "readingSection": 2,
+      "readingSlot": "complete-ionization"
+    },
+    {
+      "type": "choice",
+      "id": "ipst-barium-bars",
+      "reading": "stoich",
+      "sources": [
+        "ipst-barium-bars"
+      ],
+      "correct": 3,
+      "number": 6,
+      "readingSection": 2,
+      "readingSlot": "complete-ionization"
+    },
+    {
+      "type": "drag-drop",
+      "id": "moles-volume-mass",
+      "reading": "moles",
+      "sources": [],
+      "number": 7,
+      "readingSection": 3,
+      "readingSlot": "model-acid-amount"
+    },
+    {
+      "type": "number",
+      "id": "ipst-example-2",
+      "reading": "moles",
+      "sources": [
+        "ipst-example-2"
+      ],
+      "answer": 1.2,
+      "tolerance": 0.005,
+      "unit": "mol",
+      "number": 8,
+      "readingSection": 3,
+      "readingSlot": "model-acid-amount"
+    },
+    {
+      "type": "number",
+      "id": "ipst-hi-moles",
+      "reading": "moles",
+      "sources": [
+        "ipst-hi-moles"
+      ],
+      "answer": 0.1,
+      "tolerance": 0.0005,
+      "unit": "mol",
+      "number": 9,
+      "readingSection": 3,
+      "readingSlot": "model-acid-amount"
+    },
+    {
+      "type": "choice",
+      "id": "ipst-example-3a",
+      "reading": "dilution",
+      "sources": [
+        "ipst-example-3a"
+      ],
+      "correct": 0,
+      "number": 10,
+      "readingSection": 3,
+      "readingSlot": "model-dilution-concentrations"
+    },
+    {
+      "type": "choice",
+      "id": "ipst-example-3b",
+      "reading": "dilution",
+      "sources": [
+        "ipst-example-3b"
+      ],
+      "correct": 2,
+      "number": 11,
+      "readingSection": 3,
+      "readingSlot": "model-dilution-concentrations"
+    },
+    {
+      "type": "drag-drop",
+      "id": "dilution-conserves-amount",
+      "reading": "dilution",
+      "sources": [],
+      "number": 12,
+      "readingSection": 3,
+      "readingSlot": "model-dilution-concentrations"
+    },
+    {
+      "type": "number",
+      "id": "ipst-koh-mass",
+      "reading": "mass",
+      "sources": [
+        "ipst-koh-mass"
+      ],
+      "answer": 7.01375,
+      "tolerance": 0.015,
+      "unit": "g",
+      "number": 13,
+      "readingSection": 3,
+      "readingSlot": "practice-mass"
+    },
+    {
+      "type": "number",
+      "id": "ipst-exercise-1",
+      "reading": "mass",
+      "sources": [
+        "ipst-exercise-1"
+      ],
+      "answer": 8.5675,
+      "tolerance": 0.04,
+      "unit": "g",
+      "number": 14,
+      "readingSection": 3,
+      "readingSlot": "practice-mass"
+    },
+    {
+      "type": "drag-drop",
+      "id": "preparation-path",
+      "reading": "mass",
+      "sources": [],
+      "number": 15,
+      "readingSection": 3,
+      "readingSlot": "practice-mass"
+    },
+    {
+      "type": "drag-drop",
+      "id": "weak-equilibrium",
+      "reading": "partial",
+      "sources": [],
+      "number": 16,
+      "readingSection": 4,
+      "readingSlot": "weak-partial-equilibrium"
+    },
+    {
+      "type": "drag-drop",
+      "id": "percent-definition",
+      "reading": "percent",
+      "sources": [],
+      "number": 17,
+      "readingSection": 4,
+      "readingSlot": "model-ionization-percentage"
+    },
+    {
+      "type": "number",
+      "id": "ipst-example-4",
+      "reading": "percent",
+      "sources": [
+        "ipst-example-4"
+      ],
+      "answer": 4,
+      "tolerance": 0.02,
+      "unit": "%",
+      "number": 18,
+      "readingSection": 4,
+      "readingSlot": "model-ionization-percentage"
+    },
+    {
+      "type": "drag-drop",
+      "id": "ice-table",
+      "reading": "ice",
+      "sources": [],
+      "number": 19,
+      "readingSection": 5,
+      "readingSlot": "weak-ice-table"
+    },
+    {
+      "type": "drag-drop",
+      "id": "ka-expression",
+      "reading": "ka",
+      "sources": [],
+      "number": 20,
+      "readingSection": 5,
+      "readingSlot": "weak-acid-constant"
+    },
+    {
+      "type": "choice",
+      "id": "ipst-exercise-3",
+      "reading": "ka",
+      "sources": [
+        "ipst-exercise-3"
+      ],
+      "correct": 1,
+      "number": 21,
+      "readingSection": 5,
+      "readingSlot": "weak-acid-constant"
+    },
+    {
+      "type": "number",
+      "id": "ipst-example-5",
+      "reading": "approx",
+      "sources": [
+        "ipst-example-5"
+      ],
+      "answer": 0.003,
+      "tolerance": 1.5e-05,
+      "unit": "mol/L",
+      "number": 22,
+      "readingSection": 6,
+      "readingSlot": "weak-approximation-rule"
+    },
+    {
+      "type": "drag-drop",
+      "id": "approximation-rule",
+      "reading": "approx",
+      "sources": [],
+      "number": 23,
+      "readingSection": 6,
+      "readingSlot": "weak-approximation-rule"
+    },
+    {
+      "type": "number",
+      "id": "ipst-quadratic",
+      "reading": "quadratic",
+      "sources": [
+        "ipst-quadratic"
+      ],
+      "answer": 9.51249219725e-05,
+      "tolerance": 5e-08,
+      "unit": "mol/L",
+      "number": 24,
+      "readingSection": 6,
+      "readingSlot": "practice-quadratic"
+    },
+    {
+      "type": "drag-drop",
+      "id": "stepwise-acids",
+      "reading": "stepwise",
+      "sources": [],
+      "number": 25,
+      "readingSection": 7,
+      "readingSlot": "weak-stepwise"
+    },
+    {
+      "type": "choice",
+      "id": "ipst-sulfuric",
+      "reading": "stepwise",
+      "sources": [
+        "ipst-sulfuric"
+      ],
+      "correct": 3,
+      "number": 26,
+      "readingSection": 7,
+      "readingSlot": "weak-stepwise"
+    },
+    {
+      "type": "choice",
+      "id": "ipst-exercise-2",
+      "reading": "stepwise",
+      "sources": [
+        "ipst-exercise-2"
+      ],
+      "correct": 0,
+      "number": 27,
+      "readingSection": 7,
+      "readingSlot": "weak-stepwise"
+    },
+    {
+      "type": "drag-drop",
+      "id": "weak-base-equilibrium",
+      "reading": "base",
+      "sources": [],
+      "number": 28,
+      "readingSection": 8,
+      "readingSlot": "weak-base-equilibrium"
+    },
+    {
+      "type": "drag-drop",
+      "id": "base-strength",
+      "reading": "base",
+      "sources": [],
+      "number": 29,
+      "readingSection": 8,
+      "readingSlot": "weak-base-equilibrium"
+    },
+    {
+      "type": "number",
+      "id": "ipst-example-6",
+      "reading": "base",
+      "sources": [
+        "ipst-example-6"
+      ],
+      "answer": 0.948683298,
+      "tolerance": 0.01,
+      "unit": "%",
+      "number": 30,
+      "readingSection": 8,
+      "readingSlot": "weak-base-equilibrium"
+    },
+    {
+      "type": "number",
+      "id": "ipst-exercise-4",
+      "reading": "base-practice",
+      "sources": [
+        "ipst-exercise-4"
+      ],
+      "answer": 0.01414213562,
+      "tolerance": 0.00016,
+      "unit": "mol/L",
+      "number": 31,
+      "readingSection": 8,
+      "readingSlot": "practice-base-cation"
+    },
+    {
+      "type": "number",
+      "id": "ipst-exercise-5a",
+      "reading": "base-practice",
+      "sources": [
+        "ipst-exercise-5a"
+      ],
+      "answer": 0.015,
+      "tolerance": 0.00025,
+      "unit": "mol/L",
+      "number": 32,
+      "readingSection": 8,
+      "readingSlot": "practice-base-cation"
+    },
+    {
+      "type": "number",
+      "id": "ipst-exercise-5b",
+      "reading": "base-practice",
+      "sources": [
+        "ipst-exercise-5b"
+      ],
+      "answer": 3.0,
+      "tolerance": 0.035,
+      "unit": "%",
+      "number": 33,
+      "readingSection": 8,
+      "readingSlot": "practice-base-cation"
+    },
+    {
+      "type": "drag-drop",
+      "id": "activity-base-compare",
+      "reading": "base",
+      "sources": [
+        "activity-1-ethylamine",
+        "activity-1-ammonia",
+        "activity-1-aniline",
+        "activity-1-compare"
+      ],
+      "number": 34,
+      "readingSection": 8,
+      "readingSlot": "weak-base-equilibrium"
+    },
+    {
+      "type": "number",
+      "id": "activity-2-0050",
+      "reading": "trend",
+      "sources": [
+        "activity-2-0050"
+      ],
+      "answer": 1.8973665961010278,
+      "tolerance": 0.025,
+      "unit": "%",
+      "number": 35,
+      "readingSection": 9,
+      "readingSlot": "weak-dilution-weak"
+    },
+    {
+      "type": "number",
+      "id": "activity-2-050",
+      "reading": "trend",
+      "sources": [
+        "activity-2-050"
+      ],
+      "answer": 0.6,
+      "tolerance": 0.01,
+      "unit": "%",
+      "number": 36,
+      "readingSection": 9,
+      "readingSlot": "weak-dilution-weak"
+    },
+    {
+      "type": "choice",
+      "id": "activity-graph",
+      "reading": "trend",
+      "sources": [
+        "activity-2-010",
+        "activity-2-100",
+        "activity-2-graph"
+      ],
+      "correct": 1,
+      "number": 37,
+      "readingSection": 9,
+      "readingSlot": "weak-dilution-weak"
+    },
+    {
+      "type": "drag-drop",
+      "id": "activity-conclusions",
+      "reading": "trend",
+      "sources": [
+        "activity-end-1",
+        "activity-end-2"
+      ],
+      "number": 38,
+      "readingSection": 9,
+      "readingSlot": "weak-dilution-weak"
+    },
+    {
+      "type": "number",
+      "id": "ipst-exercise-6a",
+      "reading": "trend",
+      "sources": [
+        "ipst-exercise-6a"
+      ],
+      "answer": 1.5165750888103102,
+      "tolerance": 0.025,
+      "unit": "%",
+      "number": 39,
+      "readingSection": 9,
+      "readingSlot": "weak-dilution-weak"
+    },
+    {
+      "type": "number",
+      "id": "ipst-exercise-6b",
+      "reading": "trend",
+      "sources": [
+        "ipst-exercise-6b"
+      ],
+      "answer": 1.19895788082818,
+      "tolerance": 0.015,
+      "unit": "%",
+      "number": 40,
+      "readingSection": 9,
+      "readingSlot": "weak-dilution-weak"
+    },
+    {
+      "type": "choice",
+      "id": "ipst-exercise-6c",
+      "reading": "trend",
+      "sources": [
+        "ipst-exercise-6c"
+      ],
+      "correct": 2,
+      "number": 41,
+      "readingSection": 9,
+      "readingSlot": "weak-dilution-weak"
+    },
+    {
+      "type": "number",
+      "id": "ipst-exercise-7",
+      "reading": "reverse",
+      "sources": [
+        "ipst-exercise-7"
+      ],
+      "answer": 1.41715203856e-05,
+      "tolerance": 2e-07,
+      "unit": "",
+      "number": 42,
+      "readingSection": 9,
+      "readingSlot": "weak-reverse-percent"
+    },
+    {
+      "type": "choice",
+      "id": "ipst-unequal-strength",
+      "reading": "reverse",
+      "sources": [
+        "ipst-compare-ha",
+        "ipst-compare-hb",
+        "ipst-compare-conclusion"
+      ],
+      "correct": 0,
+      "number": 43,
+      "readingSection": 9,
+      "readingSlot": "weak-reverse-percent"
+    },
+    {
+      "type": "drag-drop",
+      "id": "water-constant",
+      "reading": "water",
+      "sources": [],
+      "number": 44,
+      "readingSection": 10,
+      "readingSlot": "water-water-constant"
+    },
+    {
+      "type": "number",
+      "id": "water-other-ion",
+      "reading": "water",
+      "sources": [],
+      "answer": 1e-09,
+      "tolerance": 5e-12,
+      "unit": "mol/L",
+      "number": 45,
+      "readingSection": 10,
+      "readingSlot": "water-water-constant"
+    },
+    {
+      "type": "drag-drop",
+      "id": "conjugate-product",
+      "reading": "pair",
+      "sources": [],
+      "number": 46,
+      "readingSection": 11,
+      "readingSlot": "water-constant-proof"
+    },
+    {
+      "type": "drag-drop",
+      "id": "ipst-exercise-8a",
+      "reading": "pair",
+      "sources": [
+        "ipst-exercise-8a"
+      ],
+      "number": 47,
+      "readingSection": 11,
+      "readingSlot": "water-constant-proof"
+    },
+    {
+      "type": "number",
+      "id": "ipst-exercise-8b",
+      "reading": "pair-calc",
+      "sources": [
+        "ipst-exercise-8b"
+      ],
+      "answer": 5e-09,
+      "tolerance": 2.5e-11,
+      "unit": "",
+      "number": 48,
+      "readingSection": 11,
+      "readingSlot": "water-rearrange-pair"
+    },
+    {
+      "type": "number",
+      "id": "ipst-exercise-9",
+      "reading": "pair-calc",
+      "sources": [
+        "ipst-exercise-9"
+      ],
+      "answer": 2e-05,
+      "tolerance": 1e-07,
+      "unit": "",
+      "number": 49,
+      "readingSection": 11,
+      "readingSlot": "water-rearrange-pair"
+    },
+    {
+      "type": "number",
+      "id": "apply-ion-ratio",
+      "reading": "stoich",
+      "sources": [],
+      "answer": 0.025,
+      "tolerance": 0.0001,
+      "unit": "mol/L",
+      "number": 50,
+      "readingSection": 2,
+      "readingSlot": "complete-ionization"
+    },
+    {
+      "type": "number",
+      "id": "apply-preparation-mass",
+      "reading": "mass",
+      "sources": [],
+      "answer": 0.2223,
+      "tolerance": 0.0025,
+      "unit": "g",
+      "number": 51,
+      "readingSection": 3,
+      "readingSlot": "practice-mass"
+    },
+    {
+      "type": "choice",
+      "id": "apply-dilution",
+      "reading": "dilution",
+      "sources": [],
+      "correct": 0,
+      "number": 52,
+      "readingSection": 3,
+      "readingSlot": "model-dilution-concentrations"
+    },
+    {
+      "type": "number",
+      "id": "apply-weak-acid",
+      "reading": "approx",
+      "sources": [],
+      "answer": 0.0018973665961010276,
+      "tolerance": 4e-05,
+      "unit": "mol/L",
+      "number": 53,
+      "readingSection": 6,
+      "readingSlot": "weak-approximation-rule"
+    },
+    {
+      "type": "number",
+      "id": "apply-full-equation",
+      "reading": "quadratic",
+      "sources": [],
+      "answer": 0.00038049968789001575,
+      "tolerance": 6e-07,
+      "unit": "mol/L",
+      "number": 54,
+      "readingSection": 6,
+      "readingSlot": "practice-quadratic"
+    },
+    {
+      "type": "number",
+      "id": "apply-reverse-ka",
+      "reading": "reverse",
+      "sources": [],
+      "answer": 1.82741116751269e-05,
+      "tolerance": 3e-07,
+      "unit": "",
+      "number": 55,
+      "readingSection": 9,
+      "readingSlot": "weak-reverse-percent"
+    },
+    {
+      "type": "number",
+      "id": "apply-reverse-concentration",
+      "reading": "percent",
+      "sources": [],
+      "answer": 0.05,
+      "tolerance": 0.00025,
+      "unit": "mol/L",
+      "number": 56,
+      "readingSection": 4,
+      "readingSlot": "model-ionization-percentage"
+    },
+    {
+      "type": "number",
+      "id": "apply-weak-base",
+      "reading": "base",
+      "sources": [],
+      "answer": 0.0006324555320336759,
+      "tolerance": 5e-06,
+      "unit": "mol/L",
+      "number": 57,
+      "readingSection": 8,
+      "readingSlot": "weak-base-equilibrium"
+    },
+    {
+      "type": "choice",
+      "id": "apply-dilution-ratio",
+      "reading": "trend",
+      "sources": [],
+      "correct": 1,
+      "number": 58,
+      "readingSection": 9,
+      "readingSlot": "weak-dilution-weak"
+    },
+    {
+      "type": "number",
+      "id": "apply-neutral-temperature",
+      "reading": "water",
+      "sources": [],
+      "answer": 2e-07,
+      "tolerance": 1e-09,
+      "unit": "mol/L",
+      "number": 59,
+      "readingSection": 10,
+      "readingSlot": "water-water-constant"
+    },
+    {
+      "type": "choice",
+      "id": "apply-pair-strength",
+      "reading": "pair-strength",
+      "sources": [],
+      "correct": 0,
+      "number": 60,
+      "readingSection": 11,
+      "readingSlot": "water-inverse-strength"
+    }
+  ]
+}

@@ -253,6 +253,31 @@ try {
   assert.equal(await good('EMULATOR_ADMIN','GET','quizProgress'),null,'Opening homework does not touch ordinary practice');
   const homeworkWindow=student.page.locator('.workspace-window').filter({has:student.page.locator('iframe[src*="homework=1"]')});
   const homeworkSrc=await homeworkWindow.locator('iframe').getAttribute('src');
+  // On iPad, switching between retained work windows must not lose the private
+  // Classroom return route when the assignment's X button is used.
+  for (const [width,height] of [[1024,768],[768,1024],[674,810]]) {
+    await student.page.setViewportSize({width,height});
+    const draft='Keep my homework draft at '+width;
+    await homeworkFrame.locator('[data-reasoning-input]').fill(draft);
+    await student.page.evaluate(()=>{location.hash='#content/qa-homework-review';});
+    const retainedReading=student.page.locator('[data-tool-id="content-html-qa-homework-review"]');
+    await retainedReading.waitFor({state:'visible'});
+    const retainedFrame=await retainedReading.locator('iframe').elementHandle();
+    await student.page.locator('.taskbar-item').filter({hasText:'ทวนคลื่น — การบ้านทดลอง'}).click();
+    await homeworkWindow.and(student.page.locator('.is-active')).waitFor();
+    await homeworkWindow.locator('.is-close').click();
+    await student.page.waitForURL(url=>url.hash===new URL(homeworkLink).hash);
+    await student.page.locator('iframe[src*="homework=1"]').waitFor({state:'detached'});
+    await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').waitFor();
+    assert.equal(await student.page.locator('[data-section="classroom"]').getAttribute('aria-current'),'page');
+    assert.equal(await retainedReading.isHidden(),true,'Other work remains minimized instead of taking over the return');
+    assert.equal(await retainedFrame.evaluate(node=>node.isConnected),true,'Retained reading is not destroyed');
+    await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').click();
+    await homeworkFrame.locator('[data-quiz-storage-status]').filter({hasText:'บันทึกบน Cloud แล้ว'}).waitFor();
+    assert.equal(await homeworkFrame.locator('[data-reasoning-input]').inputValue(),draft,'The saved homework draft survives close/reopen');
+  }
+  await student.page.setViewportSize({width:390,height:844});
+  console.log('PASS iPad homework X close: landscape/portrait/split-view → exact Classroom assignment, other work retained, draft restored');
   await homeworkWindow.locator('.window-toolbar-toggle').click();
   assert.equal(await homeworkWindow.locator('.window-trailing-tools').isVisible(),false);
   await homeworkFrame.locator('[data-action-dock-panel] > summary').click();

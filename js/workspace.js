@@ -650,9 +650,13 @@ export function createWorkspace({
     record.element.remove();
     record.taskButton.remove();
     records.delete(record.tool.id);
-    onToolClosed(record.tool.id, record.tool);
+    const returnedToOwner = onToolClosed(record.tool.id, record.tool) === true;
     setTaskbarVisibility();
     syncMaximizedState();
+
+    // The owner can restore its own menu (Classroom homework) without a later
+    // window-focus/idle callback replacing that navigation with a subject menu.
+    if (returnedToOwner) return;
 
     const nextRecord = [...records.values()]
       .filter((candidate) => !candidate.minimized)

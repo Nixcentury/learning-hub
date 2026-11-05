@@ -32,7 +32,7 @@ function dom(html, path) {
   result.window.HTMLElement.prototype.getBoundingClientRect = () => ({ left: 0, top: 0, width: 1000, height: 800 });
   return result;
 }
-function harness(initialIdentity = { status: 'guest', isGuest: true, uid: null }) {
+function harness(initialIdentity = { status: 'guest', isGuest: true, uid: null }, lifecycle = {}) {
   const { document, window: domWindow } = dom('<html><body><main id="layer"></main><nav id="bar"><div id="items"></div><output id="count"></output></nav></body></html>', 'index.html');
   const events = {}, transports = [];
   let language = 'th', identity = initialIdentity;
@@ -50,6 +50,8 @@ function harness(initialIdentity = { status: 'guest', isGuest: true, uid: null }
     taskbarItems: document.getElementById('items'), countElement: document.getElementById('count'),
     getLanguage: () => language, getIdentity: () => identity, getRole: () => 'student',
     onToolActivated: tool => activated.push(tool),
+    onToolClosed: lifecycle.onToolClosed,
+    onWorkspaceIdle: lifecycle.onWorkspaceIdle,
   });
   workspace.bindHtmlLinks(document);
   function load(frame, child, quiz = null) {
@@ -62,6 +64,41 @@ function harness(initialIdentity = { status: 'guest', isGuest: true, uid: null }
     language(value) { language = value; workspace.setLanguage(); } };
 }
 const videoButton = `<a data-hub-video data-content-id="sound-video" href="${url}" data-subject-id="physics" data-chapter-id="12" data-topic-id="sound">Video</a>`;
+
+test('closing saved homework lets Classroom take over navigation and keeps other windows without reactivating them', async()=>{
+  let closed, idle=0;
+  const h=harness({status:'signed-in',uid:'student'},{
+    onToolClosed: (_id,tool)=>{closed=tool;h.workspace.showMenu();return true;},
+    onWorkspaceIdle: ()=>idle++,
+  });
+  h.workspace.openContent({...context,toolKind:'video',contentId:'retained-video',source:h.document.URL,videoSource:url});
+  const retained=h.document.querySelector('iframe'), retainedWindow=retained.closest('.workspace-window');
+  h.load(retained,dom('<html><body>Keep this work</body></html>','pages/tools/video-player.html'));
+  const homework={uid:'student',roomId:'room-a',id:'assignment-a',contentId:'homework-one',title:'Homework'};
+  h.workspace.openHomework(homework);
+  const owner=h.document.querySelector('[data-tool-id="homework-room-a-assignment-a-student"]');
+  let saved=false;
+  h.load(owner.querySelector('iframe'),dom('<html><body>Homework</body></html>','pages/tools/quiz-player.html'),{
+    prepareClose:async()=>{saved=true;return true;},
+  });
+  const before=h.activated.length;
+  owner.querySelector('.is-close').click();await new Promise(done=>setImmediate(done));
+  assert.equal(saved,true);assert.equal(owner.isConnected,false);assert.equal(closed.homework.id,homework.id);
+  assert.equal(retained.isConnected,true);assert.equal(retainedWindow.hidden,true);
+  assert.equal(retained.contentDocument.body.textContent,'Keep this work');
+  assert.equal(h.activated.length,before,'An older activity must not replace Classroom navigation');
+  assert.equal(idle,0,'Generic idle navigation must not replace the owner return');
+});
+
+test('canceling homework close keeps the draft window and never starts return navigation',async()=>{
+  let closes=0;
+  const h=harness({status:'signed-in',uid:'student'},{onToolClosed:()=>closes++});
+  h.workspace.openHomework({uid:'student',roomId:'room-a',id:'assignment-a',contentId:'homework-one',title:'Homework'});
+  const owner=h.document.querySelector('.workspace-window');
+  h.load(owner.querySelector('iframe'),dom('<html><body>Draft</body></html>','pages/tools/quiz-player.html'),{prepareClose:async()=>false});
+  owner.querySelector('.is-close').click();await new Promise(done=>setImmediate(done));
+  assert.equal(owner.isConnected,true);assert.equal(closes,0);
+});
 
 test('a top-level video button reuses one window, pauses on minimize/menu, and closes cleanly', () => {
   const h = harness(); h.document.body.insertAdjacentHTML('afterbegin', videoButton);

@@ -599,7 +599,13 @@ try {
   await teacher.frame.locator('[data-classroom-monitor]').scrollIntoViewIfNeeded();
   await teacher.page.screenshot({ path: resolve(output, 'classroom-monitor-teacher.png'), fullPage: true });
   await student.page.locator('[data-monitor-open]').click(); await student.page.screenshot({ path: resolve(output, 'classroom-monitor-student-mobile.png'), fullPage: true });
-  assert.ok(await student.page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  for (const width of [360,390]) {
+    await student.page.setViewportSize({width,height:844});
+    assert.ok(await student.page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),'Hub fits the '+width+'px mobile viewport');
+    assert.ok(await student.page.locator('.hub-topbar').evaluate(node => [...node.querySelectorAll('button,a')].every(control => {
+      const rect=control.getBoundingClientRect();return !rect.width || rect.left>=0 && rect.right<=innerWidth;
+    })),'All visible header controls fit the '+width+'px viewport');
+  }
   await student.page.locator('[data-monitor-close]').click();
   await teacher.page.locator('#hub-view [data-language="en"]').click();
   await teacher.frame.locator('[data-monitor-lock]').filter({ hasText: 'Unlock' }).waitFor();

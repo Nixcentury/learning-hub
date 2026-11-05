@@ -5,6 +5,7 @@ import { resolve, extname, sep } from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { catalogFromRepository } from './build-route-catalog.mjs';
+import { buildFirebaseBrowserFixture } from './build-firebase-browser-fixture.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const prefix = '/learning-hub/';
@@ -24,12 +25,14 @@ const stubs = {
     export const onDisconnect=()=>({remove:async()=>{},cancel:async()=>{}});
     export const set=async()=>{};export const update=set;export const remove=set;`,
 };
+const fixtureDirectory = built ? await buildFirebaseBrowserFixture({ root, name: 'companion-browser-fixture',
+  auth: stubs['firebase-auth.js'], database: stubs['firebase-database.js'] }) : root;
 const server = createServer(async (req, res) => {
   try {
     const path = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     if (!path.startsWith(prefix)) throw Error('Outside prefix');
     const name = path.slice(prefix.length) || 'index.html';
-    const directory = built ? resolve(root, 'dist') : root;
+    const directory = fixtureDirectory;
     if (!resolve(directory, name).startsWith(directory.replace(/[\\/]$/, '') + sep)) throw Error('Outside root');
     let data;
     if (name === 'route-catalog.v1.json' && !built) data = JSON.stringify(catalog);

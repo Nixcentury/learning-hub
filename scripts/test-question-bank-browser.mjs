@@ -39,7 +39,7 @@ export async function set(path,value){window.bankDb[path]=structuredClone(value)
 export async function runTransaction(path,fn){const next=fn(structuredClone(window.bankDb[path]||null));if(next===undefined)return {committed:false};await set(path,next);return {committed:true}}`;
 const stubs = {
   'firebase-app.js': 'export const getApps=()=>[];export const initializeApp=()=>({});',
-  'firebase-auth.js': `export class GoogleAuthProvider{setCustomParameters(){}} export const browserLocalPersistence={};export const getAuth=()=>({});export const setPersistence=async()=>{};
+  'firebase-auth.js': `export class GoogleAuthProvider{setCustomParameters(){}} export const browserLocalPersistence={};export const getAuth=()=>({});export const initializeAuth=getAuth;export const browserPopupRedirectResolver={};export const setPersistence=async()=>{};
     export const onAuthStateChanged=(_,fn)=>{setTimeout(()=>fn(null),10);return ()=>{}};export const signOut=async()=>{};export const signInWithPopup=async()=>{throw Error('No live login')};`,
   'firebase-database.js': database,
 };

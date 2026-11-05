@@ -2,6 +2,10 @@
 const hub = new URL(self.registration.scope);
 const entryPath = new URL("index.html", hub).pathname;
 
+self.addEventListener("message", event => {
+  if (event.data?.type === "HUB_APPLY_UPDATE") event.waitUntil(self.skipWaiting());
+});
+
 self.addEventListener("fetch", event => {
   const { request } = event;
   if (request.method !== "GET" || request.mode !== "navigate") return;

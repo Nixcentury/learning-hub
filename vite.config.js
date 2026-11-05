@@ -2,13 +2,14 @@ import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import { pwaBuildPlugin } from "./scripts/pwa-build-plugin.mjs";
 import { routeCatalogPlugin } from "./scripts/route-catalog-plugin.mjs";
+import { firebaseBuildPlugin } from './scripts/firebase-build-plugin.mjs';
 
 /*
   แต่ละหน้าหลักเป็น HTML แยกไฟล์และ Build ไปด้วยกัน
   เพิ่มหน้าใหม่ภายหลังได้โดยใส่ชื่อและไฟล์ใน input นี้
 */
 export default defineConfig({
-  plugins: [routeCatalogPlugin(), pwaBuildPlugin()],
+  plugins: [firebaseBuildPlugin(), routeCatalogPlugin(), pwaBuildPlugin()],
   // ใช้เส้นทาง relative เพื่อเปิดได้ทั้ง localhost และ GitHub Pages /learning-hub/
   base: "./",
   build: {

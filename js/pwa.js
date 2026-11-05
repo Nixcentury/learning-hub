@@ -1,4 +1,6 @@
 import "../css/pwa.css";
+import { createPwaUpdates } from './pwa-updates.js';
+import { prepareHubReload } from './pwa-reload.js';
 
 async function startOnlineFirst() {
   if (!import.meta.env.PROD || !("serviceWorker" in navigator)) return;
@@ -10,23 +12,10 @@ async function startOnlineFirst() {
     updateViaCache: "none",
   });
 
-  const notice = document.querySelector("#hub-update-notice");
-  let shownWorker;
-  const showWaiting = () => {
-    const { active, waiting } = registration;
-    if (!active || !waiting || waiting === shownWorker) return;
-    shownWorker = waiting;
-    notice.hidden = false;
-  };
-  const watchInstall = () => {
-    registration.installing?.addEventListener("statechange", showWaiting);
-    showWaiting();
-  };
-  notice.querySelector("button").addEventListener("click", () => { notice.hidden = true; });
-  registration.addEventListener("updatefound", watchInstall);
-  watchInstall();
+  createPwaUpdates({ registration, serviceWorker: navigator.serviceWorker,
+    document, window, beforeReload: prepareHubReload });
 
-  // Let the browser switch workers only after existing Hub clients close.
+  // Background checks only notify; they never reload an open workspace.
   const check = () => {
     if (document.visibilityState === "visible" && navigator.onLine) {
       registration.update().catch(() => {});

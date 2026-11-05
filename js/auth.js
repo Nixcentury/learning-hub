@@ -7,16 +7,19 @@
 import {
   GoogleAuthProvider,
   browserLocalPersistence,
-  getAuth,
+  browserPopupRedirectResolver,
+  initializeAuth,
   onAuthStateChanged,
   setPersistence,
   signInWithPopup,
   signOut as firebaseSignOut,
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 import { firebaseApp } from "./firebase-config.js";
+import { rememberHubView } from "./hub-session-view.js";
 
 const guestStorageKey = "learning-hub-guest-session";
-const auth = getAuth(firebaseApp);
+// Avoid proactive mobile OAuth iframe initialization on every app launch.
+const auth = initializeAuth(firebaseApp, { persistence: browserLocalPersistence });
 const googleProvider = new GoogleAuthProvider();
 const subscribers = new Set();
 
@@ -67,6 +70,7 @@ function publishSession(status, user = null) {
     user: toHubUser(user),
   });
 
+  rememberHubView(currentSession);
   subscribers.forEach((subscriber) => subscriber(currentSession));
   document.dispatchEvent(
     new CustomEvent("hub-auth-change", { detail: currentSession }),
@@ -125,7 +129,7 @@ export async function signInWithGoogle() {
 
   try {
     await persistenceReady;
-    const result = await signInWithPopup(auth, googleProvider);
+    const result = await signInWithPopup(auth, googleProvider, browserPopupRedirectResolver);
     publishSession("signed-in", result.user);
     return getAuthSession();
   } catch (error) {

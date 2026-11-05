@@ -47,7 +47,7 @@ let failCatalog = false, failMenu = false, delayMenu = false;
 const stubs = {
   'firebase-app.js': 'export const getApps=()=>[];export const initializeApp=()=>({});',
   'firebase-auth.js': `export class GoogleAuthProvider{setCustomParameters(){}}
-    export const browserLocalPersistence={};export const getAuth=()=>({});export const setPersistence=async()=>{};
+    export const browserLocalPersistence={};export const getAuth=()=>({});export const initializeAuth=getAuth;export const browserPopupRedirectResolver={};export const setPersistence=async()=>{};
     export const onAuthStateChanged=(_,fn)=>{setTimeout(()=>fn(null),30);return ()=>{}};
     export const signOut=async()=>{};export const signInWithPopup=async()=>{throw Error('Live login forbidden')};`,
   'firebase-database.js': `export const orderByChild=value=>value;export const equalTo=value=>value;export const query=path=>path;export const getDatabase=()=>({});export const ref=(_,path)=>path;

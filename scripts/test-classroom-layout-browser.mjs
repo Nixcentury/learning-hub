@@ -120,7 +120,11 @@ try {
   assert.equal(await frame.locator(`[data-homework-action="launch"][data-id="${aid}"]`).isDisabled(),true);
   assert.equal(await frame.locator(`[data-homework-step="${aid}"]`).getAttribute('data-step-access'),'locked');
   assert.equal(await frame.locator('[data-hw-add-link]').isEnabled(),true);
-  assert.equal(await frame.locator('[data-links-list] a').count(),1);
+  const classroomLink=frame.locator('[data-links-list] > .room-link');
+  assert.equal(await classroomLink.count(),1,'One classroom resource is listed');
+  assert.equal(await classroomLink.locator('a:not([data-links-open])').count(),1,'The resource title remains a link');
+  assert.equal(await classroomLink.locator('[data-links-open]').getAttribute('href'),'https://example.com/notebook');
+  assert.equal(await classroomLink.locator('[data-links-copy]').count(),1,'Students can copy the resource URL');
   await frame.locator('[data-hw-add-link]').click();
   await frame.locator('[name="linkTitle"]').fill('QA retained link');
   await page.evaluate(()=>qa.send());

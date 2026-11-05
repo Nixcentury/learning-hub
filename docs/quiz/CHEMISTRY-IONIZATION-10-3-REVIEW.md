@@ -45,6 +45,12 @@ The user requested A-Level-informed applications without exceeding this learning
 
 Numerical pH, pKa/logarithms, titration, buffers, common-ion effects and mixed-acid equilibria are excluded. The original qualitative pH-ordering task remains; no logarithms are required. A temperature task supplies its Kw explicitly. The original NaX weak-anion calculation uses the same equilibrium method already taught in section 8.
 
+## Content and answer QA
+
+A final reading pass reviewed all 60 stems, filled passages, choice keys and worked solutions against the book archive and the current sheet. Conditions are explicit in both languages: Q12 conserves individual ion amounts for completely ionized strong acids/bases; Q20 compares ionization at equal initial concentration and temperature. These statements agree with the weak-acid dilution and unequal-concentration tasks later in the set.
+
+Q53 uses C = 0.120 mol/L and Ka = 3.0×10⁻⁵. Both language solutions and the answer key agree: approximate [H₃O⁺] = 0.0018973666 mol/L; the full equation gives 0.0018824259 mol/L. Its accepted interval includes both methods and their appropriate rounding. The source-specific corrections also remain intact: Exercise 4 uses Kb = 10⁻⁴, Exercise 6 uses 0.25/0.40 mol/L, Exercise 7 gives Ka ≈ 1.4×10⁻⁵, and the original quadratic case gives 9.51×10⁻⁵ mol/L without premature rounding.
+
 ## Validation
 
 - Real content adapter: 60 questions, no schema errors; bilingual prompts/hints/contexts/solutions; correct answers accepted and blank/wrong answers rejected for all formats.

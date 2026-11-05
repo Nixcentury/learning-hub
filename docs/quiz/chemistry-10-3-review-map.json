@@ -751,7 +751,7 @@
       "reading": "approx",
       "sources": [],
       "answer": 0.0018973665961010276,
-      "tolerance": 4e-05,
+      "tolerance": 2e-05,
       "unit": "mol/L",
       "number": 53,
       "readingSection": 6,

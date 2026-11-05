@@ -4,6 +4,7 @@ import { createClassroomAssignments } from '../js/classroom-assignment-service.j
 import { assignmentHash, assignmentUrl, parseAssignmentRoute, parseThaiDateInput, thaiDateInput, resolveAssignmentQuiz, resolveAssignmentLesson, assignmentStatus } from '../js/classroom-assignment-model.js';
 import { resolveHubRoute } from '../js/hub-routes.js';
 import { resolveNavigation } from '../js/hub-navigation.js';
+import { closedHomeworkHash } from '../js/classroom-assignment-routes.js';
 const rid = 'r_' + 'a'.repeat(32), aid = 'a_' + 'b'.repeat(32), other = 'r_' + 'c'.repeat(32);
 const hub = 'https://example.test/learning-hub/';
 const quizRoute = { kind: 'content', status: 'ready', hash: '#physics/1/waves/quiz', aliases: [], subjectId: 'physics', chapterId: '1', topicId: 'waves', contentId: 'wave-quiz', parentHash:'#physics/1' };
@@ -12,6 +13,20 @@ const catalog = { schemaVersion: 1, routes: [quizRoute, chapter, { hash: '#overv
   contents: [{ id: 'wave-quiz', source: 'content/test/waves.html', toolKind: 'quiz', titleTh: 'คลื่น', titleEn: 'Waves' }] };
 const context = (uid, teacher = false) => [{ status: 'signed-in', user: { uid } }, { uid, status: 'ready', isTeacher: teacher, systemRole: teacher ? 'teacher' : 'student' }];
 const tick = () => new Promise(done => setImmediate(done));
+test('closing homework resolves the exact room/assignment for its verified student or assisting teacher',()=>{
+  const homework={uid:'student',roomId:rid,id:aid};
+  assert.equal(closedHomeworkHash(homework,context('student')[0]),assignmentHash(rid,aid));
+  const assisted={...homework,actorUid:'teacher',assistId:'assist-one'};
+  assert.equal(closedHomeworkHash(assisted,context('teacher',true)[0]),assignmentHash(rid,aid));
+  assert.equal(closedHomeworkHash(assisted,context('student')[0]),null);
+});
+test('old accounts, guests and malformed homework cannot restore a private Classroom route',()=>{
+  const homework={uid:'student',roomId:rid,id:aid};
+  for(const session of [null,{status:'loading'},{status:'guest'},context('student-b')[0]])
+    assert.equal(closedHomeworkHash(homework,session),null);
+  for(const value of [null,{}, {...homework,roomId:'../outside'},{...homework,id:''},{...homework,id:aid+'#physics'}])
+    assert.equal(closedHomeworkHash(value,context('student')[0]),null);
+});
 function fixture(t, user = 'teacher', teacher = true) {
   const db = { '@classroom': { userRooms: { teacher: { [rid]: 'owner' }, student: { [rid]: 'student' } }, rooms: { [rid]: { name: 'Physics', ownerUid: 'teacher' } } }, items: {}, drafts: {}, seen: {} };
   const watchers = [], writes = [], reads = [];

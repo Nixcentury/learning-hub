@@ -40,6 +40,7 @@ import { freezeHomeworkQuiz, homeworkReviewSource } from './classroom-submission
 import { readHomeworkQuiz } from '../public/shared/classroom-submission-quiz.js';
 import { installHomeworkBridge } from './classroom-submission-bridge.js';
 import { assignmentHash } from './classroom-assignment-model.js';
+import { closedHomeworkHash } from './classroom-assignment-routes.js';
 import {
   createHubContextMessage,
   createIdentityContext,
@@ -240,6 +241,12 @@ workspace = createWorkspace({
     if (tool?.homework?.assistId) void submissions.finishAssist(tool.homework).catch(()=>{});
     companion.closeVariantFor(toolId);
     pageFrame.contentWindow?.postMessage({ type: 'learning-hub-tool-closed', toolId }, location.origin);
+    const returnHash = closedHomeworkHash(tool?.homework, activeSession);
+    if (returnHash && navigation) {
+      void navigation.openHash(returnHash);
+      pageFrame.focus();
+      return true;
+    }
   },
 });
 

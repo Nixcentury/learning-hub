@@ -94,6 +94,7 @@ export function createWorkspace({
   getLanguage,
   getIdentity,
   getRole,
+  canOpen = () => true,
   getHomeworkStatus = () => null,
   onToolClosed = () => {},
   onToolActivated = () => {},
@@ -1034,6 +1035,7 @@ export function createWorkspace({
   }
 
   function open(toolId) {
+    if (!canOpen()) return false;
     const tool = toolCatalog[toolId];
     if (!tool) return false;
 
@@ -1086,6 +1088,7 @@ export function createWorkspace({
   }
 
   function openReview(selection, { quizContext = null, preferred = [], homeworkId = null } = {}) {
+    if (!canOpen()) return false;
     const tool = createTopicReviewTool(selection, location.href);
     if (!tool) return false;
     tool.reviewQuizContext = quizContext; tool.reviewPreferred = preferred;
@@ -1110,6 +1113,7 @@ export function createWorkspace({
       const node = event.target?.closest?.("a[data-hub-html], button[data-hub-html], a[data-hub-pdf], button[data-hub-pdf], a[data-hub-video], button[data-hub-video]");
       if (!node || node.disabled || event.defaultPrevented || event.button > 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
+      if (!canOpen()) return; // Menus may be visible while the account is restoring.
       const subject = doc.querySelector("[data-subject-id]")?.dataset.subjectId;
       const isPdf = node.hasAttribute("data-hub-pdf");
       const isVideo = node.hasAttribute("data-hub-video");

@@ -27,6 +27,10 @@ for (const path of await list(dist)) {
   const name = relative(dist, path).replaceAll('\\', '/');
   assert.ok(!name.split('/').some(part => part === '.git' || part === 'node_modules' || part.startsWith('.env')), `Private/build source in artifact: ${name}`);
   assert.ok(!/^(?:firebase|scripts)\//.test(name), `Source-only folder in artifact: ${name}`);
+  if (name.startsWith('assets/') && name.endsWith('.js')) {
+    assert.ok(!(await readFile(path, 'utf8')).includes('www.gstatic.com/firebasejs/'),
+      `Firebase startup modules must be bundled with the Hub: ${name}`);
+  }
   if (!name.endsWith('.html')) continue;
   const html = await readFile(path, 'utf8');
   for (const match of html.matchAll(/<(?:script|link|img)\b[^>]*?\b(?:src|href)=["']([^"']+)["']/gi)) {

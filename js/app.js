@@ -49,12 +49,17 @@ import { createHubNavigation } from "./hub-navigation.js";
 import { openHubShare } from "./hub-sharing.js";
 import { createCompanion } from "./companion.js";
 import "./quiz-progress.js";
+import { canOpenHubWorkspace, renderHubSessionView, shouldResumeHub } from "./hub-session-view.js";
+import { setPrepareHubReload } from './pwa-reload.js';
 
 const languageStorageKey = "learning-hub-language";
 const subjectMenuStorageKey = "learning-hub-subject-menu-collapsed";
 
 const loginView = document.querySelector("#login-view");
 const hubView = document.querySelector("#hub-view");
+const pendingSessionNotice = document.querySelector("#hub-session-notice");
+const resumeHub = shouldResumeHub();
+let restoringSession = true;
 const subjectMenuToggle = document.querySelector("#hub-menu-toggle");
 const subjectMenuPanel = document.querySelector("#hub-subject-menu");
 const googleButton = document.querySelector("#google-button");
@@ -218,6 +223,7 @@ workspace = createWorkspace({
   getLanguage: () => currentLanguage,
   getIdentity: getWorkspaceIdentity,
   getRole: getWorkspaceRole,
+  canOpen: () => canOpenHubWorkspace(activeSession),
   getHomeworkStatus: binding => binding.assistId ? {active:submissionState?.assistance?.assistId===binding.assistId && submissionState.assistance.active} : {lease:submissionState?.locks?.[binding.id] || null},
   onToolActivated: tool => {
     classroomMonitor.setLocation({ hash: location.hash, titleTh: tool.titleTh, titleEn: tool.titleEn, subjectId: tool.context?.subjectId });
@@ -236,6 +242,8 @@ workspace = createWorkspace({
     pageFrame.contentWindow?.postMessage({ type: 'learning-hub-tool-closed', toolId }, location.origin);
   },
 });
+
+setPrepareHubReload(() => workspace.prepareAllForClose());
 
 installHomeworkBridge({ submissions, getSession: () => activeSession,
   onBack: binding => void navigation.openHash(assignmentHash(binding.roomId, binding.id)),
@@ -292,6 +300,14 @@ function postContextToPage() {
 function renderAccount(session) {
   accountChip.classList.remove("has-error");
   accountChip.removeAttribute("title");
+  accountChip.setAttribute("aria-busy", String(session.status === "loading"));
+
+  if (session.status === "loading") {
+    accountName.textContent = currentLanguage === "th" ? "กำลังเชื่อมบัญชี" : "Restoring account";
+    accountDetail.textContent = currentLanguage === "th" ? "เลือกดูเมนูได้ระหว่างรอ" : "Browse menus while you wait";
+    accountAvatar.src = fallbackAvatar;
+    return;
+  }
 
   if (session.status === "signed-in" && session.user) {
     accountName.textContent =
@@ -577,10 +593,11 @@ function setLanguage(language) {
   saveLanguage(language);
 }
 
-function showHub() {
+function showHub(focus = true) {
   loginView.hidden = true;
   hubView.hidden = false;
   syncWorkspaceTop();
+  if (!focus) return;
   pageFrame.focus();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -665,8 +682,14 @@ function renderSession(session) {
   renderPresence(activePresence);
   renderRole(activeRole);
 
+  const wasInHub = !hubView.hidden;
+  const view = renderHubSessionView({ session, restoring: restoringSession, resume: resumeHub,
+    loginView, hubView, pendingNotice: pendingSessionNotice });
+  signOutButton.disabled = session.status === "loading";
+
   if (session.status === "loading") {
-    showLogin(true);
+    if (view.pending) showHub(false);
+    else showLogin(true);
     navigation?.sessionChanged();
     setAuthBusy(true);
     setAuthNotice(
@@ -676,11 +699,12 @@ function renderSession(session) {
     return;
   }
 
+  restoringSession = false;
   setAuthBusy(false);
 
   if (session.status === "signed-in" || session.status === "guest") {
     authNotice.hidden = true;
-    showHub();
+    showHub(!wasInHub);
     navigation?.sessionChanged();
     return;
   }
@@ -802,7 +826,7 @@ signOutButton.addEventListener("click", async () => {
 navigation = createHubNavigation({
   pageFrame, navButtons, showSection,
   noticeElement: document.querySelector('#hub-route-notice'),
-  canOpenWorkspace: () => ['signed-in', 'guest'].includes(activeSession.status),
+  canOpenWorkspace: () => canOpenHubWorkspace(activeSession),
   openActivity: activity => activity.review ? workspace.openReview(activity.review)
     : activity.bank ? workspace.openBank(activity.bank)
     : activity.entry ? workspace.openContent(activity.entry) : workspace.open(activity.toolId),

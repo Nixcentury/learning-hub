@@ -237,6 +237,8 @@
               <small id="account-detail">ไม่บันทึกบน Cloud</small>
             </span>
           </div>
+          <button class="hub-check-update" id="hub-check-update" type="button" hidden
+            data-th="ตรวจอัปเดต" data-en="Check updates">ตรวจอัปเดต</button>
           <button
             class="icon-button"
             id="sign-out-button"
@@ -315,6 +317,12 @@
         </div>
 
         <main class="hub-content hub-frame-host">
+          <aside class="hub-route-notice" id="hub-session-notice" role="status" aria-live="polite" hidden>
+            <span data-th="กำลังเชื่อมบัญชี เลือกดูเมนูได้ระหว่างรอ งานและความคืบหน้าจะเปิดเมื่อบัญชีพร้อม"
+              data-en="Restoring your account. You can browse menus now; activities and progress will open when your account is ready.">
+              กำลังเชื่อมบัญชี เลือกดูเมนูได้ระหว่างรอ งานและความคืบหน้าจะเปิดเมื่อบัญชีพร้อม
+            </span>
+          </aside>
           <aside class="hub-route-notice" id="hub-route-notice" role="status" aria-live="polite" hidden>
             <span data-route-notice-text></span>
             <button type="button" data-route-retry data-th="ลองอีกครั้ง" data-en="Retry" hidden>ลองอีกครั้ง</button>
@@ -560,12 +568,11 @@
     </aside>
 
     <aside class="hub-update-notice" id="hub-update-notice" hidden>
-      <span role="status"
-        data-th="Hub มีเวอร์ชันใหม่ บันทึกงานให้เรียบร้อย แล้วปิดหน้า Hub ที่เปิดอยู่และเปิดใหม่เมื่อสะดวก"
-        data-en="A new Hub version is ready. Save your work, then close your open Hub pages and reopen when convenient.">
-        Hub มีเวอร์ชันใหม่ บันทึกงานให้เรียบร้อย แล้วปิดหน้า Hub ที่เปิดอยู่และเปิดใหม่เมื่อสะดวก
-      </span>
-      <button type="button" data-th="ไว้ทีหลัง" data-en="Later">ไว้ทีหลัง</button>
+      <span role="status" data-update-message></span>
+      <div class="hub-update-actions">
+        <button type="button" data-update-apply data-th="อัปเดตและเปิดใหม่" data-en="Update & reopen" hidden>อัปเดตและเปิดใหม่</button>
+        <button type="button" data-update-later data-th="ไว้ทีหลัง" data-en="Later">ไว้ทีหลัง</button>
+      </div>
     </aside>
 
     <script type="module" src="/shared/learning-hub-tools.js"></script>

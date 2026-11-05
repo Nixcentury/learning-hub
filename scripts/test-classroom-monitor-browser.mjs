@@ -14,6 +14,7 @@ import { buildSubmissionRules } from './build-classroom-submission-rules.mjs';
 import { buildAssignmentRules } from './build-classroom-assignment-rules.mjs';
 import { createRoomUpdates, joinRoomUpdates } from '../js/classroom-model.js';
 import { catalogFromRepository } from './build-route-catalog.mjs';
+import { buildFirebaseBrowserFixture } from './build-firebase-browser-fixture.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url)), prefix = '/learning-hub/', built = process.env.QA_BUILT === '1';
 const qaRequire=createRequire(process.env.PLAYWRIGHT_MODULE ? resolve(process.env.PLAYWRIGHT_MODULE,'package.json') : import.meta.url);
 const { chromium } = qaRequire('playwright');
@@ -39,7 +40,7 @@ catalog.contents.push({id:'qa-homework-review',toolKind:'html',source:'content/q
 catalog.contents.push({ id:'qa-prerequisite-quiz',toolKind:'quiz',source:'content/templates/quiz-template.html',titleTh:'ทดสอบเงื่อนไข 2 ข้อ',titleEn:'Two-question prerequisite QA',canonicalHash:'#content/qa-prerequisite-quiz',placements:[qaLocation] });
 catalog.routes.push({ hash:'#content/qa-prerequisite-quiz',aliases:[],kind:'content',status:'ready',contentId:'qa-prerequisite-quiz',...qaLocation,titleTh:'ทดสอบเงื่อนไข 2 ข้อ',titleEn:'Two-question prerequisite QA' });
 const auth = `
-export class GoogleAuthProvider{setCustomParameters(){}} export const browserLocalPersistence={};export const getAuth=()=>({});export const setPersistence=async()=>{};
+export class GoogleAuthProvider{setCustomParameters(){}} export const browserLocalPersistence={};export const getAuth=()=>({});export const initializeAuth=getAuth;export const browserPopupRedirectResolver={};export const setPersistence=async()=>{};
 let user=localStorage.getItem('monitor-qa-user'),callback;window.qaUid=user;
 const value=()=>user?{uid:user,displayName:'Name '+user,email:user+'@example.test',photoURL:'',emailVerified:true}:null;
 export function onAuthStateChanged(_,fn){callback=fn;queueMicrotask(()=>fn(value()));return ()=>{};}
@@ -67,6 +68,7 @@ export function onValue(path,fn,error=()=>{}){
 export function onDisconnect(path){return {remove:async()=>registrations.set(path,null),update:async value=>registrations.set(path,value),cancel:async()=>registrations.delete(path)};}
 window.qaNetwork=async value=>{if(!value)for(const [path,data]of registrations)await call(data===null?'DELETE':'PATCH',path,data).catch(()=>{});online=value;connectionWatchers.forEach(fn=>fn());};
 `;
+const fixtureDirectory = built ? await buildFirebaseBrowserFixture({ root, name: 'monitor-browser-fixture', auth, database }) : root;
 const googleRequests = [];
 let googleEmail = 'teacher@school.example', googleListVersion = 0;
 const googleIdentity = `window.google={accounts:{oauth2:{initTokenClient(config){window.qaGoogleConfig={client_id:config.client_id,scope:config.scope,include_granted_scopes:config.include_granted_scopes};return{requestAccessToken(){queueMicrotask(()=>window.qaGoogleMode==='closed'?config.error_callback({type:'popup_closed'}):config.callback({access_token:'mock-classroom-token-never-store',expires_in:3600,scope:config.scope}));}};}}}};`;
@@ -82,7 +84,7 @@ const server = createServer(async (req, res) => {
       res.writeHead(response.status, { 'Content-Type': 'application/json', ...(response.headers.get('etag') ? { etag: response.headers.get('etag') } : {}) }); res.end(await response.text()); return;
     }
     if (!url.pathname.startsWith(prefix)) throw Error('Outside base');
-    const name = decodeURIComponent(url.pathname.slice(prefix.length)) || 'index.html', directory = built ? resolve(root, 'dist') : root;
+    const name = decodeURIComponent(url.pathname.slice(prefix.length)) || 'index.html', directory = fixtureDirectory;
     if (!resolve(directory, name).startsWith(directory.replace(/[\\/]$/, '') + sep)) throw Error('Outside root');
     let data;
     if (name === 'route-catalog.v1.json') data = JSON.stringify(catalog);

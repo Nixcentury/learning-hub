@@ -1,0 +1,5 @@
+# Chemistry 10.3 review assets
+
+The six PNG files are byte-identical copies of the original textbook crops already preserved in `docs/learning-sheet/preparation/chemistry-ionization-10-3/quiz-source-images/`. Their crop rectangles and printed/PDF page references are recorded in that preparation directory’s `figure-map.json`. Source: the user-supplied [IPST Chemistry volume 4 PDF](https://drive.google.com/file/d/18HV75L5ndjm-Wpk1rcMFAOgd59TCmepY/view). These are reference figures/tables, not newly authored diagrams. They are used only with the matching IPST context.
+
+`activity-graph-a.svg` through `activity-graph-e.svg` are newly drawn numerical graph choices for Activity 10.1. Each has the same axes (initial C, mol/L; ionization, %) and scale. B is calculated from `100 * sqrt(1.8e-5 / C)` over C = 0.05–1.0 mol/L. A, C, D and E are deliberately incorrect distractors. The four source concentrations and results appear in the question’s bilingual table. The existing learning-sheet SVGs remain untouched.

@@ -263,16 +263,16 @@ try {
     const retainedReading=student.page.locator('[data-tool-id="content-html-qa-homework-review"]');
     await retainedReading.waitFor({state:'visible'});
     const retainedFrame=await retainedReading.locator('iframe').elementHandle();
-    await student.page.locator('.taskbar-item').filter({hasText:'ทวนคลื่น — การบ้านทดลอง'}).click();
+    await student.page.locator('.taskbar-item').filter({hasText:'ทวนคลื่น — การบ้านทดลอง'}).tap();
     await homeworkWindow.and(student.page.locator('.is-active')).waitFor();
-    await homeworkWindow.locator('.is-close').click();
+    await homeworkWindow.locator('.is-close').tap();
     await student.page.waitForURL(url=>url.hash===new URL(homeworkLink).hash);
     await student.page.locator('iframe[src*="homework=1"]').waitFor({state:'detached'});
     await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').waitFor();
     assert.equal(await student.page.locator('[data-section="classroom"]').getAttribute('aria-current'),'page');
     assert.equal(await retainedReading.isHidden(),true,'Other work remains minimized instead of taking over the return');
     assert.equal(await retainedFrame.evaluate(node=>node.isConnected),true,'Retained reading is not destroyed');
-    await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').click();
+    await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').tap();
     await homeworkFrame.locator('[data-quiz-storage-status]').filter({hasText:'บันทึกบน Cloud แล้ว'}).waitFor();
     assert.equal(await homeworkFrame.locator('[data-reasoning-input]').inputValue(),draft,'The saved homework draft survives close/reopen');
   }

@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Learning Hub",
   "short_name": "Learning Hub",
-  "start_url": "./",
+  "start_url": "./#classroom",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f4f8ff",

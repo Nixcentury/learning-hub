@@ -1,5 +1,7 @@
 # Chemistry 10.3 — one open-book review quiz
 
+> This records creation of the original 60-question set. For the current solution presentation and updated learning-sheet revision, see [ICF/ICE and dimensional-analysis solutions](CHEMISTRY-10-3-ICF-ICE-SOLUTIONS.md).
+
 The topic now offers one 60-question review set. Its **ทวนเนื้อหา / Review topic** button uses the same authored-sheet mechanism as Chemistry 10.1 and 10.2: it opens the existing combined 10.3 learning sheet alongside the quiz. Every question names an actual sheet section and a subsection, example or practice question. No separate reading-review document is introduced.
 
 ## Content and sequencing

@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "chemistry-ipst-acid-base-10-3-1-sheet",
-    "revision": "2026-11-03-1",
-    "sha256": "85ff339fda2c3258c68dd9db714067420d8cb213fbee9e007cfb01dcdf0e5452"
+    "revision": "2026-11-06-1",
+    "sha256": "0e35f8337d7b40b24b0372a9e22d9bbe963ff66096a6d290a76df123f7ee8c92"
   },
   "title": {
     "th": "การแตกตัวของกรด เบส และน้ำ",
@@ -80,16 +80,16 @@
         "en": "Read ratios from equations"
       },
       "summary": {
-        "th": "สมการที่ดุลบอกอัตราส่วนโมลและอัตราส่วนความเข้มข้นของไอออนในปริมาตรเดียวกัน\nกรด–เบสแก่ที่ละลายแล้วแตกตัวได้เกือบสมบูรณ์ Ba(OH)₂ หนึ่งหน่วยให้ OH⁻ สองหน่วย ต้องแยกการแตกตัวออกจากความสามารถละลาย",
-        "en": "Balanced reactions give mole ratios and ion-concentration ratios within one volume.\nDissolved strong acids/bases ionize almost completely. One Ba(OH)₂ gives two OH⁻; distinguish dissociation from solubility."
+        "th": "กรด–เบสแก่ใช้ ICF: I เริ่มต้น → C เปลี่ยนตามเลขดุล → F สุดท้าย ใช้ mol หรือ mol/L ให้เหมือนกันทั้งตาราง\nจัดข้อมูลด้วยตัวคูณแปลงหน่วยก่อนลงตาราง แล้วอ่านปริมาณไอออนจาก F",
+        "en": "Use ICF for complete strong-acid/base ionization: Initial → stoichiometric Change → Final, using mol or mol/L consistently.\nConvert data by unit factors before the table; read ion amounts from F."
       },
       "story": {
         "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “อ่านอัตราส่วนจากสมการ”",
         "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Read ratios from equations”."
       },
       "action": {
-        "th": "เขียนสมการก่อนตอบความเข้มข้นของไอออนในคำถามที่ลิงก์",
-        "en": "Write the balanced reaction before answering the linked ion-concentration question."
+        "th": "ดุลสมการ NaOH และ Ba(OH)₂ แล้วชี้แถว C ว่าเปลี่ยน −1:+1:+1 หรือ −1:+1:+2 ก่อนอ่าน F",
+        "en": "Balance NaOH and Ba(OH)₂; highlight row C as −1:+1:+1 or −1:+1:+2, then read F."
       },
       "links": [
         {
@@ -135,16 +135,16 @@
         "en": "Amount, mass and dilution"
       },
       "summary": {
-        "th": "ใช้ n = CV โดยแปลงปริมาตรเป็น L ก่อน แล้วใช้อัตราส่วนสมการก่อนแปลงโมลเป็นมวล\nการเติมเฉพาะน้ำคงโมลของสารละลายเดิม แต่ลดความเข้มข้น ใช้ปริมาตรสุดท้าย ไม่ใช้ปริมาตรน้ำที่เติม",
-        "en": "Use n = CV with volume in L, and apply reaction ratios before converting moles to mass.\nAdding only water preserves original solute amounts but lowers concentration. Use final solution volume, not the added-water volume."
+        "th": "แปลงข้อมูลด้วยตัวคูณหน่วย: mL → L; (mol/L)×L → mol; mol×(g/mol) → g\nหากเปลี่ยนปริมาตร ใช้ ICF หน่วย mol ก่อน คงโมลจาก F เมื่อเติมน้ำ แล้วหารปริมาตรสุดท้ายเพื่อหา mol/L",
+        "en": "Use unit factors: mL → L; (mol/L)×L → mol; mol×(g/mol) → g.\nWhen volume changes, use mol in ICF, preserve F amounts on adding water, then divide by final volume for mol/L."
       },
       "story": {
         "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “โมล มวล และการเจือจาง”",
         "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Amount, mass and dilution”."
       },
       "action": {
-        "th": "อ่านตัวอย่างการเจือจาง แล้วทำโจทย์มวลโดยแยกโมลไอออนกับโมลสาร",
-        "en": "Read the dilution example, then solve the mass problem by separating ion moles from compound moles."
+        "th": "ให้เด็กบอกหน่วยที่ตัดกันก่อนลง ICF ชี้ข้อมูลที่เป็นไอออนหลังแตกตัวว่าอยู่แถว F แล้วค่อยหามวลหรือความเข้มข้น",
+        "en": "Ask which units cancel before ICF. Identify supplied post-ionization ions as F data, then find mass or concentration."
       },
       "links": [
         {
@@ -245,8 +245,8 @@
         "en": "Equilibrium tables and acid constants"
       },
       "summary": {
-        "th": "ตั้งตารางเริ่มต้น–เปลี่ยนไป–สมดุลก่อนเขียน Kₐ ใช้ความเข้มข้นที่สมดุลในนิพจน์ค่าคงที่\nเมื่อ HA เริ่มที่ C และผลิตภัณฑ์เริ่มศูนย์ จะเหลือ C−x และเกิดไอออนชนิดละ x โดยละเลยส่วนจากน้ำ; น้ำตัวทำละลายไม่ใส่ในนิพจน์",
-        "en": "Set up an initial–change–equilibrium table before writing Kₐ; use equilibrium concentrations in the constant.\nFor initial HA = C and zero products, HA becomes C−x and each ion x when water ionization is negligible. Omit solvent water from the expression."
+        "th": "เริ่มจาก ICE แล้วอ่านแถว E โดยหน่วยความเข้มข้นทุกช่องเป็น mol/L\nตั้งตารางเริ่มต้น–เปลี่ยนไป–สมดุลก่อนเขียน Kₐ ใช้ความเข้มข้นที่สมดุลในนิพจน์ค่าคงที่\nเมื่อ HA เริ่มที่ C และผลิตภัณฑ์เริ่มศูนย์ จะเหลือ C−x และเกิดไอออนชนิดละ x โดยละเลยส่วนจากน้ำ; น้ำตัวทำละลายไม่ใส่ในนิพจน์",
+        "en": "Start from ICE and read row E; use mol/L consistently across the table.\nSet up an initial–change–equilibrium table before writing Kₐ; use equilibrium concentrations in the constant.\nFor initial HA = C and zero products, HA becomes C−x and each ion x when water ionization is negligible. Omit solvent water from the expression."
       },
       "story": {
         "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “ตารางสมดุลและค่าคงที่ของกรด”",
@@ -300,8 +300,8 @@
         "en": "Choose approximation or the full equation"
       },
       "summary": {
-        "th": "ตรวจ C/K > 1000 ตามเกณฑ์หนังสือก่อนประมาณ C−x เป็น C สำหรับสมดุลแบบที่ระบุ\nยังต้องเก็บ x² ในเศษ ถ้าไม่ผ่านเกณฑ์ให้ใช้สมการกำลังสองและเลือกรากที่เป็นความเข้มข้นได้จริง",
-        "en": "Check the book criterion C/K > 1000 before approximating C−x by C for the stated simple equilibrium.\nKeep x² in the numerator. If the criterion is not met, solve the quadratic and choose the physically valid concentration."
+        "th": "เริ่มจาก ICE แล้วอ่านแถว E โดยหน่วยความเข้มข้นทุกช่องเป็น mol/L\nตรวจ C/K > 1000 ตามเกณฑ์หนังสือก่อนประมาณ C−x เป็น C สำหรับสมดุลแบบที่ระบุ\nยังต้องเก็บ x² ในเศษ ถ้าไม่ผ่านเกณฑ์ให้ใช้สมการกำลังสองและเลือกรากที่เป็นความเข้มข้นได้จริง",
+        "en": "Start from ICE and read row E; use mol/L consistently across the table.\nCheck the book criterion C/K > 1000 before approximating C−x by C for the stated simple equilibrium.\nKeep x² in the numerator. If the criterion is not met, solve the quadratic and choose the physically valid concentration."
       },
       "story": {
         "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “เลือกการประมาณหรือสมการเต็ม”",
@@ -410,8 +410,8 @@
         "en": "Weak-base equilibrium"
       },
       "summary": {
-        "th": "เบสอ่อนรับโปรตอนจากน้ำและเกิด OH⁻ ใช้ตารางสมดุลกับ Kᵦ และตรวจเงื่อนไขการประมาณเช่นเดียวกับกรด\nแยกความเข้มข้นไอออนที่สมดุลออกจากร้อยละการแตกตัว โดยร้อยละยังหารด้วย C เริ่มต้นของเบส",
-        "en": "A weak base accepts a proton from water and produces OH⁻. Use an equilibrium table, Kᵦ and the same approximation check.\nDistinguish equilibrium ion concentration from percent ionization; the latter still uses initial base C as its denominator."
+        "th": "เริ่มจาก ICE แล้วอ่านแถว E โดยหน่วยความเข้มข้นทุกช่องเป็น mol/L\nเบสอ่อนรับโปรตอนจากน้ำและเกิด OH⁻ ใช้ตารางสมดุลกับ Kᵦ และตรวจเงื่อนไขการประมาณเช่นเดียวกับกรด\nแยกความเข้มข้นไอออนที่สมดุลออกจากร้อยละการแตกตัว โดยร้อยละยังหารด้วย C เริ่มต้นของเบส",
+        "en": "Start from ICE and read row E; use mol/L consistently across the table.\nA weak base accepts a proton from water and produces OH⁻. Use an equilibrium table, Kᵦ and the same approximation check.\nDistinguish equilibrium ion concentration from percent ionization; the latter still uses initial base C as its denominator."
       },
       "story": {
         "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “สมดุลของเบสอ่อน”",
@@ -465,8 +465,8 @@
         "en": "Concentration, percentage and finding the constant"
       },
       "summary": {
-        "th": "เมื่อเจือจางกรดอ่อนชนิดเดิมที่อุณหภูมิคงที่ Kₐ คงเดิม แต่ร้อยละการแตกตัวเพิ่มได้แม้ความเข้มข้น H₃O⁺ ลดลง\nถ้าทราบร้อยละ ใช้ x = C × ร้อยละ/100 แล้วคำนวณ Kₐ จากความเข้มข้นสมดุล เก็บเลขระหว่างทางก่อนปัดคำตอบ",
-        "en": "Diluting the same weak acid at fixed temperature leaves Kₐ unchanged. Percent ionization can rise even as H₃O⁺ concentration falls.\nGiven a percentage, find x = C × percentage/100, then Kₐ from equilibrium concentrations. Retain working digits until the end."
+        "th": "เริ่มจาก ICE แล้วอ่านแถว E โดยหน่วยความเข้มข้นทุกช่องเป็น mol/L\nเมื่อเจือจางกรดอ่อนชนิดเดิมที่อุณหภูมิคงที่ Kₐ คงเดิม แต่ร้อยละการแตกตัวเพิ่มได้แม้ความเข้มข้น H₃O⁺ ลดลง\nถ้าทราบร้อยละ ใช้ x = C × ร้อยละ/100 แล้วคำนวณ Kₐ จากความเข้มข้นสมดุล เก็บเลขระหว่างทางก่อนปัดคำตอบ",
+        "en": "Start from ICE and read row E; use mol/L consistently across the table.\nDiluting the same weak acid at fixed temperature leaves Kₐ unchanged. Percent ionization can rise even as H₃O⁺ concentration falls.\nGiven a percentage, find x = C × percentage/100, then Kₐ from equilibrium concentrations. Retain working digits until the end."
       },
       "story": {
         "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “ความเข้มข้น ร้อยละ และการย้อนหาค่าคงที่”",

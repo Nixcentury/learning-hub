@@ -1,4 +1,7 @@
 คุณกำลังเพิ่มบทเรียนให้ https://github.com/Nixcentury/learning-hub
+ถ้าต้องสร้าง PDF ใหม่ ให้อ่าน PDF-AUTHORING-START-HERE.md และ tools/pdf-authoring/AI-PROMPT.txt
+ใช้แม่แบบ A4 แนวตั้งเดิม เติมเฉพาะเนื้อหา ไม่ออกแบบ PDF ใหม่ ไม่แก้ฟอนต์หรือหัว-ท้ายเอง
+ถ้าเพิ่มลิงก์ PDF ที่มีอยู่แล้ว ให้ใช้ขั้นตอนปุ่มด้านล่าง
 ระบบ PDF กลางมีอยู่แล้ว ผู้ใช้เก็บ PDF บน Drive และจะใส่ลิงก์เอง
 อ่าน START-HERE.txt และ PDF-VIEWER-START-HERE.md ใน repo ก่อนเขียนงาน
 อ่าน HTML/Menu เป้าหมายจริงก่อนแก้ รักษา CSS ระบบตัวแปรและ ID เดิม

@@ -1,0 +1,10 @@
+{
+  "templateVersion": "1.0.0",
+  "id": "new-learning-document",
+  "subject": {"th":"วิชา", "en":"Subject"},
+  "chapter": {"th":"บท", "en":"Chapter"},
+  "topic": {"th":"หัวข้อสั้น", "en":"Short topic"},
+  "title": {"th":"ชื่อเรื่อง", "en":"Document title"},
+  "subtitle": {"th":"จุดประสงค์การเรียนรู้สั้น ๆ", "en":"A short learning objective"},
+  "work": {"th":"ใบเรียนรู้", "en":"Learning sheet"}
+}

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="290" viewBox="0 0 900 290" role="img">
+  <title>Electron attachment to a gaseous chlorine atom</title>
+  <desc>Cl(g) plus one electron gives Cl minus (g) and releases about 349 kilojoules per mole. The attachment energy change is negative; the energy released is a positive amount. This is a process diagram, not an orbital model.</desc>
+  <rect width="900" height="290" rx="18" fill="#f4f8fc"/>
+  <g font-family="Arial, sans-serif" text-anchor="middle" fill="#173454">
+    <text x="450" y="38" font-size="24" font-weight="bold">ELECTRON AFFINITY: ONE ELECTRON ADDED</text>
+    <circle cx="145" cy="128" r="48" fill="#d9eddc" stroke="#3b7150" stroke-width="2"/>
+    <text x="145" y="137" font-size="28">Cl(g)</text>
+    <text x="238" y="137" font-size="32">+</text>
+    <circle cx="295" cy="128" r="18" fill="#d8e6fa" stroke="#315f9d" stroke-width="2"/>
+    <text x="295" y="135" font-size="22">e⁻</text>
+    <path d="M350 128 H518 M502 117 L520 128 L502 139" fill="none" stroke="#315f9d" stroke-width="4"/>
+    <circle cx="625" cy="128" r="52" fill="#d9eddc" stroke="#3b7150" stroke-width="2"/>
+    <text x="625" y="137" font-size="28">Cl⁻(g)</text>
+    <text x="145" y="205" font-size="20">Neutral atom</text>
+    <text x="625" y="205" font-size="20">Negative ion</text>
+    <text x="450" y="248" font-size="22">Energy released ≈ 349 kJ/mol · ΔE ≈ −349 kJ/mol</text>
+    <text x="450" y="275" font-size="16">Process diagram; not an orbital model or an atomic-size scale</text>
+  </g>
+</svg>

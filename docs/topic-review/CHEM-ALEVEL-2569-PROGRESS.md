@@ -11,13 +11,13 @@ The teacher teaches this 35-question set over several lessons. Add about three e
 | Exam question | Review skills | Status |
 | --- | --- | --- |
 | 1 | Read subshell notation; distinguish occupancy from capacity; write/check a ground-state configuration; expand a noble-gas core when needed; sum only the requested subshells, including unoccupied ones | Written TH/EN |
-| 2 | Group 1/2 names and H; atomic radius across/down the table; EN down a group; ion versus its neutral atom; successive IE and starting charge; sum successive removal steps; electron availability | Written TH/EN |
+| 2 | Eight main-group families and element names; H/He; IE, EN and EA definitions/signs, diagrams and exceptions; atomic/ion radii; successive IE and starting charge | Written TH/EN |
 | 3 | Remaining versus decayed fraction; repeated halving; forward quantities and inverse half-life; consistent time units; constant half-life versus decreasing mass lost per interval | Written TH/EN |
-| 4 | Lewis electron accounting; multiple bonds as one region; AXₘEₙ shapes including 5/6 regions; molecular versus bond polarity; terminal-atom symmetry | Written TH/EN |
-| 5 | Molecular versus ionic/network substances; London and dipole forces; hydrogen-bond donors/acceptors; self versus water interactions; nonpolar-chain effects on solubility | Written TH/EN |
-| 6 | PV=nRT to slope nR/P; Kelvin versus Celsius intercepts; compare n/P; coincident lines; invert slope ratios for n or P | Written TH/EN |
+| 4 | Lewis electron accounting; VSEPR region versus molecular geometry; original 3D figures, wedge/dash, ideal versus actual angles; AXₘEₙ shapes including 5/6 regions; molecular polarity | Written TH/EN |
+| 5 | Narrative introduction to intra/intermolecular forces; London polarizability and shape, permanent dipoles, H-bond donors/acceptors; boiling/vapour/viscosity/melting conditions; solubility | Written TH/EN |
+| 6 | Ideal-gas model and real-gas limits; absolute pressure, Kelvin, n and R units; four gas laws and fixed variables; PV=nRT examples, slope nR/P, Celsius intercepts and ratios | Written TH/EN |
 | 7 | Graham rate/mass ratios; equal-time distance ratios; x and L−x; reference ends; inverse molar-mass and equal-quantity time ratios | Written TH/EN |
-| 8 | Simple monocyclic monoalkene scope; double bond 1–2; first-difference locant sets; alphabetical order ignoring di/tri; tied locants; punctuation | Written TH/EN |
+| 8 | Hydrocarbon stems; 10 core functional families and 5 extensions, naming tables/examples; suffix/prefix priority, ester/ether and N- traps; repeated groups, aromatic positions; existing cycloalkene locants and punctuation | Written TH/EN |
 | 9 | Skeletal C/H/O/N counts; carbonyl C and ring N; amine versus amide; formula-first comparison; identical redrawings versus constitutional/stereoisomers | Written TH/EN |
 | 10 | Solute–water donor/acceptor roles; carbonyl O; hydrocarbon chain/ring size; matched comparisons; neutral forms versus pH/ions | Written TH/EN |
 | 11 | Complete-combustion mole/mass calculations; molecular versus empirical formula; dark/light Br2 tests; aromatic ring versus side chain; intersecting evidence without claiming uniqueness | Written TH/EN |
@@ -300,3 +300,26 @@ Batch 5 QA:
   submission used. Preview HTTP crypto compatibility remains outside Git.
 - Proof image: `qa-output/chem69-review-q13-q15-ipad.jpg` (ignored local QA
   artifact). Publish via PR; verify the live deployment after an authorized merge.
+
+
+## Teacher-requested expansion — 2026-11-06
+
+Expanded existing exam sections **2, 4, 5, 6 and 8** in both languages.
+This is the same review, bank key and exam-section IDs, with no new source
+exam questions or answer-key changes. Other sections retain their content;
+recall-question headings are renumbered continuously.
+
+- The review now has **54 recall questions / 117 separately spaced subparts**
+  and 22 images per language. The five revised sections contain 25 recall
+  questions / 56 subparts.
+- Added seven OpenStax figures (source-provided WebP files, about 315 KiB
+  combined) and one original EA process diagram. Credits and reference URLs:
+  `public/content/reviews/chemistry/assets/chem69-q2-q4-SOURCES.md`.
+- Content QA covers definitions, comparison conditions, units, molecule names,
+  worked-example arithmetic, recall answers and TH/EN equivalence. LaTeX
+  expressions in the five revised sections agree between translations.
+- Figure captions distinguish rounded/ideal VSEPR angles from actual
+  molecule-specific values, and map the older radius figure's temporary
+  Uut/Uup/Uus/Uuo symbols to Nh/Mc/Ts/Og.
+- As explicitly requested, final QA is **content only**. No application,
+  browser, iPad, print or full-suite test result is claimed for this revision.

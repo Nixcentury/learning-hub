@@ -52,6 +52,9 @@ import { createCompanion } from "./companion.js";
 import "./quiz-progress.js";
 import { canOpenHubWorkspace, renderHubSessionView, shouldResumeHub } from "./hub-session-view.js";
 import { setPrepareHubReload } from './pwa-reload.js';
+import { applyPwaStartRoute } from './pwa-startup.js';
+
+applyPwaStartRoute(window);
 
 const languageStorageKey = "learning-hub-language";
 const subjectMenuStorageKey = "learning-hub-subject-menu-collapsed";

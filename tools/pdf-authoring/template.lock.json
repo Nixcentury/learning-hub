@@ -1,0 +1,18 @@
+{
+  "templateVersion": "1.0.0",
+  "weasyprintVersion": "66.0",
+  "pypdfVersion": "6.10.0",
+  "mathjaxVersion": "3.2.2",
+  "files": {
+    "tools/pdf-authoring/master.css": "7ec009bd094365064c3982bab391f52b5342d391015a51304292821a5461db8e",
+    "tools/pdf-authoring/fonts.css": "b851cb168bd14fe49bc921853335f57b40132c36ef806cf6b82f20d0a8418234",
+    "tools/pdf-authoring/content-model.mjs": "823b5d2c97369009a2351cfbcb7dd4afea457879c150c9899145a983f15b0913",
+    "tools/pdf-authoring/render.mjs": "8a80599f4778ed431cb9688ab27cba5b68befe723a64746d28530d2e40e165b2",
+    "tools/pdf-authoring/render_pdf.py": "a3fca4447f0fde68418ce2120204d3199b93bfcd7d4993034c5860f4ec942ce9",
+    "tools/pdf-authoring/package.json": "9bf6bec950ccd39fe60879a95d4cbc8ac7a901b230de0b99c8c21010a5602ec6",
+    "tools/pdf-authoring/package-lock.json": "7797bd4ddc69bc3e7a01fccd8017e599315659711ae0929ab30269d7400c494b",
+    "tools/pdf-authoring/requirements.txt": "0bc347f1a4196d4d2f063eee41f13e741fa5a17dfb2e1ecdd3a2a1eaea59bac4",
+    "js/print-metadata.js": "e557086a89dc3b53eceddea848be82d637aec144a29734b5a16e616652f30a72",
+    "public/shared/print-names.js": "6b6977e37e3d5708b9fee1272190df5105ee9ad189028a6b600550f4def5bfba"
+  }
+}

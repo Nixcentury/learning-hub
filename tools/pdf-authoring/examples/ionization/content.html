@@ -1,0 +1,168 @@
+<main data-pdf-content>
+<section data-content-lang="th" lang="th">
+  <h2>1. จัดหน่วยก่อนลงตาราง</h2>
+  <p>เริ่มจากสมการที่ดุลแล้ว เลือกใช้ mol หรือ mol/L ให้เหมือนกันทุกคอลัมน์ ถ้ามีการเปลี่ยนปริมาตร ใช้จำนวนโมลก่อน แล้วค่อยหารด้วยปริมาตรสุดท้าย</p>
+  <p>ตัวอย่างการแปลงปริมาณสาร: หน่วย mL ตัดกัน แล้วหน่วย L ตัดกัน เหลือหน่วย mol</p>
+  <p>\[250\ \mathrm{mL}\times\frac{1\ \mathrm L}{1000\ \mathrm{mL}}\times\frac{0.20\ \mathrm{mol}}{1\ \mathrm L}=0.050\ \mathrm{mol}\]</p>
+  <h2>2. กรด-เบสแก่: I-C-F</h2>
+  <p>I คือเริ่มต้น C คือเปลี่ยนไปตามเลขดุล และ F คือสุดท้าย สำหรับ NaOH ที่ละลายและแตกตัวสมบูรณ์:</p>
+  <p>\[\ce{NaOH -> Na+ + OH-}\]</p>
+  <div class="pdf-example" data-print-keep>
+    <h3>ตัวอย่าง 1 - อ่านปริมาณไอออน</h3>
+    <p>NaOH 0.050 mol ให้ไอออนแต่ละชนิดกี่โมล?</p>
+    <table>
+      <caption>ICF · หน่วย mol ทุกคอลัมน์</caption>
+      <thead><tr><th scope="col">แถว</th><th scope="col">NaOH</th><th scope="col">Na⁺</th><th scope="col">OH⁻</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">I เริ่มต้น</th><td>0.050</td><td>0</td><td>0</td></tr>
+        <tr data-pdf-change><th scope="row">C เปลี่ยนไป</th><td>-0.050</td><td>+0.050</td><td>+0.050</td></tr>
+        <tr><th scope="row">F สุดท้าย</th><td>0</td><td>0.050</td><td>0.050</td></tr>
+      </tbody>
+    </table>
+    <p>แถว C มีอัตราส่วน -1 : +1 : +1 ตามเลขดุล อ่าน F ได้ Na⁺ และ OH⁻ อย่างละ 0.050 mol</p>
+  </div>
+  <h2>3. กรด-เบสอ่อน: I-C-E</h2>
+  <p>กรดอ่อนแตกตัวบางส่วน จึงใช้ E แทนความเข้มข้นที่สมดุล ให้ c₀ เป็นความเข้มข้นเริ่มต้นและ x เป็นส่วนที่แตกตัว โดยละเลยไอออนจากน้ำ:</p>
+  <p>\[\ce{HA + H2O <=> H3O+ + A-}\]</p>
+  <table>
+    <caption>ICE · หน่วย mol/L ทุกคอลัมน์</caption>
+    <thead><tr><th scope="col">แถว</th><th scope="col">HA</th><th scope="col">H₃O⁺</th><th scope="col">A⁻</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">I เริ่มต้น</th><td>c₀</td><td>0</td><td>0</td></tr>
+      <tr data-pdf-change><th scope="row">C เปลี่ยนไป</th><td>-x</td><td>+x</td><td>+x</td></tr>
+      <tr><th scope="row">E สมดุล</th><td>c₀-x</td><td>x</td><td>x</td></tr>
+    </tbody>
+  </table>
+  <p>อ่านค่าจาก E ก่อนตั้ง \(K_a=x^2/(c_0-x)\) แล้วตรวจเงื่อนไขก่อนใช้ \(c_0-x\approx c_0\)</p>
+  <h2>4. ลองทำด้วยตนเอง</h2>
+  <div data-pdf-question="q-1" data-print-keep>
+    <h3>คำถาม 1 - ปริมาณโมลจากเบสแก่</h3>
+    <p>Ba(OH)₂ 0.0100 mol/L ปริมาตร 250 mL แตกตัวสมบูรณ์ จงหาโมลของ Ba²⁺ และ OH⁻ โดยแสดงการตัดหน่วยและตาราง ICF</p>
+    <div data-pdf-space="32"></div>
+    <div data-pdf-answer>
+      <p>\[250\ \mathrm{mL}\times\frac{1\ \mathrm L}{1000\ \mathrm{mL}}\times\frac{0.0100\ \mathrm{mol}}{1\ \mathrm L}=0.00250\ \mathrm{mol}\]</p>
+      <p>\[\ce{Ba(OH)2 -> Ba^2+ + 2OH-}\]</p>
+      <table>
+        <caption>ICF · mol</caption>
+        <thead><tr><th scope="col">แถว</th><th scope="col">Ba(OH)₂</th><th scope="col">Ba²⁺</th><th scope="col">OH⁻</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">I</th><td>0.00250</td><td>0</td><td>0</td></tr>
+          <tr data-pdf-change><th scope="row">C</th><td>-0.00250</td><td>+0.00250</td><td>+2×0.00250</td></tr>
+          <tr><th scope="row">F</th><td>0</td><td>0.00250</td><td>0.00500</td></tr>
+        </tbody>
+      </table>
+      <p>จึงได้ Ba²⁺ 0.00250 mol และ OH⁻ 0.00500 mol</p>
+    </div>
+  </div>
+  <div data-pdf-question="q-2" data-print-keep>
+    <h3>คำถาม 2 - ความเข้มข้นที่สมดุล</h3>
+    <p>HA 0.100 mol/L มี Kₐ = 1.00×10⁻⁵ จงใช้ ICE หา H₃O⁺ และร้อยละการแตกตัว ละเลยไอออนจากน้ำ และตรวจเกณฑ์ c₀/Kₐ &gt; 1000 ก่อนใช้การประมาณ</p>
+    <div data-pdf-space="36"></div>
+    <div data-pdf-answer>
+      <table>
+        <caption>ICE · mol/L</caption>
+        <thead><tr><th scope="col">แถว</th><th scope="col">HA</th><th scope="col">H₃O⁺</th><th scope="col">A⁻</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">I</th><td>0.100</td><td>0</td><td>0</td></tr>
+          <tr data-pdf-change><th scope="row">C</th><td>-x</td><td>+x</td><td>+x</td></tr>
+          <tr><th scope="row">E</th><td>0.100-x</td><td>x</td><td>x</td></tr>
+        </tbody>
+      </table>
+      <p>\[\frac{c_0}{K_a}=10^4&gt;1000,\quad x\approx\sqrt{K_ac_0}=1.00\times10^{-3}\ \mathrm{mol/L}\]</p>
+      <p>\[\%\ \mathrm{ionization}=\frac{1.00\times10^{-3}}{0.100}\times100=1.00\%\]</p>
+    </div>
+  </div>
+  <div data-pdf-question="q-3" data-print-keep>
+    <h3>คำถาม 3 - โมลไปจำนวนอะตอม</h3>
+    <p>โซเดียม 0.0200 mol มี Na กี่อะตอม? ให้หนึ่งโมลมี 6.02×10²³ อะตอม แสดงตัวคูณแปลงหน่วย</p>
+    <div data-pdf-space="20"></div>
+    <div data-pdf-answer>
+      <p>\[0.0200\ \mathrm{mol}\times\frac{6.02\times10^{23}\ \mathrm{atoms}}{1\ \mathrm{mol}}=1.204\times10^{22}\ \mathrm{atoms}\]</p>
+      <p>หน่วย mol ตัดกัน เหลืออะตอม ปัดเป็น 1.20×10²² อะตอม</p>
+    </div>
+  </div>
+</section>
+<section data-content-lang="en" lang="en">
+  <h2>1. Prepare the units before the table</h2>
+  <p>Start with a balanced reaction. Use either mol or mol/L consistently across the table. When volume changes, work in moles first, then divide by the final volume.</p>
+  <p>In this conversion, mL cancels first, then L cancels, leaving mol.</p>
+  <p>\[250\ \mathrm{mL}\times\frac{1\ \mathrm L}{1000\ \mathrm{mL}}\times\frac{0.20\ \mathrm{mol}}{1\ \mathrm L}=0.050\ \mathrm{mol}\]</p>
+  <h2>2. Strong acids and bases: I-C-F</h2>
+  <p>I means Initial, C means Change according to the balanced coefficients, and F means Final. For completely dissolved and dissociated NaOH:</p>
+  <p>\[\ce{NaOH -> Na+ + OH-}\]</p>
+  <div class="pdf-example" data-print-keep>
+    <h3>Example 1 - Read the ion amounts</h3>
+    <p>How many moles of each ion form from 0.050 mol NaOH?</p>
+    <table>
+      <caption>ICF · all columns in mol</caption>
+      <thead><tr><th scope="col">Row</th><th scope="col">NaOH</th><th scope="col">Na⁺</th><th scope="col">OH⁻</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">I Initial</th><td>0.050</td><td>0</td><td>0</td></tr>
+        <tr data-pdf-change><th scope="row">C Change</th><td>-0.050</td><td>+0.050</td><td>+0.050</td></tr>
+        <tr><th scope="row">F Final</th><td>0</td><td>0.050</td><td>0.050</td></tr>
+      </tbody>
+    </table>
+    <p>Row C follows -1 : +1 : +1. Row F gives 0.050 mol Na⁺ and 0.050 mol OH⁻.</p>
+  </div>
+  <h2>3. Weak acids and bases: I-C-E</h2>
+  <p>Weak acids ionize partially, so E means Equilibrium. Let c₀ be the initial concentration and x the concentration ionized. Neglect ions from water.</p>
+  <p>\[\ce{HA + H2O <=> H3O+ + A-}\]</p>
+  <table>
+    <caption>ICE · all columns in mol/L</caption>
+    <thead><tr><th scope="col">Row</th><th scope="col">HA</th><th scope="col">H₃O⁺</th><th scope="col">A⁻</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">I Initial</th><td>c₀</td><td>0</td><td>0</td></tr>
+      <tr data-pdf-change><th scope="row">C Change</th><td>-x</td><td>+x</td><td>+x</td></tr>
+      <tr><th scope="row">E Equilibrium</th><td>c₀-x</td><td>x</td><td>x</td></tr>
+    </tbody>
+  </table>
+  <p>Read E before writing \(K_a=x^2/(c_0-x)\). Check the criterion before using \(c_0-x\approx c_0\).</p>
+  <h2>4. Practise independently</h2>
+  <div data-pdf-question="q-1" data-print-keep>
+    <h3>Question 1 - Moles from a strong base</h3>
+    <p>250 mL of 0.0100 mol/L Ba(OH)₂ dissociates completely. Find moles of Ba²⁺ and OH⁻ using unit factors and an ICF table.</p>
+    <div data-pdf-space="32"></div>
+    <div data-pdf-answer>
+      <p>\[250\ \mathrm{mL}\times\frac{1\ \mathrm L}{1000\ \mathrm{mL}}\times\frac{0.0100\ \mathrm{mol}}{1\ \mathrm L}=0.00250\ \mathrm{mol}\]</p>
+      <p>\[\ce{Ba(OH)2 -> Ba^2+ + 2OH-}\]</p>
+      <table>
+        <caption>ICF · mol</caption>
+        <thead><tr><th scope="col">Row</th><th scope="col">Ba(OH)₂</th><th scope="col">Ba²⁺</th><th scope="col">OH⁻</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">I</th><td>0.00250</td><td>0</td><td>0</td></tr>
+          <tr data-pdf-change><th scope="row">C</th><td>-0.00250</td><td>+0.00250</td><td>+2×0.00250</td></tr>
+          <tr><th scope="row">F</th><td>0</td><td>0.00250</td><td>0.00500</td></tr>
+        </tbody>
+      </table>
+      <p>Thus Ba²⁺ = 0.00250 mol and OH⁻ = 0.00500 mol.</p>
+    </div>
+  </div>
+  <div data-pdf-question="q-2" data-print-keep>
+    <h3>Question 2 - Equilibrium concentration</h3>
+    <p>Initially 0.100 mol/L HA has Ka = 1.00×10⁻⁵. Use ICE to find H₃O⁺ and percentage ionization. Neglect water ions; check c₀/Ka &gt; 1000 before approximating.</p>
+    <div data-pdf-space="36"></div>
+    <div data-pdf-answer>
+      <table>
+        <caption>ICE · mol/L</caption>
+        <thead><tr><th scope="col">Row</th><th scope="col">HA</th><th scope="col">H₃O⁺</th><th scope="col">A⁻</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">I</th><td>0.100</td><td>0</td><td>0</td></tr>
+          <tr data-pdf-change><th scope="row">C</th><td>-x</td><td>+x</td><td>+x</td></tr>
+          <tr><th scope="row">E</th><td>0.100-x</td><td>x</td><td>x</td></tr>
+        </tbody>
+      </table>
+      <p>\[\frac{c_0}{K_a}=10^4&gt;1000,\quad x\approx\sqrt{K_ac_0}=1.00\times10^{-3}\ \mathrm{mol/L}\]</p>
+      <p>\[\%\ \mathrm{ionization}=\frac{1.00\times10^{-3}}{0.100}\times100=1.00\%\]</p>
+    </div>
+  </div>
+  <div data-pdf-question="q-3" data-print-keep>
+    <h3>Question 3 - Moles to atoms</h3>
+    <p>How many Na atoms are in 0.0200 mol sodium? Use 6.02×10²³ atoms per mole and show the unit factor.</p>
+    <div data-pdf-space="20"></div>
+    <div data-pdf-answer>
+      <p>\[0.0200\ \mathrm{mol}\times\frac{6.02\times10^{23}\ \mathrm{atoms}}{1\ \mathrm{mol}}=1.204\times10^{22}\ \mathrm{atoms}\]</p>
+      <p>The mol units cancel, leaving atoms. Round to 1.20×10²² atoms.</p>
+    </div>
+  </div>
+</section>
+</main>

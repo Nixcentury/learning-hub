@@ -48,7 +48,9 @@
     "test:monitor:sdk": "node scripts/run-classroom-monitor-qa.mjs --sdk",
     "validate:guides": "node scripts/validate-learning-guides.mjs",
     "test:assignments": "node --test --test-isolation=none scripts/classroom-assignment.test.mjs scripts/classroom-assignment-ui.test.mjs scripts/classroom-submission.test.mjs scripts/classroom-submission-bridge.test.mjs scripts/classroom-sheet-bridge.test.mjs",
-    "test:assignments:rules": "node scripts/run-classroom-assignment-qa.mjs"
+    "test:assignments:rules": "node scripts/run-classroom-assignment-qa.mjs",
+    "pdf:render": "node tools/pdf-authoring/render.mjs",
+    "test:pdf:authoring": "node --test tools/pdf-authoring/content-model.test.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

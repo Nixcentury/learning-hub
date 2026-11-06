@@ -1,0 +1,10 @@
+{
+  "templateVersion": "1.0.0",
+  "id": "learning-hub-ionization-example",
+  "subject": { "th": "เคมี", "en": "Chemistry" },
+  "chapter": { "th": "บท 10 กรด-เบส", "en": "10 Acids and bases" },
+  "topic": { "th": "10.3 การแตกตัว", "en": "10.3 Ionization" },
+  "title": { "th": "การแตกตัวของกรด-เบส", "en": "Acid-base ionization" },
+  "subtitle": { "th": "ติดตามปริมาณสารด้วยตาราง ICF และ ICE", "en": "Track quantities using ICF and ICE tables" },
+  "work": { "th": "ใบเรียนรู้", "en": "Learning sheet" }
+}

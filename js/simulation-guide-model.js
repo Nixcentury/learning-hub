@@ -11,7 +11,8 @@ export function validateSimulationGuide(guide) {
     value[lang].trim() && value[lang].length <= 1800 && !/<\/?[a-z]/i.test(value[lang]));
   if (!guide || guide.schemaVersion !== 1 || !idPattern.test(guide.contentId || '')) errors.push('Invalid guide identity');
   if (!text(guide?.title)) errors.push('Bilingual title required');
-  if (!Array.isArray(guide?.steps) || !guide.steps.length || guide.steps.length > 80) return [...errors, 'Expected 1–80 steps'];
+  if (!guide) return errors;
+  if (guide.format !== undefined && guide.format !== 'reading') errors.push('Invalid guide format');
   const sections = new Set();
   if (guide.sections !== undefined) {
     if (!Array.isArray(guide.sections) || !guide.sections.length || guide.sections.length > 16) errors.push('Expected 1–16 sections');
@@ -22,6 +23,25 @@ export function validateSimulationGuide(guide) {
         section.objectives.length > 8 || !section.objectives.every(text)) errors.push('Bilingual section objectives required');
     }
   }
+  if (guide.format === 'reading') {
+    const list = (value, max) => Array.isArray(value) && value.length > 0 && value.length <= max && value.every(text);
+    if (!sections.size) errors.push('Reading sections required');
+    if (!text(guide.introduction) || !text(guide.finish) || !list(guide.gettingStarted, 16) ||
+      !list(guide.troubleshooting, 16)) errors.push('Bilingual reading text required');
+    for (const section of Array.isArray(guide.sections) ? guide.sections : []) {
+      if (!Array.isArray(section?.parts) || !section.parts.length || section.parts.length > 8) { errors.push('Reading parts required'); continue; }
+      const parts = new Set();
+      for (const part of section.parts) {
+        if (!idPattern.test(part?.id || '') || parts.has(part?.id)) errors.push('Unique reading part IDs required');
+        parts.add(part?.id);
+        if (!text(part?.title) || !list(part?.items, 16)) errors.push('Bilingual reading part required');
+        if (part && ['answer', 'solution', 'correct', 'action', 'script'].some(key => Object.hasOwn(part, key))) errors.push('Instructions only');
+      }
+    }
+    if (Object.hasOwn(guide, 'steps')) errors.push('Reading guides contain articles, not tour steps');
+    return errors;
+  }
+  if (!Array.isArray(guide.steps) || !guide.steps.length || guide.steps.length > 80) return [...errors, 'Expected 1–80 steps'];
   const ids = new Set();
   for (const step of guide.steps) {
     if (!idPattern.test(step?.id || '') || ids.has(step.id)) errors.push('Unique step IDs required');

@@ -24,3 +24,12 @@ select:focus-visible,summary:focus-visible { outline:3px solid #057a69; outline-
 .guide-objectives summary { min-height:44px; padding:10px 0; font-size:14px; font-weight:bold; cursor:pointer; }
 .guide-objectives ul { padding-left:20px; margin:0 0 12px; }
 .guide-objectives li { font-size:14px; line-height:1.7; margin:6px 0; }
+.reading-contents { padding:4px 16px 12px; border:1px solid #b9d4c9; border-radius:10px; background:#edf6f2; }
+.reading-contents ul { list-style:none; padding:0; margin:0; }
+.reading-contents a,.reading-section>a { display:inline-block; min-height:44px; padding:10px 0; color:#075f50; text-underline-offset:3px; }
+.reading-contents a:focus-visible,.reading-section>a:focus-visible { outline:3px solid #057a69; outline-offset:3px; }
+.reading-section { border-top:1px solid #c7dbd3; margin-top:28px; padding-top:12px; scroll-margin-top:16px; }
+.reading-section h3 { font-size:16px; line-height:1.6; margin:20px 0 10px; }
+.reading-section ol,.reading-section ul { padding-left:24px; }
+.reading-section li { line-height:1.85; margin:10px 0; }
+@media print { .reading-contents,.reading-section>a { display:none; } }

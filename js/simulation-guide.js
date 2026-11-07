@@ -25,12 +25,49 @@ export function mountSimulationGuide({ document: doc, contentId, title, state, g
     state.stepId = data.steps[Math.max(0, Math.min(data.steps.length - 1, index + delta))].id;
     render(); root.querySelector('h2')?.focus({ preventScroll: true });
   }
+  function reading(data) {
+    root.dataset.guideState = 'reading';
+    add(root, 'p', data.title[lang], 'guide-notice');
+    add(root, 'p', data.introduction[lang]);
+    const contents = add(root, 'nav', '', 'reading-contents'); contents.id = 'guide-contents';
+    contents.setAttribute('aria-label', text('สารบัญคู่มือ', 'Guide contents'));
+    add(contents, 'h2', text('สารบัญ', 'Contents'));
+    const links = add(contents, 'ul', '');
+    for (const section of data.sections) {
+      const item = add(links, 'li', ''), link = add(item, 'a', section.title[lang]);
+      // Native fragment links work without scripts or click handlers in the iframe.
+      link.setAttribute('href', `#guide-reading-${section.id}`);
+    }
+    const list = (parent, values, tag = 'ol') => {
+      const node = add(parent, tag, ''); for (const value of values) add(node, 'li', value[lang]);
+    };
+    const start = add(root, 'section', '', 'reading-section');
+    add(start, 'h2', text('ก่อนเริ่มเล่น', 'Before you start')); list(start, data.gettingStarted);
+    for (const section of data.sections) {
+      const article = add(root, 'section', '', 'reading-section'); article.id = `guide-reading-${section.id}`;
+      add(article, 'h2', section.title[lang]);
+      add(article, 'h3', text('จุดประสงค์การเรียนรู้', 'Learning objectives')); list(article, section.objectives, 'ul');
+      for (const part of section.parts) {
+        add(article, 'h3', part.title[lang]); list(article, part.items);
+      }
+      const back = add(article, 'a', text('กลับสารบัญ', 'Back to contents')); back.setAttribute('href', '#guide-contents');
+    }
+    const help = add(root, 'section', '', 'reading-section');
+    add(help, 'h2', text('เมื่อเล่นแล้วติดขัด', 'If you get stuck')); list(help, data.troubleshooting, 'ul');
+    add(root, 'h2', text('ตรวจว่าทำครบแล้ว', 'Confirm completion')); add(root, 'p', data.finish[lang]);
+  }
   function render() {
     const scroll = doc.scrollingElement?.scrollTop || 0;
     doc.documentElement.lang = lang;
     root.replaceChildren();
-    add(root, 'p', text('คู่มือเล่น', 'Play guide'), 'guide-eyebrow');
+    const isReading = valid && guide.format === 'reading';
+    add(root, 'p', isReading ? text('คู่มือฉบับอ่าน', 'Reading guide') : text('คู่มือเล่น', 'Play guide'), 'guide-eyebrow');
     add(root, 'h1', title[lang]);
+    if (isReading) {
+      reading(guide);
+      if (doc.scrollingElement) doc.scrollingElement.scrollTop = scroll;
+      return;
+    }
     const data = currentGuide();
     root.dataset.guideState = state.example ? 'example' : data ? 'ready' : 'empty';
     if (!data) {

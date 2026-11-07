@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-08",
+  "revision": "2026-11-08-r07-content-final",
+  "sheet_slots_per_language": 185,
+  "quiz_questions": 70,
+  "quiz_drag_drop": 29,
+  "quiz_multiple_choice": 41,
+  "quiz_sections": {
+    "l01": 7,
+    "l02": 7,
+    "l03": 7,
+    "l04": 7,
+    "l05": 8,
+    "l06": 10,
+    "l07": 13,
+    "l08": 11
+  },
+  "vocab_entries_per_language": 72,
+  "svg_diagrams_in_pack": 24,
+  "svg_image_references": 20,
+  "guide_steps": 8,
+  "supplemental_example_tables": {
+    "monomer_plastics": 7,
+    "rubber": 4,
+    "fibre_origin_groups": 4
+  },
+  "added_review_questions_in_R07": 8,
+  "structural_qa": "pass",
+  "visual_qa": "contact sheet rendered, thumbnails inspected",
+  "runtime_qa": "delegated; not run",
+  "workbook_test_items": "not available; not audited"
+}

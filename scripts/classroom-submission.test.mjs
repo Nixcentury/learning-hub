@@ -45,20 +45,28 @@ async function gatedFixture(t, questionList=questions) {
   f.put(`@assignments/items/${rid}/${nextId}`,next);f.put(`quizzes/${rid}/${nextId}`,f.get(`quizzes/${rid}/${aid}`));
   f.context('student',rid,[item,next]);await tick();return {...f,next};
 }
-test('prerequisites require a final submission above 50%; drafts and exactly 50% do not unlock, and other students stay locked',async t=>{
-  const f=await gatedFixture(t,questions.slice(0,2)), binding=await f.service.open(aid);
+test('prerequisites unlock at exactly 20% of a final submission; drafts, zero and other students stay locked',async t=>{
+  const five=[questions[0],...Array.from({length:4},(_,i)=>({...questions[0],id:'extra-'+i}))];
+  const f=await gatedFixture(t,five), binding=await f.service.open(aid);
   await assert.rejects(f.service.open(nextId),{code:'homework/prerequisite-locked'});
-  await f.service.quizCommand('save',binding,{value:progress({choice:'a',number:'5/6'}),storageRevision:0});
+  await f.service.quizCommand('save',binding,{value:progress({choice:'a'}),storageRevision:0});
   assert.equal(f.service.getState().gates[nextId].status,'locked');
-  const half=await f.service.quizCommand('submit',binding,{value:progress({choice:'a'}),submissionId:'1'.repeat(32)});
-  assert.equal(half.grade.percent,50);assert.equal(f.service.getState().gates[nextId].status,'locked');
+  const zero=await f.service.quizCommand('submit',binding,{value:progress({choice:'b'}),submissionId:'1'.repeat(32)});
+  assert.equal(zero.grade.percent,0);assert.equal(f.service.getState().gates[nextId].status,'locked');
   const direct={...binding,id:nextId};
   for(const action of ['load','save','submit']) await assert.rejects(f.service.quizCommand(action,direct,{value:progress(),storageRevision:0,submissionId:'3'.repeat(32)}),{code:'homework/prerequisite-locked'});
-  const pass=await f.service.quizCommand('submit',binding,{value:progress({choice:'a',number:'5/6'}),submissionId:'2'.repeat(32),previousSubmissionId:half.result.submissionId});
-  assert.equal(pass.grade.percent,100);assert.equal(f.service.getState().gates[nextId].status,'open');
+  const pass=await f.service.quizCommand('submit',binding,{value:progress({choice:'a'}),submissionId:'2'.repeat(32),previousSubmissionId:zero.result.submissionId});
+  assert.equal(pass.grade.percent,20);assert.equal(f.service.getState().gates[nextId].status,'open');
   assert.equal((await f.service.open(nextId)).id,nextId);
   f.context('student-b',rid,[item,f.next]);await tick();
   assert.equal(f.service.getState().gates[nextId].status,'locked');await assert.rejects(f.service.open(nextId),{code:'homework/prerequisite-locked'});
+});
+test('a submitted score below 20% does not unlock',async t=>{
+  const six=[questions[0],...Array.from({length:5},(_,i)=>({...questions[0],id:'extra-'+i}))];
+  const f=await gatedFixture(t,six), binding=await f.service.open(aid);
+  await f.service.quizCommand('submit',binding,{value:progress({choice:'a'}),submissionId:'1'.repeat(32)});
+  assert.equal(f.service.getState().gates[nextId].status,'locked');
+  await assert.rejects(f.service.open(nextId),{code:'homework/prerequisite-locked'});
 });
 test('an archived passing submission keeps access after score reduction and a fresh account/context load while grades stay latest',async t=>{
   const f=await gatedFixture(t),binding=await f.service.open(aid);
@@ -382,4 +390,16 @@ test('assistance respects the target student prerequisite, not the teacher previ
  await assert.rejects(f.service.startAssist(nextId,'student'),{code:'homework/prerequisite-locked'});
  const p=f.service.startAssist(aid,'student');await assert.rejects(f.service.startAssist(aid,'student-b'),{code:'homework/assist-busy'});const binding=await p;
  f.connections.at(-1)(false);await assert.rejects(f.service.finishAssist(binding),{code:'homework/offline'});
+});
+
+test('ungraded work never pins a Quiz, creates quiz result listeners or exports grade CSV',async t=>{
+  const f=fixture(t,'teacher',false),media={...item,activityKind:'video'};
+  f.put(`@assignments/items/${rid}/${aid}`,media);f.context('teacher',rid,[media]);await tick();
+  assert.equal(await f.service.prepare(aid),null);assert.equal(f.writes.length,0);
+  await assert.rejects(f.service.exportSheet(aid),{code:'homework/ungraded'});
+  const state=f.context('student',rid,[media]);state.rooms[0].activityProgressStatus='ready';state.rooms[0].activityProgress={student:{[aid]:{openedAt:1000,completedAt:1100}}};
+  f.service.setContext({status:'signed-in',user:{uid:'student'}},{uid:'student',status:'ready',isTeacher:false,systemRole:'student'},state,rid);await tick();
+  assert.ok(!f.watchers.some(w=>w.active&&w.path===`results/${rid}/${aid}/student`));
+  const book=f.service.getState().grades[aid];assert.equal(book.graded,false);assert.equal(book.rows[0].completed,true);assert.equal(book.rows[0].grade,null);
+  assert.equal(f.service.getState().progress.percent,null);await f.service.checkActivityAccess(aid);
 });

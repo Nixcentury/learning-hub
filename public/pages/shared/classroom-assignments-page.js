@@ -1,5 +1,5 @@
 import { canTeachRoom } from '../../shared/classroom-room-role.js';
-import { newAssignmentId, assignmentUrl, assignmentStatus, thaiDateInput, parseThaiDateInput } from '../../shared/classroom-assignment-model.js';
+import { newAssignmentId, assignmentUrl, assignmentStatus, thaiDateInput, parseThaiDateInput, isUngradedAssignment } from '../../shared/classroom-assignment-model.js';
 
 // DOM presentation only. All authority, catalog resolution and writes live in
 // the signed-in parent Hub and are checked again by Database Rules.
@@ -7,7 +7,7 @@ const root = document.querySelector('[data-classroom-assignments]');
 root.innerHTML = `<aside class="classroom-left" data-hw-left>
   <details class="classroom-next classroom-panel" data-hw-next-panel open>
     <summary><span data-hw-next-heading></span><span class="classroom-panel-count" data-hw-next-count></span></summary>
-    <div class="classroom-next-content"><p data-hw-next-note></p><p class="homework-path-access" data-hw-path-access></p><ol class="homework-step-list" data-hw-next></ol><div data-hw-drafts></div></div>
+    <div class="classroom-next-content"><p data-hw-next-note></p><p data-hw-available-count></p><p class="homework-path-access" data-hw-path-access></p><ol class="homework-step-list" data-hw-next></ol><div data-hw-drafts></div></div>
   </details>
   <details class="classroom-links classroom-panel" data-hw-links-panel open>
     <summary data-hw-links-heading></summary>
@@ -83,6 +83,9 @@ function button(text, action, id) {
 function errorText(code) {
   if (/permission.?denied/i.test(code)) return t('ยังอ่านหรือบันทึกการบ้านไม่ได้ ให้ผู้ดูแลตรวจสิทธิ์และกติกาฐานข้อมูลการบ้าน แล้วลองเชื่อมต่ออีกครั้ง', 'Homework access was denied. Ask the administrator to check access and assignment database rules, then reconnect.');
   const pairs = {
+    'assignment/invalid-content': ['ใช้ลิงก์แชร์ของ Quiz วิดีโอ ซิมูเลเตอร์ หรือสื่อที่เปิดใช้งานใน Learning Hub', 'Use the share link from an available Learning Hub quiz, video, simulation or reading.'],
+    'assignment/open-first': ['เปิดสื่อจากงานนี้ก่อน แล้วจึงกดทำกิจกรรมแล้ว', 'Open the activity from this assignment before marking it done.'],
+    completed: ['บันทึกว่าทำกิจกรรมแล้ว · ไม่คิดคะแนน', 'Activity marked done · Ungraded'],
     'assignment/invalid-quiz': ['ลิงก์นี้ยังไม่ใช่ Quiz ที่เปิดใช้งานใน Learning Hub ใช้ปุ่มแชร์จากหน้าต่าง Quiz แล้ววางลิงก์นั้น', 'Use the share link from an available Learning Hub quiz. Menu pages, external links and temporary previews cannot be assigned.'],
     'assignment/invalid-title': ['ใส่ชื่องาน 1–180 ตัวอักษร', 'Enter a title of 1–180 characters.'],
     'assignment/invalid-instructions': ['คำชี้แจงยาวได้ไม่เกิน 4,000 ตัวอักษร', 'Instructions can contain up to 4,000 characters.'],
@@ -98,7 +101,7 @@ function errorText(code) {
     'homework/assist-busy': ['งานนี้กำลังใช้เครื่องครูอีกเครื่องอยู่ ให้นักเรียนรับกลับหรือรอสิทธิ์หมดอายุ', 'This work is active on another teacher device. Let the student reclaim it or wait for expiry.'],
     'homework/assist-unavailable': ['ยังเปิดงานนักเรียนไม่ได้ ตรวจสิทธิ์และ Rules ชุดช่วยนักเรียน แล้วลองใหม่', 'Student work is unavailable. Check your role and the assistance Rules, then retry.'],
     'homework/not-ready': ['ครูยังไม่ได้เปิดรับการส่งงาน ให้ครูเปิดการบ้านนี้แล้วกดเปิดรับการส่งงานก่อน', 'Your teacher needs to enable submissions for this assignment first.'],
-    'homework/prerequisite-locked': ['ต้องส่งงานที่กำหนดให้ได้มากกว่า 50% ก่อนเปิดงานนี้', 'Submit the required assignment with more than 50% before opening this work.'],
+    'homework/prerequisite-locked': ['ต้องส่งงานที่กำหนดให้ได้อย่างน้อย 20% ก่อนเปิดงานนี้', 'Submit the required assignment with at least 20% before opening this work.'],
     'homework/invalid-quiz': ['เตรียมชุดคำถามไม่ได้ ให้ครูตรวจเนื้อหา Quiz แล้วลองอีกครั้ง', 'Could not prepare the question set. Ask your teacher to check the quiz and retry.'],
     'homework/quiz-unavailable': ['ยังโหลดชุดคำถามไม่ได้ ตรวจการเชื่อมต่อแล้วลองอีกครั้ง', 'The question set could not be loaded. Check your connection and retry.'],
     'homework/offline': ['การเชื่อมต่อขาด รอให้กลับมาแล้วลองอีกครั้ง', 'Connection lost. Reconnect and try again.'],
@@ -139,7 +142,7 @@ function edit(item) {
   form.elements.url.value = item ? new URL(item.targetHash, snapshot().hubUrl).href : '';
   form.elements.url.readOnly = Boolean(item && item.status !== 'draft');
   prerequisiteOptions(item?.requiresAssignmentId || '');
-  preview = item ? { url: form.elements.url.value, quizTitleTh: item.quizTitleTh, quizTitleEn: item.quizTitleEn } : null;
+  preview = item ? { url: form.elements.url.value, quizTitleTh: item.quizTitleTh, quizTitleEn: item.quizTitleEn, activityKind: item.activityKind } : null;
   form.hidden = false; paint(); form.querySelector('h3').focus();
 }
 function save(publish) {
@@ -154,7 +157,7 @@ function prerequisiteOptions(selected = form.elements.requiresAssignmentId.value
   const select = form.elements.requiresAssignmentId;
   select.replaceChildren();
   const none = el('option', t('ไม่มี — เปิดทำได้ทันที', 'None — available immediately')); none.value = ''; select.append(none);
-  for (const item of (currentRoom()?.items || []).filter(item => item.id !== editor.id && (!editor.publishedAt || item.publishedAt < editor.publishedAt))
+  for (const item of (currentRoom()?.items || []).filter(item => !isUngradedAssignment(item) && item.id !== editor.id && (!editor.publishedAt || item.publishedAt < editor.publishedAt))
     .sort((a,b) => a.publishedAt - b.publishedAt || a.id.localeCompare(b.id))) {
     const option = el('option', item.title + (item.status === 'closed' ? t(' · ปิดงานแล้ว', ' · Closed') : '')); option.value = item.id; select.append(option);
   }
@@ -169,7 +172,54 @@ function sentLabel(row) {
 function resultTime(value) {
   return new Date(value).toLocaleString(context.language === 'en' ? 'en-GB' : 'th-TH', { timeZone: 'Asia/Bangkok', dateStyle: 'medium', timeStyle: 'short' });
 }
+function done(item, row = ownResult(item)) { return isUngradedAssignment(item) ? row?.completed === true : row?.submitted === true; }
+function activityLabel(row) {
+  return row?.completed ? t('ทำกิจกรรมแล้ว', 'Activity done') : row?.openedAt ? t('เปิดสื่อแล้ว · ยังไม่ยืนยัน', 'Opened · Not marked done') : t('ยังไม่เปิดสื่อ', 'Not opened');
+}
+function resultLabel(item, row) { return isUngradedAssignment(item) ? activityLabel(row) : sentLabel(row); }
+function classCount(item, rows = []) {
+  const count = rows.filter(row => done(item, row)).length;
+  return isUngradedAssignment(item) ? t(`ทำกิจกรรมแล้ว ${count}/${rows.length} คน`, `Done ${count}/${rows.length} students`)
+    : t(`ส่งแล้ว ${count}/${rows.length} คน`, `Submitted ${count}/${rows.length} students`);
+}
+function completeButton(item) {
+  if (owner() || !isUngradedAssignment(item) || item.status !== 'published') return null;
+  const row = ownResult(item), node = button(row?.completed ? t('✓ ทำกิจกรรมแล้ว', '✓ Activity done') : t('ทำกิจกรรมแล้ว', 'Mark activity done'), 'complete', item.id);
+  node.dataset.hwUnavailable = String(!submissions()?.grades?.[item.id]?.loaded || !row?.openedAt || row.completed || gateFor(item).status !== 'open');
+  return node;
+}
+function renderActivityResults(item, isOwner) {
+  const section = el('section', '', 'homework-results'); section.dataset.homeworkResults = '';
+  section.append(el('h4', t('ความคืบหน้ากิจกรรม · ไม่คิดคะแนน', 'Activity progress · Ungraded')));
+  const book = submissions()?.grades?.[item.id];
+  if (book?.error) { section.append(el('p', errorText(book.error), 'is-error')); return section; }
+  if (!book?.loaded) { section.append(el('p', t('กำลังโหลดความคืบหน้า…', 'Loading progress…'))); return section; }
+  if (isOwner) {
+    section.append(el('p', classCount(item, book.rows)));
+    const wrap = el('div', '', 'homework-results-scroll'), table = el('table', '', 'homework-results-table');
+    table.append(el('caption', item.title));
+    const head = el('thead', ''), header = el('tr', '');
+    for (const label of [t('นักเรียน', 'Student'), t('สถานะ', 'Status'), t('ทำกิจกรรมเมื่อ (เวลาไทย)', 'Done (Thailand time)')]) {
+      const cell = el('th', label); cell.scope = 'col'; header.append(cell);
+    }
+    head.append(header); table.append(head);
+    const body = el('tbody', '');
+    for (const row of book.rows) {
+      const line = el('tr', ''); line.dataset.resultUid = row.uid;
+      for (const value of [row.name, activityLabel(row), row.completedAt ? resultTime(row.completedAt) : '—']) line.append(el('td', value));
+      body.append(line);
+    }
+    table.append(body); wrap.append(table); section.append(wrap);
+  } else {
+    const row = ownResult(item); section.append(el('p', activityLabel(row)));
+    if (row?.completedAt) section.append(el('p', resultTime(row.completedAt)));
+    const complete = completeButton(item); if (complete) section.append(complete);
+  }
+  section.append(el('p', t('นักเรียนเป็นผู้ยืนยันว่าทำกิจกรรมแล้ว การเปิดสื่ออย่างเดียวยังไม่ถือว่าทำเสร็จ และไม่นำกิจกรรมนี้ไปรวมคะแนน', 'Students mark this activity done themselves. Opening it does not mark it done. This activity is excluded from scores.'), 'classroom-footnote'));
+  return section;
+}
 function renderResults(item, isOwner) {
+  if (isUngradedAssignment(item)) return renderActivityResults(item, isOwner);
   const section = el('section', '', 'homework-results'); section.dataset.homeworkResults = '';
   section.append(el('h4', isOwner ? t('ผลการส่งงาน', 'Submission results') : t('การส่งงานของฉัน', 'My submission')));
   const data = submissions(), gradebook = data?.grades?.[item.id];
@@ -227,7 +277,7 @@ function gateNote(item) {
   const gate = gateFor(item), prior = currentRoom()?.items.find(value => value.id === item.requiresAssignmentId);
   const node = el('p', gate.status === 'loading' ? t('กำลังตรวจเงื่อนไขงาน…', 'Checking prerequisite…') : gate.status === 'error'
     ? t('ยังตรวจเงื่อนไขไม่ได้ กรุณาลองเชื่อมต่ออีกครั้ง', 'Could not check the prerequisite. Reconnect and retry.')
-    : t('ต้องส่ง “', 'Submit “') + (prior?.title || t('งานที่ครูกำหนด', 'the required work')) + t('” ให้ได้มากกว่า 50%', '” with more than 50%'), 'homework-gate-note');
+    : t('ต้องส่ง “', 'Submit “') + (prior?.title || t('งานที่ครูกำหนด', 'the required work')) + t('” ให้ได้อย่างน้อย 20%', '” with at least 20%'), 'homework-gate-note');
   if (!owner() && gate.status === 'open') node.textContent = t('🔓 ปลดล็อกแล้ว', '🔓 Unlocked');
   node.dataset.gateStatus = gate.status;
   return node;
@@ -242,6 +292,7 @@ function launchButton(item, isOwner) {
     const locked = button(gate.status === 'loading' ? t('กำลังตรวจเงื่อนไข…', 'Checking prerequisite…') : t('🔒 รอผ่านงานก่อนหน้า', '🔒 Complete required work'), 'launch', item.id);
     locked.dataset.hwUnavailable = 'true'; return locked;
   }
+  if (isUngradedAssignment(item)) return item.status === 'published' ? button(t('เปิดสื่อ / กิจกรรม', 'Open activity'), 'launch', item.id) : null;
   const gradebook = submissions()?.grades?.[item.id], sent = ownResult(item)?.submitted;
   if (!gradebook?.ready || !(isOwner || item.status === 'published' || sent)) return null;
   return button(isOwner ? t('ดูชุดคำถาม', 'Preview question set') : sent ? item.status === 'published' ? t('แก้คำตอบ / ส่งอีกครั้ง', 'Edit / resubmit') : t('ดูงานที่ส่ง', 'View submitted work') : t('เปิดทำ Quiz', 'Open quiz'), 'launch', item.id);
@@ -251,16 +302,24 @@ function renderNext(values, isOwner) {
   const published = values.filter(item => item.status !== 'draft')
     .sort((a,b) => a.publishedAt - b.publishedAt || a.id.localeCompare(b.id));
   const loaded = published.every(item => submissions()?.grades?.[item.id]?.loaded);
-  const sent = published.filter(item => ownResult(item)?.submitted).length;
+  const sent = published.filter(item => done(item)).length;
+  const openItems = published.filter(item => item.status === 'published');
+  const gatesLoaded = isOwner || openItems.every(item => !['loading', 'error'].includes(gateFor(item).status));
+  const available = published.filter(item => item.status === 'published' && gateFor(item).status === 'open').length;
+  root.querySelector('[data-hw-available-count]').textContent = gatesLoaded
+    ? t(`เปิดทำได้ ${available}/${openItems.length} งาน`, `Available: ${available}/${openItems.length} assignments`)
+    : t(`กำลังตรวจงานที่เปิดทำได้ จากทั้งหมด ${openItems.length} งาน`, `Checking availability for ${openItems.length} assignments`);
   root.querySelector('[data-hw-next-heading]').textContent = t('เส้นทางงานของห้อง', 'Classroom learning path');
-  root.querySelector('[data-hw-next-count]').textContent = isOwner ? String(published.length) : loaded ? `${sent}/${published.length}` : '…';
+  const count = root.querySelector('[data-hw-next-count]');
+  count.textContent = gatesLoaded ? `${available}/${openItems.length}` : `…/${openItems.length}`;
+  count.setAttribute('aria-label', t('จำนวนงานที่เปิดทำได้จากงานทั้งหมดที่ครูเปิดไว้', 'Available assignments out of all open assignments'));
   root.querySelector('[data-hw-next-note]').textContent = !isOwner && loaded && published.length && sent === published.length
-    ? t('ส่งครบแล้ว งานทุกขั้นยังอยู่ กลับไปแก้และส่งซ้ำได้ในงานที่ยังเปิดอยู่', 'All work submitted. Every step stays here; revise and resubmit open assignments.')
+    ? t('ทำครบแล้ว งานทุกขั้นยังอยู่ กลับมาเปิดงานที่ครูยังเปิดอยู่ได้', 'All work completed. Open assignments remain available.')
     : t('งานทั้งหมดตามลำดับที่มอบหมาย', 'All assignments in publication order.');
   root.querySelector('[data-hw-path-access]').textContent = published.some(item => item.requiresAssignmentId)
-    ? t('🔒 ส่งงานที่กำหนดให้ได้มากกว่า 50% เพื่อปลดขั้นถัดไป', '🔒 Submit required work with more than 50% to unlock the next step')
+    ? t('🔒 ส่งงานที่กำหนดให้ได้อย่างน้อย 20% เพื่อปลดขั้นถัดไป', '🔒 Submit required work with at least 20% to unlock the next step')
     : t('🔓 เปิดทุกขั้น ยังไม่กำหนดงานที่ต้องผ่าน', '🔓 All steps open; no prerequisites set');
-  const nextId = !isOwner && published.find(item => item.status === 'published' && gateFor(item).status === 'open' && submissions()?.grades?.[item.id]?.loaded && !ownResult(item)?.submitted)?.id;
+  const nextId = !isOwner && published.find(item => item.status === 'published' && gateFor(item).status === 'open' && submissions()?.grades?.[item.id]?.loaded && !done(item))?.id;
   if (!published.length) {
     const empty = el('li', t('งานที่ครูมอบหมายจะแสดงเป็นขั้นที่นี่', 'Teacher assignments will appear here as steps.'), 'homework-empty-note');
     nextList.append(empty);
@@ -270,7 +329,7 @@ function renderNext(values, isOwner) {
     const step = el('li', '', 'homework-step'); step.dataset.homeworkStep = item.id;
     const gate = gateFor(item);
     step.dataset.stepAccess = item.status === 'closed' ? 'closed' : gate.status === 'open' ? 'open' : gate.status;
-    step.classList.toggle('is-submitted', !isOwner && Boolean(result?.submitted));
+    step.classList.toggle('is-submitted', !isOwner && done(item, result));
     step.classList.toggle('is-selected', selectedId === item.id);
     const number = el('span', String(index + 1), 'homework-step-number'); number.setAttribute('aria-hidden', 'true');
     const body = el('div', '', 'homework-step-body');
@@ -282,8 +341,7 @@ function renderNext(values, isOwner) {
     if (item.id === nextId) state.append(el('span', t('ขั้นต่อไป', 'Up next'), 'homework-step-next'));
     entry.append(state);
     let status = !gradebook?.loaded ? t('กำลังโหลดสถานะ…', 'Loading status…') : isOwner
-      ? t(`ส่งแล้ว ${gradebook.rows.filter(row => row.submitted).length}/${gradebook.rows.length} คน`, `Submitted ${gradebook.rows.filter(row => row.submitted).length}/${gradebook.rows.length}`)
-      : sentLabel(result);
+      ? classCount(item, gradebook.rows) : resultLabel(item, result);
     if (!isOwner && result?.submitted && Number.isFinite(result.grade?.percent)) status += ` · ${result.grade.percent}%`;
     entry.append(el('small', status, 'homework-step-result'));
     entry.append(el('small', dueText(item)));
@@ -316,12 +374,13 @@ function renderTools(item, isOwner) {
   for (const [th,en,action,available] of [
     ['แก้ไขงาน','Edit assignment','edit',Boolean(item)],
     ['ปิดงาน','Close assignment','close',item?.status === 'published'],
-    ['ดูคะแนน','View scores','scores',item && item.status !== 'draft'],
-    ['ส่งออกไปชีท (.csv)','Export to spreadsheet (.csv)','export-sheet',item && item.status !== 'draft' && gradebook?.ready],
+    [isUngradedAssignment(item) ? 'ดูความคืบหน้า' : 'ดูคะแนน',isUngradedAssignment(item) ? 'View progress' : 'View scores','scores',item && item.status !== 'draft'],
+    ['ส่งออกไปชีท (.csv)','Export to spreadsheet (.csv)','export-sheet',item && !isUngradedAssignment(item) && item.status !== 'draft' && gradebook?.ready],
   ]) {
+    if (action === 'export-sheet' && isUngradedAssignment(item)) continue;
     const node = button(t(th,en), action, item?.id); node.dataset.hwUnavailable = String(!available); toolActions.append(node);
   }
-  if (item?.status === 'published' && gradebook?.loaded && !gradebook.ready) toolActions.append(button(t('เปิดรับการส่งงาน','Enable submissions'),'prepare',item.id));
+  if (!isUngradedAssignment(item) && item?.status === 'published' && gradebook?.loaded && !gradebook.ready) toolActions.append(button(t('เปิดรับการส่งงาน','Enable submissions'),'prepare',item.id));
 }
 function renderFeed(values, room, isOwner) {
   list.replaceChildren();
@@ -337,19 +396,21 @@ function renderFeed(values, room, isOwner) {
     const byline = el('header', '', 'homework-post-byline'); byline.append(el('span','✓','homework-post-icon'));
     const who = el('div',''); who.append(el('strong',t('งานที่ครูมอบหมาย','Teacher assignment')),el('small',resultTime(item.publishedAt))); byline.append(who);
     const tags = el('div','','homework-tags'); tags.append(el('span',statusLabel(item),'homework-tag'));
+    if (isUngradedAssignment(item)) tags.append(el('span',t('ไม่คิดคะแนน','Ungraded'),'homework-tag'));
     if (!isOwner && item.status === 'published' && !room.seen?.[item.id]) tags.append(el('span',t('ใหม่','New'),'homework-tag'));
     const gradebook = submissions()?.grades?.[item.id];
     if (gradebook?.loaded && gradebook.ready) {
       const own = ownResult(item);
-      tags.append(el('span',isOwner ? t(`ส่งแล้ว ${gradebook.rows.filter(row=>row.submitted).length}/${gradebook.rows.length} คน`,`Submitted ${gradebook.rows.filter(row=>row.submitted).length}/${gradebook.rows.length}`) : sentLabel(own),'homework-tag'));
+      tags.append(el('span',isOwner ? classCount(item, gradebook.rows) : resultLabel(item, own),'homework-tag'));
       if (!isOwner && own?.submitted && own.grade && !own.grade.error) tags.append(el('span',t(`คะแนนที่ส่ง ${own.grade.score}/${own.grade.maxScore}`,`Submitted score ${own.grade.score}/${own.grade.maxScore}`),'homework-tag'));
     }
-    card.append(byline,tags,el('h3',item.title),el('p',item.instructions || t('เปิดรายละเอียดงานเพื่อเริ่มทำ Quiz','Open the assignment details to start the quiz.'),'homework-post-instructions'),el('p',dueText(item),'homework-post-due'));
+    card.append(byline,tags,el('h3',item.title),el('p',item.instructions || t('เปิดรายละเอียดงานเพื่อเริ่มทำกิจกรรม','Open the assignment details to get started.'),'homework-post-instructions'),el('p',dueText(item),'homework-post-due'));
     const note = gateNote(item); if (note) card.append(note);
     const actions = el('div','','homework-actions');
     if (isOwner) { const select = button(t('เลือกงานนี้','Select assignment'),'select',item.id); select.setAttribute('aria-pressed',String(item.id===selectedId)); actions.append(select); }
     actions.append(button(t('รายละเอียดงาน','Assignment details'),'view',item.id));
     const launch = launchButton(item,isOwner); if (launch) actions.append(launch);
+    const complete = completeButton(item); if (complete) actions.append(complete);
     const required = requiredWorkButton(item); if (required) actions.append(required);
     card.append(actions); list.append(card);
   }
@@ -371,17 +432,18 @@ function renderOverall(isOwner) {
     const bar = document.createElement('progress'); bar.max = 100; bar.value = progress.percent; bar.setAttribute('aria-label', t('เปอร์เซ็นต์คะแนนรวม', 'Overall score percentage')); score.append(bar);
   }
   const completion = el('div', '', 'homework-overall-metric');
-  completion.append(el('span', t('ส่งงานแล้ว', 'Assignments submitted')));
+  completion.append(el('span', t('ทำงานแล้ว', 'Assignments completed')));
   const count = el('strong', progress.submittedCount === null ? `…/${progress.assignmentCount}` : `${progress.submittedCount}/${progress.assignmentCount}`); count.dataset.hwOverallCount = ''; completion.append(count);
   if (progress.completionPercent !== null) {
     const bar = document.createElement('progress'); bar.max = 100; bar.value = progress.completionPercent; bar.setAttribute('aria-label', t('เปอร์เซ็นต์งานที่ส่งแล้ว', 'Assignments submitted percentage')); completion.append(bar);
   }
   values.append(score, completion); overall.append(values);
   const note = progress.status === 'empty' ? t('ยังไม่มีงานที่ประกาศในห้องนี้', 'No assignments have been published in this room.')
+    : progress.status === 'ungraded' ? t('ห้องนี้มีเฉพาะกิจกรรมไม่คิดคะแนน ดูจำนวนงานที่ทำแล้วได้', 'This room has only ungraded activities. Completion is shown separately.')
     : progress.status === 'loading' ? t('กำลังโหลดคะแนนและสถานะงานทั้งหมด…', 'Loading all scores and submission statuses…')
     : progress.status === 'waiting' ? t(`รอข้อมูลคะแนนเต็ม ${progress.unpreparedCount} งาน ให้ครูตรวจการเปิดรับการส่งงานก่อนคำนวณคะแนนรวมครบทุกงาน`, `Waiting for total points for ${progress.unpreparedCount} assignments. Ask your teacher to check that submissions have been enabled.`)
     : progress.status === 'error' ? t('ยังคำนวณคะแนนรวมไม่ได้ กรุณาลองเชื่อมต่ออีกครั้ง หรือติดต่อครูหากบางงานตรวจคะแนนไม่ได้', 'Overall score unavailable. Reconnect, or contact your teacher if an assignment cannot be graded.')
-    : t('ใช้คะแนนจากการส่งล่าสุด ÷ คะแนนเต็มของ Quiz ใน Hub ทุกงานที่ประกาศ งานยังไม่ส่งนับ 0 ในภาพรวม รวมงานที่ปิดและงานที่ยังล็อก ไม่นับงานร่าง', 'Latest submitted points ÷ total Quiz points in Hub across all published assignments. Unsubmitted work counts as 0 here; closed and locked work is included. Drafts are excluded.');
+    : t('ใช้คะแนนจากการส่งล่าสุด ÷ คะแนนเต็มของ Quiz ใน Hub ทุกงานที่ประกาศ งาน Quiz ยังไม่ส่งนับ 0 รวม Quiz ที่ปิดและยังล็อก ไม่นับงานร่างและกิจกรรมไม่คิดคะแนน', 'Latest submitted points ÷ total Quiz points in Hub across all published assignments. Unsubmitted quizzes count as 0; closed and locked quizzes are included. Drafts and ungraded activities are excluded.');
   overall.append(el('p', note));
   if (!progress.connected) overall.append(el('p', t('การเชื่อมต่อขาด · แสดงข้อมูลล่าสุดที่โหลดได้', 'Offline · showing the last loaded data'), 'homework-overall-offline'));
 }
@@ -408,24 +470,24 @@ function paint() {
   root.querySelector('[data-room-monitor-panel]').hidden = room?.membership === 'teacher';
   root.querySelector('[data-room-monitor-summary]').textContent = isOwner ? t('ติดตามคาบเรียน','Lesson monitoring') : t('คาบเรียนของฉัน','My lesson');
   const newButton = root.querySelector('[data-hw-new]'); newButton.hidden = !isOwner || Boolean(editor); newButton.textContent = t('+ มอบหมายงาน', '+ Assign homework');
-  root.querySelector('[data-hw-note]').textContent = t('ทำ Quiz → ตรวจคำตอบ → ดูคะแนน → ส่งงานให้ครู กลับไปแก้และส่งซ้ำได้จนกว่าครูปิดงาน ครูเห็นคะแนนรวมที่ส่งล่าสุด การเปิด Quiz ยังไม่นับเป็นการส่งงาน', 'Complete quiz → Check answers → Review score → Submit to teacher. Edit and resubmit until your teacher closes the assignment. Teachers see the latest submitted total. Opening a quiz is not a submission.');
-  const failure = room?.error || data?.error || submissions()?.error || (feedbackError ? feedback : '');
+  root.querySelector('[data-hw-note]').textContent = t('Quiz: ตรวจคำตอบแล้วส่งงานให้ครู · กิจกรรมไม่คิดคะแนน: เปิดสื่อแล้วกดทำกิจกรรมแล้ว การเปิดสื่ออย่างเดียวยังไม่นับว่าทำเสร็จ', 'Quiz: check answers and submit. Ungraded activity: open the content, then mark it done. Opening content alone does not count as completion.');
+  const failure = room?.error || room?.activityProgressError || data?.error || submissions()?.error || (feedbackError ? feedback : '');
   const feedbackNode = root.querySelector('[data-hw-feedback]');
   feedbackNode.textContent = busy() ? t('กำลังรอระบบยืนยัน…', 'Waiting for confirmation…') : failure ? errorText(failure)
     : !data?.connected ? errorText('assignment/offline') : !room || room.status === 'loading' ? t('กำลังโหลดการบ้าน…', 'Loading homework…') : feedback ? errorText(feedback) : '';
   feedbackNode.classList.toggle('is-error', Boolean(failure));
   const retry = root.querySelector('[data-hw-retry]'); retry.hidden = !failure; retry.textContent = t('ลองเชื่อมต่อการบ้านอีกครั้ง', 'Reconnect homework');
   if (editor) {
-    form.querySelector('h3').textContent = editor.revision ? t('แก้ไขการบ้าน', 'Edit homework') : t('มอบหมาย Quiz ให้ห้องนี้', 'Assign a quiz to this classroom');
-    const labels = { title: t('ชื่องาน', 'Assignment title'), url: t('ลิงก์ Quiz จาก Learning Hub', 'Learning Hub quiz link'), instructions: t('คำชี้แจง', 'Instructions'), requires: t('ต้องผ่านงานไหนก่อน', 'Required assignment'), due: t('กำหนดส่ง (ไม่บังคับ)', 'Due date (optional)') };
+    form.querySelector('h3').textContent = editor.revision ? t('แก้ไขการบ้าน', 'Edit homework') : t('มอบหมายงานให้ห้องนี้', 'Assign work to this classroom');
+    const labels = { title: t('ชื่องาน', 'Assignment title'), url: t('ลิงก์สื่อจาก Learning Hub', 'Learning Hub content link'), instructions: t('คำชี้แจง', 'Instructions'), requires: t('ต้องผ่านงานไหนก่อน', 'Required assignment'), due: t('กำหนดส่ง (ไม่บังคับ)', 'Due date (optional)') };
     for (const node of form.querySelectorAll('[data-hw-label]')) node.textContent = labels[node.dataset.hwLabel];
     prerequisiteOptions();
-    form.querySelector('[data-hw-prerequisite-help]').textContent = t('ส่งงานที่เลือกให้ได้มากกว่า 50% จึงเปิดงานนี้ เมื่อเคยผ่านแล้วจะปลดค้างไว้ เลือก “ไม่มี” เพื่อเปิดทันที', 'Submit the selected assignment with more than 50% to open this work. Once passed, it stays unlocked. Choose None for immediate access.');
-    form.querySelector('[data-hw-url-help]').textContent = form.elements.url.readOnly ? t('เผยแพร่แล้ว หากต้องเปลี่ยน Quiz ให้มอบหมายเป็นงานใหม่', 'This work is published. Assign a new work item to use a different quiz.') : t('คัดลอกจากปุ่มแชร์ของ Quiz ปกติหรือคลังข้อสอบ', 'Copy the share link from a regular or question-bank quiz.');
+    form.querySelector('[data-hw-prerequisite-help]').textContent = t('ส่งงานที่เลือกให้ได้อย่างน้อย 20% จึงเปิดงานนี้ เมื่อเคยผ่านแล้วจะปลดค้างไว้ เลือก “ไม่มี” เพื่อเปิดทันที', 'Submit the selected assignment with at least 20% to open this work. Once passed, it stays unlocked. Choose None for immediate access.');
+    form.querySelector('[data-hw-url-help]').textContent = form.elements.url.readOnly ? t('เผยแพร่แล้ว หากต้องเปลี่ยนสื่อให้มอบหมายเป็นงานใหม่', 'This work is published. Assign a new work item to use different content.') : t('คัดลอกจากปุ่มแชร์ของ Quiz วิดีโอ ซิมูเลเตอร์ หรือสื่อในระบบเรา', 'Copy the share link from a quiz, video, simulation or reading in our Hub.');
     form.querySelector('[data-hw-due-help]').textContent = t('ใช้เวลาไทย (UTC+7) เว้นว่างได้ เลยกำหนดแล้วยังเปิดทำได้จนกว่าครูปิดงาน', 'Use Thailand time (UTC+7). Leave blank for no due date. Past-due work can be opened until your teacher closes it.');
     form.querySelector('[data-hw-preview]').textContent = t('ตรวจลิงก์ / ดูตัวอย่าง', 'Check link / preview');
     form.querySelector('[data-hw-preview]').hidden = form.elements.url.readOnly;
-    form.querySelector('[data-hw-preview-result]').textContent = preview ? t('Quiz ที่เลือก: ', 'Selected quiz: ') + (context.language === 'en' ? preview.quizTitleEn : preview.quizTitleTh) : '';
+    form.querySelector('[data-hw-preview-result]').textContent = preview ? t('สื่อที่เลือก: ', 'Selected content: ') + (context.language === 'en' ? preview.quizTitleEn : preview.quizTitleTh) + (isUngradedAssignment(preview) ? t(' · ไม่คิดคะแนน', ' · Ungraded') : t(' · คิดคะแนน Quiz', ' · Scored quiz')) : '';
     form.querySelector('[data-hw-save]').textContent = editor.status === 'draft' ? t('บันทึกร่าง', 'Save draft') : t('บันทึกการแก้ไข', 'Save changes');
     form.querySelector('[data-hw-publish]').hidden = editor.status !== 'draft';
     form.querySelector('[data-hw-publish]').textContent = t('เผยแพร่ให้ทั้งห้อง', 'Publish to classroom');
@@ -455,10 +517,10 @@ function paint() {
       detail.append(el('h3', item.title));
       if (inspectMode !== 'scores') {
         detail.append(el('span', statusLabel(item), 'homework-tag'), el('p', dueText(item)), el('p', item.instructions || t('ไม่มีคำชี้แจงเพิ่มเติม', 'No additional instructions.'), 'homework-instructions'),
-          el('p', t('Quiz: ', 'Quiz: ') + (context.language === 'en' ? item.quizTitleEn : item.quizTitleTh)));
+          el('p', t('สื่อ: ', 'Content: ') + (context.language === 'en' ? item.quizTitleEn : item.quizTitleTh) + (isUngradedAssignment(item) ? t(' · ไม่คิดคะแนน', ' · Ungraded') : '')));
         const actions=el('div','','homework-actions');
         const launch = launchButton(item,isOwner); if (launch) actions.append(launch);
-        if(isOwner && item.status!=='draft') actions.append(button(t('งานนักเรียน','Student work'),'student-work',item.id));
+        if(isOwner && !isUngradedAssignment(item) && item.status!=='draft') actions.append(button(t('งานนักเรียน','Student work'),'student-work',item.id));
         detail.append(actions);
         if(isOwner && studentWorkId===item.id) {
           const panel=el('section','','homework-student-work');panel.dataset.studentWork='';panel.append(el('h4',t('เลือกนักเรียนเพื่อทำต่อบนเครื่องครู','Choose a student to continue on the teacher’s device')));
@@ -540,6 +602,7 @@ window.addEventListener('message', event => {
   else if (['save','publish'].includes(action)) { selectedId = event.data.result.id || selectedId; inspectMode = ''; feedback = event.data.result.status === 'draft' ? 'saved' : editor?.status === 'draft' ? 'published' : 'updated'; feedbackError = false; closeEditor(); }
   else if (action === 'close') { feedback = 'closed'; feedbackError = false; }
   else if (action === 'prepare') { feedback = 'prepared'; feedbackError = false; }
+  else if (action === 'complete') { feedback = 'completed'; feedbackError = false; }
   else if (action === 'history') historyView = event.data.result;
   else if (action === 'export-sheet') {
     try {

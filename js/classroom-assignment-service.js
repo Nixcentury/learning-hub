@@ -1,6 +1,6 @@
 import { canTeachRoom } from '../public/shared/classroom-room-role.js';
 import { createClassroomAccess } from './classroom-access.js';
-import { assignmentIdPattern, assignmentRoomPattern, assignmentError, cleanAssignmentFields, resolveAssignmentQuiz, resolveAssignmentLesson } from './classroom-assignment-model.js';
+import { assignmentIdPattern, assignmentRoomPattern, assignmentError, cleanAssignmentFields, resolveAssignmentTarget, resolveAssignmentLesson, isUngradedAssignment } from './classroom-assignment-model.js';
 
 // Reads/writes use authenticated IO. Firebase Rules independently enforce the
 // same room ownership and membership. No student score/answer access is added.
@@ -53,6 +53,28 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
   function addRoom(id, membership, version) {
     const list = []; roomStops.set(id, list);
     const relevant = () => roomStops.get(id) === list;
+    let progressStop = null, progressVersion = 0;
+    list.push(() => { ++progressVersion; progressStop?.(); });
+    function syncProgress(room) {
+      const needed = Object.values(room.items).some(isUngradedAssignment);
+      if (!needed) {
+        ++progressVersion; progressStop?.(); progressStop = null;
+        room.activityProgress = {}; room.activityProgressStatus = 'ready'; room.activityProgressError = '';
+      } else if (!progressStop) {
+        const run = ++progressVersion;
+        room.activityProgressStatus = 'loading';
+        const path = `activityProgress/${id}` + (membership === 'student' ? '/' + uid : '');
+        const progressStops = [];
+        progressStop = () => stop(progressStops);
+        watch(path, value => {
+          if (run !== progressVersion) return;
+          room.activityProgress = membership === 'student' ? { [uid]: value || {} } : value || {};
+          room.activityProgressStatus = 'ready'; room.activityProgressError = ''; publish();
+        }, progressStops, version, () => relevant() && run === progressVersion, failure => {
+          room.activityProgress = {}; room.activityProgressStatus = 'error'; room.activityProgressError = failure;
+        });
+      }
+    }
     const loaded = new Set();
     rooms.set(id, { id, membership, status: 'loading', name: '', ownerUid: '', items: {}, drafts: {}, seen: {}, error: '' });
     const failed = failure => { const room = rooms.get(id); if (room) { room.status = 'error'; room.error = failure; room.items = {}; room.drafts = {}; room.seen = {}; } };
@@ -62,6 +84,7 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
         if (!value?.ownerUid) { failed('assignment/room-unavailable'); publish(); return; }
         room.name = value.name; room.ownerUid = value.ownerUid;
       } else room[kind] = value || {};
+      if (kind === 'items') syncProgress(room);
       loaded.add(kind);
       const needed = ['owner', 'teacher'].includes(membership) ? ['meta', 'items', 'drafts'] : ['meta', 'items', 'seen'];
       if (needed.every(key => loaded.has(key)) && !room.error) room.status = 'ready';
@@ -109,7 +132,7 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
     try {
       if (action === 'preview') {
         const catalog = await loadCatalog(); guard(user, version);
-        return { preview: resolveAssignmentQuiz(payload.url, catalog, hubUrl) };
+        return { preview: resolveAssignmentTarget(payload.url, catalog, hubUrl) };
       }
       if (action === 'view') {
         if (!room.items[id] && !room.drafts[id]) throw assignmentError('assignment/room-unavailable');
@@ -126,14 +149,30 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
         const item = room.items[id];
         if (!item || room.membership !== 'student') return {};
         await io.transaction(`seen/${roomId}/${user}/${id}`, previous => live(version) ? previous || io.timestamp() : undefined);
-      } else if (action === 'launch') {
+      } else if (action === 'launch' || action === 'complete') {
         // Re-read before launch: a cached card must not reopen a closed work item.
         const item = await read(`items/${roomId}/${id}`); guard(user, version);
         if (!item || item.status !== 'published') throw assignmentError('assignment/closed');
         const catalog = await loadCatalog(); guard(user, version);
         roomFor(roomId);
-        const target = resolveAssignmentQuiz(item.targetHash, catalog, hubUrl);
-        if (target.contentId !== item.contentId) throw assignmentError('assignment/quiz-changed');
+        const target = resolveAssignmentTarget(item.targetHash, catalog, hubUrl);
+        if (target.contentId !== item.contentId || target.activityKind !== item.activityKind) throw assignmentError('assignment/quiz-changed');
+        if (action === 'complete' && (!isUngradedAssignment(item) || room.membership !== 'student')) throw assignmentError('assignment/student-required');
+        if (isUngradedAssignment(item) && room.membership === 'student') {
+          const path = `activityProgress/${roomId}/${user}/${id}`;
+          // Read first: RTDB transactions can initially receive null while the
+          // authoritative value is not in the local cache.
+          const previous = await read(path); guard(user, version); roomFor(roomId);
+          if (action === 'complete' && !previous?.openedAt) throw assignmentError('assignment/open-first');
+          const result = await io.transaction(path, current => {
+            if (!live(version)) return;
+            const record = current || previous;
+            return action === 'complete' ? { ...record, completedAt: record.completedAt || io.timestamp() }
+              : record || { openedAt: io.timestamp() };
+          });
+          guard(user, version); roomFor(roomId);
+          if (!result.committed) throw assignmentError('assignment/conflict');
+        }
         return { targetHash: target.targetHash };
       } else if (['save', 'publish', 'close'].includes(action)) {
         if (!Number.isSafeInteger(payload.revision) || payload.revision < 0) throw assignmentError('assignment/conflict');
@@ -145,11 +184,11 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
         const fields = action === 'close' ? cleanAssignmentFields(oldItem) : cleanAssignmentFields(payload);
         if (fields.requiresAssignmentId) {
           const prior = await read(`items/${roomId}/${fields.requiresAssignmentId}`); guard(user, version); roomFor(roomId, true);
-          if (fields.requiresAssignmentId === id || !prior || !['published','closed'].includes(prior.status) ||
+          if (fields.requiresAssignmentId === id || !prior || isUngradedAssignment(prior) || !['published','closed'].includes(prior.status) ||
               oldItem && !(prior.publishedAt < oldItem.publishedAt)) throw assignmentError('assignment/invalid-prerequisite');
         }
-        const target = oldItem ? Object.fromEntries(['targetHash','contentId','quizTitleTh','quizTitleEn'].map(key => [key, oldItem[key]]))
-          : resolveAssignmentQuiz(payload.url, await loadCatalog(), hubUrl);
+        const target = oldItem ? { ...Object.fromEntries(['targetHash','contentId','quizTitleTh','quizTitleEn'].map(key => [key, oldItem[key]])), ...(oldItem.activityKind ? { activityKind: oldItem.activityKind } : {}) }
+          : resolveAssignmentTarget(payload.url, await loadCatalog(), hubUrl);
         guard(user, version); roomFor(roomId, true);
         const status = action === 'close' ? 'closed' : oldItem ? oldItem.status : action === 'publish' ? 'published' : 'draft';
         const record = { ...fields, ...target, version: 1, ownerUid: room.ownerUid, status,
@@ -167,7 +206,7 @@ export function createClassroomAssignments({ io, onChange = () => {}, loadCatalo
           await io.update({ [`items/${roomId}/${id}`]: record, [`drafts/${roomId}/${id}`]: null });
         }
         guard(user, version);
-        return { id, roomId, status };
+        return { id, roomId, status, ...(target.activityKind ? { activityKind: target.activityKind } : {}) };
       } else throw assignmentError('assignment/invalid-action');
       guard(user, version);
       return {};

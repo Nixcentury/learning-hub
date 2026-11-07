@@ -25,9 +25,9 @@ Agreed scope (2026-10-31): left = work to do next; center = teacher assignment p
 
 ## Deferred work
 
-Shared practice/homework saves, student posts/comments, groups and Sheet storage are separate tasks. Prerequisite configuration and the >50% submitted-work gate are described in [CLASSROOM-PREREQUISITES.md](CLASSROOM-PREREQUISITES.md).
+Shared practice/homework saves, student posts/comments, groups and Sheet storage are separate tasks. Prerequisite configuration and the >=20% submitted-work gate are described in [CLASSROOM-PREREQUISITES.md](CLASSROOM-PREREQUISITES.md).
 
-Assignments default to no prerequisite. The path distinguishes teacher-closed work from work awaiting a prerequisite; posts remain selectable for instructions and results. A passing submitted result or history (>50%) opens the dependent work. The displayed sequence uses publication time with ID as a tie-breaker; custom reordering remains later work.
+Assignments default to no prerequisite. The path distinguishes teacher-closed work from work awaiting a prerequisite; posts remain selectable for instructions and results. A passing submitted result or history (>=20%) opens the dependent work. The displayed sequence uses publication time with ID as a tie-breaker; custom reordering remains later work.
 
 ## Monitoring browser regression (#91)
 

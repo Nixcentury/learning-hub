@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createClassroomAssignments } from '../js/classroom-assignment-service.js';
-import { assignmentHash, assignmentUrl, parseAssignmentRoute, parseThaiDateInput, thaiDateInput, resolveAssignmentQuiz, resolveAssignmentLesson, assignmentStatus } from '../js/classroom-assignment-model.js';
+import { assignmentHash, assignmentUrl, parseAssignmentRoute, parseThaiDateInput, thaiDateInput, resolveAssignmentQuiz, resolveAssignmentTarget, resolveAssignmentLesson, assignmentStatus } from '../js/classroom-assignment-model.js';
 import { resolveHubRoute } from '../js/hub-routes.js';
 import { resolveNavigation } from '../js/hub-navigation.js';
 import { closedHomeworkHash } from '../js/classroom-assignment-routes.js';
@@ -164,4 +164,67 @@ test('co-teacher reads drafts and publishes with canonical owner; downgrade stop
  const old=f.watchers.filter(w=>w.active&&w.path.startsWith('drafts/'));
  f.put(`@classroom/userRooms/friend/${rid}`,'student');f.emit();await tick();assert.ok(old.every(w=>!w.active));
  await assert.rejects(f.service.command('close',{roomId:rid,id:aid,revision:1},'friend'),{code:'assignment/owner-required'});
+});
+
+const mediaRoute = { ...quizRoute, hash: '#content/wave-sim', contentId: 'wave-sim' };
+catalog.routes.push(mediaRoute);
+catalog.contents.push({ id: 'wave-sim', source: 'content/test/waves-sim.html', toolKind: 'simulation', titleTh: 'ทดลองคลื่น', titleEn: 'Wave simulation' });
+test('assigns only catalog-authored internal media, including Hub YouTube links, never raw external URLs', () => {
+  assert.equal(resolveAssignmentTarget(hub+mediaRoute.hash,catalog,hub).activityKind,'simulation');
+  const videoRoute={...mediaRoute,hash:'#content/wave-video',contentId:'wave-video'};
+  const c={...catalog,routes:[...catalog.routes,videoRoute],contents:[...catalog.contents,{id:'wave-video',source:'content/test/video.html',toolKind:'video',videoSource:'https://youtu.be/M7lc1UVf-VE',titleTh:'คลื่น',titleEn:'Waves'}]};
+  assert.equal(resolveAssignmentTarget(hub+videoRoute.hash,c,hub).activityKind,'video');
+  for(const value of ['https://youtu.be/M7lc1UVf-VE',hub+'pages/tools/video-player.html?video=x',hub+'#overview',hub+'#content/missing'])
+    assert.throws(()=>resolveAssignmentTarget(value,c,hub),{code:'assignment/invalid-content'});
+  const pending={...c,contents:c.contents.map(item=>item.id==='wave-video'?{...item,videoSource:''}:item)};
+  assert.throws(()=>resolveAssignmentTarget(hub+videoRoute.hash,pending,hub),{code:'assignment/invalid-content'});
+  assert.throws(()=>resolveAssignmentQuiz(hub+mediaRoute.hash,catalog,hub),{code:'assignment/invalid-quiz'});
+});
+test('media posts retain their kind through draft, publication, edit and closure with no quiz writes',async t=>{
+  const f=fixture(t);await tick();const inputMedia={...input,url:hub+mediaRoute.hash};
+  await f.service.command('save',inputMedia);assert.equal(f.get(`drafts/${rid}/${aid}`).activityKind,'simulation');
+  await f.service.command('publish',{...inputMedia,revision:1});await tick();
+  assert.equal(f.get(`items/${rid}/${aid}`).activityKind,'simulation');
+  await f.service.command('save',{...input,revision:2,title:'Changed instructions'});
+  assert.equal(f.get(`items/${rid}/${aid}`).activityKind,'simulation');
+  await f.service.command('close',{roomId:rid,id:aid,revision:3});
+  assert.equal(f.get(`items/${rid}/${aid}`).activityKind,'simulation');
+  assert.ok(f.writes.every(patch=>Object.keys(patch).every(path=>!path.startsWith('quizzes/'))));
+});
+test('reading, opening, and confirming an activity are separate; confirmation is self-only, idempotent and blocked after closure',async t=>{
+  const f=fixture(t,'student',false);await tick();
+  f.put(`items/${rid}/${aid}`,{...input,status:'published',activityKind:'simulation',targetHash:mediaRoute.hash,contentId:'wave-sim'});f.emit();await tick();
+  await f.service.command('seen',{roomId:rid,id:aid});
+  assert.equal(f.get(`activityProgress/${rid}/student/${aid}`),null);
+  await assert.rejects(f.service.command('complete',{roomId:rid,id:aid}),{code:'assignment/open-first'});
+  await f.service.command('launch',{roomId:rid,id:aid});
+  assert.deepEqual(f.get(`activityProgress/${rid}/student/${aid}`),{openedAt:1000});
+  await f.service.command('complete',{roomId:rid,id:aid,uid:'student-b'});
+  const saved=f.get(`activityProgress/${rid}/student/${aid}`);assert.equal(saved.completedAt,1000);
+  assert.equal(f.get(`activityProgress/${rid}/student-b/${aid}`),null);
+  await f.service.command('complete',{roomId:rid,id:aid});assert.deepEqual(f.get(`activityProgress/${rid}/student/${aid}`),saved);
+  const old=f.watchers.find(w=>w.active&&w.path===`activityProgress/${rid}/student`);
+  f.service.setIdentity(...context('student-b',false));await tick();old.ok({[aid]:saved});
+  assert.equal(f.service.getState().rooms.length,0);
+  f.service.setIdentity(...context('student',false));await tick();
+  f.put(`items/${rid}/${aid}/status`,'closed');f.emit();
+  await assert.rejects(f.service.command('complete',{roomId:rid,id:aid}),{code:'assignment/closed'});
+});
+test('ungraded activity cannot be selected as a score prerequisite',async t=>{
+  const f=fixture(t);await tick();const prior='a_'+'c'.repeat(32);
+  f.put(`items/${rid}/${prior}`,{...input,status:'published',publishedAt:500,activityKind:'simulation'});f.emit();
+  await assert.rejects(f.service.command('publish',{...input,requiresAssignmentId:prior}),{code:'assignment/invalid-prerequisite'});
+});
+
+test('Rules upgrade preserves existing staff permissions and unrelated namespaces and is idempotent',async()=>{
+  const {readFile}=await import('node:fs/promises');const {mergeUngradedRules}=await import('./build-classroom-ungraded-rules.mjs');
+  const base=JSON.parse(await readFile(new URL('../firebase/classroom-assist.merged-draft.json',import.meta.url),'utf8'));
+  base.rules.unrelated={'.read':false,'.write':false,custom:{'.validate':'newData.isString()'}};
+  const next=mergeUngradedRules(base);
+  assert.deepEqual(next.rules.unrelated,base.rules.unrelated);
+  assert.equal(next.rules.classroomAssignmentsV1.drafts.$roomId['.read'],base.rules.classroomAssignmentsV1.drafts.$roomId['.read']);
+  assert.equal(next.rules.classroomAssignmentsV1.activityProgress.$roomId['.read'],base.rules.classroomAssignmentsV1.drafts.$roomId['.read']);
+  assert.ok(next.rules.classroomAssignmentsV1.activityProgress.$roomId['.read'].includes('teacherInvitations'));
+  assert.deepEqual(mergeUngradedRules(next),next);
+  assert.ok(!base.rules.classroomAssignmentsV1.activityProgress);
 });

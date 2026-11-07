@@ -41,3 +41,13 @@ test('a peer row is ignored; an empty room has no percentage; offline cached res
   const empty = summarize({ ...base, items: [work('draft', 'draft')] }); assert.equal(empty.status, 'empty'); assert.equal(empty.percent, null); assert.equal(empty.submittedCount, 0);
   assert.equal(summarize({ ...base, uid: '' }), null); assert.equal(summarize({ ...base, roomId: '' }), null);
 });
+
+test('ungraded activities count completion but never change score totals, even with forged grade fields',()=>{
+  const activity={...work('sim'),activityKind:'simulation'};
+  const grades={quiz:book(10,8),sim:{loaded:true,ready:true,maxScore:100,rows:[{uid,completed:false,submitted:true,grade:{score:100,maxScore:100}}]}};
+  let result=summarize({...base,items:[work('quiz'),activity],grades});
+  assert.equal(result.percent,80);assert.equal(result.maxScore,10);assert.equal(result.submittedCount,1);
+  grades.sim.rows[0].completed=true;result=summarize({...base,items:[work('quiz'),activity],grades});
+  assert.equal(result.percent,80);assert.equal(result.submittedCount,2);
+  result=summarize({...base,items:[activity],grades});assert.equal(result.status,'ungraded');assert.equal(result.percent,null);assert.equal(result.completionPercent,100);
+});

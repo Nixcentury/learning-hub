@@ -18,14 +18,15 @@ export function buildAssignmentRules() {
     return {
       '.write': `${owner} && ${published ? 'newData.exists()' : `(!newData.exists() || !${item}.exists())`}`,
       '.validate': `$roomId.matches(/^r_[a-f0-9]{32}$/) && $assignmentId.matches(/^a_[a-f0-9]{32}$/) && newData.hasChildren(${JSON.stringify(required)}) && newData.child('ownerUid').val() === auth.uid && (data.exists() ? (${immutable(['ownerUid','createdAt'])} && newData.child('revision').val() === data.child('revision').val() + 1) : (${creation} && ${revision}))` +
-        (published ? ` && (!data.exists() ? newData.child('status').val() === 'published' && newData.child('publishedAt').val() === now : (${immutable(['targetHash','contentId','quizTitleTh','quizTitleEn','publishedAt'])} && (data.child('status').val() !== 'closed' || newData.child('status').val() === 'closed'))) && !newData.parent().parent().parent().child('drafts').child($roomId).child($assignmentId).exists()` : " && newData.child('status').val() === 'draft' && newData.child('publishedAt').val() === 0"),
+        (published ? ` && (!data.exists() ? newData.child('status').val() === 'published' && newData.child('publishedAt').val() === now : (${immutable(['targetHash','contentId','quizTitleTh','quizTitleEn','activityKind','publishedAt'])} && (data.child('status').val() !== 'closed' || newData.child('status').val() === 'closed'))) && !newData.parent().parent().parent().child('drafts').child($roomId).child($assignmentId).exists()` : " && newData.child('status').val() === 'draft' && newData.child('publishedAt').val() === 0"),
       version: { '.validate': 'newData.val() === 1' }, ownerUid: text(128), title: text(180), instructions: text(4000, true),
       dueAt: { '.validate': 'newData.isNumber() && newData.val() >= 0 && newData.val() <= 4102444800000 && newData.val() % 1 === 0' },
-      requiresAssignmentId: { '.validate': "newData.isString() && newData.val().matches(/^a_[a-f0-9]{32}$/) && newData.val() !== $assignmentId && root.child('classroomAssignmentsV1/items').child($roomId).child(newData.val()).exists()" +
+      requiresAssignmentId: { '.validate': "newData.isString() && newData.val().matches(/^a_[a-f0-9]{32}$/) && newData.val() !== $assignmentId && root.child('classroomAssignmentsV1/items').child($roomId).child(newData.val()).exists() && !root.child('classroomAssignmentsV1/items').child($roomId).child(newData.val()).child('activityKind').exists()" +
         (published ? " && root.child('classroomAssignmentsV1/items').child($roomId).child(newData.val()).child('publishedAt').val() < newData.parent().child('publishedAt').val()" : '') },
       targetHash: { '.validate': "newData.isString() && newData.val().matches(/^#[a-z0-9][a-z0-9/-]{0,519}$/)" },
       contentId: { '.validate': "newData.isString() && newData.val().matches(/^[a-z0-9][a-z0-9_-]{0,127}$/)" },
       quizTitleTh: text(180), quizTitleEn: text(180),
+      activityKind: { '.validate': "newData.val() === 'video' || newData.val() === 'simulation' || newData.val() === 'html' || newData.val() === 'pdf'" },
       status: { '.validate': published ? "newData.val() === 'published' || newData.val() === 'closed'" : "newData.val() === 'draft'" },
       createdAt: { '.validate': 'newData.isNumber()' }, updatedAt: { '.validate': 'newData.val() === now' }, publishedAt: { '.validate': 'newData.isNumber()' },
       revision: { '.validate': 'newData.isNumber() && newData.val() > 0 && newData.val() <= 1000000000 && newData.val() % 1 === 0' }, '$other': none,
@@ -39,6 +40,16 @@ export function buildAssignmentRules() {
       '$assignmentId': {
         '.write': `(${member}) && auth.uid === $uid && ${item}.exists() && newData.exists()`,
         '.validate': "$roomId.matches(/^r_[a-f0-9]{32}$/) && $assignmentId.matches(/^a_[a-f0-9]{32}$/) && newData.isNumber() && (data.exists() ? newData.val() === data.val() : newData.val() === now)",
+      },
+    } } },
+    activityProgress: { '$roomId': { '.read': owner, '$uid': {
+      '.read': `(${member}) && auth.uid === $uid`,
+      '$assignmentId': {
+        '.write': `(${member}) && auth.uid === $uid && ${item}.child('status').val() === 'published' && ${item}.child('activityKind').exists() && newData.exists()`,
+        '.validate': "$roomId.matches(/^r_[a-f0-9]{32}$/) && $assignmentId.matches(/^a_[a-f0-9]{32}$/) && newData.hasChildren(['openedAt']) && (!data.child('completedAt').exists() || newData.child('completedAt').val() === data.child('completedAt').val())",
+        openedAt: { '.validate': "newData.isNumber() && (data.exists() ? newData.val() === data.val() : newData.val() === now)" },
+        completedAt: { '.validate': "newData.isNumber() && data.parent().child('openedAt').exists() && (data.exists() ? newData.val() === data.val() : newData.val() === now)" },
+        '$other': none,
       },
     } } }, '$other': none,
   };

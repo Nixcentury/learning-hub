@@ -1,6 +1,7 @@
 import {
   assignmentIdPattern,
   assignmentRoomPattern,
+  isUngradedAssignment,
 } from './classroom-assignment-model.js';
 
 export const classroomSheetColumns = [
@@ -43,7 +44,7 @@ export function createClassroomSheetCsv({
   if (
     !assignmentRoomPattern.test(roomId) ||
     !assignmentIdPattern.test(item?.id) ||
-    !['published', 'closed'].includes(item.status)
+    !['published', 'closed'].includes(item.status) || isUngradedAssignment(item)
   )
     throw Error('homework/invalid-request');
   const url = new URL(hubUrl);

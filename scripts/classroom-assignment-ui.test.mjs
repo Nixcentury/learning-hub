@@ -44,7 +44,7 @@ test('locked work remains readable but every launch button is disabled until the
   value.classroomSubmissions={uid:'student',roomId:rid,grades:{[aid]:{ready:true,loaded:true,rows:[]},[prior]:{ready:true,loaded:true,rows:[]}},gates:{[aid]:{status:'locked'}}};
   f.update(value);
   assert.equal(f.document.querySelector(`[data-homework-step="${aid}"]`).dataset.stepAccess,'locked');
-  assert.ok(f.document.querySelector('[data-hw-detail]').textContent.includes('มากกว่า 50%'));
+  assert.ok(f.document.querySelector('[data-hw-detail]').textContent.includes('อย่างน้อย 20%'));
   for(const node of f.document.querySelectorAll(`[data-homework-action="launch"][data-id="${aid}"]`))assert.equal(node.disabled,true);
   value.classroomSubmissions.gates={};f.update(value);
   assert.equal(f.document.querySelector(`[data-homework-action="launch"][data-id="${aid}"]`).disabled,true,'Loading must not briefly unlock');
@@ -165,7 +165,7 @@ test('student path retains submitted and closed work in publication order with o
   assert.deepEqual(Array.from(f.document.querySelectorAll('.homework-step-number'),n=>n.textContent),['1','2','3','4']);
   assert.ok(f.document.querySelector(`[data-homework-step="${id3}"]`).textContent.includes('ส่งแล้ว'));
   assert.equal(f.document.querySelector(`[data-homework-step="${id4}"]`).dataset.stepAccess,'closed');
-  assert.equal(f.document.querySelector('[data-hw-next-count]').textContent,'1/4');
+  assert.equal(f.document.querySelector('[data-hw-next-count]').textContent,'3/3');
   assert.equal(f.document.querySelector('[data-hw-tools]').hidden,true);assert.equal(f.document.querySelector('[data-hw-tool-actions]').children.length,0);
 });
 
@@ -176,7 +176,7 @@ test('all submitted work stays in the path, and lesson shortcuts send an assignm
   f.update(value);
   assert.equal(f.document.querySelectorAll('[data-next-assignment]').length,1);
   assert.ok(f.document.querySelector('[data-hw-next]').textContent.includes('60%'));
-  assert.ok(f.document.querySelector('[data-hw-next-note]').textContent.includes('ส่งครบแล้ว'));
+  assert.ok(f.document.querySelector('[data-hw-next-note]').textContent.includes('ทำครบแล้ว'));
   f.document.querySelector('[data-homework-action="lesson"]').click();
   const command=f.messages.find(message=>message.action==='lesson');assert.ok(command);
   assert.deepEqual(JSON.parse(JSON.stringify(command.payload)),{roomId:rid,id:aid});
@@ -220,8 +220,8 @@ test('student sees room score and submission progress, with separate labels and 
   value.classroomSubmissions={uid:'student',roomId:rid,grades:{},progress:{uid:'student',roomId:rid,status:'ready',connected:true,percent:60,score:18,maxScore:30,submittedCount:2,assignmentCount:3,completionPercent:66.67}};
   f.update(value);const summary=f.document.querySelector('[data-hw-overall]');
   assert.equal(summary.hidden,false);assert.equal(summary.querySelector('[data-hw-overall-percent]').textContent,'60%');assert.equal(summary.querySelector('[data-hw-overall-count]').textContent,'2/3');
-  assert.equal(summary.querySelectorAll('progress').length,2);assert.ok(summary.textContent.includes('18/30'));assert.ok(summary.textContent.includes('งานยังไม่ส่งนับ 0'));
-  value.language='en';f.update(value);assert.ok(summary.textContent.includes('Overall score'));assert.ok(summary.textContent.includes('Assignments submitted'));
+  assert.equal(summary.querySelectorAll('progress').length,2);assert.ok(summary.textContent.includes('18/30'));assert.ok(summary.textContent.includes('Quiz ยังไม่ส่งนับ 0'));
+  value.language='en';f.update(value);assert.ok(summary.textContent.includes('Overall score'));assert.ok(summary.textContent.includes('Assignments completed'));
   value.classroomSubmissions.progress.connected=false;f.update(value);assert.ok(summary.textContent.includes('Offline'));assert.equal(summary.querySelector('[data-hw-overall-percent]').textContent,'60%');
 });
 test('overall progress hides old room/account values and stays unavailable for loading, invalid or unprepared data',async()=>{
@@ -249,4 +249,35 @@ test('Student work opens within Assignment details, confirms a named student, an
  entry.click();assert.ok(f.document.querySelector('[data-hw-detail] [data-student-work]'));assert.equal(f.document.querySelectorAll('img').length,0);
  f.document.querySelector('[data-homework-action="assist-start"]').click();assert.equal(f.messages.at(-1).action,'assist-start');assert.equal(f.messages.at(-1).payload.studentUid,'student');
  f.update(context(false));assert.equal(f.document.querySelector('[data-homework-action="student-work"]'),null);
+});
+
+test('availability counts unlocked work immediately: 4/7 becomes 5/7 independently of completion',async()=>{
+  const f=await fixture(),value=context(false);const ids=Array.from({length:7},(_,i)=>'a_'+String(i).repeat(32));
+  const items=ids.map((id,i)=>({...item,id,requiresAssignmentId:i>=4?ids[0]:undefined}));
+  value.classroomAssignments.rooms[0].items=items;value.classroomAssignmentRoute.assignmentId=ids[0];
+  value.classroomSubmissions={uid:'student',roomId:rid,grades:Object.fromEntries(ids.map(id=>[id,{ready:true,loaded:true,rows:[{uid:'student',submitted:false}]}])),gates:Object.fromEntries(ids.map((id,i)=>[id,{status:i<4?'open':'locked'}]))};
+  f.update(value);assert.equal(f.document.querySelector('[data-hw-available-count]').textContent,'เปิดทำได้ 4/7 งาน');
+  value.classroomSubmissions.gates[ids[4]].status='open';f.update(value);
+  assert.equal(f.document.querySelector('[data-hw-available-count]').textContent,'เปิดทำได้ 5/7 งาน');
+  assert.equal(f.document.querySelector('[data-hw-next-count]').textContent,'5/7');
+  value.classroomAssignments.rooms[0].items.push({...item,id:'a_'+'f'.repeat(32),status:'closed'});f.update(value);
+  assert.equal(f.document.querySelector('[data-hw-available-count]').textContent,'เปิดทำได้ 5/7 งาน');
+  value.language='en';f.update(value);assert.equal(f.document.querySelector('[data-hw-available-count]').textContent,'Available: 5/7 assignments');
+});
+test('ungraded post opens without quiz preparation; confirming is separate and teacher progress has no score/export',async()=>{
+  const f=await fixture(),value=context(false);
+  value.classroomAssignments.rooms[0].seen={[aid]:1};value.classroomAssignments.rooms[0].items=[{...item,activityKind:'simulation'}];
+  value.classroomSubmissions={uid:'student',roomId:rid,grades:{[aid]:{ready:true,loaded:true,rows:[{uid:'student',openedAt:null,completed:false}]}}};
+  f.update(value);
+  const launch=f.document.querySelector('[data-homework-action="launch"]');assert.equal(launch.disabled,false);
+  assert.equal(f.document.querySelector('[data-homework-action="complete"]').disabled,true);
+  launch.click();assert.ok(f.messages.find(m=>m.action==='launch'));assert.ok(!f.messages.some(m=>m.action==='complete'));
+  const command=f.messages.find(m=>m.action==='launch');const event=new f.window.Event('message');Object.assign(event,{source:f.parent,origin:'https://example.test',data:{type:'learning-hub-assignment-result',uid:'student',requestId:command.requestId,ok:true,result:{targetHash:item.targetHash}}});f.window.dispatchEvent(event);
+  value.classroomSubmissions.grades[aid].rows[0].openedAt=1000;f.update(value);
+  f.document.querySelector('[data-homework-action="complete"]').click();assert.ok(f.messages.some(m=>m.action==='complete'));
+  const teacher=context();teacher.classroomAssignments.rooms[0].items=[{...item,activityKind:'simulation'}];
+  teacher.classroomSubmissions={uid:'teacher',roomId:rid,grades:{[aid]:{ready:true,loaded:true,rows:[{uid:'student',name:'A',openedAt:1000,completed:true,completedAt:2000},{uid:'student-b',name:'B',openedAt:1000,completed:false}]}}};f.update(teacher);
+  const results=f.document.querySelector('[data-homework-results]');assert.ok(results.textContent.includes('ทำกิจกรรมแล้ว 1/2 คน'));assert.ok(results.textContent.includes('เปิดสื่อแล้ว'));
+  assert.equal(f.document.querySelectorAll('[data-homework-action="export-sheet"], [data-homework-action="prepare"], [data-homework-action="student-work"]').length,0);
+  assert.ok(!Array.from(results.querySelectorAll('th')).some(node=>node.textContent.includes('คะแนน')));
 });

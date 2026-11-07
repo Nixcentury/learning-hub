@@ -941,6 +941,11 @@ window.addEventListener("message", (event) => {
       if (action === 'prepare') { await submissions.prepare(payload.id, uid); return {}; }
       if (action === 'history') return submissions.history(payload.id, payload.studentUid);
       if (action === 'export-sheet') return submissions.exportSheet(payload.id);
+      const item = assignmentState?.rooms?.find(room => room.id === payload.roomId)?.items.find(item => item.id === payload.id);
+      if (action === 'complete' || action === 'launch' && item?.activityKind) {
+        await submissions.checkActivityAccess(payload.id, uid);
+        return assignments.command(action, payload, uid);
+      }
       if (action === 'launch' || action === 'assist-start') {
         const binding = action==='assist-start' ? await submissions.startAssist(payload.id,payload.studentUid) : await submissions.open(payload.id, uid);
         let reviewSource = null;
@@ -952,7 +957,7 @@ window.addEventListener("message", (event) => {
       const result = await assignments.command(action, payload, uid);
       // Pin the teacher's questions before any student attempt can be launched.
       // If preparation fails, the published card remains recoverable via Prepare.
-      if (['save','publish'].includes(action) && result.status === 'published' && current()) {
+      if (['save','publish'].includes(action) && result.status === 'published' && !result.activityKind && current()) {
         try { await submissions.prepare(result.id, uid); } catch { /* Recovery is shown with the published assignment. */ }
       }
       return result;

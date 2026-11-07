@@ -29,8 +29,8 @@ const roomId = 'r_' + 'a'.repeat(32), stamp = { '.sv': 'timestamp' };
 await good('teacher', 'PATCH', 'classroomV1', createRoomUpdates('teacher', 'ฟิสิกส์ ม.5/1', { roomId, code: 'ABCD2345' }, stamp));
 for (const uid of ['student','student-b']) await good(uid, 'PATCH', 'classroomV1', joinRoomUpdates(uid, roomId, 'ABCD2345', uid === 'student' ? 'นักเรียนทดลอง' : 'นักเรียนอีกคน', stamp));
 const catalog = await catalogFromRepository();
-// A QA-only placement of the repository's two-question template makes exactly
-// 50% reachable. Production navigation, freezing, grading and Rules stay intact.
+// A QA-only placement of the repository's two-question template makes
+// submitted scores below and above 20% reachable. Production navigation, freezing, grading and Rules stay intact.
 const { qaLocation, homeworkHtml, homeworkContent, homeworkQuizRoute } = createHomeworkBrowserQuiz(catalog,
   await readFile(resolve(root, 'public/content/templates/quiz-template.html'), 'utf8'));
 catalog.contents.push(homeworkContent); catalog.routes.push(homeworkQuizRoute);
@@ -223,7 +223,7 @@ try {
   await teacher.frame.locator('[data-hw-editor] [name="url"]').fill(origin + prefix + homeworkQuizRoute.hash);
   await teacher.frame.locator('[data-hw-editor] [name="instructions"]').fill('อ่านคำชี้แจงแล้วเปิด Quiz');
   await teacher.frame.locator('[data-hw-preview]').click();
-  await teacher.frame.locator('[data-hw-preview-result]').filter({ hasText: 'Quiz ที่เลือก' }).waitFor();
+  await teacher.frame.locator('[data-hw-preview-result]').filter({ hasText: 'สื่อที่เลือก' }).waitFor();
   await teacher.frame.locator('[data-hw-save]').click();
   await teacher.frame.locator('[data-next-assignment]').filter({hasText:'ทวนคลื่น'}).waitFor();
   assert.equal(await student.frame.locator('.homework-card').count(), 0, 'A student cannot see a private draft');
@@ -464,15 +464,15 @@ try {
   console.log('PASS classroom path retains submitted/closed work and lesson shortcut opens the authored menu without changing results');
   const smallQuiz = catalog.contents.find(content => content.source === 'content/templates/quiz-template.html');
   assert.ok(smallQuiz, 'The two-question template fixture is available for the threshold check');
-  async function assignStep(title, requiresAssignmentId = '') {
+  async function assignStep(title, requiresAssignmentId = '', content = smallQuiz) {
     const close = teacher.frame.locator('[data-hw-detail-dialog][open] [data-hw-detail-close]');
     if (await close.count()) await close.click();
     await teacher.frame.locator('[data-hw-new]').click();
     await teacher.frame.locator('[name="title"]').fill(title);
-    await teacher.frame.locator('[name="url"]').fill(origin + prefix + smallQuiz.canonicalHash);
+    await teacher.frame.locator('[name="url"]').fill(origin + prefix + content.canonicalHash);
     await teacher.frame.locator('[name="requiresAssignmentId"]').selectOption(requiresAssignmentId);
     await teacher.frame.locator('[data-hw-preview]').click();
-    await teacher.frame.locator('[data-hw-preview-result]').filter({hasText:'Quiz ที่เลือก'}).waitFor();
+    await teacher.frame.locator('[data-hw-preview-result]').filter({hasText:'สื่อที่เลือก'}).waitFor();
     await teacher.frame.locator('[data-hw-publish]').click();
     await teacher.frame.locator('[data-hw-selection]').filter({hasText:title}).waitFor();
     const id = await teacher.frame.locator('[data-hw-tools] [data-homework-action="edit"]').getAttribute('data-id');
@@ -489,10 +489,10 @@ try {
   await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepA}"]`).click();
   const stepWindow = `#workspace-window-layer [data-tool-id="homework-${roomId}-${stepA}-student"] iframe`;
   const stepQuiz = student.page.frameLocator(stepWindow);
-  async function answerStep(questionIndex) {
+  async function answerStep(questionIndex, correct = true) {
     const correctIndex = await stepQuiz.locator('[data-quiz-print-source] [data-question]').nth(questionIndex).evaluate(question => [...question.querySelectorAll('[data-choice-id]')].findIndex(choice => choice.dataset.choiceId === question.dataset.answer));
     assert.ok(correctIndex >= 0);
-    const option = stepQuiz.locator('.quiz-option').nth(correctIndex);
+    const option = stepQuiz.locator('.quiz-option').nth(correct ? correctIndex : correctIndex === 0 ? 1 : 0);
     await option.evaluate(node => node.scrollIntoView({block:'start',behavior:'instant'}));
     assert.equal(await option.evaluate(node => {const r=node.getBoundingClientRect();return document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)?.closest('.quiz-option')===node;}),true);
     const rect = await option.boundingBox(), point = {x:rect.x+rect.width/2,y:rect.y+rect.height/2};
@@ -508,10 +508,10 @@ try {
     await student.page.locator(stepWindow).waitFor({state:'hidden'});
     await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepA}"]`).waitFor();
   }
-  await answerStep(0);await sendStep(1);
+  await answerStep(0,false);await sendStep(0);
   await inspectStep(student,stepB);
   await student.frame.locator('[data-hw-detail] [data-gate-status="locked"]').waitFor();
-  assert.equal(await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepB}"]`).isDisabled(),true,'Exactly 50% stays locked');
+  assert.equal(await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepB}"]`).isDisabled(),true,'A submitted zero stays locked');
   const deniedLaunch = await student.page.locator('#hub-page-frame').elementHandle().then(handle=>handle.contentFrame()).then(frame=>frame.evaluate(({roomId,id})=>new Promise(resolve=>{
     const requestId=crypto.randomUUID(),timeout=setTimeout(()=>{window.removeEventListener('message',receive);resolve('timeout');},10000);
     function receive(event){if(event.source===parent&&event.origin===location.origin&&event.data?.type==='learning-hub-assignment-result'&&event.data.requestId===requestId){clearTimeout(timeout);window.removeEventListener('message',receive);resolve(event.data.error);}}
@@ -519,7 +519,7 @@ try {
   }),{roomId,id:stepB}));
   assert.equal(deniedLaunch,'homework/prerequisite-locked','The parent also rejects direct launch requests');
   await inspectStep(student,stepA);await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepA}"]`).click();
-  await stepQuiz.locator('[data-retry]').click();await answerStep(1);await sendStep(2);
+  await stepQuiz.locator('[data-retry]').click();await answerStep(0);await sendStep(1);
   await inspectStep(student,stepB);
   await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepB}"]:not([disabled])`).waitFor();
   await student.page.reload();
@@ -529,7 +529,28 @@ try {
   await student.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${stepB}"]`).click();
   await student.page.frameLocator(`#workspace-window-layer [data-tool-id="homework-${roomId}-${stepB}-student"] iframe`).locator('[data-quiz-app]').waitFor();
   await student.page.reload();await student.frame.locator('[data-classroom-assignments]').waitFor();
-  console.log('PASS prerequisites: 50% locked → direct launch denied → resubmit above 50% unlocks → reload stays open → other student locked → next quiz opens');
+  console.log('PASS prerequisites: 0% locked → direct launch denied → resubmit at least 20% unlocks → reload stays open → other student locked → next quiz opens');
+  const beforeMediaScore=await student.frame.locator('[data-hw-overall-percent]').textContent();
+  const mediaId=await assignStep('อ่านบทเรียน · ไม่คิดคะแนน','',{canonicalHash:'#content/qa-homework-review'});
+  assert.equal((await good('teacher','GET',`classroomAssignmentsV1/items/${roomId}/${mediaId}`)).activityKind,'html');
+  assert.equal(await good('teacher','GET',`classroomSubmissionsV1/quizzes/${roomId}/${mediaId}`),null);
+  await inspectStep(student,mediaId);
+  assert.equal(await student.frame.locator('[data-hw-detail] [data-homework-action="complete"]').isDisabled(),true);
+  await student.frame.locator('[data-hw-detail] [data-homework-action="launch"]').click();
+  await student.page.waitForURL(url=>url.hash==='#content/qa-homework-review');
+  await student.page.locator('#workspace-window-layer [data-tool-id="content-html-qa-homework-review"] .window-control.is-close').click();
+  await inspectStep(student,mediaId);
+  await student.frame.locator('[data-hw-detail] [data-homework-action="complete"]:not([disabled])').click();
+  await student.frame.locator('[data-hw-detail] [data-homework-action="complete"]').filter({hasText:'✓ ทำกิจกรรมแล้ว'}).waitFor();
+  assert.ok((await good('student','GET',`classroomAssignmentsV1/activityProgress/${roomId}/student/${mediaId}`)).completedAt);
+  assert.equal(await student.frame.locator('[data-hw-overall-percent]').textContent(),beforeMediaScore,'Ungraded activity leaves the Quiz denominator unchanged');
+  await inspectStep(teacher,mediaId);
+  await teacher.frame.locator('[data-homework-results]').filter({hasText:'ทำกิจกรรมแล้ว 1/2 คน'}).waitFor();
+  assert.equal(await teacher.frame.locator('[data-hw-tools] [data-homework-action="export-sheet"]').count(),0);
+  assert.equal(await good('teacher','GET',`classroomSubmissionsV1/results/${roomId}/${mediaId}`),null);
+  await teacher.frame.locator('[data-hw-detail-close]').click();
+  await student.frame.locator('[data-hw-detail-close]').click();
+  console.log('PASS ungraded activity: authored Hub link → open content → separate self-confirmation → teacher progress, no Quiz snapshot/result/CSV or score changes');
   const people = teacher.frame.locator('[data-monitor-people]');
   await student.page.evaluate(() => { qaVisible(false); location.hash = '#chemistry/bank'; });
   assert.equal(await student.page.locator('.monitor-banner').isVisible(), false);

@@ -2,6 +2,8 @@ export const assignmentRoot = 'classroomAssignmentsV1';
 export const assignmentIdPattern = /^a_[a-f0-9]{32}$/;
 export const assignmentRoomPattern = /^r_[a-f0-9]{32}$/;
 export const assignmentError = code => Object.assign(new Error(code), { code });
+// Missing activityKind is the original, scored Quiz schema.
+export const isUngradedAssignment = item => ['video', 'simulation', 'html', 'pdf'].includes(item?.activityKind);
 export const newAssignmentId = () => 'a_' + crypto.randomUUID().replaceAll('-', '');
 
 // Classroom identifiers have underscores. Only this exact private route shape

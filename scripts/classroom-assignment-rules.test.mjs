@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { reset, good, request } from './fixtures/classroom-emulator.mjs';
 import { buildAssignmentRules } from './build-classroom-assignment-rules.mjs';
+import { buildSubmissionRules } from './build-classroom-submission-rules.mjs';
+import { mergeUngradedRules } from './build-classroom-ungraded-rules.mjs';
 import { createRoomUpdates, joinRoomUpdates } from '../js/classroom-model.js';
 const rid = 'r_' + 'a'.repeat(32), aid = 'a_' + 'b'.repeat(32), second = 'a_' + 'c'.repeat(32), stamp = { '.sv': 'timestamp' };
 const root = 'classroomAssignmentsV1', draftPath = `${root}/drafts/${rid}/${aid}`, itemPath = `${root}/items/${rid}/${aid}`;
@@ -10,7 +12,7 @@ const record = (status = 'draft') => ({ version: 1, ownerUid: 'teacher', title: 
 async function denied(uid, method, path, value) { assert.equal((await request(uid, method, path, value)).ok, false, `${uid} must not ${method} ${path}`); }
 test('assignment Rules — real local RTDB emulator, no production traffic', async t => {
   const rules = JSON.parse(await readFile(new URL('../firebase/classroom-phase1.merged-draft.json', import.meta.url), 'utf8'));
-  rules.rules.classroomAssignmentsV1 = buildAssignmentRules(); await reset(rules);
+  rules.rules.classroomAssignmentsV1 = buildAssignmentRules(); rules.rules.classroomSubmissionsV1 = buildSubmissionRules(); await reset(mergeUngradedRules(rules));
   await good('teacher', 'PATCH', 'classroomV1', createRoomUpdates('teacher', 'Physics', { roomId: rid, code: 'ABCD2345' }, stamp));
   for (const uid of ['student','student-b']) await good(uid, 'PATCH', 'classroomV1', joinRoomUpdates(uid, rid, 'ABCD2345', uid, stamp));
   await t.test('only approved room owner creates drafts; drafts cannot be listed or read by students, outsiders, guests or other teachers', async () => {
@@ -71,6 +73,35 @@ test('assignment Rules — real local RTDB emulator, no production traffic', asy
     await denied('teacher','PUT',gatedPath,{...before,requiresAssignmentId:otherWork,revision:2,updatedAt:stamp});
     await good('teacher','PUT',gatedPath,{...before,requiresAssignmentId:null,revision:2,updatedAt:stamp});
     assert.equal((await good('student','GET',gatedPath)).requiresAssignmentId,undefined);
+  });
+  await t.test('ungraded media has immutable kind, self-only progress and no quiz snapshots or forged score fields',async()=>{
+    const mediaId='a_'+'8'.repeat(32),mediaPath=`${root}/items/${rid}/${mediaId}`,progressPath=`${root}/activityProgress/${rid}/student/${mediaId}`;
+    await good('teacher','PUT',mediaPath,{...record('published'),activityKind:'simulation'});
+    const media=await good('teacher','GET',mediaPath);
+    await denied('teacher','PUT',mediaPath,{...media,activityKind:null,revision:2,updatedAt:stamp});
+    await denied('teacher','PUT',mediaPath,{...media,activityKind:'quiz',revision:2,updatedAt:stamp});
+    const original=await good('teacher','GET',itemPath);
+    await denied('teacher','PUT',itemPath,{...original,activityKind:'video',revision:original.revision+1,updatedAt:stamp});
+    await denied('teacher','PUT',`${root}/items/${rid}/a_${'7'.repeat(32)}`,{...record('published'),requiresAssignmentId:mediaId});
+    await denied('student','PUT',progressPath,{openedAt:stamp,completedAt:stamp});
+    for(const user of [null,'student-b','teacher','teacher-b','outsider']) await denied(user,'PUT',progressPath,{openedAt:stamp});
+    await good('student','PUT',progressPath,{openedAt:stamp});
+    const opened=await good('student','GET',progressPath);
+    await denied('student','PUT',progressPath,{...opened,score:100});
+    await good('student','PUT',progressPath,{...opened,completedAt:stamp});
+    const completed=await good('student','GET',progressPath);
+    assert.equal(typeof completed.completedAt,'number');
+    assert.ok((await good('teacher','GET',`${root}/activityProgress/${rid}`)).student[mediaId]);
+    for(const user of ['student-b','outsider','teacher-b',null]) await denied(user,'GET',progressPath);
+    await denied('student','GET',`${root}/activityProgress/${rid}`);
+    await denied('student','PUT',progressPath,{...completed,completedAt:null});
+    await denied('student','PUT',progressPath,{...completed,openedAt:opened.openedAt+1});
+    await denied('student','DELETE',progressPath);
+    await denied('student','PUT',`${root}/activityProgress/${rid}/student/${aid}`,{openedAt:stamp});
+    await denied('teacher','PUT',`classroomSubmissionsV1/quizzes/${rid}/${mediaId}`,{version:1,contentId:media.contentId,targetHash:media.targetHash,revision:'d'.repeat(64),html:'<quiz>',questionCount:1,createdAt:stamp});
+    await good('teacher','PUT',mediaPath,{...media,status:'closed',revision:2,updatedAt:stamp});
+    await denied('student','PUT',progressPath,completed);
+    assert.deepEqual(await good('student','GET',progressPath),completed);
   });
   await t.test('closing retains readable instructions and forbids reopening; revocation removes write authority', async () => {
     const item = await good('teacher', 'GET', itemPath);

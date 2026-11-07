@@ -2,7 +2,7 @@ import { canTeachRoom } from '../public/shared/classroom-room-role.js';
 import { assistLifetime, assistHeartbeat, assistLive, assistPath, homeworkActor } from '../public/shared/classroom-assist-model.js';
 import { summarizeClassroomProgress } from '../public/shared/classroom-progress-model.js';
 import { createClassroomAccess } from './classroom-access.js';
-import { assignmentIdPattern, assignmentRoomPattern } from './classroom-assignment-model.js';
+import { assignmentIdPattern, assignmentRoomPattern, isUngradedAssignment } from './classroom-assignment-model.js';
 import { failSubmission, submissionPayload, gradeSubmission } from '../public/shared/classroom-submission-model.js';
 import { createClassroomSheetCsv } from '../public/shared/classroom-sheet-export.js';
 
@@ -26,7 +26,7 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     if (!record || !quiz) return false;
     try {
       const grade = gradeSubmission(record, quiz, questionSet(quiz));
-      return !grade.error && grade.maxScore > 0 && grade.score * 2 > grade.maxScore;
+      return !grade.error && grade.maxScore > 0 && grade.score * 5 >= grade.maxScore;
     } catch { return false; }
   }
   const passKey = (id, quiz) => `${id}:${quiz?.revision || ''}`;
@@ -49,6 +49,19 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
   function state() {
     const grades = {};
     for (const item of room()?.items || []) {
+      if (isUngradedAssignment(item)) {
+        const members = isOwner() ? Object.entries(roster) : [[uid, {}]];
+        grades[item.id] = { graded: false, ready: true, maxScore: null,
+          loaded: room().activityProgressStatus === 'ready' && (!isOwner() || loaded.has('roster')),
+          error: room().activityProgressError || '',
+          rows: members.map(([user, member]) => {
+            const record = room().activityProgress?.[user]?.[item.id];
+            return { uid: user, name: member.displayName || user, submitted: false, grade: null,
+              openedAt: record?.openedAt || null, completedAt: record?.completedAt || null,
+              completed: Boolean(record?.completedAt) };
+          }).sort((a, b) => a.name.localeCompare(b.name, 'th') || a.uid.localeCompare(b.uid)) };
+        continue;
+      }
       const quiz = quizzes[item.id];
       const members = isOwner() ? Object.entries(roster) : [[uid, {}]];
       grades[item.id] = { maxScore: quiz?.questionCount || null, ready: Boolean(quiz), loaded: !error && loaded.has('quizzes') && (isOwner() ? loaded.has('results') && loaded.has('roster') : resultLoaded.has(item.id)), rows: members.map(([user, member]) => {
@@ -83,7 +96,7 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
   }
   function syncItems(version) {
     if (!uid || isOwner()) return;
-    const ids = new Set((room()?.items || []).map(item => item.id));
+    const ids = new Set((room()?.items || []).filter(item => !isUngradedAssignment(item)).map(item => item.id));
     if (io.assistEnabled) {
       for (const [id, close] of leaseStops) if (!ids.has(id)) { close(); leaseStops.delete(id); delete locks[id]; }
       for (const id of ids) if (!leaseStops.has(id)) leaseStops.set(id, io.watch(assistPath(roomId,id,uid), value => {
@@ -228,6 +241,7 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     const version = epoch, selected = roomId; busy = 'prepare'; error = ''; publish();
     try {
       const item = await published(id, user, version);
+      if (isUngradedAssignment(item)) return null;
       const old = await read(`quizzes/${selected}/${id}`); guard(user, version, true);
       if (old) return old;
       if (item.status !== 'published') throw failSubmission('homework/closed');
@@ -250,6 +264,7 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     if (!assignmentIdPattern.test(id)) throw failSubmission('homework/invalid-request');
     const version = epoch, selected = roomId;
     const item = await published(id, user, version);
+    if (isUngradedAssignment(item)) throw failSubmission('homework/ungraded');
     const quiz = await read(`quizzes/${selected}/${id}`); guard(user, version);
     if (!quiz) throw failSubmission('homework/not-ready');
     questionSet(quiz);
@@ -257,6 +272,15 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     guard(user, version, false, selected);
     return { uid: user, roomId: selected, id, quizRevision: quiz.revision, contentId: item.contentId,
       targetHash: quiz.targetHash || item.targetHash, title: item.title, preview: isOwner() };
+  }
+  async function checkActivityAccess(id, user = uid) {
+    guard(user);
+    if (!assignmentIdPattern.test(id)) throw failSubmission('homework/invalid-request');
+    const version = epoch;
+    const item = await published(id, user, version);
+    if (!isUngradedAssignment(item)) throw failSubmission('homework/invalid-request');
+    await assertUnlocked({ ...item, id }, user, version, roomId);
+    guard(user, version);
   }
   async function quizCommand(action, binding, payload = {}) {
     const user = binding?.uid, actor = homeworkActor(binding), version = epoch, selected = binding?.roomId, id = binding?.id;
@@ -377,6 +401,7 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     guard(user, version, true);
     if (!assignmentIdPattern.test(id)) throw failSubmission('homework/invalid-request');
     const item = await published(id, user, version, selected);
+    if (isUngradedAssignment(item)) throw failSubmission('homework/ungraded');
     const [quiz, records, members] = await Promise.all([read(`quizzes/${selected}/${id}`),read(`results/${selected}/${id}`),read(`@classroom/members/${selected}`)]);
     guard(user, version, true, selected);
     if (!quiz) throw failSubmission('homework/not-ready');
@@ -389,6 +414,6 @@ export function createClassroomSubmissions({ io, freezeQuiz, readQuiz, onChange 
     }).sort((a,b)=>a.name.localeCompare(b.name,'th') || a.uid.localeCompare(b.uid));
     return { filename: `hub-homework-${id.slice(2)}.csv`, csv: createClassroomSheetCsv({roomId:selected,roomName:room(selected)?.name || '',item:{...item,id},hubUrl:assignments.hubUrl,rows}) };
   }
-  return { setContext, prepare, open, history, exportSheet, startAssist, finishAssist, reclaim, quizCommand: command, getState: () => structuredClone(state()),
+  return { setContext, prepare, open, checkActivityAccess, history, exportSheet, startAssist, finishAssist, reclaim, quizCommand: command, getState: () => structuredClone(state()),
     dispose() { clear(); uid = roomId = ''; } };
 }

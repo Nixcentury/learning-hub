@@ -13,7 +13,7 @@ export function buildSubmissionRules() {
   const fields = ['version','contentId','quizRevision','answersJson','giveUpsJson','elapsedMs','dueAt','submissionId','submittedAt','submissionRevision'];
   const matches = (left, right) => fields.map(field => `${left}.child('${field}').val() === ${right}.child('${field}').val()`).join(' && ');
   const self = `(${member}) && auth.uid === $uid`;
-  const open = `${item}.child('status').val() === 'published'`;
+  const open = `${item}.child('status').val() === 'published' && !${item}.child('activityKind').exists()`;
   const ids = "$roomId.matches(/^r_[a-f0-9]{32}$/) && $assignmentId.matches(/^a_[a-f0-9]{32}$/)";
   const none = { '.validate': false };
   const text = max => ({ '.validate': `newData.isString() && newData.val().length > 0 && newData.val().length <= ${max}` });

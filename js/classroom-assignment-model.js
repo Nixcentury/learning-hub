@@ -4,7 +4,7 @@ import { activityForRoute } from './hub-activity-routes.js';
 export * from '../public/shared/classroom-assignment-model.js';
 import { assignmentError } from '../public/shared/classroom-assignment-model.js';
 
-export function resolveAssignmentQuiz(value, catalog, hubUrl) {
+export function resolveAssignmentTarget(value, catalog, hubUrl) {
   try {
     const base = new URL('./', hubUrl);
     const url = new URL(String(value || '').trim(), base);
@@ -14,9 +14,18 @@ export function resolveAssignmentQuiz(value, catalog, hubUrl) {
     const route = result.route;
     if (!route || result.status !== 'ready') throw Error();
     const activity = activityForRoute(catalog, route, base.href);
-    if (!activity || activity.tool?.context?.toolKind !== 'quiz' || activity.tool.preparing) throw Error();
+    const kind = activity?.tool?.context?.toolKind;
+    if (!activity || activity.tool.preparing || !(kind === 'quiz' || route.kind === 'content' && ['video', 'simulation', 'html', 'pdf'].includes(kind))) throw Error();
     return { targetHash: route.hash, contentId: activity.tool.context.contentId,
+      ...(kind !== 'quiz' ? { activityKind: kind } : {}),
       quizTitleTh: activity.tool.titleTh, quizTitleEn: activity.tool.titleEn };
+  } catch { throw assignmentError('assignment/invalid-content'); }
+}
+export function resolveAssignmentQuiz(value, catalog, hubUrl) {
+  try {
+    const target = resolveAssignmentTarget(value, catalog, hubUrl);
+    if (target.activityKind) throw Error();
+    return target;
   } catch { throw assignmentError('assignment/invalid-quiz'); }
 }
 

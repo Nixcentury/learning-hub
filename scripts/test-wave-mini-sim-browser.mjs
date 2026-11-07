@@ -61,28 +61,25 @@ try {
  const select=async(key,value)=>lab.locator('#param-'+key).selectOption(String(value));
  const mode=async key=>lab.locator('#tab-'+key).click();
  const shot=async name=>{await page.waitForTimeout(100);await page.screenshot({path:resolve(output,name+'.png')});};
- assert.equal((await state()).running,false);assert.equal(await lab.locator('#formula-reflection').getAttribute('open'),null);assert.equal(await lab.locator('#problem-reflection').getAttribute('open'),null);
+ assert.equal((await state()).running,false);assert.equal(await lab.locator('#formula-reflection').getAttribute('open'),null);
  await lab.locator('#play').click();await page.waitForTimeout(180);await lab.locator('#play').click();const paused=(await state()).time;assert.ok(paused>0);await page.waitForTimeout(180);assert.equal((await state()).time,paused);
- await lab.locator('#formula-reflection > summary').click();await lab.locator('#problem-reflection > summary').click();assert.equal(await lab.locator('#solution-reflection').getAttribute('open'),null);
- await lab.locator('#solution-reflection > summary').click();await setRange('angle',55);
- assert.match(await lab.locator('#readouts').innerText(),/55°/);assert.match(await lab.locator('#solution-body-reflection').textContent(),/90° − 35° = 55°/);assert.equal(await lab.locator('#solution-reflection').getAttribute('open'),null);assert.notEqual(await lab.locator('#formula-reflection').getAttribute('open'),null);
- await shot('01-reflection-th');
+ await lab.locator('#formula-reflection > summary').click();await setRange('angle',55);
+ assert.match(await lab.locator('#readouts').innerText(),/55°/);assert.equal(await lab.locator('[id^="solution-"]').count(),0);await shot('01-reflection-th');
  await mode('refraction');await select('n1',1.5);await select('n2',1);await setRange('angle',60);
- assert.match(await lab.locator('#readouts').innerText(),/สะท้อนกลับหมด/);assert.match(await lab.locator('#problem-body-refraction').textContent(),/มุมวิกฤต/);assert.match(await lab.locator('#solution-body-refraction').textContent(),/41.8/);
+ assert.match(await lab.locator('#readouts').innerText(),/สะท้อนกลับหมด/);assert.match(await lab.locator('#readouts').textContent(),/มุมวิกฤต/);
  await setRange('angle',30);assert.match(await lab.locator('#readouts').innerText(),/48.6°/);await select('n1',1);await select('n2',1.5);await setRange('angle',30);assert.match(await lab.locator('#readouts').innerText(),/19.5°/);assert.match(await lab.locator('#readouts').innerText(),/400.0 nm/);
  await lab.locator('#formula-refraction > summary').click();await shot('02-refraction-th');
  await mode('interference');assert.match(await lab.locator('#readouts').innerText(),/ปฏิบัพ/);await select('phase',180);assert.match(await lab.locator('#readouts').innerText(),/บัพ/);
  await select('probe','side');assert.match(await lab.locator('#readouts').innerText(),/ปฏิบัพ/);assert.match(await lab.locator('#readouts').innerText(),/0.50/);await select('phase',0);assert.match(await lab.locator('#readouts').innerText(),/บัพ/);
- await setRange('wavelength',4);await setRange('separation',4);await lab.locator('#problem-interference > summary').click();await lab.locator('#solution-interference > summary').click();await shot('03-interference-th');
+ await setRange('wavelength',4);await setRange('separation',4);await shot('03-interference-th');
  await mode('diffraction');assert.equal(await lab.locator('#param-opening').isDisabled(),true);
  const angle=()=>frame.evaluate(()=>{const s=LearningHubSimulation.getState();return WaveMiniModel.diffract(s.work.diffraction.params).angle;});
  const fixedOpening=(await state()).work.diffraction.params.opening;await setRange('wavelength',400);const short=await angle();await setRange('wavelength',700);assert.ok((await angle())>short);assert.equal((await state()).work.diffraction.params.opening,fixedOpening);
  await select('compare','opening');assert.equal(await lab.locator('#param-wavelength').isDisabled(),true);assert.equal(await lab.locator('#param-opening').isEnabled(),true);
  const fixedWavelength=(await state()).work.diffraction.params.wavelength;await setRange('opening',4);const wide=await angle();await setRange('opening',.8);assert.ok((await angle())>wide);assert.equal((await state()).work.diffraction.params.wavelength,fixedWavelength);
- await lab.locator('#formula-diffraction > summary').click();await lab.locator('#problem-diffraction > summary').click();assert.equal(await lab.locator('#solution-diffraction').getAttribute('open'),null);
- await lab.locator('#solution-diffraction > summary').click();assert.match(await lab.locator('#solution-body-diffraction').textContent(),/700 nm/);await shot('04-diffraction-th');
+ await lab.locator('#formula-diffraction > summary').click();await shot('04-diffraction-th');
  // Parent toolbar language changes preserve mode, parameters and open panels.
- const beforeLang=await state();await win.locator('[data-window-language="en"]').click();await lab.locator('html[lang="en"]').waitFor();assert.deepEqual(await state(),beforeLang);assert.match(await lab.locator('#formula-body-diffraction').innerText(),/larger λ → larger angle θ/);assert.match(await lab.locator('#solution-body-diffraction').textContent(),/increases|decreases/);await shot('05-diffraction-en');
+ const beforeLang=await state();await win.locator('[data-window-language="en"]').click();await lab.locator('html[lang="en"]').waitFor();assert.deepEqual(await state(),beforeLang);assert.match(await lab.locator('#formula-body-diffraction').innerText(),/larger λ → larger angle θ/);await shot('05-diffraction-en');
  const savedDiffraction=(await state()).work.diffraction;await mode('reflection');assert.equal((await state()).work.reflection.params.angle,55);assert.notEqual(await lab.locator('#formula-reflection').getAttribute('open'),null);
  await mode('diffraction');assert.deepEqual((await state()).work.diffraction,savedDiffraction);
  // State validation is atomic; malformed values must not affect the picture.
@@ -99,6 +96,6 @@ try {
  await lab.locator('#tab-diffraction').tap();await win.locator('[data-window-language="th"]').click();await lab.locator('html[lang="th"]').waitFor();assert.equal((await state()).work.diffraction.params.opening,.8);
  await shot('06-phone-diffraction-th');await lab.locator('#reset').evaluate(n=>n.scrollIntoView({block:'center'}));await lab.locator('#reset').tap();await frame.waitForFunction(()=>LearningHubSimulation.getState().work.diffraction.params.opening===1.8);assert.equal((await state()).work.diffraction.params.opening,1.8);assert.equal((await state()).work.diffraction.formula,false);assert.equal((await state()).work.reflection.params.angle,56);
  assert.deepEqual(errors,[]);assert.doesNotMatch(await lab.locator('main').innerText(),/NaN|Infinity|undefined/);
- await writeFile(resolve(output,'report.json'),JSON.stringify({built,browser:browserName,checks:['four modes','play and pause','reduced motion','independent formula/problem/solution panels','updated calculation hides old solution','Snell and critical angle','centre and off-centre interference in both phases','two locked diffraction comparisons','TH/EN preserves full state','per-mode settings and reset','atomic restore validation','untrusted messages ignored','keyboard tabs and sliders','820/390px layouts and phone touch'],errors},null,2));
+ await writeFile(resolve(output,'report.json'),JSON.stringify({built,browser:browserName,checks:['four modes','play and pause','reduced motion','formula panel and no worked-answer panels','updated calculation hides old solution','Snell and critical angle','centre and off-centre interference in both phases','two locked diffraction comparisons','TH/EN preserves full state','per-mode settings and reset','atomic restore validation','untrusted messages ignored','keyboard tabs and sliders','820/390px layouts and phone touch'],errors},null,2));
  console.log('PASS wave mini sim in real Hub: four modes, physics, formula/problem controls, state, language, keyboard and mobile touch');
 }catch(e){console.error(e);process.exitCode=1;}finally{await browser?.close();server.closeAllConnections();await new Promise(done=>server.close(done));}

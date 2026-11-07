@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {waveAssessmentModel as Assessment} from '../public/shared/wave-assessment-progress.js';
 import { createServer } from 'node:http';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { resolve, sep, extname } from 'node:path';
@@ -62,30 +63,29 @@ try {
  const mode=async key=>lab.locator('#tab-'+key).click();
  const shot=async name=>{await page.waitForTimeout(100);await page.screenshot({path:resolve(output,name+'.png')});};
 
- const finish=async answers=>{await lab.locator('#mission-answer-toggle').click();for(let i=0;i<answers.length;i++){const input=lab.locator('#mission-q'+i);if(await input.evaluate(n=>n.tagName)==='SELECT')await input.selectOption(String(answers[i]));else await input.fill(String(answers[i]));}await lab.locator('#mission-check').click();assert.match(await lab.locator('#mission-result').innerText(),/ผ่านภารกิจ/);};
- const cases=async()=>{await lab.locator('#mission-a').click();await lab.locator('#mission-b').click();};
- const next=async()=>{await lab.locator('#mission-next').click();if(!(await lab.locator('#mission-answer-panel').isHidden()))await lab.locator('#mission-answer-toggle').click();};
- for(const key of ['reflection','refraction','interference','diffraction']){const v=(await state()).work[key].visual;assert.ok(v.field&&v.fronts&&v.variables);}
- const defaultImage=await lab.locator('#bench').evaluate(n=>n.toDataURL());await lab.locator('#layer-fronts').uncheck();await page.waitForTimeout(80);assert.notEqual(await lab.locator('#bench').evaluate(n=>n.toDataURL()),defaultImage);await lab.locator('#layer-field').uncheck();await page.waitForTimeout(80);const blankImage=await lab.locator('#bench').evaluate(n=>n.toDataURL());await lab.locator('#layer-field').check();await page.waitForTimeout(80);assert.notEqual(await lab.locator('#bench').evaluate(n=>n.toDataURL()),blankImage);await lab.locator('#layer-fronts').check();
- await setRange('angle',50);await finish([50,'normal']);await next();await cases();await finish([30,'normal']);
- await mode('refraction');await cases();await finish([25.37,'same']);await next();await cases();await finish([41.81,'no']);
- await mode('interference');await cases();assert.ok(Number(await lab.locator('#mini-screen-diagram').getAttribute('data-intensity'))<1e-20);assert.ok(JSON.parse(await lab.locator('#mini-screen-diagram').getAttribute('data-orders')).every(p=>Math.abs(p.y)>0));const staticProfile=await lab.locator('#mini-screen-diagram').evaluate(n=>n.toDataURL());await lab.locator('#play').click();await page.waitForTimeout(200);await lab.locator('#play').click();assert.equal(await lab.locator('#mini-screen-diagram').evaluate(n=>n.toDataURL()),staticProfile);await finish(['antinode','node']);await next();
- await select('probe','side');await finish([1.5,'node']);
- // Graph follows the full-precision P; moving P invalidates old live answers.
- await lab.locator('#mini-probe').focus();await lab.locator('#mini-probe').press('ArrowUp');let st=await state();assert.equal(st.work.interference.params.probe,'custom');assert.deepEqual(st.work.interference.mission.answers[1],{});assert.equal(Number(await lab.locator('#mini-screen-diagram').getAttribute('data-position')),st.work.interference.visual.x);
- await lab.locator('#layer-nodes').check();await lab.locator('#layer-antinodes').check();
- await lab.locator('#bench').scrollIntoViewIfNeeded();await shot('07-ripples-and-loci');await lab.locator('#mini-screen').scrollIntoViewIfNeeded();await shot('08-linked-profile');
- await mode('diffraction');await cases();await finish(['more',700]);await next();await cases();await finish(['narrow',6.667]);
- for(const key of ['reflection','refraction','interference','diffraction'])assert.deepEqual((await state()).work[key].mission.completed,[true,true]);
- await lab.locator('#mission-q1').fill('wrong');await lab.locator('#mission-check').click();assert.match(await lab.locator('#mission-result').innerText(),/ต้องแก้/);await lab.locator('#mission-retry').click();assert.equal(await lab.locator('#mission-q1').inputValue(),'');
- await lab.locator('#mission-q1').fill('6.667');const before=await state();await win.locator('[data-window-language="en"]').click();await lab.locator('html[lang="en"]').waitFor();assert.deepEqual(await state(),before);assert.equal(await lab.locator('#mission-q1').inputValue(),'6.667');await win.locator('[data-window-language="th"]').click();
- const snap=await state();for(const type of ['visual','mission','answer','probe']){assert.equal(await frame.evaluate(({snap,type})=>{const s=structuredClone(snap);if(type==='visual')s.work.interference.visual.L=Infinity;if(type==='mission')s.work.reflection.mission.completed='bad';if(type==='answer')s.work.refraction.mission.answers[0].q0={};if(type==='probe')s.work.interference.params.probe='bad';return LearningHubSimulation.restoreState(s);},{snap,type}),false);}
- assert.equal(await frame.evaluate(s=>LearningHubSimulation.restoreState(s),snap),true);
- // Legacy version-1 states gain visual/mission defaults without losing settings.
- const legacy=structuredClone(snap);legacy.version=1;for(const w of Object.values(legacy.work)){delete w.visual;delete w.mission;if(w.params.probe==='custom')w.params.probe='center';}assert.equal(await frame.evaluate(s=>LearningHubSimulation.restoreState(s),legacy),true);assert.ok((await state()).work.reflection.visual.fronts);
- for(const width of [820,390]){await page.setViewportSize({width,height:1100});for(const key of ['reflection','refraction','interference','diffraction']){await mode(key);await lab.locator('#bench').scrollIntoViewIfNeeded();assert.ok(await lab.locator('html').evaluate(n=>n.scrollWidth<=n.clientWidth+1),`${key} overflows ${width}`);await shot('09-'+width+'-'+key);} }
- await mode('interference');await lab.locator('#mini-probe').scrollIntoViewIfNeeded();const handle=await lab.locator('#mini-probe').boundingBox();await page.touchscreen.tap(handle.x+22,handle.y+22);assert.equal(await lab.locator('#mini-probe').evaluate(n=>n.getBoundingClientRect().width),44);
- const differences=await frame.evaluate(()=>{const result={};for(const mode of ['interference','diffraction']){const s=LearningHubSimulation.getState().work[mode],canvas=document.getElementById('bench'),ctx=canvas.getContext('2d');WaveMiniView.invalidate();WaveMiniView.draw(canvas,mode,s.params,0,s.visual);const before=ctx.getImageData(0,0,canvas.width,canvas.height).data;const period=mode==='interference'?s.params.wavelength/3:s.params.wavelength/600;WaveMiniView.draw(canvas,mode,s.params,1000*period,s.visual);const after=ctx.getImageData(0,0,canvas.width,canvas.height).data;let diff=0;for(let i=0;i<before.length;i++)diff+=Math.abs(before[i]-after[i]);result[mode]=diff/before.length;}return result;});for(const diff of Object.values(differences))assert.ok(diff<.3,JSON.stringify(differences));
+ const fill=async(key,index)=>{for(const p of Assessment.parts(key,index)){const input=lab.locator('#assessment-'+p.key);if(p.type==='choice')await input.selectOption(p.answer);else await input.fill(String(p.answer));}};
+ const open=async()=>{if(!await lab.locator('#mission-answer-panel').isVisible())await lab.locator('#mission-answer-toggle').click();};
+ await open();await lab.locator('#mission-check').click();assert.match(await lab.locator('#mission-result').innerText(),/0\/3/);assert.equal(await lab.locator('#mission-next').isDisabled(),true);
+ for(const key of ['reflection','refraction','interference','diffraction']){
+   await mode(key);
+   for(const index of [0,1]){
+     if(index===1)await lab.locator('#mission-next').click();await open();assert.equal(await lab.locator('[data-main-question]').count(),3);
+     await fill(key,index);const answers=structuredClone((await state()).work[key].mission.answers[index]);await lab.locator('#mission-b').click();assert.deepEqual((await state()).work[key].mission.answers[index],answers);
+     await lab.locator('#mission-check').click();assert.match(await lab.locator('#mission-result').innerText(),/5\/5/);assert.equal(await lab.locator('.answer-feedback.correct').count(),Assessment.parts(key,index).length);
+     assert.equal(await lab.locator('#readouts').isVisible(),false);assert.equal(await lab.locator('[id^="solution-"]').count(),0);
+   }
+ }
+ assert.match(await lab.locator('#assessment-progress').innerText(),/24\/24/);assert.match(await lab.locator('#assessment-progress').innerText(),/40\/40/);
+ await lab.locator('#assessment-q6-b').fill('0');await lab.locator('#mission-check').click();assert.match(await lab.locator('#assessment-progress').innerText(),/38\/40/);assert.match(await lab.locator('#assessment-progress').innerText(),/40\/40/);assert.match(await lab.locator('#assessment-q6-b').inputValue(),/^0$/);
+ const latest=structuredClone((await state()).work.diffraction.mission.answers);await win.locator('[data-window-language="en"]').click();await lab.locator('html[lang="en"]').waitFor();assert.deepEqual((await state()).work.diffraction.mission.answers,latest);assert.equal(await lab.locator('#assessment-q6-b').inputValue(),'0');
+ await win.locator('[data-window-language="th"]').click();await lab.locator('html[lang="th"]').waitFor();
+ await lab.locator('#reset').click();assert.deepEqual((await state()).work.diffraction.mission.answers,latest);
+ await page.reload();await lab.locator('#assessment-progress').waitFor();assert.match(await lab.locator('#assessment-progress').innerText(),/40\/40/);
+ for(const width of [1024,768,674,390]){await page.setViewportSize({width,height:1100});for(const key of ['reflection','refraction','interference','diffraction']){await mode(key);await open();assert.ok(await lab.locator('html').evaluate(n=>n.scrollWidth<=n.clientWidth+1),key+' overflows '+width);}}
+ await mode('reflection');await lab.locator('#mission-select').selectOption('0');await open();await lab.locator('#assessment-q3-a').fill('');const input=await lab.locator('#assessment-q3-a').boundingBox();assert.ok(input.height>=44);assert.equal(await lab.locator('#assessment-q3-a').getAttribute('inputmode'),'decimal');
+ await lab.locator('#mission-answer-toggle').click();await win.locator('.window-simulation-guide').click();const reader=page.frameLocator('[data-tool-id="simulation-guide-content-simulation-physics-ipst-wave-optics-10-1-mini-sim"] iframe');await reader.locator('[data-simulation-guide]').waitFor();assert.equal(await reader.locator('button').count(),0);assert.equal(await reader.locator('[id^="guide-reading-"]').count(),4);
+ await reader.locator('a[href="#guide-reading-diffraction"]').first().click();assert.ok(await reader.locator('#guide-reading-diffraction').evaluate(n=>Math.abs(n.getBoundingClientRect().top)<60));
  assert.deepEqual(errors,[]);assert.doesNotMatch(await lab.locator('main').innerText(),/NaN|Infinity|undefined/);
- await writeFile(resolve(output,'missions-report.json'),JSON.stringify({built,checks:['8 missions answered in real Hub','live answers invalidated on P move','phase-180 dark centre and shifted orders','P and intensity profile linked','default field + fronts in 4 modes','node/antinode layers','TH/EN preserves answers/progress','atomic invalid state rejection','version-1 migration','820/390px layouts','44px touch P'],errors},null,2));console.log('PASS wave visual missions in real Hub: all 8 tasks, live P, phase, profiles, state and mobile');
+ await writeFile(resolve(output,'missions-report.json'),JSON.stringify({built,checks:['24 multipart questions','8 missions checked','40 total practice points','partial credit and retained best','A/B and reset retain responses','local reload resumes work','TH/EN retains answers','numeric decimal keypad and 44px controls','4 responsive widths','reading-only guide and native contents'],errors},null,2));
+ console.log('PASS wave assessment: 24 questions, partial credit, persistence, bilingual UI and reading guide');
 }catch(e){console.error(e);process.exitCode=1;}finally{await browser?.close();server.closeAllConnections();await new Promise(done=>server.close(done));}

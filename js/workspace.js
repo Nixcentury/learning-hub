@@ -26,6 +26,11 @@ import { mountSimulationGuide, createSimulationGuideHighlighter } from "./simula
 
 // Only live Quiz windows created by this workspace may use its storage bridge.
 const quizStorageFrames = new Set();
+const simulationStorageFrames = new Map();
+export function getWorkspaceSimulationContentId(source) {
+  for (const [frame, contentId] of simulationStorageFrames) if (frame.isConnected && frame.contentWindow === source) return contentId;
+  return null;
+}
 const homeworkFrames = new Map();
 export function getWorkspaceHomework(source) {
   for (const [frame, homework] of homeworkFrames) if (frame.isConnected && frame.contentWindow === source) return homework;
@@ -668,6 +673,7 @@ export function createWorkspace({
     record.simulationGuide?.dispose();
     record.simulationGuideHighlighter?.dispose();
     quizStorageFrames.delete(record.frame);
+    simulationStorageFrames.delete(record.frame);
     homeworkFrames.delete(record.frame);
     const taskButton = record.taskButton;
     record.element.remove();
@@ -743,7 +749,9 @@ export function createWorkspace({
     if (["html", "pdf", "video"].includes(record.tool.context.toolKind)) return;
     try {
       // Synchronous: removing an iframe cancels its pending debounce timers.
-      return record.frame.contentWindow?.LearningHubQuiz?.flushLocal?.();
+      return record.tool.context.toolKind === "simulation"
+        ? record.frame.contentWindow?.LearningHubSimulation?.flushLocal?.()
+        : record.frame.contentWindow?.LearningHubQuiz?.flushLocal?.();
     } catch (error) {
       // A separately hosted tool cannot be inspected by the Hub.
       console.warn("Learning Hub could not flush the quiz before closing.", error);
@@ -1095,6 +1103,7 @@ export function createWorkspace({
     records.set(toolId, record);
     windowLayer.append(record.element);
     if (tool.context.toolKind === "quiz") quizStorageFrames.add(record.frame);
+    if (tool.context.toolKind === "simulation") simulationStorageFrames.set(record.frame, tool.context.contentId);
     if (tool.homework) homeworkFrames.set(record.frame, tool.homework);
     taskbarItems.append(record.taskButton);
     positionNewWindow(record);
@@ -1246,7 +1255,8 @@ export function createWorkspace({
       record.simulationGuide?.dispose();
       record.simulationGuideHighlighter?.dispose();
       quizStorageFrames.delete(record.frame);
-    homeworkFrames.delete(record.frame);
+      simulationStorageFrames.delete(record.frame);
+      homeworkFrames.delete(record.frame);
       record.element.remove();
       record.taskButton.remove();
     });

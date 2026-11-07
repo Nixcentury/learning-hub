@@ -4,6 +4,11 @@ on:
   pull_request:
     paths:
       - 'js/workspace.js'
+      - 'js/simulation-progress*.js'
+      - 'public/shared/wave-assessment-progress.js'
+      - 'public/content/physics/ipst/wave-optics/assets/10-1-sim/**'
+      - 'scripts/wave-assessment.test.mjs'
+      - 'scripts/test-wave-visual-missions-browser.mjs'
       - 'css/styles.css'
       - 'css/learning-guide.css'
       - 'scripts/test-workspace-layout-browser.mjs'
@@ -45,3 +50,11 @@ jobs:
           pnpm test:workspace:browser
           pnpm test:review:browser
           pnpm test:sheet:browser
+      - name: Verify wave assessment questions, scores and saved drafts
+        env:
+          QA_BUILT: '1'
+        run: |
+          export PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/work/qa-tools/node_modules/playwright"
+          export QA_BROWSER_EXECUTABLE="$(node -e 'console.log(require(process.env.PLAYWRIGHT_MODULE).chromium.executablePath())')"
+          pnpm test:assessment:browser
+          node scripts/test-wave-mini-sim-browser.mjs

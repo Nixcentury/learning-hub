@@ -21,6 +21,8 @@ import { toolCatalog } from "./legacy-tool-catalog.js";
 import { applyContentLanguage } from "./content-language.js";
 import { attachLearningSheet } from "./learning-sheet.js";
 import { createLearningGuide } from "./learning-guide.js";
+import { createSimulationGuideTool, simulationGuideFor } from "./simulation-guide-model.js";
+import { mountSimulationGuide, createSimulationGuideHighlighter } from "./simulation-guide.js";
 
 // Only live Quiz windows created by this workspace may use its storage bridge.
 const quizStorageFrames = new Set();
@@ -246,6 +248,12 @@ export function createWorkspace({
       hasMaximizedWindow,
     );
     document.body.classList.toggle("has-split-workspace", Boolean(splitPair));
+    records.forEach(record => {
+      if (record.simulationGuideButton) {
+        const guide = records.get(`simulation-guide-${record.tool.id}`);
+        record.simulationGuideButton.setAttribute('aria-expanded', String(Boolean(guide && !guide.minimized)));
+      }
+    });
   }
 
   function endSplit() {
@@ -409,6 +417,15 @@ export function createWorkspace({
       record.printButton.querySelector('.window-print-label').textContent = label("พิมพ์ / PDF", "Print / PDF");
     }
     record.guide?.setLanguage(language());
+    record.simulationGuide?.setLanguage(language());
+    if (record.simulationGuideButton) {
+      const guide = records.get(`simulation-guide-${record.tool.id}`);
+      const active = Boolean(guide && !guide.minimized);
+      record.simulationGuideButton.querySelector('span').textContent = label('คู่มือเล่น', 'Play guide');
+      record.simulationGuideButton.title = label('เปิดคู่มือเล่นคู่กับ simulation', 'Open the play guide beside this simulation');
+      record.simulationGuideButton.setAttribute('aria-label', record.simulationGuideButton.title);
+      record.simulationGuideButton.setAttribute('aria-expanded', String(active));
+    }
     record.taskTitle.textContent = title;
     record.closeButton.setAttribute("aria-label", label("ปิดงาน", "Close tool"));
     record.closeButton.title = label("ปิด", "Close");
@@ -492,7 +509,7 @@ export function createWorkspace({
       return;
     }
     // Read-only HTML does not need the learner's identity or privileged bridges.
-    if (["html", "pdf", "video"].includes(record.tool.context.toolKind)) return;
+    if (["html", "pdf", "video", "simulation-guide"].includes(record.tool.context.toolKind)) return;
     const targetOrigin = location.origin === "null" ? "*" : location.origin;
     record.frame.contentWindow?.postMessage(
       { ...createHubContextMessage({
@@ -516,7 +533,8 @@ export function createWorkspace({
       candidate.taskButton.classList.toggle("is-active", isActive);
       candidate.taskButton.setAttribute("aria-pressed", String(isActive));
     });
-    if (!wasActive) onToolActivated(record.tool);
+    // A guide is a utility owned by the simulation, not a new navigation route.
+    if (!wasActive && !record.tool.simulationGuideOwnerId) onToolActivated(record.tool);
   }
 
   function positionNewWindow(record) {
@@ -580,7 +598,7 @@ export function createWorkspace({
 
   function applyFrameLanguage(record) {
     // Quiz owns its translated questions and answer DOM through its context bridge.
-    if (["quiz", "review"].includes(record.tool.context.toolKind)) return;
+    if (["quiz", "review", "simulation-guide"].includes(record.tool.context.toolKind)) return;
     try {
       const doc = record.frame.contentDocument;
       const result = applyContentLanguage(doc, language());
@@ -638,21 +656,33 @@ export function createWorkspace({
     removeRecord(record);
   }
 
-  function removeRecord(record) {
+  function removeRecord(record, linkedRemoval = false) {
+    if (!records.has(record.tool.id)) return;
+    const linkedGuide = records.get(`simulation-guide-${record.tool.id}`);
+    if (linkedGuide?.tool.simulationGuideOwnerId === record.tool.id) removeRecord(linkedGuide, true);
     if (splitPair?.includes(record)) endSplit();
     if (pendingSplit === record) cancelPendingSplit(false);
     if (layoutOwner === record) layoutDialog?.close();
     record.sheet?.dispose();
     record.guide?.dispose();
+    record.simulationGuide?.dispose();
+    record.simulationGuideHighlighter?.dispose();
     quizStorageFrames.delete(record.frame);
     homeworkFrames.delete(record.frame);
     const taskButton = record.taskButton;
     record.element.remove();
     record.taskButton.remove();
     records.delete(record.tool.id);
-    const returnedToOwner = onToolClosed(record.tool.id, record.tool) === true;
+    const returnedToOwner = !record.tool.simulationGuideOwnerId && onToolClosed(record.tool.id, record.tool) === true;
     setTaskbarVisibility();
     syncMaximizedState();
+    if (linkedRemoval) return;
+    const simulationOwner = records.get(record.tool.simulationGuideOwnerId);
+    if (simulationOwner) {
+      restore(simulationOwner);
+      simulationOwner.simulationGuideButton?.focus();
+      return;
+    }
 
     // The owner can restore its own menu (Classroom homework) without a later
     // window-focus/idle callback replacing that navigation with a subject menu.
@@ -837,6 +867,7 @@ export function createWorkspace({
     const element = document.createElement("article");
     element.className = `workspace-window accent-${tool.accent}`;
     element.dataset.toolId = tool.id;
+    if (tool.simulationGuideOwnerId) element.id = tool.id;
     element.tabIndex = -1;
     element.innerHTML = `
       <header class="workspace-window-bar">
@@ -874,6 +905,7 @@ export function createWorkspace({
         </div>
         <div class="window-trailing-tools" id="window-tools-${tool.id}">
           <div class="window-language" role="group" aria-label="ภาษา / Language"><button type="button" data-window-language="th" lang="th">TH</button><button type="button" data-window-language="en" lang="en">EN</button></div>
+          ${tool.context.toolKind === "simulation" ? '<button class="window-simulation-guide" type="button"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4zm16 0h-4a3 3 0 0 0-3 3v14a4 4 0 0 1 4-2h3z"/></svg><span></span></button>' : ''}
           <button class="window-split" type="button" aria-haspopup="dialog"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/></svg><span></span></button>
           ${tool.context.toolKind === "html" ? '<button class="window-sheet-guide" type="button" hidden><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4zm16 0h-4a3 3 0 0 0-3 3v14a4 4 0 0 1 4-2h3z"/></svg><span></span></button>' : ''}
           <button class="window-share" type="button"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m10 13 4-4M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m2 1 1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/></svg><span></span></button>
@@ -897,7 +929,7 @@ export function createWorkspace({
     `;
 
     // Static chapter overviews cannot run scripts or access the parent/account.
-    if (tool.context.toolKind === "html") element.querySelector("iframe").setAttribute("sandbox", "allow-same-origin");
+    if (["html", "simulation-guide"].includes(tool.context.toolKind)) element.querySelector("iframe").setAttribute("sandbox", "allow-same-origin");
 
     const record = {
       tool,
@@ -914,6 +946,8 @@ export function createWorkspace({
       toolbarCollapsed: false,
       resizeHandle: element.querySelector(".window-resize-handle"),
       shareButton: element.querySelector(".window-share"),
+      simulationGuideButton: element.querySelector('.window-simulation-guide'),
+      simulationGuideProgress: { example: false, stepId: null },
       languageTh: element.querySelector('[data-window-language="th"]'),
       languageEn: element.querySelector('[data-window-language="en"]'),
       printButton: tool.context.toolKind === "html" ? element.querySelector(".window-html-print") : null,
@@ -964,7 +998,11 @@ export function createWorkspace({
       updateRecordText(record); constrainWindow(record);
     });
     record.splitButton.addEventListener("click", () => openLayoutMenu(record));
-    record.shareButton.addEventListener("click", () => onShare(record.tool, record.shareButton));
+    record.simulationGuideButton?.addEventListener('click', () => openSimulationGuide(record));
+    record.shareButton.addEventListener("click", () => {
+      const owner = records.get(record.tool.simulationGuideOwnerId);
+      onShare(owner?.tool || record.tool, record.shareButton);
+    });
     record.languageTh.addEventListener("click", () => onLanguageChange("th"));
     record.languageEn.addEventListener("click", () => onLanguageChange("en"));
     record.printButton?.addEventListener("click", () => openHtmlPrint({
@@ -992,6 +1030,9 @@ export function createWorkspace({
       delete record.reviewRequestId;
       record.sheet?.dispose();
       record.sheet = null;
+      record.simulationGuide?.dispose();
+      record.simulationGuide = null;
+      if (record.tool.simulationGuideOwnerId) mountGuideWindow(record);
       applyFrameLanguage(record);
       postContext(record);
       postVideoVisibility(record, !record.minimized);
@@ -1042,6 +1083,7 @@ export function createWorkspace({
     if (!canOpen()) return false;
     const tool = toolCatalog[toolId];
     if (!tool) return false;
+    if (tool.simulationGuideOwnerId && !records.has(tool.simulationGuideOwnerId)) return false;
 
     const existingRecord = records.get(toolId);
     if (existingRecord) {
@@ -1070,6 +1112,40 @@ export function createWorkspace({
     if (previous && previous.source !== tool.source) return false;
     toolCatalog[tool.id] = tool;
     return open(tool.id);
+  }
+
+  function mountGuideWindow(record) {
+    const owner = records.get(record.tool.simulationGuideOwnerId);
+    if (!owner) return;
+    record.simulationGuideHighlighter ||= createSimulationGuideHighlighter();
+    try {
+      record.simulationGuide = mountSimulationGuide({
+        document: record.frame.contentDocument, contentId: owner.tool.context.contentId,
+        title: { th: owner.tool.titleTh, en: owner.tool.titleEn },
+        state: owner.simulationGuideProgress, language: language(),
+        guide: simulationGuideFor(owner.tool, location.href),
+        onLocate: target => {
+          if (!records.has(owner.tool.id) || !canOpen()) return 'missing';
+          restore(owner);
+          return record.simulationGuideHighlighter.locate(owner, target);
+        },
+        onReturn: () => { if (records.has(owner.tool.id) && canOpen()) { restore(owner); owner.frame.focus(); } },
+      });
+    } catch { /* A guide document may be in the middle of loading. */ }
+  }
+
+  function openSimulationGuide(owner) {
+    if (!canOpen() || !records.has(owner.tool.id) || owner.tool.context.toolKind !== 'simulation') return false;
+    const tool = createSimulationGuideTool(owner.tool, location.href);
+    if (!tool) return false;
+    toolCatalog[tool.id] = tool;
+    if (!open(tool.id)) return false;
+    const guide = records.get(tool.id);
+    if (!guide) return false;
+    const paired = pairWindows(owner, guide, guide);
+    owner.simulationGuideButton.setAttribute('aria-controls', tool.id);
+    updateRecordText(owner);
+    return paired;
   }
 
   function openBank(entry) {
@@ -1167,6 +1243,8 @@ export function createWorkspace({
       flushLocalBeforeRemoval(record);
       record.sheet?.dispose();
       record.guide?.dispose();
+      record.simulationGuide?.dispose();
+      record.simulationGuideHighlighter?.dispose();
       quizStorageFrames.delete(record.frame);
     homeworkFrames.delete(record.frame);
       record.element.remove();

@@ -1,0 +1,19 @@
+:root { font-family:Tahoma,Arial,sans-serif; color:#203b42; background:#f5faf9; }
+* { box-sizing:border-box; }
+body { margin:0; }
+main { max-width:760px; margin:auto; padding:20px clamp(14px,4vw,28px) 32px; overflow-wrap:anywhere; }
+h1 { font-size:21px; line-height:1.5; margin:4px 0 20px; }
+h2 { font-size:19px; line-height:1.6; margin:12px 0; }
+p { line-height:1.8; white-space:pre-line; }
+button { min-width:44px; min-height:44px; margin:4px 0; padding:10px 14px; border:1px solid #9fbfb6; border-radius:10px; background:#fff; color:#154e42; font:inherit; line-height:1.5; cursor:pointer; touch-action:manipulation; }
+button:disabled { color:#65716e; background:#edf1ef; cursor:default; opacity:.75; }
+button:focus-visible,h2:focus-visible { outline:3px solid #057a69; outline-offset:3px; }
+.guide-eyebrow { margin:0; font-size:13px; font-weight:bold; color:#3d695e; }
+.guide-notice { padding:10px 12px; background:#e5f2ee; border-left:3px solid #3c806e; font-size:14px; }
+.guide-progress { font-size:14px; color:#496c62; }
+.guide-instruction { font-size:16px; }
+.guide-note,.guide-status { font-size:14px; color:#536b64; }
+.guide-status:empty { display:none; }
+.guide-controls { display:flex; gap:8px; flex-wrap:wrap; margin:20px 0 8px; }
+[data-guide-return],[data-guide-example-exit] { display:block; }
+[data-guide-example-exit] { font-size:14px; }

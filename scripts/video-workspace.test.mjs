@@ -13,6 +13,8 @@ import { createLearningGuide } from '../js/learning-guide.js';
 import { createBankTool } from '../js/question-bank-tools.js';
 import { createTopicReviewTool, reviewSelection } from '../js/topic-review-tools.js';
 import { bankKeyPattern } from '../public/shared/question-bank-model.js';
+import { createSimulationGuideTool, simulationGuideFor } from '../js/simulation-guide-model.js';
+import { mountSimulationGuide, createSimulationGuideHighlighter } from '../js/simulation-guide.js';
 
 // Execute the real Workspace and its DOM handlers, with iframe transport replaced.
 // This checks integration and state transitions, not browser layout or live YouTube.
@@ -41,6 +43,7 @@ function harness(initialIdentity = { status: 'guest', isGuest: true, uid: null }
   const location = new URL(document.URL);
   const vmContext = vm.createContext({ document, window, location, URL, Intl, Date, console,
     createContentTool, createHubContextMessage, videoLinkEntry, htmlLinkEntry, pdfLinkEntry, applyContentLanguage, createLearningGuide,
+    createSimulationGuideTool, simulationGuideFor, mountSimulationGuide, createSimulationGuideHighlighter,
     toolCatalog: {}, requestAnimationFrame: fn => fn(),
     renderHtmlMath: async () => {}, attachLearningSheet: async () => null,
     createBankTool, createTopicReviewTool, reviewSelection, bankKeyPattern, openHtmlPrint() {} });
@@ -64,6 +67,72 @@ function harness(initialIdentity = { status: 'guest', isGuest: true, uid: null }
     language(value) { language = value; workspace.setLanguage(); } };
 }
 const videoButton = `<a data-hub-video data-content-id="sound-video" href="${url}" data-subject-id="physics" data-chapter-id="12" data-topic-id="sound">Video</a>`;
+const guideHtml = readFileSync(new URL('../public/pages/tools/simulation-guide-player.html', import.meta.url), 'utf8');
+const simulationEntry = suffix => ({ ...context, toolKind: 'simulation', contentId: 'qa-guide-' + suffix,
+  source: `content/qa-guide/${suffix}.html`, titleTh: 'ทดลอง ' + suffix, titleEn: 'Experiment ' + suffix });
+
+test('simulation guide pairs a script-free utility with the original simulation and returns to that exact frame', () => {
+  let closed = 0;
+  const h = harness({status:'signed-in',uid:'private-student'}, {onToolClosed:()=>closed++});
+  h.workspace.openContent(simulationEntry('one'));
+  const owner = h.document.querySelector('.workspace-window'), simulation = owner.querySelector('iframe');
+  const child = dom('<html><body><input id="value" value="47"><textarea>Keep my experiment</textarea></body></html>', 'content/qa-guide/one.html');
+  h.load(simulation, child);
+  owner.querySelector('.window-simulation-guide').click();
+  const reader = h.document.querySelector('[data-tool-id^="simulation-guide-"]'), frame = reader.querySelector('iframe');
+  assert.equal(owner.dataset.windowSnap, 'left'); assert.equal(reader.dataset.windowSnap, 'right');
+  assert.equal(frame.getAttribute('sandbox'), 'allow-same-origin');
+  assert.equal(h.activated.at(-1).id, owner.dataset.toolId, 'Utility focus retains the simulation route');
+  const sent = h.load(frame, dom(guideHtml, 'pages/tools/simulation-guide-player.html'));
+  assert.equal(sent.length, 0, 'Guide receives no account or privileged context');
+  assert.equal(frame.contentDocument.querySelector('[data-simulation-guide]').dataset.guideState, 'empty');
+  frame.contentDocument.querySelector('[data-guide-example]').click();
+  frame.contentDocument.querySelector('[data-guide-next]').click();
+  frame.contentDocument.querySelector('[data-guide-next]').click();
+  owner.querySelector('.window-simulation-guide').click();
+  assert.equal(h.document.querySelectorAll('iframe').length, 2, 'Repeated opening reuses the guide document');
+  assert.equal(reader.querySelector('iframe'), frame);
+  reader.querySelector('.is-close').click();
+  assert.equal(closed, 0, 'Closing a utility is not closing a learning activity');
+  assert.equal(owner.classList.contains('is-active'), true); assert.equal(owner.querySelector('iframe'), simulation);
+  assert.equal(simulation.contentDocument, child.document); assert.equal(child.document.querySelector('#value').value, '47');
+  assert.equal(owner.querySelector('.window-simulation-guide').getAttribute('aria-expanded'), 'false');
+  owner.querySelector('.window-simulation-guide').click();
+  const reopened = h.document.querySelector('[data-tool-id^="simulation-guide-"]');
+  h.load(reopened.querySelector('iframe'), dom(guideHtml, 'pages/tools/simulation-guide-player.html'));
+  assert.match(reopened.querySelector('iframe').contentDocument.body.textContent, /ขั้น 3 จาก 3/);
+  owner.querySelector('.is-close').click();
+  assert.equal(h.document.querySelectorAll('iframe').length, 0, 'Closing the simulation also removes its guide');
+  assert.equal(closed, 1);
+});
+
+test('two simulations keep independent guide windows and progress through minimize, language changes and clearing', () => {
+  const h = harness(), owners = [];
+  for (const suffix of ['a','b']) {
+    h.workspace.openContent(simulationEntry(suffix));
+    const owner = h.document.querySelector(`[data-tool-id="content-simulation-qa-guide-${suffix}"]`);
+    h.load(owner.querySelector('iframe'),dom('<html><body>Retain '+suffix+'</body></html>',`content/qa-guide/${suffix}.html`));
+    owner.querySelector('.window-simulation-guide').click();
+    const reader = h.document.querySelector(`[data-tool-id="simulation-guide-content-simulation-qa-guide-${suffix}"]`);
+    h.load(reader.querySelector('iframe'),dom(guideHtml,'pages/tools/simulation-guide-player.html'));
+    reader.querySelector('iframe').contentDocument.querySelector('[data-guide-example]').click();
+    owners.push({owner,reader});
+  }
+  const docA = owners[0].reader.querySelector('iframe').contentDocument;
+  const docB = owners[1].reader.querySelector('iframe').contentDocument;
+  docA.querySelector('[data-guide-next]').click();
+  h.language('en');
+  assert.match(docA.body.textContent,/Step 2 of 3/);assert.match(docB.body.textContent,/Step 1 of 3/);
+  owners[0].reader.querySelector('.is-minimize').click();
+  assert.equal(owners[0].owner.querySelector('.window-simulation-guide').getAttribute('aria-expanded'),'false');
+  owners[0].owner.querySelector('.window-simulation-guide').click();
+  assert.equal(h.document.querySelectorAll('iframe').length,4);
+  assert.equal(owners[0].reader.querySelector('iframe').contentDocument,docA);
+  assert.equal(owners[0].owner.dataset.windowSnap,'left');assert.equal(owners[0].reader.dataset.windowSnap,'right');
+  owners[0].owner.querySelector('.is-close').click();
+  assert.equal(owners[1].owner.isConnected,true);assert.equal(owners[1].reader.isConnected,true);
+  h.workspace.clear();assert.equal(h.document.querySelectorAll('iframe').length,0);
+});
 
 test('closing saved homework lets Classroom take over navigation and keeps other windows without reactivating them', async()=>{
   let closed, idle=0;

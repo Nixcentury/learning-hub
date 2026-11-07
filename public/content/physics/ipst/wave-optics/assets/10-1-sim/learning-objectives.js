@@ -1,12 +1,12 @@
-import { waveMiniPlayGuide } from './guide-data.js';
+import { waveMiniPlayGuide } from './guide-data.js?v=reading-guide-20261107';
 
 export function renderLearningObjectives(doc, mode, language) {
   const panel = doc.getElementById('learning-objectives');
   const section = waveMiniPlayGuide.sections.find(item => item.id === mode);
   if (!panel || !section) return;
   const lang = language === 'en' ? 'en' : 'th';
-  if (panel.dataset.mode === mode && panel.dataset.language === lang) return;
-  panel.dataset.mode = mode; panel.dataset.language = lang;
+  if (panel.dataset.objectiveMode === mode && panel.dataset.language === lang) return;
+  panel.dataset.objectiveMode = mode; panel.dataset.language = lang;
   // Update the contents, keeping the learner's open/closed panel and focus.
   doc.getElementById('learning-objectives-title').textContent =
     (lang === 'th' ? 'จุดประสงค์การเรียนรู้ · ' : 'Learning objectives · ') + section.title[lang];

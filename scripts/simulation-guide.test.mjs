@@ -22,46 +22,49 @@ test('guide windows bind only authored simulation identities and leave other act
   assert.equal(simulationGuideFor(tool,hub),null);
 });
 
-test('wave guide covers four mode sections and both missions without embedding answer or execution fields',()=>{
+test('reading guide binds four complete sections and validates bilingual articles without tour steps',()=>{
   assert.deepEqual(validateSimulationGuide(waveMiniPlayGuide),[]);
+  assert.equal(waveMiniPlayGuide.format,'reading');assert.equal('steps' in waveMiniPlayGuide,false);
   const real={...tool,source:new URL(waveMiniPlayGuide.source,hub).href,context:{...tool.context,contentId:waveMiniPlayGuide.contentId}};
   assert.equal(simulationGuideFor(real,hub),waveMiniPlayGuide);
   assert.equal(simulationGuideFor({...real,source:real.source+'?state=1'},hub),null);
   assert.deepEqual(waveMiniPlayGuide.sections.map(s=>s.id),['reflection','refraction','interference','diffraction']);
   for(const section of waveMiniPlayGuide.sections){
-    const steps=waveMiniPlayGuide.steps.filter(s=>s.sectionId===section.id);
-    assert.equal(steps[0].target.key,'tab-'+section.id);
-    for(const suffix of ['mission-1','answer-1-open','answer-1-fill','answer-1-check','mission-2','answer-2-open','answer-2-fill','answer-2-check','finish'])assert.ok(steps.some(s=>s.id===section.id+'-'+suffix));
-    assert.equal(section.objectives.length,3);
+    assert.deepEqual(section.parts.map(p=>p.id),['mission-1','mission-2']);
+    assert.equal(section.objectives.length,3);assert.ok(section.parts.every(p=>p.items.length>=4));
   }
   for(const change of [g=>g.sections[0].objectives[0].en='',g=>g.sections[1].id=g.sections[0].id,
-    g=>g.steps[0].sectionId='missing',g=>g.sections.push({id:'empty',title:{th:'ว่าง',en:'Empty'},objectives:[{th:'เป้าหมาย',en:'Goal'}]}),
-    g=>g.sections[0].objectives[0].th='<b>goal</b>',g=>g.steps[0]=null]){
+    g=>g.sections[0].parts[0].items[0].en='',g=>g.sections[0].parts[1].id='mission-1',
+    g=>g.sections[0].parts[0].answer='secret',g=>g.sections[0].parts[0].items[0].th='<b>HTML</b>',
+    g=>g.steps=[],g=>g.sections[0].parts[0]=null,g=>g.introduction.en='']){
     const changed=structuredClone(waveMiniPlayGuide);change(changed);assert.ok(validateSimulationGuide(changed).length);
   }
 });
 
-test('section navigation remains a manual guide action and retains its step across language and remount',()=>{
-  const {document}=parseHTML(html),state={example:false,stepId:null};let located=null;
-  const mount=()=>mountSimulationGuide({document,contentId:waveMiniPlayGuide.contentId,title:waveMiniPlayGuide.title,state,guide:waveMiniPlayGuide,onLocate:t=>{located=t;return 'missing';}});
+test('the complete manual is readable without click handlers, including after old tour state and language changes',()=>{
+  const {document}=parseHTML(html),state={example:true,stepId:'interference-goals'};let actions=0;
+  const mount=()=>mountSimulationGuide({document,contentId:waveMiniPlayGuide.contentId,title:waveMiniPlayGuide.title,state,guide:waveMiniPlayGuide,onLocate:()=>actions++,onReturn:()=>actions++});
   let controller=mount();
-  const select=document.querySelector('[data-guide-section]');
-  select.querySelector('option[value="interference"]').selected=true;
-  select.dispatchEvent(new document.defaultView.Event('change'));
-  assert.equal(state.stepId,'interference-mode');assert.equal(located,null);
-  document.querySelector('[data-guide-locate]').click();assert.equal(located.key,'tab-interference');
-  assert.match(document.querySelector('[role=status]').textContent,/เลือกโหมด/);
-  document.querySelector('[data-guide-next]').click();assert.equal(state.stepId,'interference-goals');
-  controller.setLanguage('en');assert.equal(state.stepId,'interference-goals');
-  assert.match(document.querySelector('.guide-objectives').textContent,/source phase/);
-  controller.dispose();controller=mount();assert.equal(state.stepId,'interference-goals');
-  assert.equal(document.querySelector('[data-guide-section]').value,'interference');controller.dispose();
+  assert.equal(document.querySelector('[data-simulation-guide]').dataset.guideState,'reading');
+  assert.equal(document.querySelector('button'),null);
+  assert.equal(document.querySelector('[data-guide-next]'),null);assert.equal(document.querySelector('[data-guide-locate]'),null);
+  for(const section of waveMiniPlayGuide.sections){
+    const article=document.getElementById('guide-reading-'+section.id);assert.ok(article);assert.equal(article.hidden,false);
+    for(const part of section.parts)assert.ok(article.textContent.includes(part.title.th));
+  }
+  for(const link of document.querySelectorAll('a[href^="#"]'))assert.ok(document.getElementById(link.getAttribute('href').slice(1)));
+  controller.setLanguage('en');assert.equal(document.documentElement.lang,'en');
+  assert.match(document.body.textContent,/Mission 2 · Change the opening/);
+  assert.equal(actions,0);assert.equal(state.stepId,'interference-goals');
+  controller.dispose();controller=mount();assert.equal(document.querySelectorAll('.reading-section').length,6);
+  assert.equal(document.querySelector('button'),null);controller.dispose();
 });
 
 test('learning objectives use the same authored goals without resetting the panel or experiment controls',()=>{
   const {document}=parseHTML('<html><body><details id="learning-objectives" open><summary id="learning-objectives-title"></summary><ul id="learning-objectives-list"></ul></details><input id="param-angle" value="57"></body></html>');
   const panel=document.getElementById('learning-objectives');
   renderLearningObjectives(document,'reflection','th');
+  assert.equal(panel.hasAttribute('data-mode'),false,'The objectives card must not join the simulation tab selector');
   assert.equal(document.querySelectorAll('#learning-objectives-list li').length,3);
   const first=document.querySelector('#learning-objectives-list li');
   renderLearningObjectives(document,'reflection','th');assert.equal(document.querySelector('#learning-objectives-list li'),first);

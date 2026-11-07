@@ -4,7 +4,7 @@
 
 Repository: https://github.com/Nixcentury/learning-hub
 Branch ที่ต้องใช้: [main ล่าสุดที่ตรวจ deployment.json แล้ว หรือ branch งานที่ต่อจาก main นั้น]
-subjectId: [physics หรือ chemistry]
+subjectId: [physics / chemistry / lower-science สำหรับวิทยาศาสตร์ ม.ต้น]
 bankKey จริง: [b- ตามด้วย hex ตัวเล็ก 24 ตัว จากหัวข้อเป้าหมาย]
 ชื่อหัวข้อ TH / EN: [...]
 เมนู: public/content/bank/[subjectId]/[bankKey].html

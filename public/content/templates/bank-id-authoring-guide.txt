@@ -52,10 +52,11 @@ HTML ไม่ใช้สร้างสารบัญ 213 หัวข้อ�
 
 2. คัดลอก public/content/templates/bank-tools-menu-template.html ไป:
    public/content/bank/<subjectId>/<bankKey>.html
-   subjectId ที่รองรับคือ physics และ chemistry เท่านั้น
+   subjectId ที่เปิดคลังคือ physics, chemistry และ lower-science
+   วิทยาศาสตร์ ม.ต้นใช้ lower-science และอ่านโจทย์จาก SCI_JHC
 
 3. แก้ nav ให้ตรงหัวข้อ:
-   data-subject-id="physics" หรือ "chemistry"
+   data-subject-id="physics", "chemistry" หรือ "lower-science" ให้ตรงวิชา
    data-chapter-id="bank" คงที่
    data-topic-id="bankKey จริง" ตรงกับชื่อไฟล์
    data-title-th และ data-title-en เป็นชื่อหัวข้อสำหรับลิงก์แชร์

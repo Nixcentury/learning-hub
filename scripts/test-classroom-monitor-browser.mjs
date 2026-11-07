@@ -481,7 +481,11 @@ try {
   }
   const stepA = await assignStep('ทดสอบเงื่อนไข · งาน 1'), stepB = await assignStep('ทดสอบเงื่อนไข · งาน 2', stepA);
   async function inspectStep(client, id) {
-    await client.page.evaluate(hash => { location.hash = hash; }, `#classroom/${roomId}/${id}`);
+    const hash = `#classroom/${roomId}/${id}`;
+    if (await client.page.evaluate(() => location.hash) === hash) {
+      if (!await client.frame.locator('[data-hw-detail-dialog][open]').isVisible())
+        await client.frame.locator(`[data-assignment-id="${id}"] [data-homework-action="view"]`).click();
+    } else await client.page.evaluate(hash => { location.hash = hash; }, hash);
     await client.frame.locator('[data-hw-detail-dialog][open]').waitFor();
     await client.frame.locator(`[data-hw-detail] [data-homework-action="launch"][data-id="${id}"]`).waitFor();
   }
@@ -530,6 +534,7 @@ try {
   await student.page.frameLocator(`#workspace-window-layer [data-tool-id="homework-${roomId}-${stepB}-student"] iframe`).locator('[data-quiz-app]').waitFor();
   await student.page.reload();await student.frame.locator('[data-classroom-assignments]').waitFor();
   console.log('PASS prerequisites: 0% locked → direct launch denied → resubmit at least 20% unlocks → reload stays open → other student locked → next quiz opens');
+  await student.frame.locator('[data-hw-overall-percent]').filter({hasText:/%/}).waitFor();
   const beforeMediaScore=await student.frame.locator('[data-hw-overall-percent]').textContent();
   const mediaId=await assignStep('อ่านบทเรียน · ไม่คิดคะแนน','',{canonicalHash:'#content/qa-homework-review'});
   assert.equal((await good('teacher','GET',`classroomAssignmentsV1/items/${roomId}/${mediaId}`)).activityKind,'html');

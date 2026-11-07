@@ -134,8 +134,11 @@ try {
     await page.setViewportSize({width,height:1100});
     for (const lang of ['th','en']) {
       await win.locator(`[data-window-language="${lang}"]`).click();
-      assert.ok(await sheet.locator('html').evaluate(html => html.scrollWidth <= html.clientWidth + 2), `${width}/${lang}: horizontal overflow`);
       await page.screenshot({path:resolve(output,`sheet-${width}-${lang}.png`)});
+      const layout = await sheet.locator('html').evaluate(html => ({width:html.clientWidth,scroll:html.scrollWidth,
+        overflowing:[...html.querySelectorAll('body *')].filter(node => node.getBoundingClientRect().right > html.clientWidth+2)
+          .slice(0,10).map(node => ({tag:node.tagName,css:node.className,text:node.textContent.slice(0,100)}))}));
+      assert.ok(layout.scroll <= layout.width + 2, `${width}/${lang}: horizontal overflow ${JSON.stringify(layout)}`);
     }
   }
   await page.setViewportSize({width:1360,height:1000});

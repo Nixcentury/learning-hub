@@ -13,6 +13,8 @@
 - Retained the full learning sheet, 185 paired answer slots per language, eight guide steps, and all 24 supplied SVG files. Clarified toughness in TH/EN as energy absorption before fracture, distinct from strength. Fixed the displayed question-number gap (20 → 24) to run continuously through 27; stable slot IDs and all question/answer content are retained. Guide copy, revision and fingerprint match the updated sheet.
 - Review keeps all 70 question IDs, answer keys and ordering (29 drag-fill / 41 choice). Added TH/EN metadata to all solution sections to meet the existing build contract, preserving their localized children and solution text.
 - Translated 28 English reference-label occurrences that contained Thai topic descriptions. Added the verified bank topic ID to the existing quiz-to-sheet link.
+- Connected orange branch/bridge endpoints to the blue chain curves in six SVG models, keeping the original illustrations, labels and question mappings. A contact-sheet review of all 24 figures identified these small geometry gaps.
+- Initial built-browser checks caught narrow-screen English table overflow. Added wrapping for long scientific names inside this sheet's cells; no shared CSS changes.
 - The review link's `../../content/...` URL is relative to the existing Quiz player, per `configureQuizReviewLink`; it is intentionally retained. Diagram URLs remain relative to the quiz source and are rebased by the loader.
 
 ## Checks

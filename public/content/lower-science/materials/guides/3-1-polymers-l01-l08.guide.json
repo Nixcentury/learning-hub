@@ -1,0 +1,742 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "lower-science-polymers-l01-l08-sheet",
+    "revision": "2026-11-08-r07-hub-integration",
+    "sha256": "44ad45b3887122bb0d33f809026f35ead6a9eb9918341d8fe379905e8b7b5a62"
+  },
+  "title": {
+    "th": "3.1 พอลิเมอร์ · ไกด์ใบเรียนรู้ครบ L01–L08",
+    "en": "3.1 Polymers · Full Learning Guide L01–L08"
+  },
+  "prerequisites": {
+    "th": "รู้จักสิ่งของรอบตัวและเคยสังเกตว่าวัสดุแต่ละชนิดมีสมบัติต่างกัน",
+    "en": "Know familiar products and have observed that materials show different properties."
+  },
+  "goal": {
+    "th": "อธิบายสมบัติวัสดุ การเกิดและชนิดของพอลิเมอร์ โครงสร้าง การเปลี่ยนแปลงเมื่อร้อน และการเลือกพลาสติกให้เหมาะกับหน้าที่",
+    "en": "Explain properties, polymer formation and classification, structure, heating behaviour, and choosing plastics for their functions."
+  },
+  "steps": [
+    {
+      "id": "materials",
+      "title": {
+        "th": "เริ่มจากของใช้จริง",
+        "en": "Start with everyday products"
+      },
+      "summary": {
+        "th": "วัสดุคือสิ่งที่ใช้สร้างผลิตภัณฑ์ ผลิตภัณฑ์หนึ่งชิ้นอาจทำจากหลายวัสดุ\nเราพิจารณาสมบัติ เช่น ความแข็ง สภาพยืดหยุ่น และการนำไฟฟ้า\nการเลือกวัสดุต้องดูหน้าที่และหลักฐานจากการทดสอบ ไม่ใช่ดูหน้าตาอย่างเดียว",
+        "en": "Materials are used to make products; one product can contain several materials.\nProperties include hardness, elasticity and electrical conductivity.\nChoose materials according to function and test evidence, not appearance alone."
+      },
+      "story": {
+        "th": "ชี้ภาพขวด ถุง สายไฟ และยางรัดของ แล้วถามว่าส่วนใดคือวัสดุ ส่วนใดคือผลิตภัณฑ์ ใช้รูปสายไฟชวนคิดว่าทำไมสองส่วนต้องมีสมบัติคนละอย่าง",
+        "en": "Point to the bottle, bag, wire and rubber band. Ask which are products and which materials. Use the cable diagram to discuss different functions."
+      },
+      "action": {
+        "th": "เขียนนิยามวัสดุและผลิตภัณฑ์ แล้วเลือกทำคำถาม 2 ก และ 3 ข เพื่อฝึกใช้สมบัติและหลักฐาน",
+        "en": "Write the definitions of material and product. Try Questions 2a and 3b to practise properties and evidence."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "นิยามวัสดุ",
+            "en": "Material definition"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "note-material"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 2 ก · สายไฟ",
+            "en": "Question 2a · Cable"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-2-a"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 3 ข · ทดสอบวงจร",
+            "en": "Question 3b · Circuit test"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-3-b"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เหตุใดหลอดไฟไม่สว่างจึงยังบอกไม่ได้แน่นอนว่าวัสดุเป็นฉนวน?",
+          "en": "Why is an unlit lamp not enough to prove that a material is an insulator?"
+        },
+        "answer": {
+          "th": "ต้องตรวจความสมบูรณ์ของวงจร จุดสัมผัส และความไวของอุปกรณ์ก่อน",
+          "en": "The circuit, contacts and equipment sensitivity must be checked first."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "วิธีตรวจสมบัติของวัสดุ",
+            "en": "How to test properties"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l01-start"
+          }
+        }
+      ],
+      "after": {
+        "th": "ถ้าจำแนกวัสดุและสมบัติได้แล้ว เข้าสู่ L02; คำถามที่เหลือใช้ฝึกเพิ่มได้",
+        "en": "Move to L02 when ready; use the other questions for optional practice."
+      }
+    },
+    {
+      "id": "monomers",
+      "title": {
+        "th": "จากมอนอเมอร์สู่สายโซ่พอลิเมอร์",
+        "en": "From monomers to polymer chains"
+      },
+      "summary": {
+        "th": "มอนอเมอร์เป็นโมเลกุลตั้งต้นที่สามารถทำปฏิกิริยาเกิดพอลิเมอร์\nพอลิเมอไรเซชันทำให้หน่วยย่อยเชื่อมทางเคมีเป็นโมเลกุลสายโซ่ใหญ่\nสายโซ่มีหน่วยซ้ำหลายหน่วย และพอลิเมอร์อาจสร้างจากมอนอเมอร์ชนิดเดียวหรือหลายชนิด",
+        "en": "A monomer is a starting molecule that can react to make a polymer.\nPolymerization chemically links building blocks into large molecules.\nChains contain repeating units and may involve one or more monomer types."
+      },
+      "story": {
+        "th": "ให้เปรียบเทียบภาพหน่วยกลมที่อยู่ใกล้กันกับหน่วยที่เชื่อมกันในภาพ X/Y แล้วถามว่าสิ่งใดทำให้เกิดพอลิเมอร์จริง",
+        "en": "Compare the circles sitting close together with those linked in models X and Y. Ask what actually makes a polymer."
+      },
+      "action": {
+        "th": "เปิดนิยามมอนอเมอร์และพอลิเมอไรเซชัน แล้วทำคำถาม 7 ข และ 9 ก",
+        "en": "Review monomer and polymerization definitions; answer Questions 7b and 9a."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "นิยามมอนอเมอร์",
+            "en": "Monomer definition"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "note-monomer"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 7 ข · การเชื่อมทางเคมี",
+            "en": "Question 7b · Chemical linking"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-7-b"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 9 ก · สามคำสำคัญ",
+            "en": "Question 9a · Three key terms"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-9-a"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "มอนอเมอร์จำนวนมากวางชิดกันแต่ไม่มีพันธะเชื่อม จะเรียกว่าพอลิเมอไรเซชันได้หรือไม่?",
+          "en": "If many monomers are next to each other without chemical linking, is that polymerization?"
+        },
+        "answer": {
+          "th": "ไม่ได้ เพราะยังไม่เกิดปฏิกิริยาเชื่อมต่อทางเคมีเป็นสายโซ่พอลิเมอร์",
+          "en": "No. There has been no reaction linking the units into a polymer chain."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "เปรียบเทียบแบบจำลอง X/Y",
+            "en": "Compare models X and Y"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l02-start"
+          }
+        }
+      ],
+      "after": {
+        "th": "ทำกิจกรรมที่เหลือ แล้วเรียน L03 การจำแนกพอลิเมอร์ด้วยสองเกณฑ์",
+        "en": "Try the remaining activities, then move to L03 to classify polymers using two criteria."
+      }
+    },
+    {
+      "id": "classification",
+      "title": {
+        "th": "L03 · จำแนกพอลิเมอร์ด้วยสองเกณฑ์",
+        "en": "L03 · Classify polymers using two criteria"
+      },
+      "summary": {
+        "th": "การแบ่งตามแหล่งกำเนิดแยกเป็นพอลิเมอร์ธรรมชาติและพอลิเมอร์สังเคราะห์\nการแบ่งตามชนิดของมอนอเมอร์แยกเป็นโฮโมพอลิเมอร์และโคพอลิเมอร์\nพอลิเมอร์หนึ่งชนิดอาจถูกจำแนกภายใต้ทั้งสองเกณฑ์ได้ แต่สองเกณฑ์ไม่ใช่เรื่องเดียวกัน",
+        "en": "By origin, polymers are natural or synthetic.\nBy monomer type, polymers are homopolymers or copolymers.\nA polymer can be classified by both criteria, but the criteria are different."
+      },
+      "story": {
+        "th": "เริ่มด้วยแป้งและ PE แล้วถามว่าแบ่งโดยใช้เกณฑ์ใด ต่อมาใช้ภาพ P/Q ที่มีหน่วย A/B เพื่อให้เด็กแยกเกณฑ์ชนิดมอนอเมอร์",
+        "en": "Begin with starch and PE to classify by origin. Then use models P and Q with A/B units to explore monomer-type classification."
+      },
+      "action": {
+        "th": "เปิดนิยามโฮโมพอลิเมอร์และโคพอลิเมอร์ อ่านภาพ P/Q และทำคำถาม 11(a) และ 12",
+        "en": "Reveal homopolymer and copolymer definitions, study P/Q, and answer Questions 11a and 12."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เริ่มเรื่อง L03",
+            "en": "Start L03"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l03-start"
+          }
+        },
+        {
+          "label": {
+            "th": "นิยามโฮโมพอลิเมอร์",
+            "en": "Homopolymer definition"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "l03-homo-def"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 11 ก",
+            "en": "Question 11a"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-11-a"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 12 · คำกล่าวผิด",
+            "en": "Question 12 · Misconception"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-12"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "พอลิเมอร์สังเคราะห์ทุกชนิดเป็นโคพอลิเมอร์หรือไม่?",
+          "en": "Are all synthetic polymers copolymers?"
+        },
+        "answer": {
+          "th": "ไม่ใช่ เพราะคำว่า “สังเคราะห์” จัดตามแหล่งกำเนิด ส่วน “โคพอลิเมอร์” จัดตามชนิดมอนอเมอร์ เช่น PE สังเคราะห์ได้แต่เป็นโฮโมพอลิเมอร์",
+          "en": "No. Synthetic describes origin, while copolymer describes monomer types. For example, PE is synthetic but a homopolymer."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "กลับมาดูรูป P/Q",
+            "en": "Return to models P/Q"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l03-start"
+          }
+        }
+      ],
+      "after": {
+        "th": "ถ้าแยกสองเกณฑ์ได้แล้ว ให้ต่อ L04 เพื่อเปรียบเทียบโครงสร้างสายโซ่",
+        "en": "When the two criteria are clear, go to L04 to compare chain architectures."
+      }
+    },
+    {
+      "id": "structures",
+      "title": {
+        "th": "L04 · รูปร่างสายโซ่กับสมบัติของพอลิเมอร์",
+        "en": "L04 · Chain architecture and polymer properties"
+      },
+      "summary": {
+        "th": "พอลิเมอร์มีโครงสร้างแบบเส้น แบบกิ่ง และแบบร่างแห\nการแตกกิ่งอาจทำให้สายโซ่ PE เรียงตัวชิดกันยากขึ้น\nภายใต้เงื่อนไขใกล้เคียงกัน HDPE มักแตกกิ่งน้อยกว่าและมีความหนาแน่นสูงกว่า LDPE\nสมบัติจริงยังขึ้นกับชนิดพอลิเมอร์และปัจจัยอื่น ๆ",
+        "en": "Polymers may have linear, branched or cross-linked chain architectures.\nBranching can limit close packing in polyethylene.\nUnder comparable conditions, HDPE generally has less branching and greater density than LDPE.\nActual properties also depend on other factors."
+      },
+      "story": {
+        "th": "ชวนเด็กอธิบายภาพ I–III และเปรียบเทียบ X/Y ก่อนสรุปความสัมพันธ์ของการแตกกิ่งและความหนาแน่น โดยเตือนว่าไม่ใช่กฎตายตัวของทุกพอลิเมอร์",
+        "en": "Use models I–III and X/Y before discussing branching and density. Explain why the pattern is not a universal law for all polymers."
+      },
+      "action": {
+        "th": "เปิดนิยามสามโครงสร้างแล้วทำคำถาม 13(b), 14(a) และ 15(a) โดยชี้หลักฐานจากภาพ",
+        "en": "Review the three architecture definitions, then answer Questions 13b, 14a and 15a using image evidence."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เริ่มภาพโครงสร้าง L04",
+            "en": "Start L04 structures"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l04-start"
+          }
+        },
+        {
+          "label": {
+            "th": "นิยามแบบร่างแห",
+            "en": "Cross-linked definition"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "l04-network-def"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถาม 14 ก · การจัดเรียง",
+            "en": "Question 14a · Packing"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-14-a"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อควรระวังเรื่องสมบัติ",
+            "en": "Property caveat"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l04-caution"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ทำไม HDPE มักมีความหนาแน่นสูงกว่า LDPE?",
+          "en": "Why is HDPE generally denser than LDPE?"
+        },
+        "answer": {
+          "th": "เมื่อเปรียบเทียบ PE ภายใต้เงื่อนไขอื่นใกล้เคียงกัน HDPE มักมีกิ่งน้อยกว่า จึงจัดเรียงสายโซ่ชิดกันได้มากกว่า",
+          "en": "Under comparable conditions HDPE has less chain branching, allowing closer packing of polyethylene chains."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ทบทวนทั้ง L04",
+            "en": "Review L04"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l04-start"
+          }
+        }
+      ],
+      "after": {
+        "th": "ถ้าอธิบายแบบเส้น กิ่ง ร่างแห และ HDPE/LDPE ได้แล้ว ให้ทำใบทบทวน L01–L04 และเตรียมต่อ L05",
+        "en": "Once you can explain the architectures and HDPE/LDPE, complete Review L01–L04 and prepare for L05."
+      }
+    },
+    {
+      "id": "thermal-behaviour",
+      "title": {
+        "th": "L05 · พลาสติกสองประเภทเมื่อได้รับความร้อน",
+        "en": "L05 · Two plastic types under heat"
+      },
+      "summary": {
+        "th": "เทอร์มอพลาสติกอ่อนตัวเมื่อได้รับความร้อนอย่างเหมาะสม และขึ้นรูปใหม่ได้\nเทอร์มอเซตมีโครงข่ายเชื่อมขวาง และไม่หลอมขึ้นรูปซ้ำแบบเดียวกัน\nการขึ้นรูปใหม่กับการรีไซเคิลจริงเป็นคนละเรื่อง ต้องดูระบบจัดการขยะด้วย\nตัวอย่างเรซินเมลามีน เบกาไลต์ และพอลิเมอร์บางสูตรช่วยเปรียบเทียบอย่างไม่เหมารวม",
+        "en": "Thermoplastics soften with suitable heating and can be reshaped.\nCured thermosets are cross-linked networks and do not remelt similarly.\nThe ability to reshape is not the same as practical recycling.\nMelamine resin, Bakelite and selected polymer formulations provide careful thermoset examples."
+      },
+      "story": {
+        "th": "ทบทวน L04 จากแบบจำลอง P และ Q แล้วถามว่าสายโซ่ที่ถูกเชื่อมขวางจะเคลื่อนที่ได้เหมือนโซ่แยกหรือไม่ ก่อนอ่านกรณีเมลามีน",
+        "en": "Return to models P and Q. Ask whether cross-linked chains can move like separate chains, then discuss melamine resin."
+      },
+      "action": {
+        "th": "เขียนนิยามเทอร์มอพลาสติกและเทอร์มอเซต เติมตาราง แล้วตอบคำถาม 16(b) และ 17(b)",
+        "en": "Write both definitions, fill the comparison table, and answer Questions 16b and 17b."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "นิยามเทอร์มอพลาสติก",
+            "en": "Thermoplastic definition"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "l05-thermoplastic-def"
+          }
+        },
+        {
+          "label": {
+            "th": "นิยามเทอร์มอเซต",
+            "en": "Thermoset definition"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "l05-thermoset-def"
+          }
+        },
+        {
+          "label": {
+            "th": "เหตุผลเรื่องจุดเชื่อมขวาง",
+            "en": "Question 16b · Cross-links"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-16-b"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เหตุใดพลาสติกเทอร์มอเซตจึงไม่หลอมขึ้นรูปซ้ำแบบเทอร์มอพลาสติก?",
+          "en": "Why does a cured thermoset not remelt and reshape like a thermoplastic?"
+        },
+        "answer": {
+          "th": "พันธะเชื่อมขวางเชื่อมสายโซ่เป็นโครงข่ายและขัดขวางการไหลเมื่อร้อน",
+          "en": "Cross-links form a network that prevents polymer chains from flowing as thermoplastic chains can."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "อ่าน L05 ตั้งแต่ต้น",
+            "en": "Review L05"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l05-start"
+          }
+        },
+        {
+          "label": {
+            "th": "แยกขึ้นรูปใหม่จากรีไซเคิล",
+            "en": "Question 17b · Recycling"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-17-b"
+          }
+        }
+      ],
+      "after": {
+        "th": "เมื่ออธิบายพฤติกรรมเมื่อร้อนได้ จึงเข้า L06 เพื่อเลือกพลาสติกจากสมบัติ",
+        "en": "Once heating behaviour is clear, continue to L06 to select plastics by properties."
+      }
+    },
+    {
+      "id": "plastic-selection",
+      "title": {
+        "th": "L06 · เลือกพลาสติกจากสมบัติและหน้าที่",
+        "en": "L06 · Choose plastics by properties and function"
+      },
+      "summary": {
+        "th": "พลาสติกสำคัญมี PE, PP, PVC, PS, PTFE, PET และเรซินเมลามีน\nแต่ละชนิดมีสมบัติและการใช้ประโยชน์เด่นต่างกัน เช่น ท่อ ฉนวน และสารเคลือบไม่ติด\nการเลือกผลิตภัณฑ์จริงต้องตรวจสูตร สารเติมแต่ง ความปลอดภัย และเงื่อนไขใช้งาน\nตารางเสริมรวบรวมมอนอเมอร์และผลิตภัณฑ์ของ PE, PP, PVC, PS, PTFE, PET และเมลามีน",
+        "en": "Important polymers include PE, PP, PVC, PS, PTFE, PET and melamine resin.\nThey have different useful properties for bottles, pipes, cable sheaths and coatings.\nReal products depend on formulations, additives, safety and operating conditions.\nAn extra table covers starting molecules and products for PE, PP, PVC, PS, PTFE, PET and melamine resin."
+      },
+      "story": {
+        "th": "เริ่มจากภาพขวด ลัง ท่อ และกระทะเคลือบ ถามว่างานแต่ละชนิดต้องการสมบัติใด แล้วให้ดูตารางชนิดและการใช้",
+        "en": "Show a bottle, crate, pipe and non-stick coating. Ask which material property each requires; then study the comparison table."
+      },
+      "action": {
+        "th": "เขียนศัพท์ durable, impermeable และ electrical insulator แล้วเติมข้อมูลในตารางพลาสติก สำรวจคำถาม 18(a) และ 19(a)",
+        "en": "Write the definitions of durable, impermeable and electrical insulator. Fill the plastics table and try Questions 18a and 19a."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "นิยาม Durable",
+            "en": "Durable definition"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "l06-durable"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อมูล PVC",
+            "en": "PVC properties"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "l06-material-pvc"
+          }
+        },
+        {
+          "label": {
+            "th": "เลือกสารเคลือบกระทะ",
+            "en": "Question 19a · Coating"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-19-a"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เมื่อเลือกใช้พลาสติก นอกจากชนิดพอลิเมอร์ต้องตรวจอะไรอีก?",
+          "en": "What else must be checked when selecting a plastic besides polymer type?"
+        },
+        "answer": {
+          "th": "สมบัติที่ต้องใช้ สารเติมแต่ง รูปทรง อุณหภูมิ ข้อกำหนดการสัมผัสอาหาร และความปลอดภัย",
+          "en": "Required properties, additives, shape, temperature, food-contact conditions and safety."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "อ่าน L06 ตั้งแต่ต้น",
+            "en": "Review L06"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l06-start"
+          }
+        },
+        {
+          "label": {
+            "th": "แก้ความเข้าใจผิด",
+            "en": "Question 20a · Avoid generalisation"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-20-a"
+          }
+        }
+      ],
+      "after": {
+        "th": "ต่อไป L07 ศึกษายางและเส้นใยที่นอกเหนือจากพลาสติก",
+        "en": "Continue to L07 for rubber and fibres beyond plastics."
+      }
+    },
+    {
+      "id": "rubber-and-fibres",
+      "title": {
+        "th": "L07 · ยางและเส้นใย",
+        "en": "L07 · Rubber and fibres"
+      },
+      "summary": {
+        "th": "ยางธรรมชาติและยางสังเคราะห์มีสมบัติที่ต้องพิจารณาตามการใช้งาน\nความยืดหยุ่นคือการคืนรูปเมื่อคลายแรงภายในขีดจำกัด\nเส้นใยจำแนกตามแหล่งกำเนิดเป็นธรรมชาติ เซลลูโลสแปรรูป และสังเคราะห์\nตัวอย่างไนลอน เรยอน และฝ้ายแสดงให้เห็นว่าหน้าที่คล้ายกันแต่ชนิดวัสดุต่างกัน; มี BR, SBR, นีโอพรีน และตัวอย่างเส้นใยจากพืช สัตว์ เซลลูโลสแปรรูป และเส้นใยสังเคราะห์",
+        "en": "Natural and synthetic rubbers are selected for appropriate properties.\nElasticity is the recovery of shape after unloading within limits.\nFibres include natural, regenerated cellulosic and synthetic groups.\nNylon, rayon and cotton show that similar uses do not imply identical materials.; includes BR, SBR, neoprene and examples of plant, animal, processed-cellulose and synthetic fibres."
+      },
+      "story": {
+        "th": "เริ่มจากภาพยางรัดกับเชือกแล้วถามว่าวัสดุแบบใดต้องคืนรูป จากนั้นเปรียบเทียบที่มาของฝ้าย เรยอน และไนลอน",
+        "en": "Compare a rubber band and rope, then discuss why cotton, rayon and nylon belong to different groups."
+      },
+      "action": {
+        "th": "อ่านตารางยาง เปิดนิยามความยืดหยุ่น และตอบข้อ 21(b), 22(a) โดยใช้ภาพสามกลุ่มเส้นใย",
+        "en": "Read the rubber table, reveal elasticity, then answer Questions 24b and 25a using the fibre grouping figure."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เริ่ม L07",
+            "en": "Start L07"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l07-start"
+          }
+        },
+        {
+          "label": {
+            "th": "ความหมาย Elasticity",
+            "en": "Definition: elasticity"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "l07-elasticity-def"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 21(b)",
+            "en": "Question 24b"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-24-b"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 22(a)",
+            "en": "Question 25a"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-25-a"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ทำไมไนลอนและเรยอนใช้ทำผ้าได้เหมือนกัน แต่จัดอยู่คนละกลุ่มเส้นใย?",
+          "en": "Why are nylon and rayon in different fibre groups although both can make cloth?"
+        },
+        "answer": {
+          "th": "ไนลอนเป็นเส้นใยสังเคราะห์ ส่วนเรยอนได้จากเซลลูโลสธรรมชาติผ่านการแปรรูป จึงอยู่คนละกลุ่มตามแหล่งกำเนิดและกระบวนการผลิต",
+          "en": "Nylon is synthetic; rayon is regenerated from natural cellulose. The classification concerns origin and processing."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ข้อควรระวังเรื่องยาง",
+            "en": "Rubber caution"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l07-rubber-caution"
+          }
+        },
+        {
+          "label": {
+            "th": "เซลลูโลสแปรรูป",
+            "en": "Regenerated cellulosic"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "l07-fibre-group-regenerated"
+          }
+        }
+      ],
+      "after": {
+        "th": "เมื่อแยกพลาสติก ยาง และเส้นใยได้แล้ว ไป L08 เพื่อพิจารณาผลกระทบหลังใช้งาน",
+        "en": "After distinguishing plastics, rubber and fibres, move to L08 to examine impacts after use."
+      }
+    },
+    {
+      "id": "environment",
+      "title": {
+        "th": "L08 · ผลกระทบและการใช้พอลิเมอร์อย่างรับผิดชอบ",
+        "en": "L08 · Environmental impacts and responsible use"
+      },
+      "summary": {
+        "th": "ขยะพลาสติกอาจอุดตันท่อ ทำให้เกิดน้ำขังหรือมลพิษจากการเผา\nReduce ลดใช้ Reuse ใช้ซ้ำ และ Recycle ผ่านกระบวนการผลิตใหม่\nการแตกเป็นชิ้นเล็กไม่เท่ากับย่อยสลายทางชีวภาพ\nการย่อยสลายได้ต้องมีสภาวะเหมาะสม ไม่ได้แปลว่าทิ้งที่ใดก็หายไปทันที",
+        "en": "Poorly managed plastics can block drains, hold stagnant water and release harmful pollution when burned.\nReduce, Reuse and Recycle are different actions.\nFragmentation is not the same as biodegradation.\nBiodegradation depends on suitable conditions, not littering anywhere."
+      },
+      "story": {
+        "th": "เริ่มจากสถานการณ์ขยะในท่อและขวดที่มีน้ำขัง ต่อด้วยการตัดสินใจแบบ 3R และเปรียบเทียบการแตกกับการย่อยสลาย",
+        "en": "Start with drain blockage and stagnant-water containers, then choose 3R actions and distinguish fragmentation from biodegradation."
+      },
+      "action": {
+        "th": "เขียนนิยาม 3R และ biodegradable ตอบข้อ 25(b), 26(a) และ 27 แล้วกลับไปแก้คำตอบที่ยังไม่มั่นใจ",
+        "en": "Write definitions of the 3Rs and biodegradable; answer Questions 28b, 29a and 27, then review uncertainties."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เริ่ม L08",
+            "en": "Start L08"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l08-start"
+          }
+        },
+        {
+          "label": {
+            "th": "นิยาม Recycle",
+            "en": "Recycle definition"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "l08-recycle-def"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อควรระวังการย่อยสลาย",
+            "en": "Biodegradation caution"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l08-biodegradation-note"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 26(a)",
+            "en": "Question 29a"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-29-a"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 27",
+            "en": "Question 27"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-30"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ขวดพลาสติกแตกเป็นชิ้นเล็กในทะเล ข้อมูลนี้ยืนยันว่าพลาสติกย่อยสลายทางชีวภาพหมดแล้วหรือไม่?",
+          "en": "A bottle fragments in the sea. Does this prove complete biodegradation?"
+        },
+        "answer": {
+          "th": "ไม่ยืนยัน เพราะชิ้นพลาสติกอาจยังคงอยู่ การย่อยสลายทางชีวภาพเป็นกระบวนการต่างจากการแตกเป็นชิ้นเล็ก",
+          "en": "No. Plastic fragments may remain; biodegradation is not the same process as physical fragmentation."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "สรุปแกนคิดทั้งบท",
+            "en": "Whole-topic concept link"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "l08-final-link"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 25(b) รีไซเคิลจริง",
+            "en": "Question 28b · Practical recycling"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "q-28-b"
+          }
+        }
+      ],
+      "after": {
+        "th": "ทำใบทบทวนครบ L01–L08 และกลับไปอ่านภาพหรือคำศัพท์ที่ยังตอบไม่ได้",
+        "en": "Complete Review L01–L08 and return to any concepts or vocabulary you cannot yet explain."
+      }
+    }
+  ],
+  "finish": {
+    "th": "อธิบายมอนอเมอร์และพอลิเมอร์ แยกประเภทและโครงสร้าง เปรียบเทียบสมบัติของพลาสติก ยาง เส้นใย เลือกใช้วัสดุจากหลักฐาน และอธิบายแนวทางลดผลกระทบสิ่งแวดล้อมได้",
+    "en": "Explain polymer building blocks, types and structures; compare plastics, rubber and fibres; select materials using evidence; and suggest ways to reduce environmental impacts."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "ทำไมวัสดุพอลิเมอร์หลายชนิดจึงเหมาะกับหน้าที่ต่างกัน และเมื่อใช้แล้วต้องพิจารณาอะไรต่อ?",
+      "en": "Why are different polymers suitable for different tasks, and what must we consider after use?"
+    },
+    "answer": {
+      "th": "เพราะองค์ประกอบ โครงสร้าง และสูตรผลิตทำให้สมบัติแตกต่างกัน จึงเลือกตามหน้าที่และต้องคำนึงถึงการใช้ซ้ำ การคัดแยก การรีไซเคิลและผลกระทบต่อสิ่งแวดล้อม",
+      "en": "Composition, structure and formulation influence properties; select materials by function and consider reuse, collection, recycling and impacts afterwards."
+    }
+  }
+}

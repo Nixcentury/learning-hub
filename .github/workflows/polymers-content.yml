@@ -1,0 +1,39 @@
+name: Polymers content integration
+on:
+  pull_request:
+    paths:
+      - 'public/content/lower-science/materials/**'
+      - 'public/content/bank/lower-science/b-2d4d862f9bcb87a3a2d60f0d.html'
+      - 'scripts/test-polymers-browser.mjs'
+      - '.github/workflows/polymers-content.yml'
+permissions:
+  contents: read
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Install isolated browser tools
+        run: |
+          npm install --prefix work/qa-tools --no-save --package-lock=false playwright@1.62.1
+          node work/qa-tools/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Check real polymer sheet, guide, quiz and PDF exports
+        env:
+          QA_BUILT: '1'
+        run: PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/work/qa-tools/node_modules/playwright" node scripts/test-polymers-browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: polymers-integration-evidence
+          path: qa-output/polymers/
+          if-no-files-found: ignore

@@ -17,3 +17,10 @@ button:focus-visible,h2:focus-visible { outline:3px solid #057a69; outline-offse
 .guide-controls { display:flex; gap:8px; flex-wrap:wrap; margin:20px 0 8px; }
 [data-guide-return],[data-guide-example-exit] { display:block; }
 [data-guide-example-exit] { font-size:14px; }
+select { display:block; width:100%; min-height:44px; padding:8px 10px; border:1px solid #9fbfb6; border-radius:8px; background:#fff; color:#154e42; font:inherit; }
+select:focus-visible,summary:focus-visible { outline:3px solid #057a69; outline-offset:3px; }
+.guide-section-label { display:block; font-size:14px; font-weight:bold; margin:12px 0 6px; }
+.guide-objectives { padding:0 12px; border:1px solid #b9d4c9; border-radius:10px; background:#edf6f2; }
+.guide-objectives summary { min-height:44px; padding:10px 0; font-size:14px; font-weight:bold; cursor:pointer; }
+.guide-objectives ul { padding-left:20px; margin:0 0 12px; }
+.guide-objectives li { font-size:14px; line-height:1.7; margin:6px 0; }

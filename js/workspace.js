@@ -21,8 +21,8 @@ import { toolCatalog } from "./legacy-tool-catalog.js";
 import { applyContentLanguage } from "./content-language.js";
 import { attachLearningSheet } from "./learning-sheet.js";
 import { createLearningGuide } from "./learning-guide.js";
-import { createSimulationGuideTool, simulationGuideFor } from './simulation-guide-model.js';
-import { mountSimulationGuide, createSimulationGuideHighlighter } from './simulation-guide.js';
+import { createSimulationGuideTool, simulationGuideFor } from "./simulation-guide-model.js";
+import { mountSimulationGuide, createSimulationGuideHighlighter } from "./simulation-guide.js";
 
 // Only live Quiz windows created by this workspace may use its storage bridge.
 const quizStorageFrames = new Set();

@@ -21,10 +21,28 @@
 
 - `pnpm validate:content`: passes, including learning guides; existing draft warnings retained.
 - `pnpm build`: passes.
-- Related sheet/guide/drag/review-link/print unit tests: see PR validation record.
+- Related sheet/guide/drag/review-link/print unit tests: 39 passed, 0 failed; recorded in [PR #152](https://github.com/Nixcentury/learning-hub/pull/152).
 - `.github/workflows/polymers-content.yml` runs `scripts/test-polymers-browser.mjs` against the production artifact. It exercises the real Hub and authored content with Firebase stubs, local synthetic Guest progress, and no external account writes.
 - Browser checks cover TH/EN slots/reveal/hide, every guide semantic link, all images, four actual sheet PDF exports (TH/EN × blank/answers), 390/820 px layouts, all 70 quiz questions through controls, all 29 drag confirmations, reload/resume, English prompts, and paired sheet opening. Evidence is uploaded as `polymers-integration-evidence`.
 - A workflow/script being present is not a pass: actual completed results and any fixes are recorded in the PR before handoff.
+
+## Publication retry — 8 November 2026
+
+[PR #152](https://github.com/Nixcentury/learning-hub/pull/152) merged the complete content into `main` at `47acf0e48f2c6ce4977df520b3e20baea660aea8`. The [built-browser integration run](https://github.com/Nixcentury/learning-hub/actions/runs/42399952343) passed. The [Pages publication run](https://github.com/Nixcentury/learning-hub/actions/runs/42400395785) passed its build and unit checks, then its first deploy attempt remained at `syncing_files` until the ten-minute timeout. A deploy-only retry was requested; at the time this follow-up was prepared, the public catalog still lacked the Polymers routes and the two content URLs returned HTTP 404.
+
+This documentation follow-up creates a fresh `main` commit when merged, triggering the existing `Learning Hub Pages` push workflow with the complete merged content. Publication success must be checked separately from the passing content tests.
+
+After that deployment, verify:
+
+1. The public `route-catalog.v1.json` contains ready entries for `lower-science-polymers-l01-l08-sheet` and `lower-science-polymers-l01-l08-review`.
+2. Both files under `content/lower-science/materials/` return HTTP 200.
+3. A freshly loaded Hub shows the learning-sheet and review-quiz cards under Lower Secondary Science → Materials → Polymers, and both cards open their activity.
+
+Intended published entry points, to verify after deployment:
+
+- [Polymers tools menu](https://nixcentury.github.io/learning-hub/#lower-science/bank/polymers)
+- [Learning sheet](https://nixcentury.github.io/learning-hub/#content/lower-science-polymers-l01-l08-sheet)
+- [Review quiz](https://nixcentury.github.io/learning-hub/#content/lower-science-polymers-l01-l08-review)
 
 ## Content review during integration
 

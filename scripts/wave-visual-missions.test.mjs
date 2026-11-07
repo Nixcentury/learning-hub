@@ -17,7 +17,26 @@ test('optical profile matches existing slit intensity including finite aperture 
 });
 test('scalar refraction has continuous tangential phase; reflection has symmetric geometry',()=>{
  for(const n2 of [1,1.33,1.5])for(const angle of [0,30,60]){const p={angle,n1:1,n2,wavelength:600};for(const x of [30,250,600]){const a=M.scalar('refraction',p,x,245-1e-6),b=M.scalar('refraction',p,x,245);close(a.re,b.re,1e-6);close(a.im,b.im,1e-6);}}
- assert.equal(M.scalar('reflection',{angle:30},400,300),null);close(M.scalar('reflection',{angle:30},450,200).re,M.scalar('reflection',{angle:30},350,200).re);
+ const g=M.reflectionGeometry({angle:30});assert.equal(M.scalar('reflection',{angle:30},400,g.wallY+1),null);close(M.scalar('reflection',{angle:30},450,200).re,M.scalar('reflection',{angle:30},350,200).re);
+});
+test('water reflection preserves wave speed, wavelength and wall phase with zero normal slope',()=>{
+ for(const angle of [0,20,35,60,75]){
+  const p={angle},g=M.reflectionGeometry(p);close(Math.hypot(g.kx,g.ky),2*Math.PI/g.spacing);close(g.incident.x,g.reflected.x);close(g.incident.y,-g.reflected.y);
+  close(Math.atan2(g.incident.x,g.incident.y),M.rad(angle));close(Math.atan2(g.reflected.x,-g.reflected.y),M.rad(angle));
+  for(const x of [20,237,400,697,780]){const q=M.reflection(p,x,g.wallY);close(q.re,Math.cos(g.kx*(x-g.originX)));close(q.im,Math.sin(g.kx*(x-g.originX)));close(q.dyRe,0);close(q.dyIm,0);}
+ }
+});
+test('water surface lighting slopes match displacement and normal incidence has stationary nodes',()=>{
+ for(const angle of [0,35,75])for(const [x,y] of [[70,30],[399,197],[680,330]]){
+  const p={angle},g=M.reflectionGeometry(p),q=M.reflection(p,x,y),epsilon=1e-3;
+  for(const axis of ['x','y']){const lo=M.reflection(p,x-(axis==='x'?epsilon:0),y-(axis==='y'?epsilon:0)),hi=M.reflection(p,x+(axis==='x'?epsilon:0),y+(axis==='y'?epsilon:0));for(const part of ['Re','Im'])close(q['d'+axis+part],(hi[part.toLowerCase()]-lo[part.toLowerCase()])/(2*epsilon),1e-8);}
+  for(const t of [0,.13,.25,.5,.91])close(q.re*Math.cos(2*Math.PI*t)+q.im*Math.sin(2*Math.PI*t),Math.cos(g.kx*(x-g.originX)-2*Math.PI*t)*Math.cos(g.ky*(y-g.wallY)));
+ }
+ const g=M.reflectionGeometry({angle:0});for(const n of [0,1,2,3]){const q=M.reflection({angle:0},123,g.wallY-(n+.5)*g.spacing/2);close(q.re,0);close(q.im,0);}
+});
+test('reflection starts and resets missions with the water surface and optional front guides',()=>{
+ for(const index of [0,1]){const v=Q.setup('reflection',index).visual;assert.equal(v.field,true);assert.equal(v.fronts,false);assert.equal(v.variables,true);assert.ok(M.visualValid(v));}
+ for(const mode of ['refraction','interference','diffraction'])assert.equal(Q.setup(mode,0).visual.fronts,true);
 });
 test('all eight guided missions grade full correct responses and reject blank/wrong responses',()=>{
  for(const mode of Object.keys(M.defaults))for(const i of [0,1]){const s=state(mode);s.mission.index=i;Object.assign(s,Q.setup(mode,i));Q.observe(mode,s,true);Object.assign(s.params,Q.comparison(mode,i,'a'));Q.observe(mode,s);Object.assign(s.params,Q.comparison(mode,i,'b'));Q.observe(mode,s);if(mode==='interference'&&i===1)s.params.probe='side';assert.ok(Q.requirements(mode,s).every(([ok])=>ok));assert.ok(Q.grade(mode,s).every(ok=>!ok));Q.questions(mode,s).forEach((q,j)=>s.mission.answers[i]['q'+j]=String(q.answer));assert.ok(Q.grade(mode,s).every(Boolean));s.mission.answers[i].q0='wrong';assert.equal(Q.grade(mode,s)[0],false);assert.ok(Q.valid(s.mission));}

@@ -7,6 +7,7 @@ export function mountSimulationGuide({ document: doc, contentId, title, state, g
   const root = doc.querySelector('[data-simulation-guide]');
   if (!root) return null;
   let lang = language === 'en' ? 'en' : 'th';
+  let objectivesOpen = false;
   const text = (th, en) => lang === 'th' ? th : en;
   const valid = guide?.contentId === contentId && !validateSimulationGuide(guide).length;
   const currentGuide = () => state.example ? simulationGuideExample(contentId) : valid ? guide : null;
@@ -42,7 +43,32 @@ export function mountSimulationGuide({ document: doc, contentId, title, state, g
       add(root, 'p', state.example ? text('ตัวอย่างระบบ · ยังไม่ใช่คู่มือการทดลอง', 'Control example · not an experiment walkthrough') : data.title[lang], 'guide-notice');
       const index = Math.max(0, data.steps.findIndex(step => step.id === state.stepId)), step = data.steps[index];
       state.stepId = step.id;
-      add(root, 'p', text(`ขั้น ${index + 1} จาก ${data.steps.length}`, `Step ${index + 1} of ${data.steps.length}`), 'guide-progress');
+      const section = data.sections?.find(item => item.id === step.sectionId);
+      if (section) {
+        const label = add(root, 'label', text('เลือกส่วนของคู่มือ', 'Choose a guide section'), 'guide-section-label');
+        label.htmlFor = 'guide-section';
+        const select = doc.createElement('select'); select.id = 'guide-section'; select.dataset.guideSection = '';
+        let selectedOption;
+        for (const item of data.sections) {
+          const option = doc.createElement('option'); option.value = item.id; option.textContent = item.title[lang];
+          select.append(option); if (item.id === section.id) selectedOption = option;
+        }
+        if (selectedOption) selectedOption.selected = true;
+        select.addEventListener('change', () => {
+          const first = data.steps.find(item => item.sectionId === select.value);
+          if (first) { state.stepId = first.id; render(); root.querySelector('h2')?.focus({ preventScroll: true }); }
+        });
+        root.append(select);
+        add(root, 'p', text('เลือกส่วนที่นี่ แล้วแตะเลือกโหมดใน simulation ตามขั้นแรก', 'Choose a section here, then select its simulation tab as described in the first step.'), 'guide-note');
+        const goals = doc.createElement('details'); goals.className = 'guide-objectives'; goals.open = objectivesOpen;
+        add(goals, 'summary', text('จุดประสงค์การเรียนรู้ของส่วนนี้', 'Learning objectives for this section'));
+        const list = add(goals, 'ul', ''); for (const goal of section.objectives) add(list, 'li', goal[lang]);
+        goals.addEventListener('toggle', () => { objectivesOpen = goals.open; }); root.append(goals);
+      }
+      const partSteps = section ? data.steps.filter(item => item.sectionId === section.id) : data.steps;
+      const partIndex = partSteps.findIndex(item => item.id === step.id);
+      add(root, 'p', section ? text(`ขั้น ${partIndex + 1} จาก ${partSteps.length} ในส่วนนี้ · รวม ${index + 1}/${data.steps.length}`, `Step ${partIndex + 1} of ${partSteps.length} in this section · overall ${index + 1}/${data.steps.length}`)
+        : text(`ขั้น ${index + 1} จาก ${data.steps.length}`, `Step ${index + 1} of ${data.steps.length}`), 'guide-progress');
       const heading = add(root, 'h2', step.title[lang]); heading.tabIndex = -1;
       add(root, 'p', step.instruction[lang], 'guide-instruction');
       if (index === data.steps.length - 1) add(root, 'p', text('นี่คือขั้นสุดท้ายของคู่มือ สถานะนี้ไม่ได้หมายถึงผ่านการทดลองหรือคำถาม', 'This is the last guide step. It does not mean the experiment or its questions have been passed.'), 'guide-note');

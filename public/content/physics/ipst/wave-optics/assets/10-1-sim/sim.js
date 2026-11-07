@@ -127,7 +127,7 @@
     $('readouts').replaceChildren();for(const [title,value] of values){const group=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=title;dd.textContent=value;group.append(dt,dd);$('readouts').append(group);}
     for(const key of modes){$('study-'+key).hidden=key!==mode;for(const kind of ['formula','problem','solution'])$(kind+'-'+key).open=work[key][kind];}
     const q=problem();$('formula-body-'+mode).innerHTML=formula();$('problem-body-'+mode).textContent=q.question;$('solution-body-'+mode).innerHTML=q.answer;
-    document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode===mode;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});globalThis.MiniWaveGuidance?.render();dirty=true;
+    document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode===mode;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});globalThis.MiniWaveGuidance?.render();globalThis.MiniWaveObjectives?.render(mode,lang);dirty=true;
   }
   function changeMode(next){if(!modes.includes(next))return;mode=next;controls();V.invalidate();update();publish();}
   document.querySelectorAll('[data-mode]').forEach(button=>{

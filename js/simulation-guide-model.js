@@ -1,6 +1,7 @@
-// The shell is shared; lesson walkthroughs will be authored in a later round.
-// Register each walkthrough by its real simulation content ID and source.
-export const simulationGuideCatalog = Object.freeze({});
+import { waveMiniPlayGuide } from "../public/content/physics/ipst/wave-optics/assets/10-1-sim/guide-data.js";
+
+// Bind authored instructions to the real simulation identity and exact source.
+export const simulationGuideCatalog = Object.freeze({ [waveMiniPlayGuide.contentId]: waveMiniPlayGuide });
 const idPattern = /^[a-zA-Z][a-zA-Z0-9_-]{0,127}$/;
 const windowTargets = new Set(['guide', 'language', 'split']);
 
@@ -11,11 +12,22 @@ export function validateSimulationGuide(guide) {
   if (!guide || guide.schemaVersion !== 1 || !idPattern.test(guide.contentId || '')) errors.push('Invalid guide identity');
   if (!text(guide?.title)) errors.push('Bilingual title required');
   if (!Array.isArray(guide?.steps) || !guide.steps.length || guide.steps.length > 80) return [...errors, 'Expected 1–80 steps'];
+  const sections = new Set();
+  if (guide.sections !== undefined) {
+    if (!Array.isArray(guide.sections) || !guide.sections.length || guide.sections.length > 16) errors.push('Expected 1–16 sections');
+    else for (const section of guide.sections) {
+      if (!idPattern.test(section?.id || '') || sections.has(section.id)) errors.push('Unique section IDs required');
+      sections.add(section?.id);
+      if (!text(section?.title) || !Array.isArray(section?.objectives) || !section.objectives.length ||
+        section.objectives.length > 8 || !section.objectives.every(text)) errors.push('Bilingual section objectives required');
+    }
+  }
   const ids = new Set();
   for (const step of guide.steps) {
     if (!idPattern.test(step?.id || '') || ids.has(step.id)) errors.push('Unique step IDs required');
     ids.add(step?.id);
     if (!text(step?.title) || !text(step?.instruction)) errors.push('Bilingual step text required');
+    if (sections.size ? !sections.has(step?.sectionId) : step?.sectionId !== undefined) errors.push('Step section must exist');
     if (step?.blocked !== undefined && !text(step.blocked)) errors.push('Bilingual blocked text required');
     const target = step?.target;
     if (target && !(target.scope === 'simulation' && idPattern.test(target.key || '') ||
@@ -23,6 +35,7 @@ export function validateSimulationGuide(guide) {
     // This is a click walkthrough, not a second answer/grade system.
     if (step && ['answer', 'solution', 'correct', 'action', 'script'].some(key => Object.hasOwn(step, key))) errors.push('Instructions only');
   }
+  for (const id of sections) if (!guide.steps.some(step => step?.sectionId === id)) errors.push('Every section needs steps');
   return errors;
 }
 

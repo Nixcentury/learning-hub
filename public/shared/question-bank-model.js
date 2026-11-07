@@ -1,6 +1,7 @@
 export const bankSubjects = Object.freeze({
   physics: { tab: 'PHYSIC', th: 'ฟิสิกส์', en: 'Physics' },
   chemistry: { tab: 'CHEMISTRY', th: 'เคมี', en: 'Chemistry' },
+  'lower-science': { tab: 'SCI_JHC', th: 'วิทยาศาสตร์ ม.ต้น', en: 'Lower Secondary Science' },
 });
 export const bankKeyPattern = /^b-[a-f0-9]{24}$/;
 export const bankRevisionPattern = /^[a-f0-9]{64}$/;

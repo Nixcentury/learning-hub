@@ -40,7 +40,7 @@ test('activity navigation restores its bank menu without allowing automatic filt
 
 test('review libraries and topic deep links share the owned Hub player and retain their bank menu', () => {
   const key = 'b-' + 'a'.repeat(24);
-  for (const subjectId of ['physics', 'chemistry']) for (const bankKey of [null, key]) {
+  for (const subjectId of ['physics', 'chemistry', 'lower-science']) for (const bankKey of [null, key]) {
     const hash = `#${subjectId}/review${bankKey ? '/' + bankKey : ''}`;
     const { route, notice } = resolveNavigation(catalog, hash);
     assert.equal(notice, ''); assert.equal(route.kind, 'topic-review');
@@ -72,9 +72,9 @@ test('phase 2 resolves aliases and preparing topics without rewriting their stab
   assert.deepEqual(resolveNavigation(catalog, '#physics/1'), { route: chapter, notice: '' });
   assert.deepEqual(resolveNavigation(catalog, '#physics/1/measurement'), { route: topic, notice: '' });
 });
-test('Physics and Chemistry enter their library while existing chapter links keep their IDs', async () => {
+test('Bank subjects enter their library while existing chapter links keep their IDs', async () => {
   const value = await catalogFromRepository();
-  for (const subjectId of ['physics', 'chemistry']) {
+  for (const subjectId of ['physics', 'chemistry', 'lower-science']) {
     assert.equal(resolveNavigation(value, `#${subjectId}`).route.hash, `#${subjectId}/bank`);
     assert.equal(routeForSelection(value, { subjectId }).hash, `#${subjectId}/bank`);
     const chapter = value.routes.find(route => route.kind === 'chapter' && route.subjectId === subjectId);

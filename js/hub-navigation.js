@@ -1,12 +1,13 @@
 import { parseHubRoute, resolveHubRoute, createHubShareUrl, routeCatalogFile, routeCatalogVersion } from './hub-routes.js';
 import { isMenuRoute as navigable, isActivityRoute, activityForRoute, menuForRoute, routeForTool } from './hub-activity-routes.js';
 import { classroomAssignmentRoute } from './classroom-assignment-routes.js';
+import { bankSubjects } from '../public/shared/question-bank-model.js';
 
 export function resolveNavigation(catalog, hash) {
   const result = resolveHubRoute(catalog, hash);
   // Subject tabs have one public syllabus. Keep old chapter/content routes
   // available for existing links without exposing the former outer syllabus.
-  if (result.route?.kind === 'section' && ['physics', 'chemistry'].includes(result.route.sectionId)) {
+  if (result.route?.kind === 'section' && Object.hasOwn(bankSubjects, result.route.sectionId)) {
     return { route: resolveHubRoute(catalog, `#${result.route.sectionId}/bank`).route, notice: '' };
   }
   if (navigable(result.route) || isActivityRoute(result.route)) return { route: result.route, notice: '' };
@@ -122,7 +123,7 @@ export function createHubNavigation({ pageFrame, navButtons, showSection, notice
       if (request !== revision) return;
       const sectionId = parseHubRoute(hash)?.segments[0];
       route = { kind: 'section', sectionId: sections.has(sectionId) ? sectionId : 'overview', subjectId: null };
-      if (['physics', 'chemistry'].includes(route.sectionId)) route.subjectId = route.sectionId;
+      if (Object.hasOwn(bankSubjects, route.sectionId)) route.subjectId = route.sectionId;
       route.hash = '#' + route.sectionId;
       code = 'catalog-unavailable';
     }

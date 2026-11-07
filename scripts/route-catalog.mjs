@@ -258,7 +258,7 @@ export async function buildRouteCatalog({ read, legacyCatalog = toolCatalog, ban
   // Optional, filesystem-discovered tool menus augment the live Sheet hierarchy.
   // They never enumerate/publish sets or modify their question/snapshot identity.
   for (const file of [...new Set(bankMenus)].sort(compare)) {
-    const match = /^content\/bank\/(physics|chemistry)\/(b-[a-f0-9]{24})\.html$/.exec(file);
+    const match = /^content\/bank\/([a-z][a-z0-9-]*)\/(b-[a-f0-9]{24})\.html$/.exec(file);
     if (!match) fail(file, 'Bank menu path must be content/bank/<subject>/<bankKey>.html');
     const [, subjectId, bankKey] = match;
     const section = routes.find(route => route.kind === 'section' && route.subjectId === subjectId);

@@ -5,7 +5,7 @@
  */
 const HUB_BANK = Object.freeze({
   spreadsheetId: '1N3kU1DnP7B5OPkUglCU0KOJcSELWtPJokHxx_j7tDkU',
-  subjects: { physics: 'PHYSIC', chemistry: 'CHEMISTRY' },
+  subjects: { physics: 'PHYSIC', chemistry: 'CHEMISTRY', 'lower-science': 'SCI_JHC' },
   // Enable reviewed subjects once in Script Properties. No extra authoring
   // step/column is added to the teacher's existing Sheet workflow.
   publicStatuses: ['', 'เปิดปกติ'],

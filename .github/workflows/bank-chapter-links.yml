@@ -7,6 +7,10 @@ on:
       - 'js/question-bank-tools.js'
       - 'public/pages/shared/subject-*.js'
       - 'public/shared/question-bank-menu.js'
+      - 'public/shared/question-bank-model.js'
+      - 'public/shared/print-bank-metadata.js'
+      - 'public/pages/lower-science.html'
+      - 'services/question-bank/**'
       - 'scripts/test-question-bank-browser.mjs'
       - '.github/workflows/bank-chapter-links.yml'
 
@@ -36,3 +40,10 @@ jobs:
         env:
           QA_BUILT: '1'
         run: PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/work/qa-tools/node_modules/playwright" pnpm test:bank:browser
+      - name: Save subject library screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: subject-library-screenshots
+          path: qa-output/*library*.png
+          if-no-files-found: ignore

@@ -101,6 +101,19 @@ test('HTML, Simulation, authored Quiz and inline PDF use the existing content op
   assert.equal(JSON.stringify(catalog).includes('NOT_IN_CATALOG'), false);
 });
 
+test('lower science authored menus reuse bank tools and preserve the subject-scoped storage identity', async () => {
+  const files = fixture(), scienceMenu = `content/bank/lower-science/${key}.html`;
+  files.set('index.html', files.get('index.html') + '<button data-section="lower-science" data-page-src="pages/lower-science.html"></button>');
+  files.set('pages/lower-science.html', '<main data-subject-page data-subject-id="lower-science" data-subject-home="bank"></main><template id="subject-chapters"></template>');
+  files.set(scienceMenu, menu(link('review', 'science-atoms-review')).replace('data-subject-id="physics"', 'data-subject-id="lower-science"'));
+  const catalog = await make(files, { menus: [scienceMenu] });
+  const route = resolveHubRoute(catalog, `#lower-science/bank/${key}/quiz`).route;
+  assert.equal(activityForRoute(catalog, route, hub).tool.context.contentId, bankContentId('lower-science', key));
+  assert.notEqual(bankContentId('lower-science', key), bankContentId('physics', key));
+  assert.equal(authoredBankTools(catalog, 'lower-science', key)[0].contentId, 'science-atoms-review');
+  assert.equal(createHubShareUrl(catalog, `#lower-science/bank/${key}`, hub), hub + '#lower-science/bank/measurement');
+});
+
 test('tool slugs alias stable keys and authored order is independent of route sorting', async () => {
   const files = fixture();
   files.set(menuPath, menu(link('z-review', 'phys-ipst-review', 'html', 'data-route-slug="quick-review" data-route-aliases="summary" href="../../physics/ipst/review.html"') +
@@ -204,8 +217,12 @@ test('repository discovery is optional, deterministic and rejects unexpected loc
     await writeFile(join(folder, menuPath), menu());
     await writeFile(join(folder, 'content/bank/README.txt'), 'Authoring instructions');
     assert.deepEqual(await discoverBankMenus(folder), [menuPath]);
+    const scienceMenu = `content/bank/lower-science/${key}.html`;
+    await mkdir(join(folder, 'content/bank/lower-science'));
+    await writeFile(join(folder, scienceMenu), menu());
+    assert.deepEqual(await discoverBankMenus(folder), [scienceMenu, menuPath]);
     await mkdir(join(folder, 'content/bank/biology'));
-    await assert.rejects(discoverBankMenus(folder), /physics or content\/bank\/chemistry/);
+    await assert.rejects(discoverBankMenus(folder), /registered-subject/);
     await rm(join(folder, 'content/bank/biology'), { recursive: true });
     if (process.platform !== 'win32') {
       await symlink(join(folder, menuPath), join(folder, 'content/bank/physics/' + other + '.html'));

@@ -2,6 +2,7 @@ import { readFile, realpath, readdir } from 'node:fs/promises';
 import { resolve, relative, isAbsolute } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { buildRouteCatalog } from './route-catalog.mjs';
+import { bankSubjects } from '../public/shared/question-bank-model.js';
 
 export const repositoryRoot = fileURLToPath(new URL('../', import.meta.url));
 // Only these optional files create bank tool placements. Content itself stays
@@ -15,8 +16,8 @@ export async function discoverBankMenus(publicRoot) {
   const files = [];
   for (const subject of await entries(folder)) {
     if (subject.isFile() && !subject.name.endsWith('.html')) continue;
-    if (!subject.isDirectory() || !['physics', 'chemistry'].includes(subject.name))
-      throw Error('Bank menus must be under content/bank/physics or content/bank/chemistry');
+    if (!subject.isDirectory() || !Object.hasOwn(bankSubjects, subject.name))
+      throw Error('Bank menus must be under content/bank/<registered-subject>');
     for (const file of await entries(resolve(folder, subject.name))) {
       if (file.isFile() && !file.name.endsWith('.html')) continue;
       if (!file.isFile() || !/^b-[a-f0-9]{24}\.html$/.test(file.name))

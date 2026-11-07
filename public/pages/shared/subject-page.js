@@ -8,7 +8,7 @@
 const subjectRoot = document.querySelector("[data-subject-page]");
 const chapterTemplate = document.querySelector("#subject-chapters");
 const contentNavigationUrl = new URL("subject-content-nav.js", document.currentScript.src).href;
-const bankNavigationUrl = new URL("subject-bank-nav.js?v=review-menu-route-20261102", document.currentScript.src).href;
+const bankNavigationUrl = new URL("subject-bank-nav.js?v=science-bank-20261107", document.currentScript.src).href;
 
 function setLocalizedText(element, thai, english) {
   element.dataset.th = thai;
@@ -209,7 +209,7 @@ function buildSubjectPage() {
     return true;
   }
   subjectRoot.classList.toggle("has-content-menus", hasContentMenus);
-  const bankNavigationPromise = ['physics', 'chemistry'].includes(subject.id)
+  const bankNavigationPromise = subjectRoot.dataset.subjectHome === 'bank'
     ? import(bankNavigationUrl).then(({ createSubjectBankNavigation }) => {
       bankNavigation = createSubjectBankNavigation({ root: subjectRoot, subject, setStage,
         requestNavigation(selection) {

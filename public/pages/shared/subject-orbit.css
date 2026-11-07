@@ -16,6 +16,12 @@
   --orbit-deep: #6544a9;
   --orbit-rgb: 146, 118, 219;
 }
+.subject-orbit-page.theme-science {
+  --orbit-accent: var(--hub-subject-accent);
+  --orbit-light: var(--hub-subject-soft);
+  --orbit-deep: var(--hub-subject-ink);
+  --orbit-rgb: 102, 203, 216;
+}
 .subject-orbit-page.theme-biology {
   --orbit-accent: #86d4ae;
   --orbit-light: #e0f7e9;

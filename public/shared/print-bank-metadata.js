@@ -1,10 +1,11 @@
+import { bankSubjects } from './question-bank-model.js';
 import { bankClient } from './question-bank-client.js';
 import { bankTitlePair } from './question-bank-menu.js';
 
 // Display metadata only. A slow/offline catalog must not prevent printing or
 // replace the pinned question snapshot, saved answers, IDs or revision.
 export async function loadBankPrintMetadata(context, language = 'th', client = bankClient) {
-  if (context?.chapterId !== 'bank' || !['physics', 'chemistry'].includes(context.subjectId) ||
+  if (context?.chapterId !== 'bank' || !Object.hasOwn(bankSubjects, context.subjectId) ||
       !/^b-[a-f0-9]{24}$/.test(context.topicId || '')) return {};
   let timer;
   try {

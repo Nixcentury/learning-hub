@@ -110,7 +110,7 @@ try {
   if (process.env.QA_ROUTE_DEBUG === '1') page.on('console', message => console.log('BROWSER',message.type(),message.text()));
   const subject = page.frameLocator('#hub-page-frame');
   async function ready(hash) {
-    if (['#chemistry', '#physics'].includes(hash)) hash += '/bank';
+    if (['#chemistry', '#physics', '#lower-science'].includes(hash)) hash += '/bank';
     await page.waitForURL(url => url.hash === hash);
     const route = catalog.routes.find(item => item.hash === hash) || {subjectId:hash.slice(1).split('/')[0]};
     await subject.locator(`[data-subject-page][data-subject-id="${route.subjectId || route.sectionId}"][data-navigation-ready="ready"]:not([inert])`).waitFor();

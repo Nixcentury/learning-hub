@@ -14,6 +14,7 @@ const output = resolve(root, 'qa-output'); await mkdir(output, { recursive: true
 const routeCatalog = await catalogFromRepository();
 const key = 'b-' + 'a'.repeat(24), contentId = bankContentId('physics', key);
 const mechanics = 'กลศาสตร์(Mechanics)', sound = 'เสียง(Sound)';
+const atoms = 'อะตอม ธาตุ และสารประกอบ(Atoms, Elements and Compounds)';
 const chapterHash = async (subjectId, title) => `#${subjectId}/bank/chapter/c-${(await sha256('chapter:' + title)).slice(0,24)}`;
 const mechanicsHash = await chapterHash('physics',mechanics), soundHash = await chapterHash('physics',sound);
 const question = (text, answer = 'A') => `<div class="question-step" data-ans="${answer}"><h3>${text} $F=ma$</h3>
@@ -73,7 +74,7 @@ await new Promise(done => server.listen(0, '127.0.0.1', done));
 const origin = `http://127.0.0.1:${server.address().port}`;
 let browser;
 try {
-  browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_BROWSER_CHANNEL || (process.platform === 'win32' ? 'msedge' : undefined), headless: true });
+  browser = await chromium.launch({ executablePath: process.env.QA_BROWSER_EXECUTABLE || undefined, channel: process.env.PLAYWRIGHT_BROWSER_CHANNEL || (process.platform === 'win32' ? 'msedge' : undefined), headless: true });
   async function makeContext(account = false) {
     const context = await browser.newContext({ viewport: { width: 1360, height: 1000 }, hasTouch: true });
     await context.route('**/*', async route => {
@@ -87,7 +88,7 @@ try {
             { bankKey: key, legacyId: current.legacyId, title: current.title, path: ['ฟิสิกส์', 'Learning hub', mechanics, current.title], questionCount: current === first ? 2 : 3 },
             { bankKey: 'b-' + 'b'.repeat(24), legacyId: 'empty-mechanics', title: 'งานและพลังงาน(Work and Energy)', path: ['ฟิสิกส์', 'Learning hub', mechanics, 'งานและพลังงาน(Work and Energy)'], questionCount: 0 },
             { bankKey: 'b-' + 'c'.repeat(24), legacyId: 'empty-sound', title: 'แรงดันเสียง(Sound Pressure)', path: ['ฟิสิกส์', 'Learning hub', sound, 'แรงดันเสียง(Sound Pressure)'], questionCount: 0 },
-          ] : [{ bankKey: key, legacyId: 'chemistry-qa', title: 'กรดและเบส(Acids and Bases)', path: ['เคมี', 'Learning hub', 'กรด–เบส(Acid–base)', 'กรดและเบส(Acids and Bases)'], questionCount: 0 }] }
+          ] : subject === 'lower-science' ? [{ bankKey: key, legacyId: 'science-qa', title: 'อะตอม(Atoms)', path: ['วิทยาศาสตร์ ม.ต้น', 'Learning hub', atoms, 'อะตอม(Atoms)'], questionCount: 0 }] : [{ bankKey: key, legacyId: 'chemistry-qa', title: 'กรดและเบส(Acids and Bases)', path: ['เคมี', 'Learning hub', 'กรด–เบส(Acid–base)', 'กรดและเบส(Acids and Bases)'], questionCount: 0 }] }
           : url.searchParams.get('revision') ? archives.get(url.searchParams.get('revision')) : current;
         return route.fulfill({ contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify(value ? { ok: true, data: value } : { ok: false, code: 'snapshot-not-found' }) });
       }
@@ -161,7 +162,7 @@ try {
   await page.waitForFunction(value => document.querySelector('#hub-page-frame').contentDocument.querySelector('[data-bank-chapter]').value === value, 'chapter:' + sound);
   await page.goBack(); await page.waitForURL(url => url.hash === mechanicsHash);
   await subject.locator('[data-bank-search]').fill('แรง');
-  for (const [subjectId,title] of [['physics',sound],['chemistry','กรด–เบส(Acid–base)']]) {
+  for (const [subjectId,title] of [['physics',sound],['chemistry','กรด–เบส(Acid–base)'],['lower-science',atoms]]) {
     const receiverContext = await makeContext(), receiver = await receiverContext.newPage();
     const hash = await chapterHash(subjectId,title);
     await receiverContext.addInitScript(subjectId => sessionStorage.setItem(`learning-hub:bank-menu:${subjectId}`,
@@ -192,7 +193,7 @@ try {
   console.log('PASS chapter-first menu, scoped/global search, TH/EN, empty topics and remembered filters after back/refresh/reload');
   for (const width of [390, 820]) {
     await page.setViewportSize({width, height:1000});
-    for (const subjectId of ['chemistry', 'physics']) {
+    for (const subjectId of ['chemistry', 'physics', 'lower-science']) {
       await page.locator(`[data-section="${subjectId}"]`).tap();
       await page.waitForURL(url => url.hash.startsWith(`#${subjectId}/bank`));
       await subject.locator('[data-bank-chapter] option').nth(2).waitFor({state:'attached'});
@@ -204,7 +205,14 @@ try {
       await subject.locator('[data-bank-chapter]').selectOption({index:2});
       await page.waitForURL(url => url.hash.startsWith(`#${subjectId}/bank/chapter/`));
       const chapterUrl = page.url();
+      if (subjectId === 'lower-science' && width === 820) await page.screenshot({path:resolve(output, 'lower-science-library-tablet.png')});
       await subject.locator('[data-bank-cards] button').first().tap();
+      if (subjectId === 'lower-science') {
+        assert.equal(await subject.getByRole('button', {name:/แสดงข้อสอบ|Open quiz/}).isDisabled(), true);
+        assert.equal(await subject.getByRole('button', {name:/สมุดบันทึก|Notebook/}).isEnabled(), true);
+        assert.equal(await subject.locator('[data-bank-id] p').textContent(), 'science-qabankKey: ' + key);
+        if (width === 820) await page.screenshot({path:resolve(output, 'lower-science-library-tools.png')});
+      }
       await subject.locator('[data-bank-back]').tap();
       await page.waitForURL(chapterUrl);
       assert.equal(await subject.locator('#chapter-view').isVisible(), false);
@@ -225,7 +233,7 @@ try {
   await subject.locator('[data-bank-chapter] option').nth(2).waitFor({state:'attached'});
   await subject.locator('[data-bank-cards] button').first().tap();
   await page.setViewportSize({width:1360,height:1000});
-  console.log('PASS Physics/Chemistry library homes, phone/tablet taps, hidden legacy menus, back controls and service retry');
+  console.log('PASS Physics/Chemistry/Lower Science library homes, phone/tablet taps, hidden legacy menus, back controls and service retry');
   await subject.getByRole('button', {name:/แสดงข้อสอบ/}).click();
   let frame = page.frameLocator('.workspace-tool-frame');
   await frame.locator('[data-current-options] .quiz-option').first().waitFor();

@@ -1,5 +1,7 @@
 # คลังข้อสอบจาก Sheet เดิม
 
+เพิ่มคลังวิทยาศาสตร์ ม.ต้น (`lower-science` → `SCI_JHC`, 7 พ.ย. 2026): [ขั้นตอนเปิดใช้และเพิ่มเพจภายหลัง](LOWER-SCIENCE-START-HERE.md) โค้ดเว็บรองรับแล้ว แต่บริการ Apps Script ต้องอัปเดต deployment และเปิดวิชาเพิ่มก่อนใช้ข้อมูลจริง การ merge เว็บไม่ได้อัปเดตบริการแทน
+
 งานสร้าง **Topic Review** ใหม่/ส่งต่อให้บัญชีอื่น: อ่าน [คู่มือ Topic Review](docs/topic-review/README.md) พร้อม template และตัวตรวจในโฟลเดอร์นั้นก่อนเริ่ม ไม่ต้องแก้ Apps Script เพื่อเพิ่มไฟล์สรุปตามปกติ
 
 สถานะล่าสุด 15 ตุลาคม 2026 — เปิดใช้คลังฟิสิกส์และเคมีบน Learning Hub จริงแล้ว ใช้ Google Sheet และ endpoint เดิมร่วมกัน โดยตั้ง Script Property `HUB_BANK_ENABLED_SUBJECTS` เป็น `physics,chemistry`

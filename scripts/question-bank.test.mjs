@@ -59,10 +59,10 @@ test('chapter links are stable across order, translation and added topics withou
   assert.match((await bankChapterLinks([{path:['Old'],title:'Legacy'}]))[0].routeId,/^c-[a-f0-9]{24}$/);
 });
 
-test('chapter links round-trip through selection, sharing and parent navigation for both subjects', async () => {
+test('chapter links round-trip through selection, sharing and parent navigation for bank subjects', async () => {
   const catalog = {schemaVersion:1,routes:[],contents:[]};
   const [{routeId}] = await bankChapterLinks([{path:['Physics','Hub','เสียง(Sound)','Nature of Sound']}]);
-  for (const subjectId of ['physics','chemistry']) for(const bankChapterId of [routeId,'all']) {
+  for (const subjectId of ['physics','chemistry','lower-science']) for(const bankChapterId of [routeId,'all']) {
     const hash = `#${subjectId}/bank/chapter/${bankChapterId}`;
     const selected = routeForSelection(catalog,{subjectId,bank:true,bankChapterId});
     assert.equal(selected.hash,hash); assert.equal(selected.kind,'bank');
@@ -111,7 +111,7 @@ function service() {
   const menu = (name, access = '', status = 'เปิดปกติ', tab = 'PHYSIC') => ['ฟิสิกส์', name, '', '', '', '', '', name, tab, '', '', access, status];
   const q = text => `<div class="question-step" data-ans="A"><h3>${text}</h3><div class="options"><label><input type="radio" name="q1" value="A">1</label><label><input type="radio" name="q1" value="B">2</label></div><div class="feedback-box">Explanation</div></div>`;
   const tables = { Sitemap: [menu(id), menu(second), menu('private', 'STUDENT'), menu('closed', 'ALL', 'ปิด'), menu('duplicate'), menu('duplicate', 'STUDENT')],
-    PHYSIC: [[id, second, q('one') + q('two')], [id, id, q('three')], [id + '-extra', '', q('no substring')]], CHEMISTRY: [] };
+    PHYSIC: [[id, second, q('one') + q('two')], [id, id, q('three')], [id + '-extra', '', q('no substring')]], CHEMISTRY: [], SCI_JHC: [] };
   const archive = new Map(), reads = [], properties = new Map([['HUB_BANK_ARCHIVE_FOLDER', 'folder'], ['HUB_BANK_ENABLED_SUBJECTS', 'physics,chemistry']]);
   const folder = { getFilesByName(name) { return { hasNext: () => archive.has(name), next: () => ({ getBlob: () => ({ getDataAsString: () => archive.get(name) }) }) }; },
     createFile(name, value) { archive.set(name, value); } };
@@ -119,7 +119,7 @@ function service() {
     Sheets: { Spreadsheets: { Values: { get(ss, range, options) {
       assert.equal(ss, '1N3kU1DnP7B5OPkUglCU0KOJcSELWtPJokHxx_j7tDkU');
       assert.equal(options.valueRenderOption, 'FORMATTED_VALUE');
-      const match = /^'(Sitemap|PHYSIC|CHEMISTRY)'!A2:([CM])$/.exec(range);
+      const match = /^'(Sitemap|PHYSIC|CHEMISTRY|SCI_JHC)'!A2:([CM])$/.exec(range);
       assert.ok(match); const name = match[1]; reads.push(name);
       return { values: tables[name] };
     } } } },
@@ -130,6 +130,31 @@ function service() {
   return { tables, archive, reads, properties, id, second, q, menu,
     get: params => context.doGet({ parameter: { subject: 'physics', action: 'catalog', ...params } }) };
 }
+test('lower science reads SCI_JHC only after activation and keeps its IDs, questions and archives separate', async () => {
+  const h = service();
+  h.tables.Sitemap.push(h.menu(h.id, 'ALL', '', 'SCI_JHC'), h.menu('science-empty', '', '', 'SCI_JHC'),
+    h.menu('science-private', 'STUDENT', '', 'SCI_JHC'), h.menu('science-closed', '', 'ปิด', 'SCI_JHC'),
+    h.menu('science-duplicate', '', '', 'SCI_JHC'), h.menu('science-duplicate', 'STUDENT', '', 'SCI_JHC'));
+  h.tables.SCI_JHC.push([h.id, h.id, h.q('Atoms')], ['science-private', 'science-closed', h.q('Private')]);
+  assert.equal(h.get({ subject: 'lower-science' }).code, 'set-unavailable');
+  assert.deepEqual(h.reads, []);
+  h.properties.set('HUB_BANK_ENABLED_SUBJECTS', 'physics,chemistry,lower-science');
+  const science = h.get({ subject: 'lower-science' }).data;
+  assert.deepEqual(science.sets.map(set => [set.legacyId, set.questionCount]), [[h.id, 1], ['science-empty', 0]]);
+  assert.deepEqual(h.reads, ['Sitemap', 'SCI_JHC']);
+  const key = science.sets[0].bankKey, physicsKey = h.get().data.sets[0].bankKey;
+  assert.notEqual(key, physicsKey);
+  const snapshot = h.get({ subject: 'lower-science', action: 'questions', key }).data;
+  await validateBankSnapshot(snapshot, 'lower-science', key);
+  assert.match(snapshot.rows[0].html, /Atoms/);
+  assert.equal(h.get({ subject: 'lower-science', action: 'questions', key: physicsKey }).code, 'set-unavailable');
+  assert.equal(h.get({ action: 'questions', key }).code, 'set-unavailable');
+  assert.equal(h.get({ subject: 'lower-science', action: 'questions', key: science.sets[1].bankKey }).code, 'invalid-set-size');
+  assert.ok([...h.archive.keys()].every(name => name.startsWith('lower-science-')));
+  h.tables.SCI_JHC[0][2] = h.q('Changed science');
+  assert.equal(h.get({ subject: 'lower-science', action: 'questions', key, revision: snapshot.revision }).data.rows[0].html, snapshot.rows[0].html);
+});
+
 test('chemistry uses its own tab and publication rules, including empty sets and explicit subject activation', () => {
   const h = service();
   h.tables.Sitemap.push(h.menu(h.id, 'ALL', '', 'CHEMISTRY'), h.menu('chem-empty', '', '', 'CHEMISTRY'),

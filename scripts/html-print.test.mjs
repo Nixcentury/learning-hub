@@ -119,6 +119,8 @@ test('bank print chapter labels use catalog paths without replacing the question
   const client = { catalog: async () => catalog };
   assert.deepEqual(await loadBankPrintMetadata(context, 'th', client), { chapter: 'สมดุลกล' });
   assert.deepEqual(await loadBankPrintMetadata(context, 'en', client), { chapter: 'Equilibrium' });
+  assert.deepEqual(await loadBankPrintMetadata({ ...context, subjectId: 'lower-science' }, 'en', client), { chapter: 'Equilibrium' });
+  assert.equal(buildPrintFilename({ subjectId: 'lower-science', chapter: 'Atoms', work: 'Practice', language: 'en' }), 'SCI-Atoms-Practice');
   assert.equal(JSON.stringify(catalog), before);
   assert.deepEqual(await loadBankPrintMetadata(context, 'th', { catalog: async () => { throw Error('offline'); } }), {});
   assert.deepEqual(await loadBankPrintMetadata({ ...context, topicId: 'not-a-bank-key' }, 'th', client), {});

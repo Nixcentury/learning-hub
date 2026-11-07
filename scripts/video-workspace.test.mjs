@@ -63,7 +63,7 @@ function harness(initialIdentity = { status: 'guest', isGuest: true, uid: null }
     Object.defineProperty(frame, 'contentWindow', { configurable: true, value: { postMessage: (...args) => sent.push(args), LearningHubQuiz: quiz } });
     frame.dispatchEvent(new domWindow.Event('load')); transports.push(sent); return sent;
   }
-  return { document, workspace, domWindow, load, activated, setIdentity(value) { identity = value; }, message: event => events.message(event),
+  return { document, workspace, domWindow, load, activated, simulationContentId:source=>vmContext.getWorkspaceSimulationContentId(source), setIdentity(value) { identity = value; }, message: event => events.message(event),
     language(value) { language = value; workspace.setLanguage(); } };
 }
 const videoButton = `<a data-hub-video data-content-id="sound-video" href="${url}" data-subject-id="physics" data-chapter-id="12" data-topic-id="sound">Video</a>`;
@@ -356,4 +356,15 @@ test('an opted-in Quiz sheet link opens one real HTML sheet in a pair without re
   child.document.querySelector('button').click();
   assert.equal(h.document.querySelectorAll('iframe').length,2);
   assert.equal(h.document.querySelector('[data-tool-id="topic-review-library"]'),null);
+});
+
+test('only live simulation frames register for practice sync and flush before closing',()=>{
+ const h=harness();h.workspace.openContent(simulationEntry('storage'));
+ const owner=h.document.querySelector('.workspace-window'),frame=owner.querySelector('iframe');
+ h.load(frame,dom('<html><body>Simulation</body></html>','content/qa-guide/storage.html'));
+ let flushed=0;frame.contentWindow.LearningHubSimulation={flushLocal:()=>{flushed++;return true;}};
+ const source=frame.contentWindow;assert.equal(h.simulationContentId(source),'qa-guide-storage');assert.equal(h.simulationContentId({}),null);
+ owner.querySelector('.window-simulation-guide').click();const reader=h.document.querySelector('[data-tool-id^="simulation-guide-"]');
+ h.load(reader.querySelector('iframe'),dom(guideHtml,'pages/tools/simulation-guide-player.html'));assert.equal(h.simulationContentId(reader.querySelector('iframe').contentWindow),null);
+ owner.querySelector('.is-close').click();assert.equal(flushed,1);assert.equal(h.simulationContentId(source),null);
 });

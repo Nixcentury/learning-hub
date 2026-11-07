@@ -4,7 +4,7 @@
   let lang='th',mode='reflection',identity='guest',subscriber=null,running=!matchMedia('(prefers-reduced-motion: reduce)').matches,time=0,last=null,dirty=true;
   const fresh=key=>({params:{...M.defaults[key]},formula:false,problem:false,solution:false,visual:M.visual(key),mission:Q.initial()});
   let work=Object.fromEntries(modes.map(key=>[key,fresh(key)]));
-  const s=()=>work[mode],p=()=>s().params,T=(th,en)=>lang==='th'?th:en,F=(n,d=1)=>Number(n).toFixed(d),publish=()=>subscriber?.();
+  const s=()=>work[mode],p=()=>s().params,T=(th,en)=>lang==='th'?th:en,F=(n,d=1)=>Number(n).toFixed(d),publish=()=>{subscriber?.();globalThis.WaveAssessmentStorage?.changed();};
   const names={reflection:['การสะท้อน','Reflection'],refraction:['การหักเห','Refraction'],interference:['การแทรกสอด','Interference'],diffraction:['การเลี้ยวเบน','Diffraction']};
   const descriptors={
     reflection:[['angle','มุมตกกระทบ θᵢ','Incidence angle θᵢ',0,75,1,'°']],
@@ -39,7 +39,7 @@
       $('lock-note').textContent=T('สไลเดอร์สีจางคือค่าที่ตรึงไว้ เปลี่ยนกรณีเพื่อปรับอีกค่า','The dimmed slider is held fixed. Switch comparison to change it.');
     }
   }
-  function changed(observed=true){s().solution=false;if(observed){s().mission.answers[s().mission.index]={};s().mission.attempted[s().mission.index]=false;Q.observe(mode,s(),true);}V.invalidate();dirty=true;update();publish();}
+  function changed(observed=true){s().solution=false;if(observed){Q.observe(mode,s(),true);}V.invalidate();dirty=true;update();publish();}
   function layerControls(){
     $('layer-controls').replaceChildren();
     const list=mode==='reflection'?[['field','ผิวน้ำ · สัน–ท้องคลื่น','Water surface · crests / troughs'],['fronts','เส้นหน้าคลื่นเสริม','Wavefront guides'],['variables','ลูกศรและมุม','Arrows and angles']]:[['field','รอยคลื่น / ค่าสนาม','Ripple / wave field'],['fronts','เส้นสัน–ท้องคลื่น','Crest / trough lines'],['variables','เส้นตัวแปร','Variables']];
@@ -68,39 +68,13 @@
     if(mode==='interference')return `<p>${T('ผลต่างทางเดินจริง Δr ใช้ได้ทุกระยะ ส่วน Δr ≈ d|sin θ| ใช้เมื่อ L ≫ d และ ≈ d|x|/L เพิ่มเงื่อนไข |x| ≪ L; ตัวเลขทั้งสามแสดงให้เทียบด้านล่างกราฟ','Exact path difference Δr applies at all distances. Δr ≈ d|sin θ| needs L ≫ d; ≈ d|x|/L also needs |x| ≪ L. Compare the three values below the profile.')}</p><p class="equation">u = u₁ + u₂ · Δr = |r₂ − r₁|</p><p>${T('แหล่งเฟสตรงกัน: เสริมเมื่อ Δr = mλ; หักล้างเมื่อ Δr = (m + ½)λ','In-phase sources: constructive at Δr = mλ; destructive at Δr = (m + ½)λ.')}</p><p>${T('แหล่งเฟสตรงข้าม 180°: สลับสองเงื่อนไขข้างบน; m = 0, 1, 2, …','Sources 180° apart: exchange the two conditions above; m = 0, 1, 2, …')}</p><p>${T('เมื่อคลื่นย่อยมีแอมพลิจูดเท่ากัน A: บัพมีแอมพลิจูดรวม 0 ปฏิบัพมีแอมพลิจูดรวม 2A บัพไม่ใช่เพียงจุดที่การกระจัดเป็นศูนย์ชั่วขณะ','With equal component amplitudes A, a node has resultant amplitude 0; an antinode has 2A. A momentary zero displacement alone is not a node.')}</p>`;
     return `<p class="equation">λ = c/f · 1 μm = 1,000 nm</p><p>${T('ตรึงช่องเปิด: λ มากขึ้น → มุม θ มากขึ้น','Fixed opening: larger λ → larger angle θ.')}</p><p>${T('ตรึง λ: ช่องเปิดแคบลง → มุม θ มากขึ้น','Fixed λ: narrower opening → larger angle θ.')}</p><p>${T('θ วัดที่กึ่งกลางช่อง จากแนวตรงไปข้างหน้าถึงทิศมืดแรก ตามภาพในใบเรียนรู้ 10.1 ส่วน 8 เส้นประไม่ใช่ขอบเขตที่แสงไปถึง','θ is measured at the slit centre, from the forward axis to the first dark direction, as in section 8 of the learning sheet. Dashed directions do not limit the reach of light.')}</p>`;
   }
-  function problem(){
-    const a=p();
-    if(mode==='reflection')return {
-      question:T(`รังสีตกกระทบทำมุม ${90-a.angle}° กับผิวสะท้อน จงหามุมตกกระทบและมุมสะท้อนที่วัดจากเส้นปกติ`,`A ray makes ${90-a.angle}° with the reflecting surface. Find its incidence and reflection angles measured from the normal.`),
-      answer:`<p class="equation">θᵢ = 90° − ${90-a.angle}° = ${a.angle}°<br>θᵣ = θᵢ = ${a.angle}°</p><p>${T('เส้นปกติตั้งฉากกับผิว จึงต้องหามุมเติมเต็มก่อนใช้กฎการสะท้อน','The normal is perpendicular to the surface. Find the complementary angle before applying the reflection law.')}</p>`};
-    if(mode==='refraction'){
-      const r=M.refract(a);
-      if(r.tir)return {question:T(`แสงจาก n₁ = ${a.n1} ไป n₂ = ${a.n2} ด้วยมุมตกกระทบ ${a.angle}° จงคำนวณมุมวิกฤตและอธิบายว่าทำไมไม่เห็นรังสีหักเห`,`Light travels from n₁ = ${a.n1} towards n₂ = ${a.n2} at ${a.angle}°. Calculate the critical angle and explain the missing refracted ray.`),answer:`<p class="equation">θc = sin⁻¹(${a.n2}/${a.n1}) = ${F(r.critical)}°<br>θ₁ = ${a.angle}° &gt; θc</p><p>${T('จึงเกิดการสะท้อนกลับหมด ไม่ควรฝืนหามุมหักเหด้วยค่า sin θ₂ ที่เกิน 1','Total internal reflection occurs. A sine value above 1 does not give a real refracted angle.')}</p>`};
-      return {question:T(`แสง λ₀ = ${a.wavelength} nm จาก n₁ = ${a.n1} ไป n₂ = ${a.n2} ด้วย θ₁ = ${a.angle}° จงหา θ₂ อัตราเร็ว และความยาวคลื่นในตัวกลาง 2`,`Light of vacuum wavelength ${a.wavelength} nm enters n₂ = ${a.n2} from n₁ = ${a.n1} at θ₁ = ${a.angle}°. Find θ₂, speed and wavelength in medium 2.`),answer:`<p class="equation">sin θ₂ = (${a.n1}/${a.n2}) sin ${a.angle}°<br>θ₂ = ${F(r.angle)}°<br>v₂ = (3.0 × 10⁸)/${a.n2} = ${F(r.v2/1e8,2)} × 10⁸ m/s<br>λ₂ = ${a.wavelength}/${a.n2} = ${F(r.lambda2)} nm</p><p>${T('ความถี่คงเดิมทั้งสองตัวกลาง','Frequency is unchanged across the interface.')} f ≈ ${F(r.frequency/1e12,2)} THz.</p>`};
-    }
-    if(mode==='interference'){
-      const q=W.geometry(M.water(a,s().visual)),ratio=q.delta/a.wavelength,which=q.kind==='node'?T('บัพ — หักล้างสมบูรณ์','node — complete cancellation'):q.kind==='antinode'?T('ปฏิบัพ — เสริมเต็มที่','antinode — full reinforcement'):T('ระหว่างแนวบัพ–ปฏิบัพ','between nodal and antinodal loci');
-      return {question:T(`ที่ P มี r₁ ≈ ${F(q.r1,4)} cm และ r₂ ≈ ${F(q.r2,4)} cm เมื่อ λ = ${F(a.wavelength)} cm แหล่งกำเนิดเฟส${a.phase===0?'ตรงกัน':'ตรงข้าม 180°'} จงหา Δr และระบุว่า P เป็นบัพ ปฏิบัพ หรือระหว่างแนว`,`At P, r₁ ≈ ${F(q.r1,4)} cm and r₂ ≈ ${F(q.r2,4)} cm, with λ = ${F(a.wavelength)} cm and sources ${a.phase===0?'in phase':'180° apart'}. Calculate Δr and identify P as nodal, antinodal or between loci.`),answer:`<p class="equation">Δr = |${F(q.r2,4)} − ${F(q.r1,4)}| ≈ ${F(q.delta,2)} cm<br>Δr/λ = ${F(ratio,1)}</p><p>${T('เทียบกับเงื่อนไขของเฟสแหล่งกำเนิด จะได้','Using the condition for these source phases gives')} <strong>${which}</strong>.</p><p>${T('แอมพลิจูดรวมที่ P เท่ากับ','Resultant amplitude at P:')} ${F(q.amplitude,3)}A. ${T('คำนวณจากค่าระยะเต็มก่อนปัดตัวเลขแสดงผล','Distances are calculated before display rounding.')}</p>`};
-    }
-    const r=M.diffract(a),other=a.compare==='wavelength'?(a.wavelength<=600?a.wavelength+100:a.wavelength-100):Number((a.opening>=1.2?a.opening-.4:a.opening+.4).toFixed(1));
-    const larger=a.compare==='wavelength'?other>a.wavelength:other<a.opening;
-    return {question:T(`แสงมี f ≈ ${F(r.frequency/1e12,3)} THz ใช้ c = 3.0 × 10⁸ m/s จงหา λ จากนั้น${a.compare==='wavelength'?`ตรึงช่อง a = ${F(a.opening)} μm แล้วเปลี่ยน λ เป็น ${other} nm`:`ตรึง λ แล้วเปลี่ยนช่องจาก ${F(a.opening)} เป็น ${F(other)} μm`} มุม θ จะเพิ่มหรือลด?`,`Light has f ≈ ${F(r.frequency/1e12,3)} THz. Use c = 3.0 × 10⁸ m/s to find λ. Then ${a.compare==='wavelength'?`keep a = ${F(a.opening)} μm and change λ to ${other} nm`:`keep λ fixed and change a from ${F(a.opening)} to ${F(other)} μm`}. Does θ increase or decrease?`),answer:`<p class="equation">λ = c/f = (3.0 × 10⁸)/(${F(r.frequency/1e12,3)} × 10¹²)<br>λ ≈ ${a.wavelength} × 10⁻⁹ m = ${a.wavelength} nm</p><p>${T(`มุม θ ${larger?'เพิ่มขึ้น':'ลดลง'} เพราะ${a.compare==='wavelength'?`เมื่อช่องเปิดคงเดิม ความยาวคลื่น${larger?'มากขึ้น':'น้อยลง'}`:`เมื่อความยาวคลื่นคงเดิม ช่องเปิด${larger?'แคบลง':'กว้างขึ้น'}`}`,`θ ${larger?'increases':'decreases'}: ${a.compare==='wavelength'?`the wavelength is ${larger?'longer':'shorter'} at fixed opening`:`the opening is ${larger?'narrower':'wider'} at fixed wavelength`}.`)}</p><p class="small">${T('ข้อนี้ใช้การคำนวณความยาวคลื่นและอธิบายแนวโน้ม ยังไม่ต้องคำนวณตำแหน่งแถบมืด–สว่าง','This exercise calculates wavelength and compares spreading; fringe-position calculations are not required.')}</p>`};
-  }
   function initStudy(){
     for(const key of modes){
       const section=document.createElement('section');section.id='study-'+key;
-      for(const [kind,th,en] of [['formula','สูตรย่อ · เปิด/ปิด','Formula recap · open/close'],['problem','ลองคำนวณ · เปิด/ปิดโจทย์','Try a calculation · open/close']]){
-        const details=document.createElement('details');details.id=kind+'-'+key;
-        const summary=document.createElement('summary');summary.dataset.th=th;summary.dataset.en=en;summary.textContent=th;
-        const body=document.createElement('div');body.className='study-body';body.id=kind+'-body-'+key;details.append(summary,body);
-        details.addEventListener('toggle',()=>{work[key][kind]=details.open;publish();});section.append(details);
-        if(kind==='problem'){
-          const sol=document.createElement('details');sol.id='solution-'+key;sol.className='solution';
-          const label=document.createElement('summary');label.dataset.th='เปิดวิธีทำและคำอธิบาย';label.dataset.en='Show working and explanation';label.textContent=label.dataset.th;
-          const content=document.createElement('div');content.id='solution-body-'+key;content.className='study-body';sol.append(label,content);sol.addEventListener('toggle',()=>{work[key].solution=sol.open;publish();});details.append(sol);
-        }
-      }
-      $('study-panels').append(section);
+      const details=document.createElement('details');details.id='formula-'+key;
+      const summary=document.createElement('summary');summary.dataset.th='สูตรย่อ · เปิด/ปิด';summary.dataset.en='Formula recap · open/close';summary.textContent=summary.dataset.th;
+      const body=document.createElement('div');body.className='study-body';body.id='formula-body-'+key;details.append(summary,body);
+      details.addEventListener('toggle',()=>{work[key].formula=details.open;publish();});section.append(details);$('study-panels').append(section);
     }
   }
   function update(){
@@ -125,8 +99,8 @@
     $('bench').setAttribute('aria-label',T(...names[mode])+'. '+observe);$('mode-panel').setAttribute('aria-labelledby','tab-'+mode);
     $('play').textContent=running?T('หยุดภาพ','Pause'):T('เล่นต่อ','Play');$('play-status').textContent=running?T('กำลังแสดง','Playing'):T('หยุดภาพแล้ว','Paused');
     $('readouts').replaceChildren();for(const [title,value] of values){const group=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=title;dd.textContent=value;group.append(dt,dd);$('readouts').append(group);}
-    for(const key of modes){$('study-'+key).hidden=key!==mode;for(const kind of ['formula','problem','solution'])$(kind+'-'+key).open=work[key][kind];}
-    const q=problem();$('formula-body-'+mode).innerHTML=formula();$('problem-body-'+mode).textContent=q.question;$('solution-body-'+mode).innerHTML=q.answer;
+    for(const key of modes){$('study-'+key).hidden=key!==mode;for(const kind of ['formula'])$(kind+'-'+key).open=work[key][kind];}
+    $('formula-body-'+mode).innerHTML=formula();
     document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode===mode;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});globalThis.MiniWaveGuidance?.render();globalThis.MiniWaveObjectives?.render(mode,lang);dirty=true;
   }
   function changeMode(next){if(!modes.includes(next))return;mode=next;controls();V.invalidate();update();publish();}
@@ -136,21 +110,21 @@
   });
   function language(next){lang=next==='en'?'en':'th';document.documentElement.lang=lang;document.querySelectorAll('[data-th][data-en]').forEach(n=>n.textContent=n.dataset[lang]);$('language').textContent=lang==='th'?'English':'ภาษาไทย';controls();update();}
   $('language').onclick=()=>language(lang==='th'?'en':'th');$('play').onclick=()=>{running=!running;last=null;update();publish();};
-  $('reset').onclick=()=>{work[mode]=fresh(mode);time=0;controls();V.invalidate();update();publish();};
-  function getState(){return {version:2,identity,mode,running,time,work:structuredClone(work)};}
+  $('reset').onclick=()=>{work[mode]={...fresh(mode),mission:work[mode].mission};time=0;controls();V.invalidate();update();publish();};
+  function getState(){return {version:3,identity,mode,running,time,work:structuredClone(work)};}
   function restoreState(snapshot){
-    if(!snapshot||![1,2].includes(snapshot.version)||snapshot.identity!==identity||!modes.includes(snapshot.mode)||!Number.isFinite(snapshot.time)||snapshot.time<0||snapshot.time>1e8||!snapshot.work||typeof snapshot.work!=='object')return false;
-    for(const key of modes){const v=snapshot.work[key];if(!v||!M.valid(key,v.params)||!['formula','problem','solution'].every(k=>typeof v[k]==='boolean')||(snapshot.version===2&&(!M.visualValid(v.visual,key==='interference'?v.params:null)||!Q.valid(v.mission))))return false;}
+    if(!snapshot||snapshot.version!==3||snapshot.identity!==identity||!modes.includes(snapshot.mode)||!Number.isFinite(snapshot.time)||snapshot.time<0||snapshot.time>1e8||!snapshot.work||typeof snapshot.work!=='object')return false;
+    for(const key of modes){const v=snapshot.work[key];if(!v||!M.valid(key,v.params)||!['formula','problem','solution'].every(k=>typeof v[k]==='boolean')||(!M.visualValid(v.visual,key==='interference'?v.params:null)||!Q.valid(v.mission,key)))return false;}
     work=Object.fromEntries(modes.map(k=>[k,{...fresh(k),...structuredClone(snapshot.work[k])}]));mode=snapshot.mode;time=snapshot.time;running=false;last=null;controls();V.invalidate();update();publish();return true;
   }
   window.LearningHubSimulation={getState,restoreState,subscribe:fn=>{subscriber=typeof fn==='function'?fn:null;return()=>{subscriber=null;};}};
   window.addEventListener('message',event=>{
     if(event.source!==parent||event.origin!==location.origin||event.data?.type!=='learning-hub-context')return;
-    const next=event.data.identity?.uid||'guest';if(next!==identity){identity=next;work=Object.fromEntries(modes.map(k=>[k,fresh(k)]));mode='reflection';time=0;running=false;V.invalidate();}language(event.data.language||lang);
+    const next=event.data.identity?.uid||'guest';if(next!==identity){identity=next;work=Object.fromEntries(modes.map(k=>[k,fresh(k)]));mode='reflection';time=0;running=false;V.invalidate();globalThis.WaveAssessmentStorage?.switchIdentity(next);}language(event.data.language||lang);
   });
   document.addEventListener('visibilitychange',()=>{last=null;});
   function frame(now){const dt=last===null?0:Math.min(.05,(now-last)/1000);last=now;if(running&&!document.hidden){time+=dt*.65;dirty=true;}if(dirty){V.draw($('bench'),mode,p(),time,s().visual);dirty=false;}requestAnimationFrame(frame);}
-  globalThis.WaveMiniBridge={read:()=>({mode,work}),language:()=>lang,current:s,notify:publish,change:fn=>{fn(s(),mode);controls();changed(false);}};
+  globalThis.WaveMiniBridge={read:()=>({mode,work,identity}),language:()=>lang,current:s,notify:publish,change:fn=>{fn(s(),mode);controls();changed(false);},restoreAssessment:record=>{if(!Q.validRecord(record))return false;for(const k of modes)work[k].mission=structuredClone(record.missions[k]);mode=record.mode;controls();V.invalidate();update();return true;}};
   const moveP=event=>{if(mode!=='interference')return;const rect=$('bench').getBoundingClientRect(),q=W.fromScreen((event.clientX-rect.left)/rect.width*800,(event.clientY-rect.top)/rect.height*440-10);s().visual.L=Math.max(6,Math.min(60,q.L));s().visual.x=Math.max(-8,Math.min(8,q.x));s().params.probe='custom';changed();};
   let dragging=false;const probe=$('mini-probe');probe.onpointerdown=event=>{dragging=true;probe.setPointerCapture(event.pointerId);event.preventDefault();};probe.onpointermove=event=>{if(dragging)moveP(event);};probe.onpointerup=()=>dragging=false;probe.onpointercancel=()=>dragging=false;
   $('bench').onclick=moveP;probe.onkeydown=event=>{if(mode!=='interference'||!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home'].includes(event.key))return;event.preventDefault();const w=M.water(p(),s().visual);s().visual.x=event.key==='Home'?0:Math.max(-8,Math.min(8,w.x+(event.key==='ArrowUp'?.1:event.key==='ArrowDown'?-.1:0)));s().visual.L=Math.max(6,Math.min(60,w.L+(event.key==='ArrowRight'?.5:event.key==='ArrowLeft'?-.5:0)));s().params.probe='custom';changed();};

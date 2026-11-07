@@ -54,7 +54,7 @@ test('the complete manual is readable without click handlers, including after ol
   }
   for(const link of document.querySelectorAll('a[href^="#"]'))assert.ok(document.getElementById(link.getAttribute('href').slice(1)));
   controller.setLanguage('en');assert.equal(document.documentElement.lang,'en');
-  assert.match(document.body.textContent,/Mission 2 · Change the opening/);
+  assert.match(document.body.textContent,/Mission 2 · Questions 4–6/);
   assert.equal(actions,0);assert.equal(state.stepId,'interference-goals');
   controller.dispose();controller=mount();assert.equal(document.querySelectorAll('.reading-section').length,6);
   assert.equal(document.querySelector('button'),null);controller.dispose();

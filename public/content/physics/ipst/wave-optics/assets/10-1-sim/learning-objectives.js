@@ -1,4 +1,4 @@
-import { waveMiniPlayGuide } from './guide-data.js?v=reading-guide-20261107';
+import { waveMiniPlayGuide } from './guide-data.js?v=assessment-20261107';
 
 export function renderLearningObjectives(doc, mode, language) {
   const panel = doc.getElementById('learning-objectives');

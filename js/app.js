@@ -50,6 +50,7 @@ import { createHubNavigation } from "./hub-navigation.js";
 import { openHubShare } from "./hub-sharing.js";
 import { createCompanion } from "./companion.js";
 import "./quiz-progress.js";
+import "./simulation-progress.js";
 import { canOpenHubWorkspace, renderHubSessionView, shouldResumeHub } from "./hub-session-view.js";
 import { setPrepareHubReload } from './pwa-reload.js';
 import { applyPwaStartRoute } from './pwa-startup.js';

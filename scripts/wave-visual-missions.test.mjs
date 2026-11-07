@@ -38,14 +38,10 @@ test('reflection starts and resets missions with the water surface and optional 
  for(const index of [0,1]){const v=Q.setup('reflection',index).visual;assert.equal(v.field,true);assert.equal(v.fronts,false);assert.equal(v.variables,true);assert.ok(M.visualValid(v));}
  for(const mode of ['refraction','interference','diffraction'])assert.equal(Q.setup(mode,0).visual.fronts,true);
 });
-test('all eight guided missions grade full correct responses and reject blank/wrong responses',()=>{
- for(const mode of Object.keys(M.defaults))for(const i of [0,1]){const s=state(mode);s.mission.index=i;Object.assign(s,Q.setup(mode,i));Q.observe(mode,s,true);Object.assign(s.params,Q.comparison(mode,i,'a'));Q.observe(mode,s);Object.assign(s.params,Q.comparison(mode,i,'b'));Q.observe(mode,s);if(mode==='interference'&&i===1)s.params.probe='side';assert.ok(Q.requirements(mode,s).every(([ok])=>ok));assert.ok(Q.grade(mode,s).every(ok=>!ok));Q.questions(mode,s).forEach((q,j)=>s.mission.answers[i]['q'+j]=String(q.answer));assert.ok(Q.grade(mode,s).every(Boolean));s.mission.answers[i].q0='wrong';assert.equal(Q.grade(mode,s)[0],false);assert.ok(Q.valid(s.mission));}
-});
-test('mission grading follows the current P and protects TIR from a fabricated numeric angle',()=>{
- const s=state('interference');s.mission.index=1;s.params.probe='custom';s.visual.x=.9;const g=W.geometry(M.water(s.params,s.visual));s.mission.answers[1]={q0:g.delta.toFixed(4),q1:'between'};assert.ok(Q.grade('interference',s).every(Boolean));s.visual.x=3;assert.equal(Q.grade('interference',s)[0],false);
- const r=state('refraction');r.params={angle:60,n1:1.5,n2:1,wavelength:600};assert.ok(Q.requirements('refraction',r).some(([ok])=>!ok));r.mission.answers[0].q0='0';assert.equal(Q.grade('refraction',r)[0],false);
+test('all eight assessment missions accept complete multipart responses and retain results when exploration changes',()=>{
+ for(const mode of Object.keys(M.defaults))for(const i of [0,1]){const s=state(mode);s.mission.index=i;assert.ok(Q.grade(mode,s).every(ok=>!ok));for(const p of Q.parts(mode,i))s.mission.answers[i][p.key]=String(p.answer);assert.ok(Q.grade(mode,s).every(Boolean));Q.check(mode,s);s.params={...s.params,...Q.comparison(mode,i,'b')};assert.ok(Q.grade(mode,s).every(Boolean));assert.ok(Q.valid(s.mission,mode));}
 });
 test('visual/progress validators reject corrupt geometry, flags and answer structures',()=>{
  assert.ok(M.visualValid(M.visual()));for(const bad of [{L:NaN},{L:61},{x:9},{field:'yes'},{fronts:null}])assert.equal(M.visualValid({...M.visual(),...bad}),false);
- for(const bad of [{index:2},{answers:[{}, {q0:12}]},{seen:[{a:false,b:false,changed:false},{}]},{completed:[false]},{attempted:[true,'false']}])assert.equal(Q.valid({...Q.initial(),...bad}),false);
+ for(const bad of [{index:2},{answers:[{}, {q0:12}]},{seen:[{a:false,b:false,changed:false},{}]},{completed:[false]},{attempted:[true,'false']}])assert.equal(Q.valid({...Q.initial(),...bad},'reflection'),false);
 });

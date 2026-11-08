@@ -1,0 +1,39 @@
+name: Bohr review quiz
+on:
+  pull_request:
+    paths:
+      - 'public/content/physics/ipst/atomic-physics/19-1-2-bohr-review-quiz.html'
+      - 'docs/quiz/BOHR-19-1-REVIEW.md'
+      - 'scripts/test-bohr-review-browser.mjs'
+      - '.github/workflows/bohr-review.yml'
+permissions:
+  contents: read
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Install isolated browser tools
+        run: |
+          npm install --prefix work/qa-tools --no-save --package-lock=false playwright@1.62.1
+          node work/qa-tools/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Check Bohr quiz solutions, paired reading and print exports
+        env:
+          QA_BUILT: '1'
+        run: PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/work/qa-tools/node_modules/playwright" node scripts/test-bohr-review-browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bohr-review-evidence
+          path: qa-output/bohr-review/
+          if-no-files-found: ignore

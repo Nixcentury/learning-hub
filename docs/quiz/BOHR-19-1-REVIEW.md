@@ -10,6 +10,14 @@ Four original problem figures are byte-identical to the [prepared crops](../lear
 
 The five final items are newly written. Priorities are informed by MyTCAS [2568 Q25](https://assets.mytcas.com/68/answer/tcas68-phy-a-level.pdf) (read excited-state labels and compare radii) and [2569 Q30](https://assets.mytcas.com/69/answer/tcas69-phy-a-level.pdf) (compare wavelengths through energy gaps).
 
+## Detailed self-study solutions (November 2026)
+
+All 50 solutions now explain the reasoning in both Thai and English. The 24 numeric/choice calculations show formulas, substitution, rearrangement where needed, rounding and final units; conceptual drag items explain why each placement fits. Eight prompts clarify ratio order, excited-state numbering, radius increase versus final radius, and the coefficient required by scaled numeric fields. Stable IDs, question order, answer keys, tolerances, options and all 64 drag gaps are unchanged, preserving saved progress.
+
+Quiz Q8 uses its own supplied H readings (655, 487, 436 nm), separate from the worksheet's D/x calculation sample. Q31–32 retain the source-book 4 → 2 transition (486 nm, 2.55 eV), while the adapted worksheet example uses 5 → 2; the quiz explicitly tells students to compare the method and use the current question's data. Q34 states the rounded hc = 1242 eV·nm consistent with its supplied 414/621/1242 nm lines. These are distinct given data sets, not interchangeable answers.
+
+The focused browser check is `scripts/test-bohr-review-browser.mjs`, run against the production build by `.github/workflows/bohr-review.yml`. It exercises all 50 real question controls, saved guest progress, grading, both languages, the paired worksheet, narrow screens and blank/answer print editions.
+
 ## Validation
 
 - The shared adapter loads 50 bilingual questions. All 64 gaps have unambiguous keys; each drag question has two unused distractors. Blank, partial and incorrect responses were checked against the existing scorer.

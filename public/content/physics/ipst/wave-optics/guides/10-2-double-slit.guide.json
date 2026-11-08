@@ -2,20 +2,20 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-wave-optics-10-2-sheet",
-    "revision": "2026-11-02-1",
-    "sha256": "914ca54c33ab443c5511a92a5c29bdf9f678b533830e5ee39ce98caa1c81dba3"
+    "revision": "2026-11-09-1",
+    "sha256": "07c9755b7224a0b91a8a77c56990d951e46d53c4e481ff8ce526959df753ea4c"
   },
   "title": {
     "th": "การแทรกสอดผ่านสลิตคู่",
     "en": "Double-slit interference"
   },
   "prerequisites": {
-    "th": "ทวนการซ้อนทับ เฟสหนึ่งรอบ 2π และการแปลง nm, μm, mm เป็น m รู้จัก sin และ tan จากรูปสามเหลี่ยม",
-    "en": "Review superposition, one cycle as 2π, conversions from nm/μm/mm to m, and sine/tangent in a triangle."
+    "th": "ทวนการซ้อนทับ เฟสหนึ่งรอบ 2π และการแปลง nm, μm, mm เป็น m รู้จัก sin และ tan จากรูปสามเหลี่ยม อ่านความหมายตัวแปรที่กำกับในแต่ละข้อได้ โดยยังไม่ต้องจำสูตรทุกสูตร",
+    "en": "Review superposition, one cycle as 2π, conversions from nm/μm/mm to m, and sine/tangent in a triangle. Use the symbol explanations beside each task; memorising every equation is not a prerequisite."
   },
   "goal": {
-    "th": "เชื่อมผลต่างทางเดินกับเฟสและชนิดแถบ แล้วอ่านมุมหรือระยะบนฉากเพื่อเลือกสมการได้ พร้อมแยกตำแหน่งแถบออกจากระยะห่างแถบ",
-    "en": "Connect path difference to phase and fringe type, then read angles or screen distances to choose an equation. Distinguish fringe position from fringe spacing."
+    "th": "เชื่อมผลต่างทางเดินกับเฟสและชนิดแถบ แล้วอ่านมุมหรือระยะบนฉากเพื่อเลือกสมการได้ พร้อมแยกตำแหน่งแถบออกจากระยะห่างแถบ พร้อมอธิบายเหตุผลเลือกสูตร แปลงหน่วย และแทนค่าตัวเลขทีละขั้น",
+    "en": "Connect path difference to phase and fringe type, then read angles or screen distances to choose an equation. Distinguish fringe position from fringe spacing. Explain equation selection, unit conversion and numerical substitution step by step."
   },
   "steps": [
     {

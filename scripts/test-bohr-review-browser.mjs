@@ -118,18 +118,23 @@ try{
     }
   }
   console.log('PASS all 50 detailed solutions in TH/EN with real MathJax and source figures');
+  const mathWidths=[];
   for(const width of [390,820]){
     await page.setViewportSize({width,height:1100});
     for(const lang of ['th','en']){
       await win.locator(`[data-window-language="${lang}"]`).click();
-      for(const index of [12,30,31,42,47,48]){
+      for(const index of (width===390?expected.questions.map((_,i)=>i):[12,30,31,42,47,48])){
         await quiz.locator(`[data-question-jump="${index}"]`).click();await settle();
+        const overflow=await quiz.locator('[data-current-solution] mjx-container[display="true"]').evaluateAll(nodes=>nodes.filter(n=>n.querySelector('svg')?.getBoundingClientRect().width>n.getBoundingClientRect().width+2).map(n=>({math:n.textContent,width:n.getBoundingClientRect().width,svg:n.querySelector('svg').getBoundingClientRect().width})));
+        if(overflow.length)mathWidths.push({width,lang,question:index+1,overflow});
         const layout=await quiz.locator('html').evaluate(r=>({width:r.clientWidth,scroll:r.scrollWidth}));
         assert.ok(layout.scroll<=layout.width+2,`${width}/${lang}/Q${index+1}: ${JSON.stringify(layout)}`);
       }
       await quiz.locator('[data-current-solution]').scrollIntoViewIfNeeded();await page.screenshot({path:resolve(output,`q49-${width}-${lang}.png`)});
     }
   }
+  await writeFile(resolve(output,'math-width-report.json'),JSON.stringify(mathWidths,null,2));
+  assert.deepEqual(mathWidths,[],'Worked equations fit the narrow solution area without horizontal scrolling');
   await page.setViewportSize({width:1360,height:1000});
   await quiz.locator('[data-topic-review-open]').click();
   const sheet=page.frameLocator(`[data-tool-id="content-html-${sheetId}"] iframe`);

@@ -113,7 +113,11 @@ try {
     const dialog=page.locator('[data-html-print-dialog]'),paper=page.frameLocator('[data-html-print-frame]');
     for(const edition of ['blank','answers']){
       if(edition==='answers')await dialog.locator('[data-sheet-print-edition]').selectOption(edition);
-      await page.locator('[data-html-print-dialog][data-print-state="ready"]').waitFor({timeout:60000});
+      await page.waitForFunction(()=>['ready','error'].includes(document.querySelector('[data-html-print-dialog]')?.dataset.printState),{},{timeout:60000});
+      if(await dialog.getAttribute('data-print-state')!=='ready'){
+        await page.screenshot({path:resolve(output,`print-error-${lang}-${edition}.png`)});
+        throw Error(`Print ${lang}/${edition}: ${await dialog.locator('[data-print-status]').innerText()}`);
+      }
       assert.equal(await paper.locator('[data-sheet-slot]').count(),93);
       assert.equal(await paper.locator('[data-sheet-answer]').count(),edition==='blank'?0:93);
       assert.equal(await paper.locator('[data-hub-math-error]').count(),0);

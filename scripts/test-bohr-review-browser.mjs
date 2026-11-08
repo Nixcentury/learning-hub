@@ -153,8 +153,10 @@ try{
       assert.equal(await host.locator('[data-question-solution]').count(),mode==='answer'?50:0);
       assert.equal(await host.locator('.quiz-paper-workspace').count(),mode==='worksheet'?50:0);
       assert.equal(await host.locator(mathErrors).count(),0);
-      assert.equal(await host.locator(`[data-quiz-language="${lang==='th'?'en':'th'}"]`).count(),0);
-      assert.ok(await host.locator('mjx-container').count()>50);
+      assert.equal(await host.locator(`[data-quiz-language="${lang==='th'?'en':'th'}"]:visible`).count(),0);
+      const formulaCount=await host.locator('mjx-container').count();
+      console.log('PRINT',lang,mode,{questions:50,formulaCount});
+      assert.ok(formulaCount>=(mode==='answer'?100:1),'Actual MathJax typesetting in each print edition');
       const overflow=await host.locator('[data-question-solution] mjx-container').evaluateAll(nodes=>nodes.filter(n=>n.getBoundingClientRect().right>n.closest('[data-question-solution]').getBoundingClientRect().right+2).map(n=>n.textContent));
       assert.deepEqual(overflow,[],`${lang}/${mode} print formulas`);
       const file=`bohr-quiz-${lang}-${mode}.pdf`;

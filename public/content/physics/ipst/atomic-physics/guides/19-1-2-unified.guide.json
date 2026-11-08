@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-atomic-19-1-2-sheet",
-    "revision": "2026-11-03-unified-1",
-    "sha256": "c38f0e21f7f689428f6ea51baa4a8b9987e0e0348732b9714b7d365895ddce94"
+    "revision": "2026-11-08-self-study-steps",
+    "sha256": "eb677a27559d66d687f1072247c1c30ec11bbcc9c433994e4ad1f5ff67ac4179"
   },
   "title": {
     "th": "จากหลักฐานอะตอมถึงแบบจำลองโบร์และสเปกตรัม",
@@ -159,14 +159,24 @@
         "en": "A grating separates wavelengths through diffraction and interference.\nMeasure θ from the normal. First order uses d sinθ = λ, with d = 1/N when N is in lines per metre."
       },
       "story": {
-        "th": "ให้เด็กชี้แนวที่แสงผ่านตรงก่อน แล้วจึงชี้มุมที่วัดไปยังเส้นสี ใช้ภาพเกรตติงเดิมเป็นตัวเชื่อมกับบทแสง",
-        "en": "Identify the undeviated direction first, then the angle to a spectral line. Connect the grating diagram to wave optics."
+        "th": "ชี้ภาพคลื่นน้ำ ให้เทียบ 5λ กับ 4λ และ 4.5λ กับ 4λ แล้วค่อยโยง Δ ไปสู่ d sinθ ของช่องเกรตติง",
+        "en": "Compare the 5λ/4λ and 4.5λ/4λ paths in the water-wave figure, then connect Δ to d sinθ for grating openings."
       },
       "action": {
         "th": "ตอบคำถาม 6 แล้วอธิบายว่าความถี่แสงบอกพลังงานได้อย่างไรในคำถาม 7",
         "en": "Answer Question 6, then explain the frequency–energy connection in Question 7."
       },
       "links": [
+        {
+          "label": {
+            "th": "คลื่นน้ำและผลต่างทางเดิน",
+            "en": "Water-wave path difference"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "water-interference-review"
+          }
+        },
         {
           "label": {
             "th": "เกรตติงแยกแสง",
@@ -224,14 +234,44 @@
         "en": "Average left and right positions for the same colour.\nFor first order λ = d x̄/√(D² + x̄²). Use the same units for D and x, and distinguish sample data from actual measurements."
       },
       "story": {
-        "th": "ชี้อุปกรณ์และสามเหลี่ยมการวัด พาทำเส้นแดงของ H หนึ่งแถว จากนั้นให้ลองอีกสีเพื่อดูว่าจัดรูปและหน่วยได้เองหรือไม่",
-        "en": "Use the apparatus and geometry to work through the hydrogen red line, then try another colour independently."
+        "th": "เริ่มจากจุดประสงค์ แยกค่าที่วัดกับค่าที่คำนวณ ใช้รูป OC–CP–OP หา sinθ แล้วจัดรูป d sinθ = mλ เพื่อหา λ ก่อนให้กรอกตาราง",
+        "en": "Start with the aims and separate measured from calculated quantities. Use OC–CP–OP to find sinθ, then rearrange d sinθ = mλ for λ before filling the tables."
       },
       "action": {
         "th": "ทำแถว H แดงและ H ฟ้า แล้วตอบคำถาม 10 เรื่องการเทียบค่าที่วัดกับค่าอ้างอิง",
         "en": "Calculate the H red and cyan rows, then answer Question 10 on comparing a measurement with a reference."
       },
       "links": [
+        {
+          "label": {
+            "th": "จุดประสงค์การทดลอง",
+            "en": "Experiment aims"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "spectrum-objectives"
+          }
+        },
+        {
+          "label": {
+            "th": "เรขาคณิตระยะที่วัด",
+            "en": "Measurement geometry"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "spectrum-geometry"
+          }
+        },
+        {
+          "label": {
+            "th": "จัดรูปสูตรก่อนตาราง",
+            "en": "Formulas before the tables"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "spectrum-calculation-method"
+          }
+        },
         {
           "label": {
             "th": "ชุดทดลองและข้อมูล",

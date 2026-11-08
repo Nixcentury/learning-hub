@@ -110,3 +110,17 @@ New original explanatory SVGs (English image labels shared by TH/EN):
 These diagrams are newly authored from the physics in the supplied sources, not scans or raw experimental results. Source apparatus and results were checked against student pp.63–64 (PDF pp.76–77) and teacher pp.56–58. The end-of-activity questions remain in their original order. The summary table repeats the worksheet's six calculated wavelengths (655, 492, 432; 655, 631, 603 nm), rather than replacing them with reference wavelengths. The sample data and classroom rounding remain explicitly labelled.
 
 The K/U/E tables are deliberately illustrative arithmetic values, not allowed hydrogen energy levels or measurements. They explore the circular-Coulomb-orbit relationship, followed by a derivation and then actual hydrogen examples. The existing `energy-sign` slot now holds part (a), total E at n = 2; K, U and the sum check have their own new response slots. Only the agreed `classical-acceleration` and `postulate-not-proof` response keys were removed. All other old keys remain. The five modified retained answers are documented in the review QA note.
+
+
+## Self-study detail update — 8 November 2026
+
+The active unified sheet retains all 93 answer-slot IDs per language. It now expands 39 worked solutions plus the energy/speed table calculations, clarifies the radius-ratio and Rydberg-sign questions, and adds experiment aims and a visible derivation before the data tables. The guide links to each new preparation section and uses the updated sheet revision/fingerprint. The review quiz is deferred while the learning sheet is completed first, as requested.
+
+Two new original SVG teaching diagrams:
+
+- `16-water-path-difference.svg`: initially in-phase coherent water sources spaced 3λ apart. The marked paths are 5λ/4λ at P and 4.5λ/4λ at Q. Solid fronts are crests; dashed fronts are troughs. The geometry is calculated to match the labelled path differences. Complete cancellation is qualified by equal amplitudes in the text.
+- `17-spectrum-distance-geometry.svg`: the actual ruler-viewing convention: O is eye/grating, C is the tube/central ruler mark, and P is the apparent spectral-line reading. OC = D, CP = x and OP is the hypotenuse. The triangle is illustrative and is not the sample data drawn to scale.
+
+Physics checked against [OpenStax Physics §17.1](https://openstax.org/books/physics/pages/17-1-understanding-diffraction-and-interference), [University Physics Vol.3 §3.2](https://openstax.org/books/university-physics-volume-3/pages/3-2-mathematics-of-interference), and [College Physics 2e §30.3](https://openstax.org/books/college-physics-2e/pages/30-3-bohrs-theory-of-the-hydrogen-atom). No publisher artwork was copied for these two diagrams. The sample measurements and rounded classroom constants from the existing worksheet are retained.
+
+Validation: content/guide validation and production build; related sheet/guide/math/print unit tests; focused real-Hub browser/MathJax/print checks via `.github/workflows/bohr-self-study.yml`. Completed CI results belong in the PR; presence of the workflow alone is not a pass. Physical iPad/Safari and paper-printer output are outside this headless-browser check.

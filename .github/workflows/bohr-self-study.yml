@@ -1,0 +1,40 @@
+name: Bohr sheet self-study
+on:
+  pull_request:
+    paths:
+      - 'public/content/physics/ipst/atomic-physics/19-1-2-evidence-bohr-learning-sheet.html'
+      - 'public/content/physics/ipst/atomic-physics/guides/19-1-2-unified.guide.json'
+      - 'public/content/physics/ipst/atomic-physics/assets/19-1-2/**'
+      - 'scripts/test-bohr-self-study-browser.mjs'
+      - '.github/workflows/bohr-self-study.yml'
+permissions:
+  contents: read
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Install isolated browser tools
+        run: |
+          npm install --prefix work/qa-tools --no-save --package-lock=false playwright@1.62.1
+          node work/qa-tools/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Check detailed Bohr sheet, formulas, figures and print exports
+        env:
+          QA_BUILT: '1'
+        run: PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/work/qa-tools/node_modules/playwright" node scripts/test-bohr-self-study-browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bohr-self-study-evidence
+          path: qa-output/bohr-self-study/
+          if-no-files-found: ignore

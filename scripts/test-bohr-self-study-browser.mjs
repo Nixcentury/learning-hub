@@ -78,6 +78,10 @@ try {
     await win.locator(`[data-window-language="${lang}"]`).click();
     const active=sheet.locator(`[data-content-lang="${lang}"]`);await active.waitFor({state:'visible'});
     assert.equal(await active.locator('[data-sheet-slot]').count(),93);
+    // The adapted worked answer uses 5→2: its actual leading stem must agree.
+    const exampleStem=active.locator('[data-guide-anchor="section-15"] p').first();
+    assert.equal(await exampleStem.locator('[data-math-tex="n=5"]').count(),1);
+    assert.equal(await exampleStem.locator('[data-math-tex="n=4"]').count(),0);
     assert.ok(await active.evaluate(r=>Boolean(r.querySelector('[data-guide-anchor="spectrum-calculation-method"]').compareDocumentPosition(r.querySelector('[data-guide-anchor="section-4"] table'))&Node.DOCUMENT_POSITION_FOLLOWING)));
     await active.locator('img').evaluateAll(imgs=>Promise.all(imgs.map(img=>img.decode())));
     assert.ok(await active.locator('img').evaluateAll(imgs=>imgs.every(img=>img.complete&&img.naturalWidth>0)));

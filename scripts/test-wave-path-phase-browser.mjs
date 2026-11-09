@@ -104,7 +104,7 @@ try {
       await geometry.screenshot({path:resolve(output,`geometry-${width}-${lang}.png`)});
       const layout=await sheet.locator('html').evaluate(n=>({client:n.clientWidth,scroll:n.scrollWidth}));
       assert.ok(layout.scroll<=layout.client+2,`${width}/${lang}: ${JSON.stringify(layout)}`);
-      const overflows=await active.locator('section.lesson-section:has(img[src$="20-midpoint-screen-geometry.svg"]) [data-hub-math="display"]').evaluateAll(nodes=>nodes.filter(n=>n.scrollWidth>n.clientWidth+2).map(n=>n.getAttribute('data-math-tex')));
+      const overflows=await active.locator('.wave-path-equation [data-hub-math]').evaluateAll(nodes=>nodes.filter(n=>n.scrollWidth>n.clientWidth+2).map(n=>n.getAttribute('data-math-tex')));
       assert.deepEqual(overflows,[],`${width}/${lang} new display math fits`);
     }
   }
@@ -122,6 +122,9 @@ try {
       assert.equal(await paper.locator('[data-sheet-slot]').count(),104);
       assert.equal(await paper.locator('[data-sheet-answer]').count(),edition==='blank'?0:104);
       assert.equal(await paper.locator('[data-hub-math-error]').count(),0);
+      const equationHeights=await paper.locator('.wave-path-equation mjx-container > svg').evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().height));
+      assert.equal(equationHeights.length,9);
+      assert.ok(equationHeights.every(h=>h>0&&h<80),`${lang}/${edition}: scaled equations ${equationHeights}`);
       assert.equal(await paper.locator(`[data-content-lang="${lang==='th'?'en':'th'}"]`).count(),0);
       for(const name of figures)assert.ok(await paper.locator(`img[src$="${name}"]`).evaluate(async n=>{await n.decode();return n.naturalWidth>0;}));
       const html=await paper.locator('html').evaluate(n=>'<!doctype html>'+n.outerHTML);

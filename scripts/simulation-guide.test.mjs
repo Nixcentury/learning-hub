@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 import { createSimulationGuideTool, simulationGuideFor, simulationGuideExample, validateSimulationGuide, simulationGuideCatalog } from '../js/simulation-guide-model.js';
 import { mountSimulationGuide, createSimulationGuideHighlighter } from '../js/simulation-guide.js';
 import { waveMiniPlayGuide } from '../public/content/physics/ipst/wave-optics/assets/10-1-sim/guide-data.js';
+import { doubleSlitPlayGuide } from '../public/content/physics/ipst/wave-optics/assets/10-2-lab/guide-data.js';
 import { renderLearningObjectives } from '../public/content/physics/ipst/wave-optics/assets/10-1-sim/learning-objectives.js';
 
 const tool = { id:'content-simulation-lab', titleTh:'ทดลอง',titleEn:'Lab', source:'https://school.test/hub/content/physics/lab.html',
@@ -13,13 +14,33 @@ const hub='https://school.test/hub/index.html';
 const html=readFileSync(new URL('../public/pages/tools/simulation-guide-player.html',import.meta.url),'utf8');
 
 test('guide windows bind only authored simulation identities and leave other activities empty',()=>{
-  assert.deepEqual(Object.keys(simulationGuideCatalog),['physics-ipst-wave-optics-10-1-mini-sim']);
+  assert.deepEqual(Object.keys(simulationGuideCatalog), [waveMiniPlayGuide.contentId, doubleSlitPlayGuide.contentId]);
   const guide=createSimulationGuideTool(tool,hub);
   assert.equal(guide.simulationGuideOwnerId,tool.id);assert.equal(guide.context.toolKind,'simulation-guide');
   assert.equal(guide.page,'https://school.test/hub/pages/tools/simulation-guide-player.html');
   assert.equal(createSimulationGuideTool({...tool,context:{...tool.context,toolKind:'html'}},hub),null);
   assert.equal(createSimulationGuideTool({...tool,id:'bad"><script>'},hub),null);
   assert.equal(simulationGuideFor(tool,hub),null);
+});
+
+test('the double-slit lab opens its six-mission reading guide through the actual simulation identity', () => {
+  const guide = doubleSlitPlayGuide;
+  const lab = { ...tool, source: new URL(guide.source, hub).href, context: { ...tool.context, contentId: guide.contentId } };
+  assert.equal(simulationGuideFor(lab, hub), guide);
+  assert.deepEqual(validateSimulationGuide(guide), []);
+  const { document } = parseHTML(html);
+  const controller = mountSimulationGuide({ document, contentId: guide.contentId, title: guide.title, state: {}, guide });
+  for (const language of ['th', 'en']) {
+    controller.setLanguage(language);
+    for (const section of guide.sections) {
+      const anchor = `guide-reading-${section.id}`;
+      assert.ok(document.querySelector(`a[href="#${anchor}"]`));
+      assert.ok(document.getElementById(anchor).textContent.includes(section.objectives[0][language]));
+    }
+  }
+  assert.equal(guide.sections.length, 6);
+  assert.equal(document.querySelector('button'), null);
+  controller.dispose();
 });
 
 test('reading guide binds four complete sections and validates bilingual articles without tour steps',()=>{

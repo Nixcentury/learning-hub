@@ -1,7 +1,11 @@
 import { waveMiniPlayGuide } from "../public/content/physics/ipst/wave-optics/assets/10-1-sim/guide-data.js";
+import { doubleSlitPlayGuide } from "../public/content/physics/ipst/wave-optics/assets/10-2-lab/guide-data.js";
 
 // Bind authored instructions to the real simulation identity and exact source.
-export const simulationGuideCatalog = Object.freeze({ [waveMiniPlayGuide.contentId]: waveMiniPlayGuide });
+export const simulationGuideCatalog = Object.freeze({
+  [waveMiniPlayGuide.contentId]: waveMiniPlayGuide,
+  [doubleSlitPlayGuide.contentId]: doubleSlitPlayGuide,
+});
 const idPattern = /^[a-zA-Z][a-zA-Z0-9_-]{0,127}$/;
 const windowTargets = new Set(['guide', 'language', 'split']);
 

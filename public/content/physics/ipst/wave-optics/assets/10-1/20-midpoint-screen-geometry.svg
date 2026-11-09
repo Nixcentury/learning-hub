@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 355" role="img" aria-labelledby="title desc">
+<title id="title">Angle and distances measured from the midpoint</title>
+<desc id="desc">S1 and S2 are separated by d and meet the screen at P along the paths r1 and r2. M is their midpoint. MO is the perpendicular distance L to the screen, and OP is x. The dashed hypotenuse MP has length square root of L squared plus x squared.</desc>
+<defs>
+  <marker id="ray-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="strokeWidth"><path d="M 0 0 L 7 3.5 L 0 7 Z" fill="#2c5987"/></marker>
+  <marker id="dim-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M 0 0 L 7 3.5 L 0 7" fill="none" stroke="#607487" stroke-width="1"/></marker>
+</defs>
+<rect width="600" height="355" fill="#fff"/>
+<g font-family="DejaVu Sans, Arial, sans-serif">
+  <path d="M 105.000 246.000 L 499.000 246.000 L 499.000 70.580 Z" fill="#eaf5f4"/>
+  <path d="M 499.000 51.000 L 499.000 307.000" fill="none" stroke="#1c2f46" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 105.000 204.000 L 105.000 288.000" fill="none" stroke="#607487" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 105.000 246.000 L 499.000 246.000" fill="none" stroke="#607487" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6"/>
+  <path d="M 105.000 204.000 L 499.000 70.580" fill="none" stroke="#2c5987" stroke-width="2.9" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 105.000 288.000 L 499.000 70.580" fill="none" stroke="#2c5987" stroke-width="2.9" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 105.000 246.000 L 499.000 70.580" fill="none" stroke="#1c746e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="9 6"/>
+  <path d="M 484.000 246.000 L 484.000 231.000 L 499.000 231.000" fill="none" stroke="#1c2f46" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 167.000 246.000 A 62 62 0 0 0 161.640 220.782" fill="none" stroke="#1c746e" stroke-width="2.6"/>
+  <path d="M 43.000 204.000 L 71.000 204.000" fill="none" stroke="#607487" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 43.000 288.000 L 71.000 288.000" fill="none" stroke="#607487" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 43.000 206.000 L 43.000 286.000" fill="none" stroke="#607487" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" marker-start="url(#dim-arrow)" marker-end="url(#dim-arrow)"/>
+  <path d="M 510.000 70.580 L 548.000 70.580" fill="none" stroke="#607487" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 510.000 246.000 L 548.000 246.000" fill="none" stroke="#607487" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 548.000 72.580 L 548.000 244.000" fill="none" stroke="#607487" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" marker-start="url(#dim-arrow)" marker-end="url(#dim-arrow)"/>
+  <path d="M 105.000 304.000 L 105.000 337.000" fill="none" stroke="#607487" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 499.000 315.000 L 499.000 337.000" fill="none" stroke="#607487" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 107.000 337.000 L 497.000 337.000" fill="none" stroke="#607487" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" marker-start="url(#dim-arrow)" marker-end="url(#dim-arrow)"/>
+  <path d="M 245.000 45.000 L 278.000 45.000" fill="none" stroke="#1c746e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="9 6"/>
+  <text x="292.000" y="52.000" font-size="24" fill="#1c746e" text-anchor="start" font-weight="500">MP = √(L² + x²)</text>
+  <text x="28.000" y="254.000" font-size="24" fill="#1c2f46" text-anchor="end" font-weight="500">d</text>
+  <text x="564.000" y="166.290" font-size="24" fill="#1c2f46" text-anchor="start" font-weight="500">x</text>
+  <text x="302.000" y="327.000" font-size="24" fill="#1c2f46" text-anchor="middle" font-weight="500">L</text>
+  <text x="169.000" y="237.000" font-size="24" fill="#1c746e" text-anchor="start" font-weight="500">θ</text>
+  <text x="264.000" y="136.000" font-size="23" fill="#2c5987" text-anchor="start" font-weight="500">r₁</text>
+  <text x="333.000" y="190.000" font-size="23" fill="#2c5987" text-anchor="start" font-weight="500">r₂</text>
+  <circle cx="105.000" cy="204.000" r="4.8" fill="#1c2f46"/>
+  <circle cx="105.000" cy="288.000" r="4.8" fill="#1c2f46"/>
+  <circle cx="105.000" cy="246.000" r="4" fill="#1c2f46"/>
+  <circle cx="499.000" cy="70.580" r="5.3" fill="#1c746e"/>
+  <circle cx="499.000" cy="246.000" r="4" fill="#1c2f46"/>
+  <text x="93.000" y="197.000" font-size="24" fill="#1c2f46" text-anchor="end" font-weight="500">S₁</text>
+  <text x="93.000" y="295.000" font-size="24" fill="#1c2f46" text-anchor="end" font-weight="500">S₂</text>
+  <text x="93.000" y="254.000" font-size="24" fill="#1c2f46" text-anchor="end" font-weight="500">M</text>
+  <text x="511.000" y="61.580" font-size="23" fill="#1c746e" text-anchor="start" font-weight="500">P</text>
+  <text x="510.000" y="270.000" font-size="23" fill="#1c2f46" text-anchor="start" font-weight="500">O</text>
+</g>
+</svg>

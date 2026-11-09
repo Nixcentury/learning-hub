@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 324" role="img" aria-labelledby="title desc">
+<title id="title">Path difference for a distant screen</title>
+<desc id="desc">The two rays and the dashed midpoint direction MP are nearly parallel. H is the perpendicular foot from S1 to the lower ray. S2H is the extra distance in the parallel-ray construction. The angle at M is measured from axis MO.</desc>
+<defs>
+  <marker id="ray-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="strokeWidth"><path d="M 0 0 L 7 3.5 L 0 7 Z" fill="#2c5987"/></marker>
+  <marker id="dim-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M 0 0 L 7 3.5 L 0 7" fill="none" stroke="#607487" stroke-width="1"/></marker>
+</defs>
+<rect width="600" height="324" fill="#fff"/>
+<g font-family="DejaVu Sans, Arial, sans-serif">
+  <path d="M 120.000 107.000 L 120.000 237.000 L 168.304 215.493 Z" fill="#f9eee7"/>
+  <path d="M 120.000 107.000 L 120.000 237.000" fill="none" stroke="#607487" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 120.000 172.000 L 558.000 172.000" fill="none" stroke="#607487" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6"/>
+  <path d="M 120.000 172.000 L 408.680 43.471" fill="none" stroke="#1c746e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="9 6"/>
+  <path d="M 120.000 107.000 L 279.870 35.821" fill="none" stroke="#2c5987" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ray-arrow)"/>
+  <path d="M 120.000 237.000 L 517.392 60.070" fill="none" stroke="#2c5987" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ray-arrow)"/>
+  <path d="M 120.000 107.000 L 168.304 215.493" fill="none" stroke="#607487" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6"/>
+  <path d="M 120.000 237.000 L 168.304 215.493" fill="none" stroke="#a6401e" stroke-width="7.3" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 179.267 210.613 L 174.386 199.650 L 163.424 204.531" fill="none" stroke="#1c2f46" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 228.000 172.000 A 108 108 0 0 0 218.663 128.072" fill="none" stroke="#1c746e" stroke-width="2.6"/>
+  <path d="M 58.000 107.000 L 91.000 107.000" fill="none" stroke="#607487" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 58.000 237.000 L 91.000 237.000" fill="none" stroke="#607487" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 58.000 109.000 L 58.000 235.000" fill="none" stroke="#607487" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" marker-start="url(#dim-arrow)" marker-end="url(#dim-arrow)"/>
+  <text x="43.000" y="180.000" font-size="24" fill="#1c2f46" text-anchor="end" font-weight="500">d</text>
+  <path d="M 144.152 226.247 L 193.000 269.000 L 222.000 269.000" fill="none" stroke="#a6401e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="233.000" y="275.000" font-size="24" fill="#a6401e" text-anchor="start" font-weight="650">S₂H = d sin θ</text>
+  <text x="233.000" y="303.000" font-size="22" fill="#a6401e" text-anchor="start" font-weight="500">Δr ≈ S₂H</text>
+  <circle cx="120.000" cy="107.000" r="4.8" fill="#1c2f46"/>
+  <circle cx="120.000" cy="237.000" r="4.8" fill="#1c2f46"/>
+  <circle cx="120.000" cy="172.000" r="4" fill="#1c2f46"/>
+  <circle cx="168.304" cy="215.493" r="5.4" fill="#a6401e"/>
+  <text x="108.000" y="100.000" font-size="24" fill="#1c2f46" text-anchor="end" font-weight="500">S₁</text>
+  <text x="108.000" y="245.000" font-size="24" fill="#1c2f46" text-anchor="end" font-weight="500">S₂</text>
+  <text x="108.000" y="180.000" font-size="24" fill="#1c2f46" text-anchor="end" font-weight="500">M</text>
+  <text x="181.000" y="238.000" font-size="23" fill="#a6401e" text-anchor="start" font-weight="500">H</text>
+  <text x="236.000" y="151.000" font-size="25" fill="#1c746e" text-anchor="start" font-weight="500">θ</text>
+  <text x="194.000" y="52.000" font-size="23" fill="#2c5987" text-anchor="start" font-weight="500">S₁P</text>
+  <text x="441.000" y="118.000" font-size="23" fill="#2c5987" text-anchor="start" font-weight="500">S₂P</text>
+  <text x="387.000" y="82.000" font-size="22" fill="#1c746e" text-anchor="start" font-weight="500">MP</text>
+  <text x="554.000" y="197.000" font-size="22" fill="#607487" text-anchor="end" font-weight="500">MO</text>
+</g>
+</svg>

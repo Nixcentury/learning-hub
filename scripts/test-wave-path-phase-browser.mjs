@@ -104,7 +104,7 @@ try {
       await geometry.screenshot({path:resolve(output,`geometry-${width}-${lang}.png`)});
       const layout=await sheet.locator('html').evaluate(n=>({client:n.clientWidth,scroll:n.scrollWidth}));
       assert.ok(layout.scroll<=layout.client+2,`${width}/${lang}: ${JSON.stringify(layout)}`);
-      const overflows=await active.locator('h3').filter({hasText:/^7\.[1-3]/}).evaluateAll(headings=>headings.flatMap(h=>[...h.parentElement.querySelectorAll('mjx-container[display="true"]')]).filter(n=>n.querySelector('svg')?.getBoundingClientRect().width>n.getBoundingClientRect().width+2).map(n=>n.textContent));
+      const overflows=await active.locator('section.lesson-section:has(img[src$="20-midpoint-screen-geometry.svg"]) [data-hub-math="display"]').evaluateAll(nodes=>nodes.filter(n=>n.scrollWidth>n.clientWidth+2).map(n=>n.getAttribute('data-math-tex')));
       assert.deepEqual(overflows,[],`${width}/${lang} new display math fits`);
     }
   }

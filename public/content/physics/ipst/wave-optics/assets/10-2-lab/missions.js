@@ -9,30 +9,97 @@
     ['เปิดเส้นทาง r₁/r₂ แล้วลาก P บนฉาก หรือกด P ตัวอย่าง คำนวณ Δr และระบุว่าจุดอยู่บนแนวใด','Show r₁/r₂ paths. Drag P along the screen or choose the example point. Calculate Δr and identify its locus.'],
     ['กดดูกรณีใกล้/มุมมาก และไกล/มุมเล็ก เปิดสูตรเพื่อเทียบค่าจริง d|sin θ| และ d|x|/L','Inspect both near/large-angle and far/small-angle cases. Compare exact Δr, d|sin θ| and d|x|/L.'],
     ['เลือก A/B/C ทีละชุด วัดแถบสว่างกลางและบันทึกทั้งสามชุดที่เฟส 0° และ L = 1 m แล้วตอบจากการเปรียบเทียบ','At 0° and L = 1 m, select A/B/C, measure the central fringe and record each set. Then compare.'],
-    ['ใช้บันทึกล่าสุด แปลงหน่วยแล้วคำนวณ λ จาก dΔx/L ถ้าต่างจากค่าเลเซอร์ ให้ย้อนตรวจขอบแถบที่เลือก','Use your latest record. Convert units and calculate λ from dΔx/L. If it differs from the laser value, recheck your selected boundaries.'],
+    ['ใช้บันทึกล่าสุด อ่านระยะสลิต ระยะฉาก และระยะห่างแถบ แล้วจัดหน่วยก่อนคำนวณความยาวคลื่น','Use your latest record. Read slit separation, screen distance and measured spacing, then align the units before calculating wavelength.'],
   ];
   function valid(s){return !!s&&typeof s.enabled==='boolean'&&typeof s.answerOpen==='boolean'&&Number.isInteger(s.current)&&s.current>=0&&s.current<6&&Array.isArray(s.completed)&&new Set(s.completed).size===s.completed.length&&s.completed.every(i=>Number.isInteger(i)&&i>=0&&i<6)&&Array.isArray(s.answers)&&s.answers.length===6&&s.answers.every(a=>a&&typeof a==='object'&&!Array.isArray(a)&&Object.keys(a).every(k=>['q0','q1'].includes(k))&&Object.values(a).every(v=>typeof v==='string'&&v.length<=80))&&['attempted','played'].every(k=>Array.isArray(s[k])&&s[k].length===6&&s[k].every(v=>typeof v==='boolean'))&&typeof s.near==='boolean'&&typeof s.far==='boolean';}
-  const choice=(th,en,options,answer,hint,explain)=>({type:'choice',text:[th,en],options,answer,hint,explain});
-  const kinds=[['node','บัพ','Node'],['antinode','ปฏิบัพ','Antinode'],['between','อยู่ระหว่างแนว','Between loci']];
-  function questions(id,s){
-    const g=W.geometry(s.water),last=s.records.at(-1);
-    if(id===0)return [choice('ที่ P บนแนวกลาง เมื่อแหล่งเฟสตรงกัน จุดนี้เป็นอะไร?','With in-phase sources, what is P on the centre line?',kinds,'antinode',['ลองเปิดเส้นทางแล้วเทียบ r₁ กับ r₂','Show the paths and compare r₁ with r₂.'],['r₁ = r₂ ทำให้ Δr = 0 คลื่นเริ่มเฟสตรงกันจึงเสริมเต็มที่ ได้แอมพลิจูด 2A','Equal paths give Δr = 0. In-phase sources reinforce, giving amplitude 2A.'])];
-    if(id===1)return [choice('เมื่อแหล่งเฟสตรงข้าม 180° แนวกลางเป็นอะไร?','With sources 180° apart, what is the centre line?',kinds,'node',['ผลต่างทางเดินยังเป็นศูนย์ แต่เฟสเริ่มต้นเปลี่ยน','The paths are still equal, but the initial phase changed.'],['บนแนวกลาง r₁ = r₂ จึงคงความต่างเฟส 180° และหักล้างสมบูรณ์ เมื่อแอมพลิจูดเท่ากัน','Equal paths preserve the initial 180° difference; equal received amplitudes cancel completely.'])];
-    if(id===2)return [{type:'number',text:[`P ปัจจุบัน: r₁ = ${g.r1.toFixed(4)}, r₂ = ${g.r2.toFixed(4)} cm จงหา Δr (cm)`,`At P: r₁ = ${g.r1.toFixed(4)}, r₂ = ${g.r2.toFixed(4)} cm. Find Δr in cm.`],answer:g.delta,tolerance:.01,hint:['ใช้ |r₂ − r₁| หน่วยเดียวกันก่อนลบ','Use |r₂ − r₁| with common units.'],explain:[`Δr = |r₂ − r₁| ≈ ${g.delta.toFixed(4)} cm; Δr/λ ≈ ${g.ratio.toFixed(4)}`,`Δr = |r₂ − r₁| ≈ ${g.delta.toFixed(4)} cm; Δr/λ ≈ ${g.ratio.toFixed(4)}`]},choice('P ปัจจุบันอยู่บน/ใกล้แนวใด?','Which locus is the current P on or near?',[['node','บน/ใกล้แนวบัพ','On/near a nodal locus'],['antinode','บน/ใกล้แนวปฏิบัพ','On/near an antinodal locus'],['between','อยู่ระหว่างแนว','Between loci']],W.nearKind(s.water),['ลองใช้ P ตัวอย่างเพื่อให้ได้ผลต่างทางเดินครึ่งความยาวคลื่นพอดี จุดที่ลากเองอาจอยู่ระหว่างแนว การตอบใกล้แนวยอม Δr/λ คลาดเคลื่อน ±0.04 เพื่อการแตะภาพ','The example point gives an exact half-wavelength path difference; a freely dragged point may lie between loci. Near-locus answers allow ±0.04 in Δr/λ for plotting tolerance.'],['เทียบ Δr/λ กับเงื่อนไขของเฟสแหล่งกำเนิด: เฟส 0° เสริมที่จำนวนเต็ม หักล้างที่ครึ่งจำนวนคี่; เฟส 180° สลับเงื่อนไข','Compare Δr/λ with the source-phase conditions: at 0°, integers reinforce and half-integers cancel; 180° exchanges these conditions.'])];
-    if(id===3)return [choice('d|sin θ| ใกล้ผลต่างทางเดินจริงขึ้นเมื่อใด?','When is d|sin θ| a better path-difference approximation?', [['far','ฉากไกลมากเมื่อเทียบกับ d','Screen far away compared with d'],['near','ฉากอยู่ใกล้แหล่งกำเนิด','Screen close to the sources'],['always','เท่ากันพอดีทุกกรณี','Exactly equal in all cases']],'far',['ดูอัตราส่วน L/d ในสองกรณี','Compare L/d in the two cases.'],['เมื่อฉากไกลเมื่อเทียบกับ d ทางเดินสองเส้นมีทิศเกือบขนานกัน จึงประมาณ Δr ด้วย d|sin θ| ได้','For a distant screen relative to d, the two paths are nearly parallel, permitting d|sin θ|.']),choice('การใช้ d|x|/L ต้องมีเงื่อนไขเพิ่มอะไร?','What extra condition is needed for d|x|/L?',[['small','มุม θ เล็ก หรือ |x| น้อยกว่า L มาก','Small θ, or |x| much smaller than L'],['large','มุม θ ยิ่งมากยิ่งดี','Larger θ is better'],['phase','ต้องเป็นเฟสตรงข้ามเท่านั้น','Only opposite-phase sources']],'small',['พิจารณา sin θ ≈ tan θ','Consider sin θ ≈ tan θ.'],['มุมเล็กทำให้ sin θ ≈ tan θ = x/L ส่วนเฟสเริ่มต้นใช้ตัดสินเสริม/หักล้าง ไม่เปลี่ยนระยะทางเรขาคณิต','Small angles permit sin θ ≈ tan θ = x/L. Initial phase changes reinforcement, not geometrical path lengths.'])];
-    if(id===4)return [choice('เปลี่ยน A เป็น B: d เพิ่มสองเท่า โดย λ และ L คงเดิม ระยะแถบเป็นอย่างไร?','From A to B, d doubles at fixed λ and L. What happens to fringe spacing?',[['half','เหลือประมาณครึ่งหนึ่ง','Approximately halves'],['double','เพิ่มเป็นสองเท่า','Doubles'],['same','เท่าเดิม','Unchanged']],'half',['ใช้ Δx ≈ λL/d','Use Δx ≈ λL/d.'],['d อยู่ในตัวหาร จึงได้ Δx ของ A ประมาณสองเท่าของ B','Since d is in the denominator, A has approximately twice B’s spacing.']),choice('เปรียบเทียบ B กับ C ที่ d และ L เท่ากัน ชุดใดมีแถบห่างกว่า?','At equal d and L, which has wider spacing: B or C?',[['C','C สีแดง','C, red'],['B','B สีเขียว','B, green'],['same','เท่ากัน','Equal']],'C',['เทียบความยาวคลื่น 532 กับ 650 nm','Compare 532 and 650 nm.'],['C ใช้ λ = 650 nm มากกว่า B ที่ 532 nm จึงมีระยะแถบมากกว่า','C uses 650 nm rather than B’s 532 nm, so its spacing is larger.'])];
-    const width=last?Number(M.measurement(last.cursors).toFixed(2)):0,value=last?M.inferLambda(last.config,width):0;
-    return [{type:'number',text:last?[`บันทึก ${last.id}: d = ${last.config.slit} μm, L = ${last.config.distance.toFixed(1)} m, Δx = ${width.toFixed(2)} mm จงหา λ (nm)`,`Trial ${last.id}: d = ${last.config.slit} μm, L = ${last.config.distance.toFixed(1)} m, Δx = ${width.toFixed(2)} mm. Find λ in nm.`]:['บันทึกผลการวัดก่อน','Record a measurement first.'],answer:value,tolerance:Math.max(1,Math.abs(value)*.005),hint:['แปลง μm เป็น 10⁻⁶ m และ mm เป็น 10⁻³ m แล้วใช้ λ ≈ dΔx/L','Convert μm to 10⁻⁶ m and mm to 10⁻³ m, then use λ ≈ dΔx/L.'],explain:[`จากค่าที่วัดได้ λ ≈ ${value.toFixed(1)} nm ค่าตั้งของเลเซอร์คือ ${last?M.wavelengths[last.config.color]:0} nm หากต่างกันให้ตรวจขอบแถบและการอ่านสเกล`,`Your measurement gives λ ≈ ${value.toFixed(1)} nm. The configured laser is ${last?M.wavelengths[last.config.color]:0} nm; if different, recheck boundaries and scale reading.`]}];
+  const choice = (th, en, options, answer, hint) => ({
+    type: 'choice', text: [th, en], options, answer, hint,
+  });
+  const kinds = [
+    ['node', 'บัพ', 'Node'],
+    ['antinode', 'ปฏิบัพ', 'Antinode'],
+    ['between', 'อยู่ระหว่างแนว', 'Between loci'],
+  ];
+
+  function trialForPreset(records, key) {
+    return records.findLast(record => M.preset(record.config) === key && (record.phase ?? 0) === 0);
+  }
+
+  function questions(id, state) {
+    if (id === 0) return [choice(
+      'เมื่อแหล่งเริ่มเฟสตรงกัน P ที่แนวกลางเป็นจุดชนิดใด?',
+      'For initially in-phase sources, what kind of point is P on the centre line?',
+      kinds, 'antinode',
+      ['สังเกตการสั่นที่ P หลายจังหวะ แล้วเทียบกับความหมายของบัพและปฏิบัพ', 'Watch P over several cycles and compare with the meanings of node and antinode.'],
+    )];
+    if (id === 1) return [choice(
+      'หลังเปลี่ยนเฟสเริ่มต้นเป็น 180° จุด P เดิมบนแนวกลางเป็นจุดชนิดใด?',
+      'After setting the initial phase difference to 180°, what kind of point is the same centre-line P?',
+      kinds, 'node',
+      ['เปรียบเทียบการสั่นที่ P ตำแหน่งเดิมก่อนและหลังเปลี่ยนเฟส', 'Compare the motion at the same P before and after changing phase.'],
+    )];
+    if (id === 2) {
+      const geometry = W.geometry(state.water);
+      const r1 = geometry.r1.toFixed(4), r2 = geometry.r2.toFixed(4);
+      return [
+        {
+          type: 'number', unit: 'cm',
+          text: [
+            `ที่ P ปัจจุบัน คลื่นเดินทางจากแหล่งแรก ${r1} cm และจากแหล่งที่สอง ${r2} cm ผลต่างทางเดินมีขนาดเท่าใด?`,
+            `At the current P, the paths from the two sources are ${r1} cm and ${r2} cm. Find the magnitude of the path difference.`,
+          ],
+          answer: geometry.delta, tolerance: .01,
+          hint: ['อ่านความยาวทั้งสองเส้นของ P เดียวกัน แล้วตรวจว่าหน่วยตรงกัน', 'Use both path lengths for the same P and check that the units match.'],
+        },
+        choice(
+          `ใช้ P เดิมกับ λ = ${state.water.wavelength} cm และเฟส ${state.water.phase}° จุด P อยู่บนหรือใกล้แนวชนิดใด?`,
+          `Use the same P with λ = ${state.water.wavelength} cm and ${state.water.phase}° source phase. Which locus is P on or near?`,
+          [['node', 'บนหรือใกล้แนวบัพ', 'On or near a nodal locus'], ['antinode', 'บนหรือใกล้แนวปฏิบัพ', 'On or near an antinodal locus'], kinds[2]],
+          W.nearKind(state.water),
+          ['ใช้ผลต่างทางเดินที่เพิ่งคำนวณร่วมกับความยาวคลื่นและเฟสของกรณีนี้', 'Use your path difference together with this case’s wavelength and phase.'],
+        ),
+      ];
+    }
+    if (id === 3) return [
+      choice('จากข้อมูลสองกรณี d|sin θ| ใกล้ค่าจริงขึ้นเมื่อใด?', 'From the two cases, when is d|sin θ| closer to the exact value?',
+        [['far', 'ฉากไกลมากเมื่อเทียบกับระยะห่างแหล่ง d', 'The screen is far compared with source separation d'], ['near', 'ฉากอยู่ใกล้แหล่งกำเนิด', 'The screen is near the sources'], ['always', 'เท่ากับค่าจริงทุกกรณี', 'It matches the exact value in every case']], 'far',
+        ['เทียบ L/d กับความต่างระหว่างค่าจริงและค่าประมาณในแต่ละกรณี', 'Compare L/d and the difference between the exact and approximate values in each case.']),
+      choice('การประมาณผลต่างทางเดินด้วย d|x|/L ต้องมีเงื่อนไขเพิ่มอะไร?', 'What additional condition does the d|x|/L approximation need?',
+        [['small', 'มุม θ เล็ก หรือ |x| น้อยกว่า L มาก', 'Small θ, or |x| much smaller than L'], ['large', 'มุม θ มีขนาดใหญ่', 'A large angle θ'], ['phase', 'สองแหล่งเริ่มเฟสตรงข้าม', 'The sources start in opposite phase']], 'small',
+        ['ดูมุมของสองกรณี แล้วเทียบค่าประมาณแบบใช้ x กับค่าจริง', 'Compare the angles and the screen-offset estimates with the exact values.']),
+    ];
+    if (id === 4) return [
+      choice('เมื่อเปลี่ยนจาก A เป็น B ระยะสลิต d เพิ่มเป็นสองเท่า โดยความยาวคลื่นและระยะฉากคงเดิม ระยะห่างแถบควรเปลี่ยนอย่างไร?',
+        'From A to B the slit separation d doubles at fixed wavelength and screen distance. How should fringe spacing change?',
+        [['half', 'เหลือประมาณครึ่งหนึ่ง', 'Approximately halves'], ['double', 'เพิ่มเป็นสองเท่า', 'Doubles'], ['same', 'เท่าเดิม', 'Unchanged']], 'half',
+        ['เทียบแถว A กับ B แล้วดูว่าระยะสลิตกับระยะห่างแถบเปลี่ยนไปอย่างไร', 'Compare rows A and B and note how slit separation and fringe spacing change.']),
+      choice('เมื่อ B กับ C ใช้ระยะสลิตและระยะฉากเท่ากัน ชุดใดควรมีระยะห่างแถบมากกว่า?',
+        'At equal slit separation and screen distance, which set should have wider fringes, B or C?',
+        [['C', 'ชุด C สีแดง', 'Set C, red'], ['B', 'ชุด B สีเขียว', 'Set B, green'], ['same', 'เท่ากัน', 'Equal']], 'C',
+        ['เทียบแถว B กับ C แล้วระบุว่าตัวแปรใดเปลี่ยนในคู่ที่กำลังดู', 'Compare rows B and C and identify which variable changes in this pair.']),
+    ];
+    const latest = state.records.at(-1);
+    const width = latest ? Number(M.measurement(latest.cursors).toFixed(2)) : 0;
+    const wavelength = latest ? M.inferLambda(latest.config, width) : 0;
+    return [{
+      type: 'number', unit: 'nm',
+      text: latest ? [
+        `บันทึก ${latest.id}: ระยะสลิต ${latest.config.slit} μm ระยะฉาก ${latest.config.distance.toFixed(1)} m และระยะห่างแถบที่วัดได้ ${width.toFixed(2)} mm คำนวณความยาวคลื่นจากผลวัดนี้`,
+        `Trial ${latest.id}: slit separation ${latest.config.slit} μm, screen distance ${latest.config.distance.toFixed(1)} m, measured spacing ${width.toFixed(2)} mm. Infer wavelength from this record.`,
+      ] : ['บันทึกผลการวัดก่อนเพื่อสร้างโจทย์ข้อนี้', 'Record a measurement to generate this question.'],
+      answer: wavelength, tolerance: Math.max(1, Math.abs(wavelength) * .005),
+      hint: ['อ่านข้อมูลจากบันทึกเดียวกัน จัดหน่วยความยาวให้ตรงกันก่อนแทนค่า แล้วแปลงผลเป็น nm', 'Use values from one record, convert the lengths to matching units and express the result in nm.'],
+    }];
   }
   function requirements(s){
     const id=s.missions.current,w=s.water,m=s.missions;
     if(id===0)return [[m.played[id],['กดเล่นคลื่น','Play the waves']],[w.phase===0&&Math.abs(w.x)<.001,['เฟส 0° และ P บนแนวกลาง','0° phase and P on centre line']]];
-    if(id===1)return [[m.played[id],['กดเล่นคลื่น','Play the waves']],[w.phase===180,['เปลี่ยนเป็น 180°','Set phase to 180°']],[w.layers.nodes,['เปิดแนวบัพ','Show nodal lines']],[Math.abs(w.x)<.001,['P บนแนวกลาง','P on centre line']]];
+    if(id===1)return [[w.phase===180,['เปลี่ยนเป็น 180°','Set phase to 180°']],[w.layers.nodes,['เปิดแนวบัพ','Show nodal lines']],[Math.abs(w.x)<.001,['P บนแนวกลาง','P on centre line']],[m.played[id],['กดเล่นคลื่น','Play the waves']]];
     if(id===2)return [[w.layers.paths,['เปิดเส้นทาง r₁/r₂','Show r₁/r₂ paths']],[Math.abs(w.x)>.1,['ลาก P ออกจากกลาง หรือเลือก P ตัวอย่าง','Move P off centre or choose the example point']]];
     if(id===3)return [[m.near,['ดูกรณีใกล้/มุมมาก','Inspect near/large-angle case']],[m.far,['ดูกรณีไกล/มุมเล็ก','Inspect far/small-angle case']]];
-    if(id===4)return ['A','B','C'].map(key=>[s.records.some(r=>M.preset(r.config)===key&&(r.phase||0)===0),[`บันทึกชุด ${key} ที่เฟส 0°`,`Record set ${key} at 0°`]]);
+    if(id===4)return ['A','B','C'].map(key=>[Boolean(trialForPreset(s.records,key)),[`บันทึกชุด ${key} ที่เฟส 0°`,`Record set ${key} at 0°`]]);
     return [[s.records.length>0,['มีบันทึกผลการวัด','Have a measurement record']]];
   }
   function grade(s){const qs=questions(s.missions.current,s),answers=s.missions.answers[s.missions.current];return qs.map((q,i)=>{const a=answers['q'+i]??'';return q.type==='number'?a.trim()!==''&&Number.isFinite(Number(a))&&Math.abs(Number(a)-q.answer)<=q.tolerance:a===q.answer;});}
-  globalThis.InterferenceMissions=Object.freeze({initial,valid,titles,instructions,questions,requirements,grade});
+  globalThis.InterferenceMissions=Object.freeze({initial,valid,titles,instructions,questions,requirements,grade,trialForPreset});
 })();

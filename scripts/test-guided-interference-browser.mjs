@@ -56,7 +56,7 @@ try {
  const win=page.locator('[data-tool-id="content-simulation-physics-ipst-wave-optics-10-2-double-slit-lab"]');await win.waitFor();await win.locator('.is-maximize').click();
  const lab=page.frameLocator('[data-tool-id="content-simulation-physics-ipst-wave-optics-10-2-double-slit-lab"] iframe');await lab.locator('#water-play').waitFor();
  const frame=page.frames().find(f=>f.url().includes('/10-2-double-slit-lab.html')),state=()=>frame.evaluate(()=>LearningHubSimulation.getState());
- const answer=async(q,value)=>lab.locator(`#mission-questions input[name="mission-${(await state()).missions.current}-q${q}"][value="${value}"]`).check();
+ const answer = (index, value) => lab.locator(`#checkout-choice-${index}`).selectOption(value);
  const open=async()=>{if(!(await lab.locator('#mission-answer').getAttribute('open')!==null))await lab.locator('#mission-answer > summary').click();};
  const passed=async count=>{await lab.locator('#mission-check').click();assert.equal((await state()).missions.completed.length,count);assert.match(await lab.locator('#mission-feedback').innerText(),/ผ่านภารกิจ|Mission completed/);};
  const shot=async name=>{await lab.locator('#water-stage').screenshot({path:resolve(output,name+'.png')});};
@@ -71,12 +71,17 @@ try {
  // A free point is allowed to be between loci; it must not be rounded to a node.
  await setWater('x',.9);assert.equal((await state()).missions.attempted[2],false);const between=await frame.evaluate(()=>InterferenceWater.geometry(LearningHubSimulation.getState().water));assert.equal(between.kind,'between');await lab.locator('#mission-number-0').fill(between.delta.toFixed(4));await answer(1,'between');await passed(3);
  await lab.locator('#mission-next').click();await lab.locator('#mission-near').click();const near=await frame.evaluate(()=>InterferenceWater.geometry(LearningHubSimulation.getState().water));await lab.locator('#mission-far').click();const far=await frame.evaluate(()=>InterferenceWater.geometry(LearningHubSimulation.getState().water));assert.ok(Math.abs(far.angular-far.delta)<Math.abs(near.angular-near.delta));assert.match(await lab.locator('#water-formulas').innerText(),/d\|x\|\/L/);await shot('03-far-geometry');
- await open();await answer(0,'far');await answer(1,'small');await passed(4);
- const langState=await state();await win.locator('[data-window-language="en"]').click();await lab.locator('html[lang="en"]').waitFor();assert.deepEqual(await state(),langState);assert.match(await lab.locator('#mission-feedback').innerText(),/Mission completed/);
+ await open();
+ assert.equal(await lab.locator('#checkout-comparison-cases article').count(), 2);
+ await answer(0,'far');await answer(1,'small');await passed(4);
+ const langState=await state();await win.locator('[data-window-language="en"]').click();await lab.locator('#mission-feedback').getByText('Mission completed. Continue to the next mission.', { exact: true }).waitFor();
+ assert.deepEqual(await state(),langState);
  await lab.locator('#mission-next').click();assert.equal((await state()).view,'light');
  async function measure(side,target){await lab.locator('#handle-'+side).scrollIntoViewIfNeeded();const st=await state(),h=await lab.locator('#handle-'+side).boundingBox(),o=await lab.locator('#overlay').boundingBox(),x=h.x+h.width/2,y=h.y+h.height/2,dx=(target-st.cursors[side])*9*st.zoom*o.width/800;await page.mouse.move(x,y);await page.mouse.down();await page.mouse.move(x+dx,y,{steps:6});await page.mouse.up();}
  for(const [preset,value] of [['A',5.32],['B',2.66],['C',3.25]]){await lab.locator(`[data-preset="${preset}"]`).click();await measure('left',-value);await measure('right',value);await lab.locator('#record').click();}
- assert.equal((await state()).records.length,3);await open();await answer(0,'half');await answer(1,'C');await passed(5);await lab.locator('#mission-next').click();await open();await lab.locator('#mission-number-0').fill('532');await lab.locator('#mission-check').click();assert.equal((await state()).missions.completed.length,5);await lab.locator('#mission-number-0').fill('650');await passed(6);
+ assert.equal((await state()).records.length,3);await open();
+ assert.equal(await lab.locator('#checkout-comparison-cases article').count(), 3);
+ await answer(0,'half');await answer(1,'C');await passed(5);await lab.locator('#mission-next').click();await open();await lab.locator('#mission-number-0').fill('532');await lab.locator('#mission-check').click();assert.equal((await state()).missions.completed.length,5);await lab.locator('#mission-number-0').fill('650');await passed(6);
  const completed=await state();assert.deepEqual(completed.missions.completed,[0,1,2,3,4,5]);
  // Both optical phase cases, and book presets explicitly restore 0 degrees.
  const centre=()=>lab.locator('#pattern').evaluate(n=>Array.from(n.getContext('2d').getImageData(400,120,1,1).data));const bright=await centre();await lab.locator('#light-phase').selectOption('180');const dark=await centre();assert.ok(dark[0]+dark[1]+dark[2]<bright[0]+bright[1]+bright[2]);assert.match(await lab.locator('#light-phase-note').innerText(),/phase shifter/);await lab.locator('[data-preset="A"]').click();assert.equal((await state()).lightPhase,0);

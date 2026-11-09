@@ -104,7 +104,12 @@ try {
       await geometry.screenshot({path:resolve(output,`geometry-${width}-${lang}.png`)});
       const layout=await sheet.locator('html').evaluate(n=>({client:n.clientWidth,scroll:n.scrollWidth}));
       assert.ok(layout.scroll<=layout.client+2,`${width}/${lang}: ${JSON.stringify(layout)}`);
-      const overflows=await active.locator('.wave-path-equation [data-hub-math]').evaluateAll(nodes=>nodes.filter(n=>n.scrollWidth>n.clientWidth+2).map(n=>n.getAttribute('data-math-tex')));
+      const overflows=await active.locator('.wave-path-equation').evaluateAll(nodes=>nodes.flatMap(node=>{
+        const bounds=node.getBoundingClientRect();
+        const equation=node.querySelector('mjx-container > svg')?.getBoundingClientRect();
+        return !equation?.width||equation.left<bounds.left-2||equation.right>bounds.right+2
+          ?[{tex:node.querySelector('[data-math-tex]')?.dataset.mathTex,area:bounds.width,math:equation?.width}]:[];
+      }));
       assert.deepEqual(overflows,[],`${width}/${lang} new display math fits`);
     }
   }

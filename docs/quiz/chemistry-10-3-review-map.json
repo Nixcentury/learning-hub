@@ -11,7 +11,7 @@
   "readingSheet": {
     "contentId": "chemistry-ipst-acid-base-10-3-1-sheet",
     "source": "public/content/chemistry/ipst/acid-base/10-3-ionization-learning-sheet.html",
-    "sha256": "0e35f8337d7b40b24b0372a9e22d9bbe963ff66096a6d290a76df123f7ee8c92"
+    "sha256": "8e889e8d1607a380248051828da1e4f6216ba869ade5adcac8bee6809df59b07"
   },
   "sourceCoverage": {
     "activity-1-ammonia": [
@@ -462,7 +462,7 @@
       "unit": "%",
       "number": 30,
       "readingSection": 8,
-      "readingSlot": "weak-base-equilibrium"
+      "readingSlot": "model-weak-base-percent"
     },
     {
       "type": "number",
@@ -490,7 +490,7 @@
       "unit": "mol/L",
       "number": 32,
       "readingSection": 8,
-      "readingSlot": "practice-base-cation"
+      "readingSlot": "model-weak-base-ions"
     },
     {
       "type": "number",
@@ -504,7 +504,7 @@
       "unit": "%",
       "number": 33,
       "readingSection": 8,
-      "readingSlot": "practice-base-cation"
+      "readingSlot": "model-weak-base-percent"
     },
     {
       "type": "drag-drop",
@@ -803,7 +803,7 @@
       "unit": "mol/L",
       "number": 57,
       "readingSection": 8,
-      "readingSlot": "weak-base-equilibrium"
+      "readingSlot": "model-weak-base-ions"
     },
     {
       "type": "choice",

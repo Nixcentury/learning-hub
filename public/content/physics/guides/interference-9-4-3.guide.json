@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-waves-9-4-3-interference-sheet",
-    "revision": "2026-11-10-compact-print",
-    "sha256": "b37fda04333402de671c7ef1586c716f67e6a96b7c6039d1da984ab8b795f93e"
+    "revision": "2026-11-10-ipst-order",
+    "sha256": "edfe1ceea1bcf89d9b5a8065f0fa68906dc07fba1a2dcdf46d7b5e23e9ac6d32"
   },
   "title": {
     "th": "การแทรกสอดของคลื่น",
@@ -80,8 +80,8 @@
         "en": "Count path differences"
       },
       "summary": {
-        "th": "แหล่งอาพันธ์มีความถี่เท่ากันและผลต่างเฟสคงที่\nเมื่อเฟสตรงกัน Δr = nλ ให้ปฏิบัพ และ Δr = (n + ½)λ ให้บัพเมื่อแอมพลิจูดที่มาถึงเท่ากัน",
-        "en": "Coherent sources have the same frequency and a fixed phase difference.\nFor in-phase sources, Δr = nλ gives an antinode; Δr = (n + ½)λ gives a node if the arriving amplitudes are equal."
+        "th": "แหล่งอาพันธ์มีความถี่เท่ากันและผลต่างเฟสคงที่\nเมื่อเฟสตรงกัน Δr = nλ ให้ปฏิบัพ (n = 0, 1, 2, …) และ Δr = (n − ½)λ ให้บัพ (n = 1, 2, 3, …) เมื่อแอมพลิจูดที่มาถึงเท่ากัน",
+        "en": "Coherent sources have the same frequency and a fixed phase difference.\nFor in-phase sources, Δr = nλ gives an antinode (n = 0, 1, 2, …). With equal arriving amplitudes, Δr = (n − ½)λ gives a node (n = 1, 2, 3, …)."
       },
       "story": {
         "th": "ใช้รูป 9.24 แยกสันกับท้อง แล้วนับจากแหล่งทั้งสองไปยังจุดเดียวกัน",

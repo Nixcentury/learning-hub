@@ -1,7 +1,8 @@
 import { loadBankPrintMetadata } from '../public/shared/print-bank-metadata.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { safePrintUrl, htmlPrintCSS } from '../js/html-print.js';
+import { parseHTML } from 'linkedom';
+import { buildHtmlPrintSnapshot, safePrintUrl, htmlPrintCSS } from '../js/html-print.js';
 import { normalizePrintMetadata, resolvePrintMetadata, buildPrintFilename, resolvePrintContext, createPrintTitleSession } from '../js/print-metadata.js';
 import { defaultPrintProfile, printPageCSS, tableRowGroups } from '../js/print-layout.js';
 
@@ -69,6 +70,40 @@ test('print layout separates long sections but keeps equations and table rows to
   assert.match(htmlPrintCSS, /thead[^\n]*table-header-group/);
 });
 
+test('zoned learning sheets print only the selected section of the active language', () => {
+  const { document } = parseHTML(`<html data-learning-html data-learning-sheet="1"><head></head><body>
+    <main data-content-lang="th"><h1>หัวข้อ</h1><nav data-no-print>ตัวเลือก</nav>
+      <section data-print-zone="learning"><p>บทเรียนไทย</p></section>
+      <section data-print-zone="problem"><p>โจทย์ไทย</p></section>
+    </main>
+    <main data-content-lang="en" hidden><h1>Topic</h1>
+      <section data-print-zone="learning"><p>English lesson</p></section>
+      <section data-print-zone="problem"><p>English problems</p></section>
+    </main>
+  </body></html>`);
+  Object.defineProperty(document, 'defaultView', { value: undefined });
+  const learning = buildHtmlPrintSnapshot(document, 'Sheet');
+  const problem = buildHtmlPrintSnapshot(document, 'Sheet', 'problem');
+  assert.match(learning, /หัวข้อ.*บทเรียนไทย/s);
+  assert.doesNotMatch(learning, /โจทย์ไทย|English lesson|ตัวเลือก/);
+  assert.match(problem, /หัวข้อ.*โจทย์ไทย/s);
+  assert.doesNotMatch(problem, /บทเรียนไทย|English problems|ตัวเลือก/);
+  assert.equal(document.querySelectorAll('[data-print-zone]').length, 4);
+  document.querySelector('[data-content-lang="th"]').setAttribute('hidden', '');
+  document.querySelector('[data-content-lang="en"]').removeAttribute('hidden');
+  assert.match(buildHtmlPrintSnapshot(document, 'Sheet', 'problem'), /English problems/);
+});
+
+test('ordinary and incomplete learning sheets keep their existing print content', () => {
+  for (const marker of ['', 'data-learning-sheet="1"']) {
+    const { document } = parseHTML(`<html data-learning-html ${marker}><head></head><body>
+      <main><section data-print-zone="problem"><p>Keep this</p></section><p>And this</p></main>
+    </body></html>`);
+    Object.defineProperty(document, 'defaultView', { value: undefined });
+    assert.match(buildHtmlPrintSnapshot(document, 'Sheet'), /Keep this.*And this/s);
+  }
+});
+
 
 test('default print names use course codes, Thai chapter/work labels and separate paper editions', () => {
   const labels = { subjectId: 'physics', chapter: 'สมดุลกล', work: 'ใบงานที่ 1', extension: 'pdf' };
@@ -76,6 +111,7 @@ test('default print names use course codes, Thai chapter/work labels and separat
   assert.equal(buildPrintFilename({ ...labels, mode: 'answer' }), 'PHY-สมดุลกล-ใบงานที่ 1-เฉลย.pdf');
   assert.equal(buildPrintFilename({ subject: 'เคมี', chapter: 'กรด–เบส', work: 'ใบเรียนรู้', mode: 'blank' }), 'CHEM-กรด–เบส-ใบเรียนรู้-ฉบับว่าง');
   assert.equal(buildPrintFilename({ subjectId: 'chemistry', chapter: 'Acids', work: 'Sheet 1', mode: 'answer', language: 'en' }), 'CHEM-Acids-Sheet 1-Answers');
+  assert.equal(buildPrintFilename({ subjectId: 'chemistry', chapter: 'Acids', work: '10.3', mode: 'blank', zone: 'problem', language: 'en' }), 'CHEM-Acids-10.3-Problem-Blank');
 });
 
 test('filenames keep Thai, remove path/control characters and reserve room for the edition suffix', () => {

@@ -110,6 +110,7 @@ contentId ใหม่ต้องไม่ซ้ำ ถ้าเป็นกา
 - relative link ไป `public/shared/learning-sheet.css` ต้องตรงกับระดับโฟลเดอร์จริง ระบบใช้ stylesheet นี้ติดตั้ง toolbar/ปุ่มจาก parent ตาม [HUB-DESIGN-SYSTEM.md](../../HUB-DESIGN-SYSTEM.md)
 - สมการใช้ `\(...\)` หรือ `\[...\]` ภายใน text node เดียว ตรวจข้อจำกัดของ renderer จาก [html-math.js](../../js/html-math.js) โดยเฉพาะงานสูตรจำนวนมาก รวมสองภาษาแล้วต้องไม่เกินที่ระบบรองรับ
 - ใช้ `data-print-keep` กับคำถาม+พื้นที่ตอบ รูป หรือกลุ่มเล็ก ห้ามครอบทั้ง section ยาวเกินหน้า ไม่กำหนด `@page` หรือทับ `.hub-print-*`
+- หากต้องแยกพิมพ์ช่วงเล่าเรื่องกับช่วงโจทย์ ให้ห่อเนื้อหาด้วย `data-print-zone="learning"` และ `data-print-zone="problem"` เป็นองค์ประกอบพี่น้องหนึ่งคู่ในแต่ละภาษา วางหัวเรื่องที่ใช้ร่วมกันไว้นอกทั้งสองโซน ปุ่มพิมพ์กลางเริ่มที่ Learning + ฉบับว่าง และเลือกฉบับว่างหรือเฉลยได้ทั้งสองโซน
 - ใช้ระบบภาษา เฉลย MathJax และพิมพ์เดิม ไม่เพิ่ม script, event handler, iframe, form, toolbar, CDN, ปุ่มพิมพ์ หรือ engine ใหม่ลงในไฟล์เนื้อหา
 - งานนี้ใช้สัญญา `data-sheet-*` ของ Learning Sheet; สัญญา `data-review-*` ใน `docs/topic-review/` เป็นคนละเครื่องมือ อย่านำมาปะปนแม้ต่างมีคำถามและพื้นที่เขียน
 

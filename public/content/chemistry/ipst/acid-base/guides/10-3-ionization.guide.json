@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "chemistry-ipst-acid-base-10-3-1-sheet",
-    "revision": "2026-11-10-1",
-    "sha256": "8e889e8d1607a380248051828da1e4f6216ba869ade5adcac8bee6809df59b07"
+    "revision": "2026-11-10-2",
+    "sha256": "7791e1c8f6444e866442cab53cb93d3d29dbb9144b92c6313316e5a8cbff121e"
   },
   "title": {
     "th": "การแตกตัวของกรด เบส และน้ำ",
@@ -25,16 +25,16 @@
         "en": "How do strong and weak acids ionize differently?"
       },
       "summary": {
-        "th": "ภาพ A ไม่มี HA เหลือ ส่วนภาพ B ยังเหลือ 18 จาก 20 โมเลกุล\nความแรงคือระดับการแตกตัว ความเข้มข้นคือปริมาณต่อปริมาตร",
-        "en": "No HA remains in Set A; 18 out of 20 remain in Set B.\nStrength concerns ionization; concentration is amount per volume."
+        "th": "ภาพ A ไม่มี HA เหลือ ภาพ B ยังมี HA 18 จาก 20 โมเลกุล\nอิเล็กโทรไลต์ให้ไอออนที่เคลื่อนที่ได้ แก่ให้ไอออนเกือบสมบูรณ์ อ่อนให้บางส่วน",
+        "en": "No HA remains in Set A; 18 out of 20 remain in Set B.\nElectrolytes give mobile ions. Strong electrolytes ionize or dissociate almost completely; weak electrolytes partially."
       },
       "story": {
-        "th": "ให้เด็กนับ HA หลังลูกศรทั้งสองรูป แล้วค่อยเรียกกรณีสมบูรณ์และบางส่วน",
-        "en": "Have students count HA on the right of each arrow before naming complete and partial ionization."
+        "th": "ชวนเด็กนับ HA แล้วเชื่อมจำนวนไอออนกับภาพหลอดไฟ",
+        "en": "Count the remaining HA, then connect the ions to the bulb diagram."
       },
       "action": {
-        "th": "นับ HA ที่เหลือในภาพ A และ B แล้วลองบอกชื่อกรดแก่กับเบสแก่อย่างละสองชนิด",
-        "en": "Count the remaining HA in both diagrams and name two strong acids and two strong bases."
+        "th": "จำแนกภาพ A/B แล้วเปิดชื่อกรดแก่ เบสแก่ และอิเล็กโทรไลต์",
+        "en": "Classify A/B and review strong acids, strong bases and electrolytes."
       },
       "links": [
         {
@@ -55,6 +55,16 @@
           "target": {
             "kind": "slot",
             "key": "particle-set-b"
+          }
+        },
+        {
+          "label": {
+            "th": "อิเล็กโทรไลต์และการนำไฟฟ้า",
+            "en": "Electrolytes and conductivity"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ions-and-conductivity"
           }
         },
         {
@@ -161,26 +171,26 @@
     {
       "id": "stage-3",
       "title": {
-        "th": "โจทย์กรด–เบสแก่ จากไอออนกลับไปหาสารตั้งต้น",
-        "en": "Strong acids and bases: working back from ions"
+        "th": "จากไอออนกลับไปหาสารตั้งต้น",
+        "en": "Working back from ions to the initial solute"
       },
       "summary": {
         "th": "ใช้ mol/L × L หา mol ก่อนลง ICF เมื่อโจทย์ให้ปริมาตร\nเติมน้ำแล้วโมลไอออนเดิมคงเดิม ส่วนมวลต้องใช้มวลโมลาร์ของสารตั้งต้น",
         "en": "Use mol/L × L to find moles before ICF when volume is given.\nAdding water preserves ion amounts; mass uses the molar mass of the original solute."
       },
       "story": {
-        "th": "ชี้ให้เด็กเห็นว่า 0.300 mol/L ในตัวอย่าง 1 เป็นของไอออนหลังแตกตัว",
-        "en": "Point out that 0.300 mol/L in Example 1 describes the product ion after ionization."
+        "th": "ให้เด็กแยกข้อมูลในแถว F ออกจากสารตั้งต้นในแถว I ก่อนแปลงหน่วย",
+        "en": "Distinguish row F data from the initial solute in row I before converting units."
       },
       "action": {
-        "th": "ทำตัวอย่าง 1 ให้จบ แล้วให้เด็กบอกว่าโมล OH⁻ เปลี่ยนไหมเมื่อเติมน้ำ",
-        "en": "Complete Example 1, then predict whether adding water changes the moles of OH⁻."
+        "th": "บอกขั้นจาก CV ไปโมล แล้วอธิบายผลเมื่อเติมน้ำ",
+        "en": "Explain the CV-to-moles step and what changes on dilution."
       },
       "links": [
         {
           "label": {
-            "th": "ตัวอย่าง 1 · ต้องใช้กรดกี่โมล?",
-            "en": "Example 1 · How many moles of acid are needed?"
+            "th": "จากความเข้มข้นไอออนไปหาโมลของกรดแก่",
+            "en": "From ion concentration to moles of strong acid"
           },
           "target": {
             "kind": "slot",
@@ -199,8 +209,8 @@
         },
         {
           "label": {
-            "th": "ถ้าโจทย์ถามมวล ต้องคูณตัวแปลงอะไร?",
-            "en": "Which conversion factors give the mass?"
+            "th": "จากโมลไอออนไปหามวลสารตั้งต้น",
+            "en": "From moles of ions to the initial mass"
           },
           "target": {
             "kind": "slot",
@@ -219,8 +229,8 @@
         }
       },
       "after": {
-        "th": "เลือกข้อ 8 หรือ 10–11 ในควิซตามทักษะที่ต้องฝึก",
-        "en": "Use quiz question 8 or 10–11 to practise the relevant skill."
+        "th": "พาทำตัวอย่าง 2–3 ใน Problem",
+        "en": "Work through IPST Examples 2–3 in Problem."
       }
     },
     {
@@ -329,8 +339,8 @@
         }
       },
       "after": {
-        "th": "ถ้าเขียนแถว E ได้ ให้แทนตัวเลขในตัวอย่าง 2",
-        "en": "Once row E is clear, substitute the numbers in Example 2."
+        "th": "ถ้าเขียนแถว E ได้ ให้พาทำตัวอย่าง 5 ใน Problem",
+        "en": "Once row E is clear, work through IPST Example 5 in Problem."
       }
     },
     {
@@ -344,18 +354,18 @@
         "en": "For the 1 : 1 case here, check C₀/Kₐ > 1000 before using C₀ − x ≈ C₀.\nIf this sheet’s criterion is not met, solve the full equation and choose a root with 0 < x < C₀."
       },
       "story": {
-        "th": "วางตัวอย่าง 2 เทียบกับกรณี C₀/Kₐ = 100 แล้วให้เด็กวงเฉพาะ x ที่ประมาณได้",
-        "en": "Compare Example 2 with C₀/Kₐ = 100 and ask students to circle only the x that may be approximated away."
+        "th": "ชี้พจน์ C₀ − x แล้วเทียบขั้นตอนของกรณีที่ผ่านเกณฑ์กับกรณีที่ต้องแก้สมการเต็ม",
+        "en": "Point to C₀ − x and compare the steps with and without the approximation."
       },
       "action": {
-        "th": "ทำตัวอย่าง 2 แล้วตัดสินใจว่าสมการที่สองใช้การประมาณได้หรือไม่",
-        "en": "Work through Example 2, then decide whether the approximation works in the second case."
+        "th": "ให้เด็กบอกเกณฑ์และจัดรูปสมการเต็มก่อนลองฝึกซ้ำ",
+        "en": "State the criterion and rearrange the full equation before repeat practice."
       },
       "links": [
         {
           "label": {
-            "th": "ตัวอย่าง 2 · กรดอ่อน หาความเข้มข้นไอออน",
-            "en": "Example 2 · Finding the ion concentration of a weak acid"
+            "th": "ตรวจเกณฑ์ก่อนประมาณตัวส่วน",
+            "en": "Check the criterion before approximating the denominator"
           },
           "target": {
             "kind": "slot",
@@ -364,8 +374,8 @@
         },
         {
           "label": {
-            "th": "ถ้า C₀/Kₐ ไม่เกิน 1000 ทำอย่างไร?",
-            "en": "What if C₀/Kₐ is at most 1000?"
+            "th": "จัดรูปสมการเต็มและเลือกราก",
+            "en": "Rearrange the full equation and choose the root"
           },
           "target": {
             "kind": "slot",
@@ -448,8 +458,8 @@
         "en": "Compare the arrows for NaOH and NH₃, then set up the weak-base reaction before revealing Kᵦ."
       },
       "action": {
-        "th": "ทำตัวอย่าง 3 ก–ข แล้วชี้ว่า X⁻ ตั้งต้นในโจทย์ NaX มาจากตารางใด",
-        "en": "Do Example 3(a–b), then identify where the initial X⁻ in the NaX problem comes from."
+        "th": "อ่านแถว E ของ NH₃ แล้วชี้ว่า X⁻ ตั้งต้นในโจทย์ NaX มาจากตารางใด",
+        "en": "Read row E for NH₃, then identify where the initial X⁻ in the NaX problem comes from."
       },
       "links": [
         {
@@ -464,8 +474,8 @@
         },
         {
           "label": {
-            "th": "ตัวอย่าง 3 ก · เบสอ่อน หาความเข้มข้นไอออน",
-            "en": "Example 3(a) · Finding ion concentrations of a weak base"
+            "th": "อ่านไอออนของเบสอ่อนจากแถว E",
+            "en": "Read the weak-base ion concentrations from row E"
           },
           "target": {
             "kind": "slot",
@@ -474,8 +484,8 @@
         },
         {
           "label": {
-            "th": "ตัวอย่าง 3 ข · เบสอ่อนแตกร้อยละเท่าไร?",
-            "en": "Example 3(b) · What percentage of the base ionized?"
+            "th": "จาก x ไปหาร้อยละของเบสอ่อน",
+            "en": "From x to the percent ionization of a weak base"
           },
           "target": {
             "kind": "slot",
@@ -523,8 +533,8 @@
         "en": "Have students read the graph axes, then ask separately about percentage and H₃O⁺ concentration."
       },
       "action": {
-        "th": "ทำนายแนวกราฟ แล้วใช้ร้อยละที่ให้ย้อนหา x ในตัวอย่างท้ายช่วง",
-        "en": "Predict the trend, then work back to x from the percentage in the final example."
+        "th": "อ่านแนวกราฟ แล้วบอกวิธีย้อนจากร้อยละไปหา x",
+        "en": "Read the graph trend, then explain how to recover x from the percentage."
       },
       "links": [
         {
@@ -681,6 +691,81 @@
       "after": {
         "th": "ใช้ข้อ 47–49 ฝึกระบุคู่แล้วคำนวณค่าคงที่",
         "en": "Use questions 47–49 to identify the conjugate pair and calculate the constant."
+      }
+    },
+    {
+      "id": "problem-practice",
+      "title": {
+        "th": "Problem · ทำโจทย์จากหนังสือและฝึกซ้ำ",
+        "en": "Problem · Textbook questions and repeat practice"
+      },
+      "summary": {
+        "th": "เริ่มตัวอย่าง สสวท. 2–6 แล้วฝึกซ้ำที่อยู่ถัดลงมา\nตามด้วยตรวจสอบความเข้าใจ กิจกรรม 10.1 และแบบฝึกหัด 10.3 ข้อ 1–9",
+        "en": "Start with IPST Examples 2–6 and the adjacent repeat practice.\nContinue with the textbook checks, Activity 10.1 and Exercise 10.3 Questions 1–9."
+      },
+      "story": {
+        "th": "ให้เด็กลองเขียนสมการและตารางก่อนเปิดวิธีทำ",
+        "en": "Have students write the reaction and table before revealing the method."
+      },
+      "action": {
+        "th": "พาทำตัวอย่าง 2 แล้วฝึกซ้ำ อ่านแถว F และย้อนกลับไปหา I",
+        "en": "Work through Example 2, then practise reading row F and recovering row I."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ตัวอย่าง สสวท. และฝึกซ้ำตามวิธีทำ",
+            "en": "IPST worked examples and follow-up practice"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "problem-examples"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถามตรวจสอบความเข้าใจในหนังสือ",
+            "en": "Textbook understanding questions"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "problem-understanding"
+          }
+        },
+        {
+          "label": {
+            "th": "กิจกรรม 10.1 ร้อยละการแตกตัว",
+            "en": "Activity 10.1 Percent ionization"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "problem-activity"
+          }
+        },
+        {
+          "label": {
+            "th": "แบบฝึกหัดท้ายหัวข้อ 10.3",
+            "en": "Exercise 10.3"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "problem-exercises"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้าจะพิมพ์เฉพาะโจทย์ให้เด็กทำ เลือกอะไร?",
+          "en": "Which settings give a student worksheet with the problems?"
+        },
+        "answer": {
+          "th": "เลือก Problem และฉบับว่าง",
+          "en": "Choose Problem and Blank."
+        }
+      },
+      "after": {
+        "th": "ปิดท้ายด้วยเขียนสมการจากชื่อสารในฝึกซ้ำ 12",
+        "en": "Finish with writing equations from names in Repeat practice 12."
       }
     }
   ],

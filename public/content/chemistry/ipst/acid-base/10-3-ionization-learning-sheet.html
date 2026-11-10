@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-learning-html="" data-learning-sheet="1" data-print-chapter-en="Chapter 10 Acids and Bases" data-print-chapter-th="บทที่ 10 กรด–เบส" data-print-subject-en="Chemistry" data-print-subject-th="เคมี" data-print-topic-en="10.3 Ionization of Acids, Bases and Water" data-print-topic-th="10.3 การแตกตัวของกรด เบส และน้ำ" data-print-work-en="10.3 Ionization learning sheet" data-print-work-th="ใบเรียนรู้ 10.3 การแตกตัวของกรด เบส และน้ำ" data-sheet-guide="guides/10-3-ionization.guide.json" data-sheet-revision="2026-11-10-1" lang="th">
+<html data-learning-html="" data-learning-sheet="1" data-print-chapter-en="Chapter 10 Acids and Bases" data-print-chapter-th="บทที่ 10 กรด–เบส" data-print-subject-en="Chemistry" data-print-subject-th="เคมี" data-print-topic-en="10.3 Ionization of Acids, Bases and Water" data-print-topic-th="10.3 การแตกตัวของกรด เบส และน้ำ" data-print-work-en="Learning sheet 10.3" data-print-work-th="ใบเรียนรู้ 10.3" data-sheet-guide="guides/10-3-ionization.guide.json" data-sheet-revision="2026-11-10-2" lang="th">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -63,11 +63,26 @@
     display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3mm; align-items: center;
   }
   html[data-hub-print-snapshot] .lesson-section[data-guide-anchor="stage-9"] > figure { max-width: 78mm; }
+
+  .sheet-zone-nav { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+  .sheet-zone-nav a { border:1px solid #b8b2ba; border-radius:8px; padding:8px 12px; color:#443155; }
+  .sheet-zone-nav a:focus-visible { outline:2px solid #54358d; outline-offset:2px; }
+  .zone-title { margin-top:16px; }
+  .problem-question { border-top:1px solid #d6cbd9; padding-top:7px; margin-top:14px; }
+  .problem-question .practice-label { color:#694575; }
+  .problem-question figure { max-width:115mm; }
+  .problem-question figure:has(img[src*="p15-complete-ionization"]) { max-width:56mm; }
+  html[data-hub-print-snapshot] .problem-question { border-color:#999; padding-top:3px; }
+  html[data-hub-print-snapshot] .problem-question .practice-label { color:#000; }
+  html[data-hub-print-snapshot] .problem-question [data-hub-math="display"] { margin:2px 0; padding:2px 0; }
+  html[data-hub-print-snapshot] [data-guide-anchor="stage-1"] > figure { max-width:96mm; }
 </style>
 </head>
 <body>
 <main class="sheet-page" data-content-lang="th">
 <header class="lesson-header"><div class="eyebrow">เคมี · บทที่ 10 กรด–เบส</div><h1>10.3 การแตกตัวของกรด เบส และน้ำ</h1></header>
+<nav class="sheet-zone-nav" data-no-print="" aria-label="ส่วนของใบเรียนรู้"><a href="#learning-th">Learning · ส่วนเล่าเรื่อง</a><a href="#problem-th">Problem · โจทย์และแบบฝึกหัด</a></nav><div data-print-zone="learning" id="learning-th">
+<h2 class="zone-title" data-no-print="">Learning · ส่วนเล่าเรื่อง</h2>
 <section class="lesson-section" data-guide-anchor="stage-1">
 <div data-print-keep>
 <div data-print-keep><h2><span>1</span> กรดแก่กับกรดอ่อนแตกตัวต่างกันอย่างไร?</h2><p>ภาพ A และ B เริ่มด้วย HA 20 โมเลกุลเท่ากัน ดูช่องหลังลูกศรแล้วนับโมเลกุล HA ที่เหลือในแต่ละภาพ</p></div>
@@ -75,9 +90,7 @@
 <figure data-print-keep><img src="assets/10-3-combined/particles-complete.svg" width="1000" height="350" alt="ภาพ A · ก่อนและหลังกรดทำปฏิกิริยากับน้ำ"><figcaption>ภาพ A · ก่อนและหลังกรดทำปฏิกิริยากับน้ำ</figcaption></figure>
 <div class="question-item" data-print-keep>
 <h3>ภาพ A เหลือ HA กี่โมเลกุล?</h3>
-<div data-sheet-slot="particle-set-a" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ภาพ A เหลือ HA กี่โมเลกุล?" data-sheet-label-en="How many HA molecules remain in Set A?"
-     style="--sheet-print-height:10mm">
+<div data-sheet-slot="particle-set-a" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ภาพ A เหลือ HA กี่โมเลกุล?" data-sheet-label-en="How many HA molecules remain in Set A?" style="--sheet-print-height:10mm">
 <div data-sheet-answer>
 <p>เหลือ <strong>0 โมเลกุล</strong> HA ทั้ง 20 โมเลกุลให้โปรตอนแก่น้ำ เกิด H₃O⁺ และ A⁻ อย่างละ 20 ตัว แบบจำลองนี้แทนกรดแก่ที่แตกตัวสมบูรณ์</p>
 </div>
@@ -89,9 +102,7 @@
 <figure data-print-keep><img src="assets/10-3-combined/particles-partial.svg" width="1000" height="350" alt="ภาพ B · ก่อนและหลังกรดทำปฏิกิริยากับน้ำ"><figcaption>ภาพ B · ก่อนและหลังกรดทำปฏิกิริยากับน้ำ</figcaption></figure>
 <div class="question-item" data-print-keep>
 <h3>ภาพ B เหลือ HA กี่โมเลกุล?</h3>
-<div data-sheet-slot="particle-set-b" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ภาพ B เหลือ HA กี่โมเลกุล?" data-sheet-label-en="How many HA molecules remain in Set B?"
-     style="--sheet-print-height:10mm">
+<div data-sheet-slot="particle-set-b" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ภาพ B เหลือ HA กี่โมเลกุล?" data-sheet-label-en="How many HA molecules remain in Set B?" style="--sheet-print-height:10mm">
 <div data-sheet-answer>
 <p>เหลือ <strong>18 โมเลกุล</strong> จึงแตกตัวไป 2 จาก 20 โมเลกุล เกิด H₃O⁺ และ A⁻ อย่างละ 2 ตัว แบบจำลองนี้แทนกรดอ่อนที่แตกตัวบางส่วน</p>
 </div>
@@ -100,19 +111,22 @@
 </div>
 <div class="question-item" data-print-keep>
 <h3>กรดแก่จะเจือจางได้ไหม?</h3>
-<div data-sheet-slot="concentration-strength" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="กรดแก่จะเจือจางได้ไหม?" data-sheet-label-en="Can a strong acid be dilute?"
-     style="--sheet-print-height:10mm">
+<div data-sheet-slot="concentration-strength" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="กรดแก่จะเจือจางได้ไหม?" data-sheet-label-en="Can a strong acid be dilute?" style="--sheet-print-height:10mm">
 <div data-sheet-answer>
 <p>ได้ ความแรงบอกระดับการแตกตัว ส่วนความเข้มข้นเริ่มต้นบอกจำนวนโมลของสารต่อปริมาตร HCl เจือจางยังเป็นกรดแก่ ส่วน CH₃COOH เข้มข้นยังเป็นกรดอ่อน</p>
 </div>
 </div>
 </div>
+<figure data-print-keep><img src="assets/10-3-combined/conductivity.svg" width="1000" height="350" alt="ภาพหลอดไฟเปรียบเทียบสารละลายที่มีความเข้มข้นเท่ากัน"><figcaption>ภาพหลอดไฟเปรียบเทียบสารละลายที่มีความเข้มข้นเท่ากัน</figcaption></figure><div class="question-item" data-print-keep>
+<h3>อิเล็กโทรไลต์และการนำไฟฟ้า</h3>
+<div class="question-prompt">เมื่อสารละลายมีไอออนที่เคลื่อนที่ได้ หลอดไฟบอกอะไรเราได้บ้าง?</div>
+<div data-sheet-slot="ions-and-conductivity" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="อิเล็กโทรไลต์และการนำไฟฟ้า" data-sheet-label-en="Electrolytes and conductivity" style="--sheet-print-height:19mm">
+<div data-sheet-answer><p><strong>อิเล็กโทรไลต์</strong> คือสารที่ให้ไอออนเมื่อละลายในน้ำ ไอออนที่เคลื่อนที่ได้ทำให้สารละลายนำไฟฟ้า</p><p><strong>แก่</strong> ให้ไอออนเกือบสมบูรณ์ เช่น HCl, NaOH และ NaCl ส่วน <strong>อ่อน</strong> ให้ไอออนบางส่วน เช่น CH<sub>3</sub>COOH และ NH<sub>3</sub> น้ำตาลซูโครสละลายเป็นโมเลกุล จึงเป็น <strong>นอนอิเล็กโทรไลต์</strong></p><p>ใช้ภาพเปรียบเทียบภายใต้ความเข้มข้น อุณหภูมิ และอุปกรณ์เดียวกัน แยกเทียบกรดกับกรดและเบสกับเบส กรดที่ให้ H<sub>3</sub>O<sup>+</sup> มากกว่ามี pH ต่ำกว่า ส่วนเบสที่ให้ OH<sup>−</sup> มากกว่ามี pH สูงกว่า</p></div>
+</div>
+</div>
 <div class="question-item" data-print-keep>
 <h3>กรดแก่ที่ใช้ในบทนี้</h3>
-<div data-sheet-slot="strong-acids-list" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="กรดแก่ที่ใช้ในบทนี้" data-sheet-label-en="Strong acids in this chapter"
-     style="--sheet-print-height:9mm">
+<div data-sheet-slot="strong-acids-list" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="กรดแก่ที่ใช้ในบทนี้" data-sheet-label-en="Strong acids in this chapter" style="--sheet-print-height:9mm">
 <div data-sheet-answer>
 <p><strong>HCl, HBr, HI, HNO₃, HClO₄</strong> และ <strong>H₂SO₄ เฉพาะการแตกตัวขั้นแรก</strong> ส่วน HF เป็นกรดอ่อน</p>
 </div>
@@ -120,22 +134,9 @@
 </div>
 <div class="question-item" data-print-keep>
 <h3>เบสแก่ที่ใช้ในบทนี้</h3>
-<div data-sheet-slot="strong-bases-list" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="เบสแก่ที่ใช้ในบทนี้" data-sheet-label-en="Strong bases in this chapter"
-     style="--sheet-print-height:9mm">
+<div data-sheet-slot="strong-bases-list" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เบสแก่ที่ใช้ในบทนี้" data-sheet-label-en="Strong bases in this chapter" style="--sheet-print-height:9mm">
 <div data-sheet-answer>
 <p><strong>LiOH, NaOH, KOH, Ca(OH)₂, Sr(OH)₂ และ Ba(OH)₂</strong> ส่วนที่ละลายน้ำแล้วแตกตัวเป็นไอออนสมบูรณ์ ส่วน NH₃ เป็นเบสอ่อน</p>
-</div>
-</div>
-</div>
-<div class="question-item" data-print-keep>
-<h3>ไอออนกับการนำไฟฟ้า</h3>
-<div class="question-prompt">ถ้าเทียบ HCl กับ CH₃COOH และ NaOH กับ NH₃ ด้วยหลอดไฟ เราต้องควบคุมอะไรบ้าง?</div>
-<div data-sheet-slot="ions-and-conductivity" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ไอออนกับการนำไฟฟ้า" data-sheet-label-en="Ions and conductivity"
-     style="--sheet-print-height:11mm">
-<div data-sheet-answer>
-<p>ไอออนที่เคลื่อนที่ได้ทำให้สารละลายนำไฟฟ้า เทียบกรดกับกรดและเบสกับเบสที่ความเข้มข้นเริ่มต้นเท่ากัน โดยใช้อุปกรณ์และอุณหภูมิเดียวกัน ในชุดนี้ HCl นำไฟฟ้าดีกว่า CH₃COOH และ NaOH ดีกว่า NH₃ เมื่อเรียง pH ให้กรดอยู่ก่อนเบส กรดที่ให้ H₃O⁺ มากกว่ามี pH ต่ำกว่า และเบสที่ให้ OH⁻ มากกว่ามี pH สูงกว่า</p>
 </div>
 </div>
 </div>
@@ -145,11 +146,9 @@
 <div data-print-keep><h2><span>2</span> กรด–เบสแก่ให้ไอออนอะไร และให้เท่าไร?</h2><p>เขียนสมการก่อน แล้วอ่านอัตราส่วนจากเลขดุล</p></div>
 <div class="question-item" data-print-keep>
 <h3>HCl ทำปฏิกิริยากับน้ำอย่างไร?</h3>
-<div data-sheet-slot="strong-acid-reaction" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="HCl ทำปฏิกิริยากับน้ำอย่างไร?" data-sheet-label-en="How does HCl react with water?"
-     style="--sheet-print-height:9mm">
+<div data-sheet-slot="strong-acid-reaction" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="HCl ทำปฏิกิริยากับน้ำอย่างไร?" data-sheet-label-en="How does HCl react with water?" style="--sheet-print-height:9mm">
 <div data-sheet-answer>
-<div class="equation">\[\ce{HCl(aq) + H2O(l) -> H3O+(aq) + Cl-(aq)}\]</div><p>HCl 1 mol ให้ H₃O⁺ 1 mol และ Cl⁻ 1 mol</p>
+<div class="equation">\[\ce{HCl(aq) + H2O(l) -&gt; H3O+(aq) + Cl-(aq)}\]</div><p>HCl 1 mol ให้ H₃O⁺ 1 mol และ Cl⁻ 1 mol</p>
 </div>
 </div>
 </div>
@@ -157,19 +156,15 @@
 <div class="question-item" data-print-keep>
 <h3>NaOH กับ Ba(OH)₂ ให้ OH⁻ ต่างกันอย่างไร?</h3>
 <div class="question-prompt">เขียนสมการของทั้งสองสาร แล้วอธิบายผลเมื่อมีความเข้มข้นเริ่มต้นเท่ากัน</div>
-<div data-sheet-slot="complete-ionization" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="NaOH กับ Ba(OH)₂ ให้ OH⁻ ต่างกันอย่างไร?" data-sheet-label-en="How do NaOH and Ba(OH)₂ differ in the amount of OH⁻ they give?"
-     style="--sheet-print-height:18mm">
+<div data-sheet-slot="complete-ionization" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="NaOH กับ Ba(OH)₂ ให้ OH⁻ ต่างกันอย่างไร?" data-sheet-label-en="How do NaOH and Ba(OH)₂ differ in the amount of OH⁻ they give?" style="--sheet-print-height:18mm">
 <div data-sheet-answer>
-<div class="chart-note"><div><div class="equation">\[\ce{NaOH(aq) -> Na+(aq) + OH-(aq)}\]</div><div class="equation">\[\ce{Ba(OH)2(aq) -> Ba^2+(aq) + 2OH-(aq)}\]</div><p>สารที่ละลาย 1 mol ให้ OH⁻ 1 mol จาก NaOH และ 2 mol จาก Ba(OH)₂ ดังนั้นที่ 0.020 mol/L เท่ากัน Ba(OH)₂ ให้ OH⁻ 0.040 mol/L ส่วน NaOH ให้ 0.020 mol/L</p></div><figure data-print-keep><img src="assets/10-3-combined/barium-bars.svg" width="900" height="350" alt="กราฟแท่งเทียบความเข้มข้นก่อนและหลังแตกตัว"><figcaption>กราฟแท่งเทียบความเข้มข้นก่อนและหลังแตกตัว</figcaption></figure></div>
+<div class="chart-note"><div><div class="equation">\[\ce{NaOH(aq) -&gt; Na+(aq) + OH-(aq)}\]</div><div class="equation">\[\ce{Ba(OH)2(aq) -&gt; Ba^2+(aq) + 2OH-(aq)}\]</div><p>สารที่ละลาย 1 mol ให้ OH⁻ 1 mol จาก NaOH และ 2 mol จาก Ba(OH)₂ ดังนั้นที่ 0.020 mol/L เท่ากัน Ba(OH)₂ ให้ OH⁻ 0.040 mol/L ส่วน NaOH ให้ 0.020 mol/L</p></div><figure data-print-keep><img src="assets/10-3-combined/barium-bars.svg" width="900" height="350" alt="กราฟแท่งเทียบความเข้มข้นก่อนและหลังแตกตัว"><figcaption>กราฟแท่งเทียบความเข้มข้นก่อนและหลังแตกตัว</figcaption></figure></div>
 </div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
 <h3>อ่านตาราง ICF ตรงไหน?</h3>
-<div data-sheet-slot="strong-icf-method" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="อ่านตาราง ICF ตรงไหน?" data-sheet-label-en="Which row of ICF do we read?"
-     style="--sheet-print-height:10mm">
+<div data-sheet-slot="strong-icf-method" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="อ่านตาราง ICF ตรงไหน?" data-sheet-label-en="Which row of ICF do we read?" style="--sheet-print-height:10mm">
 <div data-sheet-answer>
 <p><strong>I</strong> ใส่ปริมาณเริ่มต้น <strong>C</strong> ใส่การเปลี่ยนแปลงตามเลขดุล <strong>F</strong> อ่านปริมาณสุดท้ายเมื่อสารที่ละลายแตกตัวครบ ใช้หน่วย mol หรือ mol/L ให้เหมือนกันทั้งตาราง</p>
 </div>
@@ -178,43 +173,27 @@
 </section>
 <section class="lesson-section" data-guide-anchor="stage-3">
 <div data-print-keep>
-<div data-print-keep><h2><span>3</span> โจทย์กรด–เบสแก่ จากไอออนกลับไปหาสารตั้งต้น</h2><p>ก่อนลงตาราง ให้ระบุว่าข้อมูลในโจทย์เป็นของสารตั้งต้นหรือไอออนหลังแตกตัว</p></div>
+<div data-print-keep><h2><span>3</span> จากไอออนกลับไปหาสารตั้งต้น</h2><p>ก่อนลงตาราง ให้ระบุว่าข้อมูลในโจทย์เป็นของสารตั้งต้นหรือไอออนหลังแตกตัว</p></div>
 <div class="question-item" data-print-keep>
-<h3>ตัวอย่าง 1 · ต้องใช้กรดกี่โมล?</h3>
-<div class="question-prompt">ต้องใช้ HCl กี่โมลเพื่อเตรียมสารละลาย 0.500 L ที่มี H₃O⁺ และ Cl⁻ เข้มข้นชนิดละ 0.300 mol/L?</div>
-<div data-sheet-slot="model-acid-amount" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ตัวอย่าง 1 · ต้องใช้กรดกี่โมล?" data-sheet-label-en="Example 1 · How many moles of acid are needed?"
-     style="--sheet-print-height:33mm">
-<div data-sheet-answer>
-<p>1. แปลงข้อมูลของไอออนเป็นโมลก่อน เพราะความเข้มข้นที่ให้เป็นของ H₃O⁺ หลังแตกตัว ค่านี้จึงอยู่แถว F ใช้ n = CV โดย V เป็น L ถ้าต้องการมวลให้ใช้ m = nM</p><div class="equation">\[n(\mathrm{H_3O^+})=0.500\,\mathrm L\times\frac{0.300\,\mathrm{mol}}{1\,\mathrm L}=0.150\,\mathrm{mol}\]</div><p>2. สมการของ HCl ให้อัตราส่วน 1 : 1 : 1 ให้ a เป็นโมล HCl เริ่มต้น</p><table><caption>ICF · mol</caption><thead><tr><th scope="col">แถว</th><th scope="col">HCl</th><th scope="col">H₃O⁺</th><th scope="col">Cl⁻</th></tr></thead><tbody>
-<tr><th scope="row">I · เริ่มต้น</th><td>a</td><td>0</td><td>0</td></tr>
-<tr class="change-row"><th scope="row">C · เปลี่ยนไป</th><td>−a</td><td>+a</td><td>+a</td></tr>
-<tr><th scope="row">F · สุดท้าย</th><td>0</td><td>a</td><td>a</td></tr>
-</tbody></table><p>3. จากแถว F ได้ a = 0.150 mol ดังนั้นต้องใช้ HCl <strong>0.150 mol</strong></p>
-</div>
+<h3>จากความเข้มข้นไอออนไปหาโมลของกรดแก่</h3>
+<div class="question-prompt">ถ้าโจทย์ให้ความเข้มข้นของไอออนหลังแตกตัว ข้อมูลอยู่แถวไหน?</div>
+<div data-sheet-slot="model-acid-amount" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากความเข้มข้นไอออนไปหาโมลของกรดแก่" data-sheet-label-en="From ion concentration to moles of strong acid" style="--sheet-print-height:13mm">
+<div data-sheet-answer><p>ใช้ n = CV โดยแปลง V เป็น L ก่อน หน่วย L ตัดกันเหลือ mol ใส่ปริมาณไอออนที่ได้ในแถว F ของ ICF แล้วย้อนตามเลขดุลไปหาสารตั้งต้นในแถว I</p></div>
 </div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
 <h3>เติมน้ำแล้วโมลหรือความเข้มข้นเปลี่ยน?</h3>
-<div class="question-prompt">สารละลาย Ba(OH)₂ มี OH⁻ อยู่ 0.020 mol ในปริมาตร 0.100 L เติมน้ำจนเป็น 0.200 L จะเหลือ OH⁻ กี่โมลและเข้มข้นเท่าไร?</div>
-<div data-sheet-slot="model-dilution-concentrations" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="เติมน้ำแล้วโมลหรือความเข้มข้นเปลี่ยน?" data-sheet-label-en="Does adding water change moles or concentration?"
-     style="--sheet-print-height:15mm">
-<div data-sheet-answer>
-<p>การเติมน้ำอย่างเดียวทำให้ปริมาตรเพิ่ม โมล OH⁻ ยังเป็น <strong>0.020 mol</strong> จึงได้ [OH⁻] = (0.020 mol)/(0.200 L) = <strong>0.100 mol/L</strong> ถ้าโจทย์ให้ความเข้มข้นตั้งต้น ให้หาโมลใน ICF ก่อนเปลี่ยนปริมาตร</p>
-</div>
+<div class="question-prompt">ถ้าเติมเฉพาะน้ำให้สารละลายเบสแก่ โมลไอออนเดิมเปลี่ยนไหม?</div>
+<div data-sheet-slot="model-dilution-concentrations" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เติมน้ำแล้วโมลหรือความเข้มข้นเปลี่ยน?" data-sheet-label-en="Does adding water change moles or concentration?" style="--sheet-print-height:12mm">
+<div data-sheet-answer><p>ทำ ICF เป็น mol ก่อน เมื่อเติมเฉพาะน้ำ โมลไอออนจากสารแก่คงเดิม ปริมาตรเพิ่ม ความเข้มข้นจึงลดลง</p><div class="equation">\[C_{\mathrm{final}}=\frac{n_{\mathrm{ion}}}{V_{\mathrm{final}}}\]</div></div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
-<h3>ถ้าโจทย์ถามมวล ต้องคูณตัวแปลงอะไร?</h3>
-<div class="question-prompt">ต้องการ OH⁻ 0.0200 mol จาก Ba(OH)₂ ต้องใช้ Ba(OH)₂ กี่กรัม? ให้มวลโมลาร์ 171.35 g/mol</div>
-<div data-sheet-slot="practice-mass" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ถ้าโจทย์ถามมวล ต้องคูณตัวแปลงอะไร?" data-sheet-label-en="Which conversion factors give the mass?"
-     style="--sheet-print-height:14mm">
-<div data-sheet-answer>
-<p>อ่านจากเลขดุลก่อนว่า OH⁻ 2 mol มาจาก Ba(OH)₂ 1 mol แล้วคูณมวลโมลาร์ โดยให้หน่วย mol ตัดกัน</p><div class="equation">\[0.0200\,\mathrm{mol}\,\mathrm{OH^-}\times\frac{1\,\mathrm{mol}\,\mathrm{Ba(OH)_2}}{2\,\mathrm{mol}\,\mathrm{OH^-}}=0.0100\,\mathrm{mol}\,\mathrm{Ba(OH)_2}\]</div><div class="equation">\[0.0100\,\mathrm{mol}\times\frac{171.35\,\mathrm g}{1\,\mathrm{mol}}\approx1.71\,\mathrm g\]</div>
-</div>
+<h3>จากโมลไอออนไปหามวลสารตั้งต้น</h3>
+<div class="question-prompt">ถ้าต้องเตรียมสารละลายให้มี OH<sup>−</sup> ตามกำหนด จะย้อนหามวลเบสอย่างไร?</div>
+<div data-sheet-slot="practice-mass" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากโมลไอออนไปหามวลสารตั้งต้น" data-sheet-label-en="From moles of ions to the initial mass" style="--sheet-print-height:11mm">
+<div data-sheet-answer><p>หาโมล OH<sup>−</sup> จาก CV แล้วย้อนตามเลขดุล เช่น OH<sup>−</sup> 2 mol มาจาก Ba(OH)<sub>2</sub> 1 mol จากนั้นคูณมวลโมลาร์ของเบส หน่วย mol ตัดกันเหลือ g</p></div>
 </div>
 </div>
 </section>
@@ -224,20 +203,16 @@
 <div class="question-item" data-print-keep>
 <h3>กรดอ่อน HA ทำปฏิกิริยากับน้ำอย่างไร?</h3>
 <div class="question-prompt">เขียนสมการจากภาพ B แล้วอธิบายว่าทำไมหลังแตกตัวยังมี HA เหลือ</div>
-<div data-sheet-slot="weak-partial-equilibrium" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="กรดอ่อน HA ทำปฏิกิริยากับน้ำอย่างไร?" data-sheet-label-en="How does the weak acid HA react with water?"
-     style="--sheet-print-height:11mm">
+<div data-sheet-slot="weak-partial-equilibrium" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="กรดอ่อน HA ทำปฏิกิริยากับน้ำอย่างไร?" data-sheet-label-en="How does the weak acid HA react with water?" style="--sheet-print-height:11mm">
 <div data-sheet-answer>
-<div class="equation">\[\ce{HA(aq) + H2O(l) <=> H3O+(aq) + A-(aq)}\]</div><p>HA ให้โปรตอนแก่น้ำได้ และ H₃O⁺ ให้โปรตอนคืนแก่ A⁻ ได้ เมื่ออัตราไปข้างหน้าและย้อนกลับเท่ากัน ความเข้มข้นคงที่ จึงมีทั้ง HA และไอออนที่สมดุล</p>
+<div class="equation">\[\ce{HA(aq) + H2O(l) &lt;=&gt; H3O+(aq) + A-(aq)}\]</div><p>HA ให้โปรตอนแก่น้ำได้ และ H₃O⁺ ให้โปรตอนคืนแก่ A⁻ ได้ เมื่ออัตราไปข้างหน้าและย้อนกลับเท่ากัน ความเข้มข้นคงที่ จึงมีทั้ง HA และไอออนที่สมดุล</p>
 </div>
 </div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
 <h3>ภาพ B แตกตัวไปกี่เปอร์เซ็นต์?</h3>
-<div data-sheet-slot="model-ionization-percentage" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ภาพ B แตกตัวไปกี่เปอร์เซ็นต์?" data-sheet-label-en="What percentage ionized in Set B?"
-     style="--sheet-print-height:9mm">
+<div data-sheet-slot="model-ionization-percentage" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ภาพ B แตกตัวไปกี่เปอร์เซ็นต์?" data-sheet-label-en="What percentage ionized in Set B?" style="--sheet-print-height:9mm">
 <div data-sheet-answer>
 <p>HA แตกตัว 2 จาก 20 โมเลกุล จึงได้ (2/20) × 100 = <strong>10%</strong> ให้นับโมเลกุล HA ที่หายไป เพราะหนึ่งโมเลกุลให้ไอออนสองชนิด ถ้าข้อมูลเป็นความเข้มข้น ใช้ (ความเข้มข้นที่แตกตัวไป ÷ ความเข้มข้นเริ่มต้น) × 100</p>
 </div>
@@ -249,10 +224,8 @@
 <div data-print-keep><h2><span>5</span> สมดุลกรดอ่อน จากสมการไปตาราง ICE</h2></div>
 <div class="question-item" data-print-keep>
 <h3>จากสมการนี้ เขียนนิพจน์ Kₐ อย่างไร?</h3>
-<div class="question-prompt"><div class="equation">\[\ce{HA(aq) + H2O(l) <=> H3O+(aq) + A-(aq)}\]</div></div>
-<div data-sheet-slot="weak-acid-constant" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="จากสมการนี้ เขียนนิพจน์ Kₐ อย่างไร?" data-sheet-label-en="What is the expression for Kₐ for this equation?"
-     style="--sheet-print-height:13mm">
+<div class="question-prompt"><div class="equation">\[\ce{HA(aq) + H2O(l) &lt;=&gt; H3O+(aq) + A-(aq)}\]</div></div>
+<div data-sheet-slot="weak-acid-constant" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากสมการนี้ เขียนนิพจน์ Kₐ อย่างไร?" data-sheet-label-en="What is the expression for Kₐ for this equation?" style="--sheet-print-height:13mm">
 <div data-sheet-answer>
 <div class="equation">\[K_a=\frac{[\mathrm{H_3O^+}][\mathrm{A^-}]}{[\mathrm{HA}]}\]</div><p>ใช้ความเข้มข้นที่สมดุลและละน้ำในนิพจน์ เพราะน้ำเป็นตัวทำละลาย เมื่อเทียบกรดภายใต้เงื่อนไขเดียวกัน Kₐ ที่มากกว่าบอกว่ากรดให้โปรตอนได้ดีกว่า</p>
 </div>
@@ -262,9 +235,7 @@
 <div class="question-item" data-print-keep>
 <h3>ถ้ากรดแตกตัวไป x แถว E มีค่าอะไร?</h3>
 <div class="question-prompt">ใช้ C₀ เป็นความเข้มข้นเริ่มต้นของกรด และละเลยไอออนจากน้ำเมื่อเทียบกับไอออนที่กรดให้</div>
-<div data-sheet-slot="weak-ice-table" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ถ้ากรดแตกตัวไป x แถว E มีค่าอะไร?" data-sheet-label-en="If x ionizes, what belongs in row E?"
-     style="--sheet-print-height:18mm">
+<div data-sheet-slot="weak-ice-table" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ถ้ากรดแตกตัวไป x แถว E มีค่าอะไร?" data-sheet-label-en="If x ionizes, what belongs in row E?" style="--sheet-print-height:18mm">
 <div data-sheet-answer>
 <table><caption>ICE · mol/L</caption><thead><tr><th scope="col">แถว</th><th scope="col">HA</th><th scope="col">H₃O⁺</th><th scope="col">A⁻</th></tr></thead><tbody>
 <tr><th scope="row">I · เริ่มต้น</th><td>C₀</td><td>0</td><td>0</td></tr>
@@ -279,30 +250,18 @@
 <div data-print-keep>
 <div data-print-keep><h2><span>6</span> หา x แล้วเลือกว่าจะประมาณหรือใช้สมการเต็ม</h2><p>เริ่มจากสมการสมดุล แล้วตรวจเงื่อนไขก่อนใช้สูตรถอดราก</p></div>
 <div class="question-item" data-print-keep>
-<h3>ตัวอย่าง 2 · กรดอ่อน หาความเข้มข้นไอออน</h3>
-<div class="question-prompt">CH₃COOH 0.200 mol/L ที่ 25 °C มี Kₐ = 1.80 × 10⁻⁵ จงหา [H₃O⁺] ที่สมดุล</div>
-<div data-sheet-slot="weak-approximation-rule" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ตัวอย่าง 2 · กรดอ่อน หาความเข้มข้นไอออน" data-sheet-label-en="Example 2 · Finding the ion concentration of a weak acid"
-     style="--sheet-print-height:34mm">
-<div data-sheet-answer>
-<div class="equation">\[\ce{CH3COOH(aq) + H2O(l) <=> H3O+(aq) + CH3COO-(aq)}\]</div><table><caption>ICE · mol/L</caption><thead><tr><th scope="col">แถว</th><th scope="col">CH₃COOH</th><th scope="col">H₃O⁺</th><th scope="col">CH₃COO⁻</th></tr></thead><tbody>
-<tr><th scope="row">I · เริ่มต้น</th><td>0.200</td><td>0</td><td>0</td></tr>
-<tr class="change-row"><th scope="row">C · เปลี่ยนไป</th><td>−x</td><td>+x</td><td>+x</td></tr>
-<tr><th scope="row">E · สมดุล</th><td>0.200 − x</td><td>x</td><td>x</td></tr>
-</tbody></table><p>แทนแถว E แล้วเทียบความเข้มข้นเริ่มต้นกับ Kₐ ตามเกณฑ์ในบทนี้</p><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{0.200-x}\]</div><div class="equation">\[\frac{C_0}{K_a}=\frac{0.200}{1.80\times10^{-5}}\approx1.11\times10^4>1000\]</div><p>เมื่อ C₀/Kₐ > 1000 ให้ประมาณเฉพาะตัวส่วน 0.200 − x ≈ 0.200</p><div class="equation">\[[\mathrm{H_3O^+}]=x\approx\sqrt{(1.80\times10^{-5})(0.200)}=1.90\times10^{-3}\,\mathrm{mol/L}\]</div>
-</div>
+<h3>ตรวจเกณฑ์ก่อนประมาณตัวส่วน</h3>
+<div class="question-prompt">ในสมดุลแบบ 1 : 1 ค่าใดใช้ตัดสินว่า C<sub>0</sub> − x ประมาณเป็น C<sub>0</sub> ได้?</div>
+<div data-sheet-slot="weak-approximation-rule" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ตรวจเกณฑ์ก่อนประมาณตัวส่วน" data-sheet-label-en="Check the criterion before approximating the denominator" style="--sheet-print-height:17mm">
+<div data-sheet-answer><div class="equation">\[K=\frac{x^2}{C_0-x}\]</div><p>กรณีที่ไม่มีไอออนผลิตภัณฑ์เติมมาตั้งต้นและละเลยไอออนจากน้ำ ใช้เกณฑ์ในบทนี้ ถ้า C<sub>0</sub>/K &gt; 1000 ให้ประมาณเฉพาะตัวส่วน C<sub>0</sub> − x ≈ C<sub>0</sub> แล้วหา x</p><div class="equation">\[x\approx\sqrt{KC_0}\]</div></div>
 </div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
-<h3>ถ้า C₀/Kₐ ไม่เกิน 1000 ทำอย่างไร?</h3>
-<div class="question-prompt">HA 0.00200 mol/L มี Kₐ = 2.00 × 10⁻⁵ จะหา [H₃O⁺] อย่างไร?</div>
-<div data-sheet-slot="practice-quadratic" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ถ้า C₀/Kₐ ไม่เกิน 1000 ทำอย่างไร?" data-sheet-label-en="What if C₀/Kₐ is at most 1000?"
-     style="--sheet-print-height:21mm">
-<div data-sheet-answer>
-<p>C₀/Kₐ = 100 ตามเกณฑ์ในบทนี้จึงใช้สมการเต็ม โดยคง x ในตัวส่วน</p><div class="equation">\[2.00\times10^{-5}=\frac{x^2}{0.00200-x}\ \Rightarrow\ x^2+(2.00\times10^{-5})x-4.00\times10^{-8}=0\]</div><p>เลือกรากที่อยู่ในช่วง 0 &lt; x &lt; C₀ จึงได้ [H₃O⁺] ≈ <strong>1.90 × 10⁻⁴ mol/L</strong></p>
-</div>
+<h3>จัดรูปสมการเต็มและเลือกราก</h3>
+<div class="question-prompt">ถ้า C<sub>0</sub>/K ไม่ผ่านเกณฑ์ในบทนี้ ต้องเก็บพจน์ใด?</div>
+<div data-sheet-slot="practice-quadratic" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จัดรูปสมการเต็มและเลือกราก" data-sheet-label-en="Rearrange the full equation and choose the root" style="--sheet-print-height:14mm">
+<div data-sheet-answer><p>เก็บ C<sub>0</sub> − x ในตัวส่วน คูณไขว้แล้วจัดรูป จากนั้นเลือกรากที่อยู่ระหว่าง 0 กับ C<sub>0</sub></p><div class="equation">\[K(C_0-x)=x^2\quad\Rightarrow\quad x^2+Kx-KC_0=0\]</div></div>
 </div>
 </div>
 </section>
@@ -312,11 +271,9 @@
 <div class="question-item" data-print-keep>
 <h3>H₂SO₄ กับ H₂SO₃ แตกตัวสองขั้นอย่างไร?</h3>
 <div class="question-prompt">ขั้นไหนถือว่าสมบูรณ์ และ Kₐ₁ กับ Kₐ₂ บอกอะไร?</div>
-<div data-sheet-slot="weak-stepwise" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="H₂SO₄ กับ H₂SO₃ แตกตัวสองขั้นอย่างไร?" data-sheet-label-en="How do the two ionization steps differ for H₂SO₄ and H₂SO₃?"
-     style="--sheet-print-height:15mm">
+<div data-sheet-slot="weak-stepwise" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="H₂SO₄ กับ H₂SO₃ แตกตัวสองขั้นอย่างไร?" data-sheet-label-en="How do the two ionization steps differ for H₂SO₄ and H₂SO₃?" style="--sheet-print-height:15mm">
 <div data-sheet-answer>
-<div class="equation">\[\ce{H2SO4 + H2O -> H3O+ + HSO4-}\]</div><div class="equation">\[\ce{HSO4- + H2O <=> H3O+ + SO4^2-}\]</div><p>H₂SO₄ ถือว่าขั้นแรกสมบูรณ์ ส่วนขั้นที่สองเป็นสมดุล แถว I ของขั้นสองจึงมี H₃O⁺ จากขั้นแรกอยู่แล้ว ส่วน H₂SO₃ มีสองสมดุลจาก H₂SO₃ → HSO₃⁻ → SO₃²⁻ โดย Kₐ₁ ใหญ่กว่า Kₐ₂ มาก จึงได้ [HSO₃⁻] > [SO₃²⁻] เมื่อไม่นับไอออนจากน้ำ แต่ละ HSO₃⁻ มาพร้อม H₃O⁺ หนึ่งไอออน ส่วนแต่ละ SO₃²⁻ มาพร้อมสองไอออน จึงได้ [H₃O⁺] > [HSO₃⁻]</p>
+<div class="equation">\[\ce{H2SO4 + H2O -&gt; H3O+ + HSO4-}\]</div><div class="equation">\[\ce{HSO4- + H2O &lt;=&gt; H3O+ + SO4^2-}\]</div><p>H₂SO₄ ถือว่าขั้นแรกสมบูรณ์ ส่วนขั้นที่สองเป็นสมดุล แถว I ของขั้นสองจึงมี H₃O⁺ จากขั้นแรกอยู่แล้ว ส่วน H₂SO₃ มีสองสมดุลจาก H₂SO₃ → HSO₃⁻ → SO₃²⁻ โดย Kₐ₁ ใหญ่กว่า Kₐ₂ มาก จึงได้ [HSO₃⁻] &gt; [SO₃²⁻] เมื่อไม่นับไอออนจากน้ำ แต่ละ HSO₃⁻ มาพร้อม H₃O⁺ หนึ่งไอออน ส่วนแต่ละ SO₃²⁻ มาพร้อมสองไอออน จึงได้ [H₃O⁺] &gt; [HSO₃⁻]</p>
 </div>
 </div>
 </div>
@@ -328,60 +285,42 @@
 <div class="question-item" data-print-keep>
 <h3>เบสอ่อน B รับโปรตอนจากอะไร?</h3>
 <div class="question-prompt">เขียนสมการของเบสอ่อน B ในน้ำและเลือกชนิดลูกศร</div>
-<div data-sheet-slot="weak-base-reaction" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="เบสอ่อน B รับโปรตอนจากอะไร?" data-sheet-label-en="What donates a proton to a weak base B?"
-     style="--sheet-print-height:10mm">
+<div data-sheet-slot="weak-base-reaction" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เบสอ่อน B รับโปรตอนจากอะไร?" data-sheet-label-en="What donates a proton to a weak base B?" style="--sheet-print-height:10mm">
 <div data-sheet-answer>
-<div class="equation">\[\ce{B(aq) + H2O(l) <=> BH+(aq) + OH-(aq)}\]</div><p>น้ำให้โปรตอนแก่ B จึงเกิด BH⁺ และ OH⁻ ใช้ลูกศรสองทางเพราะเป็นสมดุล</p>
+<div class="equation">\[\ce{B(aq) + H2O(l) &lt;=&gt; BH+(aq) + OH-(aq)}\]</div><p>น้ำให้โปรตอนแก่ B จึงเกิด BH⁺ และ OH⁻ ใช้ลูกศรสองทางเพราะเป็นสมดุล</p>
 </div>
 </div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
 <h3>จากสมการนี้ เขียนนิพจน์ Kᵦ อย่างไร?</h3>
-<div class="question-prompt"><div class="equation">\[\ce{NH3(aq) + H2O(l) <=> NH4+(aq) + OH-(aq)}\]</div></div>
-<div data-sheet-slot="weak-base-equilibrium" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="จากสมการนี้ เขียนนิพจน์ Kᵦ อย่างไร?" data-sheet-label-en="What is the expression for Kᵦ for this equation?"
-     style="--sheet-print-height:12mm">
+<div class="question-prompt"><div class="equation">\[\ce{NH3(aq) + H2O(l) &lt;=&gt; NH4+(aq) + OH-(aq)}\]</div></div>
+<div data-sheet-slot="weak-base-equilibrium" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากสมการนี้ เขียนนิพจน์ Kᵦ อย่างไร?" data-sheet-label-en="What is the expression for Kᵦ for this equation?" style="--sheet-print-height:12mm">
 <div data-sheet-answer>
 <div class="equation">\[K_b=\frac{[\mathrm{NH_4^+}][\mathrm{OH^-}]}{[\mathrm{NH_3}]}\]</div><p>NH₃ รับโปรตอนจากน้ำ เกิด NH₄⁺ และ OH⁻ อย่างละหนึ่งต่อ NH₃ ที่ทำปฏิกิริยาหนึ่งหน่วย ใช้ความเข้มข้นที่สมดุล และละน้ำในนิพจน์ เมื่อ C₀ และอุณหภูมิเท่ากัน เบสที่ Kᵦ มากกว่าให้ OH⁻ และร้อยละการแตกตัวสูงกว่าในกรณี 1 : 1</p>
 </div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
-<h3>ตัวอย่าง 3 ก · เบสอ่อน หาความเข้มข้นไอออน</h3>
-<div class="question-prompt">NH₃ 0.180 mol/L ที่ 25 °C มี Kᵦ = 1.80 × 10⁻⁵ จงหา [NH₄⁺] และ [OH⁻] ที่สมดุล</div>
-<div data-sheet-slot="model-weak-base-ions" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ตัวอย่าง 3 ก · เบสอ่อน หาความเข้มข้นไอออน" data-sheet-label-en="Example 3(a) · Finding ion concentrations of a weak base"
-     style="--sheet-print-height:30mm">
-<div data-sheet-answer>
-<table><caption>ICE · mol/L</caption><thead><tr><th scope="col">แถว</th><th scope="col">NH₃</th><th scope="col">NH₄⁺</th><th scope="col">OH⁻</th></tr></thead><tbody>
-<tr><th scope="row">I · เริ่มต้น</th><td>0.180</td><td>0</td><td>0</td></tr>
-<tr class="change-row"><th scope="row">C · เปลี่ยนไป</th><td>−x</td><td>+x</td><td>+x</td></tr>
-<tr><th scope="row">E · สมดุล</th><td>0.180 − x</td><td>x</td><td>x</td></tr>
-</tbody></table><p>จากแถว E เขียนสมการ Kᵦ ตรวจ C₀/Kᵦ ก่อนประมาณตัวส่วน</p><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{0.180-x}\]</div><div class="equation">\[\frac{C_0}{K_b}=\frac{0.180}{1.80\times10^{-5}}=1.00\times10^4>1000\]</div><div class="equation">\[[\mathrm{OH^-}]=x\approx\sqrt{(1.80\times10^{-5})(0.180)}=1.80\times10^{-3}\,\mathrm{mol/L}\]</div><p>จากเลขดุล [NH₄⁺] เท่ากับ [OH⁻] จึงมีความเข้มข้นชนิดละประมาณ 1.80 × 10⁻³ mol/L</p>
-</div>
+<h3>อ่านไอออนของเบสอ่อนจากแถว E</h3>
+<div class="question-prompt">สำหรับ NH<sub>3</sub> ที่ทำปฏิกิริยากับน้ำไป x mol/L แถว E ของเบสและไอออนสองชนิดเป็นอะไร?</div>
+<div data-sheet-slot="model-weak-base-ions" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="อ่านไอออนของเบสอ่อนจากแถว E" data-sheet-label-en="Read the weak-base ion concentrations from row E" style="--sheet-print-height:14mm">
+<div data-sheet-answer><p>เมื่อไม่มีไอออนผลิตภัณฑ์เติมมาตั้งต้นและละเลยไอออนจากน้ำ แถว E ของ NH<sub>3</sub>, NH<sub>4</sub><sup>+</sup>, OH<sup>−</sup> คือ C<sub>0</sub> − x, x, x ตามลำดับ</p><div class="equation">\[K_b=\frac{x^2}{C_0-x}\]</div></div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
-<h3>ตัวอย่าง 3 ข · เบสอ่อนแตกร้อยละเท่าไร?</h3>
-<div class="question-prompt">ใช้ผลจากข้อ ก และความเข้มข้น NH₃ เริ่มต้น</div>
-<div data-sheet-slot="model-weak-base-percent" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ตัวอย่าง 3 ข · เบสอ่อนแตกร้อยละเท่าไร?" data-sheet-label-en="Example 3(b) · What percentage of the base ionized?"
-     style="--sheet-print-height:11mm">
-<div data-sheet-answer>
-<p>จากข้อ ก NH₃ เปลี่ยนไป x ≈ 0.00180 mol/L จากที่เริ่ม 0.180 mol/L จึงแตกตัวประมาณ (0.00180/0.180) × 100 = <strong>1.00%</strong></p>
-</div>
+<h3>จาก x ไปหาร้อยละของเบสอ่อน</h3>
+<div class="question-prompt">เมื่อหา x จาก ICE ได้แล้ว ต้องหารด้วยความเข้มข้นใด?</div>
+<div data-sheet-slot="model-weak-base-percent" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จาก x ไปหาร้อยละของเบสอ่อน" data-sheet-label-en="From x to the percent ionization of a weak base" style="--sheet-print-height:11mm">
+<div data-sheet-answer><p>หารด้วยความเข้มข้นเริ่มต้น C<sub>0</sub> ให้ x กับ C<sub>0</sub> เป็นหน่วยเดียวกัน แล้วคูณ 100</p><div class="equation">\[\frac{x}{C_0}\times100\%\]</div></div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
 <h3>จาก NaX ไปหา OH⁻ ต้องต่อสองตารางอย่างไร?</h3>
 <div class="question-prompt">NaX แตกตัวสมบูรณ์ และ X⁻ ทำหน้าที่เป็นเบสอ่อน ความเข้มข้น X⁻ ตั้งต้นในตาราง ICE มาจากไหน?</div>
-<div data-sheet-slot="practice-base-cation" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="จาก NaX ไปหา OH⁻ ต้องต่อสองตารางอย่างไร?" data-sheet-label-en="How do we connect two tables to find OH⁻ from NaX?"
-     style="--sheet-print-height:14mm">
+<div data-sheet-slot="practice-base-cation" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จาก NaX ไปหา OH⁻ ต้องต่อสองตารางอย่างไร?" data-sheet-label-en="How do we connect two tables to find OH⁻ from NaX?" style="--sheet-print-height:14mm">
 <div data-sheet-answer>
-<div class="equation">\[\ce{NaX -> Na+ + X-}\]</div><div class="equation">\[\ce{X- + H2O <=> HX + OH-}\]</div><p>ใช้ <strong>F ของ ICF</strong> จากสมการแรกเป็น <strong>I ของ ICE</strong> ในสมการที่สอง เช่น NaX 0.20 mol/L ให้ X⁻ ตั้งต้น 0.20 mol/L จากนั้นจึงใช้ Kᵦ ของ X⁻ หา OH⁻ ที่สมดุล</p>
+<div class="equation">\[\ce{NaX -&gt; Na+ + X-}\]</div><div class="equation">\[\ce{X- + H2O &lt;=&gt; HX + OH-}\]</div><p>ใช้ <strong>F ของ ICF</strong> จากสมการแรกเป็น <strong>I ของ ICE</strong> ในสมการที่สอง เช่น NaX 0.20 mol/L ให้ X⁻ ตั้งต้น 0.20 mol/L จากนั้นจึงใช้ Kᵦ ของ X⁻ หา OH⁻ ที่สมดุล</p>
 </div>
 </div>
 </div>
@@ -392,9 +331,7 @@
 <div class="question-item" data-print-keep>
 <h3>จากที่นับได้ในภาพ B เขียนเป็นสูตรอย่างไร?</h3>
 <div class="question-prompt">ใช้ x เป็นความเข้มข้นของสารที่แตกตัวไป และ C₀ เป็นความเข้มข้นเริ่มต้น</div>
-<div data-sheet-slot="percent-ionized" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="จากที่นับได้ในภาพ B เขียนเป็นสูตรอย่างไร?" data-sheet-label-en="How do we write a formula for what we counted in Set B?"
-     style="--sheet-print-height:10mm">
+<div data-sheet-slot="percent-ionized" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากที่นับได้ในภาพ B เขียนเป็นสูตรอย่างไร?" data-sheet-label-en="How do we write a formula for what we counted in Set B?" style="--sheet-print-height:10mm">
 <div data-sheet-answer>
 <div class="equation">\[\frac{x}{C_0}\times100\%\]</div><p>x กับ C₀ ใช้หน่วยเดียวกัน เช่น mol/L หน่วยจึงตัดกัน</p>
 </div>
@@ -405,9 +342,7 @@
 <div class="question-item" data-print-keep>
 <h3>เมื่อเจือจางกรดอ่อน ร้อยละกับความเข้มข้นไอออนเปลี่ยนอย่างไร?</h3>
 <div class="question-prompt">พิจารณากรดอ่อนชนิดเดิมที่อุณหภูมิเดิม ในช่วงที่ใช้การประมาณได้</div>
-<div data-sheet-slot="weak-dilution-weak" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="เมื่อเจือจางกรดอ่อน ร้อยละกับความเข้มข้นไอออนเปลี่ยนอย่างไร?" data-sheet-label-en="On dilution, what happens to the percentage and ion concentration?"
-     style="--sheet-print-height:12mm">
+<div data-sheet-slot="weak-dilution-weak" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เมื่อเจือจางกรดอ่อน ร้อยละกับความเข้มข้นไอออนเปลี่ยนอย่างไร?" data-sheet-label-en="On dilution, what happens to the percentage and ion concentration?" style="--sheet-print-height:12mm">
 <div data-sheet-answer>
 <div class="equation">\[[\mathrm{H_3O^+}]\approx\sqrt{K_aC_0}\]</div><div class="equation">\[\frac{x}{C_0}\times100\%\approx\sqrt{\frac{K_a}{C_0}}\times100\%\]</div><p>เมื่อ C₀ ลดลง ความเข้มข้น H₃O⁺ ลดลง แต่สัดส่วนที่แตกตัวเพิ่มขึ้น ส่วน Kₐ คงเดิมที่อุณหภูมิเดิม</p>
 </div>
@@ -415,13 +350,9 @@
 </div>
 <div class="question-item" data-print-keep>
 <h3>ถ้ารู้ร้อยละแล้ว จะย้อนหา Kₐ อย่างไร?</h3>
-<div class="question-prompt">HA เริ่มต้น 0.20 mol/L แตกตัว 5.0% ให้หา x แล้วแทนค่าที่สมดุล</div>
-<div data-sheet-slot="weak-reverse-percent" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ถ้ารู้ร้อยละแล้ว จะย้อนหา Kₐ อย่างไร?" data-sheet-label-en="How do we work back to Kₐ from a given percentage?"
-     style="--sheet-print-height:16mm">
-<div data-sheet-answer>
-<p>x = (5.0/100)(0.20) = 0.010 mol/L กรดที่เหลือมีความเข้มข้น 0.20 − 0.010 = 0.19 mol/L</p><div class="equation">\[K_a=\frac{x^2}{C_0-x}=\frac{(0.010)^2}{0.19}\approx5.3\times10^{-4}\]</div><p>เมื่อต้องเทียบความแรงของกรดที่ความเข้มข้นเริ่มต้นต่างกัน ให้เทียบ Kₐ ที่อุณหภูมิเดียวกัน</p>
-</div>
+<div class="question-prompt">ถ้าร้อยละที่โจทย์ให้มีค่าตัวเลขเป็น P จะเปลี่ยนกลับเป็น x อย่างไร?</div>
+<div data-sheet-slot="weak-reverse-percent" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ถ้ารู้ร้อยละแล้ว จะย้อนหา Kₐ อย่างไร?" data-sheet-label-en="How do we work back to Kₐ from a given percentage?" style="--sheet-print-height:14mm">
+<div data-sheet-answer><div class="equation">\[x=C_0\frac{P}{100}\]</div><p>ใส่ x ในแถว C แล้วอ่าน C<sub>0</sub> − x กับ x จากแถว E เพื่อหา K<sub>a</sub> ถ้าเทียบความแรงของกรดที่ความเข้มข้นต่างกัน ให้เทียบ K<sub>a</sub> ที่อุณหภูมิเดียวกัน</p></div>
 </div>
 </div>
 </section>
@@ -430,10 +361,8 @@
 <div data-print-keep><h2><span>10</span> น้ำให้ไอออนได้อย่างไร?</h2><p>น้ำโมเลกุลหนึ่งให้โปรตอน อีกโมเลกุลรับโปรตอน</p></div>
 <div class="question-item" data-print-keep>
 <h3>K𝓌 และความเป็นกลางของน้ำ</h3>
-<div class="question-prompt"><div class="equation">\[\ce{2H2O(l) <=> H3O+(aq) + OH-(aq)}\]</div></div>
-<div data-sheet-slot="water-water-constant" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="K𝓌 และความเป็นกลางของน้ำ" data-sheet-label-en="K𝓌 and the neutrality of water"
-     style="--sheet-print-height:14mm">
+<div class="question-prompt"><div class="equation">\[\ce{2H2O(l) &lt;=&gt; H3O+(aq) + OH-(aq)}\]</div></div>
+<div data-sheet-slot="water-water-constant" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="K𝓌 และความเป็นกลางของน้ำ" data-sheet-label-en="K𝓌 and the neutrality of water" style="--sheet-print-height:14mm">
 <div data-sheet-answer>
 <div class="equation">\[K_w=[\mathrm{H_3O^+}][\mathrm{OH^-}]=1.0\times10^{-14}\quad(25\,^\circ\mathrm C)\]</div><p>น้ำบริสุทธิ์ให้สองไอออนชนิดละเท่ากัน ที่ 25 °C จึงมีความเข้มข้นชนิดละ √K𝓌 = 1.0 × 10⁻⁷ mol/L ความเป็นกลางหมายถึง [H₃O⁺] = [OH⁻] ค่า K𝓌 เปลี่ยนได้เมื่ออุณหภูมิเปลี่ยน</p>
 </div>
@@ -446,10 +375,8 @@
 <div data-print-keep><h2><span>11</span> ทำไม Kₐ ของ HA คูณ Kᵦ ของ A⁻ ได้ K𝓌?</h2></div>
 <div class="question-item" data-print-keep>
 <h3>เขียนสองนิพจน์แล้วลองคูณกัน</h3>
-<div class="question-prompt"><p>สมการแรกมอง HA เป็นกรด สมการที่สองมอง A⁻ เป็นเบสคู่กัน</p><div class="equation">\[\ce{HA(aq) + H2O(l) <=> H3O+(aq) + A-(aq)}\]</div><div class="equation">\[\ce{A-(aq) + H2O(l) <=> HA(aq) + OH-(aq)}\]</div></div>
-<div data-sheet-slot="water-constant-proof" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="เขียนสองนิพจน์แล้วลองคูณกัน" data-sheet-label-en="Write the two expressions and multiply them"
-     style="--sheet-print-height:20mm">
+<div class="question-prompt"><p>สมการแรกมอง HA เป็นกรด สมการที่สองมอง A⁻ เป็นเบสคู่กัน</p><div class="equation">\[\ce{HA(aq) + H2O(l) &lt;=&gt; H3O+(aq) + A-(aq)}\]</div><div class="equation">\[\ce{A-(aq) + H2O(l) &lt;=&gt; HA(aq) + OH-(aq)}\]</div></div>
+<div data-sheet-slot="water-constant-proof" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เขียนสองนิพจน์แล้วลองคูณกัน" data-sheet-label-en="Write the two expressions and multiply them" style="--sheet-print-height:20mm">
 <div data-sheet-answer>
 <div class="equation">\[K_aK_b=\frac{[\mathrm{H_3O^+}][\mathrm{A^-}]}{[\mathrm{HA}]}\times\frac{[\mathrm{HA}][\mathrm{OH^-}]}{[\mathrm{A^-}]}\]</div><div class="equation">\[=[\mathrm{H_3O^+}][\mathrm{OH^-}]=K_w\]</div><p>ตัด [HA] และ [A⁻] ออกได้ เพราะสองนิพจน์เป็นของคู่เดียวกันที่อุณหภูมิเดียวกัน เมื่อรวมสองสมการจะเหลือสมการแตกตัวของน้ำ</p>
 </div>
@@ -459,9 +386,7 @@
 <div class="question-item" data-print-keep>
 <h3>ถ้ารู้ค่าหนึ่ง หาค่าของคู่กันอย่างไร?</h3>
 <div class="question-prompt">ถ้ารู้ Kₐ ของ HA ให้หา Kᵦ ของ A⁻ อย่างไร? ถ้ารู้ Kᵦ ของ B ให้หา Kₐ ของ BH⁺ อย่างไร?</div>
-<div data-sheet-slot="water-rearrange-pair" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ถ้ารู้ค่าหนึ่ง หาค่าของคู่กันอย่างไร?" data-sheet-label-en="How do we find the conjugate constant from the given one?"
-     style="--sheet-print-height:13mm">
+<div data-sheet-slot="water-rearrange-pair" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ถ้ารู้ค่าหนึ่ง หาค่าของคู่กันอย่างไร?" data-sheet-label-en="How do we find the conjugate constant from the given one?" style="--sheet-print-height:13mm">
 <div data-sheet-answer>
 <div class="equation">\[K_b(\mathrm{A^-})=\frac{K_w}{K_a(\mathrm{HA})},\quad K_a(\mathrm{BH^+})=\frac{K_w}{K_b(\mathrm B)}\]</div><p>ระบุคู่ให้ถูกก่อน เช่น HA กับ A⁻ ต่างกันหนึ่งโปรตอน แล้วใช้ K𝓌 ที่อุณหภูมิของโจทย์</p>
 </div>
@@ -469,19 +394,290 @@
 </div>
 <div class="question-item" data-print-keep>
 <h3>กรดยิ่งแรง คู่เบสเป็นอย่างไร?</h3>
-<div data-sheet-slot="water-inverse-strength" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="กรดยิ่งแรง คู่เบสเป็นอย่างไร?" data-sheet-label-en="What happens to the conjugate base as the acid gets stronger?"
-     style="--sheet-print-height:8mm">
+<div data-sheet-slot="water-inverse-strength" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="กรดยิ่งแรง คู่เบสเป็นอย่างไร?" data-sheet-label-en="What happens to the conjugate base as the acid gets stronger?" style="--sheet-print-height:8mm">
 <div data-sheet-answer>
 <p>คู่เบสอ่อนลง เพราะที่อุณหภูมิเดียวกัน K𝓌 คงที่ เมื่อ Kₐ ของกรดมากขึ้น Kᵦ ของคู่เบสจึงเล็กลง</p>
 </div>
 </div>
 </div>
 </section>
-<footer class="source-note">ฝึกตัวอย่าง 2–6 และแบบฝึกหัด 10.3 ข้อ 1–9 ของ สสวท. ต่อในควิซทบทวนของหัวข้อนี้</footer>
-</main>
+<footer class="source-note">ไปต่อที่โซน Problem เพื่อพาทำตัวอย่าง สสวท. และฝึกตามทักษะ</footer>
+</div><div data-print-zone="problem" id="problem-th">
+<h2 class="zone-title">Problem · โจทย์และแบบฝึกหัด</h2>
+<p>ใช้เลขตัวอย่างและข้อเดิมของ สสวท. ป้าย «ฝึกซ้ำ» คือโจทย์เสริมสำหรับทบทวนวิธีคิดและสารสำคัญ</p>
+<section class="lesson-section" data-guide-anchor="problem-examples">
+<h2>ตัวอย่าง สสวท. และฝึกซ้ำตามวิธีทำ</h2>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-01">
+<h3 class="practice-label">ฝึกซ้ำ 01 · จำแนกสารจากสูตร</h3>
+<div class="question-prompt"><p>จัด HCl, HBr, HI, HNO<sub>3</sub>, HClO<sub>4</sub>, LiOH, NaOH, KOH, Ca(OH)<sub>2</sub>, Sr(OH)<sub>2</sub>, Ba(OH)<sub>2</sub>, HF, CH<sub>3</sub>COOH และ NH<sub>3</sub> เป็นกรดแก่ เบสแก่ กรดอ่อน หรือเบสอ่อน แล้วจำแนก NaCl กับน้ำตาลซูโครสตามชนิดอิเล็กโทรไลต์</p></div>
+<div data-sheet-slot="repeat-01" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:29mm" data-sheet-label-th="ฝึกซ้ำ 01 · จำแนกสารจากสูตร" data-sheet-label-en="Repeat practice 01 · Classify the substances from their formulas"><div data-sheet-answer=""><p>กรดแก่ HCl, HBr, HI, HNO<sub>3</sub>, HClO<sub>4</sub></p><p>เบสแก่ LiOH, NaOH, KOH, Ca(OH)<sub>2</sub>, Sr(OH)<sub>2</sub>, Ba(OH)<sub>2</sub></p><p>กรดอ่อน HF และ CH<sub>3</sub>COOH เบสอ่อน NH<sub>3</sub></p><p>NaCl เป็นอิเล็กโทรไลต์แก่ ส่วนซูโครสเป็นนอนอิเล็กโทรไลต์</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-example-2">
+<h3>ตัวอย่าง 2 (สสวท.) · แก๊ส HBr</h3>
+<div class="question-prompt"><p>ต้องใช้แก๊ส HBr กี่โมล จึงเตรียมสารละลาย 2.0 L ที่มี <span class="chem">H<sub>3</sub>O<sup>+</sup></span> และ <span class="chem">Br<sup>-</sup></span> เข้มข้นชนิดละ 0.60 mol/L?</p></div>
+<div data-sheet-slot="ipst-example-2" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตัวอย่าง 2 (สสวท.) · แก๊ส HBr" data-sheet-label-en="Example 2 (IPST) · HBr gas"><div data-sheet-answer="">\[2.0\ \mathrm L\times\frac{0.60\ \mathrm{mol}}{1\ \mathrm L}=1.200\ \mathrm{mol}\]<p>หน่วย L ตัดกัน เหลือ mol ของ H₃O⁺ จัดข้อมูลนี้ก่อนลงตาราง.</p><p>ข้อมูล H₃O⁺ ที่โจทย์ให้เป็นปริมาณหลังแตกตัว จึงใช้แถว F ของไอออน; ให้เริ่มต้นสารที่จะละลาย a mol.</p>\[\ce{HBr + H2O -&gt; H3O+ + Br-}\]<p>ดุลสมการ แล้วให้หนึ่งส่วนของการเปลี่ยนเท่ากับ a mol แถว C เปลี่ยนตามอัตราส่วน −1 : +1 : +1.</p><table data-solution-table="icf" data-unit="mol"><caption>ICF · mol</caption><thead><tr><th scope="col">แถว (mol)</th><th scope="col">HBr</th><th scope="col">H<sub>3</sub>O<sup>+</sup></th><th scope="col">Br<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — เริ่มต้น</th><td>a</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — เปลี่ยนไป</strong></th><td><strong>−a</strong></td><td><strong>+a</strong></td><td><strong>+a</strong></td></tr><tr><th scope="row">F — สุดท้าย</th><td>0</td><td>a</td><td>a</td></tr></tbody></table><p>จากแถว F: 1a = 1.20 mol จึง a = 1.20 mol.</p><p>\(\ce{HBr + H2O -&gt; H3O+ + Br-}\) อัตราส่วน 1:1:1 จึงต้องมี HBr เข้มข้น 0.60 mol/L และ \(n=CV=0.60(2.0)=1.2\ \mathrm{mol}\)</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-02">
+<h3 class="practice-label">ฝึกซ้ำ 02 · อ่านอัตราส่วนไปข้างหน้า</h3>
+<div class="question-prompt"><p>สารละลาย Ba(OH)<sub>2</sub> 0.030 mol/L ให้ Ba<sup>2+</sup> และ OH<sup>−</sup> เข้มข้นเท่าใด? เขียนสมการก่อนตอบ</p></div>
+<div data-sheet-slot="repeat-02" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 02 · อ่านอัตราส่วนไปข้างหน้า" data-sheet-label-en="Repeat practice 02 · Use the ratio forwards"><div data-sheet-answer=""><div class="equation">\[\ce{Ba(OH)2 -&gt; Ba^2+ + 2OH-}\]</div><p>แถว C ของ ICF เปลี่ยน −0.030, +0.030, +0.060 mol/L ตามเลขดุล จึงได้ [Ba<sup>2+</sup>] = 0.030 mol/L และ [OH<sup>−</sup>] = 0.060 mol/L</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-03">
+<h3 class="practice-label">ฝึกซ้ำ 03 · ย้อนจากไอออนกลับไปหาเบส</h3>
+<div class="question-prompt"><p>สารละลาย Sr(OH)<sub>2</sub> มี [OH<sup>−</sup>] = 0.060 mol/L ใช้ Sr(OH)<sub>2</sub> เข้มข้นเริ่มต้นเท่าใด?</p></div>
+<div data-sheet-slot="repeat-03" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 03 · ย้อนจากไอออนกลับไปหาเบส" data-sheet-label-en="Repeat practice 03 · Work back from the ion to the base"><div data-sheet-answer=""><div class="equation">\[\ce{Sr(OH)2 -&gt; Sr^2+ + 2OH-}\]</div><p>ถ้า I ของเบสเป็น a แถว C ให้ OH<sup>−</sup> +2a และแถว F มี 2a = 0.060 mol/L จึงได้ a = 0.030 mol/L</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-example-3a">
+<h3>ตัวอย่าง 3 (สสวท.) · ก · จำนวนโมล</h3>
+<div class="question-prompt"><p>สารละลาย <span class="chem">Sr(OH)<sub>2</sub></span> 0.40 L มี <span class="chem">OH<sup>-</sup></span> 1.0 mol/L เติมน้ำจนปริมาตรรวมเป็น 2.00 L</p><p>หาโมลของ <span class="chem">Sr<sup>2+</sup></span> และ <span class="chem">OH<sup>-</sup></span> ก่อนและหลังเติมน้ำ</p></div>
+<div data-sheet-slot="ipst-example-3a" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตัวอย่าง 3 (สสวท.) · ก · จำนวนโมล" data-sheet-label-en="Example 3 (IPST)(a) · Amounts"><div data-sheet-answer="">\[0.40\ \mathrm L\times\frac{1.0\ \mathrm{mol}}{1\ \mathrm L}=0.400\ \mathrm{mol}\]<p>หน่วย L ตัดกัน เหลือ mol ของ OH⁻ จัดข้อมูลนี้ก่อนลงตาราง.</p><p>ข้อมูล OH⁻ ที่โจทย์ให้เป็นปริมาณหลังแตกตัว จึงใช้แถว F ของไอออน; ให้เริ่มต้นสารที่จะละลาย a mol.</p>\[\ce{Sr(OH)2 -&gt; Sr^2+ + 2OH-}\]<p>ดุลสมการ แล้วให้หนึ่งส่วนของการเปลี่ยนเท่ากับ a mol แถว C เปลี่ยนตามอัตราส่วน −1 : +1 : +2.</p><table data-solution-table="icf" data-unit="mol"><caption>ICF · mol</caption><thead><tr><th scope="col">แถว (mol)</th><th scope="col">Sr(OH)<sub>2</sub></th><th scope="col">Sr<sup>2+</sup></th><th scope="col">OH<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — เริ่มต้น</th><td>a</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — เปลี่ยนไป</strong></th><td><strong>−a</strong></td><td><strong>+a</strong></td><td><strong>+2a</strong></td></tr><tr><th scope="row">F — สุดท้าย</th><td>0</td><td>a</td><td>2a</td></tr></tbody></table><p>จากแถว F: 2a = 0.40 mol จึง a = 0.20 mol.</p><p>เติมน้ำหลังแตกตัวจนเป็น 2.00 L: โมลไอออนจาก F คงเดิม แล้วใช้ n×(1/V) เปลี่ยนเป็น mol/L.</p>\[0.20\ \mathrm{mol}\times\frac{1}{2.00\ \mathrm L}=0.1\ \mathrm{mol/L}\]<p>อ่านโมลจากแถว F แล้วหารปริมาตรสุดท้าย เหลือหน่วย mol/L ของ Sr²⁺.</p>\[0.40\ \mathrm{mol}\times\frac{1}{2.00\ \mathrm L}=0.2\ \mathrm{mol/L}\]<p>อ่านโมลจากแถว F แล้วหารปริมาตรสุดท้าย เหลือหน่วย mol/L ของ OH⁻.</p><p>\(n(\ce{OH-})=1.0(0.40)=0.40\ \mathrm{mol}\) และ \(n(\ce{Sr^2+})=0.40/2=0.20\ \mathrm{mol}\) การเติมน้ำไม่เปลี่ยนจำนวนโมลของไอออนแต่ละชนิด</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-example-3b">
+<h3>ตัวอย่าง 3 (สสวท.) · ข · ความเข้มข้นใหม่</h3>
+<div class="question-prompt"><p>สารละลาย <span class="chem">Sr(OH)<sub>2</sub></span> 0.40 L มี <span class="chem">OH<sup>-</sup></span> 1.0 mol/L เติมน้ำจนปริมาตรรวมเป็น 2.00 L</p><p>หาความเข้มข้นของไอออนทั้งสองหลังเติมน้ำ</p></div>
+<div data-sheet-slot="ipst-example-3b" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตัวอย่าง 3 (สสวท.) · ข · ความเข้มข้นใหม่" data-sheet-label-en="Example 3 (IPST)(b) · Final concentrations"><div data-sheet-answer="">\[0.40\ \mathrm L\times\frac{1.0\ \mathrm{mol}}{1\ \mathrm L}=0.400\ \mathrm{mol}\]<p>หน่วย L ตัดกัน เหลือ mol ของ OH⁻ จัดข้อมูลนี้ก่อนลงตาราง.</p><p>ข้อมูล OH⁻ ที่โจทย์ให้เป็นปริมาณหลังแตกตัว จึงใช้แถว F ของไอออน; ให้เริ่มต้นสารที่จะละลาย a mol.</p>\[\ce{Sr(OH)2 -&gt; Sr^2+ + 2OH-}\]<p>ดุลสมการ แล้วให้หนึ่งส่วนของการเปลี่ยนเท่ากับ a mol แถว C เปลี่ยนตามอัตราส่วน −1 : +1 : +2.</p><table data-solution-table="icf" data-unit="mol"><caption>ICF · mol</caption><thead><tr><th scope="col">แถว (mol)</th><th scope="col">Sr(OH)<sub>2</sub></th><th scope="col">Sr<sup>2+</sup></th><th scope="col">OH<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — เริ่มต้น</th><td>a</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — เปลี่ยนไป</strong></th><td><strong>−a</strong></td><td><strong>+a</strong></td><td><strong>+2a</strong></td></tr><tr><th scope="row">F — สุดท้าย</th><td>0</td><td>a</td><td>2a</td></tr></tbody></table><p>จากแถว F: 2a = 0.40 mol จึง a = 0.20 mol.</p><p>เติมน้ำหลังแตกตัวจนเป็น 2.00 L: โมลไอออนจาก F คงเดิม แล้วใช้ n×(1/V) เปลี่ยนเป็น mol/L.</p>\[0.20\ \mathrm{mol}\times\frac{1}{2.00\ \mathrm L}=0.1\ \mathrm{mol/L}\]<p>อ่านโมลจากแถว F แล้วหารปริมาตรสุดท้าย เหลือหน่วย mol/L ของ Sr²⁺.</p>\[0.40\ \mathrm{mol}\times\frac{1}{2.00\ \mathrm L}=0.2\ \mathrm{mol/L}\]<p>อ่านโมลจากแถว F แล้วหารปริมาตรสุดท้าย เหลือหน่วย mol/L ของ OH⁻.</p><p>ใช้โมลเดิมหารปริมาตรสุดท้าย 2.00 L: \([\ce{Sr^2+}]=0.20/2.00=0.10\) และ \([\ce{OH-}]=0.40/2.00=0.20\ \mathrm{mol/L}\)</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-04">
+<h3 class="practice-label">ฝึกซ้ำ 04 · แยกโมลออกจากความเข้มข้นตอนเจือจาง</h3>
+<div class="question-prompt"><p>สารละลาย NaOH 0.20 mol/L ปริมาตร 50.0 mL เติมน้ำจนมีปริมาตร 200.0 mL จงหาโมล OH<sup>−</sup> ก่อนและหลังเติมน้ำ และ [OH<sup>−</sup>] หลังเติมน้ำ</p></div>
+<div data-sheet-slot="repeat-04" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:27mm" data-sheet-label-th="ฝึกซ้ำ 04 · แยกโมลออกจากความเข้มข้นตอนเจือจาง" data-sheet-label-en="Repeat practice 04 · Separate moles from concentration during dilution"><div data-sheet-answer=""><p>NaOH ให้ OH<sup>−</sup> อัตราส่วน 1 : 1 จึงได้ (0.20 mol/L)(0.0500 L) = 0.010 mol โมลไอออนจาก NaOH เท่าเดิมหลังเติมน้ำ</p><div class="equation">\[[\mathrm{OH^-}]=\frac{0.010\,\mathrm{mol}}{0.2000\,\mathrm L}=0.050\,\mathrm{mol/L}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-example-4">
+<h3>ตัวอย่าง 4 (สสวท.) · ร้อยละจากความเข้มข้น</h3>
+<div class="question-prompt"><p>HF 0.5 mol/L แตกตัวให้ <span class="chem">H<sub>3</sub>O<sup>+</sup></span> 0.02 mol/L จงหาร้อยละการแตกตัว</p></div>
+<div data-sheet-slot="ipst-example-4" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตัวอย่าง 4 (สสวท.) · ร้อยละจากความเข้มข้น" data-sheet-label-en="Example 4 (IPST) · Percent from concentration"><div data-sheet-answer="">\[\ce{HF + H2O &lt;=&gt; H3O+ + F-}\]<p>เริ่มผลิตภัณฑ์จากสมดุลนี้ที่ศูนย์ และละเลยไอออนจากน้ำ แถว C ใช้ −1 : +1 : +1 ตามเลขดุล อ่านแถว E ก่อนแทนใน Kₐ หรือ Kᵦ หรือหาร้อยละ.</p><table data-solution-table="ice" data-unit="mol/L"><caption>ICE · mol/L</caption><thead><tr><th scope="col">แถว (mol/L)</th><th scope="col">HF</th><th scope="col">H<sub>3</sub>O<sup>+</sup></th><th scope="col">F<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — เริ่มต้น</th><td>0.50</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — เปลี่ยนไป</strong></th><td><strong>−0.02</strong></td><td><strong>+0.02</strong></td><td><strong>+0.02</strong></td></tr><tr><th scope="row">E — สมดุล</th><td>0.48</td><td>0.02</td><td>0.02</td></tr></tbody></table><p>\(\%\text{แตกตัว}=100(0.02)/0.50=4.0\%\) HF แตกตัวให้ H₃O⁺ อัตราส่วน 1:1</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-05">
+<h3 class="practice-label">ฝึกซ้ำ 05 · หาร้อยละจากปริมาณที่แตกตัว</h3>
+<div class="question-prompt"><p>กรดอ่อน HA เริ่มที่ 0.15 mol/L เมื่อสมดุลมีกรดแตกตัวไป 0.0030 mol/L กรดแตกตัวกี่เปอร์เซ็นต์?</p></div>
+<div data-sheet-slot="repeat-05" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 05 · หาร้อยละจากปริมาณที่แตกตัว" data-sheet-label-en="Repeat practice 05 · Calculate percent ionization from x"><div data-sheet-answer=""><p>ใช้ปริมาณที่แตกตัวหารความเข้มข้นเริ่มต้น หน่วย mol/L ตัดกัน</p><div class="equation">\[\frac{0.0030}{0.15}\times100\%=2.0\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-06">
+<h3 class="practice-label">ฝึกซ้ำ 06 · ย้อนจากร้อยละหา x และ Kₐ</h3>
+<div class="question-prompt"><p>HA เริ่มที่ 0.25 mol/L แตกตัว 4.0% ให้หา x และ K<sub>a</sub> โดยใช้ความเข้มข้น HA ที่เหลือ</p></div>
+<div data-sheet-slot="repeat-06" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 06 · ย้อนจากร้อยละหา x และ Kₐ" data-sheet-label-en="Repeat practice 06 · Work from percentage back to x and Kₐ"><div data-sheet-answer=""><p>x = (4.0/100)(0.25 mol/L) = 0.010 mol/L และ [HA] ที่สมดุล = 0.24 mol/L</p><div class="equation">\[K_a=\frac{(0.010)^2}{0.24}\approx4.2\times10^{-4}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-example-5">
+<h3>ตัวอย่าง 5 (สสวท.) · ใช้การประมาณ</h3>
+<div class="question-prompt"><p><span class="chem">CH<sub>3</sub>COOH</span> 0.50 mol/L มี <span class="chem">H<sub>3</sub>O<sup>+</sup></span> เข้มข้นเท่าใด? ให้ \(K_a=1.80\times10^{-5}\)</p></div>
+<div data-sheet-slot="ipst-example-5" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตัวอย่าง 5 (สสวท.) · ใช้การประมาณ" data-sheet-label-en="Example 5 (IPST) · Using the approximation"><div data-sheet-answer="">\[\ce{CH3COOH + H2O &lt;=&gt; H3O+ + CH3COO-}\]<p>เริ่มผลิตภัณฑ์จากสมดุลนี้ที่ศูนย์ และละเลยไอออนจากน้ำ แถว C ใช้ −1 : +1 : +1 ตามเลขดุล อ่านแถว E ก่อนแทนใน Kₐ หรือ Kᵦ หรือหาร้อยละ.</p><table data-solution-table="ice" data-unit="mol/L"><caption>ICE · mol/L</caption><thead><tr><th scope="col">แถว (mol/L)</th><th scope="col">CH<sub>3</sub>COOH</th><th scope="col">H<sub>3</sub>O<sup>+</sup></th><th scope="col">CH<sub>3</sub>COO<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — เริ่มต้น</th><td>0.50</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — เปลี่ยนไป</strong></th><td><strong>−x</strong></td><td><strong>+x</strong></td><td><strong>+x</strong></td></tr><tr><th scope="row">E — สมดุล</th><td>0.50−x</td><td>x</td><td>x</td></tr></tbody></table><p>\(C/K_a=0.50/(1.8\times10^{-5})\approx27778&gt;1000\) จึงประมาณ C−x ≈ C ได้ \(x=\sqrt{K_aC}=\sqrt{9.0\times10^{-6}}=0.0030\ \mathrm{mol/L}\) สมการเต็มได้ 0.002991 mol/L</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-07">
+<h3 class="practice-label">ฝึกซ้ำ 07 · เขียนแถว E ก่อนแทนค่า</h3>
+<div class="question-prompt"><p>NH<sub>3</sub> เริ่มที่ 0.15 mol/L และทำปฏิกิริยากับน้ำไป x mol/L เขียนแถว E ของ NH<sub>3</sub>, NH<sub>4</sub><sup>+</sup> และ OH<sup>−</sup> พร้อมนิพจน์ K<sub>b</sub></p></div>
+<div data-sheet-slot="repeat-07" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 07 · เขียนแถว E ก่อนแทนค่า" data-sheet-label-en="Repeat practice 07 · Write row E before substituting"><div data-sheet-answer=""><div class="equation">\[\ce{NH3 + H2O &lt;=&gt; NH4+ + OH-}\]</div><p>แถว C คือ −x, +x, +x จึงได้แถว E เป็น 0.15 − x, x, x ตามลำดับ</p><div class="equation">\[K_b=\frac{x^2}{0.15-x}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-08">
+<h3 class="practice-label">ฝึกซ้ำ 08 · กรณีที่ใช้การประมาณได้</h3>
+<div class="question-prompt"><p>HA 0.16 mol/L มี K<sub>a</sub> = \(2.5\times10^{-5}\) หาความเข้มข้น H<sub>3</sub>O<sup>+</sup> โดยตรวจเกณฑ์ก่อน</p></div>
+<div data-sheet-slot="repeat-08" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:26mm" data-sheet-label-th="ฝึกซ้ำ 08 · กรณีที่ใช้การประมาณได้" data-sheet-label-en="Repeat practice 08 · A case where the approximation applies"><div data-sheet-answer=""><p>แถว E คือ 0.16 − x, x, x และ C<sub>0</sub>/K<sub>a</sub> = 6400 จึงประมาณตัวส่วนได้</p><div class="equation">\[x\approx\sqrt{(2.5\times10^{-5})(0.16)}=2.0\times10^{-3}\,\mathrm{mol/L}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-09">
+<h3 class="practice-label">ฝึกซ้ำ 09 · กรณีที่ใช้สมการเต็ม</h3>
+<div class="question-prompt"><p>HA 0.0020 mol/L มี K<sub>a</sub> = \(5.0\times10^{-5}\) ใช้แถว E หา [H<sub>3</sub>O<sup>+</sup>] และอธิบายการเลือกราก</p></div>
+<div data-sheet-slot="repeat-09" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:32mm" data-sheet-label-th="ฝึกซ้ำ 09 · กรณีที่ใช้สมการเต็ม" data-sheet-label-en="Repeat practice 09 · A case requiring the full equation"><div data-sheet-answer=""><p>C<sub>0</sub>/K<sub>a</sub> = 40 ให้คง 0.0020 − x ในตัวส่วน</p><div class="equation">\[5.0\times10^{-5}=\frac{x^2}{0.0020-x}\]</div><div class="equation">\[x^2+5.0\times10^{-5}x-1.0\times10^{-7}=0\]</div><p>เลือกรากบวกที่น้อยกว่าความเข้มข้นเริ่มต้น จึงได้ x ประมาณ \(2.9\times10^{-4}\,\mathrm{mol/L}\)</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-example-6">
+<h3>ตัวอย่าง 6 (สสวท.) · แอมโมเนีย</h3>
+<div class="question-prompt"><p>สารละลาย <span class="chem">NH<sub>3</sub></span> 0.20 mol/L มีร้อยละการแตกตัวเท่าใด?</p><p>ที่ 25 °C ให้ \(K_b=1.80\times10^{-5}\)</p></div>
+<div data-sheet-slot="ipst-example-6" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตัวอย่าง 6 (สสวท.) · แอมโมเนีย" data-sheet-label-en="Example 6 (IPST) · Ammonia"><div data-sheet-answer="">\[\ce{NH3 + H2O &lt;=&gt; NH4+ + OH-}\]<p>เริ่มผลิตภัณฑ์จากสมดุลนี้ที่ศูนย์ และละเลยไอออนจากน้ำ แถว C ใช้ −1 : +1 : +1 ตามเลขดุล อ่านแถว E ก่อนแทนใน Kₐ หรือ Kᵦ หรือหาร้อยละ.</p><table data-solution-table="ice" data-unit="mol/L"><caption>ICE · mol/L</caption><thead><tr><th scope="col">แถว (mol/L)</th><th scope="col">NH<sub>3</sub></th><th scope="col">NH<sub>4</sub><sup>+</sup></th><th scope="col">OH<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — เริ่มต้น</th><td>0.20</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — เปลี่ยนไป</strong></th><td><strong>−x</strong></td><td><strong>+x</strong></td><td><strong>+x</strong></td></tr><tr><th scope="row">E — สมดุล</th><td>0.20−x</td><td>x</td><td>x</td></tr></tbody></table><p>\(C/K_b\approx11111&gt;1000;\quad x\approx\sqrt{(1.8\times10^{-5})(0.20)}=1.89737\times10^{-3}\) ดังนั้น \(100x/C=0.94868\%\approx0.95\%\)</p></div></div>
+</div>
+</section>
+<section class="lesson-section" data-guide-anchor="problem-understanding">
+<h2>คำถามตรวจสอบความเข้าใจในหนังสือ</h2>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-ph-order">
+<h3>ตรวจสอบความเข้าใจ · ลำดับ pH</h3>
+<div class="question-prompt"><figure data-print-keep><img src="assets/10-3-review/p14-conductivity.png" width="1048" height="391" alt="รูป 10.1 จากหนังสือ · สารละลายทั้งสี่มีความเข้มข้นเท่ากัน"><figcaption>รูป 10.1 จากหนังสือ · สารละลายทั้งสี่มีความเข้มข้นเท่ากัน</figcaption></figure><p>เรียงลำดับ pH จากน้อยไปมากของสารละลายทั้งสี่ในภาพ โดยไม่ต้องคำนวณ</p></div>
+<div data-sheet-slot="ipst-ph-order" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:23mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · ลำดับ pH" data-sheet-label-en="IPST understanding · pH order"><div data-sheet-answer="">\(\mathrm{HCl}&lt;\mathrm{CH_3COOH}&lt;\mathrm{NH_3}&lt;\mathrm{NaOH}\)<p>กรดมี pH ต่ำกว่า 7 และเบสมี pH สูงกว่า 7 ที่ 25 °C เมื่อความเข้มข้นเท่ากัน กรดที่แตกตัวได้มากกว่ามี pH ต่ำกว่า ส่วนเบสที่เกิด <span class="chem">OH<sup>-</sup></span> ได้มากกว่ามี pH สูงกว่า</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-barium-bars">
+<h3>ตรวจสอบความเข้าใจ · แผนภูมิแท่ง</h3>
+<div class="question-prompt"><figure data-print-keep><img src="assets/10-3-review/p15-complete-ionization.png" width="407" height="612" alt="รูป 10.2 จากหนังสือ · ตัวอย่างการใช้แกนความเข้มข้นเดียวกัน"><figcaption>รูป 10.2 จากหนังสือ · ตัวอย่างการใช้แกนความเข้มข้นเดียวกัน</figcaption></figure><p>แสดงแผนภูมิแท่งความเข้มข้นก่อนและหลังการแตกตัวของ <span class="chem">Ba(OH)<sub>2</sub></span> เช่นเดียวกับกรณีกรดแก่ ใช้ความเข้มข้นเริ่มต้น 1.0 mol/L และตรวจอัตราส่วนความสูงของแท่ง</p></div>
+<div data-sheet-slot="ipst-barium-bars" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:62mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · แผนภูมิแท่ง" data-sheet-label-en="IPST understanding · Bar chart"><div data-sheet-answer=""><figure data-print-keep=""><img alt="แท่งก่อนแตกตัวและไอออนหลังแตกตัวใช้แกนความเข้มข้นเดียวกัน" height="350" src="assets/10-3/barium-bars.svg" width="900"><figcaption>แท่งก่อนแตกตัวและไอออนหลังแตกตัวใช้แกนความเข้มข้นเดียวกัน</figcaption></figure><p>ก่อนแตกตัวใช้ 1.0 mol/L เป็นค่าตั้งต้น หลังแตกตัว <span class="chem">Ba(OH)<sub>2</sub></span> เหลือประมาณ 0, <span class="chem">Ba<sup>2+</sup></span> = 1.0 และ <span class="chem">OH<sup>-</sup></span> = 2.0 mol/L แท่งของ <span class="chem">OH<sup>-</sup></span> จึงสูงเป็นสองเท่าของ <span class="chem">Ba<sup>2+</sup></span></p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-hi-moles">
+<h3>ตรวจสอบความเข้าใจ · HI</h3>
+<div class="question-prompt"><p>สารละลาย HI ปริมาตร 500 mL มี <span class="chem">I<sup>-</sup></span> เข้มข้น 0.2 mol/L จะมี <span class="chem">H<sub>3</sub>O<sup>+</sup></span> กี่โมล?</p></div>
+<div data-sheet-slot="ipst-hi-moles" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · HI" data-sheet-label-en="IPST understanding · HI"><div data-sheet-answer=""><div class="equation">\[\ce{HI(aq) + H2O(l) -&gt; H3O+(aq) + I-(aq)}\]</div><p>ไอออนทั้งสองมีจำนวนโมลเท่ากัน</p><div class="equation">\[n(\ce{H3O+})=(0.2)(0.500)=0.1\ \mathrm{mol}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-koh-mass">
+<h3>ตรวจสอบความเข้าใจ · KOH</h3>
+<div class="question-prompt"><p>ต้องใช้ KOH กี่กรัม เพื่อเตรียมสารละลาย 250.00 mL ที่มี <span class="chem">OH<sup>-</sup></span> 0.50 mol/L? ให้มวลโมลาร์ KOH = 56.11 g/mol</p></div>
+<div data-sheet-slot="ipst-koh-mass" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · KOH" data-sheet-label-en="IPST understanding · KOH"><div data-sheet-answer=""><div class="equation">\[\ce{KOH(aq) -&gt; K+(aq) + OH-(aq)}\]</div><div class="equation">\[n(\ce{OH-})=(0.50)(0.25000)=0.125\ \mathrm{mol}\]</div><p>อัตราส่วน 1 : 1 ต้องใช้ KOH 0.125 mol</p><div class="equation">\[m=(0.125)(56.11)=7.01375\approx7.0\ \mathrm{g}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-sulfuric">
+<h3>ตรวจสอบความเข้าใจ · H2SO4</h3>
+<div class="question-prompt"><p><span class="chem">H<sub>2</sub>SO<sub>4</sub></span> 1 mol/L มี <span class="chem">H<sub>3</sub>O<sup>+</sup></span> ที่สมดุลเท่ากับ 2 mol/L ใช่หรือไม่ เพราะเหตุใด?</p></div>
+<div data-sheet-slot="ipst-sulfuric" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:20mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · H2SO4" data-sheet-label-en="IPST understanding · H2SO4"><div data-sheet-answer="">ไม่ใช่ ขั้นแรกให้ <span class="chem">H<sub>3</sub>O<sup>+</sup></span> ประมาณ 1 mol/L ส่วนขั้นที่สองแตกตัวเพียงบางส่วน จึงได้มากกว่า 1 แต่ไม่ถึง 2 mol/L ตามแบบจำลองความเข้มข้นในบทนี้</div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-10">
+<h3 class="practice-label">ฝึกซ้ำ 10 · เลือกชนิดลูกศรทีละขั้น</h3>
+<div class="question-prompt"><p>เขียนสมการการแตกตัวของ H<sub>2</sub>SO<sub>4</sub> ในน้ำสองขั้น แล้วระบุว่าไฮโดรเนียมจากขั้นแรกอยู่แถวใดเมื่อตั้งตารางของขั้นสอง</p></div>
+<div data-sheet-slot="repeat-10" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 10 · เลือกชนิดลูกศรทีละขั้น" data-sheet-label-en="Repeat practice 10 · Choose the arrow for each step"><div data-sheet-answer=""><div class="equation">\[\ce{H2SO4 + H2O -&gt; H3O+ + HSO4-}\]</div><div class="equation">\[\ce{HSO4- + H2O &lt;=&gt; H3O+ + SO4^2-}\]</div><p>ไฮโดรเนียมจากขั้นแรกมีอยู่เมื่อเริ่มขั้นที่สอง จึงใส่ในแถว I ของ ICE</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-quadratic">
+<h3>ตรวจสอบความเข้าใจ · HA</h3>
+<div class="question-prompt"><p>HA \(1.00\times10^{-3}\) mol/L มี \(K_a=1.00\times10^{-5}\) จงหา <span class="chem">H<sub>3</sub>O<sup>+</sup></span> โดยตรวจการประมาณและเลือกรากที่เหมาะสม</p></div>
+<div data-sheet-slot="ipst-quadratic" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · HA" data-sheet-label-en="IPST understanding · HA"><div data-sheet-answer=""><p>\(C/K_a=100\) ไม่ผ่านเกณฑ์ &gt;1000</p><div class="equation">\[1.00\times10^{-5}=\frac{x^2}{1.00\times10^{-3}-x}\]</div><div class="equation">\[x^2+(1.00\times10^{-5})x-1.00\times10^{-8}=0\]</div><div class="equation">\[x=\frac{-1.00\times10^{-5}+\sqrt{(1.00\times10^{-5})^2+4.00\times10^{-8}}}{2}\]</div><p>รากบวก = \(9.51249\times10^{-5}\) และรากลบ = \(-1.051249\times10^{-4}\) mol/L เลือกรากบวก จึงได้ <span class="chem">H<sub>3</sub>O<sup>+</sup></span> = \(9.51\times10^{-5}\) mol/L</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-compare-ha">
+<h3>ตรวจสอบความเข้าใจ · ก · HA</h3>
+<div class="question-prompt"><p>HA 0.20 mol/L แตกตัว 10% ส่วน HB 0.020 mol/L แตกตัว 20% ข้อสรุปว่า HB แรงกว่า HA ถูกหรือไม่? หาค่าต่อไปนี้ประกอบเหตุผล</p><p>หา \(K_a\) ของ HA</p></div>
+<div data-sheet-slot="ipst-compare-ha" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · ก · HA" data-sheet-label-en="IPST understanding · (a) HA"><div data-sheet-answer=""><div class="equation">\[x=(0.20)(10/100)=0.020\ \mathrm{mol/L}\]</div><div class="equation">\[K_a(\ce{HA})=\frac{(0.020)^2}{0.20-0.020}=2.2\times10^{-3}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-compare-hb">
+<h3>ตรวจสอบความเข้าใจ · ข · HB</h3>
+<div class="question-prompt"><p>HA 0.20 mol/L แตกตัว 10% ส่วน HB 0.020 mol/L แตกตัว 20% ข้อสรุปว่า HB แรงกว่า HA ถูกหรือไม่? หาค่าต่อไปนี้ประกอบเหตุผล</p><p>หา \(K_a\) ของ HB</p></div>
+<div data-sheet-slot="ipst-compare-hb" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · ข · HB" data-sheet-label-en="IPST understanding · (b) HB"><div data-sheet-answer=""><div class="equation">\[x=(0.020)(20/100)=0.0040\ \mathrm{mol/L}\]</div><div class="equation">\[K_a(\ce{HB})=\frac{(0.0040)^2}{0.020-0.0040}=1.0\times10^{-3}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-compare-conclusion">
+<h3>ตรวจสอบความเข้าใจ · ค · ข้อสรุป</h3>
+<div class="question-prompt"><p>HA 0.20 mol/L แตกตัว 10% ส่วน HB 0.020 mol/L แตกตัว 20% ข้อสรุปว่า HB แรงกว่า HA ถูกหรือไม่? หาค่าต่อไปนี้ประกอบเหตุผล</p><p>HB เป็นกรดแรงกว่า HA ใช่หรือไม่ เพราะเหตุใด?</p></div>
+<div data-sheet-slot="ipst-compare-conclusion" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:18mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · ค · ข้อสรุป" data-sheet-label-en="IPST understanding · (c) Conclusion"><div data-sheet-answer="">ไม่ใช่ HA มี \(K_a\) มากกว่าจึงแรงกว่า การเปรียบเทียบร้อยละเพียงอย่างเดียวใช้ไม่ได้เมื่อความเข้มข้นเริ่มต้นไม่เท่ากัน</div></div>
+</div>
+</section>
+<section class="lesson-section" data-guide-anchor="problem-activity">
+<h2>กิจกรรม 10.1 ร้อยละการแตกตัว</h2>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-1-ethylamine">
+<h3>กิจกรรม 10.1 · ตอนที่ 1 · เอทิลเอมีน</h3>
+<div class="question-prompt"><p>คำนวณร้อยละการแตกตัวของ <span class="chem">C<sub>2</sub>H<sub>5</sub>NH<sub>2</sub></span> 0.50 mol/L</p><p>ที่ 25 °C ให้ \(K_b=4.47\times10^{-4}\)</p></div>
+<div data-sheet-slot="activity-1-ethylamine" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 1 · เอทิลเอมีน" data-sheet-label-en="Activity 10.1 · Part 1 · Ethylamine"><div data-sheet-answer=""><div class="equation">\[\ce{C2H5NH2(aq) + H2O(l) &lt;=&gt; C2H5NH3+(aq) + OH-(aq)}\]</div><p>ที่สมดุล เบสเหลือ 0.50−x และไอออนผลิตภัณฑ์แต่ละชนิดเท่ากับ x mol/L</p><div class="equation">\[4.47\times10^{-4}=\frac{x^2}{0.50-x}\]</div><p>\(C/K_b=1.12\times10^3&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(4.47\times10^{-4})(0.50)}=1.495\times10^{-2}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{การแตกตัว}\approx\frac{1.495\times10^{-2}}{0.50}\times100=3.0\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-1-ammonia">
+<h3>กิจกรรม 10.1 · ตอนที่ 1 · แอมโมเนีย</h3>
+<div class="question-prompt"><p>คำนวณร้อยละการแตกตัวของ <span class="chem">NH<sub>3</sub></span> 0.50 mol/L</p><p>ที่ 25 °C ให้ \(K_b=1.80\times10^{-5}\)</p></div>
+<div data-sheet-slot="activity-1-ammonia" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 1 · แอมโมเนีย" data-sheet-label-en="Activity 10.1 · Part 1 · Ammonia"><div data-sheet-answer=""><div class="equation">\[\ce{NH3(aq) + H2O(l) &lt;=&gt; NH4+(aq) + OH-(aq)}\]</div><p>ที่สมดุล เบสเหลือ 0.50−x และไอออนผลิตภัณฑ์แต่ละชนิดเท่ากับ x mol/L</p><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{0.50-x}\]</div><p>\(C/K_b=2.78\times10^4&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(1.80\times10^{-5})(0.50)}=3.00\times10^{-3}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{การแตกตัว}\approx\frac{3.00\times10^{-3}}{0.50}\times100=0.60\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-1-aniline">
+<h3>กิจกรรม 10.1 · ตอนที่ 1 · ฟีนิลเอมีน</h3>
+<div class="question-prompt"><p>คำนวณร้อยละการแตกตัวของ <span class="chem">C<sub>6</sub>H<sub>5</sub>NH<sub>2</sub></span> 0.50 mol/L</p><p>ที่ 25 °C ให้ \(K_b=7.41\times10^{-10}\)</p></div>
+<div data-sheet-slot="activity-1-aniline" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 1 · ฟีนิลเอมีน" data-sheet-label-en="Activity 10.1 · Part 1 · Phenylamine"><div data-sheet-answer=""><div class="equation">\[\ce{C6H5NH2(aq) + H2O(l) &lt;=&gt; C6H5NH3+(aq) + OH-(aq)}\]</div><p>ที่สมดุล เบสเหลือ 0.50−x และไอออนผลิตภัณฑ์แต่ละชนิดเท่ากับ x mol/L</p><div class="equation">\[7.41\times10^{-10}=\frac{x^2}{0.50-x}\]</div><p>\(C/K_b=6.75\times10^8&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(7.41\times10^{-10})(0.50)}=1.925\times10^{-5}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{การแตกตัว}\approx\frac{1.925\times10^{-5}}{0.50}\times100=3.8\times10^{-3}\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-1-compare">
+<h3>กิจกรรม 10.1 · ตอนที่ 1 · เปรียบเทียบ</h3>
+<div class="question-prompt"><p>เรียงลำดับร้อยละการแตกตัวของเบสทั้งสามจากมากไปน้อย</p></div>
+<div data-sheet-slot="activity-1-compare" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:18mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 1 · เปรียบเทียบ" data-sheet-label-en="Activity 10.1 · Part 1 · Compare"><div data-sheet-answer="">\(\ce{C2H5NH2}&gt;\ce{NH3}&gt;\ce{C6H5NH2}\)<p>ประมาณ 3.0%, 0.60% และ \(3.8\times10^{-3}\%\) ตามลำดับ</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-2-0050">
+<h3>กิจกรรม 10.1 · ตอนที่ 2 · 0.050 mol/L</h3>
+<div class="question-prompt"><p>กรดแอซีติกชนิดเดิมที่ 25 °C ให้ \(K_a=1.80\times10^{-5}\)</p><p>หาร้อยละการแตกตัวที่ความเข้มข้น 0.050 mol/L</p></div>
+<div data-sheet-slot="activity-2-0050" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 2 · 0.050 mol/L" data-sheet-label-en="Activity 10.1 · Part 2 · 0.050 mol/L"><div data-sheet-answer=""><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{0.050-x}\]</div><p>\(C/K_a=2.78\times10^3&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(1.80\times10^{-5})(0.050)}=9.487\times10^{-4}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{การแตกตัว}\approx\frac{9.487\times10^{-4}}{0.050}\times100\approx1.9\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-2-010">
+<h3>กิจกรรม 10.1 · ตอนที่ 2 · 0.10 mol/L</h3>
+<div class="question-prompt"><p>กรดแอซีติกชนิดเดิมที่ 25 °C ให้ \(K_a=1.80\times10^{-5}\)</p><p>หาร้อยละการแตกตัวที่ความเข้มข้น 0.10 mol/L</p></div>
+<div data-sheet-slot="activity-2-010" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 2 · 0.10 mol/L" data-sheet-label-en="Activity 10.1 · Part 2 · 0.10 mol/L"><div data-sheet-answer=""><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{0.10-x}\]</div><p>\(C/K_a=5.56\times10^3&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(1.80\times10^{-5})(0.10)}=1.342\times10^{-3}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{การแตกตัว}\approx\frac{1.342\times10^{-3}}{0.10}\times100\approx1.3\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-2-050">
+<h3>กิจกรรม 10.1 · ตอนที่ 2 · 0.50 mol/L</h3>
+<div class="question-prompt"><p>กรดแอซีติกชนิดเดิมที่ 25 °C ให้ \(K_a=1.80\times10^{-5}\)</p><p>หาร้อยละการแตกตัวที่ความเข้มข้น 0.50 mol/L</p></div>
+<div data-sheet-slot="activity-2-050" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 2 · 0.50 mol/L" data-sheet-label-en="Activity 10.1 · Part 2 · 0.50 mol/L"><div data-sheet-answer=""><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{0.50-x}\]</div><p>\(C/K_a=2.78\times10^4&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(1.80\times10^{-5})(0.50)}=3.00\times10^{-3}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{การแตกตัว}\approx\frac{3.00\times10^{-3}}{0.50}\times100\approx0.60\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-2-100">
+<h3>กิจกรรม 10.1 · ตอนที่ 2 · 1.0 mol/L</h3>
+<div class="question-prompt"><p>กรดแอซีติกชนิดเดิมที่ 25 °C ให้ \(K_a=1.80\times10^{-5}\)</p><p>หาร้อยละการแตกตัวที่ความเข้มข้น 1.0 mol/L</p></div>
+<div data-sheet-slot="activity-2-100" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 2 · 1.0 mol/L" data-sheet-label-en="Activity 10.1 · Part 2 · 1.0 mol/L"><div data-sheet-answer=""><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{1.0-x}\]</div><p>\(C/K_a=5.56\times10^4&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(1.80\times10^{-5})(1.0)}=4.243\times10^{-3}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{การแตกตัว}\approx\frac{4.243\times10^{-3}}{1.0}\times100\approx0.42\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-2-graph">
+<h3>กิจกรรม 10.1 · ตอนที่ 2 · ข้อ 2</h3>
+<div class="question-prompt"><p>กรดแอซีติกชนิดเดิมที่ 25 °C ให้ \(K_a=1.80\times10^{-5}\)</p><p>แสดงกราฟร้อยละการแตกตัวกับความเข้มข้นทั้งสี่ค่า ระบุปริมาณบนแกนและแนวโน้ม ใช้กราฟในเฉลยประกอบการตรวจผลได้</p><p>ใช้ค่าที่คำนวณได้สำหรับความเข้มข้น 0.050, 0.10, 0.50 และ 1.0 mol/L</p></div>
+<div data-sheet-slot="activity-2-graph" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:69mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 2 · ข้อ 2" data-sheet-label-en="Activity 10.1 · Part 2 · Q2"><div data-sheet-answer=""><figure data-print-keep=""><img alt="กราฟคำนวณจาก \(x\approx\sqrt{K_aC}\) ที่ \(K_a=1.80\times10^{-5}\); จุดทั้งสี่คือความเข้มข้นในกิจกรรม" height="480" src="assets/10-3/dilution-graph.svg" width="900"><figcaption>กราฟคำนวณจาก \(x\approx\sqrt{K_aC}\) ที่ \(K_a=1.80\times10^{-5}\); จุดทั้งสี่คือความเข้มข้นในกิจกรรม</figcaption></figure><p>แกนนอน: ความเข้มข้นเริ่มต้น (mol/L) แกนตั้ง: ร้อยละการแตกตัว ความเข้มข้นเพิ่มขึ้น ร้อยละการแตกตัวลดลง ใช้กราฟนี้ประกอบการอธิบายได้โดยไม่ต้องวาดอุปกรณ์ใหม่</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-end-1">
+<h3>คำถามท้ายกิจกรรม 10.1 · ข้อ 1</h3>
+<div class="question-prompt"><p>ร้อยละการแตกตัวของเบสในสารละลายมีแนวโน้มเดียวกับค่า \(K_b\) หรือไม่ อย่างไร?</p></div>
+<div data-sheet-slot="activity-end-1" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:19mm" data-sheet-label-th="คำถามท้ายกิจกรรม 10.1 · ข้อ 1" data-sheet-label-en="Activity 10.1 questions · Q1"><div data-sheet-answer="">มี เมื่อเปรียบเทียบที่ความเข้มข้นและอุณหภูมิเดียวกัน เบสที่มี \(K_b\) มากกว่ามีร้อยละการแตกตัวมากกว่า เช่น เอทิลเอมีน &gt; แอมโมเนีย &gt; ฟีนิลเอมีน</div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-end-2">
+<h3>คำถามท้ายกิจกรรม 10.1 · ข้อ 2</h3>
+<div class="question-prompt"><p>ร้อยละการแตกตัวของกรดในสารละลายขึ้นกับความเข้มข้นของกรดหรือไม่ อย่างไร?</p></div>
+<div data-sheet-slot="activity-end-2" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:19mm" data-sheet-label-th="คำถามท้ายกิจกรรม 10.1 · ข้อ 2" data-sheet-label-en="Activity 10.1 questions · Q2"><div data-sheet-answer="">ขึ้นกับความเข้มข้น สำหรับกรดแอซีติกชนิดเดิมที่อุณหภูมิคงที่ ความเข้มข้นเริ่มต้นลดลงแล้วร้อยละการแตกตัวเพิ่มขึ้น แต่ \(K_a\) คงเดิม</div></div>
+</div>
+</section>
+<section class="lesson-section" data-guide-anchor="problem-exercises">
+<h2>แบบฝึกหัดท้ายหัวข้อ 10.3</h2>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-1">
+<h3>แบบฝึกหัด 10.3 · ข้อ 1</h3>
+<div class="question-prompt"><p>ต้องใช้ <span class="chem">Ba(OH)<sub>2</sub></span> กี่กรัม เพื่อเตรียมสารละลาย 100.0 mL ที่มี <span class="chem">OH<sup>-</sup></span> 1.0 mol/L? ให้มวลโมลาร์ <span class="chem">Ba(OH)<sub>2</sub></span> = 171.35 g/mol</p></div>
+<div data-sheet-slot="ipst-exercise-1" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 1" data-sheet-label-en="IPST Exercise 10.3 · Q1"><div data-sheet-answer="">\[100.0\ \mathrm{mL}\times\frac{1\ \mathrm L}{1000\ \mathrm{mL}}\times\frac{1.0\ \mathrm{mol}}{1\ \mathrm L}=0.10\ \mathrm{mol}\]<p>ตัดหน่วย mL แล้วตัด L เหลือ mol ของ OH⁻ จัดข้อมูลนี้ก่อนลงตาราง.</p><p>ข้อมูล OH⁻ ที่โจทย์ให้เป็นปริมาณหลังแตกตัว จึงใช้แถว F ของไอออน; ให้เริ่มต้นสารที่จะละลาย a mol.</p>\[\ce{Ba(OH)2 -&gt; Ba^2+ + 2OH-}\]<p>ดุลสมการ แล้วให้หนึ่งส่วนของการเปลี่ยนเท่ากับ a mol แถว C เปลี่ยนตามอัตราส่วน −1 : +1 : +2.</p><table data-solution-table="icf" data-unit="mol"><caption>ICF · mol</caption><thead><tr><th scope="col">แถว (mol)</th><th scope="col">Ba(OH)<sub>2</sub></th><th scope="col">Ba<sup>2+</sup></th><th scope="col">OH<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — เริ่มต้น</th><td>a</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — เปลี่ยนไป</strong></th><td><strong>−a</strong></td><td><strong>+a</strong></td><td><strong>+2a</strong></td></tr><tr><th scope="row">F — สุดท้าย</th><td>0</td><td>a</td><td>2a</td></tr></tbody></table><p>จากแถว F: 2a = 0.100 mol จึง a = 0.050 mol.</p>\[0.0500\ \mathrm{mol}\times\frac{171.35\ \mathrm g}{1\ \mathrm{mol}}=8.567500\ \mathrm g\]<p>ใช้โมลของสารที่จะชั่งคูณมวลโมลาร์ หน่วย mol ตัดกัน เหลือ g.</p><p>\(n(\ce{OH-})=1.0(0.1000)=0.100\ \mathrm{mol}\) จึงใช้ Ba(OH)₂ 0.0500 mol และ \(m=0.0500(171.35)=8.5675\ \mathrm{g}\) ประมาณ 8.57 g</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-2">
+<h3>แบบฝึกหัด 10.3 · ข้อ 2</h3>
+<div class="question-prompt"><p><span class="chem">H<sub>2</sub>SO<sub>3</sub></span> มี \(K_{a1}=1.41\times10^{-2}\) และ \(K_{a2}=6.31\times10^{-8}\) จงเปรียบเทียบความเข้มข้นของไอออนต่าง ๆ ในสารละลาย</p></div>
+<div data-sheet-slot="ipst-exercise-2" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:24mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 2" data-sheet-label-en="IPST Exercise 10.3 · Q2"><div data-sheet-answer=""><div class="equation">\[\ce{H2SO3(aq) + H2O(l) &lt;=&gt; H3O+(aq) + HSO3-(aq)}\]</div><div class="equation">\[\ce{HSO3-(aq) + H2O(l) &lt;=&gt; H3O+(aq) + SO3^2-(aq)}\]</div><p>ขั้นแรกแตกตัวได้มากกว่าขั้นที่สองมาก ทั้งสองขั้นให้ <span class="chem">H<sub>3</sub>O<sup>+</sup></span> แต่ขั้นที่สองใช้ <span class="chem">HSO<sub>3</sub><sup>-</sup></span> ไปบางส่วน จึงได้</p><div class="equation">\[[\ce{H3O+}]&gt;[\ce{HSO3-}]&gt;[\ce{SO3^2-}]\]</div><p>พิจารณาไอออนจากกรด; <span class="chem">OH<sup>-</sup></span> จากน้ำมีน้อยมากในสารละลายกรดนี้</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-3">
+<h3>แบบฝึกหัด 10.3 · ข้อ 3</h3>
+<div class="question-prompt"><p><span class="chem">HNO<sub>2</sub></span> กับ HF มีความเข้มข้นและปริมาตรเท่ากัน สารละลายใดมี <span class="chem">H<sub>3</sub>O<sup>+</sup></span> เข้มข้นมากกว่า เพราะเหตุใด?</p><p>ที่ 25 °C ให้ \(K_a(\ce{HNO2})=5.62\times10^{-4},\;K_a(\ce{HF})=6.31\times10^{-4}\)</p></div>
+<div data-sheet-slot="ipst-exercise-3" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:20mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 3" data-sheet-label-en="IPST Exercise 10.3 · Q3"><div data-sheet-answer="">HF เพราะ \(6.31\times10^{-4}&gt;5.62\times10^{-4}\) จึงแตกตัวได้มากกว่าเมื่อความเข้มข้นเริ่มต้นเท่ากัน</div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-4">
+<h3>แบบฝึกหัด 10.3 · ข้อ 4</h3>
+<div class="question-prompt"><p>NaX แตกตัวให้ <span class="chem">X<sup>-</sup></span> ในจำนวนโมลเท่ากัน และมีสมดุล \(\ce{X-(aq) + H2O(l) &lt;=&gt; HX(aq) + OH-(aq)}\) ให้ \(K_b=1.0\times10^{-4}\) จงหา <span class="chem">OH<sup>-</sup></span> ใน NaX 2.0 mol/L</p></div>
+<div data-sheet-slot="ipst-exercise-4" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 4" data-sheet-label-en="IPST Exercise 10.3 · Q4"><div data-sheet-answer="">\[\ce{NaX -&gt; Na+ + X-}\]<p>ดุลสมการ แล้วให้หนึ่งส่วนของการเปลี่ยนเท่ากับ 2.0 mol/L แถว C เปลี่ยนตามอัตราส่วน −1 : +1 : +1.</p><table data-solution-table="icf" data-unit="mol/L"><caption>ICF · mol/L</caption><thead><tr><th scope="col">แถว (mol/L)</th><th scope="col">NaX</th><th scope="col">Na<sup>+</sup></th><th scope="col">X<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — เริ่มต้น</th><td>2.0</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — เปลี่ยนไป</strong></th><td><strong>−2.0</strong></td><td><strong>+2.0</strong></td><td><strong>+2.0</strong></td></tr><tr><th scope="row">F — สุดท้าย</th><td>0</td><td>2.0</td><td>2.0</td></tr></tbody></table><p>แถว F ของ NaX ให้ [X⁻] = 2.0 mol/L ใช้เป็นแถว I ของ ICE แล้วจึงคำนวณ Kᵦ.</p>\[\ce{X- + H2O &lt;=&gt; HX + OH-}\]<p>เริ่มผลิตภัณฑ์จากสมดุลนี้ที่ศูนย์ และละเลยไอออนจากน้ำ แถว C ใช้ −1 : +1 : +1 ตามเลขดุล อ่านแถว E ก่อนแทนใน Kₐ หรือ Kᵦ หรือหาร้อยละ.</p><table data-solution-table="ice" data-unit="mol/L"><caption>ICE · mol/L</caption><thead><tr><th scope="col">แถว (mol/L)</th><th scope="col">X<sup>−</sup></th><th scope="col">HX</th><th scope="col">OH<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — เริ่มต้น</th><td>2.0</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — เปลี่ยนไป</strong></th><td><strong>−x</strong></td><td><strong>+x</strong></td><td><strong>+x</strong></td></tr><tr><th scope="row">E — สมดุล</th><td>2.0−x</td><td>x</td><td>x</td></tr></tbody></table><p>\(\ce{X- + H2O &lt;=&gt; HX + OH-}\) เริ่ม [X⁻] = 2.0 และ C/Kb = 20000 จึงได้ \(x\approx\sqrt{(10^{-4})(2.0)}=0.01414\ \mathrm{mol/L}\) สมการเต็มได้ 0.01409 mol/L ใช้ Kb = 10⁻⁴ ตามโจทย์</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-11">
+<h3 class="practice-label">ฝึกซ้ำ 11 · ต่อค่าจาก ICF เข้าสู่ ICE</h3>
+<div class="question-prompt"><p>NaX 0.35 mol/L ให้ X<sup>−</sup> ซึ่งเป็นเบสอ่อน เขียนสมการสองขั้นและระบุ [X<sup>−</sup>] ในแถว I ของ ICE</p></div>
+<div data-sheet-slot="repeat-11" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 11 · ต่อค่าจาก ICF เข้าสู่ ICE" data-sheet-label-en="Repeat practice 11 · Transfer the value from ICF to ICE"><div data-sheet-answer=""><div class="equation">\[\ce{NaX -&gt; Na+ + X-}\]</div><div class="equation">\[\ce{X- + H2O &lt;=&gt; HX + OH-}\]</div><p>NaX ให้ X<sup>−</sup> 1 : 1 จึงนำ [X<sup>−</sup>] = 0.35 mol/L จากแถว F ของ ICF มาเป็นแถว I ของ ICE</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-5a">
+<h3>แบบฝึกหัด 10.3 · ข้อ 5 ก</h3>
+<div class="question-prompt"><p>เมทิลเอมีน CH<sub>3</sub>NH<sub>2</sub> 0.50 mol/L ที่ 25 °C ให้ \(K_b=4.57\times10^{-4}\)</p><p>หา <span class="chem">CH<sub>3</sub>NH<sub>3</sub><sup>+</sup></span> ที่สมดุล</p></div>
+<div data-sheet-slot="ipst-exercise-5a" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 5 ก" data-sheet-label-en="IPST Exercise 10.3 · Q5(a)"><div data-sheet-answer=""><div class="equation">\[\ce{CH3NH2(aq) + H2O(l) &lt;=&gt; CH3NH3+(aq) + OH-(aq)}\]</div><div class="equation">\[4.57\times10^{-4}=\frac{x^2}{0.50-x}\]</div><p>\(C/K_b=1.094\times10^3&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(4.57\times10^{-4})(0.50)}=1.512\times10^{-2}\ \mathrm{mol/L}\]</div><p>จึงได้ <span class="chem">CH<sub>3</sub>NH<sub>3</sub><sup>+</sup></span> ≈ \(1.5\times10^{-2}\) mol/L</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-5b">
+<h3>แบบฝึกหัด 10.3 · ข้อ 5 ข</h3>
+<div class="question-prompt"><p>เมทิลเอมีน CH<sub>3</sub>NH<sub>2</sub> 0.50 mol/L ที่ 25 °C ให้ \(K_b=4.57\times10^{-4}\)</p><p>หาร้อยละการแตกตัวของเมทิลเอมีน</p></div>
+<div data-sheet-slot="ipst-exercise-5b" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 5 ข" data-sheet-label-en="IPST Exercise 10.3 · Q5(b)"><div data-sheet-answer=""><div class="equation">\[\%\text{การแตกตัว}\approx\frac{1.512\times10^{-2}}{0.50}\times100=3.0\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-6a">
+<h3>แบบฝึกหัด 10.3 · ข้อ 6 ก</h3>
+<div class="question-prompt"><p>กรดเบนโซอิก <span class="chem">C<sub>6</sub>H<sub>5</sub>COOH</span> มี \(K_a=5.75\times10^{-5}\) คำนวณและเปรียบเทียบร้อยละการแตกตัวในสองสารละลาย</p><p>คำนวณร้อยละการแตกตัวที่ 0.25 mol/L</p></div>
+<div data-sheet-slot="ipst-exercise-6a" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 6 ก" data-sheet-label-en="IPST Exercise 10.3 · Q6(a)"><div data-sheet-answer=""><p>\(C/K_a=4.35\times10^3&gt;1000\)</p><div class="equation">\[5.75\times10^{-5}=\frac{x^2}{0.25-x}\]</div><div class="equation">\[x\approx\sqrt{(5.75\times10^{-5})(0.25)}=3.791\times10^{-3}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{การแตกตัว}\approx\frac{3.791\times10^{-3}}{0.25}\times100\approx1.5\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-6b">
+<h3>แบบฝึกหัด 10.3 · ข้อ 6 ข</h3>
+<div class="question-prompt"><p>กรดเบนโซอิก <span class="chem">C<sub>6</sub>H<sub>5</sub>COOH</span> มี \(K_a=5.75\times10^{-5}\) คำนวณและเปรียบเทียบร้อยละการแตกตัวในสองสารละลาย</p><p>คำนวณร้อยละการแตกตัวที่ 0.40 mol/L</p></div>
+<div data-sheet-slot="ipst-exercise-6b" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 6 ข" data-sheet-label-en="IPST Exercise 10.3 · Q6(b)"><div data-sheet-answer=""><p>\(C/K_a=6.96\times10^3&gt;1000\)</p><div class="equation">\[5.75\times10^{-5}=\frac{x^2}{0.40-x}\]</div><div class="equation">\[x\approx\sqrt{(5.75\times10^{-5})(0.40)}=4.796\times10^{-3}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{การแตกตัว}\approx\frac{4.796\times10^{-3}}{0.40}\times100\approx1.2\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-6c">
+<h3>แบบฝึกหัด 10.3 · ข้อ 6 ค</h3>
+<div class="question-prompt"><p>กรดเบนโซอิก <span class="chem">C<sub>6</sub>H<sub>5</sub>COOH</span> มี \(K_a=5.75\times10^{-5}\) คำนวณและเปรียบเทียบร้อยละการแตกตัวในสองสารละลาย</p><p>สารละลายใดมีร้อยละการแตกตัวมากกว่า?</p></div>
+<div data-sheet-slot="ipst-exercise-6c" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:18mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 6 ค" data-sheet-label-en="IPST Exercise 10.3 · Q6(c)"><div data-sheet-answer="">สารละลาย 0.25 mol/L มีร้อยละการแตกตัวประมาณ 1.5% มากกว่าของ 0.40 mol/L ซึ่งประมาณ 1.2% เป็นกรดชนิดเดิมที่มี \(K_a\) เท่ากัน</div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-7">
+<h3>แบบฝึกหัด 10.3 · ข้อ 7</h3>
+<div class="question-prompt"><p>หา \(K_a\) ของ HA 0.80 mol/L ซึ่งแตกตัว 0.42%</p></div>
+<div data-sheet-slot="ipst-exercise-7" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 7" data-sheet-label-en="IPST Exercise 10.3 · Q7"><div data-sheet-answer=""><div class="equation">\[x=0.80\frac{0.42}{100}=0.00336\ \mathrm{mol/L}\]</div><div class="equation">\[[\ce{HA}]=0.80-0.00336=0.79664\ \mathrm{mol/L}\]</div><div class="equation">\[K_a=\frac{(0.00336)^2}{0.79664}=1.417\times10^{-5}\approx1.4\times10^{-5}\]</div><p>เก็บตัวเลขระหว่างคำนวณไว้ก่อน แล้วปัดคำตอบสุดท้าย</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-8a">
+<h3>แบบฝึกหัด 10.3 · ข้อ 8 ก</h3>
+<div class="question-prompt"><p>กรด HY ที่ 25 °C มี \(K_a=2.0\times10^{-6},\;K_w=1.0\times10^{-14}\)</p><p>ระบุคู่เบสของ HY</p></div>
+<div data-sheet-slot="ipst-exercise-8a" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:16mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 8 ก" data-sheet-label-en="IPST Exercise 10.3 · Q8(a)"><div data-sheet-answer=""><span class="chem">Y<sup>-</sup></span> ได้จาก HY ให้โปรตอนหนึ่งตัว</div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-8b">
+<h3>แบบฝึกหัด 10.3 · ข้อ 8 ข</h3>
+<div class="question-prompt"><p>กรด HY ที่ 25 °C มี \(K_a=2.0\times10^{-6},\;K_w=1.0\times10^{-14}\)</p><p>หา \(K_b\) ของคู่เบสนี้</p></div>
+<div data-sheet-slot="ipst-exercise-8b" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 8 ข" data-sheet-label-en="IPST Exercise 10.3 · Q8(b)"><div data-sheet-answer=""><div class="equation">\[K_b=\frac{1.0\times10^{-14}}{2.0\times10^{-6}}=5.0\times10^{-9}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-9">
+<h3>แบบฝึกหัด 10.3 · ข้อ 9</h3>
+<div class="question-prompt"><p>เบสอ่อนมี \(K_b=5.0\times10^{-10}\) จงหา \(K_a\) ของคู่กรดที่ 25 °C</p></div>
+<div data-sheet-slot="ipst-exercise-9" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 9" data-sheet-label-en="IPST Exercise 10.3 · Q9"><div data-sheet-answer=""><div class="equation">\[K_a=\frac{1.0\times10^{-14}}{5.0\times10^{-10}}=2.0\times10^{-5}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-12">
+<h3 class="practice-label">ฝึกซ้ำ 12 · จำสารแล้วเขียนสมการจากชื่อ</h3>
+<div class="question-prompt"><p>เขียนสูตรและสมการในน้ำของกรดไฮโดรโบรมิก กรดไฮโดรฟลูออริก แบเรียมไฮดรอกไซด์ และแอมโมเนีย เลือกลูกศรและระบุไอออนที่บอกความเป็นกรดหรือเบสในแต่ละสมการ</p></div>
+<div data-sheet-slot="repeat-12" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:42mm" data-sheet-label-th="ฝึกซ้ำ 12 · จำสารแล้วเขียนสมการจากชื่อ" data-sheet-label-en="Repeat practice 12 · Recall formulas and equations from names"><div data-sheet-answer=""><div class="equation">\[\ce{HBr + H2O -&gt; H3O+ + Br-}\]</div><div class="equation">\[\ce{HF + H2O &lt;=&gt; H3O+ + F-}\]</div><div class="equation">\[\ce{Ba(OH)2 -&gt; Ba^2+ + 2OH-}\]</div><div class="equation">\[\ce{NH3 + H2O &lt;=&gt; NH4+ + OH-}\]</div><p>กรดทั้งสองให้ H<sub>3</sub>O<sup>+</sup> เบสทั้งสองให้ OH<sup>−</sup> HBr และส่วนที่ละลายของ Ba(OH)<sub>2</sub> แตกตัวสมบูรณ์ ส่วน HF และ NH<sub>3</sub> ใช้ลูกศรสมดุล</p></div></div>
+</div>
+</section>
+<footer class="source-note">โจทย์อ้างอิงหนังสือเรียนเคมี ม.5 เล่ม 4 สสวท. หัวข้อ 10.3 หน้า 14–30 โจทย์ที่มีป้ายฝึกซ้ำจัดทำเพิ่มสำหรับใบนี้</footer>
+</div></main>
 <main class="sheet-page" data-content-lang="en" hidden>
 <header class="lesson-header"><div class="eyebrow">Chemistry · Chapter 10 Acids and Bases</div><h1>10.3 Ionization of Acids, Bases and Water</h1></header>
+<nav class="sheet-zone-nav" data-no-print="" aria-label="Sheet sections"><a href="#learning-en">Learning · Lesson notes</a><a href="#problem-en">Problem · Questions and practice</a></nav><div data-print-zone="learning" id="learning-en">
+<h2 class="zone-title" data-no-print="">Learning · Lesson notes</h2>
 <section class="lesson-section" data-guide-anchor="stage-1">
 <div data-print-keep>
 <div data-print-keep><h2><span>1</span> How do strong and weak acids ionize differently?</h2><p>Sets A and B both start with 20 HA molecules. Look to the right of each arrow and count the HA molecules that remain.</p></div>
@@ -489,9 +685,7 @@
 <figure data-print-keep><img src="assets/10-3-combined/particles-complete.svg" width="1000" height="350" alt="Set A · Before and after the acid reacts with water"><figcaption>Set A · Before and after the acid reacts with water</figcaption></figure>
 <div class="question-item" data-print-keep>
 <h3>How many HA molecules remain in Set A?</h3>
-<div data-sheet-slot="particle-set-a" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ภาพ A เหลือ HA กี่โมเลกุล?" data-sheet-label-en="How many HA molecules remain in Set A?"
-     style="--sheet-print-height:10mm">
+<div data-sheet-slot="particle-set-a" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ภาพ A เหลือ HA กี่โมเลกุล?" data-sheet-label-en="How many HA molecules remain in Set A?" style="--sheet-print-height:10mm">
 <div data-sheet-answer>
 <p><strong>0 molecules</strong> remain. All 20 HA molecules transfer a proton to water, giving 20 H₃O⁺ and 20 A⁻ ions. This model represents a strong acid undergoing complete ionization.</p>
 </div>
@@ -503,9 +697,7 @@
 <figure data-print-keep><img src="assets/10-3-combined/particles-partial.svg" width="1000" height="350" alt="Set B · Before and after the acid reacts with water"><figcaption>Set B · Before and after the acid reacts with water</figcaption></figure>
 <div class="question-item" data-print-keep>
 <h3>How many HA molecules remain in Set B?</h3>
-<div data-sheet-slot="particle-set-b" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ภาพ B เหลือ HA กี่โมเลกุล?" data-sheet-label-en="How many HA molecules remain in Set B?"
-     style="--sheet-print-height:10mm">
+<div data-sheet-slot="particle-set-b" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ภาพ B เหลือ HA กี่โมเลกุล?" data-sheet-label-en="How many HA molecules remain in Set B?" style="--sheet-print-height:10mm">
 <div data-sheet-answer>
 <p><strong>18 molecules</strong> remain, so 2 of the original 20 ionized, giving 2 H₃O⁺ and 2 A⁻ ions. This model represents a weak acid undergoing partial ionization.</p>
 </div>
@@ -514,19 +706,22 @@
 </div>
 <div class="question-item" data-print-keep>
 <h3>Can a strong acid be dilute?</h3>
-<div data-sheet-slot="concentration-strength" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="กรดแก่จะเจือจางได้ไหม?" data-sheet-label-en="Can a strong acid be dilute?"
-     style="--sheet-print-height:10mm">
+<div data-sheet-slot="concentration-strength" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="กรดแก่จะเจือจางได้ไหม?" data-sheet-label-en="Can a strong acid be dilute?" style="--sheet-print-height:10mm">
 <div data-sheet-answer>
 <p>Yes. Strength describes the extent of ionization. Initial concentration is the amount of solute per volume. Dilute HCl is still strong, and concentrated CH₃COOH is still weak.</p>
 </div>
 </div>
 </div>
+<figure data-print-keep><img src="assets/10-3-combined/conductivity.svg" width="1000" height="350" alt="Bulb brightness for solutions of equal initial concentration"><figcaption>Bulb brightness for solutions of equal initial concentration</figcaption></figure><div class="question-item" data-print-keep>
+<h3>Electrolytes and conductivity</h3>
+<div class="question-prompt">What does the bulb reveal about mobile ions in solution?</div>
+<div data-sheet-slot="ions-and-conductivity" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="อิเล็กโทรไลต์และการนำไฟฟ้า" data-sheet-label-en="Electrolytes and conductivity" style="--sheet-print-height:19mm">
+<div data-sheet-answer><p>An <strong>electrolyte</strong> produces ions when dissolved in water. Mobile ions allow the solution to conduct electricity.</p><p><strong>Strong</strong> electrolytes produce ions almost completely, such as HCl, NaOH and NaCl. <strong>Weak</strong> electrolytes, such as CH<sub>3</sub>COOH and NH<sub>3</sub>, produce ions only partially. Sucrose dissolves as molecules and is a <strong>nonelectrolyte</strong>.</p><p>Use the figure for comparisons at equal concentration and temperature with the same equipment. Compare acid with acid and base with base. More H<sub>3</sub>O<sup>+</sup> means lower pH, while more OH<sup>−</sup> means higher pH.</p></div>
+</div>
+</div>
 <div class="question-item" data-print-keep>
 <h3>Strong acids in this chapter</h3>
-<div data-sheet-slot="strong-acids-list" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="กรดแก่ที่ใช้ในบทนี้" data-sheet-label-en="Strong acids in this chapter"
-     style="--sheet-print-height:9mm">
+<div data-sheet-slot="strong-acids-list" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="กรดแก่ที่ใช้ในบทนี้" data-sheet-label-en="Strong acids in this chapter" style="--sheet-print-height:9mm">
 <div data-sheet-answer>
 <p><strong>HCl, HBr, HI, HNO₃, HClO₄</strong> and <strong>the first ionization step of H₂SO₄</strong>. HF is a weak acid.</p>
 </div>
@@ -534,22 +729,9 @@
 </div>
 <div class="question-item" data-print-keep>
 <h3>Strong bases in this chapter</h3>
-<div data-sheet-slot="strong-bases-list" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="เบสแก่ที่ใช้ในบทนี้" data-sheet-label-en="Strong bases in this chapter"
-     style="--sheet-print-height:9mm">
+<div data-sheet-slot="strong-bases-list" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เบสแก่ที่ใช้ในบทนี้" data-sheet-label-en="Strong bases in this chapter" style="--sheet-print-height:9mm">
 <div data-sheet-answer>
 <p><strong>LiOH, NaOH, KOH, Ca(OH)₂, Sr(OH)₂ and Ba(OH)₂</strong>. The dissolved portion dissociates completely. NH₃ is a weak base.</p>
-</div>
-</div>
-</div>
-<div class="question-item" data-print-keep>
-<h3>Ions and conductivity</h3>
-<div class="question-prompt">If bulbs are used to compare HCl with CH₃COOH and NaOH with NH₃, what should be controlled?</div>
-<div data-sheet-slot="ions-and-conductivity" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ไอออนกับการนำไฟฟ้า" data-sheet-label-en="Ions and conductivity"
-     style="--sheet-print-height:11mm">
-<div data-sheet-answer>
-<p>Mobile ions conduct electricity. Compare acids with acids and bases with bases at the same initial concentration, using the same equipment and temperature. In this set, HCl conducts better than CH₃COOH, and NaOH better than NH₃. For pH order, acids come before bases. More H₃O⁺ means lower pH, while more OH⁻ means higher pH.</p>
 </div>
 </div>
 </div>
@@ -559,11 +741,9 @@
 <div data-print-keep><h2><span>2</span> Which ions do strong acids and bases give, and how much?</h2><p>Write the equation first, then read the ratio from its coefficients.</p></div>
 <div class="question-item" data-print-keep>
 <h3>How does HCl react with water?</h3>
-<div data-sheet-slot="strong-acid-reaction" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="HCl ทำปฏิกิริยากับน้ำอย่างไร?" data-sheet-label-en="How does HCl react with water?"
-     style="--sheet-print-height:9mm">
+<div data-sheet-slot="strong-acid-reaction" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="HCl ทำปฏิกิริยากับน้ำอย่างไร?" data-sheet-label-en="How does HCl react with water?" style="--sheet-print-height:9mm">
 <div data-sheet-answer>
-<div class="equation">\[\ce{HCl(aq) + H2O(l) -> H3O+(aq) + Cl-(aq)}\]</div><p>1 mol of HCl gives 1 mol of H₃O⁺ and 1 mol of Cl⁻.</p>
+<div class="equation">\[\ce{HCl(aq) + H2O(l) -&gt; H3O+(aq) + Cl-(aq)}\]</div><p>1 mol of HCl gives 1 mol of H₃O⁺ and 1 mol of Cl⁻.</p>
 </div>
 </div>
 </div>
@@ -571,19 +751,15 @@
 <div class="question-item" data-print-keep>
 <h3>How do NaOH and Ba(OH)₂ differ in the amount of OH⁻ they give?</h3>
 <div class="question-prompt">Write both equations and explain what happens at equal initial concentrations.</div>
-<div data-sheet-slot="complete-ionization" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="NaOH กับ Ba(OH)₂ ให้ OH⁻ ต่างกันอย่างไร?" data-sheet-label-en="How do NaOH and Ba(OH)₂ differ in the amount of OH⁻ they give?"
-     style="--sheet-print-height:18mm">
+<div data-sheet-slot="complete-ionization" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="NaOH กับ Ba(OH)₂ ให้ OH⁻ ต่างกันอย่างไร?" data-sheet-label-en="How do NaOH and Ba(OH)₂ differ in the amount of OH⁻ they give?" style="--sheet-print-height:18mm">
 <div data-sheet-answer>
-<div class="chart-note"><div><div class="equation">\[\ce{NaOH(aq) -> Na+(aq) + OH-(aq)}\]</div><div class="equation">\[\ce{Ba(OH)2(aq) -> Ba^2+(aq) + 2OH-(aq)}\]</div><p>Per mole of dissolved solute, NaOH gives 1 mol of OH⁻ and Ba(OH)₂ gives 2 mol. At the same initial concentration of 0.020 mol/L, Ba(OH)₂ gives 0.040 mol/L OH⁻ and NaOH gives 0.020 mol/L.</p></div><figure data-print-keep><img src="assets/10-3-combined/barium-bars.svg" width="900" height="350" alt="Bar chart comparing concentrations before and after dissociation"><figcaption>Bar chart comparing concentrations before and after dissociation</figcaption></figure></div>
+<div class="chart-note"><div><div class="equation">\[\ce{NaOH(aq) -&gt; Na+(aq) + OH-(aq)}\]</div><div class="equation">\[\ce{Ba(OH)2(aq) -&gt; Ba^2+(aq) + 2OH-(aq)}\]</div><p>Per mole of dissolved solute, NaOH gives 1 mol of OH⁻ and Ba(OH)₂ gives 2 mol. At the same initial concentration of 0.020 mol/L, Ba(OH)₂ gives 0.040 mol/L OH⁻ and NaOH gives 0.020 mol/L.</p></div><figure data-print-keep><img src="assets/10-3-combined/barium-bars.svg" width="900" height="350" alt="Bar chart comparing concentrations before and after dissociation"><figcaption>Bar chart comparing concentrations before and after dissociation</figcaption></figure></div>
 </div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
 <h3>Which row of ICF do we read?</h3>
-<div data-sheet-slot="strong-icf-method" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="อ่านตาราง ICF ตรงไหน?" data-sheet-label-en="Which row of ICF do we read?"
-     style="--sheet-print-height:10mm">
+<div data-sheet-slot="strong-icf-method" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="อ่านตาราง ICF ตรงไหน?" data-sheet-label-en="Which row of ICF do we read?" style="--sheet-print-height:10mm">
 <div data-sheet-answer>
 <p><strong>I</strong> is the initial amount, <strong>C</strong> follows the balanced coefficients, and <strong>F</strong> gives the final amounts after complete ionization or dissociation. Use either mol or mol/L consistently across the table.</p>
 </div>
@@ -592,43 +768,27 @@
 </section>
 <section class="lesson-section" data-guide-anchor="stage-3">
 <div data-print-keep>
-<div data-print-keep><h2><span>3</span> Strong acids and bases: working back from ions</h2><p>Before filling the table, identify whether each given value describes the initial solute or a product ion.</p></div>
+<div data-print-keep><h2><span>3</span> Working back from ions to the initial solute</h2><p>Before filling the table, identify whether each given value describes the initial solute or a product ion.</p></div>
 <div class="question-item" data-print-keep>
-<h3>Example 1 · How many moles of acid are needed?</h3>
-<div class="question-prompt">How many moles of HCl are needed to prepare 0.500 L of solution containing 0.300 mol/L each of H₃O⁺ and Cl⁻?</div>
-<div data-sheet-slot="model-acid-amount" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ตัวอย่าง 1 · ต้องใช้กรดกี่โมล?" data-sheet-label-en="Example 1 · How many moles of acid are needed?"
-     style="--sheet-print-height:33mm">
-<div data-sheet-answer>
-<p>1. Convert the given H₃O⁺ concentration to moles. It describes the ion after ionization, so it belongs in row F. Use n = CV with V in L. For mass, use m = nM.</p><div class="equation">\[n(\mathrm{H_3O^+})=0.500\,\mathrm L\times\frac{0.300\,\mathrm{mol}}{1\,\mathrm L}=0.150\,\mathrm{mol}\]</div><p>2. The HCl equation gives a 1 : 1 : 1 ratio. Let a be the initial amount of HCl in mol.</p><table><caption>ICF · mol</caption><thead><tr><th scope="col">Row</th><th scope="col">HCl</th><th scope="col">H₃O⁺</th><th scope="col">Cl⁻</th></tr></thead><tbody>
-<tr><th scope="row">I · Initial</th><td>a</td><td>0</td><td>0</td></tr>
-<tr class="change-row"><th scope="row">C · Change</th><td>−a</td><td>+a</td><td>+a</td></tr>
-<tr><th scope="row">F · Final</th><td>0</td><td>a</td><td>a</td></tr>
-</tbody></table><p>3. From row F, a = 0.150 mol. The solution therefore requires <strong>0.150 mol of HCl</strong>.</p>
-</div>
+<h3>From ion concentration to moles of strong acid</h3>
+<div class="question-prompt">If a problem gives the concentration of an ion after ionization, which row takes that information?</div>
+<div data-sheet-slot="model-acid-amount" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากความเข้มข้นไอออนไปหาโมลของกรดแก่" data-sheet-label-en="From ion concentration to moles of strong acid" style="--sheet-print-height:13mm">
+<div data-sheet-answer><p>Use n = CV after converting V to L. Litres cancel, leaving mol. Put the given ion amount in row F of ICF, then use the coefficients to recover the original amount in row I.</p></div>
 </div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
 <h3>Does adding water change moles or concentration?</h3>
-<div class="question-prompt">A 0.100 L Ba(OH)₂ solution contains 0.020 mol of OH⁻. After dilution to 0.200 L, what are the amount and concentration of OH⁻?</div>
-<div data-sheet-slot="model-dilution-concentrations" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="เติมน้ำแล้วโมลหรือความเข้มข้นเปลี่ยน?" data-sheet-label-en="Does adding water change moles or concentration?"
-     style="--sheet-print-height:15mm">
-<div data-sheet-answer>
-<p>Adding only water increases the volume. The OH⁻ amount stays at <strong>0.020 mol</strong>, so [OH⁻] = (0.020 mol)/(0.200 L) = <strong>0.100 mol/L</strong>. If the question gives the initial solute concentration, use ICF in moles before changing the volume.</p>
-</div>
+<div class="question-prompt">If only water is added to a strong-base solution, do the original moles of ions change?</div>
+<div data-sheet-slot="model-dilution-concentrations" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เติมน้ำแล้วโมลหรือความเข้มข้นเปลี่ยน?" data-sheet-label-en="Does adding water change moles or concentration?" style="--sheet-print-height:12mm">
+<div data-sheet-answer><p>Use ICF in moles first. Adding only water preserves the moles from the strong solute but increases the volume, so the concentration decreases.</p><div class="equation">\[C_{\mathrm{final}}=\frac{n_{\mathrm{ion}}}{V_{\mathrm{final}}}\]</div></div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
-<h3>Which conversion factors give the mass?</h3>
-<div class="question-prompt">What mass of Ba(OH)₂ supplies 0.0200 mol of OH⁻? Its molar mass is 171.35 g/mol.</div>
-<div data-sheet-slot="practice-mass" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ถ้าโจทย์ถามมวล ต้องคูณตัวแปลงอะไร?" data-sheet-label-en="Which conversion factors give the mass?"
-     style="--sheet-print-height:14mm">
-<div data-sheet-answer>
-<p>The coefficients show that 2 mol of OH⁻ come from 1 mol of Ba(OH)₂. Then multiply by its molar mass so that the mole units cancel.</p><div class="equation">\[0.0200\,\mathrm{mol}\,\mathrm{OH^-}\times\frac{1\,\mathrm{mol}\,\mathrm{Ba(OH)_2}}{2\,\mathrm{mol}\,\mathrm{OH^-}}=0.0100\,\mathrm{mol}\,\mathrm{Ba(OH)_2}\]</div><div class="equation">\[0.0100\,\mathrm{mol}\times\frac{171.35\,\mathrm g}{1\,\mathrm{mol}}\approx1.71\,\mathrm g\]</div>
-</div>
+<h3>From moles of ions to the initial mass</h3>
+<div class="question-prompt">How do we work backwards to the mass of base needed for a target amount of OH<sup>−</sup>?</div>
+<div data-sheet-slot="practice-mass" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากโมลไอออนไปหามวลสารตั้งต้น" data-sheet-label-en="From moles of ions to the initial mass" style="--sheet-print-height:11mm">
+<div data-sheet-answer><p>Find the OH<sup>−</sup> amount from CV and work backwards using the balanced equation. For example, 2 mol of OH<sup>−</sup> come from 1 mol of Ba(OH)<sub>2</sub>. Multiply the base amount by its molar mass to leave g.</p></div>
 </div>
 </div>
 </section>
@@ -638,20 +798,16 @@
 <div class="question-item" data-print-keep>
 <h3>How does the weak acid HA react with water?</h3>
 <div class="question-prompt">Write the equation from Set B and explain why some HA remains.</div>
-<div data-sheet-slot="weak-partial-equilibrium" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="กรดอ่อน HA ทำปฏิกิริยากับน้ำอย่างไร?" data-sheet-label-en="How does the weak acid HA react with water?"
-     style="--sheet-print-height:11mm">
+<div data-sheet-slot="weak-partial-equilibrium" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="กรดอ่อน HA ทำปฏิกิริยากับน้ำอย่างไร?" data-sheet-label-en="How does the weak acid HA react with water?" style="--sheet-print-height:11mm">
 <div data-sheet-answer>
-<div class="equation">\[\ce{HA(aq) + H2O(l) <=> H3O+(aq) + A-(aq)}\]</div><p>HA can donate a proton to water, and H₃O⁺ can transfer a proton back to A⁻. The concentrations stay constant when the forward and reverse rates are equal, so both HA and ions are present at equilibrium.</p>
+<div class="equation">\[\ce{HA(aq) + H2O(l) &lt;=&gt; H3O+(aq) + A-(aq)}\]</div><p>HA can donate a proton to water, and H₃O⁺ can transfer a proton back to A⁻. The concentrations stay constant when the forward and reverse rates are equal, so both HA and ions are present at equilibrium.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
 <h3>What percentage ionized in Set B?</h3>
-<div data-sheet-slot="model-ionization-percentage" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ภาพ B แตกตัวไปกี่เปอร์เซ็นต์?" data-sheet-label-en="What percentage ionized in Set B?"
-     style="--sheet-print-height:9mm">
+<div data-sheet-slot="model-ionization-percentage" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ภาพ B แตกตัวไปกี่เปอร์เซ็นต์?" data-sheet-label-en="What percentage ionized in Set B?" style="--sheet-print-height:9mm">
 <div data-sheet-answer>
 <p>2 out of 20 HA molecules ionized, so (2/20) × 100 = <strong>10%</strong>. Count the HA molecules that reacted. Each such molecule yields two product ions. For concentration data, use (concentration ionized ÷ initial concentration) × 100.</p>
 </div>
@@ -663,10 +819,8 @@
 <div data-print-keep><h2><span>5</span> Weak acid equilibrium: from the equation to ICE</h2></div>
 <div class="question-item" data-print-keep>
 <h3>What is the expression for Kₐ for this equation?</h3>
-<div class="question-prompt"><div class="equation">\[\ce{HA(aq) + H2O(l) <=> H3O+(aq) + A-(aq)}\]</div></div>
-<div data-sheet-slot="weak-acid-constant" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="จากสมการนี้ เขียนนิพจน์ Kₐ อย่างไร?" data-sheet-label-en="What is the expression for Kₐ for this equation?"
-     style="--sheet-print-height:13mm">
+<div class="question-prompt"><div class="equation">\[\ce{HA(aq) + H2O(l) &lt;=&gt; H3O+(aq) + A-(aq)}\]</div></div>
+<div data-sheet-slot="weak-acid-constant" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากสมการนี้ เขียนนิพจน์ Kₐ อย่างไร?" data-sheet-label-en="What is the expression for Kₐ for this equation?" style="--sheet-print-height:13mm">
 <div data-sheet-answer>
 <div class="equation">\[K_a=\frac{[\mathrm{H_3O^+}][\mathrm{A^-}]}{[\mathrm{HA}]}\]</div><p>Use equilibrium concentrations. Water is the solvent and is omitted. Under the same conditions, a larger Kₐ indicates a stronger proton donor.</p>
 </div>
@@ -676,9 +830,7 @@
 <div class="question-item" data-print-keep>
 <h3>If x ionizes, what belongs in row E?</h3>
 <div class="question-prompt">Let C₀ be the initial acid concentration. Neglect ions from water relative to those produced by the acid.</div>
-<div data-sheet-slot="weak-ice-table" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ถ้ากรดแตกตัวไป x แถว E มีค่าอะไร?" data-sheet-label-en="If x ionizes, what belongs in row E?"
-     style="--sheet-print-height:18mm">
+<div data-sheet-slot="weak-ice-table" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ถ้ากรดแตกตัวไป x แถว E มีค่าอะไร?" data-sheet-label-en="If x ionizes, what belongs in row E?" style="--sheet-print-height:18mm">
 <div data-sheet-answer>
 <table><caption>ICE · mol/L</caption><thead><tr><th scope="col">Row</th><th scope="col">HA</th><th scope="col">H₃O⁺</th><th scope="col">A⁻</th></tr></thead><tbody>
 <tr><th scope="row">I · Initial</th><td>C₀</td><td>0</td><td>0</td></tr>
@@ -693,30 +845,18 @@
 <div data-print-keep>
 <div data-print-keep><h2><span>6</span> Finding x: choosing an approximation or the full equation</h2><p>Start from the equilibrium expression, then check the condition before taking a square root.</p></div>
 <div class="question-item" data-print-keep>
-<h3>Example 2 · Finding the ion concentration of a weak acid</h3>
-<div class="question-prompt">Find equilibrium [H₃O⁺] for 0.200 mol/L CH₃COOH at 25 °C, with Kₐ = 1.80 × 10⁻⁵.</div>
-<div data-sheet-slot="weak-approximation-rule" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ตัวอย่าง 2 · กรดอ่อน หาความเข้มข้นไอออน" data-sheet-label-en="Example 2 · Finding the ion concentration of a weak acid"
-     style="--sheet-print-height:34mm">
-<div data-sheet-answer>
-<div class="equation">\[\ce{CH3COOH(aq) + H2O(l) <=> H3O+(aq) + CH3COO-(aq)}\]</div><table><caption>ICE · mol/L</caption><thead><tr><th scope="col">Row</th><th scope="col">CH₃COOH</th><th scope="col">H₃O⁺</th><th scope="col">CH₃COO⁻</th></tr></thead><tbody>
-<tr><th scope="row">I · Initial</th><td>0.200</td><td>0</td><td>0</td></tr>
-<tr class="change-row"><th scope="row">C · Change</th><td>−x</td><td>+x</td><td>+x</td></tr>
-<tr><th scope="row">E · Equilibrium</th><td>0.200 − x</td><td>x</td><td>x</td></tr>
-</tbody></table><p>Substitute row E and compare the initial concentration with Kₐ using the criterion in this chapter.</p><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{0.200-x}\]</div><div class="equation">\[\frac{C_0}{K_a}=\frac{0.200}{1.80\times10^{-5}}\approx1.11\times10^4>1000\]</div><p>When C₀/Kₐ > 1000, approximate only the denominator, 0.200 − x ≈ 0.200.</p><div class="equation">\[[\mathrm{H_3O^+}]=x\approx\sqrt{(1.80\times10^{-5})(0.200)}=1.90\times10^{-3}\,\mathrm{mol/L}\]</div>
-</div>
+<h3>Check the criterion before approximating the denominator</h3>
+<div class="question-prompt">In a 1 : 1 equilibrium, what tells us whether C<sub>0</sub> − x can be approximated as C<sub>0</sub>?</div>
+<div data-sheet-slot="weak-approximation-rule" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ตรวจเกณฑ์ก่อนประมาณตัวส่วน" data-sheet-label-en="Check the criterion before approximating the denominator" style="--sheet-print-height:17mm">
+<div data-sheet-answer><div class="equation">\[K=\frac{x^2}{C_0-x}\]</div><p>For this case with no added product ions and negligible water ionization, apply the chapter criterion. If C<sub>0</sub>/K &gt; 1000, approximate only the denominator as C<sub>0</sub> and solve for x.</p><div class="equation">\[x\approx\sqrt{KC_0}\]</div></div>
 </div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
-<h3>What if C₀/Kₐ is at most 1000?</h3>
-<div class="question-prompt">How do we find [H₃O⁺] for 0.00200 mol/L HA with Kₐ = 2.00 × 10⁻⁵?</div>
-<div data-sheet-slot="practice-quadratic" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ถ้า C₀/Kₐ ไม่เกิน 1000 ทำอย่างไร?" data-sheet-label-en="What if C₀/Kₐ is at most 1000?"
-     style="--sheet-print-height:21mm">
-<div data-sheet-answer>
-<p>C₀/Kₐ = 100. With the criterion used here, solve the full equation and keep x in the denominator.</p><div class="equation">\[2.00\times10^{-5}=\frac{x^2}{0.00200-x}\ \Rightarrow\ x^2+(2.00\times10^{-5})x-4.00\times10^{-8}=0\]</div><p>Choose the root with 0 &lt; x &lt; C₀. This gives [H₃O⁺] ≈ <strong>1.90 × 10⁻⁴ mol/L</strong>.</p>
-</div>
+<h3>Rearrange the full equation and choose the root</h3>
+<div class="question-prompt">If C<sub>0</sub>/K does not meet the chapter criterion, which term must be kept?</div>
+<div data-sheet-slot="practice-quadratic" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จัดรูปสมการเต็มและเลือกราก" data-sheet-label-en="Rearrange the full equation and choose the root" style="--sheet-print-height:14mm">
+<div data-sheet-answer><p>Keep C<sub>0</sub> − x in the denominator. Cross-multiply, rearrange and choose the root between 0 and C<sub>0</sub>.</p><div class="equation">\[K(C_0-x)=x^2\quad\Rightarrow\quad x^2+Kx-KC_0=0\]</div></div>
 </div>
 </div>
 </section>
@@ -726,11 +866,9 @@
 <div class="question-item" data-print-keep>
 <h3>How do the two ionization steps differ for H₂SO₄ and H₂SO₃?</h3>
 <div class="question-prompt">Which step is treated as complete, and what do Kₐ₁ and Kₐ₂ tell us?</div>
-<div data-sheet-slot="weak-stepwise" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="H₂SO₄ กับ H₂SO₃ แตกตัวสองขั้นอย่างไร?" data-sheet-label-en="How do the two ionization steps differ for H₂SO₄ and H₂SO₃?"
-     style="--sheet-print-height:15mm">
+<div data-sheet-slot="weak-stepwise" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="H₂SO₄ กับ H₂SO₃ แตกตัวสองขั้นอย่างไร?" data-sheet-label-en="How do the two ionization steps differ for H₂SO₄ and H₂SO₃?" style="--sheet-print-height:15mm">
 <div data-sheet-answer>
-<div class="equation">\[\ce{H2SO4 + H2O -> H3O+ + HSO4-}\]</div><div class="equation">\[\ce{HSO4- + H2O <=> H3O+ + SO4^2-}\]</div><p>The first step of H₂SO₄ is treated as complete. The second is an equilibrium, so its initial row already contains H₃O⁺ from step one. H₂SO₃ has two equilibria along H₂SO₃ → HSO₃⁻ → SO₃²⁻. Kₐ₁ is much larger than Kₐ₂, so [HSO₃⁻] > [SO₃²⁻]. Ignoring ions from water, each HSO₃⁻ is accompanied by one H₃O⁺ and each SO₃²⁻ by two, so [H₃O⁺] > [HSO₃⁻].</p>
+<div class="equation">\[\ce{H2SO4 + H2O -&gt; H3O+ + HSO4-}\]</div><div class="equation">\[\ce{HSO4- + H2O &lt;=&gt; H3O+ + SO4^2-}\]</div><p>The first step of H₂SO₄ is treated as complete. The second is an equilibrium, so its initial row already contains H₃O⁺ from step one. H₂SO₃ has two equilibria along H₂SO₃ → HSO₃⁻ → SO₃²⁻. Kₐ₁ is much larger than Kₐ₂, so [HSO₃⁻] &gt; [SO₃²⁻]. Ignoring ions from water, each HSO₃⁻ is accompanied by one H₃O⁺ and each SO₃²⁻ by two, so [H₃O⁺] &gt; [HSO₃⁻].</p>
 </div>
 </div>
 </div>
@@ -742,60 +880,42 @@
 <div class="question-item" data-print-keep>
 <h3>What donates a proton to a weak base B?</h3>
 <div class="question-prompt">Write the equation for a weak base B in water and choose the arrow.</div>
-<div data-sheet-slot="weak-base-reaction" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="เบสอ่อน B รับโปรตอนจากอะไร?" data-sheet-label-en="What donates a proton to a weak base B?"
-     style="--sheet-print-height:10mm">
+<div data-sheet-slot="weak-base-reaction" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เบสอ่อน B รับโปรตอนจากอะไร?" data-sheet-label-en="What donates a proton to a weak base B?" style="--sheet-print-height:10mm">
 <div data-sheet-answer>
-<div class="equation">\[\ce{B(aq) + H2O(l) <=> BH+(aq) + OH-(aq)}\]</div><p>Water donates a proton to B, forming BH⁺ and OH⁻. Use a two-way arrow for the equilibrium.</p>
+<div class="equation">\[\ce{B(aq) + H2O(l) &lt;=&gt; BH+(aq) + OH-(aq)}\]</div><p>Water donates a proton to B, forming BH⁺ and OH⁻. Use a two-way arrow for the equilibrium.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
 <h3>What is the expression for Kᵦ for this equation?</h3>
-<div class="question-prompt"><div class="equation">\[\ce{NH3(aq) + H2O(l) <=> NH4+(aq) + OH-(aq)}\]</div></div>
-<div data-sheet-slot="weak-base-equilibrium" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="จากสมการนี้ เขียนนิพจน์ Kᵦ อย่างไร?" data-sheet-label-en="What is the expression for Kᵦ for this equation?"
-     style="--sheet-print-height:12mm">
+<div class="question-prompt"><div class="equation">\[\ce{NH3(aq) + H2O(l) &lt;=&gt; NH4+(aq) + OH-(aq)}\]</div></div>
+<div data-sheet-slot="weak-base-equilibrium" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากสมการนี้ เขียนนิพจน์ Kᵦ อย่างไร?" data-sheet-label-en="What is the expression for Kᵦ for this equation?" style="--sheet-print-height:12mm">
 <div data-sheet-answer>
 <div class="equation">\[K_b=\frac{[\mathrm{NH_4^+}][\mathrm{OH^-}]}{[\mathrm{NH_3}]}\]</div><p>NH₃ accepts a proton from water. One NH₄⁺ and one OH⁻ form for each NH₃ that reacts. Use equilibrium concentrations and omit the solvent water. At equal C₀ and temperature, a larger Kᵦ gives a higher [OH⁻] and percent ionization for 1 : 1 reactions.</p>
 </div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
-<h3>Example 3(a) · Finding ion concentrations of a weak base</h3>
-<div class="question-prompt">Find equilibrium [NH₄⁺] and [OH⁻] for 0.180 mol/L NH₃ at 25 °C, with Kᵦ = 1.80 × 10⁻⁵.</div>
-<div data-sheet-slot="model-weak-base-ions" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ตัวอย่าง 3 ก · เบสอ่อน หาความเข้มข้นไอออน" data-sheet-label-en="Example 3(a) · Finding ion concentrations of a weak base"
-     style="--sheet-print-height:30mm">
-<div data-sheet-answer>
-<table><caption>ICE · mol/L</caption><thead><tr><th scope="col">Row</th><th scope="col">NH₃</th><th scope="col">NH₄⁺</th><th scope="col">OH⁻</th></tr></thead><tbody>
-<tr><th scope="row">I · Initial</th><td>0.180</td><td>0</td><td>0</td></tr>
-<tr class="change-row"><th scope="row">C · Change</th><td>−x</td><td>+x</td><td>+x</td></tr>
-<tr><th scope="row">E · Equilibrium</th><td>0.180 − x</td><td>x</td><td>x</td></tr>
-</tbody></table><p>Use row E to write Kᵦ. Check C₀/Kᵦ before approximating the denominator.</p><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{0.180-x}\]</div><div class="equation">\[\frac{C_0}{K_b}=\frac{0.180}{1.80\times10^{-5}}=1.00\times10^4>1000\]</div><div class="equation">\[[\mathrm{OH^-}]=x\approx\sqrt{(1.80\times10^{-5})(0.180)}=1.80\times10^{-3}\,\mathrm{mol/L}\]</div><p>From the coefficients, [NH₄⁺] equals [OH⁻], so each concentration is approximately 1.80 × 10⁻³ mol/L.</p>
-</div>
+<h3>Read the weak-base ion concentrations from row E</h3>
+<div class="question-prompt">When x mol/L of NH<sub>3</sub> reacts with water, what does row E contain for the base and both ions?</div>
+<div data-sheet-slot="model-weak-base-ions" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="อ่านไอออนของเบสอ่อนจากแถว E" data-sheet-label-en="Read the weak-base ion concentrations from row E" style="--sheet-print-height:14mm">
+<div data-sheet-answer><p>With no added product ions and negligible water ionization, row E for NH<sub>3</sub>, NH<sub>4</sub><sup>+</sup> and OH<sup>−</sup> is C<sub>0</sub> − x, x, x, respectively.</p><div class="equation">\[K_b=\frac{x^2}{C_0-x}\]</div></div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
-<h3>Example 3(b) · What percentage of the base ionized?</h3>
-<div class="question-prompt">Use the result from part (a) and the initial NH₃ concentration.</div>
-<div data-sheet-slot="model-weak-base-percent" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ตัวอย่าง 3 ข · เบสอ่อนแตกร้อยละเท่าไร?" data-sheet-label-en="Example 3(b) · What percentage of the base ionized?"
-     style="--sheet-print-height:11mm">
-<div data-sheet-answer>
-<p>From part (a), x ≈ 0.00180 mol/L out of the initial 0.180 mol/L NH₃. The percentage ionized is approximately (0.00180/0.180) × 100 = <strong>1.00%</strong>.</p>
-</div>
+<h3>From x to the percent ionization of a weak base</h3>
+<div class="question-prompt">Once ICE gives x, which concentration should we divide by?</div>
+<div data-sheet-slot="model-weak-base-percent" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จาก x ไปหาร้อยละของเบสอ่อน" data-sheet-label-en="From x to the percent ionization of a weak base" style="--sheet-print-height:11mm">
+<div data-sheet-answer><p>Divide by the initial concentration C<sub>0</sub>. Use the same units for x and C<sub>0</sub>, then multiply by 100.</p><div class="equation">\[\frac{x}{C_0}\times100\%\]</div></div>
 </div>
 </div>
 <div class="question-item" data-print-keep>
 <h3>How do we connect two tables to find OH⁻ from NaX?</h3>
 <div class="question-prompt">NaX dissociates completely and X⁻ acts as a weak base. Where does the initial X⁻ concentration in ICE come from?</div>
-<div data-sheet-slot="practice-base-cation" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="จาก NaX ไปหา OH⁻ ต้องต่อสองตารางอย่างไร?" data-sheet-label-en="How do we connect two tables to find OH⁻ from NaX?"
-     style="--sheet-print-height:14mm">
+<div data-sheet-slot="practice-base-cation" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จาก NaX ไปหา OH⁻ ต้องต่อสองตารางอย่างไร?" data-sheet-label-en="How do we connect two tables to find OH⁻ from NaX?" style="--sheet-print-height:14mm">
 <div data-sheet-answer>
-<div class="equation">\[\ce{NaX -> Na+ + X-}\]</div><div class="equation">\[\ce{X- + H2O <=> HX + OH-}\]</div><p>Use <strong>F from ICF</strong> for the first equation as <strong>I in ICE</strong> for the second. For example, 0.20 mol/L NaX gives an initial 0.20 mol/L of X⁻. Then use the Kᵦ of X⁻ to find equilibrium OH⁻.</p>
+<div class="equation">\[\ce{NaX -&gt; Na+ + X-}\]</div><div class="equation">\[\ce{X- + H2O &lt;=&gt; HX + OH-}\]</div><p>Use <strong>F from ICF</strong> for the first equation as <strong>I in ICE</strong> for the second. For example, 0.20 mol/L NaX gives an initial 0.20 mol/L of X⁻. Then use the Kᵦ of X⁻ to find equilibrium OH⁻.</p>
 </div>
 </div>
 </div>
@@ -806,9 +926,7 @@
 <div class="question-item" data-print-keep>
 <h3>How do we write a formula for what we counted in Set B?</h3>
 <div class="question-prompt">Let x be the concentration that ionizes and C₀ the initial concentration.</div>
-<div data-sheet-slot="percent-ionized" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="จากที่นับได้ในภาพ B เขียนเป็นสูตรอย่างไร?" data-sheet-label-en="How do we write a formula for what we counted in Set B?"
-     style="--sheet-print-height:10mm">
+<div data-sheet-slot="percent-ionized" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากที่นับได้ในภาพ B เขียนเป็นสูตรอย่างไร?" data-sheet-label-en="How do we write a formula for what we counted in Set B?" style="--sheet-print-height:10mm">
 <div data-sheet-answer>
 <div class="equation">\[\frac{x}{C_0}\times100\%\]</div><p>Use the same unit for x and C₀, such as mol/L, so the units cancel.</p>
 </div>
@@ -819,9 +937,7 @@
 <div class="question-item" data-print-keep>
 <h3>On dilution, what happens to the percentage and ion concentration?</h3>
 <div class="question-prompt">Consider the same weak acid at constant temperature in the range where the approximation applies.</div>
-<div data-sheet-slot="weak-dilution-weak" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="เมื่อเจือจางกรดอ่อน ร้อยละกับความเข้มข้นไอออนเปลี่ยนอย่างไร?" data-sheet-label-en="On dilution, what happens to the percentage and ion concentration?"
-     style="--sheet-print-height:12mm">
+<div data-sheet-slot="weak-dilution-weak" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เมื่อเจือจางกรดอ่อน ร้อยละกับความเข้มข้นไอออนเปลี่ยนอย่างไร?" data-sheet-label-en="On dilution, what happens to the percentage and ion concentration?" style="--sheet-print-height:12mm">
 <div data-sheet-answer>
 <div class="equation">\[[\mathrm{H_3O^+}]\approx\sqrt{K_aC_0}\]</div><div class="equation">\[\frac{x}{C_0}\times100\%\approx\sqrt{\frac{K_a}{C_0}}\times100\%\]</div><p>As C₀ decreases, the H₃O⁺ concentration decreases while the fraction ionized increases. Kₐ stays constant at the same temperature.</p>
 </div>
@@ -829,13 +945,9 @@
 </div>
 <div class="question-item" data-print-keep>
 <h3>How do we work back to Kₐ from a given percentage?</h3>
-<div class="question-prompt">HA starts at 0.20 mol/L and is 5.0% ionized. Find x, then substitute the equilibrium values.</div>
-<div data-sheet-slot="weak-reverse-percent" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ถ้ารู้ร้อยละแล้ว จะย้อนหา Kₐ อย่างไร?" data-sheet-label-en="How do we work back to Kₐ from a given percentage?"
-     style="--sheet-print-height:16mm">
-<div data-sheet-answer>
-<p>x = (5.0/100)(0.20) = 0.010 mol/L. The remaining acid concentration is 0.20 − 0.010 = 0.19 mol/L.</p><div class="equation">\[K_a=\frac{x^2}{C_0-x}=\frac{(0.010)^2}{0.19}\approx5.3\times10^{-4}\]</div><p>For acids with different initial concentrations, compare their Kₐ values at the same temperature to compare strength.</p>
-</div>
+<div class="question-prompt">If the numerical percentage in the question is P, how do we recover x?</div>
+<div data-sheet-slot="weak-reverse-percent" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ถ้ารู้ร้อยละแล้ว จะย้อนหา Kₐ อย่างไร?" data-sheet-label-en="How do we work back to Kₐ from a given percentage?" style="--sheet-print-height:14mm">
+<div data-sheet-answer><div class="equation">\[x=C_0\frac{P}{100}\]</div><p>Put x in row C, then read C<sub>0</sub> − x and x from row E to find K<sub>a</sub>. Compare K<sub>a</sub> at the same temperature when the acids have different initial concentrations.</p></div>
 </div>
 </div>
 </section>
@@ -844,10 +956,8 @@
 <div data-print-keep><h2><span>10</span> How does water form ions?</h2><p>One water molecule donates a proton and another accepts it.</p></div>
 <div class="question-item" data-print-keep>
 <h3>K𝓌 and the neutrality of water</h3>
-<div class="question-prompt"><div class="equation">\[\ce{2H2O(l) <=> H3O+(aq) + OH-(aq)}\]</div></div>
-<div data-sheet-slot="water-water-constant" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="K𝓌 และความเป็นกลางของน้ำ" data-sheet-label-en="K𝓌 and the neutrality of water"
-     style="--sheet-print-height:14mm">
+<div class="question-prompt"><div class="equation">\[\ce{2H2O(l) &lt;=&gt; H3O+(aq) + OH-(aq)}\]</div></div>
+<div data-sheet-slot="water-water-constant" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="K𝓌 และความเป็นกลางของน้ำ" data-sheet-label-en="K𝓌 and the neutrality of water" style="--sheet-print-height:14mm">
 <div data-sheet-answer>
 <div class="equation">\[K_w=[\mathrm{H_3O^+}][\mathrm{OH^-}]=1.0\times10^{-14}\quad(25\,^\circ\mathrm C)\]</div><p>Pure water forms equal concentrations of the two ions. At 25 °C each is √K𝓌 = 1.0 × 10⁻⁷ mol/L. Neutrality means [H₃O⁺] = [OH⁻]. K𝓌 can change with temperature.</p>
 </div>
@@ -860,10 +970,8 @@
 <div data-print-keep><h2><span>11</span> Why does Kₐ of HA times Kᵦ of A⁻ equal K𝓌?</h2></div>
 <div class="question-item" data-print-keep>
 <h3>Write the two expressions and multiply them</h3>
-<div class="question-prompt"><p>The first equation treats HA as an acid. The second treats A⁻ as its conjugate base.</p><div class="equation">\[\ce{HA(aq) + H2O(l) <=> H3O+(aq) + A-(aq)}\]</div><div class="equation">\[\ce{A-(aq) + H2O(l) <=> HA(aq) + OH-(aq)}\]</div></div>
-<div data-sheet-slot="water-constant-proof" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="เขียนสองนิพจน์แล้วลองคูณกัน" data-sheet-label-en="Write the two expressions and multiply them"
-     style="--sheet-print-height:20mm">
+<div class="question-prompt"><p>The first equation treats HA as an acid. The second treats A⁻ as its conjugate base.</p><div class="equation">\[\ce{HA(aq) + H2O(l) &lt;=&gt; H3O+(aq) + A-(aq)}\]</div><div class="equation">\[\ce{A-(aq) + H2O(l) &lt;=&gt; HA(aq) + OH-(aq)}\]</div></div>
+<div data-sheet-slot="water-constant-proof" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เขียนสองนิพจน์แล้วลองคูณกัน" data-sheet-label-en="Write the two expressions and multiply them" style="--sheet-print-height:20mm">
 <div data-sheet-answer>
 <div class="equation">\[K_aK_b=\frac{[\mathrm{H_3O^+}][\mathrm{A^-}]}{[\mathrm{HA}]}\times\frac{[\mathrm{HA}][\mathrm{OH^-}]}{[\mathrm{A^-}]}\]</div><div class="equation">\[=[\mathrm{H_3O^+}][\mathrm{OH^-}]=K_w\]</div><p>[HA] and [A⁻] cancel because the expressions describe the same conjugate pair at the same temperature. Adding the reactions gives the autoionization equation for water.</p>
 </div>
@@ -873,9 +981,7 @@
 <div class="question-item" data-print-keep>
 <h3>How do we find the conjugate constant from the given one?</h3>
 <div class="question-prompt">Given Kₐ of HA, how do we find Kᵦ of A⁻? Given Kᵦ of B, how do we find Kₐ of BH⁺?</div>
-<div data-sheet-slot="water-rearrange-pair" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="ถ้ารู้ค่าหนึ่ง หาค่าของคู่กันอย่างไร?" data-sheet-label-en="How do we find the conjugate constant from the given one?"
-     style="--sheet-print-height:13mm">
+<div data-sheet-slot="water-rearrange-pair" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ถ้ารู้ค่าหนึ่ง หาค่าของคู่กันอย่างไร?" data-sheet-label-en="How do we find the conjugate constant from the given one?" style="--sheet-print-height:13mm">
 <div data-sheet-answer>
 <div class="equation">\[K_b(\mathrm{A^-})=\frac{K_w}{K_a(\mathrm{HA})},\quad K_a(\mathrm{BH^+})=\frac{K_w}{K_b(\mathrm B)}\]</div><p>Identify the pair first. For instance, HA and A⁻ differ by one proton. Use K𝓌 at the temperature given.</p>
 </div>
@@ -883,16 +989,285 @@
 </div>
 <div class="question-item" data-print-keep>
 <h3>What happens to the conjugate base as the acid gets stronger?</h3>
-<div data-sheet-slot="water-inverse-strength" data-sheet-layout="block" data-sheet-size="medium"
-     data-sheet-label-th="กรดยิ่งแรง คู่เบสเป็นอย่างไร?" data-sheet-label-en="What happens to the conjugate base as the acid gets stronger?"
-     style="--sheet-print-height:8mm">
+<div data-sheet-slot="water-inverse-strength" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="กรดยิ่งแรง คู่เบสเป็นอย่างไร?" data-sheet-label-en="What happens to the conjugate base as the acid gets stronger?" style="--sheet-print-height:8mm">
 <div data-sheet-answer>
 <p>The conjugate base is weaker. At a fixed temperature K𝓌 is constant, so a larger Kₐ implies a smaller Kᵦ for its conjugate base.</p>
 </div>
 </div>
 </div>
 </section>
-<footer class="source-note">Practise IPST Examples 2–6 and Exercise 10.3 Questions 1–9 in the review quiz for this topic.</footer>
-</main>
+<footer class="source-note">Continue in Problem for the IPST worked examples and follow-up practice.</footer>
+</div><div data-print-zone="problem" id="problem-en">
+<h2 class="zone-title">Problem · Questions and practice</h2>
+<p>The IPST example and question numbers follow the textbook. Items marked “Repeat practice” reinforce methods and recall of key substances.</p>
+<section class="lesson-section" data-guide-anchor="problem-examples">
+<h2>IPST worked examples and follow-up practice</h2>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-01">
+<h3 class="practice-label">Repeat practice 01 · Classify the substances from their formulas</h3>
+<div class="question-prompt"><p>Classify HCl, HBr, HI, HNO<sub>3</sub>, HClO<sub>4</sub>, LiOH, NaOH, KOH, Ca(OH)<sub>2</sub>, Sr(OH)<sub>2</sub>, Ba(OH)<sub>2</sub>, HF, CH<sub>3</sub>COOH and NH<sub>3</sub> as strong acids, strong bases, weak acids or weak bases. Then classify NaCl and sucrose by electrolyte type.</p></div>
+<div data-sheet-slot="repeat-01" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:29mm" data-sheet-label-th="ฝึกซ้ำ 01 · จำแนกสารจากสูตร" data-sheet-label-en="Repeat practice 01 · Classify the substances from their formulas"><div data-sheet-answer=""><p>Strong acids: HCl, HBr, HI, HNO<sub>3</sub>, HClO<sub>4</sub>.</p><p>Strong bases: LiOH, NaOH, KOH, Ca(OH)<sub>2</sub>, Sr(OH)<sub>2</sub>, Ba(OH)<sub>2</sub>.</p><p>Weak acids: HF and CH<sub>3</sub>COOH. Weak base: NH<sub>3</sub>.</p><p>NaCl is a strong electrolyte. Sucrose is a nonelectrolyte.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-example-2">
+<h3>Example 2 (IPST) · HBr gas</h3>
+<div class="question-prompt"><p>How many moles of HBr gas are needed to make 2.0 L of solution containing 0.60 mol/L each of hydronium and bromide?</p></div>
+<div data-sheet-slot="ipst-example-2" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตัวอย่าง 2 (สสวท.) · แก๊ส HBr" data-sheet-label-en="Example 2 (IPST) · HBr gas"><div data-sheet-answer="">\[2.0\ \mathrm L\times\frac{0.60\ \mathrm{mol}}{1\ \mathrm L}=1.200\ \mathrm{mol}\]<p>The L units cancel, leaving mol of H₃O⁺. Use these units before the table.</p><p>The supplied H₃O⁺ amount is after dissociation, so it belongs to ion row F; let the starting solute be a mol.</p>\[\ce{HBr + H2O -&gt; H3O+ + Br-}\]<p>Balance the equation. One change unit is a mol; row C follows −1 : +1 : +1.</p><table data-solution-table="icf" data-unit="mol"><caption>ICF · mol</caption><thead><tr><th scope="col">Row (mol)</th><th scope="col">HBr</th><th scope="col">H<sub>3</sub>O<sup>+</sup></th><th scope="col">Br<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — Initial</th><td>a</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — Change</strong></th><td><strong>−a</strong></td><td><strong>+a</strong></td><td><strong>+a</strong></td></tr><tr><th scope="row">F — Final</th><td>0</td><td>a</td><td>a</td></tr></tbody></table><p>From row F: 1a = 1.20 mol, so a = 1.20 mol.</p><p>\(\ce{HBr + H2O -&gt; H3O+ + Br-}\) gives a 1:1:1 ratio. Thus \(n=CV=0.60(2.0)=1.2\ \mathrm{mol}\).</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-02">
+<h3 class="practice-label">Repeat practice 02 · Use the ratio forwards</h3>
+<div class="question-prompt"><p>A 0.030 mol/L Ba(OH)<sub>2</sub> solution dissociates. Find [Ba<sup>2+</sup>] and [OH<sup>−</sup>] after writing the equation.</p></div>
+<div data-sheet-slot="repeat-02" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 02 · อ่านอัตราส่วนไปข้างหน้า" data-sheet-label-en="Repeat practice 02 · Use the ratio forwards"><div data-sheet-answer=""><div class="equation">\[\ce{Ba(OH)2 -&gt; Ba^2+ + 2OH-}\]</div><p>Row C of ICF changes by −0.030, +0.030 and +0.060 mol/L. Thus [Ba<sup>2+</sup>] = 0.030 mol/L and [OH<sup>−</sup>] = 0.060 mol/L.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-03">
+<h3 class="practice-label">Repeat practice 03 · Work back from the ion to the base</h3>
+<div class="question-prompt"><p>A solution of Sr(OH)<sub>2</sub> contains 0.060 mol/L OH<sup>−</sup>. What was the initial Sr(OH)<sub>2</sub> concentration?</p></div>
+<div data-sheet-slot="repeat-03" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 03 · ย้อนจากไอออนกลับไปหาเบส" data-sheet-label-en="Repeat practice 03 · Work back from the ion to the base"><div data-sheet-answer=""><div class="equation">\[\ce{Sr(OH)2 -&gt; Sr^2+ + 2OH-}\]</div><p>Let the initial base concentration be a. Row C gives +2a of OH<sup>−</sup>, so row F has 2a = 0.060 mol/L and a = 0.030 mol/L.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-example-3a">
+<h3>Example 3 (IPST)(a) · Amounts</h3>
+<div class="question-prompt"><p>A 0.40 L <span class="chem">Sr(OH)<sub>2</sub></span> solution contains 1.0 mol/L hydroxide. Add water to make a final volume of 2.00 L.</p><p>Find the amounts of strontium and hydroxide before and after dilution.</p></div>
+<div data-sheet-slot="ipst-example-3a" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตัวอย่าง 3 (สสวท.) · ก · จำนวนโมล" data-sheet-label-en="Example 3 (IPST)(a) · Amounts"><div data-sheet-answer="">\[0.40\ \mathrm L\times\frac{1.0\ \mathrm{mol}}{1\ \mathrm L}=0.400\ \mathrm{mol}\]<p>The L units cancel, leaving mol of OH⁻. Use these units before the table.</p><p>The supplied OH⁻ amount is after dissociation, so it belongs to ion row F; let the starting solute be a mol.</p>\[\ce{Sr(OH)2 -&gt; Sr^2+ + 2OH-}\]<p>Balance the equation. One change unit is a mol; row C follows −1 : +1 : +2.</p><table data-solution-table="icf" data-unit="mol"><caption>ICF · mol</caption><thead><tr><th scope="col">Row (mol)</th><th scope="col">Sr(OH)<sub>2</sub></th><th scope="col">Sr<sup>2+</sup></th><th scope="col">OH<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — Initial</th><td>a</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — Change</strong></th><td><strong>−a</strong></td><td><strong>+a</strong></td><td><strong>+2a</strong></td></tr><tr><th scope="row">F — Final</th><td>0</td><td>a</td><td>2a</td></tr></tbody></table><p>From row F: 2a = 0.40 mol, so a = 0.20 mol.</p><p>Add water after dissociation to 2.00 L: preserve ion amounts from F, then use n×(1/V) to obtain mol/L.</p>\[0.20\ \mathrm{mol}\times\frac{1}{2.00\ \mathrm L}=0.1\ \mathrm{mol/L}\]<p>Read moles from F and divide by final volume, leaving mol/L of Sr²⁺.</p>\[0.40\ \mathrm{mol}\times\frac{1}{2.00\ \mathrm L}=0.2\ \mathrm{mol/L}\]<p>Read moles from F and divide by final volume, leaving mol/L of OH⁻.</p><p>\(n(\ce{OH-})=1.0(0.40)=0.40\ \mathrm{mol}\) and \(n(\ce{Sr^2+})=0.40/2=0.20\ \mathrm{mol}\). Adding water leaves both amounts unchanged.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-example-3b">
+<h3>Example 3 (IPST)(b) · Final concentrations</h3>
+<div class="question-prompt"><p>A 0.40 L <span class="chem">Sr(OH)<sub>2</sub></span> solution contains 1.0 mol/L hydroxide. Add water to make a final volume of 2.00 L.</p><p>Find both ion concentrations after dilution.</p></div>
+<div data-sheet-slot="ipst-example-3b" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตัวอย่าง 3 (สสวท.) · ข · ความเข้มข้นใหม่" data-sheet-label-en="Example 3 (IPST)(b) · Final concentrations"><div data-sheet-answer="">\[0.40\ \mathrm L\times\frac{1.0\ \mathrm{mol}}{1\ \mathrm L}=0.400\ \mathrm{mol}\]<p>The L units cancel, leaving mol of OH⁻. Use these units before the table.</p><p>The supplied OH⁻ amount is after dissociation, so it belongs to ion row F; let the starting solute be a mol.</p>\[\ce{Sr(OH)2 -&gt; Sr^2+ + 2OH-}\]<p>Balance the equation. One change unit is a mol; row C follows −1 : +1 : +2.</p><table data-solution-table="icf" data-unit="mol"><caption>ICF · mol</caption><thead><tr><th scope="col">Row (mol)</th><th scope="col">Sr(OH)<sub>2</sub></th><th scope="col">Sr<sup>2+</sup></th><th scope="col">OH<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — Initial</th><td>a</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — Change</strong></th><td><strong>−a</strong></td><td><strong>+a</strong></td><td><strong>+2a</strong></td></tr><tr><th scope="row">F — Final</th><td>0</td><td>a</td><td>2a</td></tr></tbody></table><p>From row F: 2a = 0.40 mol, so a = 0.20 mol.</p><p>Add water after dissociation to 2.00 L: preserve ion amounts from F, then use n×(1/V) to obtain mol/L.</p>\[0.20\ \mathrm{mol}\times\frac{1}{2.00\ \mathrm L}=0.1\ \mathrm{mol/L}\]<p>Read moles from F and divide by final volume, leaving mol/L of Sr²⁺.</p>\[0.40\ \mathrm{mol}\times\frac{1}{2.00\ \mathrm L}=0.2\ \mathrm{mol/L}\]<p>Read moles from F and divide by final volume, leaving mol/L of OH⁻.</p><p>Divide the unchanged amounts by the final 2.00 L: \([\ce{Sr^2+}]=0.20/2.00=0.10\) and \([\ce{OH-}]=0.40/2.00=0.20\ \mathrm{mol/L}\).</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-04">
+<h3 class="practice-label">Repeat practice 04 · Separate moles from concentration during dilution</h3>
+<div class="question-prompt"><p>Dilute 50.0 mL of 0.20 mol/L NaOH to 200.0 mL. Find the moles of OH<sup>−</sup> before and after dilution, and the final [OH<sup>−</sup>].</p></div>
+<div data-sheet-slot="repeat-04" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:27mm" data-sheet-label-th="ฝึกซ้ำ 04 · แยกโมลออกจากความเข้มข้นตอนเจือจาง" data-sheet-label-en="Repeat practice 04 · Separate moles from concentration during dilution"><div data-sheet-answer=""><p>NaOH gives OH<sup>−</sup> in a 1 : 1 ratio, so (0.20 mol/L)(0.0500 L) = 0.010 mol. Dilution preserves these moles.</p><div class="equation">\[[\mathrm{OH^-}]=\frac{0.010\,\mathrm{mol}}{0.2000\,\mathrm L}=0.050\,\mathrm{mol/L}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-example-4">
+<h3>Example 4 (IPST) · Percent from concentration</h3>
+<div class="question-prompt"><p>A 0.5 mol/L HF solution forms 0.02 mol/L hydronium. Find its percent ionization.</p></div>
+<div data-sheet-slot="ipst-example-4" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตัวอย่าง 4 (สสวท.) · ร้อยละจากความเข้มข้น" data-sheet-label-en="Example 4 (IPST) · Percent from concentration"><div data-sheet-answer="">\[\ce{HF + H2O &lt;=&gt; H3O+ + F-}\]<p>Start with zero products from this equilibrium and neglect water ions. Row C follows −1 : +1 : +1. Read row E before using Ka/Kb or finding percentage ionization.</p><table data-solution-table="ice" data-unit="mol/L"><caption>ICE · mol/L</caption><thead><tr><th scope="col">Row (mol/L)</th><th scope="col">HF</th><th scope="col">H<sub>3</sub>O<sup>+</sup></th><th scope="col">F<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — Initial</th><td>0.50</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — Change</strong></th><td><strong>−0.02</strong></td><td><strong>+0.02</strong></td><td><strong>+0.02</strong></td></tr><tr><th scope="row">E — Equilibrium</th><td>0.48</td><td>0.02</td><td>0.02</td></tr></tbody></table><p>HF:H₃O⁺ is 1:1, so \(100(0.02)/0.50=4.0\%\).</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-05">
+<h3 class="practice-label">Repeat practice 05 · Calculate percent ionization from x</h3>
+<div class="question-prompt"><p>A weak acid HA starts at 0.15 mol/L. At equilibrium 0.0030 mol/L has ionized. What percentage ionized?</p></div>
+<div data-sheet-slot="repeat-05" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 05 · หาร้อยละจากปริมาณที่แตกตัว" data-sheet-label-en="Repeat practice 05 · Calculate percent ionization from x"><div data-sheet-answer=""><p>Divide the concentration that ionized by the initial concentration. The mol/L units cancel.</p><div class="equation">\[\frac{0.0030}{0.15}\times100\%=2.0\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-06">
+<h3 class="practice-label">Repeat practice 06 · Work from percentage back to x and Kₐ</h3>
+<div class="question-prompt"><p>HA starts at 0.25 mol/L and is 4.0% ionized. Find x and K<sub>a</sub> using the remaining HA concentration.</p></div>
+<div data-sheet-slot="repeat-06" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 06 · ย้อนจากร้อยละหา x และ Kₐ" data-sheet-label-en="Repeat practice 06 · Work from percentage back to x and Kₐ"><div data-sheet-answer=""><p>x = (4.0/100)(0.25 mol/L) = 0.010 mol/L and equilibrium [HA] = 0.24 mol/L.</p><div class="equation">\[K_a=\frac{(0.010)^2}{0.24}\approx4.2\times10^{-4}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-example-5">
+<h3>Example 5 (IPST) · Using the approximation</h3>
+<div class="question-prompt"><p>Find hydronium in 0.50 mol/L acetic acid with \(K_a=1.80\times10^{-5}\).</p></div>
+<div data-sheet-slot="ipst-example-5" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตัวอย่าง 5 (สสวท.) · ใช้การประมาณ" data-sheet-label-en="Example 5 (IPST) · Using the approximation"><div data-sheet-answer="">\[\ce{CH3COOH + H2O &lt;=&gt; H3O+ + CH3COO-}\]<p>Start with zero products from this equilibrium and neglect water ions. Row C follows −1 : +1 : +1. Read row E before using Ka/Kb or finding percentage ionization.</p><table data-solution-table="ice" data-unit="mol/L"><caption>ICE · mol/L</caption><thead><tr><th scope="col">Row (mol/L)</th><th scope="col">CH<sub>3</sub>COOH</th><th scope="col">H<sub>3</sub>O<sup>+</sup></th><th scope="col">CH<sub>3</sub>COO<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — Initial</th><td>0.50</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — Change</strong></th><td><strong>−x</strong></td><td><strong>+x</strong></td><td><strong>+x</strong></td></tr><tr><th scope="row">E — Equilibrium</th><td>0.50−x</td><td>x</td><td>x</td></tr></tbody></table><p>\(C/K_a\approx27778&gt;1000\), so \(x=\sqrt{K_aC}=0.0030\ \mathrm{mol/L}\). The full equation gives 0.002991 mol/L.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-07">
+<h3 class="practice-label">Repeat practice 07 · Write row E before substituting</h3>
+<div class="question-prompt"><p>NH<sub>3</sub> starts at 0.15 mol/L and x mol/L reacts with water. Write row E for NH<sub>3</sub>, NH<sub>4</sub><sup>+</sup> and OH<sup>−</sup>, then write K<sub>b</sub>.</p></div>
+<div data-sheet-slot="repeat-07" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 07 · เขียนแถว E ก่อนแทนค่า" data-sheet-label-en="Repeat practice 07 · Write row E before substituting"><div data-sheet-answer=""><div class="equation">\[\ce{NH3 + H2O &lt;=&gt; NH4+ + OH-}\]</div><p>Row C is −x, +x, +x, giving 0.15 − x, x, x in row E, respectively.</p><div class="equation">\[K_b=\frac{x^2}{0.15-x}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-08">
+<h3 class="practice-label">Repeat practice 08 · A case where the approximation applies</h3>
+<div class="question-prompt"><p>For 0.16 mol/L HA with K<sub>a</sub> = \(2.5\times10^{-5}\), check the criterion and find [H<sub>3</sub>O<sup>+</sup>].</p></div>
+<div data-sheet-slot="repeat-08" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:26mm" data-sheet-label-th="ฝึกซ้ำ 08 · กรณีที่ใช้การประมาณได้" data-sheet-label-en="Repeat practice 08 · A case where the approximation applies"><div data-sheet-answer=""><p>Row E is 0.16 − x, x, x. Since C<sub>0</sub>/K<sub>a</sub> = 6400, approximate the denominator.</p><div class="equation">\[x\approx\sqrt{(2.5\times10^{-5})(0.16)}=2.0\times10^{-3}\,\mathrm{mol/L}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-09">
+<h3 class="practice-label">Repeat practice 09 · A case requiring the full equation</h3>
+<div class="question-prompt"><p>For 0.0020 mol/L HA with K<sub>a</sub> = \(5.0\times10^{-5}\), use row E to find [H<sub>3</sub>O<sup>+</sup>] and explain the choice of root.</p></div>
+<div data-sheet-slot="repeat-09" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:32mm" data-sheet-label-th="ฝึกซ้ำ 09 · กรณีที่ใช้สมการเต็ม" data-sheet-label-en="Repeat practice 09 · A case requiring the full equation"><div data-sheet-answer=""><p>C<sub>0</sub>/K<sub>a</sub> = 40. Keep 0.0020 − x in the denominator.</p><div class="equation">\[5.0\times10^{-5}=\frac{x^2}{0.0020-x}\]</div><div class="equation">\[x^2+5.0\times10^{-5}x-1.0\times10^{-7}=0\]</div><p>Choose the positive root below the initial concentration, giving x ≈ \(2.9\times10^{-4}\,\mathrm{mol/L}\).</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-example-6">
+<h3>Example 6 (IPST) · Ammonia</h3>
+<div class="question-prompt"><p>Find the percent ionization of 0.20 mol/L ammonia.</p><p>At 25 °C, use \(K_b=1.80\times10^{-5}\)</p></div>
+<div data-sheet-slot="ipst-example-6" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตัวอย่าง 6 (สสวท.) · แอมโมเนีย" data-sheet-label-en="Example 6 (IPST) · Ammonia"><div data-sheet-answer="">\[\ce{NH3 + H2O &lt;=&gt; NH4+ + OH-}\]<p>Start with zero products from this equilibrium and neglect water ions. Row C follows −1 : +1 : +1. Read row E before using Ka/Kb or finding percentage ionization.</p><table data-solution-table="ice" data-unit="mol/L"><caption>ICE · mol/L</caption><thead><tr><th scope="col">Row (mol/L)</th><th scope="col">NH<sub>3</sub></th><th scope="col">NH<sub>4</sub><sup>+</sup></th><th scope="col">OH<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — Initial</th><td>0.20</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — Change</strong></th><td><strong>−x</strong></td><td><strong>+x</strong></td><td><strong>+x</strong></td></tr><tr><th scope="row">E — Equilibrium</th><td>0.20−x</td><td>x</td><td>x</td></tr></tbody></table><p>\(C/K_b\approx11111&gt;1000;\quad x\approx1.89737\times10^{-3}\ \mathrm{mol/L}\). Thus \(100x/C=0.94868\%\approx0.95\%\).</p></div></div>
+</div>
+</section>
+<section class="lesson-section" data-guide-anchor="problem-understanding">
+<h2>Textbook understanding questions</h2>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-ph-order">
+<h3>IPST understanding · pH order</h3>
+<div class="question-prompt"><figure data-print-keep><img src="assets/10-3-review/p14-conductivity.png" width="1048" height="391" alt="Book Figure 10.1 · All four solutions have equal initial concentrations"><figcaption>Book Figure 10.1 · All four solutions have equal initial concentrations</figcaption></figure><p>Order the four solutions by increasing pH without calculating pH.</p></div>
+<div data-sheet-slot="ipst-ph-order" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:23mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · ลำดับ pH" data-sheet-label-en="IPST understanding · pH order"><div data-sheet-answer="">\(\mathrm{HCl}&lt;\mathrm{CH_3COOH}&lt;\mathrm{NH_3}&lt;\mathrm{NaOH}\)<p>At 25 °C, acidic solutions have pH below 7 and basic solutions have pH above 7. At equal concentration, greater acid ionization lowers pH, while greater hydroxide formation raises pH.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-barium-bars">
+<h3>IPST understanding · Bar chart</h3>
+<div class="question-prompt"><figure data-print-keep><img src="assets/10-3-review/p15-complete-ionization.png" width="407" height="612" alt="Book Figure 10.2 · Example of using the same concentration scale"><figcaption>Book Figure 10.2 · Example of using the same concentration scale</figcaption></figure><p>Show the before-and-after concentration bars for 1.0 mol/L <span class="chem">Ba(OH)<sub>2</sub></span>, as for a strong acid, and check their height ratio.</p></div>
+<div data-sheet-slot="ipst-barium-bars" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:62mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · แผนภูมิแท่ง" data-sheet-label-en="IPST understanding · Bar chart"><div data-sheet-answer=""><figure data-print-keep=""><img alt="Initial solute and final ions use the same concentration scale." height="350" src="assets/10-3/barium-bars.svg" width="900"><figcaption>Initial solute and final ions use the same concentration scale.</figcaption></figure><p>Use 1.0 mol/L as the initial concentration. After dissociation, undissociated solute is approximately zero, barium is 1.0 mol/L and hydroxide is 2.0 mol/L, so the hydroxide bar is twice as high.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-hi-moles">
+<h3>IPST understanding · HI</h3>
+<div class="question-prompt"><p>A 500 mL HI solution contains 0.2 mol/L iodide. How many moles of hydronium are present?</p></div>
+<div data-sheet-slot="ipst-hi-moles" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · HI" data-sheet-label-en="IPST understanding · HI"><div data-sheet-answer=""><div class="equation">\[\ce{HI(aq) + H2O(l) -&gt; H3O+(aq) + I-(aq)}\]</div><p>The two ions are formed in equal amounts.</p><div class="equation">\[n(\ce{H3O+})=(0.2)(0.500)=0.1\ \mathrm{mol}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-koh-mass">
+<h3>IPST understanding · KOH</h3>
+<div class="question-prompt"><p>What mass of KOH makes 250.00 mL of solution with 0.50 mol/L hydroxide? Use M(KOH) = 56.11 g/mol.</p></div>
+<div data-sheet-slot="ipst-koh-mass" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · KOH" data-sheet-label-en="IPST understanding · KOH"><div data-sheet-answer=""><div class="equation">\[\ce{KOH(aq) -&gt; K+(aq) + OH-(aq)}\]</div><div class="equation">\[n(\ce{OH-})=(0.50)(0.25000)=0.125\ \mathrm{mol}\]</div><p>The 1 : 1 ratio requires 0.125 mol KOH.</p><div class="equation">\[m=(0.125)(56.11)=7.01375\approx7.0\ \mathrm{g}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-sulfuric">
+<h3>IPST understanding · H2SO4</h3>
+<div class="question-prompt"><p>Does 1 mol/L sulfuric acid have 2 mol/L hydronium at equilibrium? Explain.</p></div>
+<div data-sheet-slot="ipst-sulfuric" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:20mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · H2SO4" data-sheet-label-en="IPST understanding · H2SO4"><div data-sheet-answer="">No. The first step gives approximately 1 mol/L hydronium, while the second step is partial. In this chapter’s concentration model, the result is greater than 1 but less than 2 mol/L.</div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-10">
+<h3 class="practice-label">Repeat practice 10 · Choose the arrow for each step</h3>
+<div class="question-prompt"><p>Write the two ionization steps of H<sub>2</sub>SO<sub>4</sub> in water. In which row does the hydronium from step one appear for step two?</p></div>
+<div data-sheet-slot="repeat-10" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 10 · เลือกชนิดลูกศรทีละขั้น" data-sheet-label-en="Repeat practice 10 · Choose the arrow for each step"><div data-sheet-answer=""><div class="equation">\[\ce{H2SO4 + H2O -&gt; H3O+ + HSO4-}\]</div><div class="equation">\[\ce{HSO4- + H2O &lt;=&gt; H3O+ + SO4^2-}\]</div><p>Hydronium from step one is already present at the start of step two, so enter it in row I of ICE.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-quadratic">
+<h3>IPST understanding · HA</h3>
+<div class="question-prompt"><p>Find hydronium in \(1.00\times10^{-3}\) mol/L HA with \(K_a=1.00\times10^{-5}\). Check the approximation and select the physical root.</p></div>
+<div data-sheet-slot="ipst-quadratic" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · HA" data-sheet-label-en="IPST understanding · HA"><div data-sheet-answer=""><p>\(C/K_a=100\) fails the &gt;1000 criterion.</p><div class="equation">\[1.00\times10^{-5}=\frac{x^2}{1.00\times10^{-3}-x}\]</div><div class="equation">\[x^2+(1.00\times10^{-5})x-1.00\times10^{-8}=0\]</div><div class="equation">\[x=\frac{-1.00\times10^{-5}+\sqrt{(1.00\times10^{-5})^2+4.00\times10^{-8}}}{2}\]</div><p>The roots are \(9.51249\times10^{-5}\) and \(-1.051249\times10^{-4}\) mol/L. Select the positive root: hydronium is \(9.51\times10^{-5}\) mol/L.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-compare-ha">
+<h3>IPST understanding · (a) HA</h3>
+<div class="question-prompt"><p>HA is 0.20 mol/L and 10% ionized; HB is 0.020 mol/L and 20% ionized. Is HB stronger? Find the following quantities to support your answer.</p><p>Find \(K_a\) for HA.</p></div>
+<div data-sheet-slot="ipst-compare-ha" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · ก · HA" data-sheet-label-en="IPST understanding · (a) HA"><div data-sheet-answer=""><div class="equation">\[x=(0.20)(10/100)=0.020\ \mathrm{mol/L}\]</div><div class="equation">\[K_a(\ce{HA})=\frac{(0.020)^2}{0.20-0.020}=2.2\times10^{-3}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-compare-hb">
+<h3>IPST understanding · (b) HB</h3>
+<div class="question-prompt"><p>HA is 0.20 mol/L and 10% ionized; HB is 0.020 mol/L and 20% ionized. Is HB stronger? Find the following quantities to support your answer.</p><p>Find \(K_a\) for HB.</p></div>
+<div data-sheet-slot="ipst-compare-hb" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · ข · HB" data-sheet-label-en="IPST understanding · (b) HB"><div data-sheet-answer=""><div class="equation">\[x=(0.020)(20/100)=0.0040\ \mathrm{mol/L}\]</div><div class="equation">\[K_a(\ce{HB})=\frac{(0.0040)^2}{0.020-0.0040}=1.0\times10^{-3}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-compare-conclusion">
+<h3>IPST understanding · (c) Conclusion</h3>
+<div class="question-prompt"><p>HA is 0.20 mol/L and 10% ionized; HB is 0.020 mol/L and 20% ionized. Is HB stronger? Find the following quantities to support your answer.</p><p>Is HB stronger than HA? Explain.</p></div>
+<div data-sheet-slot="ipst-compare-conclusion" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:18mm" data-sheet-label-th="ตรวจสอบความเข้าใจ · ค · ข้อสรุป" data-sheet-label-en="IPST understanding · (c) Conclusion"><div data-sheet-answer="">No. HA has the larger \(K_a\) and is stronger. Percentages alone cannot establish strength when initial concentrations differ.</div></div>
+</div>
+</section>
+<section class="lesson-section" data-guide-anchor="problem-activity">
+<h2>Activity 10.1 Percent ionization</h2>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-1-ethylamine">
+<h3>Activity 10.1 · Part 1 · Ethylamine</h3>
+<div class="question-prompt"><p>Calculate percent ionization of 0.50 mol/L <span class="chem">C<sub>2</sub>H<sub>5</sub>NH<sub>2</sub></span>.</p><p>At 25 °C, use \(K_b=4.47\times10^{-4}\)</p></div>
+<div data-sheet-slot="activity-1-ethylamine" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 1 · เอทิลเอมีน" data-sheet-label-en="Activity 10.1 · Part 1 · Ethylamine"><div data-sheet-answer=""><div class="equation">\[\ce{C2H5NH2(aq) + H2O(l) &lt;=&gt; C2H5NH3+(aq) + OH-(aq)}\]</div><p>At equilibrium the base is 0.50−x and each product ion is x mol/L.</p><div class="equation">\[4.47\times10^{-4}=\frac{x^2}{0.50-x}\]</div><p>\(C/K_b=1.12\times10^3&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(4.47\times10^{-4})(0.50)}=1.495\times10^{-2}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{ ionization}\approx\frac{1.495\times10^{-2}}{0.50}\times100=3.0\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-1-ammonia">
+<h3>Activity 10.1 · Part 1 · Ammonia</h3>
+<div class="question-prompt"><p>Calculate percent ionization of 0.50 mol/L <span class="chem">NH<sub>3</sub></span>.</p><p>At 25 °C, use \(K_b=1.80\times10^{-5}\)</p></div>
+<div data-sheet-slot="activity-1-ammonia" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 1 · แอมโมเนีย" data-sheet-label-en="Activity 10.1 · Part 1 · Ammonia"><div data-sheet-answer=""><div class="equation">\[\ce{NH3(aq) + H2O(l) &lt;=&gt; NH4+(aq) + OH-(aq)}\]</div><p>At equilibrium the base is 0.50−x and each product ion is x mol/L.</p><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{0.50-x}\]</div><p>\(C/K_b=2.78\times10^4&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(1.80\times10^{-5})(0.50)}=3.00\times10^{-3}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{ ionization}\approx\frac{3.00\times10^{-3}}{0.50}\times100=0.60\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-1-aniline">
+<h3>Activity 10.1 · Part 1 · Phenylamine</h3>
+<div class="question-prompt"><p>Calculate percent ionization of 0.50 mol/L <span class="chem">C<sub>6</sub>H<sub>5</sub>NH<sub>2</sub></span>.</p><p>At 25 °C, use \(K_b=7.41\times10^{-10}\)</p></div>
+<div data-sheet-slot="activity-1-aniline" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 1 · ฟีนิลเอมีน" data-sheet-label-en="Activity 10.1 · Part 1 · Phenylamine"><div data-sheet-answer=""><div class="equation">\[\ce{C6H5NH2(aq) + H2O(l) &lt;=&gt; C6H5NH3+(aq) + OH-(aq)}\]</div><p>At equilibrium the base is 0.50−x and each product ion is x mol/L.</p><div class="equation">\[7.41\times10^{-10}=\frac{x^2}{0.50-x}\]</div><p>\(C/K_b=6.75\times10^8&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(7.41\times10^{-10})(0.50)}=1.925\times10^{-5}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{ ionization}\approx\frac{1.925\times10^{-5}}{0.50}\times100=3.8\times10^{-3}\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-1-compare">
+<h3>Activity 10.1 · Part 1 · Compare</h3>
+<div class="question-prompt"><p>Rank the three bases by decreasing percent ionization.</p></div>
+<div data-sheet-slot="activity-1-compare" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:18mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 1 · เปรียบเทียบ" data-sheet-label-en="Activity 10.1 · Part 1 · Compare"><div data-sheet-answer="">\(\ce{C2H5NH2}&gt;\ce{NH3}&gt;\ce{C6H5NH2}\)<p>Approximately 3.0%, 0.60% and \(3.8\times10^{-3}\%\), respectively.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-2-0050">
+<h3>Activity 10.1 · Part 2 · 0.050 mol/L</h3>
+<div class="question-prompt"><p>Use the same acetic acid at 25 °C with \(K_a=1.80\times10^{-5}\)</p><p>Find the percent ionization at 0.050 mol/L.</p></div>
+<div data-sheet-slot="activity-2-0050" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 2 · 0.050 mol/L" data-sheet-label-en="Activity 10.1 · Part 2 · 0.050 mol/L"><div data-sheet-answer=""><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{0.050-x}\]</div><p>\(C/K_a=2.78\times10^3&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(1.80\times10^{-5})(0.050)}=9.487\times10^{-4}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{ ionization}\approx\frac{9.487\times10^{-4}}{0.050}\times100\approx1.9\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-2-010">
+<h3>Activity 10.1 · Part 2 · 0.10 mol/L</h3>
+<div class="question-prompt"><p>Use the same acetic acid at 25 °C with \(K_a=1.80\times10^{-5}\)</p><p>Find the percent ionization at 0.10 mol/L.</p></div>
+<div data-sheet-slot="activity-2-010" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 2 · 0.10 mol/L" data-sheet-label-en="Activity 10.1 · Part 2 · 0.10 mol/L"><div data-sheet-answer=""><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{0.10-x}\]</div><p>\(C/K_a=5.56\times10^3&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(1.80\times10^{-5})(0.10)}=1.342\times10^{-3}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{ ionization}\approx\frac{1.342\times10^{-3}}{0.10}\times100\approx1.3\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-2-050">
+<h3>Activity 10.1 · Part 2 · 0.50 mol/L</h3>
+<div class="question-prompt"><p>Use the same acetic acid at 25 °C with \(K_a=1.80\times10^{-5}\)</p><p>Find the percent ionization at 0.50 mol/L.</p></div>
+<div data-sheet-slot="activity-2-050" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 2 · 0.50 mol/L" data-sheet-label-en="Activity 10.1 · Part 2 · 0.50 mol/L"><div data-sheet-answer=""><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{0.50-x}\]</div><p>\(C/K_a=2.78\times10^4&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(1.80\times10^{-5})(0.50)}=3.00\times10^{-3}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{ ionization}\approx\frac{3.00\times10^{-3}}{0.50}\times100\approx0.60\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-2-100">
+<h3>Activity 10.1 · Part 2 · 1.0 mol/L</h3>
+<div class="question-prompt"><p>Use the same acetic acid at 25 °C with \(K_a=1.80\times10^{-5}\)</p><p>Find the percent ionization at 1.0 mol/L.</p></div>
+<div data-sheet-slot="activity-2-100" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 2 · 1.0 mol/L" data-sheet-label-en="Activity 10.1 · Part 2 · 1.0 mol/L"><div data-sheet-answer=""><div class="equation">\[1.80\times10^{-5}=\frac{x^2}{1.0-x}\]</div><p>\(C/K_a=5.56\times10^4&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(1.80\times10^{-5})(1.0)}=4.243\times10^{-3}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{ ionization}\approx\frac{4.243\times10^{-3}}{1.0}\times100\approx0.42\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-2-graph">
+<h3>Activity 10.1 · Part 2 · Q2</h3>
+<div class="question-prompt"><p>Use the same acetic acid at 25 °C with \(K_a=1.80\times10^{-5}\)</p><p>Show the graph of percent ionization against the four concentrations. Identify the axes and trend. Use the prepared solution graph to compare your results.</p><p>Use the results for 0.050, 0.10, 0.50 and 1.0 mol/L.</p></div>
+<div data-sheet-slot="activity-2-graph" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:69mm" data-sheet-label-th="กิจกรรม 10.1 · ตอนที่ 2 · ข้อ 2" data-sheet-label-en="Activity 10.1 · Part 2 · Q2"><div data-sheet-answer=""><figure data-print-keep=""><img alt="Calculated using \(x\approx\sqrt{K_aC}\) and \(K_a=1.80\times10^{-5}\). The four points are the activity concentrations." height="480" src="assets/10-3/dilution-graph.svg" width="900"><figcaption>Calculated using \(x\approx\sqrt{K_aC}\) and \(K_a=1.80\times10^{-5}\). The four points are the activity concentrations.</figcaption></figure><p>Horizontal axis: initial concentration in mol/L. Vertical axis: percent ionization. Percent ionization falls as initial concentration rises. The prepared graph can be used for discussion.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-end-1">
+<h3>Activity 10.1 questions · Q1</h3>
+<div class="question-prompt"><p>Does percent ionization of the bases follow the same trend as \(K_b\)? Explain.</p></div>
+<div data-sheet-slot="activity-end-1" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:19mm" data-sheet-label-th="คำถามท้ายกิจกรรม 10.1 · ข้อ 1" data-sheet-label-en="Activity 10.1 questions · Q1"><div data-sheet-answer="">Yes, when concentration and temperature are the same. A larger \(K_b\) gives a higher percent ionization: ethylamine &gt; ammonia &gt; phenylamine.</div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="activity-end-2">
+<h3>Activity 10.1 questions · Q2</h3>
+<div class="question-prompt"><p>Does the acid’s percent ionization depend on its concentration? Explain.</p></div>
+<div data-sheet-slot="activity-end-2" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:19mm" data-sheet-label-th="คำถามท้ายกิจกรรม 10.1 · ข้อ 2" data-sheet-label-en="Activity 10.1 questions · Q2"><div data-sheet-answer="">Yes. For the same acetic acid at fixed temperature, lowering initial concentration increases percent ionization, while \(K_a\) remains unchanged.</div></div>
+</div>
+</section>
+<section class="lesson-section" data-guide-anchor="problem-exercises">
+<h2>Exercise 10.3</h2>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-1">
+<h3>IPST Exercise 10.3 · Q1</h3>
+<div class="question-prompt"><p>What mass of <span class="chem">Ba(OH)<sub>2</sub></span> makes 100.0 mL of solution with 1.0 mol/L hydroxide? Use molar mass 171.35 g/mol.</p></div>
+<div data-sheet-slot="ipst-exercise-1" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 1" data-sheet-label-en="IPST Exercise 10.3 · Q1"><div data-sheet-answer="">\[100.0\ \mathrm{mL}\times\frac{1\ \mathrm L}{1000\ \mathrm{mL}}\times\frac{1.0\ \mathrm{mol}}{1\ \mathrm L}=0.10\ \mathrm{mol}\]<p>Cancel mL, then L, leaving mol of OH⁻. Put the converted data into the table.</p><p>The supplied OH⁻ amount is after dissociation, so it belongs to ion row F; let the starting solute be a mol.</p>\[\ce{Ba(OH)2 -&gt; Ba^2+ + 2OH-}\]<p>Balance the equation. One change unit is a mol; row C follows −1 : +1 : +2.</p><table data-solution-table="icf" data-unit="mol"><caption>ICF · mol</caption><thead><tr><th scope="col">Row (mol)</th><th scope="col">Ba(OH)<sub>2</sub></th><th scope="col">Ba<sup>2+</sup></th><th scope="col">OH<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — Initial</th><td>a</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — Change</strong></th><td><strong>−a</strong></td><td><strong>+a</strong></td><td><strong>+2a</strong></td></tr><tr><th scope="row">F — Final</th><td>0</td><td>a</td><td>2a</td></tr></tbody></table><p>From row F: 2a = 0.100 mol, so a = 0.050 mol.</p>\[0.0500\ \mathrm{mol}\times\frac{171.35\ \mathrm g}{1\ \mathrm{mol}}=8.567500\ \mathrm g\]<p>Use moles of the actual solid. Multiply by molar mass; mol cancels, leaving g.</p><p>\(n(\ce{OH-})=1.0(0.1000)=0.100\ \mathrm{mol}\). This needs 0.0500 mol Ba(OH)₂: \(m=0.0500(171.35)=8.5675\ \mathrm{g}\), approximately 8.57 g.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-2">
+<h3>IPST Exercise 10.3 · Q2</h3>
+<div class="question-prompt"><p><span class="chem">H<sub>2</sub>SO<sub>3</sub></span> has \(K_{a1}=1.41\times10^{-2}\) and \(K_{a2}=6.31\times10^{-8}\). Compare the ion concentrations in its solution.</p></div>
+<div data-sheet-slot="ipst-exercise-2" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:24mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 2" data-sheet-label-en="IPST Exercise 10.3 · Q2"><div data-sheet-answer=""><div class="equation">\[\ce{H2SO3(aq) + H2O(l) &lt;=&gt; H3O+(aq) + HSO3-(aq)}\]</div><div class="equation">\[\ce{HSO3-(aq) + H2O(l) &lt;=&gt; H3O+(aq) + SO3^2-(aq)}\]</div><p>The first step is much more extensive than the second. Both steps form hydronium, while the second consumes some hydrogen sulfite. Thus:</p><div class="equation">\[[\ce{H3O+}]&gt;[\ce{HSO3-}]&gt;[\ce{SO3^2-}]\]</div><p>This compares the acid-derived ions; water supplies only a tiny hydroxide concentration in this acidic solution.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-3">
+<h3>IPST Exercise 10.3 · Q3</h3>
+<div class="question-prompt"><p>Equal-concentration, equal-volume solutions of <span class="chem">HNO<sub>2</sub></span> and HF are compared. Which has the larger hydronium concentration, and why?</p><p>At 25 °C, use \(K_a(\ce{HNO2})=5.62\times10^{-4},\;K_a(\ce{HF})=6.31\times10^{-4}\)</p></div>
+<div data-sheet-slot="ipst-exercise-3" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:20mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 3" data-sheet-label-en="IPST Exercise 10.3 · Q3"><div data-sheet-answer="">HF. Its \(K_a\) is \(6.31\times10^{-4}\), larger than \(5.62\times10^{-4}\) for nitrous acid, so it ionizes more at the same initial concentration.</div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-4">
+<h3>IPST Exercise 10.3 · Q4</h3>
+<div class="question-prompt"><p>NaX supplies an equal molar amount of X−, which reacts by \(\ce{X-(aq) + H2O(l) &lt;=&gt; HX(aq) + OH-(aq)}\). Given \(K_b=1.0\times10^{-4}\), find hydroxide in 2.0 mol/L NaX.</p></div>
+<div data-sheet-slot="ipst-exercise-4" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 4" data-sheet-label-en="IPST Exercise 10.3 · Q4"><div data-sheet-answer="">\[\ce{NaX -&gt; Na+ + X-}\]<p>Balance the equation. One change unit is 2.0 mol/L; row C follows −1 : +1 : +1.</p><table data-solution-table="icf" data-unit="mol/L"><caption>ICF · mol/L</caption><thead><tr><th scope="col">Row (mol/L)</th><th scope="col">NaX</th><th scope="col">Na<sup>+</sup></th><th scope="col">X<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — Initial</th><td>2.0</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — Change</strong></th><td><strong>−2.0</strong></td><td><strong>+2.0</strong></td><td><strong>+2.0</strong></td></tr><tr><th scope="row">F — Final</th><td>0</td><td>2.0</td><td>2.0</td></tr></tbody></table><p>NaX row F supplies [X⁻] = 2.0 mol/L. Use this in ICE row I before applying Kb.</p>\[\ce{X- + H2O &lt;=&gt; HX + OH-}\]<p>Start with zero products from this equilibrium and neglect water ions. Row C follows −1 : +1 : +1. Read row E before using Ka/Kb or finding percentage ionization.</p><table data-solution-table="ice" data-unit="mol/L"><caption>ICE · mol/L</caption><thead><tr><th scope="col">Row (mol/L)</th><th scope="col">X<sup>−</sup></th><th scope="col">HX</th><th scope="col">OH<sup>−</sup></th></tr></thead><tbody><tr><th scope="row">I — Initial</th><td>2.0</td><td>0</td><td>0</td></tr><tr><th scope="row"><strong>C — Change</strong></th><td><strong>−x</strong></td><td><strong>+x</strong></td><td><strong>+x</strong></td></tr><tr><th scope="row">E — Equilibrium</th><td>2.0−x</td><td>x</td><td>x</td></tr></tbody></table><p>\(\ce{X- + H2O &lt;=&gt; HX + OH-}\). Initial [X⁻] = 2.0 and C/Kb = 20000, so \(x\approx0.01414\ \mathrm{mol/L}\). The full equation gives 0.01409 mol/L. Use the stated Kb = 10⁻⁴.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-11">
+<h3 class="practice-label">Repeat practice 11 · Transfer the value from ICF to ICE</h3>
+<div class="question-prompt"><p>A 0.35 mol/L solution of NaX gives X<sup>−</sup>, a weak base. Write the two equations and identify [X<sup>−</sup>] in row I of ICE.</p></div>
+<div data-sheet-slot="repeat-11" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:22mm" data-sheet-label-th="ฝึกซ้ำ 11 · ต่อค่าจาก ICF เข้าสู่ ICE" data-sheet-label-en="Repeat practice 11 · Transfer the value from ICF to ICE"><div data-sheet-answer=""><div class="equation">\[\ce{NaX -&gt; Na+ + X-}\]</div><div class="equation">\[\ce{X- + H2O &lt;=&gt; HX + OH-}\]</div><p>NaX gives X<sup>−</sup> in a 1 : 1 ratio. Transfer [X<sup>−</sup>] = 0.35 mol/L from row F of ICF to row I of ICE.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-5a">
+<h3>IPST Exercise 10.3 · Q5(a)</h3>
+<div class="question-prompt"><p>For 0.50 mol/L methylamine, CH<sub>3</sub>NH<sub>2</sub>, at 25 °C, use \(K_b=4.57\times10^{-4}\)</p><p>Find the equilibrium methylammonium concentration.</p></div>
+<div data-sheet-slot="ipst-exercise-5a" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 5 ก" data-sheet-label-en="IPST Exercise 10.3 · Q5(a)"><div data-sheet-answer=""><div class="equation">\[\ce{CH3NH2(aq) + H2O(l) &lt;=&gt; CH3NH3+(aq) + OH-(aq)}\]</div><div class="equation">\[4.57\times10^{-4}=\frac{x^2}{0.50-x}\]</div><p>\(C/K_b=1.094\times10^3&gt;1000\)</p><div class="equation">\[x\approx\sqrt{(4.57\times10^{-4})(0.50)}=1.512\times10^{-2}\ \mathrm{mol/L}\]</div><p>Thus methylammonium is approximately \(1.5\times10^{-2}\) mol/L.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-5b">
+<h3>IPST Exercise 10.3 · Q5(b)</h3>
+<div class="question-prompt"><p>For 0.50 mol/L methylamine, CH<sub>3</sub>NH<sub>2</sub>, at 25 °C, use \(K_b=4.57\times10^{-4}\)</p><p>Find the percent ionization of methylamine.</p></div>
+<div data-sheet-slot="ipst-exercise-5b" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 5 ข" data-sheet-label-en="IPST Exercise 10.3 · Q5(b)"><div data-sheet-answer=""><div class="equation">\[\%\text{ ionization}\approx\frac{1.512\times10^{-2}}{0.50}\times100=3.0\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-6a">
+<h3>IPST Exercise 10.3 · Q6(a)</h3>
+<div class="question-prompt"><p>Benzoic acid, <span class="chem">C<sub>6</sub>H<sub>5</sub>COOH</span>, has \(K_a=5.75\times10^{-5}\). Calculate and compare percent ionization in two solutions.</p><p>Find percent ionization at 0.25 mol/L.</p></div>
+<div data-sheet-slot="ipst-exercise-6a" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 6 ก" data-sheet-label-en="IPST Exercise 10.3 · Q6(a)"><div data-sheet-answer=""><p>\(C/K_a=4.35\times10^3&gt;1000\)</p><div class="equation">\[5.75\times10^{-5}=\frac{x^2}{0.25-x}\]</div><div class="equation">\[x\approx\sqrt{(5.75\times10^{-5})(0.25)}=3.791\times10^{-3}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{ ionization}\approx\frac{3.791\times10^{-3}}{0.25}\times100\approx1.5\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-6b">
+<h3>IPST Exercise 10.3 · Q6(b)</h3>
+<div class="question-prompt"><p>Benzoic acid, <span class="chem">C<sub>6</sub>H<sub>5</sub>COOH</span>, has \(K_a=5.75\times10^{-5}\). Calculate and compare percent ionization in two solutions.</p><p>Find percent ionization at 0.40 mol/L.</p></div>
+<div data-sheet-slot="ipst-exercise-6b" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 6 ข" data-sheet-label-en="IPST Exercise 10.3 · Q6(b)"><div data-sheet-answer=""><p>\(C/K_a=6.96\times10^3&gt;1000\)</p><div class="equation">\[5.75\times10^{-5}=\frac{x^2}{0.40-x}\]</div><div class="equation">\[x\approx\sqrt{(5.75\times10^{-5})(0.40)}=4.796\times10^{-3}\ \mathrm{mol/L}\]</div><div class="equation">\[\%\text{ ionization}\approx\frac{4.796\times10^{-3}}{0.40}\times100\approx1.2\%\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-6c">
+<h3>IPST Exercise 10.3 · Q6(c)</h3>
+<div class="question-prompt"><p>Benzoic acid, <span class="chem">C<sub>6</sub>H<sub>5</sub>COOH</span>, has \(K_a=5.75\times10^{-5}\). Calculate and compare percent ionization in two solutions.</p><p>Which solution has the higher percent ionization?</p></div>
+<div data-sheet-slot="ipst-exercise-6c" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:18mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 6 ค" data-sheet-label-en="IPST Exercise 10.3 · Q6(c)"><div data-sheet-answer="">The 0.25 mol/L solution is about 1.5% ionized, more than the approximately 1.2% for 0.40 mol/L. Both contain the same acid with the same \(K_a\).</div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-7">
+<h3>IPST Exercise 10.3 · Q7</h3>
+<div class="question-prompt"><p>Find \(K_a\) for 0.80 mol/L HA with 0.42% ionization.</p></div>
+<div data-sheet-slot="ipst-exercise-7" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 7" data-sheet-label-en="IPST Exercise 10.3 · Q7"><div data-sheet-answer=""><div class="equation">\[x=0.80\frac{0.42}{100}=0.00336\ \mathrm{mol/L}\]</div><div class="equation">\[[\ce{HA}]=0.80-0.00336=0.79664\ \mathrm{mol/L}\]</div><div class="equation">\[K_a=\frac{(0.00336)^2}{0.79664}=1.417\times10^{-5}\approx1.4\times10^{-5}\]</div><p>Retain intermediate digits and round the final result.</p></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-8a">
+<h3>IPST Exercise 10.3 · Q8(a)</h3>
+<div class="question-prompt"><p>Acid HY at 25 °C has \(K_a=2.0\times10^{-6},\;K_w=1.0\times10^{-14}\)</p><p>Identify the conjugate base of HY.</p></div>
+<div data-sheet-slot="ipst-exercise-8a" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:16mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 8 ก" data-sheet-label-en="IPST Exercise 10.3 · Q8(a)"><div data-sheet-answer=""><span class="chem">Y<sup>-</sup></span>, formed when HY donates one proton.</div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-8b">
+<h3>IPST Exercise 10.3 · Q8(b)</h3>
+<div class="question-prompt"><p>Acid HY at 25 °C has \(K_a=2.0\times10^{-6},\;K_w=1.0\times10^{-14}\)</p><p>Find \(K_b\) for this conjugate base.</p></div>
+<div data-sheet-slot="ipst-exercise-8b" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 8 ข" data-sheet-label-en="IPST Exercise 10.3 · Q8(b)"><div data-sheet-answer=""><div class="equation">\[K_b=\frac{1.0\times10^{-14}}{2.0\times10^{-6}}=5.0\times10^{-9}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="ipst-exercise-9">
+<h3>IPST Exercise 10.3 · Q9</h3>
+<div class="question-prompt"><p>A weak base has \(K_b=5.0\times10^{-10}\). Find the \(K_a\) of its conjugate acid at 25 °C.</p></div>
+<div data-sheet-slot="ipst-exercise-9" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:28mm" data-sheet-label-th="แบบฝึกหัด 10.3 · ข้อ 9" data-sheet-label-en="IPST Exercise 10.3 · Q9"><div data-sheet-answer=""><div class="equation">\[K_a=\frac{1.0\times10^{-14}}{5.0\times10^{-10}}=2.0\times10^{-5}\]</div></div></div>
+</div>
+<div class="question-item problem-question" data-print-keep="" data-problem-key="repeat-12">
+<h3 class="practice-label">Repeat practice 12 · Recall formulas and equations from names</h3>
+<div class="question-prompt"><p>Write the formulas and aqueous equations for hydrobromic acid, hydrofluoric acid, barium hydroxide and ammonia. Choose the arrows and identify the ion indicating acidity or basicity in each equation.</p></div>
+<div data-sheet-slot="repeat-12" data-sheet-layout="block" data-sheet-size="medium" style="--sheet-print-height:42mm" data-sheet-label-th="ฝึกซ้ำ 12 · จำสารแล้วเขียนสมการจากชื่อ" data-sheet-label-en="Repeat practice 12 · Recall formulas and equations from names"><div data-sheet-answer=""><div class="equation">\[\ce{HBr + H2O -&gt; H3O+ + Br-}\]</div><div class="equation">\[\ce{HF + H2O &lt;=&gt; H3O+ + F-}\]</div><div class="equation">\[\ce{Ba(OH)2 -&gt; Ba^2+ + 2OH-}\]</div><div class="equation">\[\ce{NH3 + H2O &lt;=&gt; NH4+ + OH-}\]</div><p>Both acids produce H<sub>3</sub>O<sup>+</sup>, and both bases give OH<sup>−</sup>. HBr and the dissolved portion of Ba(OH)<sub>2</sub> ionize or dissociate completely. HF and NH<sub>3</sub> use equilibrium arrows.</p></div></div>
+</div>
+</section>
+<footer class="source-note">Textbook questions are from IPST Chemistry, Grade 11, Volume 4, section 10.3, pp. 14–30. Repeat practice items were written for this sheet.</footer>
+</div></main>
 </body>
 </html>

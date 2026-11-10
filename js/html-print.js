@@ -49,7 +49,18 @@ export const htmlPrintCSS = `
   @media print { body.hub-print-document { width:auto !important; } }
 `;
 
-export function buildHtmlPrintSnapshot(source, title) {
+function sheetPrintZones(root) {
+  if (!root?.hasAttribute('data-learning-sheet')) return [];
+  const content = root.querySelector('[data-content-lang]:not([hidden])') || root.querySelector('body');
+  const zones = [...(content?.querySelectorAll('[data-print-zone]') || [])];
+  if (zones.length !== 2 || zones[0].parentElement !== zones[1].parentElement
+    || zones.some(zone => !zone.firstElementChild)
+    || !zones.some(zone => zone.dataset.printZone === 'learning')
+    || !zones.some(zone => zone.dataset.printZone === 'problem')) return [];
+  return zones;
+}
+
+export function buildHtmlPrintSnapshot(source, title, zone = 'learning') {
   if (!source?.documentElement.hasAttribute('data-learning-html')) throw Error('Not a reading document');
   const clone = source.documentElement.cloneNode(true);
   const originals = source.querySelectorAll('*');
@@ -66,6 +77,11 @@ export function buildHtmlPrintSnapshot(source, title) {
   clone.querySelectorAll('script, iframe, object, embed, form, button, input, textarea, select, base, template, [data-no-print], .no-print, [data-hub-html], [data-hub-math-notice], meta[http-equiv]').forEach(node => node.remove());
   // Print only the chosen language; do not paginate the hidden translation.
   clone.querySelectorAll('[data-content-lang][hidden]').forEach(node => node.remove());
+  const zones = sheetPrintZones(clone);
+  if (zones.length) {
+    const selected = zone === 'problem' ? 'problem' : 'learning';
+    zones.find(node => node.dataset.printZone !== selected).remove();
+  }
   resetLearningSheetSnapshot(clone);
   clone.querySelectorAll('link:not([rel="stylesheet"])').forEach(node => node.remove());
   for (const node of [clone, ...clone.querySelectorAll('*')]) {
@@ -146,13 +162,29 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
   const preview = dialog.querySelector('iframe');
   const rebuildButton = dialog.querySelector('[data-print-rebuild]');
   const inputs = {};
-  let snapshot = '', revision = 0;
+  const snapshots = new Map();
+  let sourceDocument, revision = 0;
   const titleSession = createPrintTitleSession(window);
   let defaultFilename = '';
   const filenameHint = document.createElement('p'); filenameHint.dataset.printFilename = '';
   dialog.querySelector('.html-print-help').after(filenameHint);
   const isSheet = frame.contentDocument?.documentElement.hasAttribute('data-learning-sheet');
-  let editionSelect = null;
+  const hasZones = sheetPrintZones(frame.contentDocument?.documentElement).length > 0;
+  const zoneOptions = [
+    ['learning', 'Learning — ส่วนเล่าเรื่อง', 'Learning — lesson notes'],
+    ['problem', 'Problem — โจทย์และแบบฝึกหัด', 'Problem — questions and practice'],
+  ];
+  let editionSelect = null, zoneSelect = null;
+  if (hasZones) {
+    const field = document.createElement('label'); field.className = 'html-print-edition';
+    field.textContent = label('ส่วนที่จะพิมพ์', 'Section to print');
+    zoneSelect = document.createElement('select'); zoneSelect.dataset.sheetPrintZoneSelect = ''; zoneSelect.disabled = true;
+    for (const [value, th, english] of zoneOptions) {
+      const option = document.createElement('option'); option.value = value; option.textContent = label(th, english); zoneSelect.append(option);
+    }
+    field.append(zoneSelect); dialog.querySelector('.html-print-metadata').before(field);
+    zoneSelect.addEventListener('change', () => { if (sourceDocument) void buildPages(); });
+  }
   if (isSheet) {
     const field = document.createElement('label'); field.className = 'html-print-edition';
     field.textContent = label('ฉบับที่ต้องการพิมพ์', 'Print edition');
@@ -161,7 +193,7 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
       const option = document.createElement('option'); option.value = value; option.textContent = label(th, english); editionSelect.append(option);
     }
     field.append(editionSelect); dialog.querySelector('.html-print-metadata').before(field);
-    editionSelect.addEventListener('change', () => { if (snapshot) void buildPages(); });
+    editionSelect.addEventListener('change', () => { if (sourceDocument) void buildPages(); });
   }
   dialog.querySelector('summary').textContent = label('ตั้งค่าหน้าพิมพ์และชื่อบนหัว–ท้าย (เฉพาะครั้งนี้)', 'Page layout and labels (this print only)');
   rebuildButton.textContent = label('จัดหน้าใหม่', 'Update pages');
@@ -236,10 +268,16 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
     dialog.dataset.printState = 'loading'; printButton.disabled = true; rebuildButton.disabled = true;
     preview.style.visibility = 'hidden';
     if (editionSelect) editionSelect.disabled = true;
+    if (zoneSelect) zoneSelect.disabled = true;
     profileSelect.disabled = true;
     Object.values(inputs).forEach(input => { input.disabled = true; });
     status.textContent = label('กำลังตรวจรูป สมการ และจัดหน้า A4…', 'Checking resources and arranging A4 pages…');
     try {
+      const zone = zoneSelect?.value || '';
+      if (!snapshots.has(zone)) {
+        if (!frame.isConnected || frame.contentDocument !== sourceDocument) throw Error('Reading document changed');
+        snapshots.set(zone, buildHtmlPrintSnapshot(sourceDocument, title, zone));
+      }
       const loaded = new Promise(resolve => {
         const onLoad = () => {
           if (!preview.contentDocument?.documentElement.hasAttribute('data-hub-print-snapshot')) return;
@@ -247,7 +285,7 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
         };
         preview.addEventListener('load', onLoad);
       });
-      preview.srcdoc = snapshot;
+      preview.srcdoc = snapshots.get(zone);
       await withTimeout(loaded);
       if (!alive() || token !== revision) return;
       await waitForPrintResources(preview.contentDocument);
@@ -255,7 +293,7 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
       if (isSheet) prepareLearningSheetPrint(preview.contentDocument, editionSelect.value);
       const labels = Object.fromEntries(Object.entries(inputs).map(([key, input]) => [key, input.value]));
       const result = paginatePrintDocument(preview.contentDocument, labels, language, { profile:profileSelect.value });
-      defaultFilename = buildPrintFilename({ ...labels, subjectId: context.subjectId, language, mode: isSheet ? editionSelect.value : '' });
+      defaultFilename = buildPrintFilename({ ...labels, subjectId: context.subjectId, language, mode: isSheet ? editionSelect.value : '', zone });
       preview.contentDocument.title = defaultFilename;
       filenameHint.textContent = label('ชื่อไฟล์เริ่มต้น: ', 'Suggested filename: ') + defaultFilename + '.pdf';
       await waitForPrintResources(preview.contentDocument);
@@ -265,17 +303,19 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
       preview.style.visibility = 'visible';
       dialog.dataset.printState = 'ready'; printButton.disabled = false;
       const editionName = isSheet ? (editionSelect.value === 'blank' ? label('ฉบับว่าง · ', 'Blank · ') : label('ฉบับเฉลย · ', 'Answers · ')) : '';
-      status.textContent = editionName + label(`พร้อมพิมพ์ ${result.pages} หน้า`, `${result.pages} pages ready to print`);
+      const sectionName = zone ? (zone === 'problem' ? 'Problem · ' : 'Learning · ') : '';
+      status.textContent = sectionName + editionName + label(`พร้อมพิมพ์ ${result.pages} หน้า`, `${result.pages} pages ready to print`);
     } catch (error) { if (alive() && token === revision) printError(error); }
     finally {
       if (alive() && token === revision) {
         rebuildButton.disabled = false; profileSelect.disabled = false;
         if (editionSelect) editionSelect.disabled = false;
+        if (zoneSelect) zoneSelect.disabled = false;
         Object.values(inputs).forEach(input => { input.disabled = false; });
       }
     }
   }
-  rebuildButton.addEventListener('click', () => { if (snapshot) void buildPages(); });
+  rebuildButton.addEventListener('click', () => { if (sourceDocument) void buildPages(); });
   void (async () => {
     try {
       const source = frame.contentDocument;
@@ -293,7 +333,7 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
       if (!alive()) return;
       const metadata = resolvePrintMetadata({ catalog, context, title, language, authored: { ...bankLabels, ...readPrintMetadata(source, language) } });
       Object.entries(metadata).forEach(([key, value]) => { inputs[key].value = value; });
-      snapshot = buildHtmlPrintSnapshot(source, title);
+      sourceDocument = source;
       await buildPages();
     } catch (error) {
       if (!alive()) return;

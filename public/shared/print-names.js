@@ -57,13 +57,14 @@ function filenamePart(value) {
   return String(value ?? '').normalize('NFC').replace(/[\p{Cc}\p{Cf}]/gu, '')
     .replace(/[<>:"/\\|?*]+/gu, '-').replace(/\s+/gu, ' ').replace(/-{2,}/gu, '-').replace(/^[. -]+|[. -]+$/gu, '');
 }
-function buildPrintFilename({ subjectId = '', subject = '', chapter = '', work = '', mode = '', language = 'th', extension = '' } = {}) {
+function buildPrintFilename({ subjectId = '', subject = '', chapter = '', work = '', mode = '', zone = '', language = 'th', extension = '' } = {}) {
   const subjectKey = String(subjectId).toLowerCase();
   const labelKey = String(subject).trim().toLowerCase();
   const code = subjectCodes[subjectKey] || subjectCodes[subjectAliases[labelKey] || labelKey] || 'HUB';
   const suffixes = { worksheet: ['โจทย์','Questions'], answer: ['เฉลย','Answers'], summary: ['สรุป','Summary'],
     blank: ['ฉบับว่าง','Blank'], answers: ['เฉลย','Answers'], evidence: ['หลักฐานวิธีทำ','Reasoning'], 'topic-review': ['ทบทวน','Review'] };
-  const suffix = suffixes[mode]?.[language === 'en' ? 1 : 0] || '';
+  const section = zone === 'learning' ? 'Learning' : zone === 'problem' ? 'Problem' : '';
+  const suffix = [section, suffixes[mode]?.[language === 'en' ? 1 : 0]].filter(Boolean).join('-');
   const cleanChapter = filenamePart(chapter), cleanWork = filenamePart(work);
   const parts = [cleanChapter, cleanWork].filter((value, index, all) => value && all.indexOf(value) === index);
   if (!parts.length) parts.push(language === 'en' ? 'Document' : 'เอกสาร');

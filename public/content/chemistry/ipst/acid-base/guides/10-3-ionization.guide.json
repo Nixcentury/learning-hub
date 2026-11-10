@@ -2,165 +2,205 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "chemistry-ipst-acid-base-10-3-1-sheet",
-    "revision": "2026-11-06-1",
-    "sha256": "0e35f8337d7b40b24b0372a9e22d9bbe963ff66096a6d290a76df123f7ee8c92"
+    "revision": "2026-11-10-1",
+    "sha256": "8e889e8d1607a380248051828da1e4f6216ba869ade5adcac8bee6809df59b07"
   },
   "title": {
     "th": "การแตกตัวของกรด เบส และน้ำ",
     "en": "Ionization of acids, bases and water"
   },
   "prerequisites": {
-    "th": "ทวนโมล ความเข้มข้น mol/L การแปลง mL เป็น L การดุลสมการ และคู่กรด–เบสจากการให้–รับโปรตอน",
-    "en": "Review moles, mol/L, mL-to-L conversion, balanced equations and conjugate pairs from proton transfer."
+    "th": "ทวน mol, mol/L, การดุลสมการ และการให้–รับโปรตอน",
+    "en": "Recall mol, mol/L, balanced equations and proton transfer."
   },
   "goal": {
-    "th": "อ่านภาพและสมการเพื่อเลือกการคำนวณไอออน ร้อยละหรือค่าคงที่ พร้อมตรวจเงื่อนไขและอธิบายเหตุผล",
-    "en": "Use diagrams and reactions to choose ion, percentage or constant calculations, checking assumptions and explaining reasoning."
+    "th": "ดูรูปแล้วแยกการแตกตัวสมบูรณ์กับบางส่วน จากนั้นเลือก ICF, ICE หรือความสัมพันธ์ของค่าคงที่ให้ตรงโจทย์",
+    "en": "Read the particle diagrams, distinguish complete from partial ionization, and choose ICF, ICE or a constant relationship for the problem."
   },
   "steps": [
     {
       "id": "stage-1",
       "title": {
-        "th": "ไอออน การนำไฟฟ้า และความแรง",
-        "en": "Ions, conductivity and strength"
+        "th": "กรดแก่กับกรดอ่อนแตกตัวต่างกันอย่างไร?",
+        "en": "How do strong and weak acids ionize differently?"
       },
       "summary": {
-        "th": "ไอออนที่เคลื่อนที่ได้ทำให้สารละลายนำไฟฟ้า การเทียบความสว่างต้องควบคุมความเข้มข้น อุปกรณ์และอุณหภูมิ\nความแรงบอกการแตกตัว ส่วนความเข้มข้นบอกปริมาณต่อปริมาตร กรดแก่จึงอาจเจือจางได้",
-        "en": "Mobile ions allow solutions to conduct. Compare brightness at controlled concentration, apparatus and temperature.\nStrength concerns ionization; concentration concerns amount per volume. A strong acid can be dilute."
+        "th": "ภาพ A ไม่มี HA เหลือ ส่วนภาพ B ยังเหลือ 18 จาก 20 โมเลกุล\nความแรงคือระดับการแตกตัว ความเข้มข้นคือปริมาณต่อปริมาตร",
+        "en": "No HA remains in Set A; 18 out of 20 remain in Set B.\nStrength concerns ionization; concentration is amount per volume."
       },
       "story": {
-        "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “ไอออน การนำไฟฟ้า และความแรง”",
-        "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Ions, conductivity and strength”."
+        "th": "ให้เด็กนับ HA หลังลูกศรทั้งสองรูป แล้วค่อยเรียกกรณีสมบูรณ์และบางส่วน",
+        "en": "Have students count HA on the right of each arrow before naming complete and partial ionization."
       },
       "action": {
-        "th": "เทียบความแรงกับความเข้มข้นในคำถามที่ลิงก์ แล้วอธิบายด้วยคำของตนเอง",
-        "en": "Use the linked question to distinguish strength from concentration in your own words."
+        "th": "นับ HA ที่เหลือในภาพ A และ B แล้วลองบอกชื่อกรดแก่กับเบสแก่อย่างละสองชนิด",
+        "en": "Count the remaining HA in both diagrams and name two strong acids and two strong bases."
       },
       "links": [
         {
           "label": {
-            "th": "หัวข้อ 1",
-            "en": "Section 1"
+            "th": "ภาพ A เหลือ HA กี่โมเลกุล?",
+            "en": "How many HA molecules remain in Set A?"
           },
           "target": {
-            "kind": "anchor",
-            "key": "stage-1"
+            "kind": "slot",
+            "key": "particle-set-a"
           }
         },
         {
           "label": {
-            "th": "คำถาม 4",
-            "en": "Question 4"
+            "th": "ภาพ B เหลือ HA กี่โมเลกุล?",
+            "en": "How many HA molecules remain in Set B?"
           },
           "target": {
             "kind": "slot",
-            "key": "q-03"
+            "key": "particle-set-b"
+          }
+        },
+        {
+          "label": {
+            "th": "กรดแก่ที่ใช้ในบทนี้",
+            "en": "Strong acids in this chapter"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "strong-acids-list"
+          }
+        },
+        {
+          "label": {
+            "th": "เบสแก่ที่ใช้ในบทนี้",
+            "en": "Strong bases in this chapter"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "strong-bases-list"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "HCl เจือจางยังเป็นกรดแก่ได้หรือไม่?",
-          "en": "Can dilute HCl still be a strong acid?"
+          "th": "รูปใดแทนกรดอ่อน เพราะอะไร?",
+          "en": "Which set represents a weak acid, and why?"
         },
         "answer": {
-          "th": "ได้ ความแรงกับความเข้มข้นเป็นคนละปริมาณ",
-          "en": "Yes. Strength and concentration describe different things."
+          "th": "ชุด B เพราะยังมี HA เหลือหลังแตกตัว",
+          "en": "Set B, because some HA remains."
         }
       },
       "after": {
-        "th": "ถ้าอธิบายได้ ให้เลือกฝึกข้อคำนวณในช่วงนี้ต่อ หากยังสับสนกลับไปอ่านสาระและภาพก่อนเปิดเฉลย",
-        "en": "If the explanation is clear, try another calculation in this section. If unsure, revisit the notes and diagrams before revealing solutions."
+        "th": "ใช้ HCl เจือจางเป็นคำถามปิดช่วงก่อนเขียนสมการ",
+        "en": "Use dilute HCl as the final check before writing equations."
       }
     },
     {
       "id": "stage-2",
       "title": {
-        "th": "อ่านอัตราส่วนจากสมการ",
-        "en": "Read ratios from equations"
+        "th": "กรด–เบสแก่ให้ไอออนอะไร และให้เท่าไร?",
+        "en": "Which ions do strong acids and bases give, and how much?"
       },
       "summary": {
-        "th": "กรด–เบสแก่ใช้ ICF: I เริ่มต้น → C เปลี่ยนตามเลขดุล → F สุดท้าย ใช้ mol หรือ mol/L ให้เหมือนกันทั้งตาราง\nจัดข้อมูลด้วยตัวคูณแปลงหน่วยก่อนลงตาราง แล้วอ่านปริมาณไอออนจาก F",
-        "en": "Use ICF for complete strong-acid/base ionization: Initial → stoichiometric Change → Final, using mol or mol/L consistently.\nConvert data by unit factors before the table; read ion amounts from F."
+        "th": "HCl ให้ H₃O⁺ และ Cl⁻ อย่างละหนึ่งต่อโมล ส่วน NaOH กับ Ba(OH)₂ ให้ OH⁻ ในอัตราส่วนต่างกัน\nใน ICF แถว C ตามเลขดุล และแถว F เป็นค่าหลังแตกตัว",
+        "en": "HCl gives one H₃O⁺ and one Cl⁻ per mole; NaOH and Ba(OH)₂ give different OH⁻ ratios.\nIn ICF, row C follows the coefficients and row F gives the final amounts."
       },
       "story": {
-        "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “อ่านอัตราส่วนจากสมการ”",
-        "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Read ratios from equations”."
+        "th": "ให้เทียบ NaOH กับ Ba(OH)₂ ที่ความเข้มข้นเท่ากัน แล้วชี้เลข 2 ก่อนเปิดกราฟแท่ง",
+        "en": "Compare NaOH and Ba(OH)₂ at equal concentrations and identify the coefficient 2 before revealing the bar chart."
       },
       "action": {
-        "th": "ดุลสมการ NaOH และ Ba(OH)₂ แล้วชี้แถว C ว่าเปลี่ยน −1:+1:+1 หรือ −1:+1:+2 ก่อนอ่าน F",
-        "en": "Balance NaOH and Ba(OH)₂; highlight row C as −1:+1:+1 or −1:+1:+2, then read F."
+        "th": "เขียนสมการของ HCl กับ Ba(OH)₂ แล้วระบุเลขดุลที่ใช้ในแถว C",
+        "en": "Write the HCl and Ba(OH)₂ reactions and identify the coefficients for row C."
       },
       "links": [
         {
           "label": {
-            "th": "หัวข้อ 2",
-            "en": "Section 2"
+            "th": "HCl ทำปฏิกิริยากับน้ำอย่างไร?",
+            "en": "How does HCl react with water?"
           },
           "target": {
-            "kind": "anchor",
-            "key": "stage-2"
+            "kind": "slot",
+            "key": "strong-acid-reaction"
           }
         },
         {
           "label": {
-            "th": "คำถาม 8",
-            "en": "Question 8"
+            "th": "NaOH กับ Ba(OH)₂ ให้ OH⁻ ต่างกันอย่างไร?",
+            "en": "How do NaOH and Ba(OH)₂ differ in the amount of OH⁻ they give?"
           },
           "target": {
             "kind": "slot",
-            "key": "q-07"
+            "key": "complete-ionization"
+          }
+        },
+        {
+          "label": {
+            "th": "อ่านตาราง ICF ตรงไหน?",
+            "en": "Which row of ICF do we read?"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "strong-icf-method"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "Ba(OH)₂ 1 mol ให้ OH⁻ กี่ mol เมื่อส่วนที่ละลายแตกตัวสมบูรณ์?",
-          "en": "How many moles of OH⁻ come from 1 mol dissolved Ba(OH)₂?"
+          "th": "Ba(OH)₂ ที่ละลาย 1 mol ให้ OH⁻ กี่ mol?",
+          "en": "How many moles of OH⁻ come from 1 mol of dissolved Ba(OH)₂?"
         },
         "answer": {
-          "th": "2 mol จากสัมประสิทธิ์สมการ",
-          "en": "2 mol from the reaction coefficient."
+          "th": "2 mol ตามเลขดุล",
+          "en": "2 mol, from the coefficient."
         }
       },
       "after": {
-        "th": "ถ้าอธิบายได้ ให้เลือกฝึกข้อคำนวณในช่วงนี้ต่อ หากยังสับสนกลับไปอ่านสาระและภาพก่อนเปิดเฉลย",
-        "en": "If the explanation is clear, try another calculation in this section. If unsure, revisit the notes and diagrams before revealing solutions."
+        "th": "ให้เด็กลองแยกว่าไอออนในโจทย์ถัดไปเป็นข้อมูลแถวใด",
+        "en": "Ask students to identify the row for the given ion in the next problem."
       }
     },
     {
       "id": "stage-3",
       "title": {
-        "th": "โมล มวล และการเจือจาง",
-        "en": "Amount, mass and dilution"
+        "th": "โจทย์กรด–เบสแก่ จากไอออนกลับไปหาสารตั้งต้น",
+        "en": "Strong acids and bases: working back from ions"
       },
       "summary": {
-        "th": "แปลงข้อมูลด้วยตัวคูณหน่วย: mL → L; (mol/L)×L → mol; mol×(g/mol) → g\nหากเปลี่ยนปริมาตร ใช้ ICF หน่วย mol ก่อน คงโมลจาก F เมื่อเติมน้ำ แล้วหารปริมาตรสุดท้ายเพื่อหา mol/L",
-        "en": "Use unit factors: mL → L; (mol/L)×L → mol; mol×(g/mol) → g.\nWhen volume changes, use mol in ICF, preserve F amounts on adding water, then divide by final volume for mol/L."
+        "th": "ใช้ mol/L × L หา mol ก่อนลง ICF เมื่อโจทย์ให้ปริมาตร\nเติมน้ำแล้วโมลไอออนเดิมคงเดิม ส่วนมวลต้องใช้มวลโมลาร์ของสารตั้งต้น",
+        "en": "Use mol/L × L to find moles before ICF when volume is given.\nAdding water preserves ion amounts; mass uses the molar mass of the original solute."
       },
       "story": {
-        "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “โมล มวล และการเจือจาง”",
-        "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Amount, mass and dilution”."
+        "th": "ชี้ให้เด็กเห็นว่า 0.300 mol/L ในตัวอย่าง 1 เป็นของไอออนหลังแตกตัว",
+        "en": "Point out that 0.300 mol/L in Example 1 describes the product ion after ionization."
       },
       "action": {
-        "th": "ให้เด็กบอกหน่วยที่ตัดกันก่อนลง ICF ชี้ข้อมูลที่เป็นไอออนหลังแตกตัวว่าอยู่แถว F แล้วค่อยหามวลหรือความเข้มข้น",
-        "en": "Ask which units cancel before ICF. Identify supplied post-ionization ions as F data, then find mass or concentration."
+        "th": "ทำตัวอย่าง 1 ให้จบ แล้วให้เด็กบอกว่าโมล OH⁻ เปลี่ยนไหมเมื่อเติมน้ำ",
+        "en": "Complete Example 1, then predict whether adding water changes the moles of OH⁻."
       },
       "links": [
         {
           "label": {
-            "th": "หัวข้อ 3",
-            "en": "Section 3"
+            "th": "ตัวอย่าง 1 · ต้องใช้กรดกี่โมล?",
+            "en": "Example 1 · How many moles of acid are needed?"
           },
           "target": {
-            "kind": "anchor",
-            "key": "stage-3"
+            "kind": "slot",
+            "key": "model-acid-amount"
           }
         },
         {
           "label": {
-            "th": "คำถาม 11",
-            "en": "Question 11"
+            "th": "เติมน้ำแล้วโมลหรือความเข้มข้นเปลี่ยน?",
+            "en": "Does adding water change moles or concentration?"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "model-dilution-concentrations"
+          }
+        },
+        {
+          "label": {
+            "th": "ถ้าโจทย์ถามมวล ต้องคูณตัวแปลงอะไร?",
+            "en": "Which conversion factors give the mass?"
           },
           "target": {
             "kind": "slot",
@@ -170,162 +210,162 @@
       ],
       "check": {
         "question": {
-          "th": "เติมเฉพาะน้ำแล้วโมลของไอออนเดิมเปลี่ยนหรือไม่?",
-          "en": "Does adding only water change the original ion amounts?"
+          "th": "เติมน้ำอย่างเดียว จำนวนโมล OH⁻ ที่มาจากเบสแก่เปลี่ยนไหม?",
+          "en": "Does adding only water change the moles of OH⁻ from a strong base?"
         },
         "answer": {
-          "th": "ไม่เปลี่ยน แต่ความเข้มข้นเปลี่ยนเพราะปริมาตรมากขึ้น",
-          "en": "No; concentration changes because volume increases."
+          "th": "คงเดิม แต่ความเข้มข้นลดเพราะปริมาตรเพิ่ม",
+          "en": "It stays the same, but the concentration decreases as the volume rises."
         }
       },
       "after": {
-        "th": "ถ้าอธิบายได้ ให้เลือกฝึกข้อคำนวณในช่วงนี้ต่อ หากยังสับสนกลับไปอ่านสาระและภาพก่อนเปิดเฉลย",
-        "en": "If the explanation is clear, try another calculation in this section. If unsure, revisit the notes and diagrams before revealing solutions."
+        "th": "เลือกข้อ 8 หรือ 10–11 ในควิซตามทักษะที่ต้องฝึก",
+        "en": "Use quiz question 8 or 10–11 to practise the relevant skill."
       }
     },
     {
       "id": "stage-4",
       "title": {
-        "th": "การแตกตัวบางส่วนและร้อยละ",
-        "en": "Partial ionization and percentages"
+        "th": "กรดอ่อน เหตุใดจึงยังมี HA เหลือ?",
+        "en": "Weak acids: why does some HA remain?"
       },
       "summary": {
-        "th": "กรดอ่อนอยู่ในสมดุลและเหลือโมเลกุลที่ยังไม่แตกตัว การนับไอออนบวกกับลบรวมกันไม่เท่ากับจำนวนโมเลกุลที่แตกตัว\nร้อยละการแตกตัวเทียบส่วนที่แตกตัวกับความเข้มข้นเริ่มต้น สำหรับ HA หนึ่งโปรตอนที่ไม่มีไอออนผลิตภัณฑ์เริ่มต้นใช้ x/C × 100",
-        "en": "A weak acid reaches equilibrium with un-ionized molecules remaining. Adding both ion counts double-counts ionized HA molecules.\nPercent ionization compares the ionized amount with initial concentration; for monoprotic HA with no initial product ions, use x/C × 100."
+        "th": "กรดอ่อนให้โปรตอนบางส่วน และมีทั้ง HA กับไอออนที่สมดุล\nภาพ B แตกตัว 2 จาก 20 โมเลกุล หรือ 10%",
+        "en": "A weak acid ionizes partially; both HA and ions are present at equilibrium.\nIn Set B, 2 out of 20 molecules ionized, or 10%."
       },
       "story": {
-        "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “การแตกตัวบางส่วนและร้อยละ”",
-        "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Partial ionization and percentages”."
+        "th": "กลับมาที่ภาพ B แล้วให้เด็กชี้ว่าทั้งสองทิศทางของสมการสัมพันธ์กับอนุภาคในรูปอย่างไร",
+        "en": "Return to Set B and ask how both directions of the equation relate to the particles shown."
       },
       "action": {
-        "th": "นับโมเลกุลที่เปลี่ยนไปในภาพ B ก่อนแปลงเป็นร้อยละ",
-        "en": "Count changed molecules in diagram B before converting to a percentage."
+        "th": "เขียนสมการของ HA แล้วคิดร้อยละจากจำนวนโมเลกุลในภาพ B",
+        "en": "Write the HA reaction and calculate the percentage from the molecule count in Set B."
       },
       "links": [
         {
           "label": {
-            "th": "หัวข้อ 4",
-            "en": "Section 4"
+            "th": "กรดอ่อน HA ทำปฏิกิริยากับน้ำอย่างไร?",
+            "en": "How does the weak acid HA react with water?"
           },
           "target": {
-            "kind": "anchor",
-            "key": "stage-4"
+            "kind": "slot",
+            "key": "weak-partial-equilibrium"
           }
         },
         {
           "label": {
-            "th": "คำถาม 14",
-            "en": "Question 14"
+            "th": "ภาพ B แตกตัวไปกี่เปอร์เซ็นต์?",
+            "en": "What percentage ionized in Set B?"
           },
           "target": {
             "kind": "slot",
-            "key": "weak-q-02"
+            "key": "model-ionization-percentage"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "HA แตกตัว 2 โมเลกุล ให้ไอออนรวม 4 ตัว แปลว่าแตกตัว 4 โมเลกุลหรือไม่?",
-          "en": "Two HA molecules form four ions in total. Did four molecules ionize?"
+          "th": "เห็นผลิตภัณฑ์ 4 ไอออนในภาพ B แปลว่า HA แตกตัวกี่โมเลกุล?",
+          "en": "Four product ions appear in Set B. How many HA molecules ionized?"
         },
         "answer": {
-          "th": "แตกตัว 2 โมเลกุล ไอออนสองชนิดเกิดจากโมเลกุลชุดเดียวกัน",
-          "en": "Only two molecules ionized; both ion types come from those same molecules."
+          "th": "2 โมเลกุล เพราะ HA หนึ่งโมเลกุลให้ไอออนสองชนิด",
+          "en": "2 molecules, because one HA produces two kinds of ion."
         }
       },
       "after": {
-        "th": "ถ้าอธิบายได้ ให้เลือกฝึกข้อคำนวณในช่วงนี้ต่อ หากยังสับสนกลับไปอ่านสาระและภาพก่อนเปิดเฉลย",
-        "en": "If the explanation is clear, try another calculation in this section. If unsure, revisit the notes and diagrams before revealing solutions."
+        "th": "ชวนคิดต่อว่าจะหา x ได้อย่างไรเมื่อโจทย์ให้ Kₐ",
+        "en": "Ask how to find x when the problem gives Kₐ."
       }
     },
     {
       "id": "stage-5",
       "title": {
-        "th": "ตารางสมดุลและค่าคงที่ของกรด",
-        "en": "Equilibrium tables and acid constants"
+        "th": "สมดุลกรดอ่อน จากสมการไปตาราง ICE",
+        "en": "Weak acid equilibrium: from the equation to ICE"
       },
       "summary": {
-        "th": "เริ่มจาก ICE แล้วอ่านแถว E โดยหน่วยความเข้มข้นทุกช่องเป็น mol/L\nตั้งตารางเริ่มต้น–เปลี่ยนไป–สมดุลก่อนเขียน Kₐ ใช้ความเข้มข้นที่สมดุลในนิพจน์ค่าคงที่\nเมื่อ HA เริ่มที่ C และผลิตภัณฑ์เริ่มศูนย์ จะเหลือ C−x และเกิดไอออนชนิดละ x โดยละเลยส่วนจากน้ำ; น้ำตัวทำละลายไม่ใส่ในนิพจน์",
-        "en": "Start from ICE and read row E; use mol/L consistently across the table.\nSet up an initial–change–equilibrium table before writing Kₐ; use equilibrium concentrations in the constant.\nFor initial HA = C and zero products, HA becomes C−x and each ion x when water ionization is negligible. Omit solvent water from the expression."
+        "th": "ตาราง ICE ใช้ mol/L และแถว C ตามเลขดุล\nสำหรับสมดุล 1 : 1 แบบที่ใช้ในใบ ค่า E คือ C₀ − x, x, x ใช้ค่าเหล่านี้ใน Kₐ",
+        "en": "Use mol/L in ICE and follow the coefficients in row C.\nFor the 1 : 1 equilibrium used here, row E contains C₀ − x, x and x; use those in Kₐ."
       },
       "story": {
-        "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “ตารางสมดุลและค่าคงที่ของกรด”",
-        "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Equilibrium tables and acid constants”."
+        "th": "ให้เด็กลองเขียนตัวเศษและตัวส่วนจากสมการ แล้วชี้ว่าต้องใช้ความเข้มข้นแถวไหน",
+        "en": "Ask students to write the numerator and denominator from the equation, then identify the correct row."
       },
       "action": {
-        "th": "คำนวณ x จากร้อยละก่อน แล้วหากรดที่เหลือและ Kₐ",
-        "en": "Find x from percentage first, then remaining acid and Kₐ."
+        "th": "เขียน Kₐ แล้วเติมแถว E โดยใช้ C₀ และ x",
+        "en": "Write Kₐ and fill row E using C₀ and x."
       },
       "links": [
         {
           "label": {
-            "th": "หัวข้อ 5",
-            "en": "Section 5"
+            "th": "จากสมการนี้ เขียนนิพจน์ Kₐ อย่างไร?",
+            "en": "What is the expression for Kₐ for this equation?"
           },
           "target": {
-            "kind": "anchor",
-            "key": "stage-5"
+            "kind": "slot",
+            "key": "weak-acid-constant"
           }
         },
         {
           "label": {
-            "th": "คำถาม 19",
-            "en": "Question 19"
+            "th": "ถ้ากรดแตกตัวไป x แถว E มีค่าอะไร?",
+            "en": "If x ionizes, what belongs in row E?"
           },
           "target": {
             "kind": "slot",
-            "key": "weak-q-07"
+            "key": "weak-ice-table"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "ในตัวส่วน Kₐ ใช้ C หรือ C−x?",
-          "en": "Does the denominator of Kₐ contain C or C−x?"
+          "th": "กรดที่เหลือในแถว E เขียนอย่างไร?",
+          "en": "How do we write the remaining acid in row E?"
         },
         "answer": {
-          "th": "ใช้ C−x ที่สมดุล ก่อนพิจารณาว่าประมาณเป็น C ได้หรือไม่",
-          "en": "Use equilibrium C−x before checking whether C is a valid approximation."
+          "th": "C₀ − x เพราะเริ่ม C₀ และแตกตัวไป x",
+          "en": "C₀ − x, because it starts at C₀ and x ionizes."
         }
       },
       "after": {
-        "th": "ถ้าอธิบายได้ ให้เลือกฝึกข้อคำนวณในช่วงนี้ต่อ หากยังสับสนกลับไปอ่านสาระและภาพก่อนเปิดเฉลย",
-        "en": "If the explanation is clear, try another calculation in this section. If unsure, revisit the notes and diagrams before revealing solutions."
+        "th": "ถ้าเขียนแถว E ได้ ให้แทนตัวเลขในตัวอย่าง 2",
+        "en": "Once row E is clear, substitute the numbers in Example 2."
       }
     },
     {
       "id": "stage-6",
       "title": {
-        "th": "เลือกการประมาณหรือสมการเต็ม",
-        "en": "Choose approximation or the full equation"
+        "th": "หา x แล้วเลือกว่าจะประมาณหรือใช้สมการเต็ม",
+        "en": "Finding x: choosing an approximation or the full equation"
       },
       "summary": {
-        "th": "เริ่มจาก ICE แล้วอ่านแถว E โดยหน่วยความเข้มข้นทุกช่องเป็น mol/L\nตรวจ C/K > 1000 ตามเกณฑ์หนังสือก่อนประมาณ C−x เป็น C สำหรับสมดุลแบบที่ระบุ\nยังต้องเก็บ x² ในเศษ ถ้าไม่ผ่านเกณฑ์ให้ใช้สมการกำลังสองและเลือกรากที่เป็นความเข้มข้นได้จริง",
-        "en": "Start from ICE and read row E; use mol/L consistently across the table.\nCheck the book criterion C/K > 1000 before approximating C−x by C for the stated simple equilibrium.\nKeep x² in the numerator. If the criterion is not met, solve the quadratic and choose the physically valid concentration."
+        "th": "ในกรณี 1 : 1 ที่ใช้ที่นี่ ให้ตรวจ C₀/Kₐ > 1000 ก่อนประมาณ C₀ − x ≈ C₀\nเมื่อไม่ผ่านเกณฑ์ของใบนี้ ใช้สมการเต็มและเลือกรากในช่วง 0 < x < C₀",
+        "en": "For the 1 : 1 case here, check C₀/Kₐ > 1000 before using C₀ − x ≈ C₀.\nIf this sheet’s criterion is not met, solve the full equation and choose a root with 0 < x < C₀."
       },
       "story": {
-        "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “เลือกการประมาณหรือสมการเต็ม”",
-        "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Choose approximation or the full equation”."
+        "th": "วางตัวอย่าง 2 เทียบกับกรณี C₀/Kₐ = 100 แล้วให้เด็กวงเฉพาะ x ที่ประมาณได้",
+        "en": "Compare Example 2 with C₀/Kₐ = 100 and ask students to circle only the x that may be approximated away."
       },
       "action": {
-        "th": "ทำโจทย์สมการเต็ม และตรวจว่ารากที่เลือกอยู่ระหว่าง 0 กับ C",
-        "en": "Solve the full-equation problem and check that the chosen root lies between 0 and C."
+        "th": "ทำตัวอย่าง 2 แล้วตัดสินใจว่าสมการที่สองใช้การประมาณได้หรือไม่",
+        "en": "Work through Example 2, then decide whether the approximation works in the second case."
       },
       "links": [
         {
           "label": {
-            "th": "หัวข้อ 6",
-            "en": "Section 6"
+            "th": "ตัวอย่าง 2 · กรดอ่อน หาความเข้มข้นไอออน",
+            "en": "Example 2 · Finding the ion concentration of a weak acid"
           },
           "target": {
-            "kind": "anchor",
-            "key": "stage-6"
+            "kind": "slot",
+            "key": "weak-approximation-rule"
           }
         },
         {
           "label": {
-            "th": "คำถาม 25",
-            "en": "Question 25"
+            "th": "ถ้า C₀/Kₐ ไม่เกิน 1000 ทำอย่างไร?",
+            "en": "What if C₀/Kₐ is at most 1000?"
           },
           "target": {
             "kind": "slot",
@@ -335,292 +375,312 @@
       ],
       "check": {
         "question": {
-          "th": "ละเลย x ใน C−x แล้วตัด x² ได้หรือไม่?",
-          "en": "Can x² also be removed after neglecting x in C−x?"
+          "th": "เมื่อประมาณได้ ยังเก็บ x² ในเศษหรือไม่?",
+          "en": "When the approximation applies, do we keep x² in the numerator?"
         },
         "answer": {
-          "th": "ไม่ได้ x² เป็นผลคูณความเข้มข้นไอออนที่กำลังหา",
-          "en": "No. x² is the product of the ion concentrations being found."
+          "th": "เก็บ เพราะประมาณเฉพาะตัวส่วน C₀ − x",
+          "en": "Yes. Only the denominator C₀ − x is approximated."
         }
       },
       "after": {
-        "th": "ถ้าอธิบายได้ ให้เลือกฝึกข้อคำนวณในช่วงนี้ต่อ หากยังสับสนกลับไปอ่านสาระและภาพก่อนเปิดเฉลย",
-        "en": "If the explanation is clear, try another calculation in this section. If unsure, revisit the notes and diagrams before revealing solutions."
+        "th": "ใช้ข้อ 22 และ 24 ในควิซเทียบการเลือกวิธี",
+        "en": "Compare the method choices in quiz questions 22 and 24."
       }
     },
     {
       "id": "stage-7",
       "title": {
-        "th": "กรดที่แตกตัวได้หลายขั้น",
-        "en": "Acids that ionize in steps"
+        "th": "ถ้ากรดให้โปรตอนได้สองตัว ให้อ่านทีละขั้น",
+        "en": "For acids that can donate two protons, read one step at a time"
       },
       "summary": {
-        "th": "กรดหลายโปรตอนแตกตัวทีละขั้น แต่ละขั้นมี Kₐ ของตนเองและให้ไอออนต่างชนิด\nเปรียบเทียบค่าคงที่และดูว่าไอออนใดเกิดหรือถูกใช้ในแต่ละขั้น H₂SO₄ แตกตัวขั้นแรกเกือบสมบูรณ์ แต่ขั้นที่สองไม่สมบูรณ์",
-        "en": "A polyprotic acid ionizes stepwise, with a separate Kₐ and different ions at each step.\nCompare constants and track what each step forms or consumes. H₂SO₄ has an essentially complete first step but an incomplete second step."
+        "th": "กรดสองโปรตอนต้องอ่านสมการและค่าคงที่ทีละขั้น\nH₂SO₄ ขั้นแรกถือว่าสมบูรณ์ ขั้นสองยังเป็นสมดุลและมี H₃O⁺ ตั้งต้น",
+        "en": "Read the equation and constant for each step of a diprotic acid.\nTreat the first H₂SO₄ step as complete. The second is an equilibrium with H₃O⁺ already present."
       },
       "story": {
-        "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “กรดที่แตกตัวได้หลายขั้น”",
-        "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Acids that ionize in steps”."
+        "th": "ให้ชี้ลูกศรทั้งสองของ H₂SO₄ และอธิบายว่าค่าเริ่มต้นของขั้นสองมาจากไหน",
+        "en": "Have students point to both H₂SO₄ arrows and explain where the second step’s initial concentration comes from."
       },
       "action": {
-        "th": "เขียนการแตกตัวสองขั้นแล้วอธิบายการเรียงไอออน",
-        "en": "Write both ionization steps and explain the ion ordering."
+        "th": "แยกขั้นของ H₂SO₄ แล้วระบุว่าไฮโดรเนียมจากขั้นแรกต้องอยู่แถวใด",
+        "en": "Separate the H₂SO₄ steps and identify where hydronium from step one belongs in the second table."
       },
       "links": [
         {
           "label": {
-            "th": "หัวข้อ 7",
-            "en": "Section 7"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "stage-7"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 26",
-            "en": "Question 26"
+            "th": "H₂SO₄ กับ H₂SO₃ แตกตัวสองขั้นอย่างไร?",
+            "en": "How do the two ionization steps differ for H₂SO₄ and H₂SO₃?"
           },
           "target": {
             "kind": "slot",
-            "key": "practice-stepwise"
+            "key": "weak-stepwise"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "กรดสองโปรตอนต้องให้ H₃O⁺ เท่ากับ 2C เสมอหรือไม่?",
-          "en": "Must a diprotic acid always give H₃O⁺ = 2C?"
+          "th": "ทำไม H₂SO₄ จึงใช้ตัวคูณสองแบบ Ba(OH)₂ โดยตรงไม่ได้?",
+          "en": "Why can we not use a factor of two for H₂SO₄ as we do for Ba(OH)₂?"
         },
         "answer": {
-          "th": "ไม่เสมอ ต้องพิจารณาการแตกตัวแต่ละขั้น",
-          "en": "No. Consider the extent of each step."
+          "th": "โปรตอนตัวที่สองออกมาเพียงบางส่วน จึงต้องคิดอีกสมดุล",
+          "en": "The second proton is released only partially, so that step has its own equilibrium."
         }
       },
       "after": {
-        "th": "ถ้าอธิบายได้ ให้เลือกฝึกข้อคำนวณในช่วงนี้ต่อ หากยังสับสนกลับไปอ่านสาระและภาพก่อนเปิดเฉลย",
-        "en": "If the explanation is clear, try another calculation in this section. If unsure, revisit the notes and diagrams before revealing solutions."
+        "th": "ให้ลองเรียงไอออนของ H₂SO₃ ในข้อ 27",
+        "en": "Try ordering the H₂SO₃ ions in question 27."
       }
     },
     {
       "id": "stage-8",
       "title": {
-        "th": "สมดุลของเบสอ่อน",
-        "en": "Weak-base equilibrium"
+        "th": "เบสอ่อนใช้ ICE แบบเดียวกัน แต่ติดตาม OH⁻",
+        "en": "Weak bases use ICE as well, now tracking OH⁻"
       },
       "summary": {
-        "th": "เริ่มจาก ICE แล้วอ่านแถว E โดยหน่วยความเข้มข้นทุกช่องเป็น mol/L\nเบสอ่อนรับโปรตอนจากน้ำและเกิด OH⁻ ใช้ตารางสมดุลกับ Kᵦ และตรวจเงื่อนไขการประมาณเช่นเดียวกับกรด\nแยกความเข้มข้นไอออนที่สมดุลออกจากร้อยละการแตกตัว โดยร้อยละยังหารด้วย C เริ่มต้นของเบส",
-        "en": "Start from ICE and read row E; use mol/L consistently across the table.\nA weak base accepts a proton from water and produces OH⁻. Use an equilibrium table, Kᵦ and the same approximation check.\nDistinguish equilibrium ion concentration from percent ionization; the latter still uses initial base C as its denominator."
+        "th": "เบสอ่อนรับโปรตอนจากน้ำ ติดตาม OH⁻ ใน ICE แล้วใช้ Kᵦ\nถ้า X⁻ มาจาก NaX ให้ส่งค่าจาก F ของ ICF ไป I ของ ICE",
+        "en": "A weak base accepts a proton from water. Track OH⁻ in ICE, then use Kᵦ.\nFor X⁻ from NaX, take row F of ICF into row I of ICE."
       },
       "story": {
-        "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “สมดุลของเบสอ่อน”",
-        "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Weak-base equilibrium”."
+        "th": "ให้เด็กเปรียบเทียบลูกศรของ NaOH กับ NH₃ แล้วตั้งสมการของเบสอ่อนก่อนเปิด Kᵦ",
+        "en": "Compare the arrows for NaOH and NH₃, then set up the weak-base reaction before revealing Kᵦ."
       },
       "action": {
-        "th": "ทำตัวอย่าง NH₃ ทั้งส่วนไอออนและร้อยละ แล้วเลือกทำโจทย์เบสอีกชนิด",
-        "en": "Complete both ion and percentage parts of the NH₃ example, then try the other-base problem."
+        "th": "ทำตัวอย่าง 3 ก–ข แล้วชี้ว่า X⁻ ตั้งต้นในโจทย์ NaX มาจากตารางใด",
+        "en": "Do Example 3(a–b), then identify where the initial X⁻ in the NaX problem comes from."
       },
       "links": [
         {
           "label": {
-            "th": "หัวข้อ 8",
-            "en": "Section 8"
+            "th": "จากสมการนี้ เขียนนิพจน์ Kᵦ อย่างไร?",
+            "en": "What is the expression for Kᵦ for this equation?"
           },
           "target": {
-            "kind": "anchor",
-            "key": "stage-8"
+            "kind": "slot",
+            "key": "weak-base-equilibrium"
           }
         },
         {
           "label": {
-            "th": "ตัวอย่าง 5 · ก",
-            "en": "Example 5 · a"
+            "th": "ตัวอย่าง 3 ก · เบสอ่อน หาความเข้มข้นไอออน",
+            "en": "Example 3(a) · Finding ion concentrations of a weak base"
           },
           "target": {
             "kind": "slot",
             "key": "model-weak-base-ions"
           }
+        },
+        {
+          "label": {
+            "th": "ตัวอย่าง 3 ข · เบสอ่อนแตกร้อยละเท่าไร?",
+            "en": "Example 3(b) · What percentage of the base ionized?"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "model-weak-base-percent"
+          }
+        },
+        {
+          "label": {
+            "th": "จาก NaX ไปหา OH⁻ ต้องต่อสองตารางอย่างไร?",
+            "en": "How do we connect two tables to find OH⁻ from NaX?"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "practice-base-cation"
+          }
         }
       ],
       "check": {
         "question": {
-          "th": "สมดุล NH₃ กับน้ำให้ H₃O⁺ หรือ OH⁻ เป็นผลิตภัณฑ์?",
-          "en": "Does NH₃ reacting with water produce H₃O⁺ or OH⁻?"
+          "th": "NaX 0.20 mol/L ให้ X⁻ ตั้งต้นใน ICE เท่าไร?",
+          "en": "What initial X⁻ concentration does 0.20 mol/L NaX give in ICE?"
         },
         "answer": {
-          "th": "ให้ OH⁻ พร้อม NH₄⁺",
-          "en": "OH⁻, together with NH₄⁺."
+          "th": "0.20 mol/L จากการแตกตัว 1 : 1 ใน ICF",
+          "en": "0.20 mol/L from 1 : 1 dissociation in ICF."
         }
       },
       "after": {
-        "th": "ถ้าอธิบายได้ ให้เลือกฝึกข้อคำนวณในช่วงนี้ต่อ หากยังสับสนกลับไปอ่านสาระและภาพก่อนเปิดเฉลย",
-        "en": "If the explanation is clear, try another calculation in this section. If unsure, revisit the notes and diagrams before revealing solutions."
+        "th": "ให้ฝึกคำนวณเบสอ่อนในข้อ 30–33 ตามชนิดข้อมูลที่ให้",
+        "en": "Practise quiz questions 30–33 according to the data given."
       }
     },
     {
       "id": "stage-9",
       "title": {
-        "th": "ความเข้มข้น ร้อยละ และการย้อนหาค่าคงที่",
-        "en": "Concentration, percentage and finding the constant"
+        "th": "ร้อยละการแตกตัวและผลของการเจือจาง",
+        "en": "Percent ionization and the effect of dilution"
       },
       "summary": {
-        "th": "เริ่มจาก ICE แล้วอ่านแถว E โดยหน่วยความเข้มข้นทุกช่องเป็น mol/L\nเมื่อเจือจางกรดอ่อนชนิดเดิมที่อุณหภูมิคงที่ Kₐ คงเดิม แต่ร้อยละการแตกตัวเพิ่มได้แม้ความเข้มข้น H₃O⁺ ลดลง\nถ้าทราบร้อยละ ใช้ x = C × ร้อยละ/100 แล้วคำนวณ Kₐ จากความเข้มข้นสมดุล เก็บเลขระหว่างทางก่อนปัดคำตอบ",
-        "en": "Start from ICE and read row E; use mol/L consistently across the table.\nDiluting the same weak acid at fixed temperature leaves Kₐ unchanged. Percent ionization can rise even as H₃O⁺ concentration falls.\nGiven a percentage, find x = C × percentage/100, then Kₐ from equilibrium concentrations. Retain working digits until the end."
+        "th": "ร้อยละการแตกตัว = (x/C₀) × 100 เมื่อใช้หน่วยเดียวกัน\nเจือจางกรดอ่อนชนิดเดิมแล้วร้อยละเพิ่มในช่วงที่พิจารณา แต่ Kₐ คงเดิมที่อุณหภูมิเดิม",
+        "en": "Percent ionization = (x/C₀) × 100 when both quantities use the same units.\nIn the range considered, dilution of the same weak acid increases percent ionization, but Kₐ stays constant at fixed temperature."
       },
       "story": {
-        "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “ความเข้มข้น ร้อยละ และการย้อนหาค่าคงที่”",
-        "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Concentration, percentage and finding the constant”."
+        "th": "ให้เด็กอ่านแกนกราฟก่อน แล้วถามแยกกันเรื่องร้อยละกับความเข้มข้น H₃O⁺",
+        "en": "Have students read the graph axes, then ask separately about percentage and H₃O⁺ concentration."
       },
       "action": {
-        "th": "หาร้อยละของ A,B แล้วตอบข้อเปรียบเทียบที่ลิงก์",
-        "en": "Find the percentages for A and B, then answer the linked comparison."
+        "th": "ทำนายแนวกราฟ แล้วใช้ร้อยละที่ให้ย้อนหา x ในตัวอย่างท้ายช่วง",
+        "en": "Predict the trend, then work back to x from the percentage in the final example."
       },
       "links": [
         {
           "label": {
-            "th": "หัวข้อ 9",
-            "en": "Section 9"
+            "th": "จากที่นับได้ในภาพ B เขียนเป็นสูตรอย่างไร?",
+            "en": "How do we write a formula for what we counted in Set B?"
           },
           "target": {
-            "kind": "anchor",
-            "key": "stage-9"
+            "kind": "slot",
+            "key": "percent-ionized"
           }
         },
         {
           "label": {
-            "th": "คำถาม 34",
-            "en": "Question 34"
+            "th": "เมื่อเจือจางกรดอ่อน ร้อยละกับความเข้มข้นไอออนเปลี่ยนอย่างไร?",
+            "en": "On dilution, what happens to the percentage and ion concentration?"
           },
           "target": {
             "kind": "slot",
-            "key": "weak-q-15"
+            "key": "weak-dilution-weak"
+          }
+        },
+        {
+          "label": {
+            "th": "ถ้ารู้ร้อยละแล้ว จะย้อนหา Kₐ อย่างไร?",
+            "en": "How do we work back to Kₐ from a given percentage?"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "weak-reverse-percent"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "ร้อยละเพิ่มขึ้นแปลว่า H₃O⁺ ต้องเข้มข้นขึ้นเสมอหรือไม่?",
-          "en": "Does a higher ionization percentage always mean more concentrated H₃O⁺?"
+          "th": "HA 0.20 mol/L แตกตัว 5.0% ให้ x เท่าไร?",
+          "en": "What is x for 0.20 mol/L HA that is 5.0% ionized?"
         },
         "answer": {
-          "th": "ไม่เสมอ เพราะร้อยละเทียบกับความเข้มข้นเริ่มต้น",
-          "en": "No. Percentage is relative to initial concentration."
+          "th": "0.010 mol/L เพราะ x = (5.0/100) × 0.20",
+          "en": "0.010 mol/L because x = (5.0/100) × 0.20."
         }
       },
       "after": {
-        "th": "ถ้าอธิบายได้ ให้เลือกฝึกข้อคำนวณในช่วงนี้ต่อ หากยังสับสนกลับไปอ่านสาระและภาพก่อนเปิดเฉลย",
-        "en": "If the explanation is clear, try another calculation in this section. If unsure, revisit the notes and diagrams before revealing solutions."
+        "th": "ให้ใช้ C₀ − x ตอนย้อนหา Kₐ ก่อนทำควิซข้อ 42",
+        "en": "Use C₀ − x when working back to Kₐ before doing quiz question 42."
       }
     },
     {
       "id": "stage-10",
       "title": {
-        "th": "การแตกตัวของน้ำ",
-        "en": "Water autoionization"
+        "th": "น้ำให้ไอออนได้อย่างไร?",
+        "en": "How does water form ions?"
       },
       "summary": {
-        "th": "น้ำรับและให้โปรตอนกันเอง เกิด H₃O⁺ กับ OH⁻ น้ำเป็นกลางเมื่อไอออนทั้งสองเข้มข้นเท่ากัน\nK𝓌 = [H₃O⁺][OH⁻] ขึ้นกับอุณหภูมิ ที่ 25 °C ใช้ 1.00×10⁻¹⁴ และใช้ค่านี้หาไอออนอีกชนิด",
-        "en": "Water donates and accepts protons, forming H₃O⁺ and OH⁻. Neutrality means equal concentrations of the two ions.\nK𝓌 = [H₃O⁺][OH⁻] depends on temperature. At 25 °C use 1.00×10⁻¹⁴ and divide by the known ion concentration to find the other."
+        "th": "K𝓌 = [H₃O⁺][OH⁻] และมีค่า 1.0 × 10⁻¹⁴ ที่ 25 °C\nน้ำบริสุทธิ์ที่อุณหภูมินี้มีไอออนชนิดละ 1.0 × 10⁻⁷ mol/L",
+        "en": "K𝓌 = [H₃O⁺][OH⁻] and equals 1.0 × 10⁻¹⁴ at 25 °C.\nPure water at that temperature contains 1.0 × 10⁻⁷ mol/L of each ion."
       },
       "story": {
-        "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “การแตกตัวของน้ำ”",
-        "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Water autoionization”."
+        "th": "ให้บอกบทบาทของน้ำสองโมเลกุล แล้วคูณความเข้มข้นไอออนเพื่อหา K𝓌",
+        "en": "Identify the roles of the two water molecules, then multiply the ion concentrations to get K𝓌."
       },
       "action": {
-        "th": "อธิบายผลของอุณหภูมิในคำถามที่ลิงก์ และตรวจการหาไอออนอีกชนิดหนึ่ง",
-        "en": "Explain the temperature effect in the linked question, then check the other-ion calculation."
+        "th": "คูณความเข้มข้นไอออนในน้ำบริสุทธิ์ทั้งสองชนิด แล้วระบุอุณหภูมิ",
+        "en": "Multiply the two ion concentrations in pure water and specify the temperature."
       },
       "links": [
         {
           "label": {
-            "th": "หัวข้อ 10",
-            "en": "Section 10"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "stage-10"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 41",
-            "en": "Question 41"
+            "th": "K𝓌 และความเป็นกลางของน้ำ",
+            "en": "K𝓌 and the neutrality of water"
           },
           "target": {
             "kind": "slot",
-            "key": "water-q-05"
+            "key": "water-water-constant"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "น้ำเป็นกลางเมื่อไม่มีไอออนหรือเมื่อไอออนสองชนิดเท่ากัน?",
-          "en": "Is water neutral because ions are absent or because their concentrations are equal?"
+          "th": "ถ้าอุณหภูมิเปลี่ยน น้ำเป็นกลางดูจากอะไร?",
+          "en": "If temperature changes, how do we recognise neutrality?"
         },
         "answer": {
-          "th": "เมื่อ H₃O⁺ และ OH⁻ เข้มข้นเท่ากัน",
-          "en": "When H₃O⁺ and OH⁻ concentrations are equal."
+          "th": "ดูว่า [H₃O⁺] เท่ากับ [OH⁻] ค่าแต่ละชนิดเปลี่ยนตาม K𝓌 ได้",
+          "en": "[H₃O⁺] equals [OH⁻]. Each value can change with K𝓌."
         }
       },
       "after": {
-        "th": "ถ้าอธิบายได้ ให้เลือกฝึกข้อคำนวณในช่วงนี้ต่อ หากยังสับสนกลับไปอ่านสาระและภาพก่อนเปิดเฉลย",
-        "en": "If the explanation is clear, try another calculation in this section. If unsure, revisit the notes and diagrams before revealing solutions."
+        "th": "ใช้ข้อ 44–45 ฝึกอ่านค่าแล้วจัดรูป",
+        "en": "Use questions 44–45 to practise reading the values and rearranging."
       }
     },
     {
       "id": "stage-11",
       "title": {
-        "th": "ค่าคงที่และความแรงของคู่กรด–เบส",
-        "en": "Constants and strength of conjugate pairs"
+        "th": "ทำไม Kₐ ของ HA คูณ Kᵦ ของ A⁻ ได้ K𝓌?",
+        "en": "Why does Kₐ of HA times Kᵦ of A⁻ equal K𝓌?"
       },
       "summary": {
-        "th": "คูณสมการและค่าคงที่ของกรดกับคู่เบสเดียวกันจะได้ KₐKᵦ = K𝓌 ที่อุณหภูมิเดียวกัน\nกรดที่แรงกว่ามีคู่เบสที่อ่อนกว่า การหา K ของคู่สารเป็นคนละงานกับการหาความเข้มข้นไอออนจากสมดุล",
-        "en": "For the same conjugate pair at the same temperature, multiplying the reactions/constants gives KₐKᵦ = K𝓌.\nA stronger acid has a weaker conjugate base. Finding a conjugate constant differs from finding ion concentration through equilibrium."
+        "th": "เขียน Kₐ ของ HA และ Kᵦ ของ A⁻ แล้วคูณกัน ส่วน HA และ A⁻ ตัดกัน\nKₐKᵦ = K𝓌 ใช้กับคู่เดียวกันที่อุณหภูมิเดียวกัน",
+        "en": "Multiply Kₐ for HA by Kᵦ for A⁻; HA and A⁻ cancel.\nKₐKᵦ = K𝓌 applies to the same conjugate pair at the same temperature."
       },
       "story": {
-        "th": "เริ่มจากภาพ สมการ หรือข้อมูลในช่วงนี้ ให้เด็กอธิบายว่าแต่ละปริมาณหมายถึงอะไร ก่อนใช้สูตรในหัวข้อ “ค่าคงที่และความแรงของคู่กรด–เบส”",
-        "en": "Begin with the diagram, reaction or data here. Ask what each quantity means before using a formula in “Constants and strength of conjugate pairs”."
+        "th": "ให้เด็กชี้ว่า A⁻ ได้มาจากสมการไหน ก่อนเขียน A⁻ รับโปรตอนจากน้ำและคูณนิพจน์",
+        "en": "Identify where A⁻ comes from, then write it accepting a proton from water and multiply the expressions."
       },
       "action": {
-        "th": "เลือกคู่กรด–เบสให้ถูกก่อนใช้ความสัมพันธ์ค่าคงที่",
-        "en": "Identify the correct conjugate pair before using the constant relationship."
+        "th": "เขียนนิพจน์ของ HA และ A⁻ คูณกัน แล้วระบุสิ่งที่ตัดได้",
+        "en": "Write and multiply the HA and A⁻ expressions, then identify the factors that cancel."
       },
       "links": [
         {
           "label": {
-            "th": "หัวข้อ 11",
-            "en": "Section 11"
+            "th": "เขียนสองนิพจน์แล้วลองคูณกัน",
+            "en": "Write the two expressions and multiply them"
           },
           "target": {
-            "kind": "anchor",
-            "key": "stage-11"
+            "kind": "slot",
+            "key": "water-constant-proof"
           }
         },
         {
           "label": {
-            "th": "คำถาม 42",
-            "en": "Question 42"
+            "th": "ถ้ารู้ค่าหนึ่ง หาค่าของคู่กันอย่างไร?",
+            "en": "How do we find the conjugate constant from the given one?"
           },
           "target": {
             "kind": "slot",
-            "key": "water-q-06"
+            "key": "water-rearrange-pair"
+          }
+        },
+        {
+          "label": {
+            "th": "กรดยิ่งแรง คู่เบสเป็นอย่างไร?",
+            "en": "What happens to the conjugate base as the acid gets stronger?"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "water-inverse-strength"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "Kₐ ของ HF คูณ Kᵦ ของ NH₃ ได้ K𝓌 หรือไม่?",
-          "en": "Does Kₐ(HF) × Kᵦ(NH₃) equal K𝓌?"
+          "th": "ถ้า Kₐ ใหญ่ขึ้นที่อุณหภูมิเดิม คู่เบสมี Kᵦ อย่างไร?",
+          "en": "If Kₐ increases at the same temperature, what happens to the conjugate Kᵦ?"
         },
         "answer": {
-          "th": "ไม่ได้ ต้องใช้ HF กับคู่เบส F⁻",
-          "en": "No. Pair HF with its conjugate base F⁻."
+          "th": "เล็กลง เพราะ K𝓌 คงที่",
+          "en": "It decreases because K𝓌 is constant."
         }
       },
       "after": {
-        "th": "ถ้าอธิบายได้ ให้เลือกฝึกข้อคำนวณในช่วงนี้ต่อ หากยังสับสนกลับไปอ่านสาระและภาพก่อนเปิดเฉลย",
-        "en": "If the explanation is clear, try another calculation in this section. If unsure, revisit the notes and diagrams before revealing solutions."
+        "th": "ใช้ข้อ 47–49 ฝึกระบุคู่แล้วคำนวณค่าคงที่",
+        "en": "Use questions 47–49 to identify the conjugate pair and calculate the constant."
       }
     }
   ],

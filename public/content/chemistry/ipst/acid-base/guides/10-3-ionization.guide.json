@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "chemistry-ipst-acid-base-10-3-1-sheet",
-    "revision": "2026-11-10-2",
-    "sha256": "7791e1c8f6444e866442cab53cb93d3d29dbb9144b92c6313316e5a8cbff121e"
+    "revision": "2026-11-11-1",
+    "sha256": "57be6604b03037e012d17bdebee348e5908378fc699b2652dab456dd2aca335d"
   },
   "title": {
     "th": "การแตกตัวของกรด เบส และน้ำ",
@@ -99,8 +99,8 @@
         }
       },
       "after": {
-        "th": "ใช้ HCl เจือจางเป็นคำถามปิดช่วงก่อนเขียนสมการ",
-        "en": "Use dilute HCl as the final check before writing equations."
+        "th": "ปิดช่วงด้วยความต่างระหว่าง strong acid กับ strongly acidic โดยเชื่อม [H₃O⁺] กับ pH",
+        "en": "Finish by distinguishing strong acid from strongly acidic, connecting [H₃O⁺] with pH."
       }
     },
     {
@@ -183,8 +183,8 @@
         "en": "Distinguish row F data from the initial solute in row I before converting units."
       },
       "action": {
-        "th": "บอกขั้นจาก CV ไปโมล แล้วอธิบายผลเมื่อเติมน้ำ",
-        "en": "Explain the CV-to-moles step and what changes on dilution."
+        "th": "แสดงตัวประกอบแปลง mL เป็น L แล้วขีดตัดหน่วยก่อนใส่โมลในแถว F",
+        "en": "Show the mL-to-L conversion factor and cross out units before entering moles in row F."
       },
       "links": [
         {
@@ -248,8 +248,8 @@
         "en": "Return to Set B and ask how both directions of the equation relate to the particles shown."
       },
       "action": {
-        "th": "เขียนสมการของ HA แล้วคิดร้อยละจากจำนวนโมเลกุลในภาพ B",
-        "en": "Write the HA reaction and calculate the percentage from the molecule count in Set B."
+        "th": "นับ HA ที่แตกตัวในภาพ B แล้วเขียนสูตรร้อยละก่อนแทน 2/20 × 100",
+        "en": "Count the ionized HA in Set B, write the percentage formula, then substitute 2/20 × 100."
       },
       "links": [
         {
@@ -533,8 +533,8 @@
         "en": "Have students read the graph axes, then ask separately about percentage and H₃O⁺ concentration."
       },
       "action": {
-        "th": "อ่านแนวกราฟ แล้วบอกวิธีย้อนจากร้อยละไปหา x",
-        "en": "Read the graph trend, then explain how to recover x from the percentage."
+        "th": "เริ่มสูตรร้อยละ ตรวจ Cₐ/Kₐ หา x แล้วแทนค่าทีละความเข้มข้น",
+        "en": "Start with the percentage formula, check Cₐ/Kₐ, find x, then substitute for each concentration."
       },
       "links": [
         {
@@ -556,16 +556,6 @@
             "kind": "slot",
             "key": "weak-dilution-weak"
           }
-        },
-        {
-          "label": {
-            "th": "ถ้ารู้ร้อยละแล้ว จะย้อนหา Kₐ อย่างไร?",
-            "en": "How do we work back to Kₐ from a given percentage?"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "weak-reverse-percent"
-          }
         }
       ],
       "check": {
@@ -579,8 +569,8 @@
         }
       },
       "after": {
-        "th": "ให้ใช้ C₀ − x ตอนย้อนหา Kₐ ก่อนทำควิซข้อ 42",
-        "en": "Use C₀ − x when working back to Kₐ before doing quiz question 42."
+        "th": "ให้เด็กจัดรูปจากสูตรร้อยละเองเมื่อทำโจทย์ใน Problem และควิซข้อ 42",
+        "en": "Have students rearrange the percentage formula themselves in Problem and quiz question 42."
       }
     },
     {

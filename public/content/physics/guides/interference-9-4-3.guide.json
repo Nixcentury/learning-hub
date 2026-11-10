@@ -1,0 +1,311 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "physics-ipst-waves-9-4-3-interference-sheet",
+    "revision": "2026-11-10-qa",
+    "sha256": "f20b7a8d4cfcba8cd99633a66363d7cf3caeefaaec96422849e23b5d4767211b"
+  },
+  "title": {
+    "th": "การแทรกสอดของคลื่น",
+    "en": "Wave interference"
+  },
+  "prerequisites": {
+    "th": "ทวนแอมพลิจูด ความยาวคลื่น เฟส และ v = fλ",
+    "en": "Recall amplitude, wavelength, phase and v = fλ."
+  },
+  "goal": {
+    "th": "ใช้ผลต่างทางเดินตัดสินการเสริมและหักล้าง พร้อมอธิบายขอบเขตของสูตรมุม",
+    "en": "Use path difference to predict reinforcement or cancellation and explain when the angle approximation applies."
+  },
+  "steps": [
+    {
+      "id": "superposition",
+      "title": {
+        "th": "คลื่นมาพบกัน",
+        "en": "Waves meet"
+      },
+      "summary": {
+        "th": "การกระจัดรวมเท่ากับ y₁ + y₂ ที่จุดและขณะเดียวกัน\nยอดเจอยอดเสริมกัน ยอดเจอท้องอาจหักล้างทั้งหมดหรือบางส่วน",
+        "en": "At a given point and instant, the total displacement is y₁ + y₂.\nTwo crests reinforce; a crest and a trough can cancel partly or completely."
+      },
+      "story": {
+        "th": "เปิดภาพผิวน้ำแล้วให้เด็กทำนายว่าคลื่นแต่ละขบวนจะเคลื่อนต่ออย่างไรหลังผ่านกัน",
+        "en": "Show the water photograph and ask what each wave does after the overlap."
+      },
+      "action": {
+        "th": "ลองบวกการกระจัดจากรูปซ้อนทับหนึ่งคู่ แล้วอธิบายข้อ 5 ท้ายบท สสวท.",
+        "en": "Add the displacements for one illustrated pair, then explain IPST chapter question 5."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "รูปคลื่นมาพบกัน",
+            "en": "Waves meeting"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "wave-part-1"
+          }
+        },
+        {
+          "label": {
+            "th": "สสวท. ข้อ 5",
+            "en": "IPST question 5"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ipst-end-5"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ยอด +5 cm เจอท้อง −5 cm ได้การกระจัดเท่าไร?",
+          "en": "What is the resultant of +5 cm and −5 cm?"
+        },
+        "answer": {
+          "th": "0 cm ณ จุดและขณะนั้น",
+          "en": "0 cm at that point and instant."
+        }
+      },
+      "after": {
+        "th": "ไปดูว่าการหักล้างซ้ำทุกขณะทำให้เกิดบัพได้อย่างไร",
+        "en": "Next, consider what happens when cancellation repeats at a fixed point."
+      }
+    },
+    {
+      "id": "paths",
+      "title": {
+        "th": "นับผลต่างทางเดิน",
+        "en": "Count path differences"
+      },
+      "summary": {
+        "th": "แหล่งอาพันธ์มีความถี่เท่ากันและผลต่างเฟสคงที่\nเมื่อเฟสตรงกัน Δr = nλ ให้ปฏิบัพ และ Δr = (n − ½)λ ให้บัพเมื่อแอมพลิจูดที่มาถึงเท่ากัน",
+        "en": "Coherent sources have the same frequency and a fixed phase difference.\nFor in-phase sources, Δr = nλ gives an antinode; Δr = (n − ½)λ gives a node if the arriving amplitudes are equal."
+      },
+      "story": {
+        "th": "ใช้รูป 9.24 แยกสันกับท้อง แล้วนับจากแหล่งทั้งสองไปยังจุดเดียวกัน",
+        "en": "Use Fig. 9.24 to distinguish crests from troughs and count from both sources to one point."
+      },
+      "action": {
+        "th": "นับ E และ F ก่อนเปิดเฉลย พร้อมบอกว่าเส้นใดเป็นสันและเส้นใดเป็นท้อง",
+        "en": "Count the distances to E and F before revealing the solution. Identify the crests and troughs."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "รูปและสูตรผลต่างทางเดิน",
+            "en": "Figure and path difference"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "wave-part-3"
+          }
+        },
+        {
+          "label": {
+            "th": "จุด E และ F",
+            "en": "Points E and F"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ipst-94-ef"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ทำไม E เป็นบัพ?",
+          "en": "Why is E a node?"
+        },
+        "answer": {
+          "th": "3λ − 2.5λ = 0.5λ สันคลื่นจึงเจอท้องคลื่น",
+          "en": "3λ − 2.5λ = 0.5λ, so a crest meets a trough."
+        }
+      },
+      "after": {
+        "th": "ไปดูการประมาณระยะไกลเมื่อโจทย์ให้มุมแทนระยะถึงแหล่งกำเนิด",
+        "en": "Continue to the far-field approximation for questions that give an angle."
+      }
+    },
+    {
+      "id": "geometry",
+      "title": {
+        "th": "มุมและฉาก",
+        "en": "Angle and screen"
+      },
+      "summary": {
+        "th": "ที่ระยะไกล ใช้ Δr ≈ d sin θ จากภาพฉายตั้งฉาก\nจากสามเหลี่ยม sin θ = x/√(L² + x²) และใช้ Δr ≈ dx/L เพิ่มได้เมื่อ x ≪ L",
+        "en": "In the far field, perpendicular projection gives Δr ≈ d sin θ.\nThe triangle gives sin θ = x/√(L² + x²); Δr ≈ dx/L additionally requires x ≪ L."
+      },
+      "story": {
+        "th": "ชี้ H และมุมฉากก่อน แล้วให้เด็กแยกเงื่อนไขระยะไกลกับมุมเล็ก",
+        "en": "Point to H and the right angle first. Then separate the far-field and small-angle conditions."
+      },
+      "action": {
+        "th": "ทำโจทย์สร้างเพิ่มข้อ 2 เทียบค่า 7.48 mm กับ 7.50 mm",
+        "en": "Use original practice 2 to compare 7.48 mm and 7.50 mm."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ที่มาของ d sin θ",
+            "en": "Projection and d sin θ"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "wave-part-4"
+          }
+        },
+        {
+          "label": {
+            "th": "โจทย์เทียบสองการประมาณ",
+            "en": "Compare the two approximations"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "extra-geometry-2"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ต้องเพิ่มเงื่อนไขใดจึงแทน sin θ ด้วย x/L?",
+          "en": "What extra condition lets us replace sin θ by x/L?"
+        },
+        "answer": {
+          "th": "x ≪ L ทำให้ θ เล็ก",
+          "en": "x ≪ L, so θ is small."
+        }
+      },
+      "after": {
+        "th": "เมื่ออธิบายสองเงื่อนไขได้แล้ว ให้ลองโจทย์หามุมข้อ 1",
+        "en": "When both conditions are clear, try practice question 1 on the angle."
+      }
+    },
+    {
+      "id": "phase",
+      "title": {
+        "th": "เปลี่ยนเฟสเริ่มต้น",
+        "en": "Change the source phase"
+      },
+      "summary": {
+        "th": "ระยะทางต่าง Δr ทำให้เฟสต่าง 2πΔr/λ เรเดียน\nถ้าเฟสเริ่มต้นต่าง 180° เงื่อนไขบัพกับปฏิบัพสลับกัน",
+        "en": "A path difference Δr contributes a phase difference of 2πΔr/λ radians.\nAn initial 180° offset swaps the node and antinode conditions."
+      },
+      "story": {
+        "th": "ชี้แนวกลางที่ระยะถึงสองแหล่งเท่ากัน แล้วให้เด็กเทียบสองกรณี",
+        "en": "Compare the two cases on the centreline, which is equidistant from the sources."
+      },
+      "action": {
+        "th": "ทำคำถามท้ายหน้า 95 เรื่องเฟสตรงข้าม พร้อมอธิบายว่าทำไมแนวกลางเปลี่ยน",
+        "en": "Answer the end-of-page 95 question on opposite phase and explain the centreline."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "รูปเทียบ 0° และ 180°",
+            "en": "Compare 0° and 180°"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "wave-part-6"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถามแนวกลาง",
+            "en": "Centreline question"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ipst-95-middle"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ที่แนวกลางของแหล่งกำเนิดเฟสตรงข้าม ผลต่างเฟสเป็นเท่าไร?",
+          "en": "For opposite-phase sources, what is the phase difference on the centreline?"
+        },
+        "answer": {
+          "th": "180° เพราะผลต่างทางเดินเป็นศูนย์",
+          "en": "180°, because the path difference is zero."
+        }
+      },
+      "after": {
+        "th": "ฝึกเพิ่มด้วยข้อที่ให้นับจุดบัพและปฏิบัพระหว่างแหล่งกำเนิด",
+        "en": "For further practice, count nodes and antinodes between the sources."
+      }
+    },
+    {
+      "id": "practice",
+      "title": {
+        "th": "ฝึกคลื่นนิ่งและโจทย์จากรูป",
+        "en": "Standing waves and diagram practice"
+      },
+      "summary": {
+        "th": "บัพติดกันในคลื่นนิ่งห่าง λ/2 และบัพถึงปฏิบัพถัดไปห่าง λ/4\nเชือกตรึงสองปลายที่มี n ลูปให้ L = nλ/2",
+        "en": "Adjacent nodes are λ/2 apart; a node and the nearest antinode are λ/4 apart.\nA string fixed at both ends with n loops has L = nλ/2."
+      },
+      "story": {
+        "th": "แยกการนับลูปบนเชือกออกจากการนับอันดับแนวบัพของคลื่นน้ำ",
+        "en": "Distinguish counting loops on a string from counting nodal-line orders on water."
+      },
+      "action": {
+        "th": "ทำตัวอย่าง 9.6 และ PEC ข้อ 52 โดยอ่านรูปก่อนแทนตัวเลข",
+        "en": "Work IPST Example 9.6 and PEC question 52, reading the figures before substituting numbers."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "สสวท. ตัวอย่าง 9.6",
+            "en": "IPST Example 9.6"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ipst-example-9-6"
+          }
+        },
+        {
+          "label": {
+            "th": "PEC ข้อ 52",
+            "en": "PEC question 52"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "pec-52"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เชือกยาว 1.50 m มี 3 ลูป ความยาวคลื่นเท่าไร?",
+          "en": "A 1.50 m string has three loops. What is the wavelength?"
+        },
+        "answer": {
+          "th": "λ = 2(1.50)/3 = 1.00 m",
+          "en": "λ = 2(1.50)/3 = 1.00 m."
+        }
+      },
+      "after": {
+        "th": "เลือกโจทย์เพิ่มตามจุดที่ยังสับสนจากท้ายใบ",
+        "en": "Select further practice at the end of the sheet to address any remaining gaps."
+      }
+    }
+  ],
+  "finish": {
+    "th": "เชื่อมผลต่างทางเดินกับเฟส และเลือกใช้สูตรตามสมมติฐานของรูป",
+    "en": "Connect path difference to phase and choose a formula that fits the geometry."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "แหล่งกำเนิดเฟสตรงกันให้ Δr = 1.5λ จุดนั้นเป็นอะไร?",
+      "en": "For in-phase sources with Δr = 1.5λ, what type of point is this?"
+    },
+    "answer": {
+      "th": "บัพอันดับสองเมื่อแอมพลิจูดที่มาถึงเท่ากัน",
+      "en": "A second-order node when the arriving amplitudes are equal."
+    }
+  }
+}

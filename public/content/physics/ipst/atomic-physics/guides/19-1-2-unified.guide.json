@@ -2,485 +2,550 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-atomic-19-1-2-sheet",
-    "revision": "2026-11-08-self-study-steps",
-    "sha256": "97ec9d56c9f614a473cc4a9a85a389c9f0ff1d05ed32aa0eeda3fbba9741a631"
+    "revision": "2026-11-11-learning-problem-r1",
+    "sha256": "7f8ae6a41ba516a611f33852717821f12bac44a50c899d140d112757566d34ec"
   },
   "title": {
-    "th": "จากหลักฐานอะตอมถึงแบบจำลองโบร์และสเปกตรัม",
-    "en": "From atomic evidence to Bohr’s model and spectra"
+    "th": "ทฤษฎีโบร์: จากสเปกตรัมจริงถึงการคำนวณ",
+    "en": "Bohr: observed spectra to calculations"
   },
   "prerequisites": {
-    "th": "ทวนแรงไฟฟ้า แรงสู่ศูนย์กลาง พลังงานจลน์ และ Eγ = hf = hc/λ พร้อมหน่วย J/eV จากใบพลังค์",
-    "en": "Review electric force, circular motion, kinetic energy and Eγ = hf = hc/λ, including J/eV units from the Planck sheet."
+    "th": "ทบทวน Eγ=hf=hc/λ, การแปลง nm เป็น m, eV และแรงสู่ศูนย์กลางจากเรื่องก่อนหน้า",
+    "en": "Review photon energy, nm-to-m and eV units, and centripetal force from prior physics."
   },
   "goal": {
-    "th": "เชื่อมหลักฐานการกระเจิงและสเปกตรัมกับแบบจำลอง ใช้ระดับเริ่มต้น–สุดท้ายหาพลังงานและความยาวคลื่น โดยแยก K, U, E และพลังงานโฟตอนให้ถูก",
-    "en": "Connect scattering and spectra to the model. Use initial/final states to find energies and wavelengths, distinguishing K, U, total E and photon energy."
+    "th": "อธิบายเส้นสเปกตรัมจากผลต่างระดับพลังงาน ใช้สูตรรัศมี พลังงาน และโฟตอน พร้อมทำโจทย์ สสวท. และแนว A-Level ไม่เกินเนื้อหา",
+    "en": "Explain spectral lines using level gaps; apply Bohr radius, energy and photon formulas to IPST and in-scope A-Level-style problems."
   },
   "steps": [
     {
+      "id": "spectrum",
+      "title": {
+        "th": "เริ่มที่ภาพสเปกตรัม",
+        "en": "Start from spectral evidence"
+      },
+      "summary": {
+        "th": "หลอดไส้ร้อนให้สเปกตรัมต่อเนื่อง ส่วนแก๊สที่ถูกกระตุ้นให้เส้นเฉพาะบางสี\nเส้นมืดจากการดูดกลืนทำให้เกิดคำถามเรื่องพลังงานที่ยอมรับได้",
+        "en": "Hot filaments show continuous spectra; excited gases give characteristic lines.\nAbsorption reveals dark lines and raises the question of allowed atomic energies."
+      },
+      "story": {
+        "th": "ชี้ภาพก่อนถามเด็กว่าเหตุใดบางสีจึงหายไป",
+        "en": "Show the pattern first, then ask why selected wavelengths are missing."
+      },
+      "action": {
+        "th": "อ่านภาพและจดข้อสรุปหลัก",
+        "en": "Inspect the figures and record the key observation."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เริ่มที่ภาพสเปกตรัม",
+            "en": "Start from spectral evidence"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "learning-1"
+          }
+        },
+        {
+          "label": {
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "bohr-core-spectrum"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ทำไมสเปกตรัมไฮโดรเจนไม่ต่อเนื่อง?",
+          "en": "Why isn't hydrogen's emission spectrum continuous?"
+        },
+        "answer": {
+          "th": "อะตอมปล่อยโฟตอนได้เฉพาะพลังงานที่สอดคล้องกับผลต่างระดับ",
+          "en": "Only photons matching allowed level gaps are emitted."
+        }
+      },
+      "after": {
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
+      }
+    },
+    {
+      "id": "measurement",
+      "title": {
+        "th": "จากเส้นสเปกตรัมสู่พลังงาน",
+        "en": "From spectral wavelength to photon energy"
+      },
+      "summary": {
+        "th": "แยกสีด้วยเกรตติงและใช้ความยาวคลื่นที่สังเกตได้\nค่ามาตรฐานของเส้นแดงไฮโดรเจนให้พลังงานโฟตอนประมาณ 1.89 eV",
+        "en": "A grating separates wavelengths that can be measured.\nA reference hydrogen red line corresponds to roughly 1.89 eV per photon."
+      },
+      "story": {
+        "th": "ย้ำว่า 656.3 nm เป็นค่าอ้างอิง ไม่ใช่ผลวัดจริงของนักเรียน",
+        "en": "State clearly that 656.3 nm is a reference value, not student data."
+      },
+      "action": {
+        "th": "ทวนการแปลง nm เป็น m และคำนวณโฟตอน",
+        "en": "Convert nm to m and calculate photon energy."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "จากเส้นสเปกตรัมสู่พลังงาน",
+            "en": "From spectral wavelength to photon energy"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "learning-2"
+          }
+        },
+        {
+          "label": {
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "bohr-core-photon"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เหตุใดจึงต้องแปลงนาโนเมตร?",
+          "en": "Why convert nanometres?"
+        },
+        "answer": {
+          "th": "เมื่อใช้ h และ c ใน SI ต้องให้ λ อยู่ในเมตร",
+          "en": "With h and c in SI, wavelength must be in metres."
+        }
+      },
+      "after": {
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
+      }
+    },
+    {
       "id": "evidence",
       "title": {
-        "th": "หลักฐานใดทำให้เปลี่ยนภาพอะตอม",
-        "en": "Evidence that changes the atomic model"
+        "th": "ทำไมจึงต้องเสนอแบบจำลองใหม่",
+        "en": "Why a new atomic model was needed"
       },
       "summary": {
-        "th": "ทอมสันเสนอประจุบวกกระจายและอิเล็กตรอนฝังอยู่\nการผ่านเกือบตรงของแอลฟาส่วนใหญ่และการเบนมุมมากของส่วนน้อยสนับสนุนนิวเคลียสเล็กที่รวมประจุบวกและมวลเกือบทั้งหมด",
-        "en": "Thomson spread positive charge through a sphere containing electrons.\nMostly straight alpha paths and rare large deflections support a tiny nucleus containing positive charge and nearly all atomic mass."
+        "th": "แอลฟาส่วนใหญ่ผ่านแผ่นทองคำ แต่ส่วนน้อยเบนมากหรือกลับหลัง\nผลนี้บอกโครงสร้างนิวเคลียส แต่ยังไม่อธิบายสเปกตรัมแบบเส้น",
+        "en": "Most alpha particles pass through gold foil, but a few scatter strongly.\nThe nucleus explains the scattering, not discrete spectral lines by itself."
       },
       "story": {
-        "th": "ชี้รูปการกระเจิงก่อนเล่าชื่อแบบจำลอง ถามว่า “อนุภาคส่วนใหญ่ผ่านตรงบอกอะไร และอนุภาคส่วนน้อยที่กลับหลังบอกอะไรเพิ่ม?”",
-        "en": "Start with scattering paths: “What do the many straight paths tell us, and what extra evidence comes from the rare backward paths?”"
+        "th": "สอนแยกแรงไฟฟ้าจริงจากอุปมาแม่เหล็ก",
+        "en": "Separate true electric scattering from the magnet analogy."
       },
       "action": {
-        "th": "ดูตารางผลการกระเจิง แล้วตอบคำถาม 2 และ 3",
-        "en": "Read the scattering table, then answer Questions 2 and 3."
+        "th": "ตอบหลักฐานจากแผ่นทองคำ",
+        "en": "Explain the gold-foil evidence."
       },
       "links": [
         {
           "label": {
-            "th": "หลักฐานและตารางผล",
-            "en": "Evidence and observations"
+            "th": "ทำไมจึงต้องเสนอแบบจำลองใหม่",
+            "en": "Why a new atomic model was needed"
           },
           "target": {
             "kind": "anchor",
-            "key": "section-1"
+            "key": "learning-3"
           }
         },
         {
           "label": {
-            "th": "คำถาม 2",
-            "en": "Question 2"
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
           },
           "target": {
             "kind": "slot",
-            "key": "rare-backscatter"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 3",
-            "en": "Question 3"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "contact-nucleus"
+            "key": "bohr-core-evidence"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "แอลฟาต้องสัมผัสนิวเคลียสก่อนจึงเบนหรือไม่?",
-          "en": "Must an alpha particle touch the nucleus before being deflected?"
+          "th": "แอลฟาต้องชนผิวนิวเคลียสก่อนเบนไหม?",
+          "en": "Must alpha particles touch the nucleus to deflect?"
         },
         "answer": {
-          "th": "ไม่ต้อง แรงผลักไฟฟ้ากระทำได้โดยไม่สัมผัส",
-          "en": "No. Electric repulsion acts without contact."
+          "th": "ไม่ต้อง เพราะแรงไฟฟ้าเป็นแรงไม่สัมผัส",
+          "en": "No; electric forces act without contact."
         }
       },
       "after": {
-        "th": "ถ้ายังสับสนแบบจำลอง ใช้คำถาม 5 เปรียบเทียบการกระจายประจุ",
-        "en": "Use Question 5 if the charge distributions are still unclear."
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
       }
     },
     {
-      "id": "magnet-analogy",
+      "id": "postulates",
       "title": {
-        "th": "ใช้แม่เหล็กช่วยเห็นแรงที่ไม่ต้องสัมผัส",
-        "en": "Make non-contact deflection visible"
+        "th": "ข้อเสนอของโบร์",
+        "en": "Bohr's postulates"
       },
       "summary": {
-        "th": "ในกิจกรรม A แทนนิวเคลียสและ B แทนแอลฟา\nเมื่อควบคุมอัตราเร็วเริ่มต้นใกล้เคียงกัน การผ่านใกล้ A ให้การเบนมากกว่า แต่แรงในกิจกรรมเป็นแม่เหล็ก ส่วนของจริงเป็นแรงไฟฟ้า",
-        "en": "A represents the nucleus and B an alpha particle.\nAt similar initial speed, closer approaches give larger deflections. The analogy is magnetic, whereas real scattering is electric."
+        "th": "ระดับที่อนุญาตเป็นจำนวนเต็มบวก และสถานะคงตัวไม่แผ่รังสี\nการเปลี่ยนระดับสัมพันธ์กับการดูดกลืนหรือเปล่งโฟตอน",
+        "en": "Allowed n values are positive integers and stationary states do not radiate.\nTransitions correspond to photon absorption or emission."
       },
       "story": {
-        "th": "ชี้แนวเริ่มต้นทั้งสามก่อนเปิดผล ให้เด็กคาดการณ์แล้วเทียบการเบน อย่าเล่าว่าแม่เหล็กคือแรงจริงในอะตอม",
-        "en": "Compare the three initial paths before showing results. Predict and compare deflections, while distinguishing the analogy from the actual force."
+        "th": "ชี้สมการเริ่มต้นสองข้อ แต่ไม่ให้พิสูจน์หลายบรรทัด",
+        "en": "Show the two physical starting relationships without a long derivation."
       },
       "action": {
-        "th": "อธิบายแนว 1–3 สั้น ๆ แล้วตอบคำถาม 4",
-        "en": "Describe paths 1–3 briefly, then answer Question 4."
+        "th": "ยกตัวอย่างสถานะพื้นและกระตุ้น",
+        "en": "Identify ground and excited levels."
       },
       "links": [
         {
           "label": {
-            "th": "การเคลื่อนที่แนว 1",
-            "en": "Path 1"
+            "th": "ข้อเสนอของโบร์",
+            "en": "Bohr's postulates"
           },
           "target": {
-            "kind": "slot",
-            "key": "magnet-path-1"
+            "kind": "anchor",
+            "key": "learning-4"
           }
         },
         {
           "label": {
-            "th": "การเคลื่อนที่แนว 3",
-            "en": "Path 3"
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
           },
           "target": {
             "kind": "slot",
-            "key": "magnet-path-3"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 4",
-            "en": "Question 4"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "magnet-limit"
+            "key": "bohr-core-postulates"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "กิจกรรมนี้ใช้คำนวณสัดส่วนการกระเจิงจริงได้หรือไม่?",
-          "en": "Can this analogy calculate actual scattering proportions?"
+          "th": "สถานะกระตุ้นที่สองคือ n เท่าใด?",
+          "en": "What n is the second excited state?"
         },
         "answer": {
-          "th": "ไม่ได้ ใช้เปรียบเทียบแรงผลักและการเบน แต่ขนาดแม่เหล็ก แรง และแรงเสียดทานต่างจากของจริง",
-          "en": "No. It illustrates repulsion and deflection, but magnet size, forces and friction differ from atomic scattering."
+          "th": "n=3",
+          "en": "n=3"
         }
       },
       "after": {
-        "th": "ผ่านแล้วไปดูแสงจากอะตอม ซึ่งเป็นหลักฐานอีกชนิด",
-        "en": "Next examine atomic light as another kind of evidence."
-      }
-    },
-    {
-      "id": "grating",
-      "title": {
-        "th": "อ่านแนวกลางและมุมก่อนวัดสเปกตรัม",
-        "en": "Read the central direction and angle first"
-      },
-      "summary": {
-        "th": "เกรตติงใช้การเลี้ยวเบนและการแทรกสอดแยกความยาวคลื่น\nมุม θ วัดจากแนวตั้งฉากกับเกรตติง แสงอันดับหนึ่งใช้ d sinθ = λ และ d = 1/N เมื่อ N อยู่ในหน่วยเส้นต่อเมตร",
-        "en": "A grating separates wavelengths through diffraction and interference.\nMeasure θ from the normal. First order uses d sinθ = λ, with d = 1/N when N is in lines per metre."
-      },
-      "story": {
-        "th": "ชี้ภาพคลื่นน้ำ ให้เทียบ 5λ กับ 4λ และ 4.5λ กับ 4λ แล้วค่อยโยง Δ ไปสู่ d sinθ ของช่องเกรตติง",
-        "en": "Compare the 5λ/4λ and 4.5λ/4λ paths in the water-wave figure, then connect Δ to d sinθ for grating openings."
-      },
-      "action": {
-        "th": "ตอบคำถาม 6 แล้วอธิบายว่าความถี่แสงบอกพลังงานได้อย่างไรในคำถาม 7",
-        "en": "Answer Question 6, then explain the frequency–energy connection in Question 7."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "คลื่นน้ำและผลต่างทางเดิน",
-            "en": "Water-wave path difference"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "water-interference-review"
-          }
-        },
-        {
-          "label": {
-            "th": "เกรตติงแยกแสง",
-            "en": "Grating separation"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "grating-review"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 6",
-            "en": "Question 6"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "grating-angle"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 7",
-            "en": "Question 7"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "spectrum-purpose"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "5300 เส้น/cm ต้องแปลงอย่างไรก่อนหา d?",
-          "en": "How do you use 5300 lines/cm to find d?"
-        },
-        "answer": {
-          "th": "แปลงเป็น 530000 เส้น/m แล้วใช้ d = 1/N",
-          "en": "Convert to 530000 lines/m, then use d = 1/N."
-        }
-      },
-      "after": {
-        "th": "ถ้าชี้มุมได้แล้วจึงเข้าสู่การวัด ไม่จำเป็นต้องวาดอุปกรณ์ซ้ำ",
-        "en": "Proceed to measurements once the angle is clear; copying the apparatus drawing is unnecessary."
-      }
-    },
-    {
-      "id": "spectrum-activity",
-      "title": {
-        "th": "จากตำแหน่งเส้นไปสู่ความยาวคลื่น",
-        "en": "From line position to wavelength"
-      },
-      "summary": {
-        "th": "วัด x ซ้าย–ขวาของเส้นสีเดียวกันแล้วหาค่าเฉลี่ย\nสำหรับอันดับหนึ่ง λ = d x̄/√(D² + x̄²) ใช้ D และ x หน่วยเดียวกัน ข้อมูลตัวอย่างแยกจากผลที่วัดเอง",
-        "en": "Average left and right positions for the same colour.\nFor first order λ = d x̄/√(D² + x̄²). Use the same units for D and x, and distinguish sample data from actual measurements."
-      },
-      "story": {
-        "th": "เริ่มจากจุดประสงค์ แยกค่าที่วัดกับค่าที่คำนวณ ใช้รูป OC–CP–OP หา sinθ แล้วจัดรูป d sinθ = mλ เพื่อหา λ ก่อนให้กรอกตาราง",
-        "en": "Start with the aims and separate measured from calculated quantities. Use OC–CP–OP to find sinθ, then rearrange d sinθ = mλ for λ before filling the tables."
-      },
-      "action": {
-        "th": "ทำแถว H แดงและ H ฟ้า แล้วตอบคำถาม 10 เรื่องการเทียบค่าที่วัดกับค่าอ้างอิง",
-        "en": "Calculate the H red and cyan rows, then answer Question 10 on comparing a measurement with a reference."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "จุดประสงค์การทดลอง",
-            "en": "Experiment aims"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "spectrum-objectives"
-          }
-        },
-        {
-          "label": {
-            "th": "เรขาคณิตระยะที่วัด",
-            "en": "Measurement geometry"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "spectrum-geometry"
-          }
-        },
-        {
-          "label": {
-            "th": "จัดรูปสูตรก่อนตาราง",
-            "en": "Formulas before the tables"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "spectrum-calculation-method"
-          }
-        },
-        {
-          "label": {
-            "th": "ชุดทดลองและข้อมูล",
-            "en": "Apparatus and data"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "section-4"
-          }
-        },
-        {
-          "label": {
-            "th": "คำนวณ H แดง",
-            "en": "H red calculation"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "activity-line-1"
-          }
-        },
-        {
-          "label": {
-            "th": "คำนวณ H ฟ้า",
-            "en": "H cyan calculation"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "activity-line-2"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 10",
-            "en": "Question 10"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "adapted-measurement-comparison"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "ได้ 655 nm แทน 656 nm แปลว่าแบบจำลองผิดทันทีหรือไม่?",
-          "en": "Does 655 nm instead of 656 nm immediately disprove the model?"
-        },
-        "answer": {
-          "th": "ยังสรุปไม่ได้ ต้องพิจารณาความละเอียดและความไม่แน่นอนของการวัดร่วมกับเส้นอื่น",
-          "en": "No. Consider measurement resolution and uncertainty, together with other lines."
-        }
-      },
-      "after": {
-        "th": "แถวที่เหลือใช้ฝึกเองได้ ถ้าทำทดลองจริงให้บันทึกค่าจริงแยกจากชุดตัวอย่าง",
-        "en": "Use remaining rows for independent practice. Keep actual experimental readings separate from the sample."
-      }
-    },
-    {
-      "id": "spectral-patterns",
-      "title": {
-        "th": "เส้นสว่างกับเส้นมืดบอกช่องว่างเดียวกัน",
-        "en": "Bright and dark lines reflect energy gaps"
-      },
-      "summary": {
-        "th": "แก๊สที่ถูกกระตุ้นให้เส้นเปล่งออก ส่วนแสงต่อเนื่องผ่านแก๊สอาจมีเส้นดูดกลืน\nการรับและปล่อยระหว่างระดับคู่เดิมใช้พลังงานและความยาวคลื่นเท่ากัน โดยการดูดกลืนต้องมีอะตอมอยู่ในระดับเริ่มต้นที่เหมาะสม",
-        "en": "Excited gas produces emission lines; a continuous beam through gas can show absorption lines.\nThe same pair of levels has the same photon energy and wavelength in either direction, with a suitable initial atomic state required for absorption."
-      },
-      "story": {
-        "th": "เทียบภาพแหล่งกำเนิดและผลที่เห็นก่อนถามว่า “เส้นมืดหายไปเพราะอะไร?” แล้วใช้ภาพลูกศรขึ้น–ลงเชื่อมไปยังแบบจำลองโบร์",
-        "en": "Compare the observing arrangements and ask why some wavelengths are missing. Use upward/downward arrows to lead into Bohr’s model."
-      },
-      "action": {
-        "th": "ตอบคำถาม 11–12 โดยชี้หลักฐานจากภาพ",
-        "en": "Use the diagrams to answer Questions 11–12."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "การเปล่งออก",
-            "en": "Emission"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "emission-summary"
-          }
-        },
-        {
-          "label": {
-            "th": "การดูดกลืน",
-            "en": "Absorption"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "absorption-summary"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 11",
-            "en": "Question 11"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "same-wavelength"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "เหตุใดการกลับทิศของระดับคู่เดิมไม่เปลี่ยนความยาวคลื่น?",
-          "en": "Why does reversing a transition between the same two levels preserve wavelength?"
-        },
-        "answer": {
-          "th": "ขนาดช่องว่างพลังงานเท่าเดิม และ Eγ = hc/λ",
-          "en": "The energy-gap magnitude is unchanged, and Eγ = hc/λ."
-        }
-      },
-      "after": {
-        "th": "ต่อด้วยเงื่อนไขวงโคจรของโบร์ เพื่ออธิบายว่าทำไมพลังงานจึงเป็นบางค่า",
-        "en": "Continue to allowed Bohr orbits to explain discrete energies."
-      }
-    },
-    {
-      "id": "bohr-postulates",
-      "title": {
-        "th": "โบร์เพิ่มเงื่อนไขอะไรให้แบบจำลอง",
-        "en": "What Bohr adds to the model"
-      },
-      "summary": {
-        "th": "วงโคจรที่อนุญาตมี mvr = nh/(2π), n เป็นจำนวนเต็มบวก\nอิเล็กตรอนไม่แผ่รังสีขณะอยู่ในวงโคจรที่อนุญาต การเปลี่ยนระดับรับหรือปล่อยโฟตอนตามผลต่างพลังงาน",
-        "en": "Allowed orbits satisfy mvr = nh/(2π), with positive-integer n.\nAn electron does not radiate in an allowed orbit; transitions exchange photons matching level differences."
-      },
-      "story": {
-        "th": "ทวน L = mvr แล้วแยกให้เห็นว่าเงื่อนไขจำนวนเต็มเป็นข้อเสนอของโบร์ จากนั้นจึงใช้ร่วมกับแรงไฟฟ้าเพื่อหาผลที่ตรวจสอบได้",
-        "en": "Review L = mvr and identify integer quantization as a postulate, then combine it with the electric force to obtain testable consequences."
-      },
-      "action": {
-        "th": "ตอบคำถาม 13 แล้วตามการพิสูจน์รัศมีในหัวข้อ 7",
-        "en": "Answer Question 13, then follow the radius derivation in section 7."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "เงื่อนไขของโบร์",
-            "en": "Bohr condition"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "formula-angular"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 13",
-            "en": "Question 13"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "adapted-allowed-n"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "n = 1.5 ใช้เป็นวงโคจรที่อนุญาตได้หรือไม่?",
-          "en": "Can n = 1.5 label an allowed orbit?"
-        },
-        "answer": {
-          "th": "ไม่ได้ n ต้องเป็นจำนวนเต็มบวกในแบบจำลองนี้",
-          "en": "No. This model requires positive-integer n."
-        }
-      },
-      "after": {
-        "th": "เก็บเงื่อนไขนี้ไว้ใช้คู่กับแรงสู่ศูนย์กลาง ไม่ต้องเพิ่มข้อพิสูจน์เชิงควอนตัมขั้นสูง",
-        "en": "Use this condition alongside circular motion; an advanced quantum proof is not required."
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
       }
     },
     {
       "id": "radius",
       "title": {
-        "th": "เริ่มจากวงโคจรที่อนุญาต",
-        "en": "Start with allowed orbits"
+        "th": "ที่มารัศมีโบร์และอัตราเร็ว",
+        "en": "Origin of Bohr radius and speed"
       },
       "summary": {
-        "th": "ในแบบจำลองโบร์ n = 1, 2, 3, … และ mvr = nh/(2π)\nสำหรับไฮโดรเจน rₙ = a₀n² โดย a₀ = 5.29 × 10⁻¹¹ m รัศมีจึงเพิ่มตาม n²",
-        "en": "In Bohr’s model n = 1, 2, 3, … and mvr = nh/(2π).\nFor hydrogen rₙ = a₀n², where a₀ = 5.29 × 10⁻¹¹ m. Radius grows with n²."
+        "th": "ย่อการจัดรูปสมการ แต่แทนค่าคงตัวจริงจนเห็น a₀\nสูตรที่ใช้คือ rₙ=n²a₀ และ vₙ∝1/n",
+        "en": "Skip long algebra but substitute physical constants to obtain a₀.\nUse rₙ=n²a₀ and vₙ∝1/n for hydrogen."
       },
       "story": {
-        "th": "เปิดหัวข้อ 6 แล้วถามว่า “ถ้าเลขวงโคจรเพิ่มเป็นสองเท่า รัศมีเพิ่มสองเท่าด้วยไหม?” ใช้หัวข้อ 7 เชื่อมแรงไฟฟ้าที่ทำหน้าที่เป็นแรงสู่ศูนย์กลางกับเงื่อนไขของโบร์",
-        "en": "Start at section 6: “If the orbit number doubles, does the radius double?” In section 7, connect electric force as centripetal force to Bohr’s condition."
+        "th": "ย้ำ n² และการนับสถานะกระตุ้นให้ถูก",
+        "en": "Focus on n² and correct excited-state labels."
       },
       "action": {
-        "th": "อ่านสูตรรัศมี แล้วทำคำถาม 14 โดยใช้อัตราส่วนก่อนแทนค่าคงตัว",
-        "en": "Read the radius formula, then solve Question 14 using a ratio before substituting constants."
+        "th": "ฝึกโจทย์อัตราส่วนและย้อนหา n",
+        "en": "Practice inverse radius and ratios."
       },
       "links": [
         {
           "label": {
-            "th": "สูตรรัศมี · หัวข้อ 7",
-            "en": "Radius formula · section 7"
+            "th": "ที่มารัศมีโบร์และอัตราเร็ว",
+            "en": "Origin of Bohr radius and speed"
           },
           "target": {
-            "kind": "slot",
-            "key": "formula-radius"
+            "kind": "anchor",
+            "key": "learning-5"
           }
         },
         {
           "label": {
-            "th": "คำถาม 14",
-            "en": "Question 14"
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "bohr-core-radius"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "n เพิ่มจาก 1 เป็น 3 รัศมีเป็นกี่เท่า?",
+          "en": "How much does radius grow from n=1 to 3?"
+        },
+        "answer": {
+          "th": "9 เท่า",
+          "en": "9 times"
+        }
+      },
+      "after": {
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
+      }
+    },
+    {
+      "id": "energy",
+      "title": {
+        "th": "ที่มาของ −13.6 eV",
+        "en": "Origin of −13.6 eV"
+      },
+      "summary": {
+        "th": "ใช้ E=K+U และค่าคงตัวจริงเพื่อได้ E₁≈−13.6 eV\nพลังงานติดลบหมายถึงอิเล็กตรอนยังถูกยึดเหนี่ยว",
+        "en": "Use E=K+U and physical constants to obtain E₁≈−13.6 eV.\nNegative total energy means the electron remains bound."
+      },
+      "story": {
+        "th": "เขียนที่มาให้เห็น ไม่ให้เด็กคัดลอกการพิสูจน์",
+        "en": "Show numerical provenance without requiring copying."
+      },
+      "action": {
+        "th": "เปรียบเทียบ K, U, E และพลังงานไอออไนซ์",
+        "en": "Compare K, U, E and ionization."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ที่มาของ −13.6 eV",
+            "en": "Origin of −13.6 eV"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "learning-6"
+          }
+        },
+        {
+          "label": {
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "bohr-core-energy"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้า E=−3.4 eV ค่า K คือเท่าใด?",
+          "en": "If E=−3.4 eV, what is K?"
+        },
+        "answer": {
+          "th": "K=+3.4 eV",
+          "en": "K=+3.4 eV"
+        }
+      },
+      "after": {
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
+      }
+    },
+    {
+      "id": "transitions",
+      "title": {
+        "th": "กลับไปอธิบายเส้นสเปกตรัม",
+        "en": "Explain the original spectrum"
+      },
+      "summary": {
+        "th": "การลดระดับปล่อยโฟตอน ส่วนการเพิ่มระดับดูดกลืนพลังงาน\nใช้ผลต่างพลังงาน โฟตอน และสมการริดเบิร์กอธิบาย λ",
+        "en": "Dropping between levels emits; rising absorbs photon energy.\nUse energy gaps and the Rydberg relation to explain line wavelengths."
+      },
+      "story": {
+        "th": "กลับไปชี้เส้นสีแดงที่คำนวณตอนเปิดเรื่อง",
+        "en": "Return to the red line calculated at the start."
+      },
+      "action": {
+        "th": "ฝึกอ่านลูกศรและแยกหนึ่งอะตอมกับหลายอะตอม",
+        "en": "Practice arrows and distinguish a single atom from an ensemble."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "กลับไปอธิบายเส้นสเปกตรัม",
+            "en": "Explain the original spectrum"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "learning-7"
+          }
+        },
+        {
+          "label": {
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "bohr-core-transition"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "3→2 เป็นการดูดกลืนหรือเปล่งแสง?",
+          "en": "Is 3→2 emission or absorption?"
+        },
+        "answer": {
+          "th": "เปล่งแสงประมาณ 656 nm ในอนุกรมบัลเมอร์",
+          "en": "Emission around 656 nm in Balmer."
+        }
+      },
+      "after": {
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
+      }
+    },
+    {
+      "id": "series",
+      "title": {
+        "th": "อนุกรมและข้อจำกัด",
+        "en": "Spectral series and model limits"
+      },
+      "summary": {
+        "th": "อนุกรมเรียกตามระดับปลาย และแถบแสงสัมพันธ์กับช่องว่างพลังงาน\nโบร์ไม่ใช่ภาพวงโคจรแน่นอนในกลศาสตร์ควอนตัมสมัยใหม่",
+        "en": "Series names follow final levels and energy gaps determine wavelengths.\nBohr orbits are not literal modern quantum electron paths."
+      },
+      "story": {
+        "th": "ใช้แผนภาพสั้น ๆ ไม่สอนพีชคณิตที่เกินระดับมัธยม",
+        "en": "Use simple diagrams; avoid advanced algebra."
+      },
+      "action": {
+        "th": "จำชื่ออนุกรมและข้อจำกัดสำคัญ",
+        "en": "Recall the series and model limitations."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "อนุกรมและข้อจำกัด",
+            "en": "Spectral series and model limits"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "learning-8"
+          }
+        },
+        {
+          "label": {
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "bohr-core-series"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เส้น 4→2 อยู่อนุกรมใด?",
+          "en": "Which series contains 4→2?"
+        },
+        "answer": {
+          "th": "บัลเมอร์",
+          "en": "Balmer"
+        }
+      },
+      "after": {
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
+      }
+    },
+    {
+      "id": "memory",
+      "title": {
+        "th": "Problem: ฝึกจำให้แม่น",
+        "en": "Problem: recall drills"
+      },
+      "summary": {
+        "th": "ฝึกสูตร รัศมี อัตราส่วน พลังงาน และสเปกตรัมซ้ำจากหลายมุม\nทุกข้อใช้สาระและสูตรที่ปรากฏใน Learning เท่านั้น",
+        "en": "Practice radius, energy, spectra and formula recall in varied forms.\nEvery task draws on previously introduced Learning content."
+      },
+      "story": {
+        "th": "ให้ปิดเฉลยก่อน แล้วพูดสูตรหรือหลักการให้ได้",
+        "en": "Keep solutions hidden while students recall the rule."
+      },
+      "action": {
+        "th": "ทำโจทย์ช่วยจำและย้อนตรวจข้อที่พลาด",
+        "en": "Attempt memory questions and revisit mistakes."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "Problem: ฝึกจำให้แม่น",
+            "en": "Problem: recall drills"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "problem-memory"
+          }
+        },
+        {
+          "label": {
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "bohr-memory-r-formula"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "r₄/r₂ เท่าไร?",
+          "en": "What is r₄/r₂?"
+        },
+        "answer": {
+          "th": "4",
+          "en": "4"
+        }
+      },
+      "after": {
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
+      }
+    },
+    {
+      "id": "retained",
+      "title": {
+        "th": "Problem: โจทย์เดิม",
+        "en": "Problem: retained worksheet questions"
+      },
+      "summary": {
+        "th": "เก็บโจทย์ที่เคยมีในใบรวมเดิม ไม่ทิ้งทักษะการทดลองและการคำนวณ\nเฉลยยังเปิดปิดได้และเชื่อมกลับไปสูตรใน Learning",
+        "en": "Original worksheet prompts and worked tasks are preserved.\nAnswers remain revealable and rely on Learning formulas."
+      },
+      "story": {
+        "th": "เลือกโจทย์ตามทักษะ ไม่จำเป็นต้องทำทุกข้อในคาบเดียว",
+        "en": "Assign relevant questions by skill rather than all in one class."
+      },
+      "action": {
+        "th": "ฝึกข้อเดิมทีละหัวข้อ",
+        "en": "Work through retained questions by topic."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "Problem: โจทย์เดิม",
+            "en": "Problem: retained worksheet questions"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "section-7"
+          }
+        },
+        {
+          "label": {
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
           },
           "target": {
             "kind": "slot",
@@ -490,785 +555,133 @@
       ],
       "check": {
         "question": {
-          "th": "จาก n = 2 ไป n = 4 รัศมีเป็นกี่เท่าของเดิม?",
-          "en": "From n = 2 to n = 4, what is the radius ratio?"
+          "th": "รัศมีจาก n=2 ไป n=4 เพิ่มกี่เท่า?",
+          "en": "What is the radius factor from n=2 to n=4?"
         },
         "answer": {
-          "th": "4 เท่า เพราะ r₄/r₂ = 4²/2² = 4",
-          "en": "4 times: r₄/r₂ = 4²/2² = 4."
+          "th": "4 เท่า",
+          "en": "4 times"
         }
       },
-      "review": [
-        {
-          "label": {
-            "th": "เงื่อนไขโมเมนตัมเชิงมุม · หัวข้อ 6",
-            "en": "Angular momentum · section 6"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "formula-angular"
-          }
-        }
-      ],
       "after": {
-        "th": "ถ้าทำได้ ลองคำถาม 15 กลับด้านเพื่อหา n ส่วนที่มาของสูตรอ่านตามสี่ขั้นในหัวข้อ 7 ได้",
-        "en": "If ready, try Question 15 to work backward for n. Read the four derivation steps in section 7 when needed."
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
       }
     },
     {
-      "id": "energy-meaning",
+      "id": "ipst",
       "title": {
-        "th": "แยก K, U และ E ให้เห็นก่อน",
-        "en": "Distinguish K, U and E"
+        "th": "Problem: สสวท. ตัวอย่างและท้ายบท",
+        "en": "Problem: IPST source tasks"
       },
       "summary": {
-        "th": "K คือพลังงานจลน์, U คือพลังงานศักย์ไฟฟ้า และ E = K + U\nเมื่อกำหนด U = 0 ที่ระยะอนันต์ วงโคจรวงกลมภายใต้แรงคูลอมบ์ให้ U = −2K จึงได้ E = −K, K = −E และ U = 2E",
-        "en": "K is kinetic energy, U is electric potential energy and E = K + U.\nWith U = 0 at infinity, a circular Coulomb orbit has U = −2K. Thus E = −K, K = −E and U = 2E."
+        "th": "นำโจทย์จากบัญชีต้นฉบับครบ 20 กลุ่ม พร้อมข้อย่อยและรูป\nเฉลยเริ่มแนวคิดสั้น แล้วเดินสูตร จัดรูป แทนค่า และสรุปท้าย",
+        "en": "All 20 catalogued IPST groups include their parts and relevant diagrams.\nSolutions follow brief setup, formula, rearrangement, substitution and final interpretation."
       },
       "story": {
-        "th": "เริ่มที่ความหมายในหัวข้อ 8 แล้วใช้ตารางที่ 1 หา E จาก K + U จากนั้นดูตารางที่ 2 เทียบ U/K, E/K และ U/E ตัวเลขในตารางเป็นค่าจำลองเพื่อดูความสัมพันธ์ ไม่ใช่ทุกค่าจะเป็นระดับพลังงานจริงของไฮโดรเจน",
-        "en": "Begin with the definitions in section 8. Use table 1 to calculate E = K + U, then table 2 to compare U/K, E/K and U/E. These are illustrative values; not every value is an actual hydrogen energy level."
+        "th": "ก่อนทำให้ชี้ส่วนที่ต้องใช้จาก Learning",
+        "en": "First identify the matching Learning formula."
       },
       "action": {
-        "th": "ทำแถว B ของตารางที่ 1 แล้วใช้แถวเดียวกันในตารางที่ 2 หาความสัมพันธ์ ก่อนอ่านพิสูจน์ที่ตามมา",
-        "en": "Complete row B in table 1, then its corresponding ratios in table 2. Read the following derivation after spotting the pattern."
+        "th": "ทำตัวอย่าง 19.4 และโจทย์ท้ายบท",
+        "en": "Solve IPST Example 19.4 and chapter tasks."
       },
       "links": [
         {
           "label": {
-            "th": "ความหมาย K, U, E",
-            "en": "Meanings of K, U, E"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "energy-meanings"
-          }
-        },
-        {
-          "label": {
-            "th": "ตารางที่ 1 · แถว B",
-            "en": "Table 1 · row B"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "energy-total-b"
-          }
-        },
-        {
-          "label": {
-            "th": "ตารางที่ 2 · แถว B",
-            "en": "Table 2 · row B"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "energy-ratio-b-0"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "ถ้า K = 5 eV และ U = −10 eV แล้ว E เท่าไร? ทำไม E ติดลบได้ทั้งที่ K เป็นบวก?",
-          "en": "If K = 5 eV and U = −10 eV, what is E? Why can E be negative while K is positive?"
-        },
-        "answer": {
-          "th": "E = −5 eV เพราะ E = 5 − 10 พลังงานศักย์ที่ติดลบมีขนาดมากกว่า K เครื่องหมายลบของ E จึงไม่ได้แปลว่าอิเล็กตรอนหยุดเคลื่อนที่",
-          "en": "E = −5 eV because E = 5 − 10. The negative potential energy has greater magnitude than K. Negative E does not mean the electron is stationary."
-        }
-      },
-      "review": [
-        {
-          "label": {
-            "th": "คำถาม 17",
-            "en": "Question 17"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "energy-relation-uk"
-          }
-        }
-      ],
-      "after": {
-        "th": "ถ้ายังสับสน ลองอีกแถวในตารางที่ 1 และ 2 แล้วตรวจ E = K + U ทุกครั้ง ความสัมพันธ์นี้ใช้กับแบบจำลองวงโคจรที่กำลังศึกษา ไม่ใช่พลังงานทุกระบบ",
-        "en": "If unsure, try another row in tables 1 and 2 and check E = K + U. These relations apply to the orbit model being studied, not to every physical system."
-      }
-    },
-    {
-      "id": "energy-calculate",
-      "title": {
-        "th": "ใช้พลังงานรวมให้ถูกเครื่องหมาย",
-        "en": "Calculate with the correct signs"
-      },
-      "summary": {
-        "th": "สำหรับไฮโดรเจน Eₙ = −13.6/n² eV\nหา E ก่อน แล้วใช้ K = −E และ U = 2E ตรวจด้วย K + U = E พลังงานรวมที่ติดลบยังสอดคล้องกับ K ที่เป็นบวก",
-        "en": "For hydrogen Eₙ = −13.6/n² eV.\nFind E first, then use K = −E and U = 2E. Check K + U = E. A negative total energy is consistent with positive kinetic energy."
-      },
-      "story": {
-        "th": "ชี้สูตรพลังงานแล้วถามว่า “เครื่องหมายลบอยู่ที่ E หรือทุกพลังงาน?” พาทำคำถาม 18 ก จากนั้นให้ลอง ข–ง เอง โดยแทนค่า E ที่หาได้จริงพร้อมเครื่องหมาย",
-        "en": "Point to the energy formula: “Does the minus sign belong to E or to every energy?” Work through Question 18(a), then try (b)–(d), retaining the sign of E."
-      },
-      "action": {
-        "th": "ทำคำถาม 18 ให้ครบสี่ช่อง ใช้สมการตรวจในช่อง ง เพื่อจับข้อผิดพลาดเรื่องเครื่องหมาย",
-        "en": "Complete all four parts of Question 18. Use part (d) to catch sign errors."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "สูตรพลังงาน · หัวข้อ 8",
-            "en": "Energy formula · section 8"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "formula-energy"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 18",
-            "en": "Question 18"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "energy-sign"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "ที่ n = 2 ค่า E, K และ U เท่าไร?",
-          "en": "At n = 2, what are E, K and U?"
-        },
-        "answer": {
-          "th": "E = −3.40 eV, K = +3.40 eV, U = −6.80 eV และ 3.40 − 6.80 = −3.40 eV",
-          "en": "E = −3.40 eV, K = +3.40 eV and U = −6.80 eV; 3.40 − 6.80 = −3.40 eV."
-        }
-      },
-      "review": [
-        {
-          "label": {
-            "th": "กลับไปแยกความหมายของพลังงาน",
-            "en": "Revisit the energy definitions"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "energy-meanings"
-          }
-        }
-      ],
-      "after": {
-        "th": "ถ้าคำนวณได้แล้ว ใช้คำถาม 19 เปรียบเทียบว่า “พลังงานสูงกว่า” กับ “ถูกยึดแน่นกว่า” ต่างกันอย่างไร",
-        "en": "Once the calculation is secure, use Question 19 to distinguish higher energy from stronger binding."
-      }
-    },
-    {
-      "id": "ionization",
-      "title": {
-        "th": "กระตุ้นกับหลุดออกจากอะตอม",
-        "en": "Excitation versus ionization"
-      },
-      "summary": {
-        "th": "n = 1 คือสถานะพื้น; n > 1 ที่ E < 0 ยังเป็นสถานะกระตุ้นที่ถูกยึดไว้\nใช้เกณฑ์อิเล็กตรอนอิสระที่หยุดนิ่ง ณ ระยะอนันต์มี E = 0 พลังงานไอออไนซ์ต่ำสุดจากระดับเดิมจึงเป็น 0 − Eₙ",
-        "en": "n = 1 is the ground state. A level with n > 1 and E < 0 is still an excited bound state.\nA free electron at rest at infinity defines E = 0. The minimum ionization energy from the initial level is therefore 0 − Eₙ."
-      },
-      "story": {
-        "th": "เปิดแผนภาพในหัวข้อ 9 ชี้ระดับที่สูงขึ้นแต่ยังต่ำกว่า 0 แล้วถามว่า “สูงขึ้นแปลว่าหลุดแล้วหรือยัง?” ใช้คำถาม 21 เทียบการให้พลังงานจากสถานะพื้น",
-        "en": "Use the level diagram in section 9. Point to a higher level still below zero: “Does a higher level mean the electron is free?” Use Question 21 to compare energy inputs from the ground state."
-      },
-      "action": {
-        "th": "ตอบคำถาม 21 แล้วทำคำถาม 22 โดยดูระดับเริ่มต้นก่อนเสมอ",
-        "en": "Answer Question 21, then Question 22. Always identify the initial level first."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "แผนภาพระดับพลังงาน · หัวข้อ 9",
-            "en": "Energy-level diagram · section 9"
+            "th": "Problem: สสวท. ตัวอย่างและท้ายบท",
+            "en": "Problem: IPST source tasks"
           },
           "target": {
             "kind": "anchor",
-            "key": "hydrogen-energy-diagram"
+            "key": "problem-ipst"
           }
         },
         {
           "label": {
-            "th": "คำถาม 21",
-            "en": "Question 21"
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
           },
           "target": {
             "kind": "slot",
-            "key": "excite-or-ionize"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 22",
-            "en": "Question 22"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "adapted-ionization-n3"
+            "key": "ipst-example-19-4-1"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "ที่ n = 2 ต้องให้พลังงานต่ำสุดเท่าไรจึงหลุด? ใช้ 13.6 eV ทุกครั้งได้ไหม?",
-          "en": "What minimum input ionizes n = 2? Is 13.6 eV always the answer?"
+          "th": "จาก 4→2 ต้องใช้ระดับใดเป็นระดับต่ำ?",
+          "en": "In 4→2, which is the lower level?"
         },
         "answer": {
-          "th": "3.40 eV จาก 0 − (−3.40) ส่วน 13.6 eV ใช้เมื่อเริ่มจากสถานะพื้น n = 1",
-          "en": "3.40 eV, from 0 − (−3.40). The value 13.6 eV applies when starting at the ground state, n = 1."
+          "th": "n=2",
+          "en": "n=2"
         }
       },
-      "review": [
-        {
-          "label": {
-            "th": "ความหมายของ E ติดลบ",
-            "en": "Meaning of negative E"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "bound-energy-meaning"
-          }
-        }
-      ],
       "after": {
-        "th": "ถ้ายังติด ให้วาดแค่ระดับเริ่มต้นกับเส้น E = 0 แล้วหาผลต่าง ไม่ต้องจำค่าพลังงานไอออไนซ์แยกทุกระดับ",
-        "en": "If unsure, sketch just the initial level and E = 0, then take the difference. There is no need to memorize each ionization energy separately."
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
       }
     },
     {
-      "id": "speed-connect",
+      "id": "alevel",
       "title": {
-        "th": "รวมรัศมี พลังงาน และอัตราเร็ว",
-        "en": "Connect radius, energy and speed"
+        "th": "Problem: แนว A-Level",
+        "en": "Problem: A-Level-style applications"
       },
       "summary": {
-        "th": "สำหรับไฮโดรเจน vₙ ≈ (2.19 × 10⁶)/n m/s\nเมื่อ n เพิ่ม รัศมีเพิ่มตาม n² อัตราเร็วลดตาม 1/n และ E เพิ่มเข้าใกล้ 0 โดยยังติดลบสำหรับระดับที่ถูกยึดไว้",
-        "en": "For hydrogen vₙ ≈ (2.19 × 10⁶)/n m/s.\nAs n increases, radius grows with n², speed falls with 1/n, and E rises toward zero while remaining negative for a bound level."
+        "th": "เริ่มจากแนวจริง 2568 เรื่องสถานะกระตุ้นและพลังงานโฟตอน\nโจทย์ประยุกต์ที่เหลือแต่งใหม่โดยไม่เกินสูตรใน Learning",
+        "en": "Begin with official 2568 patterns on excited states and photon gaps.\nOther items are newly authored and use only Learning formulas."
       },
       "story": {
-        "th": "เริ่มจากสูตรทั่วไปในหัวข้อ 10 ใช้ mvr = nh/(2π) ร่วมกับ rₙ = a₀n² เพื่อให้เห็นว่าตัด n เหลือ 1/n แล้วค่อยแทนค่าคงตัว",
-        "en": "Start with the general equations in section 10. Combine mvr = nh/(2π) with rₙ = a₀n² to see n/n² become 1/n before substituting constants."
+        "th": "ให้เด็กอ่านสิ่งที่โจทย์ถามก่อนเลือกสมการ",
+        "en": "Make students identify the unknown before choosing the formula."
       },
       "action": {
-        "th": "ทำคำถาม 23 เปรียบเทียบอัตราส่วน แล้วทำคำถาม 25 ก–ค ที่ใช้ n = 4 ร่วมกัน",
-        "en": "Use Question 23 to compare ratios, then complete Question 25(a)–(c) for the same n = 4 state."
+        "th": "ฝึกอัตราส่วนและโจทย์คำนวณย้อน",
+        "en": "Work inverse and ratio questions."
       },
       "links": [
         {
           "label": {
-            "th": "สูตรอัตราเร็ว · หัวข้อ 10",
-            "en": "Speed formula · section 10"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "formula-speed"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 23",
-            "en": "Question 23"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "speed-radius-comparison"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 25",
-            "en": "Question 25"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "integrated-n4"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "จาก n = 1 ไป n = 4 รัศมีและอัตราเร็วเป็นกี่เท่า?",
-          "en": "From n = 1 to n = 4, what are the radius and speed ratios?"
-        },
-        "answer": {
-          "th": "รัศมีเป็น 16 เท่า แต่อัตราเร็วเหลือ 1/4 เท่า ต้องแยกการแปรผันของแต่ละปริมาณ",
-          "en": "Radius becomes 16 times as large, while speed becomes 1/4 as large. Each quantity has its own dependence on n."
-        }
-      },
-      "review": [
-        {
-          "label": {
-            "th": "คำถาม 24",
-            "en": "Question 24"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "adapted-speed-ratio"
-          }
-        }
-      ],
-      "after": {
-        "th": "ถ้าทำคำถาม 25 ได้พร้อมหน่วยและเครื่องหมาย ถือว่าผ่านเส้นทางขั้นต่ำของชุดนี้ เลือกทำข้อที่เหลือเพื่อทบทวนส่วนที่ยังไม่คล่อง",
-        "en": "Completing Question 25 with correct units and signs finishes the minimum route for this part. Choose remaining questions to practise areas that still need work."
-      }
-    },
-    {
-      "id": "energy-gap",
-      "title": {
-        "th": "อะตอมเสียพลังงาน แต่โฟตอนได้พลังงานบวก",
-        "en": "The atom loses energy; the photon carries positive energy"
-      },
-      "summary": {
-        "th": "ΔEอะตอม = Ef − Ei: ขึ้นระดับรับพลังงาน ลงระดับปล่อยพลังงาน\nพลังงานโฟตอนเป็นบวก Eγ = |Ef − Ei| = hf = hc/λ คู่ระดับเดิมกลับทิศจะใช้พลังงานโฟตอนขนาดเท่าเดิม",
-        "en": "ΔEatom = Ef − Ei: upward transitions absorb energy; downward transitions release it.\nPhoton energy is positive: Eγ = |Ef − Ei| = hf = hc/λ. Reversing the same pair of levels uses the same photon-energy magnitude."
-      },
-      "story": {
-        "th": "ชี้รูปแล้วถามว่า “จาก 3 ลงมา 2 อะตอมเสียพลังงาน แล้วโฟตอนต้องติดลบด้วยไหม?” เขียน Ei และ Ef ก่อนหาผลต่าง แล้วกลับลูกศรเพื่อเทียบการดูดกลืนกับการเปล่งออก",
-        "en": "Point to the diagram: “From 3 down to 2 the atom loses energy. Must the photon energy be negative too?” Write Ei and Ef before subtracting, then reverse the arrow to compare absorption with emission."
-      },
-      "action": {
-        "th": "ทำคำถาม 26–2 ต่อกัน แล้วตอบคำถาม 28 สั้น ๆ ว่ากลับทิศแล้วอะไรเปลี่ยนและอะไรเท่าเดิม",
-        "en": "Complete Questions 1–2 in sequence, then answer Question 28 briefly: what changes on reversing the transition, and what stays the same?"
-      },
-      "links": [
-        {
-          "label": {
-            "th": "รูปคู่ระดับ · หัวข้อ 11",
-            "en": "Level-pair diagram · section 11"
+            "th": "Problem: แนว A-Level",
+            "en": "Problem: A-Level-style applications"
           },
           "target": {
             "kind": "anchor",
-            "key": "transition-energy"
+            "key": "problem-alevel"
           }
         },
         {
           "label": {
-            "th": "คำถาม 26",
-            "en": "Question 26"
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
           },
           "target": {
             "kind": "slot",
-            "key": "sign-32"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 28",
-            "en": "Question 28"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "absorb-23"
+            "key": "bohr-alevel-excited-radius"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "3 → 2 มี ΔEอะตอม และ Eγ เท่าไร?",
-          "en": "For 3 → 2, what are ΔEatom and Eγ?"
+          "th": "สถานะกระตุ้นที่สองคือ n เท่าไร?",
+          "en": "What n corresponds to the second excited state?"
         },
         "answer": {
-          "th": "ΔEอะตอม ≈ −1.89 eV แต่ Eγ ≈ +1.89 eV และ λ ≈ 656 nm เป็นการเปล่งแสง",
-          "en": "ΔEatom ≈ −1.89 eV, Eγ ≈ +1.89 eV and λ ≈ 656 nm: emission."
+          "th": "n=3",
+          "en": "n=3"
         }
       },
-      "review": [
-        {
-          "label": {
-            "th": "พลังงานโฟตอนกับผลต่างระดับ",
-            "en": "Photon energy and the level difference"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "formula-photon"
-          }
-        }
-      ],
       "after": {
-        "th": "ถ้าเครื่องหมายยังสับสน ให้เขียน ΔEอะตอม แยกจาก Eγ คนละบรรทัด ก่อนใช้สูตรความยาวคลื่น",
-        "en": "If signs are unclear, write ΔEatom and Eγ on separate lines before using the wavelength equation."
-      }
-    },
-    {
-      "id": "paths-and-lines",
-      "title": {
-        "th": "หนึ่งอะตอมมีกี่โฟตอน แล้วหลายอะตอมมีกี่เส้น",
-        "en": "Photons from one atom versus lines from many atoms"
-      },
-      "summary": {
-        "th": "ทางตรง 3 → 1 ให้หนึ่งโฟตอน; ทางผ่าน 3 → 2 → 1 ให้สองโฟตอน แต่พลังงานรวมเท่ากัน\nอะตอมจำนวนมากที่เกิดได้ทั้งสองเส้นทางให้เส้นต่างกันสามเส้น อย่าสับสนจำนวนเส้นกับจำนวนโฟตอนในเหตุการณ์เดียว",
-        "en": "Direct 3 → 1 gives one photon; cascade 3 → 2 → 1 gives two, with the same total released energy.\nAcross many atoms following both paths, three distinct lines can occur. A line count is not the photon count in one decay event."
-      },
-      "story": {
-        "th": "ให้เลือกเดินทีละเส้นทางในรูป แล้วนับลูกศรว่าแต่ละอะตอมปล่อยกี่ครั้ง จากนั้นค่อยถามว่า “ถ้ามีอะตอมหลายตัวเดินคนละทาง เครื่องตรวจรวมจะเห็นเส้นใดบ้าง?”",
-        "en": "Follow one path at a time and count its arrows. Then ask: “If many atoms take different paths, which lines can the combined detector observe?”"
-      },
-      "action": {
-        "th": "ตอบคำถาม 29 แล้วใช้คำถาม 30 ตรวจพลังงานรวม ก่อนตอบคำถาม 31 สำหรับกรณีอะตอมจำนวนมาก",
-        "en": "Answer Question 29, check total energy in Question 30, then answer Question 31 for many atoms."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "รูปทางตรงและหลายขั้น · หัวข้อ 12",
-            "en": "Direct/cascade diagram · section 12"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "transition-paths"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 29",
-            "en": "Question 29"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "cascade-count"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 31",
-            "en": "Question 31"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "ensemble-lines"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "อะตอมเดียวเดิน 3 → 2 → 1 ปล่อยกี่โฟตอน? พลังงานรวมต่างจากทางตรงหรือไม่?",
-          "en": "How many photons does one atom emit on 3 → 2 → 1? Does total energy differ from the direct route?"
-        },
-        "answer": {
-          "th": "สองโฟตอน พลังงานรวม 1.889 + 10.200 = 12.089 eV เท่าทางตรง ต้องรวมพลังงาน ไม่ใช่รวมความยาวคลื่น",
-          "en": "Two photons. Their energies sum to 1.889 + 10.200 = 12.089 eV, equal to the direct route. Add energies, not wavelengths."
-        }
-      },
-      "review": [
-        {
-          "label": {
-            "th": "คำถาม 30",
-            "en": "Question 30"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "cascade-conservation"
-          }
-        }
-      ],
-      "after": {
-        "th": "เมื่อผ่านแล้วค่อยเชื่อมไปว่า เส้นหนึ่งเส้นสัมพันธ์กับช่องว่างพลังงานคู่หนึ่ง ไม่ได้แปลว่าอะตอมหนึ่งตัวปล่อยทุกเส้นพร้อมกัน",
-        "en": "Then connect one spectral line with one level gap. One atom does not emit every possible line simultaneously."
-      }
-    },
-    {
-      "id": "series-rydberg",
-      "title": {
-        "th": "ดูระดับต่ำ แล้วจัดอนุกรมและเลือกสมการ",
-        "en": "Identify the lower level, then the series and equation"
-      },
-      "summary": {
-        "th": "การเปล่งออกที่ลงสู่ระดับปลายทางเดียวกันอยู่ในอนุกรมเดียวกัน: n = 1 ไลมาน, 2 บัลเมอร์, 3 พาเชน\n1/λ = R_H(1/nℓ² − 1/nᵤ²) โดย nᵤ > nℓ; nℓ คือระดับต่ำ และ nᵤ คือระดับสูง ใช้ λ เป็นเมตรเมื่อ R_H มีหน่วย m⁻¹",
-        "en": "Emission transitions ending at the same lower level belong to one series: n = 1 Lyman, 2 Balmer, 3 Paschen.\n1/λ = R_H(1/nℓ² − 1/nᵤ²), with nᵤ > nℓ; nℓ is lower and nᵤ is upper. Use metres when R_H is in m⁻¹."
-      },
-      "story": {
-        "th": "ใช้รูปเส้นสเปกตรัมถามว่า “หลายเส้นต่างกัน แต่ทำไมจึงเรียกอนุกรมเดียวกัน?” ให้ดูระดับปลายทาง แล้วเชื่อมที่มาของริดเบิร์กจากผลต่างพลังงานในหัวข้อ 14 ก่อนดูว่าลำดับในวงเล็บทำให้คำตอบเป็นบวก",
-        "en": "Use the spectrum: “Why are different lines grouped into one series?” Identify their final level, then connect the energy-gap derivation in section 14 to the Rydberg equation and the positive order of its terms."
-      },
-      "action": {
-        "th": "ทำคำถาม 32 เพื่อเลือกอนุกรม แล้วอ่านพิสูจน์ในหัวข้อ 14 และแก้คำถาม 33 เรื่องการสลับระดับต่ำ–สูง",
-        "en": "Use Question 32 to identify series, read the derivation in section 14, then correct the lower/upper-level order in Question 33."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "ตำแหน่งเส้นสเปกตรัม · หัวข้อ 13",
-            "en": "Spectral-line positions · section 13"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "spectral-lines"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 32",
-            "en": "Question 32"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "name-series"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 33",
-            "en": "Question 33"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "rydberg-sign"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "5 → 2 อยู่อนุกรมใด? ในสูตรต้องใช้ 1/2² − 1/5² หรือกลับกัน?",
-          "en": "Which series contains 5 → 2? Is the bracket 1/2² − 1/5² or the reverse?"
-        },
-        "answer": {
-          "th": "บัลเมอร์ ใช้ 1/2² − 1/5² ซึ่งเป็นบวก สำหรับการเปล่งออก 2 คือระดับปลายทางที่ต่ำกว่า",
-          "en": "Balmer. Use 1/2² − 1/5², a positive quantity. For this emission, 2 is the lower final level."
-        }
-      },
-      "review": [
-        {
-          "label": {
-            "th": "สูตรริดเบิร์กและพิสูจน์ก่อนหน้า · หัวข้อ 14",
-            "en": "Rydberg equation and preceding derivation · section 14"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "formula-rydberg"
-          }
-        }
-      ],
-      "after": {
-        "th": "ใช้ค่าคงตัวตามโจทย์แต่ละข้อให้สอดคล้องกัน และระบุอนุกรมก่อนสรุปช่วงรังสี บัลเมอร์ไม่ได้มีเฉพาะเส้นที่ตามองเห็น",
-        "en": "Use each problem’s constants consistently. Identify the series before the spectral region: not every Balmer line is visible."
-      }
-    },
-    {
-      "id": "example-and-limit",
-      "title": {
-        "th": "จากเส้นหนึ่งเส้นไปถึงขอบเขตของอนุกรม",
-        "en": "From one line to the limits of a series"
-      },
-      "summary": {
-        "th": "ตัวอย่าง 5 → 2 ให้ λ ≈ 434 nm และ Eγ ≈ 2.86 eV\nเส้นแรกของบัลเมอร์ 3 → 2 ยาวที่สุด ส่วนขีดจำกัด nu → ∞ มี λ ≈ 364.5 nm อยู่ UV",
-        "en": "The worked 5 → 2 transition gives λ ≈ 434 nm and Eγ ≈ 2.86 eV.\nBalmer’s first line, 3 → 2, is its longest wavelength; the nu → ∞ limit is about 364.5 nm in the UV."
-      },
-      "story": {
-        "th": "พาทำตัวอย่าง 1 ก โดยเริ่มจากระดับต่ำ 2 แล้วให้ลองพลังงานในข้อ ข จากนั้นเปรียบเทียบกับขีดจำกัดของอนุกรม ไม่เล่าว่าทุกเส้นบัลเมอร์มองเห็น",
-        "en": "Work through Example 1(a), identifying lower level 2, then try the photon energy in (b). Compare a line with the series limit; not every Balmer line is visible."
-      },
-      "action": {
-        "th": "ทำตัวอย่าง 1 ก–ข แล้วตอบคำถาม 34–35",
-        "en": "Complete Example 1(a)–(b), then Questions 34–35."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "ตัวอย่าง 1 ก–ข",
-            "en": "Example 1(a)–(b)"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "adapted-example-52-wavelength"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 35",
-            "en": "Question 35"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "balmer-limit"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "เส้น 8 → 2 เป็นบัลเมอร์แล้วจำเป็นต้องมองเห็นหรือไม่?",
-          "en": "Must the 8 → 2 line be visible because it is Balmer?"
-        },
-        "answer": {
-          "th": "ไม่จำเป็น ได้ประมาณ 389 nm อยู่ UV ตามช่วง 400–700 nm ที่บทนี้ใช้",
-          "en": "No. It is about 389 nm, in the UV under this chapter’s 400–700 nm convention."
-        }
-      },
-      "review": [
-        {
-          "label": {
-            "th": "คำถาม 34",
-            "en": "Question 34"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "adapted-visibility-82"
-          }
-        }
-      ],
-      "after": {
-        "th": "ถ้าคล่องแล้วใช้สมการเดียวกันกับระดับคู่อื่น โดยตรวจหน่วยและลำดับระดับก่อนแทนค่า",
-        "en": "Apply the same equation to another pair once confident, checking units and level order first."
-      }
-    },
-    {
-      "id": "initial-state",
-      "title": {
-        "th": "อ่านชนิดอะตอมและระดับเริ่มต้นก่อนคำนวณ",
-        "en": "Read the atom and initial state first"
-      },
-      "summary": {
-        "th": "โจทย์อะตอมสมมติใช้ระดับพลังงานที่ให้: เริ่ม n = 2 ได้โฟตอน 6 eV เมื่อกลับสถานะพื้น\nโจทย์ไฮโดรเจน n = 5 ระบุสองเส้นทาง 5 → 1 และ 5 → 2 → 1 ต้องแยกแต่ละการเปลี่ยนระดับ",
-        "en": "Use the hypothetical atom’s given levels: starting at n = 2 produces a 6 eV ground-state photon.\nFor hydrogen at n = 5, distinguish each transition in the specified direct and cascade paths."
-      },
-      "story": {
-        "th": "ก่อนคำนวณถามว่าเป็นไฮโดรเจนหรืออะตอมสมมติ แล้วชี้ระดับเริ่มต้นให้ตรงโจทย์ ใช้คำถาม 36 เปรียบเทียบกับคำถาม 37",
-        "en": "Identify hydrogen versus a hypothetical atom before choosing a formula, then locate the stated initial level. Compare Questions 36 and 37."
-      },
-      "action": {
-        "th": "ทำคำถาม 36 แล้วเลือกหนึ่งแถวของคำถาม 37 และตอบคำถาม 38 เรื่องโฟตอนที่ตรงช่องว่างพลังงาน",
-        "en": "Complete Question 36, one transition row in Question 37, and Question 38 on matching a photon to an energy gap."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "คำถาม 36",
-            "en": "Question 36"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "adapted-hypothetical-atom"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 37",
-            "en": "Question 37"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "exercise-six"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 38",
-            "en": "Question 38"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "absorption-match"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "นำ −13.6/n² eV ไปใช้กับอะตอมสมมติทุกชนิดได้หรือไม่?",
-          "en": "Can −13.6/n² eV be used for every hypothetical atom?"
-        },
-        "answer": {
-          "th": "ไม่ได้ ต้องใช้ระดับที่โจทย์กำหนด สูตรนี้เป็นของไฮโดรเจนในแบบจำลองที่ศึกษา",
-          "en": "No. Use the supplied levels; that formula is for hydrogen in the model being studied."
-        }
-      },
-      "review": [
-        {
-          "label": {
-            "th": "คำถาม 39",
-            "en": "Question 39"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "infer-level"
-          }
-        }
-      ],
-      "after": {
-        "th": "แถวที่เหลือของคำถาม 37 และคำถาม 39 ใช้ฝึกต่อเองได้ โดยระบุระดับเริ่มต้นและสุดท้ายทุกครั้ง",
-        "en": "Use the remaining Question 37 rows and Question 39 for further practice, stating initial and final levels each time."
-      }
-    },
-    {
-      "id": "cloud-model",
-      "title": {
-        "th": "เก็บแนวคิดพลังงานไว้ เปลี่ยนภาพของอิเล็กตรอน",
-        "en": "Keep the energy idea; revise the electron picture"
-      },
-      "summary": {
-        "th": "กลุ่มหมอกแทนความน่าจะเป็นของการตรวจพบ ไม่ใช่เนื้อหมอกหรือรอยทางโคจร\nยอดกราฟความน่าจะเป็นตามระยะใกล้ a₀ ไม่ได้แปลว่าพบแน่นอนที่ระยะนั้น แบบจำลองควอนตัมยังมีระดับพลังงานไม่ต่อเนื่องโดยไม่ต้องมีวงกลมแน่นอน",
-        "en": "An electron cloud represents detection probability, not a fog substance or an orbital trail.\nA radial-probability peak near a₀ does not give certainty at that radius. Quantum states can have discrete energies without definite circular trajectories."
-      },
-      "story": {
-        "th": "ชี้ภาพจุดแล้วถามว่า “จุดหลายจุดแปลว่ามีอิเล็กตรอนหลายตัวหรือเป็นผลแทนการตรวจพบซ้ำ?” จากนั้นให้เทียบกับวงกลมแบบโบร์ และแยกสิ่งที่ยังใช้ได้คือระดับพลังงานกับโฟตอน ออกจากภาพเส้นทางที่ไม่ควรยึดเป็นจริง",
-        "en": "Point to the dots: “Do many dots mean many electrons, or repeated detection possibilities?” Compare the cloud with Bohr’s circle, retaining energy levels and photon gaps while revising the trajectory picture."
-      },
-      "action": {
-        "th": "อ่านภาพและคำอธิบายในหัวข้อ 17 แล้วตอบคำถาม 40–13 เป็นประโยคสั้นที่แก้ความเข้าใจผิดให้ตรงจุด",
-        "en": "Read the figures and explanations in section 17, then answer Questions 12–13 with short statements correcting the misconceptions."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "ภาพความน่าจะเป็น · หัวข้อ 17",
-            "en": "Probability diagram · section 17"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "electron-cloud"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 40",
-            "en": "Question 40"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "cloud-meaning"
-          }
-        },
-        {
-          "label": {
-            "th": "คำถาม 41",
-            "en": "Question 41"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "bohr-vs-quantum"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "พบจุดหนาแน่นใกล้บริเวณหนึ่ง แปลว่าต้องพบอิเล็กตรอนที่จุดนั้นแน่นอนหรือไม่?",
-          "en": "Does a dense region of dots mean an electron must be found at a particular point there?"
-        },
-        "answer": {
-          "th": "ไม่ใช่ เป็นการแทนโอกาสพบสูงกว่า ไม่ใช่ความแน่นอน 100% และไม่ใช่เส้นทางการวิ่งของอิเล็กตรอน",
-          "en": "No. It represents greater detection probability, not 100% certainty or a trajectory."
-        }
-      },
-      "review": [
-        {
-          "label": {
-            "th": "กลับไปเชื่อมระดับพลังงานกับโฟตอน",
-            "en": "Revisit the connection between levels and photons"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "formula-photon"
-          }
-        }
-      ],
-      "after": {
-        "th": "รายละเอียดรูปแบบ 2s/2p และฟังก์ชันคลื่นอ่านต่อจากใบเต็มได้ เป้าหมายช่วงนี้คือแยกความน่าจะเป็นออกจากวงโคจรแน่นอน",
-        "en": "Read the full sheet for further 2s/2p and wavefunction detail. The immediate goal is distinguishing probability from a definite orbit."
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
       }
     }
   ],
   "finish": {
-    "th": "อธิบายให้ได้ว่าทำไมต้องมีนิวเคลียส เหตุใดโบร์ให้ระดับเฉพาะบางค่า และผลต่างระดับอธิบายเส้นสเปกตรัมอย่างไร เลือกกลับไปอ่านส่วนที่ยังติด ไม่จำเป็นต้องทำทุกช่องในคาบเดียว",
-    "en": "Explain the evidence for a nucleus, Bohr’s discrete levels and how energy gaps explain spectral lines. Revisit weak areas; the entire sheet need not be completed in one lesson."
+    "th": "อธิบายว่าทำไมไฮโดรเจนมีเส้นสเปกตรัม เปลี่ยนระดับแล้ว Eγ เป็นอย่างไร ใช้สูตรพร้อมใช้และทำโจทย์แต่ละกลุ่มได้",
+    "en": "Explain hydrogen spectral lines and photon energies; apply the formulas to each problem family."
   },
   "exitCheck": {
     "question": {

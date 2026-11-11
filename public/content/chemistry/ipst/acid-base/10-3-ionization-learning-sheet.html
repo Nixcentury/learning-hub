@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-learning-html="" data-learning-sheet="1" data-print-chapter-en="Chapter 10 Acids and Bases" data-print-chapter-th="บทที่ 10 กรด–เบส" data-print-subject-en="Chemistry" data-print-subject-th="เคมี" data-print-topic-en="10.3 Ionization of Acids, Bases and Water" data-print-topic-th="10.3 การแตกตัวของกรด เบส และน้ำ" data-print-work-en="Learning sheet 10.3" data-print-work-th="ใบเรียนรู้ 10.3" data-sheet-guide="guides/10-3-ionization.guide.json" data-sheet-revision="2026-11-10-2" lang="th">
+<html data-learning-html="" data-learning-sheet="1" data-print-chapter-en="Chapter 10 Acids and Bases" data-print-chapter-th="บทที่ 10 กรด–เบส" data-print-subject-en="Chemistry" data-print-subject-th="เคมี" data-print-topic-en="10.3 Ionization of Acids, Bases and Water" data-print-topic-th="10.3 การแตกตัวของกรด เบส และน้ำ" data-print-work-en="Learning sheet 10.3" data-print-work-th="ใบเรียนรู้ 10.3" data-sheet-guide="guides/10-3-ionization.guide.json" data-sheet-revision="2026-11-11-1" lang="th">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -20,6 +20,11 @@
   .lesson-section { margin-top: 20px; }
   .question-item { margin: 9px 0; }
   .question-prompt { margin-bottom: 5px; }
+  .inline-fraction { display:inline-flex; flex-direction:column; vertical-align:middle; align-items:center; line-height:1.25; margin:0 2px; }
+  .inline-fraction > :first-child { border-bottom:1px solid currentColor; padding:0 3px 1px; }
+  .inline-fraction > :last-child { padding:1px 3px 0; }
+  .unit-calculation { padding:3px 0; white-space:nowrap; }
+  .unit-calculation s { text-decoration-thickness:1px; }
   .equation { max-width: 100%; overflow-x: auto; margin: 4px 0; }
   figure { max-width: 620px; margin: 9px auto; }
   img { display: block; width: 100%; height: auto; }
@@ -110,10 +115,10 @@
 </div>
 </div>
 <div class="question-item" data-print-keep>
-<h3>กรดแก่จะเจือจางได้ไหม?</h3>
-<div data-sheet-slot="concentration-strength" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="กรดแก่จะเจือจางได้ไหม?" data-sheet-label-en="Can a strong acid be dilute?" style="--sheet-print-height:10mm">
+<h3>Strong acid กับ strongly acidic ต่างกันอย่างไร?</h3>
+<div data-sheet-slot="concentration-strength" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="Strong acid กับ strongly acidic ต่างกันอย่างไร?" data-sheet-label-en="How do strong acid and strongly acidic differ?" style="--sheet-print-height:17mm">
 <div data-sheet-answer>
-<p>ได้ ความแรงบอกระดับการแตกตัว ส่วนความเข้มข้นเริ่มต้นบอกจำนวนโมลของสารต่อปริมาตร HCl เจือจางยังเป็นกรดแก่ ส่วน CH₃COOH เข้มข้นยังเป็นกรดอ่อน</p>
+<p><strong>Strong acid · กรดแก่</strong> บอกความสามารถในการให้โปรตอน ในน้ำกรดแก่แตกตัวเกือบสมบูรณ์ เช่น HCl</p><p><strong>Strongly acidic · สารละลายที่มีความเป็นกรดสูง</strong> บอกสมบัติของสารละลายที่มี [H₃O⁺] สูงและ pH ต่ำ ต้องพิจารณาทั้งความแรงและความเข้มข้นของกรด HCl ที่เจือจางมากยังเป็นกรดแก่ แต่มี [H₃O⁺] ลดลงและ pH สูงขึ้น</p>
 </div>
 </div>
 </div>
@@ -177,8 +182,10 @@
 <div class="question-item" data-print-keep>
 <h3>จากความเข้มข้นไอออนไปหาโมลของกรดแก่</h3>
 <div class="question-prompt">ถ้าโจทย์ให้ความเข้มข้นของไอออนหลังแตกตัว ข้อมูลอยู่แถวไหน?</div>
-<div data-sheet-slot="model-acid-amount" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากความเข้มข้นไอออนไปหาโมลของกรดแก่" data-sheet-label-en="From ion concentration to moles of strong acid" style="--sheet-print-height:13mm">
-<div data-sheet-answer><p>ใช้ n = CV โดยแปลง V เป็น L ก่อน หน่วย L ตัดกันเหลือ mol ใส่ปริมาณไอออนที่ได้ในแถว F ของ ICF แล้วย้อนตามเลขดุลไปหาสารตั้งต้นในแถว I</p></div>
+<div data-sheet-slot="model-acid-amount" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากความเข้มข้นไอออนไปหาโมลของกรดแก่" data-sheet-label-en="From ion concentration to moles of strong acid" style="--sheet-print-height:18mm">
+<div data-sheet-answer>
+<p>เช่น ไอออนมีความเข้มข้น 0.20 mol/L ในสารละลาย 500 mL ใช้ตัวประกอบแปลงหน่วย 1 L / 1000 mL</p><div class="equation unit-calculation" role="math" aria-label="0.20 โมลต่อลิตร คูณ 500 มิลลิลิตร คูณ 1 ลิตรต่อ 1000 มิลลิลิตร เท่ากับ 0.100 โมล ตัดหน่วยลิตรและมิลลิลิตร">n = 0.20 <span class="inline-fraction"><span>mol</span><span><s>L</s></span></span> × 500 <s>mL</s> × <span class="inline-fraction"><span>1 <s>L</s></span><span>1000 <s>mL</s></span></span> = 0.100 mol</div><p>ตัด L และ mL เหลือ mol ใส่โมลไอออนในแถว F ของ ICF แล้วย้อนตามเลขดุลไปหาสารตั้งต้นในแถว I</p>
+</div>
 </div>
 </div>
 </div>
@@ -212,9 +219,9 @@
 </div>
 <div class="question-item" data-print-keep>
 <h3>ภาพ B แตกตัวไปกี่เปอร์เซ็นต์?</h3>
-<div data-sheet-slot="model-ionization-percentage" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ภาพ B แตกตัวไปกี่เปอร์เซ็นต์?" data-sheet-label-en="What percentage ionized in Set B?" style="--sheet-print-height:9mm">
+<div data-sheet-slot="model-ionization-percentage" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ภาพ B แตกตัวไปกี่เปอร์เซ็นต์?" data-sheet-label-en="What percentage ionized in Set B?" style="--sheet-print-height:20mm">
 <div data-sheet-answer>
-<p>HA แตกตัว 2 จาก 20 โมเลกุล จึงได้ (2/20) × 100 = <strong>10%</strong> ให้นับโมเลกุล HA ที่หายไป เพราะหนึ่งโมเลกุลให้ไอออนสองชนิด ถ้าข้อมูลเป็นความเข้มข้น ใช้ (ความเข้มข้นที่แตกตัวไป ÷ ความเข้มข้นเริ่มต้น) × 100</p>
+<div class="equation">ร้อยละการแตกตัว = <span class="inline-fraction"><span>จำนวนโมเลกุลที่แตกตัวไป</span><span>จำนวนโมเลกุลเริ่มต้น</span></span> \(\times100\%\)</div><div class="equation">\[\frac{2}{20}\times100\%=10\%\]</div><p>นับ HA ที่แตกตัวไป 2 โมเลกุลจากเริ่มต้น 20 โมเลกุล แต่ละโมเลกุลให้ไอออนสองชนิด</p><div class="equation">ร้อยละการแตกตัว \(=\frac{x}{C_0}\times100\%\)</div><p>x คือความเข้มข้นของสารที่แตกตัวไป และ C₀ คือความเข้มข้นเริ่มต้น ใช้หน่วยเดียวกัน</p>
 </div>
 </div>
 </div>
@@ -342,19 +349,13 @@
 <div class="question-item" data-print-keep>
 <h3>เมื่อเจือจางกรดอ่อน ร้อยละกับความเข้มข้นไอออนเปลี่ยนอย่างไร?</h3>
 <div class="question-prompt">พิจารณากรดอ่อนชนิดเดิมที่อุณหภูมิเดิม ในช่วงที่ใช้การประมาณได้</div>
-<div data-sheet-slot="weak-dilution-weak" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เมื่อเจือจางกรดอ่อน ร้อยละกับความเข้มข้นไอออนเปลี่ยนอย่างไร?" data-sheet-label-en="On dilution, what happens to the percentage and ion concentration?" style="--sheet-print-height:12mm">
+<div data-sheet-slot="weak-dilution-weak" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เมื่อเจือจางกรดอ่อน ร้อยละกับความเข้มข้นไอออนเปลี่ยนอย่างไร?" data-sheet-label-en="On dilution, what happens to the percentage and ion concentration?" style="--sheet-print-height:38mm">
 <div data-sheet-answer>
-<div class="equation">\[[\mathrm{H_3O^+}]\approx\sqrt{K_aC_0}\]</div><div class="equation">\[\frac{x}{C_0}\times100\%\approx\sqrt{\frac{K_a}{C_0}}\times100\%\]</div><p>เมื่อ C₀ ลดลง ความเข้มข้น H₃O⁺ ลดลง แต่สัดส่วนที่แตกตัวเพิ่มขึ้น ส่วน Kₐ คงเดิมที่อุณหภูมิเดิม</p>
+<p>C<sub>a</sub> คือความเข้มข้นเริ่มต้นของกรด ตรงกับ C₀ ในตาราง ICE</p><div class="equation">ร้อยละการแตกตัว \(=\frac{x}{C_a}\times100\%\)</div><p>เมื่อ C<sub>a</sub>/K<sub>a</sub> &gt; 1000 และไม่มีไอออนผลิตภัณฑ์เติมมาตั้งต้น ใช้การประมาณโดยละเลยไอออนจากน้ำ</p><div class="equation">\[x=[\mathrm{H_3O^+}]\approx\sqrt{K_aC_a}\]</div><p>เช่น HA มี K<sub>a</sub> = 1.0 × 10<sup>−5</sup> ตามกราฟที่อุณหภูมิเดิม หา x ก่อน แล้วแทนในสูตรร้อยละ</p><table><thead><tr><th scope="col">C<sub>a</sub> (mol/L)</th><th scope="col">C<sub>a</sub>/K<sub>a</sub></th><th scope="col">x (mol/L)</th><th scope="col">ร้อยละการแตกตัว</th></tr></thead><tbody><tr><td>0.10</td><td>10<sup>4</sup> &gt; 1000</td><td>\(\sqrt{(10^{-5})(0.10)}\)<br>\(=1.0\times10^{-3}\)</td><td>\(\frac{1.0\times10^{-3}}{0.10}\times100\%\)<br>\(=1.0\%\)</td></tr><tr><td>0.025</td><td>2.5 × 10<sup>3</sup> &gt; 1000</td><td>\(\sqrt{(10^{-5})(0.025)}\)<br>\(=5.0\times10^{-4}\)</td><td>\(\frac{5.0\times10^{-4}}{0.025}\times100\%\)<br>\(=2.0\%\)</td></tr></tbody></table><p>เมื่อเจือจาง 0.10 → 0.025 mol/L ร้อยละเพิ่ม 1.0% → 2.0% ขณะที่ [H₃O⁺] ลดลง ส่วน K<sub>a</sub> คงเดิมที่อุณหภูมิเดิม</p>
 </div>
 </div>
 </div>
-<div class="question-item" data-print-keep>
-<h3>ถ้ารู้ร้อยละแล้ว จะย้อนหา Kₐ อย่างไร?</h3>
-<div class="question-prompt">ถ้าร้อยละที่โจทย์ให้มีค่าตัวเลขเป็น P จะเปลี่ยนกลับเป็น x อย่างไร?</div>
-<div data-sheet-slot="weak-reverse-percent" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ถ้ารู้ร้อยละแล้ว จะย้อนหา Kₐ อย่างไร?" data-sheet-label-en="How do we work back to Kₐ from a given percentage?" style="--sheet-print-height:14mm">
-<div data-sheet-answer><div class="equation">\[x=C_0\frac{P}{100}\]</div><p>ใส่ x ในแถว C แล้วอ่าน C<sub>0</sub> − x กับ x จากแถว E เพื่อหา K<sub>a</sub> ถ้าเทียบความแรงของกรดที่ความเข้มข้นต่างกัน ให้เทียบ K<sub>a</sub> ที่อุณหภูมิเดียวกัน</p></div>
-</div>
-</div>
+
 </section>
 <section class="lesson-section" data-guide-anchor="stage-10">
 <div data-print-keep>
@@ -705,10 +706,10 @@
 </div>
 </div>
 <div class="question-item" data-print-keep>
-<h3>Can a strong acid be dilute?</h3>
-<div data-sheet-slot="concentration-strength" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="กรดแก่จะเจือจางได้ไหม?" data-sheet-label-en="Can a strong acid be dilute?" style="--sheet-print-height:10mm">
+<h3>How do strong acid and strongly acidic differ?</h3>
+<div data-sheet-slot="concentration-strength" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="Strong acid กับ strongly acidic ต่างกันอย่างไร?" data-sheet-label-en="How do strong acid and strongly acidic differ?" style="--sheet-print-height:17mm">
 <div data-sheet-answer>
-<p>Yes. Strength describes the extent of ionization. Initial concentration is the amount of solute per volume. Dilute HCl is still strong, and concentrated CH₃COOH is still weak.</p>
+<p><strong>Strong acid</strong> describes proton donation. A strong acid such as HCl ionizes almost completely in water.</p><p><strong>Strongly acidic</strong> describes a solution with a high [H₃O⁺] and a low pH. Both acid strength and concentration affect this property. Very dilute HCl remains a strong acid, while dilution lowers [H₃O⁺] and raises its pH.</p>
 </div>
 </div>
 </div>
@@ -772,8 +773,10 @@
 <div class="question-item" data-print-keep>
 <h3>From ion concentration to moles of strong acid</h3>
 <div class="question-prompt">If a problem gives the concentration of an ion after ionization, which row takes that information?</div>
-<div data-sheet-slot="model-acid-amount" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากความเข้มข้นไอออนไปหาโมลของกรดแก่" data-sheet-label-en="From ion concentration to moles of strong acid" style="--sheet-print-height:13mm">
-<div data-sheet-answer><p>Use n = CV after converting V to L. Litres cancel, leaving mol. Put the given ion amount in row F of ICF, then use the coefficients to recover the original amount in row I.</p></div>
+<div data-sheet-slot="model-acid-amount" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="จากความเข้มข้นไอออนไปหาโมลของกรดแก่" data-sheet-label-en="From ion concentration to moles of strong acid" style="--sheet-print-height:18mm">
+<div data-sheet-answer>
+<p>For example, an ion concentration of 0.20 mol/L in 500 mL of solution uses the conversion factor 1 L / 1000 mL.</p><div class="equation unit-calculation" role="math" aria-label="0.20 moles per litre times 500 millilitres times 1 litre per 1000 millilitres equals 0.100 moles. Litres and millilitres cancel.">n = 0.20 <span class="inline-fraction"><span>mol</span><span><s>L</s></span></span> × 500 <s>mL</s> × <span class="inline-fraction"><span>1 <s>L</s></span><span>1000 <s>mL</s></span></span> = 0.100 mol</div><p>Cancel L and mL to leave mol. Put the ion amount in row F of ICF, then use the coefficients to find the initial solute amount in row I.</p>
+</div>
 </div>
 </div>
 </div>
@@ -807,9 +810,9 @@
 </div>
 <div class="question-item" data-print-keep>
 <h3>What percentage ionized in Set B?</h3>
-<div data-sheet-slot="model-ionization-percentage" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ภาพ B แตกตัวไปกี่เปอร์เซ็นต์?" data-sheet-label-en="What percentage ionized in Set B?" style="--sheet-print-height:9mm">
+<div data-sheet-slot="model-ionization-percentage" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ภาพ B แตกตัวไปกี่เปอร์เซ็นต์?" data-sheet-label-en="What percentage ionized in Set B?" style="--sheet-print-height:20mm">
 <div data-sheet-answer>
-<p>2 out of 20 HA molecules ionized, so (2/20) × 100 = <strong>10%</strong>. Count the HA molecules that reacted. Each such molecule yields two product ions. For concentration data, use (concentration ionized ÷ initial concentration) × 100.</p>
+<div class="equation">Percent ionization = <span class="inline-fraction"><span>number of molecules ionized</span><span>initial number of molecules</span></span> \(\times100\%\)</div><div class="equation">\[\frac{2}{20}\times100\%=10\%\]</div><p>Count the 2 HA molecules that ionized out of the initial 20. Each molecule gives two types of product ion.</p><div class="equation">Percent ionization \(=\frac{x}{C_0}\times100\%\)</div><p>x is the concentration that ionized and C₀ is the initial concentration. Use the same units.</p>
 </div>
 </div>
 </div>
@@ -937,19 +940,13 @@
 <div class="question-item" data-print-keep>
 <h3>On dilution, what happens to the percentage and ion concentration?</h3>
 <div class="question-prompt">Consider the same weak acid at constant temperature in the range where the approximation applies.</div>
-<div data-sheet-slot="weak-dilution-weak" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เมื่อเจือจางกรดอ่อน ร้อยละกับความเข้มข้นไอออนเปลี่ยนอย่างไร?" data-sheet-label-en="On dilution, what happens to the percentage and ion concentration?" style="--sheet-print-height:12mm">
+<div data-sheet-slot="weak-dilution-weak" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="เมื่อเจือจางกรดอ่อน ร้อยละกับความเข้มข้นไอออนเปลี่ยนอย่างไร?" data-sheet-label-en="On dilution, what happens to the percentage and ion concentration?" style="--sheet-print-height:38mm">
 <div data-sheet-answer>
-<div class="equation">\[[\mathrm{H_3O^+}]\approx\sqrt{K_aC_0}\]</div><div class="equation">\[\frac{x}{C_0}\times100\%\approx\sqrt{\frac{K_a}{C_0}}\times100\%\]</div><p>As C₀ decreases, the H₃O⁺ concentration decreases while the fraction ionized increases. Kₐ stays constant at the same temperature.</p>
+<p>C<sub>a</sub> is the initial acid concentration, the same quantity as C₀ in the ICE table.</p><div class="equation">Percent ionization \(=\frac{x}{C_a}\times100\%\)</div><p>When C<sub>a</sub>/K<sub>a</sub> &gt; 1000, with no product ions initially added and water ionization negligible, use the approximation.</p><div class="equation">\[x=[\mathrm{H_3O^+}]\approx\sqrt{K_aC_a}\]</div><p>For HA with K<sub>a</sub> = 1.0 × 10<sup>−5</sup> as in the graph, at fixed temperature, find x first, then substitute into the percentage formula.</p><table><thead><tr><th scope="col">C<sub>a</sub> (mol/L)</th><th scope="col">C<sub>a</sub>/K<sub>a</sub></th><th scope="col">x (mol/L)</th><th scope="col">Percent ionization</th></tr></thead><tbody><tr><td>0.10</td><td>10<sup>4</sup> &gt; 1000</td><td>\(\sqrt{(10^{-5})(0.10)}\)<br>\(=1.0\times10^{-3}\)</td><td>\(\frac{1.0\times10^{-3}}{0.10}\times100\%\)<br>\(=1.0\%\)</td></tr><tr><td>0.025</td><td>2.5 × 10<sup>3</sup> &gt; 1000</td><td>\(\sqrt{(10^{-5})(0.025)}\)<br>\(=5.0\times10^{-4}\)</td><td>\(\frac{5.0\times10^{-4}}{0.025}\times100\%\)<br>\(=2.0\%\)</td></tr></tbody></table><p>On dilution from 0.10 to 0.025 mol/L, ionization increases from 1.0% to 2.0%, while [H₃O⁺] decreases. K<sub>a</sub> stays constant at fixed temperature.</p>
 </div>
 </div>
 </div>
-<div class="question-item" data-print-keep>
-<h3>How do we work back to Kₐ from a given percentage?</h3>
-<div class="question-prompt">If the numerical percentage in the question is P, how do we recover x?</div>
-<div data-sheet-slot="weak-reverse-percent" data-sheet-layout="block" data-sheet-size="medium" data-sheet-label-th="ถ้ารู้ร้อยละแล้ว จะย้อนหา Kₐ อย่างไร?" data-sheet-label-en="How do we work back to Kₐ from a given percentage?" style="--sheet-print-height:14mm">
-<div data-sheet-answer><div class="equation">\[x=C_0\frac{P}{100}\]</div><p>Put x in row C, then read C<sub>0</sub> − x and x from row E to find K<sub>a</sub>. Compare K<sub>a</sub> at the same temperature when the acids have different initial concentrations.</p></div>
-</div>
-</div>
+
 </section>
 <section class="lesson-section" data-guide-anchor="stage-10">
 <div data-print-keep>

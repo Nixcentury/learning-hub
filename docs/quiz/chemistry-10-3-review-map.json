@@ -11,7 +11,7 @@
   "readingSheet": {
     "contentId": "chemistry-ipst-acid-base-10-3-1-sheet",
     "source": "public/content/chemistry/ipst/acid-base/10-3-ionization-learning-sheet.html",
-    "sha256": "7791e1c8f6444e866442cab53cb93d3d29dbb9144b92c6313316e5a8cbff121e"
+    "sha256": "57be6604b03037e012d17bdebee348e5908378fc699b2652dab456dd2aca335d"
   },
   "sourceCoverage": {
     "activity-1-ammonia": [
@@ -626,7 +626,7 @@
       "unit": "",
       "number": 42,
       "readingSection": 9,
-      "readingSlot": "weak-reverse-percent"
+      "readingSlot": "percent-ionized"
     },
     {
       "type": "choice",
@@ -640,7 +640,7 @@
       "correct": 0,
       "number": 43,
       "readingSection": 9,
-      "readingSlot": "weak-reverse-percent"
+      "readingSlot": "percent-ionized"
     },
     {
       "type": "drag-drop",
@@ -779,7 +779,7 @@
       "unit": "",
       "number": 55,
       "readingSection": 9,
-      "readingSlot": "weak-reverse-percent"
+      "readingSlot": "percent-ionized"
     },
     {
       "type": "number",
@@ -883,7 +883,7 @@
       "weak-q-07",
       "weak-q-12",
       "weak-quadratic",
-      "weak-reverse-percent",
+      "percent-ionized",
       "weak-stepwise"
     ],
     "updatedQuizQuestionIds": [

@@ -1,6 +1,6 @@
 # Bohr 19.1 ตอน 2: Learning / Problem rebuild contract (11 November 2026)
 
-> **Active specification for the next content-editing round.** Supersedes the lesson-sequence and publication assumptions of the historical 3 November combined-sheet README below. This document is a production brief and audited source map, **not** a claim that the HTML has already been rebuilt or that every IPST book page has been re-read in this round.
+> **Approved design now implemented on draft PR #171.** This contract supersedes the old 3 November lesson narrative. The actual HTML has been rebuilt into eight short Learning stages plus a full Problem zone; see [IMPLEMENTATION-QA-2026-11-11.md](IMPLEMENTATION-QA-2026-11-11.md) for the source coverage, actual static checks, remaining full-book verification, and build/browser tests still outstanding. The PR has not been merged.
 
 ## User-approved decisions (do not reopen without reason)
 
@@ -49,7 +49,7 @@ Suggested ordering **inside each P-stage**: 2–6 targeted recall items → inve
 
 ## Old-book original 20-item inventory mapped to existing Quiz
 
-This is **20/20 of the prepared source inventory linked in the Quiz documentation**, not proof of exhaustive book-page coverage. The current unified Learning sheet has 41 authored questions and one two-part example, not verbatim copies of all 20 book tasks; Quiz is the place with all 20 referenced groups. Recover full givens/figures from the `ipst-original-items.json` and `quiz-source-images` plus the teacher-supplied **IPST Physics Book 6**, printed pp.59–80 and 105–110 (PDF pp.72–93, 118–123). Do not trust a Quiz question's simplified prompt to represent all textbook subparts.
+This is **20/20 of the prepared source inventory linked in the Quiz documentation**, now restored in the actual Problem zone; not proof of exhaustive book-page coverage. The current unified Learning sheet has 41 authored questions and one two-part example, not verbatim copies of all 20 book tasks; Quiz is the place with all 20 referenced groups. Recover full givens/figures from the `ipst-original-items.json` and `quiz-source-images` plus the teacher-supplied **IPST Physics Book 6**, printed pp.59–80 and 105–110 (PDF pp.72–93, 118–123). Do not trust a Quiz question's simplified prompt to represent all textbook subparts.
 
 | Source ID | Type | Book page | Quiz Q mapping | Inventory subparts | Handling |
 |---|---|---|---|---:|---|

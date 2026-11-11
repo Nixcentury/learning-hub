@@ -65,16 +65,22 @@ function sheetPrintZones(root) {
 export function buildHtmlPrintSnapshot(source, title, zone = 'learning') {
   if (!source?.documentElement.hasAttribute('data-learning-html')) throw Error('Not a reading document');
   const clone = source.documentElement.cloneNode(true);
-  const originals = source.querySelectorAll('*');
-  const copies = clone.querySelectorAll('*');
-  // querySelectorAll on Document includes html, while on the cloned html does not.
-  for (let i = 0; i < copies.length; i += 1) {
-    const node = originals[i + 1];
-    if (!node) continue;
-    // Keep the selected picture/srcset image when moving to a separate document.
-    if (node.localName === 'img' && node.currentSrc) copies[i].setAttribute('src', safePrintUrl(node.currentSrc, source.URL));
+  // Copy responsive image selections before pruning hidden languages and zones.
+  // Avoid getComputedStyle() on every MathJax SVG/glyph: a long bilingual
+  // worksheet can contain thousands of such nodes and freeze the print UI.
+  const originalImages = source.querySelectorAll('img');
+  const copiedImages = clone.querySelectorAll('img');
+  for (let i = 0; i < copiedImages.length; i += 1) {
+    if (originalImages[i]?.currentSrc) copiedImages[i].setAttribute('src', safePrintUrl(originalImages[i].currentSrc, source.URL));
+  }
+  const overflowSelector = 'pre, [style*="overflow"], .derivation, .math-scroll, .scrollable, [class*="scroll"], [data-hub-math]';
+  const originalScroll = source.querySelectorAll(overflowSelector);
+  const copiedScroll = clone.querySelectorAll(overflowSelector);
+  for (let i = 0; i < copiedScroll.length; i += 1) {
+    const node = originalScroll[i];
+    if (!node || node.closest('[data-hub-math]') && !node.hasAttribute('data-hub-math')) continue;
     const css = source.defaultView?.getComputedStyle(node);
-    if (css && /auto|scroll|hidden|clip/.test(`${css.overflowX} ${css.overflowY}`)) copies[i].setAttribute('data-hub-print-scroll', '');
+    if (css && /auto|scroll|hidden|clip/.test(`${css.overflowX} ${css.overflowY}`)) copiedScroll[i].setAttribute('data-hub-print-scroll', '');
   }
   clone.querySelectorAll('script, iframe, object, embed, form, button, input, textarea, select, base, template, [data-no-print], .no-print, [data-hub-html], [data-hub-math-notice], meta[http-equiv]').forEach(node => node.remove());
   // Print only the chosen language; do not paginate the hidden translation.
@@ -128,7 +134,11 @@ export async function waitForPrintResources(doc) {
     const value = node.getAttribute('href') || node.getAttributeNS('http://www.w3.org/1999/xlink', 'href');
     if (value && !value.startsWith('#')) throw new PrintLayoutError('external-svg-use', node);
   }
-  for (const node of doc.querySelectorAll('*')) {
+  // Backgrounds are used on layout elements, not inside MathJax SVG glyphs.
+  // Sampling every SVG descendant here made large bilingual print dialogs stall.
+  const backgroundCandidates = doc.querySelectorAll('body, main, section, article, header, footer, figure, div, p, li, span, pre, table, th, td, [style*="background"]');
+  for (const node of backgroundCandidates) {
+    if (node.closest('[data-hub-math]')) continue;
     const background = doc.defaultView.getComputedStyle(node).backgroundImage;
     for (const match of background.matchAll(/url\(["']?(.*?)["']?\)/g)) if (!match[1].startsWith('#')) extraImages.add(match[1]);
   }

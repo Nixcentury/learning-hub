@@ -1,5 +1,16 @@
 # Physics Bohr 19.1 ตอน 2 — Implementation QA and handoff, 11 Nov 2026
 
+> **ACTIVE REVISION R3 / DRAFT PR #174 (11 Nov 2026).** Previous R1 notes and counts below are historical. The current Bohr HTML has **7 Learning stages**; it starts from emission/absorption spectra, then quickly reviews Dalton/Thomson/Rutherford/Bohr. The grating wavelength-measurement explanation is **removed from Learning**, but the IPST grating activity/data is retained in **Problem**. In Learning, show all intermediate algebra from force + angular momentum to **general r_n=n²a₀** and from K+U to **general E_n=−13.6/n² eV**, with numerical constants and unit conversion. The table requested by the teacher is the **K_n/U_n/E_n hydrogen energy table** (n=1,2,3), NOT a radius-proof table. Give explanatory series table including Lyman/Balmer/Paschen/Brackett/Pfund. **Core Memory reduced from 32 to 18** formula/rearrangement/ratio questions, including equation-(1)/(2) ratio style. **Never reduce IPST 20/20 catalogued groups, all source subparts, or 10 A-Level-style questions.** The problem section has **no page cap**. Guide has 11 steps and must be fingerprinted against the HTML. Print performance changes (MathJax per-language limit; reduced DOM style scans; batched layout freeze) are in PR #174, but browser/print regression status must be checked before merging. See this PR's checks.
+
+## R3 static QA, 11 Nov 2026 (PR #174)
+
+- **Current actual HTML:** 7 Learning sections per language, 18 memory items, 20 registered IPST groups, 10 A-Level-style items and original worksheet Questions 1–41. Exactly **131 semantic answer slots per language**, same sequence of IDs in Thai and English; no invalid slot keys.
+- **Science corrections:** No radius derivation table. Instead, explicit equation transformations to r_n (from electric/centripetal force and m_ev_nr_n=nℏ) and to E_n (K_n+U_n, substitute r_n, use SI and eV conversion). The K/U/E table contains true Bohr hydrogen values for n=1,2,3; U=-2K, E=-K and U=2E are derived and observed. The series table includes the final n and a plain-language explanation.
+- **Problem scope:** Full grating activity/data remains for review; all catalogued IPST items and original A-Level-style problems remain. Memory reduced from 32 to 18, not the official problems. Original book completeness beyond the 20-group inventory remains unverified in this PR.
+- **Print fixes:** src/js html-math per-language limit, HTML print snapshot and resource-scan reduced traversal, print-layout freeze batched writes; browser/print checks for 5 combinations are triggered by the revised Playwright test. *Do not say the printing hang is solved until the GitHub workflow has passed and a user confirms on iPad.*
+- **Guide:** 11 steps (7 Learning + 4 Problem); HTML SHA256 refreshed after R3 content edit. Update again if HTML changes.
+
+
 ## Scope and user decisions
 
 Actual content edit of the established sheet at `public/content/physics/ipst/atomic-physics/19-1-2-evidence-bohr-learning-sheet.html`; one bilingual file with `data-print-zone="learning"` and `data-print-zone="problem"`, following Chemistry 10.3's central Hub design. **No print page cap**, no requirement to print; user teaches on screen and wants abundant writing-practice problems. Existing scored Bohr 50-question Quiz and its scoring/progress were not edited.

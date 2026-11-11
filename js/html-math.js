@@ -136,7 +136,12 @@ async function renderDocument(doc, host, baseUrl, isCurrent) {
   }
   if (!isCurrent()) return;
   installStyles(doc, math);
-  let count = 0, errors = 0;
+  // Count each authored language separately. A bilingual worksheet can have
+  // hundreds of legitimate formula instances per language, although the
+  // shared document contains both translations. Keep the per-language safety
+  // limit for unusually large or hostile single-language documents.
+  const countsByLanguage = new Map();
+  let errors = 0;
   for (const job of jobs) {
     if (!isCurrent()) return;
     if (!job.node.isConnected) continue;
@@ -148,7 +153,10 @@ async function renderDocument(doc, host, baseUrl, isCurrent) {
       wrapper.dataset.mathTex = part.tex;
       wrapper.textContent = part.raw;
       try {
-        if (++count > MAX_FORMULAS || part.tex.length > MAX_TEX_LENGTH) throw new Error('Formula limit exceeded');
+        const languageKey = job.node.parentElement?.closest('[data-content-lang]')?.dataset.contentLang || '*';
+        const languageCount = (countsByLanguage.get(languageKey) || 0) + 1;
+        countsByLanguage.set(languageKey, languageCount);
+        if (languageCount > MAX_FORMULAS || part.tex.length > MAX_TEX_LENGTH) throw new Error('Formula limit exceeded');
         const size = parseFloat(doc.defaultView.getComputedStyle(job.node.parentElement).fontSize) || 16;
         // MathJax conversions must be serialized across all open reading windows.
         const conversion = runtime.queue.then(async () => {

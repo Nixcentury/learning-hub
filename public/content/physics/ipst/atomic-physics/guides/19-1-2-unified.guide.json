@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-atomic-19-1-2-sheet",
-    "revision": "2026-11-11-learning-problem-r1",
-    "sha256": "4f52dd4bd93f5c707b853809e5acb8c8c6c27c8eb702db3cfea25b2a56dbf9a4"
+    "revision": "2026-11-11-learning-problem-r3",
+    "sha256": "5cbcd53178d0dc94e15175ce93a2c19658a377934ca03fcf87f5ede39708507b"
   },
   "title": {
     "th": "ทฤษฎีโบร์: จากสเปกตรัมจริงถึงการคำนวณ",
@@ -74,69 +74,14 @@
       }
     },
     {
-      "id": "measurement",
-      "title": {
-        "th": "จากเส้นสเปกตรัมสู่พลังงาน",
-        "en": "From spectral wavelength to photon energy"
-      },
-      "summary": {
-        "th": "แยกสีด้วยเกรตติงและใช้ความยาวคลื่นที่สังเกตได้\nค่ามาตรฐานของเส้นแดงไฮโดรเจนให้พลังงานโฟตอนประมาณ 1.89 eV",
-        "en": "A grating separates wavelengths that can be measured.\nA reference hydrogen red line corresponds to roughly 1.89 eV per photon."
-      },
-      "story": {
-        "th": "ย้ำว่า 656.3 nm เป็นค่าอ้างอิง ไม่ใช่ผลวัดจริงของนักเรียน",
-        "en": "State clearly that 656.3 nm is a reference value, not student data."
-      },
-      "action": {
-        "th": "ทวนการแปลง nm เป็น m และคำนวณโฟตอน",
-        "en": "Convert nm to m and calculate photon energy."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "จากเส้นสเปกตรัมสู่พลังงาน",
-            "en": "From spectral wavelength to photon energy"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "learning-2"
-          }
-        },
-        {
-          "label": {
-            "th": "คำตอบ/ฝึก",
-            "en": "Note / practice"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "bohr-core-photon"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "เหตุใดจึงต้องแปลงนาโนเมตร?",
-          "en": "Why convert nanometres?"
-        },
-        "answer": {
-          "th": "เมื่อใช้ h และ c ใน SI ต้องให้ λ อยู่ในเมตร",
-          "en": "With h and c in SI, wavelength must be in metres."
-        }
-      },
-      "after": {
-        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
-        "en": "Reveal the answer after trying, then revisit unclear content."
-      }
-    },
-    {
       "id": "evidence",
       "title": {
-        "th": "ทำไมจึงต้องเสนอแบบจำลองใหม่",
-        "en": "Why a new atomic model was needed"
+        "th": "ทวนแบบจำลองอะตอมอย่างรวดเร็ว",
+        "en": "Quick review of atomic models"
       },
       "summary": {
-        "th": "แอลฟาส่วนใหญ่ผ่านแผ่นทองคำ แต่ส่วนน้อยเบนมากหรือกลับหลัง\nผลนี้บอกโครงสร้างนิวเคลียส แต่ยังไม่อธิบายสเปกตรัมแบบเส้น",
-        "en": "Most alpha particles pass through gold foil, but a few scatter strongly.\nThe nucleus explains the scattering, not discrete spectral lines by itself."
+        "th": "ดอลตัน ทอมสัน รัทเทอร์ฟอร์ด และโบร์: หลักฐาน ข้อจำกัด และเหตุผลที่ต้องพัฒนาแบบจำลอง",
+        "en": "Dalton, Thomson, Rutherford and Bohr: experimental evidence and model limits"
       },
       "story": {
         "th": "สอนแยกแรงไฟฟ้าจริงจากอุปมาแม่เหล็ก",
@@ -154,7 +99,7 @@
           },
           "target": {
             "kind": "anchor",
-            "key": "learning-3"
+            "key": "learning-2"
           }
         },
         {
@@ -209,7 +154,7 @@
           },
           "target": {
             "kind": "anchor",
-            "key": "learning-4"
+            "key": "learning-3"
           }
         },
         {
@@ -245,8 +190,8 @@
         "en": "Origin of Bohr radius and speed"
       },
       "summary": {
-        "th": "ย่อการจัดรูปสมการ แต่แทนค่าคงตัวจริงจนเห็น a₀\nสูตรที่ใช้คือ rₙ=n²a₀ และ vₙ∝1/n",
-        "en": "Skip long algebra but substitute physical constants to obtain a₀.\nUse rₙ=n²a₀ and vₙ∝1/n for hydrogen."
+        "th": "สมการ (1) และ (2) จัดรูปหา r_n และ v_n แสดงการแทนค่าคงตัวจริง พร้อมตารางขั้นพิสูจน์",
+        "en": "Rearrange equations (1) and (2) to derive r_n and v_n, with a short derivation table and numeric substitutions"
       },
       "story": {
         "th": "ย้ำ n² และการนับสถานะกระตุ้นให้ถูก",
@@ -264,7 +209,7 @@
           },
           "target": {
             "kind": "anchor",
-            "key": "learning-5"
+            "key": "learning-4"
           }
         },
         {
@@ -300,8 +245,8 @@
         "en": "Origin of −13.6 eV"
       },
       "summary": {
-        "th": "ใช้ E=K+U และค่าคงตัวจริงเพื่อได้ E₁≈−13.6 eV\nพลังงานติดลบหมายถึงอิเล็กตรอนยังถูกยึดเหนี่ยว",
-        "en": "Use E=K+U and physical constants to obtain E₁≈−13.6 eV.\nNegative total energy means the electron remains bound."
+        "th": "เริ่ม E=K+U แล้วแทน r_n ก่อนจัดรูปหา E_n และที่มาของ −13.6 eV",
+        "en": "Begin with E=K+U, substitute r_n, then derive E_n and the origin of −13.6 eV"
       },
       "story": {
         "th": "เขียนที่มาให้เห็น ไม่ให้เด็กคัดลอกการพิสูจน์",
@@ -319,7 +264,7 @@
           },
           "target": {
             "kind": "anchor",
-            "key": "learning-6"
+            "key": "learning-5"
           }
         },
         {
@@ -374,7 +319,7 @@
           },
           "target": {
             "kind": "anchor",
-            "key": "learning-7"
+            "key": "learning-6"
           }
         },
         {
@@ -410,8 +355,8 @@
         "en": "Spectral series and model limits"
       },
       "summary": {
-        "th": "อนุกรมเรียกตามระดับปลาย และแถบแสงสัมพันธ์กับช่องว่างพลังงาน\nโบร์ไม่ใช่ภาพวงโคจรแน่นอนในกลศาสตร์ควอนตัมสมัยใหม่",
-        "en": "Series names follow final levels and energy gaps determine wavelengths.\nBohr orbits are not literal modern quantum electron paths."
+        "th": "ตารางอนุกรม Lyman Balmer Paschen Brackett Pfund และคำอธิบายระดับปลาย",
+        "en": "Spectral series table with explanation of final quantum levels"
       },
       "story": {
         "th": "ใช้แผนภาพสั้น ๆ ไม่สอนพีชคณิตที่เกินระดับมัธยม",
@@ -429,7 +374,7 @@
           },
           "target": {
             "kind": "anchor",
-            "key": "learning-8"
+            "key": "learning-7"
           }
         },
         {
@@ -465,8 +410,8 @@
         "en": "Problem: recall drills"
       },
       "summary": {
-        "th": "ฝึกสูตร รัศมี อัตราส่วน พลังงาน และสเปกตรัมซ้ำจากหลายมุม\nทุกข้อใช้สาระและสูตรที่ปรากฏใน Learning เท่านั้น",
-        "en": "Practice radius, energy, spectra and formula recall in varied forms.\nEvery task draws on previously introduced Learning content."
+        "th": "ฝึกสูตรที่ต้องจำและอัตราส่วน 18 ข้อ ลดคำถามหยิบย่อย",
+        "en": "18 high-value memory and algebra drills; redundant microquestions removed"
       },
       "story": {
         "th": "ให้ปิดเฉลยก่อน แล้วพูดสูตรหรือหลักการให้ได้",

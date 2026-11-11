@@ -1,5 +1,7 @@
 # 19.1 ใบรวม: ทฤษฎีอะตอมของโบร์และสเปกตรัมอะตอม
 
+> **HTML NOW UPDATED ON DRAFT PR #171 (11 November 2026).** The established worksheet was actually edited into eight short **Learning** stages and an uncapped **Problem** zone. It retains original Questions 1–41 and worked tasks, restores 20 catalogued IPST source groups (25 subparts), adds 32 memory questions and 10 A-Level-style questions per language, and updates the guide. Read [IMPLEMENTATION-QA-2026-11-11.md](IMPLEMENTATION-QA-2026-11-11.md) for counts, the book completeness caveat and remaining browser/build tests. The HTML is **not merged or deployed** until reviewed.
+
 > **CURRENT INSTRUCTIONS (11 NOV 2026)**: Read [REBUILD-Learning-Problem-2026-11-11.md](REBUILD-Learning-Problem-2026-11-11.md) **before** using historical content/counts below. The user approved a phenomenon-first, condensed Bohr **Learning** zone and a fully worked, uncapped **Problem** zone restoring all relevant IPST originals from the old worksheet + 50-question Quiz, plus in-scope A-Level-style practice. Display concise SI origins of Bohr radius and −13.6 eV, formulas visible without copying, and solutions as short setup → Learning formula → rearrange → substitute with units → final answer → short check. The old combined-worksheet structure below is historical. The 20/20 prepared inventory/Quiz linkage has been audited; exhaustive original-book completeness is not yet independently certified. This is a content rebuild specification, **not an already merged HTML revision**.
 
 

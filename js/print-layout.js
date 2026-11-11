@@ -60,7 +60,13 @@ function freezeLayout(source) {
     const computed = view.getComputedStyle(node);
     return [node, properties.map(name => [name, computed.getPropertyValue(name)])];
   });
-  for (const [node, values] of snapshots) for (const [name, value] of values) node.style.setProperty(name, value, 'important');
+  // One style write per block instead of ~20 individual writes. On long
+  // interactive worksheets the original loop repeatedly invalidated layout
+  // thousands of times before the first page could be placed.
+  for (const [node, values] of snapshots) {
+    const frozen = values.map(([name, value]) => `${name}:${value} !important;`).join('');
+    node.style.cssText += ';' + frozen;
+  }
 }
 
 export function tableRowGroups(rows) {

@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { parseHTML } from 'linkedom';
 import { applyContentLanguage } from '../js/content-language.js';
 import { buildHtmlPrintSnapshot } from '../js/html-print.js';
-import { isExitTicketRevision, exitTicketPages, prepareExitTicketPrint } from '../js/exit-ticket-revision.js';
+import { isExitTicketRevision, exitTicketPages, exitTicketRanges, prepareExitTicketPrint } from '../js/exit-ticket-revision.js';
 
 const topics = [
   ['2-1','b-6622c75196960aae9364b231','atomic-models',4,2],
@@ -122,4 +122,75 @@ test('content QA corrections are present in the imported versions', async () => 
   assert.match(c.body.textContent,/theoretical capacity is 50/);
   assert.match(d.body.textContent,/Pauling electronegativity in bonds/);
   assert.match(d.body.textContent,/Mg 1\.20 < Al 1\.22/);
+});
+
+async function physicsRevision() {
+  const path='content/physics/ipst/atomic-physics/19-1-1-exit-ticket-revision.html';
+  const {document}=parseHTML(await readFile(new URL('../public/'+path,import.meta.url),'utf8'));
+  Object.defineProperty(document,'URL',{value:'https://example.test/learning-hub/'+path});
+  Object.defineProperty(document,'defaultView',{value:undefined});
+  return document;
+}
+
+test('blackbody revision appends the approved v1.7 after the existing worksheet and quiz', async () => {
+  const {document}=parseHTML(await readFile(new URL('../public/content/bank/physics/b-0f490c3358e9212cee2e2a43.html',import.meta.url),'utf8'));
+  const links=[...document.querySelectorAll('a')];
+  assert.deepEqual(links.map(a=>a.dataset.toolKey),['learning-sheet','quiz-set-1','exit-ticket-revision']);
+  assert.equal(links.at(-1).dataset.toolKind,'html');
+  assert.equal(links.at(-1).dataset.contentId,'physics-ipst-atomic-19-1-1-exit-ticket-revision');
+  assert.equal(links.at(-1).dataset.th,'exit ticket revision');
+  assert.equal(links.at(-1).dataset.en,'exit ticket revision');
+  const source=await physicsRevision();
+  assert.equal(source.documentElement.dataset.contentRevision,'1.7');
+  assert.equal(source.documentElement.dataset.sourceSha256,'c549e418f85c656f983d9a635747ffa20dddc99dcc67b552bb5b67163b5a8c9f');
+  assert.equal(source.querySelectorAll('script,template,iframe,form,button,select,input,[data-learning-activity-content],[data-sheet-slot]').length,0);
+});
+
+test('blackbody: 16 exports retain every question, calculation space and independent page count', async () => {
+  const source=await physicsRevision();
+  const ranges=['all','quiz','recall','review'];
+  assert.deepEqual(exitTicketRanges(source),ranges);
+  const expectedUnits={all:24,quiz:11,recall:5,review:8};
+  for(const language of ['th','en'])for(const answers of [false,true])for(const range of ranges){
+    applyContentLanguage(source,language);
+    // Request the opposite edition to the reader; exporting must select the requested layout.
+    source.body.classList.toggle('answers-on',!answers);
+    const before=source.documentElement.outerHTML;
+    const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'Blackbody revision'));
+    const count=prepareExitTicketPrint(copy,{range,answers});
+    const counts=language==='th'?[answers?6:7,3,1,3]:[7,4,1,3];
+    assert.equal(count,counts[ranges.indexOf(range)]);
+    assert.equal(copy.querySelectorAll('.page').length,count);
+    assert.equal(copy.querySelectorAll('[data-revision-edition]').length,1);
+    assert.equal(copy.querySelectorAll('[data-revision-range]').length,1);
+    assert.equal(copy.querySelectorAll('.unit').length,expectedUnits[range]);
+    assert.equal(new Set([...copy.querySelectorAll('.unit')].map(u=>u.dataset.revisionUnit)).size,expectedUnits[range]);
+    assert.equal(copy.documentElement.lang,language);
+    assert.equal(copy.querySelectorAll('[data-hub-print-style],.hub-print-page').length,0);
+    const hasQuiz=range==='all'||range==='quiz',hasRecall=range==='all'||range==='recall';
+    assert.equal(copy.querySelectorAll('.blank').length,hasQuiz?10:0);
+    assert.equal(copy.querySelectorAll('.recall-card').length,hasRecall?10:0);
+    assert.equal(copy.querySelectorAll('.answer-inline,.teacher-key').length,answers?(hasQuiz?15:0)+(hasRecall?10:0):0);
+    assert.equal(copy.querySelectorAll('.response-space').length,answers?0:(hasQuiz?10:0)+(hasRecall?10:0));
+    for(const unit of copy.querySelectorAll('.unit'))if(range!=='all')assert.equal(unit.dataset.kind,range);
+    for(const img of copy.querySelectorAll('img'))assert.match(img.getAttribute('src'),/^https:\/\/example.test\/learning-hub\/content\/physics\/ipst\/atomic-physics\/assets\/19-1-1\/exit-ticket\//);
+    assert.match(copy.querySelector('.footer span:last-child').textContent,new RegExp(`1 / ${count}$`));
+    assert.equal(source.documentElement.outerHTML,before);
+  }
+});
+
+test('blackbody: science QA and approved continuous writing lines survive import',async()=>{
+  const source=await physicsRevision();
+  for(const language of ['th','en']){
+    const view=source.querySelector(`[data-content-lang="${language}"]`);
+    const student=view.querySelector('[data-revision-edition="blank"] [data-revision-range="all"]');
+    const teacher=view.querySelector('[data-revision-edition="answers"] [data-revision-range="all"]');
+    assert.equal(student.querySelectorAll('.answer-rule').length,10);
+    for(const blank of student.querySelectorAll('.blank'))assert.ok(blank.getAttribute('style').includes('--rule-width'));
+    assert.match(teacher.textContent,/650 nm/);
+    assert.match(teacher.textContent,/3\.3 × 10⁻¹⁹/);
+    assert.match(teacher.textContent,/6\.5 × 10¹⁵/);
+    assert.equal(student.querySelectorAll('img').length,3);
+    if(language==='en')assert.match(teacher.textContent,/nonzero levels/);
+  }
 });

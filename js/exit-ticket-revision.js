@@ -5,25 +5,44 @@ export function isExitTicketRevision(doc) {
     && doc.documentElement.hasAttribute('data-learning-html');
 }
 
+export function exitTicketRanges(doc) {
+  return doc?.documentElement.getAttribute('data-exit-ticket-editions') === '1'
+    ? ['all', 'quiz', 'recall', 'review'] : ['all', 'quiz'];
+}
+
 export function exitTicketPages(doc, range = 'all') {
   if (!isExitTicketRevision(doc)) throw Error('Not an exit ticket revision');
+  if (!exitTicketRanges(doc).includes(range)) throw Error('Unknown revision print range');
   const views = [...doc.querySelectorAll('[data-content-lang]')].filter(view => !view.hasAttribute('hidden'));
   if (views.length !== 1) throw Error('Choose exactly one revision language');
+  if (doc.documentElement.getAttribute('data-exit-ticket-editions') === '1') {
+    const edition = doc.body.classList.contains('answers-on') ? 'answers' : 'blank';
+    return [...views[0].querySelectorAll(`[data-revision-edition="${edition}"] [data-revision-range="${range}"] .page`)];
+  }
   return [...views[0].querySelectorAll('.page')].filter(page => range !== 'quiz' || !page.classList.contains('review'));
 }
 
 // Receives the sanitized, detached snapshot, never the live teaching document.
 export function prepareExitTicketPrint(doc, { range = 'all', answers = false } = {}) {
   if (!doc.documentElement.hasAttribute('data-hub-print-snapshot')) throw Error('A detached print snapshot is required');
-  if (!['all', 'quiz'].includes(range)) throw Error('Unknown revision print range');
+  if (!exitTicketRanges(doc).includes(range)) throw Error('Unknown revision print range');
+  doc.body.classList.toggle('answers-on', Boolean(answers));
   const selected = new Set(exitTicketPages(doc, range));
   if (!selected.size) throw Error('Revision has no printable pages');
+  if (doc.documentElement.getAttribute('data-exit-ticket-editions') === '1') {
+    const selectedRange = [...selected][0].closest('[data-revision-range]');
+    const selectedEdition = selectedRange.closest('[data-revision-edition]');
+    doc.querySelectorAll('[data-revision-edition]').forEach(node => { if (node !== selectedEdition) node.remove(); });
+    doc.querySelectorAll('[data-revision-range]').forEach(node => { if (node !== selectedRange) node.remove(); });
+    // The selected, independently paginated range becomes the complete snapshot.
+    selectedRange.dataset.revisionRange = 'all';
+  }
   doc.querySelectorAll('.page').forEach(page => { if (!selected.has(page)) page.remove(); });
   doc.querySelectorAll('[data-hub-print-style]').forEach(node => node.remove());
   doc.body.classList.remove('hub-print-document', 'print-quiz-only');
   doc.body.classList.toggle('answers-on', Boolean(answers));
   if (answers) doc.querySelectorAll('.calc-workarea,.scratch').forEach(node => node.remove());
-  else doc.querySelectorAll('.solution-text,.answer-key,.teacher-only,.teacher-work,.teacherkey').forEach(node => node.remove());
+  else doc.querySelectorAll('.solution-text,.answer-key,.teacher-only,.teacher-work,.teacherkey,.answer-inline,.teacher-key').forEach(node => node.remove());
   const pages = exitTicketPages(doc);
   pages.forEach((page, index) => {
     const number = page.querySelector('.footer span:last-child');

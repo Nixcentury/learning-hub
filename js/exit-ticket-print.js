@@ -1,4 +1,4 @@
-import { exitTicketPages, prepareExitTicketPrint } from './exit-ticket-revision.js';
+import { exitTicketPages, exitTicketRanges, prepareExitTicketPrint } from './exit-ticket-revision.js';
 import { readPrintMetadata, buildPrintFilename, createPrintTitleSession } from './print-metadata.js';
 
 let active = null;
@@ -28,10 +28,14 @@ export function openExitTicketPrint({ frame, title, language, opener, context,
     }
     field.append(control); options.append(field); return control;
   }
-  const range = select('data-revision-print-range', text('ช่วงที่พิมพ์', 'Print range'), [
+  const rangeChoices = exitTicketRanges(source).length > 2 ? [
+    ['all',text('ทั้งชุด','Full set')], ['quiz',text('เฉพาะควิซ','Quiz only')],
+    ['recall',text('เฉพาะ Recall','Recall only')], ['review',text('เฉพาะสรุป','Review only')],
+  ] : [
     ['all',text(`ทั้งชุด (${allCount} หน้า)`,`Full set (${allCount} pages)`)],
     ['quiz',text(`เฉพาะควิซ (${quizCount} หน้า)`,`Quiz only (${quizCount} pages)`)],
-  ]);
+  ];
+  const range = select('data-revision-print-range', text('ช่วงที่พิมพ์', 'Print range'), rangeChoices);
   const edition = select('data-revision-print-edition',text('ฉบับที่พิมพ์','Print edition'),[
     ['blank',text('ฉบับผู้เรียน — ไม่แสดงเฉลย','Student — answers hidden')],
     ['answers',text('ฉบับเฉลย','Teacher answers')],

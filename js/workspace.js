@@ -20,6 +20,7 @@ import { openHtmlPrint } from "./html-print.js";
 import { toolCatalog } from "./legacy-tool-catalog.js";
 import { applyContentLanguage } from "./content-language.js";
 import { attachLearningSheet } from "./learning-sheet.js";
+import { isExitTicketRevision } from "./exit-ticket-revision.js";
 import { createLearningGuide } from "./learning-guide.js";
 import { createSimulationGuideTool, simulationGuideFor } from "./simulation-guide-model.js";
 import { mountSimulationGuide, createSimulationGuideHighlighter } from "./simulation-guide.js";
@@ -420,6 +421,11 @@ export function createWorkspace({
         : label("พิมพ์ / บันทึก PDF", "Print / Save PDF");
       record.printButton.setAttribute("aria-label", record.printButton.title);
       record.printButton.querySelector('.window-print-label').textContent = label("พิมพ์ / PDF", "Print / PDF");
+    }
+    if (record.revisionAnswers && !record.revisionAnswers.hidden) {
+      const shown = record.frame.contentDocument?.body.classList.contains('answers-on');
+      record.revisionAnswers.textContent = shown ? label('ปิดเฉลย', 'Hide answers') : label('เปิดเฉลย', 'Show answers');
+      record.revisionAnswers.setAttribute('aria-pressed', String(Boolean(shown)));
     }
     record.guide?.setLanguage(language());
     record.simulationGuide?.setLanguage(language());
@@ -918,6 +924,7 @@ export function createWorkspace({
           ${tool.context.toolKind === "html" ? '<button class="window-sheet-guide" type="button" hidden><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4zm16 0h-4a3 3 0 0 0-3 3v14a4 4 0 0 1 4-2h3z"/></svg><span></span></button>' : ''}
           <button class="window-share" type="button"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m10 13 4-4M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m2 1 1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/></svg><span></span></button>
           ${tool.context.toolKind === "html" ? '<button class="window-html-print" type="button" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V3h12v6M6 18H3V9h18v9h-3M6 14h12v7H6z"/></svg><span class="window-print-label"></span></button>' : ''}
+          ${tool.context.toolKind === "html" ? '<button class="window-revision-answers" type="button" aria-pressed="false" hidden></button>' : ''}
           <span class="window-drag-hint" aria-hidden="true">•••</span>
         </div>
       </header>
@@ -959,6 +966,7 @@ export function createWorkspace({
       languageTh: element.querySelector('[data-window-language="th"]'),
       languageEn: element.querySelector('[data-window-language="en"]'),
       printButton: tool.context.toolKind === "html" ? element.querySelector(".window-html-print") : null,
+      revisionAnswers: element.querySelector('.window-revision-answers'),
       clock: element.querySelector(".window-clock"),
       clockDate: element.querySelector(".window-clock-date"),
       clockTime: element.querySelector(".window-clock-time"),
@@ -1013,6 +1021,12 @@ export function createWorkspace({
     });
     record.languageTh.addEventListener("click", () => onLanguageChange("th"));
     record.languageEn.addEventListener("click", () => onLanguageChange("en"));
+    record.revisionAnswers?.addEventListener('click', () => {
+      const doc = record.frame.contentDocument;
+      if (!isExitTicketRevision(doc)) return;
+      doc.body.classList.toggle('answers-on');
+      updateRecordText(record);
+    });
     record.printButton?.addEventListener("click", () => openHtmlPrint({
       frame: record.frame,
       title: language() === 'en' ? record.tool.titleEn : record.tool.titleTh,
@@ -1055,6 +1069,7 @@ export function createWorkspace({
         record.element.classList.toggle('is-learning-sheet', record.isLearningSheet);
         record.guide.setDocument(doc);
         record.printButton.disabled = !doc?.documentElement.hasAttribute('data-learning-html');
+        record.revisionAnswers.hidden = !isExitTicketRevision(doc);
         updateRecordText(record);
         void attachLearningSheet(doc, {
           stylesheetUrl: new URL('shared/learning-sheet.css?v=sheet-touch-20261025', location.href).href,

@@ -9,6 +9,7 @@ import { videoLinkEntry } from '../js/video-link.js';
 import { htmlLinkEntry } from '../js/html-link.js';
 import { pdfLinkEntry } from '../js/pdf-link.js';
 import { applyContentLanguage } from '../js/content-language.js';
+import { isExitTicketRevision } from '../js/exit-ticket-revision.js';
 import { createLearningGuide } from '../js/learning-guide.js';
 import { createBankTool } from '../js/question-bank-tools.js';
 import { createTopicReviewTool, reviewSelection } from '../js/topic-review-tools.js';
@@ -42,7 +43,7 @@ function harness(initialIdentity = { status: 'guest', isGuest: true, uid: null }
   const window = { addEventListener: (name, fn) => { events[name] = fn; }, setInterval() {} };
   const location = new URL(document.URL);
   const vmContext = vm.createContext({ document, window, location, URL, Intl, Date, console,
-    createContentTool, createHubContextMessage, videoLinkEntry, htmlLinkEntry, pdfLinkEntry, applyContentLanguage, createLearningGuide,
+    createContentTool, createHubContextMessage, videoLinkEntry, htmlLinkEntry, pdfLinkEntry, applyContentLanguage, createLearningGuide, isExitTicketRevision,
     createSimulationGuideTool, simulationGuideFor, mountSimulationGuide, createSimulationGuideHighlighter,
     toolCatalog: {}, requestAnimationFrame: fn => fn(),
     renderHtmlMath: async () => {}, attachLearningSheet: async () => null,
@@ -67,6 +68,25 @@ function harness(initialIdentity = { status: 'guest', isGuest: true, uid: null }
     language(value) { language = value; workspace.setLanguage(); } };
 }
 const videoButton = `<a data-hub-video data-content-id="sound-video" href="${url}" data-subject-id="physics" data-chapter-id="12" data-topic-id="sound">Video</a>`;
+test('revision answers use parent controls, retain language/state and never receive quiz identity', () => {
+  const h = harness();
+  h.workspace.openContent({ ...context, toolKind:'html', contentId:'qa-exit-ticket',
+    source:'content/chemistry/atomic-properties/2-1-exit-ticket-revision.html', titleTh:'exit ticket revision', titleEn:'exit ticket revision' });
+  const reader=h.document.querySelector('.workspace-window'),frame=reader.querySelector('iframe');
+  const child=dom(readFileSync(new URL('../public/content/chemistry/atomic-properties/2-1-exit-ticket-revision.html',import.meta.url),'utf8'),'content/chemistry/atomic-properties/2-1-exit-ticket-revision.html');
+  assert.equal(h.load(frame,child).length,0);
+  assert.equal(frame.getAttribute('sandbox'),'allow-same-origin');
+  const button=reader.querySelector('.window-revision-answers');
+  assert.equal(button.hidden,false);
+  button.click(); assert.ok(child.document.body.classList.contains('answers-on'));
+  h.language('en');
+  assert.equal(child.document.getElementById('lang-en').hidden,false);
+  assert.equal(child.document.getElementById('lang-th').hidden,true);
+  assert.equal(button.textContent,'Hide answers');
+  assert.ok(child.document.body.classList.contains('answers-on'));
+  button.click(); assert.equal(child.document.body.classList.contains('answers-on'),false);
+  assert.equal(button.getAttribute('aria-pressed'),'false');
+});
 const guideHtml = readFileSync(new URL('../public/pages/tools/simulation-guide-player.html', import.meta.url), 'utf8');
 const simulationEntry = suffix => ({ ...context, toolKind: 'simulation', contentId: 'qa-guide-' + suffix,
   source: `content/qa-guide/${suffix}.html`, titleTh: 'ทดลอง ' + suffix, titleEn: 'Experiment ' + suffix });

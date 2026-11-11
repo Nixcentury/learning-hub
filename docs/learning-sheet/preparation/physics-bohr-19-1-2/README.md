@@ -1,5 +1,8 @@
 # 19.1 ใบรวม: ทฤษฎีอะตอมของโบร์และสเปกตรัมอะตอม
 
+> **CURRENT INSTRUCTIONS (11 NOV 2026)**: Read [REBUILD-Learning-Problem-2026-11-11.md](REBUILD-Learning-Problem-2026-11-11.md) **before** using historical content/counts below. The user approved a phenomenon-first, condensed Bohr **Learning** zone and a fully worked, uncapped **Problem** zone restoring all relevant IPST originals from the old worksheet + 50-question Quiz, plus in-scope A-Level-style practice. Display concise SI origins of Bohr radius and −13.6 eV, formulas visible without copying, and solutions as short setup → Learning formula → rearrange → substitute with units → final answer → short check. The old combined-worksheet structure below is historical. The 20/20 prepared inventory/Quiz linkage has been audited; exhaustive original-book completeness is not yet independently certified. This is a content rebuild specification, **not an already merged HTML revision**.
+
+
 3 November 2026. This task combines the three worksheets under the existing Bohr bank ID. It does not modify the separate blackbody sheet, Chemistry content, the Quiz Engine, student data or Classroom.
 
 ## Entry and compatibility
@@ -60,10 +63,3 @@ This task does **not** claim native iPad/Safari verification, actual A4 paginati
 ## Next quiz task
 
 Use the original-item inventory, source fragments and source figures together. Keep every requested subpart, distinguish one atom from an ensemble, state visible-band and rounding conventions, and retain the activity sample-data provenance. Follow the latest mostly-drag rule for theory with unused distractors, typed/choice answers for calculation, and the shared paired worksheet review link. The current PR only prepares this source material while completing the unified worksheet.
-
-
----
-
-## Active rebuild instruction (11 November 2026)
-
-**Read [REBUILD-Learning-Problem-2026-11-11.md](REBUILD-Learning-Problem-2026-11-11.md) first.** The teaching design has changed since this historical 3 November combined-sheet report: concise phenomenon-first **Learning**, full-size source-and-A-Level **Problem**, no copying long proofs, visible formula/value origins, all relevant IPST originals restored from the worksheet + Quiz inventory, tightly standardized equation-first solutions, no page cap, and updated guide/QA. This is the approved production specification; the historical metrics and descriptions below are not the definition of the future sheet. The 20/20 prepared-source inventory crosswalk has been checked, but an exhaustive re-read of the actual full textbook is still required before claiming total original-book completeness.

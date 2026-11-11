@@ -3,6 +3,8 @@ import { renderHtmlMath } from './html-math.js';
 import { defaultPrintProfile, paginatePrintDocument, PrintLayoutError } from './print-layout.js';
 import { loadPrintCatalog, readPrintMetadata, resolvePrintMetadata, buildPrintFilename, createPrintTitleSession } from './print-metadata.js';
 import { learningSheetPrintCSS, resetLearningSheetSnapshot, prepareLearningSheetPrint } from './learning-sheet-print.js';
+import { isExitTicketRevision } from './exit-ticket-revision.js';
+import { openExitTicketPrint } from './exit-ticket-print.js';
 
 let activePreview = null;
 const RESOURCE_TIMEOUT = 15000;
@@ -150,6 +152,10 @@ export async function waitForPrintResources(doc) {
 }
 
 export function openHtmlPrint({ frame, title, language = 'th', opener, context = {} }) {
+  if (isExitTicketRevision(frame.contentDocument)) return openExitTicketPrint({
+    frame, title, language, opener, context,
+    buildSnapshot:buildHtmlPrintSnapshot, waitForResources:waitForPrintResources,
+  });
   const en = language === 'en';
   const label = (th, english) => en ? english : th;
   if (activePreview?.isConnected) { activePreview.focus(); return; }

@@ -1789,6 +1789,10 @@ body.has-maximized-workspace .hub-taskbar {
 .window-html-print { display:flex; align-items:center; gap:6px; min-height:36px; padding:6px 10px; border:1px solid #c9c5e8; border-radius:9px; background:#f0edff; color:#4f4086; cursor:pointer; font-size:12px; font-weight:700; touch-action:manipulation; }
 .window-html-print svg { width:19px; height:19px; }
 .window-html-print:disabled { opacity:.5; cursor:wait; }
+.window-revision-answers { min-height:40px; padding:6px 10px; border:1px solid #c9ae71; border-radius:9px; background:#fff8e9; color:#5b4313; cursor:pointer; font:700 12px/1.3 var(--font-ui,sans-serif); touch-action:manipulation; }
+.window-revision-answers[hidden] { display:none; }
+.window-revision-answers[aria-pressed="true"] { background:#ffe1a4; }
+.window-revision-answers:focus-visible { outline:3px solid #738edd; outline-offset:2px; }
 .window-html-print:focus-visible, .html-print-dialog button:focus-visible { outline:3px solid #738edd; outline-offset:2px; }
 .html-print-dialog { width:min(1100px, calc(100vw - 24px)); height:calc(100dvh - 32px); max-height:none; padding:0; border:1px solid #c5cee4; border-radius:16px; background:#f4f6fc; color:#233451; box-shadow:0 24px 90px #14284e44; }
 .html-print-dialog[open] { display:flex; flex-direction:column; }

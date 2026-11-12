@@ -122,7 +122,10 @@ try {
     const {frame,pages}=await ready(label);
     const slots=await frame.locator('[data-sheet-slot]').count();
     const expected=groups[lang][zone];
-    assert.equal(await frame.locator('[data-print-zone="'+zone+'"]').count(),1,label+' wrong print zone');
+    const zoneFragments=await frame.locator('[data-print-zone="'+zone+'"]').count();
+    // Pagination splits a logical zone across A4 pages and clones its wrapper.
+    // Validate fragments and all original slots rather than expecting one DOM wrapper.
+    assert.ok(zoneFragments>=1 && zoneFragments<=pages,label+' wrong print zone fragments: '+zoneFragments);
     assert.equal(await frame.locator('[data-print-zone="'+(zone==='learning'?'problem':'learning')+'"]').count(),0,label+' extra print zone');
     assert.equal(slots,expected,label+' lost print slots');
     const answers=await frame.locator('[data-sheet-answer]').count();

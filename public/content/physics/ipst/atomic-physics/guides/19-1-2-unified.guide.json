@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-atomic-19-1-2-sheet",
-    "revision": "2026-11-12-r6-focused-problem",
-    "sha256": "cdfffd1d95b144944007921d89c6e0dd6ca7e3831e7ffafd9e53483d0a483868"
+    "revision": "2026-11-12-r7-priority-examples",
+    "sha256": "5f63504b4eebf7ad39df2cbf27b2dc557a1a209d14e97d331e269660031af6b1"
   },
   "title": {
     "th": "ทฤษฎีโบร์: จากสเปกตรัมจริงถึงการคำนวณ",
@@ -404,77 +404,22 @@
       }
     },
     {
-      "id": "memory",
-      "title": {
-        "th": "Problem: ฝึกจำให้แม่น",
-        "en": "Problem: recall drills"
-      },
-      "summary": {
-        "th": "ฝึกสูตรที่ต้องจำและอัตราส่วน 18 ข้อ ลดคำถามหยิบย่อย",
-        "en": "18 high-value memory and algebra drills; redundant microquestions removed"
-      },
-      "story": {
-        "th": "ให้ปิดเฉลยก่อน แล้วพูดสูตรหรือหลักการให้ได้",
-        "en": "Keep solutions hidden while students recall the rule."
-      },
-      "action": {
-        "th": "ทำโจทย์ช่วยจำและย้อนตรวจข้อที่พลาด",
-        "en": "Attempt memory questions and revisit mistakes."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "Problem: ฝึกจำให้แม่น",
-            "en": "Problem: recall drills"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "problem-memory"
-          }
-        },
-        {
-          "label": {
-            "th": "คำตอบ/ฝึก",
-            "en": "Note / practice"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "bohr-memory-r-formula"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "r₄/r₂ เท่าไร?",
-          "en": "What is r₄/r₂?"
-        },
-        "answer": {
-          "th": "4",
-          "en": "4"
-        }
-      },
-      "after": {
-        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
-        "en": "Reveal the answer after trying, then revisit unclear content."
-      }
-    },
-    {
       "id": "ipst",
       "title": {
-        "th": "คำถามและแบบฝึกหัด สสวท. ท้ายหัวข้อ–ท้ายบท",
-        "en": "IPST end-of-section and end-of-chapter questions"
+        "th": "ตัวอย่างและแบบฝึกหัด สสวท.",
+        "en": "IPST worked example and exercises"
       },
       "summary": {
-        "th": "คำถามชวนคิด ตรวจสอบความเข้าใจ และแบบฝึกหัด 19.1 ต่อด้วยคำถามและแบบฝึกหัดท้ายบท 19 รวม 15 รายการ 17 ช่องตอบ",
-        "en": "Think-about-it questions, understanding checks and Exercise 19.1, followed by Chapter 19 questions and problems. 15 groups and 17 answer areas."
+        "th": "พาทำตัวอย่าง 19.4 ก่อนฝึกท้ายหัวข้อ–ท้ายบท รวมตัวอย่างและโจทย์ สสวท. 16 รายการ 19 ช่องตอบ",
+        "en": "Start with Example 19.4, then section and chapter exercises. 16 IPST groups and 19 answer areas."
       },
       "story": {
         "th": "ก่อนทำให้ชี้ส่วนที่ต้องใช้จาก Learning",
         "en": "First identify the matching Learning formula."
       },
       "action": {
-        "th": "ให้เด็กลองตอบคำถามท้ายหัวข้อก่อน แล้วเลือกแบบฝึกหัดท้ายบทตามทักษะ",
-        "en": "Start with section questions, then select chapter problems by skill."
+        "th": "พาทำตัวอย่าง 19.4 แล้วให้เด็กเลือกโจทย์ท้ายหัวข้อและท้ายบทตามทักษะ",
+        "en": "Work through Example 19.4, then choose section and chapter exercises by skill."
       },
       "links": [
         {
@@ -489,12 +434,12 @@
         },
         {
           "label": {
-            "th": "แบบฝึกหัด 19.1 ข้อ 3",
-            "en": "Exercise 19.1 Question 3"
+            "th": "ตัวอย่าง 19.4",
+            "en": "Example 19.4"
           },
           "target": {
             "kind": "slot",
-            "key": "ipst-exercise-19-1-q3"
+            "key": "ipst-example-19-4-1"
           }
         }
       ],
@@ -561,6 +506,61 @@
         "answer": {
           "th": "n=3",
           "en": "n=3"
+        }
+      },
+      "after": {
+        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
+        "en": "Reveal the answer after trying, then revisit unclear content."
+      }
+    },
+    {
+      "id": "memory",
+      "title": {
+        "th": "ทวนสูตรเพิ่มเติม",
+        "en": "Additional formula recall"
+      },
+      "summary": {
+        "th": "ฝึกสูตรที่ต้องจำและอัตราส่วน 18 ข้อ ลดคำถามหยิบย่อย",
+        "en": "18 high-value memory and algebra drills; redundant microquestions removed"
+      },
+      "story": {
+        "th": "ให้ปิดเฉลยก่อน แล้วพูดสูตรหรือหลักการให้ได้",
+        "en": "Keep solutions hidden while students recall the rule."
+      },
+      "action": {
+        "th": "เลือกฝึกสูตรที่ยังจำไม่ได้หลังทำโจทย์หลัก",
+        "en": "After the main problems, select the formulas that still need practice."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "Problem: ฝึกจำให้แม่น",
+            "en": "Problem: recall drills"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "problem-memory"
+          }
+        },
+        {
+          "label": {
+            "th": "คำตอบ/ฝึก",
+            "en": "Note / practice"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "bohr-memory-r-formula"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "r₄/r₂ เท่าไร?",
+          "en": "What is r₄/r₂?"
+        },
+        "answer": {
+          "th": "4",
+          "en": "4"
         }
       },
       "after": {

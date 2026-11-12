@@ -67,16 +67,16 @@ for (const lang of ['th', 'en']) {
 assert.deepEqual(groups.th,groups.en,'The TH and EN sheets must match in slot order and counts');
 assert.equal(groups.th.stages,7);
 assert.equal(groups.th.memory,18);
-assert.equal(groups.th.ipst,15);
+assert.equal(groups.th.ipst,16);
 assert.ok(groups.th.slotKeys.every(key=>!key.startsWith('magnet-') && !key.startsWith('ipst-magnet-')),'Removed magnet activity must stay excluded');
 assert.ok(groups.th.slotKeys.includes('ipst-chapter-question-2'),'Retain the textbook alpha-scattering evidence question');
 assert.equal(groups.th.learning,7);
-assert.equal(groups.th.problem,45);
+assert.equal(groups.th.problem,47);
 assert.equal(groups.th.alevel,10);
-assert.equal(groups.th.slotKeys.length,52,'Keep the seven Learning notes and 45 focused Problem responses');
+assert.equal(groups.th.slotKeys.length,54,'Keep the seven Learning notes and 47 focused Problem responses');
 for (const lang of ['th','en']) {
   const problems=source.document.querySelector('[data-content-lang="'+lang+'"] [data-print-zone="problem"]');
-  assert.equal(problems.querySelectorAll('[data-guide-anchor^="section-"], [data-problem-key^="ipst-activity-"], [data-problem-key^="ipst-example-"], .practice-table, .energy-table').length,0,'Keep activities, experiments and former adapted blocks out of Problem');
+  assert.equal(problems.querySelectorAll('[data-guide-anchor^="section-"], [data-problem-key^="ipst-activity-"], .practice-table, .energy-table').length,0,'Keep activities, experiments and former adapted blocks out of Problem');
 }
 
 let browser;
@@ -123,6 +123,7 @@ try {
     const frame=page.frameLocator('[data-html-print-frame]');
     const pages=Number(await frame.locator('html').getAttribute('data-hub-print-pages'));
     assert.ok(pages>0 && pages<150,label+' invalid number of pages: '+pages);
+    if (label.includes('problem')) assert.ok(pages<=30,label+' exceeds the teacher’s 30-page Problem budget: '+pages);
     assert.equal(await frame.locator('[data-hub-math-error]').count(),0,label+' math errors');
     return {dialog,frame,pages};
   }
@@ -159,7 +160,7 @@ try {
   assert.deepEqual(errors,[],'Browser runtime errors');
   assert.deepEqual(missing,[],'Missing first-party resources');
   await writeFile(resolve(output,'print-report.json'),JSON.stringify({counts:groups.th,printChecks},null,2));
-  console.log('PASS bilingual seven-stage Bohr sheet, 15 IPST, 10 A-Level and 18 memory items');
+  console.log('PASS bilingual seven-stage Bohr sheet, 16 IPST, 10 A-Level and 18 memory items');
   console.log('PASS A4 print readiness in 5 Learning/Problem and blank/answer cases');
 } finally {
   await browser?.close();

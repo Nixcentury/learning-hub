@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-atomic-19-1-2-sheet",
-    "revision": "2026-11-12-r4-rydberg-ipst-print",
-    "sha256": "b5b20e8600df07548b9013e5cc869bf82261a9f9d3cc479d381204a3e9d7571f"
+    "revision": "2026-11-12-r6-focused-problem",
+    "sha256": "cdfffd1d95b144944007921d89c6e0dd6ca7e3831e7ffafd9e53483d0a483868"
   },
   "title": {
     "th": "ทฤษฎีโบร์: จากสเปกตรัมจริงถึงการคำนวณ",
@@ -84,8 +84,8 @@
         "en": "Dalton, Thomson, Rutherford and Bohr: experimental evidence and model limits"
       },
       "story": {
-        "th": "สอนแยกแรงไฟฟ้าจริงจากอุปมาแม่เหล็ก",
-        "en": "Separate true electric scattering from the magnet analogy."
+        "th": "เชื่อมผลการกระเจิงแอลฟากับแรงไฟฟ้าและแบบจำลองนิวเคลียส",
+        "en": "Connect alpha-scattering observations with electric forces and the nuclear model."
       },
       "action": {
         "th": "ตอบหลักฐานจากแผ่นทองคำ",
@@ -459,77 +459,22 @@
       }
     },
     {
-      "id": "retained",
-      "title": {
-        "th": "Problem: โจทย์เดิม",
-        "en": "Problem: retained worksheet questions"
-      },
-      "summary": {
-        "th": "เก็บโจทย์ที่เคยมีในใบรวมเดิม ไม่ทิ้งทักษะการทดลองและการคำนวณ\nเฉลยยังเปิดปิดได้และเชื่อมกลับไปสูตรใน Learning",
-        "en": "Original worksheet prompts and worked tasks are preserved.\nAnswers remain revealable and rely on Learning formulas."
-      },
-      "story": {
-        "th": "เลือกโจทย์ตามทักษะ ไม่จำเป็นต้องทำทุกข้อในคาบเดียว",
-        "en": "Assign relevant questions by skill rather than all in one class."
-      },
-      "action": {
-        "th": "ฝึกข้อเดิมทีละหัวข้อ",
-        "en": "Work through retained questions by topic."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "Problem: โจทย์เดิม",
-            "en": "Problem: retained worksheet questions"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "section-7"
-          }
-        },
-        {
-          "label": {
-            "th": "คำตอบ/ฝึก",
-            "en": "Note / practice"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "radius-ratio"
-          }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "รัศมีจาก n=2 ไป n=4 เพิ่มกี่เท่า?",
-          "en": "What is the radius factor from n=2 to n=4?"
-        },
-        "answer": {
-          "th": "4 เท่า",
-          "en": "4 times"
-        }
-      },
-      "after": {
-        "th": "เปิดเฉลยหลังลองตอบ แล้วทวนสาระที่ยังจำไม่ได้",
-        "en": "Reveal the answer after trying, then revisit unclear content."
-      }
-    },
-    {
       "id": "ipst",
       "title": {
-        "th": "Problem: สสวท. ตัวอย่างและท้ายบท",
-        "en": "Problem: IPST source tasks"
+        "th": "คำถามและแบบฝึกหัด สสวท. ท้ายหัวข้อ–ท้ายบท",
+        "en": "IPST end-of-section and end-of-chapter questions"
       },
       "summary": {
-        "th": "นำโจทย์จากบัญชีต้นฉบับครบ 20 กลุ่ม พร้อมข้อย่อยและรูป\nเฉลยเริ่มแนวคิดสั้น แล้วเดินสูตร จัดรูป แทนค่า และสรุปท้าย",
-        "en": "All 20 catalogued IPST groups include their parts and relevant diagrams.\nSolutions follow brief setup, formula, rearrangement, substitution and final interpretation."
+        "th": "คำถามชวนคิด ตรวจสอบความเข้าใจ และแบบฝึกหัด 19.1 ต่อด้วยคำถามและแบบฝึกหัดท้ายบท 19 รวม 15 รายการ 17 ช่องตอบ",
+        "en": "Think-about-it questions, understanding checks and Exercise 19.1, followed by Chapter 19 questions and problems. 15 groups and 17 answer areas."
       },
       "story": {
         "th": "ก่อนทำให้ชี้ส่วนที่ต้องใช้จาก Learning",
         "en": "First identify the matching Learning formula."
       },
       "action": {
-        "th": "ทำตัวอย่าง 19.4 และโจทย์ท้ายบท",
-        "en": "Solve IPST Example 19.4 and chapter tasks."
+        "th": "ให้เด็กลองตอบคำถามท้ายหัวข้อก่อน แล้วเลือกแบบฝึกหัดท้ายบทตามทักษะ",
+        "en": "Start with section questions, then select chapter problems by skill."
       },
       "links": [
         {
@@ -544,12 +489,12 @@
         },
         {
           "label": {
-            "th": "คำตอบ/ฝึก",
-            "en": "Note / practice"
+            "th": "แบบฝึกหัด 19.1 ข้อ 3",
+            "en": "Exercise 19.1 Question 3"
           },
           "target": {
             "kind": "slot",
-            "key": "ipst-example-19-4-1"
+            "key": "ipst-exercise-19-1-q3"
           }
         }
       ],
@@ -571,8 +516,8 @@
     {
       "id": "alevel",
       "title": {
-        "th": "Problem: แนว A-Level",
-        "en": "Problem: A-Level-style applications"
+        "th": "โจทย์แนว A-Level / 9 วิชาสามัญ",
+        "en": "A-Level / Nine Common Subjects-style practice"
       },
       "summary": {
         "th": "เริ่มจากแนวจริง 2568 เรื่องสถานะกระตุ้นและพลังงานโฟตอน\nโจทย์ประยุกต์ที่เหลือแต่งใหม่โดยไม่เกินสูตรใน Learning",

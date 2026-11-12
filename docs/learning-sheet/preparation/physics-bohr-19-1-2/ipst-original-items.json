@@ -22,7 +22,8 @@
       ],
       "figureSource": "Book pp.60–61; existing 03-magnet-analogy.png",
       "note": "Use the initial-path image in a question and reserve the resulting-path image for its explanation.",
-      "pdfPage": 74
+      "pdfPage": 74,
+      "worksheetStatus": "excluded from Problem by teacher scope on 2026-11-12; retain only textbook questions/exercises, formula recall and exam-style practice"
     },
     {
       "id": "activity-19-1-q1",
@@ -33,7 +34,8 @@
         "en": "How does a gas-tube spectrum compare with the ordinary lamp in the activity?"
       },
       "note": "Clarify that the comparison source is the incandescent filament lamp, not all modern lamp technologies.",
-      "pdfPage": 77
+      "pdfPage": 77,
+      "worksheetStatus": "excluded from Problem by teacher scope on 2026-11-12; retain only textbook questions/exercises, formula recall and exam-style practice"
     },
     {
       "id": "activity-19-1-q2",
@@ -43,7 +45,8 @@
         "th": "สเปกตรัมจากหลอดบรรจุแก๊สแต่ละชนิดมีลักษณะเหมือนหรือต่างกันอย่างไร",
         "en": "How are the spectra of the different gas tubes similar or different?"
       },
-      "pdfPage": 77
+      "pdfPage": 77,
+      "worksheetStatus": "excluded from Problem by teacher scope on 2026-11-12; retain only textbook questions/exercises, formula recall and exam-style practice"
     },
     {
       "id": "activity-19-1-q3",
@@ -54,7 +57,8 @@
         "en": "What wavelengths occur in the hydrogen-tube spectrum?"
       },
       "note": "Requires the activity readings or an explicitly labelled model-data set; do not present sample results as student measurements.",
-      "pdfPage": 77
+      "pdfPage": 77,
+      "worksheetStatus": "excluded from Problem by teacher scope on 2026-11-12; retain only textbook questions/exercises, formula recall and exam-style practice"
     },
     {
       "id": "example-19-4",
@@ -79,7 +83,8 @@
         "energy_eV": 2.56
       },
       "note": "Book p.76 has a printed exponent typo: 485.99 nm is 4.8599e-7 m, not e-9 m. Preserve the problem, correct the explanation. Rounded hydrogen levels give about 2.55 eV.",
-      "pdfPage": 89
+      "pdfPage": 89,
+      "worksheetStatus": "excluded from Problem by teacher scope on 2026-11-12; retain only textbook questions/exercises, formula recall and exam-style practice"
     },
     {
       "id": "think-77",

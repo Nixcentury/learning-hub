@@ -130,3 +130,7 @@ When referencing an old worksheet solution, retain any scientifically material a
 - User-provided book: https://drive.google.com/file/d/1claSYEw2Laz0zWRXjNcI9jhbt7A2sGMd/view
 - Official curricular baseline (science additional physics strands): https://www.ipst.ac.th/wp-content/uploads/2022/05/SciCurriculum_2560.pdf
 - Chemistry 10.3 style change PRs: [#166](https://github.com/Nixcentury/learning-hub/pull/166), [#167](https://github.com/Nixcentury/learning-hub/pull/167), [#168](https://github.com/Nixcentury/learning-hub/pull/168).
+
+### Print figure size follow-up · 12 November 2026
+
+Keep the four simple energy-level diagrams in Problem at no more than 95 mm wide in the print snapshot. Preserve their aspect ratio and readable labels. Check the final page layout in both languages, blank/answer editions, and standard/device-margin profiles. The Problem page budget remains 30 pages.

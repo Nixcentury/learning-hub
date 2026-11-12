@@ -17,6 +17,8 @@
 /* Match this author's paper layout during the Hub's screen-based measuring
    pass too. The central A4 margins remain owned by the shared print engine. */
 html[data-hub-print-snapshot] .sheet-page { max-width:none; margin:0; padding:0; }
+/* Compact the simple Problem diagrams while keeping labels readable on paper. */
+html[data-hub-print-snapshot] [data-print-zone="problem"] figure { max-width:95mm !important; }
 @media(max-width:580px) {
   html:not([data-hub-print-snapshot]) .practice-table,
   html:not([data-hub-print-snapshot]) .practice-table tbody,

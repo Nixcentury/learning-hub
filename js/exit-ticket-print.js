@@ -31,7 +31,7 @@ export function openExitTicketPrint({ frame, title, language, opener, context,
   const rangeChoices = exitTicketRanges(source).length > 2 ? [
     ['all',text('ทั้งชุด','Full set')], ['quiz',text('เฉพาะควิซ','Quiz only')],
     ['recall',text('เฉพาะ Recall','Recall only')], ['review',text('เฉพาะสรุป','Review only')],
-  ] : [
+  ].filter(([value]) => exitTicketRanges(source).includes(value)) : [
     ['all',text(`ทั้งชุด (${allCount} หน้า)`,`Full set (${allCount} pages)`)],
     ['quiz',text(`เฉพาะควิซ (${quizCount} หน้า)`,`Quiz only (${quizCount} pages)`)],
   ];

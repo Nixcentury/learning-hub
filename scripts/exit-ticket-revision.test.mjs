@@ -194,3 +194,73 @@ test('blackbody: science QA and approved continuous writing lines survive import
     if(language==='en')assert.match(teacher.textContent,/nonzero levels/);
   }
 });
+
+async function equilibriumRevision() {
+  const path='content/physics/ipst/equilibrium/4-2-exit-ticket-revision.html';
+  const {document}=parseHTML(await readFile(new URL('../public/'+path,import.meta.url),'utf8'));
+  Object.defineProperty(document,'URL',{value:'https://example.test/learning-hub/'+path});
+  Object.defineProperty(document,'defaultView',{value:undefined});
+  return document;
+}
+
+test('4.2 revision preserves the topic tools and keeps Recall inside Quiz in all 12 exports',async()=>{
+  const {document:menu}=parseHTML(await readFile(new URL('../public/content/bank/physics/b-c54c2d76bc074671ec10618f.html',import.meta.url),'utf8'));
+  assert.equal(menu.querySelector('nav').dataset.routeSlug,'centre-of-mass-and-gravity');
+  const links=[...menu.querySelectorAll('a')];
+  assert.deepEqual(links.map(a=>a.dataset.toolKey),['learning-sheet','quiz-set-1','cg-lab','exit-ticket-revision']);
+  assert.equal(links.at(-1).dataset.contentId,'physics-ipst-equilibrium-4-2-exit-ticket-revision');
+  assert.equal(links.at(-1).dataset.toolKind,'html');
+  const source=await equilibriumRevision();
+  assert.deepEqual(exitTicketRanges(source),['all','quiz','review']);
+  assert.equal(source.documentElement.dataset.sourceSha256,'9485216bee0d8e1de8d45903f08b7ae2b5e9f3059f82272511424b56c9f687bf');
+  assert.equal(source.querySelectorAll('script,template,iframe,form,button,input,select,[data-sheet-slot],[data-learning-activity-content]').length,0);
+  assert.throws(()=>exitTicketPages(source,'recall'),/range/,'Recall is not a separate print range for this document');
+  for(const language of ['th','en'])for(const answers of [false,true])for(const range of ['all','quiz','review']){
+    applyContentLanguage(source,language);source.body.classList.toggle('answers-on',!answers);
+    const before=source.documentElement.outerHTML;
+    const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'4.1–4.2 revision'));
+    assert.equal(prepareExitTicketPrint(copy,{range,answers}),range==='all'?8:4);
+    assert.equal(copy.querySelectorAll('.page').length,range==='all'?8:4);
+    assert.equal(copy.querySelectorAll('.unit').length,{all:39,quiz:7,review:32}[range]);
+    assert.equal(new Set([...copy.querySelectorAll('.unit')].map(u=>u.dataset.unitKey)).size,copy.querySelectorAll('.unit').length);
+    const quiz=range!=='review',review=range!=='quiz';
+    assert.equal(copy.querySelectorAll('.question').length,quiz?4:0);
+    assert.equal(copy.querySelectorAll('.blank').length,quiz?7:0);
+    assert.equal(copy.querySelectorAll('.recall-card').length,quiz?4:0);
+    assert.equal(copy.querySelectorAll('.response-space').length,!answers&&quiz?16:0);
+    assert.equal(copy.querySelectorAll('.answer-inline,.teacher-key').length,answers&&quiz?15:0);
+    assert.equal(copy.querySelectorAll('.worked-fbd').length,review?1:0,'retain one representative numerical example');
+    assert.equal(copy.querySelectorAll('[data-hub-print-style],.hub-print-page').length,0);
+    if(quiz){
+      const units=[...copy.querySelectorAll('.unit')];
+      assert.equal(units.findIndex(u=>u.querySelector('.recall-card')),units.findIndex(u=>u.dataset.group==='q4')+1);
+    }
+    assert.equal(source.documentElement.outerHTML,before,'print choices cannot change the teaching document');
+    for(const img of copy.querySelectorAll('img')){
+      assert.match(img.getAttribute('src'),/\/assets\/4-2\/exit-ticket\/[a-f0-9]+\.jpg$/);
+      assert.ok(Number(img.getAttribute('width'))>0&&Number(img.getAttribute('height'))>0,'reserve original figure geometry before decoding');
+    }
+  }
+});
+
+test('4.2 reading covers cloze and Recall concepts without a numbered cloze key or parallel problem set',async()=>{
+  const source=await equilibriumRevision();
+  for(const language of ['th','en']){
+    const view=source.querySelector(`[data-content-lang="${language}"] [data-revision-edition="blank"] [data-revision-range="all"]`);
+    const reading=[...view.querySelectorAll('.unit[data-kind="review"]')];
+    const text=reading.map(u=>u.textContent).join(' ');
+    assert.doesNotMatch(text,/A[1-7]\s*[=:]/);
+    assert.equal(reading.reduce((n,u)=>n+u.querySelectorAll('.recall-card,.response-space').length,0),0);
+    assert.equal(reading.reduce((n,u)=>n+u.querySelectorAll('.worked-fbd').length,0),1);
+    assert.ok(reading.reduce((n,u)=>n+u.querySelectorAll('.math-asset svg').length,0)>8);
+    if(language==='en'){
+      assert.match(text,/Static equilibrium/);assert.match(text,/Dynamic equilibrium/);
+      assert.match(text,/uniform gravitational field/);assert.match(text,/fixed relative to the material/);
+      assert.match(text,/net torque/);assert.match(text,/different objects/);
+      assert.match(text,/two.*nonparallel|second, nonparallel/);
+    }else{
+      assert.match(text,/สมดุลสถิต/);assert.match(text,/สมดุลจลน์/);
+      assert.match(text,/สนามโน้มถ่วงสม่ำเสมอ/);assert.match(text,/สองแนวที่ไม่ขนาน/);
+    }
+  }
+});

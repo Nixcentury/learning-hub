@@ -6,8 +6,10 @@ export function isExitTicketRevision(doc) {
 }
 
 export function exitTicketRanges(doc) {
-  return doc?.documentElement.getAttribute('data-exit-ticket-editions') === '1'
-    ? ['all', 'quiz', 'recall', 'review'] : ['all', 'quiz'];
+  if (doc?.documentElement.getAttribute('data-exit-ticket-editions') !== '1') return ['all', 'quiz'];
+  const allowed = ['all', 'quiz', 'recall', 'review'];
+  const declared = doc.documentElement.getAttribute('data-exit-ticket-ranges');
+  return declared ? allowed.filter(range => range === 'all' || declared.split(/\s+/).includes(range)) : allowed;
 }
 
 export function exitTicketPages(doc, range = 'all') {

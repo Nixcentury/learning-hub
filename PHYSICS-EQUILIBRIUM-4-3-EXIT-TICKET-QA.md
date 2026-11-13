@@ -7,8 +7,32 @@ This is ungraded HTML using the established revision reader and print adapter.
 
 Original v1.2 SHA-256:
 `37329a642d10664ff39fec2a2e159756bb82036963e23a3d31f0bb1026551130`.
-Corrected standalone v1.3 SHA-256:
-`fc7fa6512001da7e61f4d2084fbc44df6ac422c801e7b50153d8e4651c0816c6`.
+Corrected standalone v1.4 SHA-256:
+`05f5223d1f94f761a0daf731810e2151a77aa5007cb5ca9673877d41fe687b9e`.
+
+## Illustrated worked examples and factual Recall
+
+The four existing numerical examples now show SVG free-body diagrams,
+positive axes, signed components, substituted x/y equations, the solved
+unknowns and a zero-resultant check. The examples cover an equilibrant,
+symmetric ropes, separate bodies with limiting friction, and an angled
+push. An additional incline diagram uses rotated axes and explicitly
+resolves the weight. Solid force arrows and dashed components are distinct;
+the resultant replaces the original forces and is not counted again.
+The downward push has Fy = -15 N on its upward-positive axis.
+
+All eight Recall prompts now ask for terms, formulas, directions or stated
+rules. They do not ask why. All eight original answering spaces remain in
+Quiz; the reading's final checklist is aligned with those factual topics.
+The original cloze passage and ten practice questions, including their
+answer spaces, are byte-for-byte unchanged in both languages.
+
+Automated geometry checks verify the balance of the symmetric-rope,
+separate-body, incline and downward-push FBDs, and the closure of the
+resultant/equilibrant pair. Browser checks cover label clipping and formula
+width inside the worked-example columns. The added visual teaching content
+uses two additional reading pages in each language; Quiz page counts and
+handwriting space heights are unchanged.
 
 ## Content corrections
 
@@ -73,20 +97,20 @@ range snapshots; student snapshots physically remove the answers.
 
 | Language / edition | All | Quiz including Recall | Reading |
 | --- | ---: | ---: | ---: |
-| Thai student | 13 | 9 | 4 |
-| Thai teacher | 13 | 9 | 4 |
-| English student | 16 | 11 | 5 |
-| English teacher | 14 | 9 | 5 |
+| Thai student | 15 | 9 | 6 |
+| Thai teacher | 15 | 9 | 6 |
+| English student | 18 | 11 | 7 |
+| English teacher | 16 | 9 | 7 |
 
 Managed-browser inspection of the standalone final source covered all twelve
-combinations / 112 page states: no vertical overflow, no missing images,
+combinations / 128 page states: no vertical overflow, no missing images,
 all student writing spaces retained. The revision regression suite covers
 all twelve imported exports, student answer removal, immutable live reading
 state, correct topic placement, source corrections and the existing revisions.
-All 21 revision tests passed, including the previous chemistry, blackbody
+All 22 revision tests passed, including the previous chemistry, blackbody
 and 4.2 exports. The production build passed and verified 919 identical
 public files. Browser QA of the built Hub also passed all twelve print
-combinations / 112 page states: no page-body overflow, no missing images,
+combinations / 128 page states: no page-body overflow, no missing images,
 zero answer nodes in student snapshots and all 38 student response spaces.
 The actual topic menu opens the revision, and the trusted reader's Thai
 answer toggle exposes all three teacher FBDs.

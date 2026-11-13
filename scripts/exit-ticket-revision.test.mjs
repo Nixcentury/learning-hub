@@ -11,7 +11,7 @@ test('4.3 revision: corrected self-study content and all 12 independent exports'
   const {document:source}=parseHTML(await readFile(new URL('../public/'+path,import.meta.url),'utf8'));
   Object.defineProperty(source,'URL',{value:'https://example.test/learning-hub/'+path});
   Object.defineProperty(source,'defaultView',{value:undefined});
-  assert.equal(source.documentElement.dataset.contentRevision,'1.3');
+  assert.equal(source.documentElement.dataset.contentRevision,'1.4');
   assert.deepEqual(exitTicketRanges(source),['all','quiz','review']);
   assert.equal(source.querySelectorAll('script,template,iframe,form,button,input,select,[data-sheet-slot],[data-learning-activity-content]').length,0);
   const {document:menu}=parseHTML(await readFile(new URL('../public/content/bank/physics/b-d52412f9e1c700d9a5223472.html',import.meta.url),'utf8'));
@@ -25,7 +25,7 @@ test('4.3 revision: corrected self-study content and all 12 independent exports'
     applyContentLanguage(source,lang);source.body.classList.toggle('answers-on',!answers);
     const before=source.documentElement.outerHTML;
     const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'4.3 revision'));
-    const counts=lang==='th'?[13,9,4]:answers?[14,9,5]:[16,11,5];
+    const counts=lang==='th'?[15,9,6]:answers?[16,9,7]:[18,11,7];
     const count=prepareExitTicketPrint(copy,{range,answers});
     assert.equal(count,counts[['all','quiz','review'].indexOf(range)]);
     assert.equal(copy.querySelectorAll('.unit').length,{all:33,quiz:13,review:20}[range]);
@@ -51,7 +51,7 @@ test('4.3 revision: corrected self-study content and all 12 independent exports'
       assert.match(reading.textContent,/120°/);
       assert.match(copy.querySelector('[data-unit-key="19"]').textContent,/4\.2/);
       assert.doesNotMatch(copy.querySelector('[data-unit-key="19"]').textContent,/4\.1/);
-      assert.match(copy.querySelector('[data-unit-key="24"]').textContent,lang==='th'?/เชือกเบาดึง A ในแนวราบ/:/rope pulls A horizontally/);
+      assert.match(copy.querySelector('[data-unit-key="24"]').textContent,lang==='th'?/เชือกเบาดึง A (ใน)?แนวราบ/:/rope pulls A horizontally/);
       assert.doesNotMatch(copy.querySelector('[data-unit-key="26"]').textContent,/90 N|37°/);
       assert.doesNotMatch(copy.querySelector('[data-unit-key="28"]').textContent,/60 N|37°/);
     }
@@ -60,6 +60,38 @@ test('4.3 revision: corrected self-study content and all 12 independent exports'
       assert.ok(+img.getAttribute('width')>0&&+img.getAttribute('height')>0);
     }
     assert.equal(source.documentElement.outerHTML,before);
+  }
+});
+
+test('4.3: worked diagrams agree with the force balances; Recall asks for facts',async()=>{
+  const {document:doc}=parseHTML(await readFile(new URL('../public/content/physics/ipst/equilibrium/4-3-exit-ticket-revision.html',import.meta.url),'utf8'));
+  const sum=nodes=>nodes.reduce((v,n)=>[v[0]+Number(n.dataset.dx),v[1]+Number(n.dataset.dy)],[0,0]);
+  const zero=v=>v.forEach(x=>assert.ok(Math.abs(x)<1e-4,'illustrated equilibrium must have zero vector sum'));
+  for(const lang of ['th','en']){
+    const view=doc.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="blank"] [data-revision-range="all"]`);
+    const diagrams=[...view.querySelectorAll('.worked-diagram')];
+    assert.deepEqual(diagrams.map(x=>x.dataset.workedDiagram),['equilibrant','symmetric','two-bodies','incline','push']);
+    const byId=id=>diagrams.find(x=>x.dataset.workedDiagram===id);
+    const forces=id=>[...byId(id).querySelectorAll('[data-vector-kind="force"]')];
+    zero(sum(forces('symmetric')));
+    const pulley=forces('two-bodies');zero(sum(pulley.slice(0,4)));zero(sum(pulley.slice(4)));
+    zero(sum(forces('incline')));
+    const push=forces('push');zero(sum(push.slice(0,4)));
+    const components=[...byId('push').querySelectorAll('[data-vector-kind="component"]')];
+    assert.deepEqual(sum(components),[Number(push[4].dataset.dx),Number(push[4].dataset.dy)]);
+    assert.match(byId('push').textContent,/Fy = -15 N/);
+    zero(sum([...byId('equilibrant').querySelectorAll('[data-vector-kind="resultant"],[data-vector-kind="equilibrant"]')]));
+    for(const unit of view.querySelectorAll('.unit[data-worked-visual]:not([data-worked-visual="incline"])')){
+      assert.equal(unit.querySelectorAll('.worked-step').length,4);
+      const tex=[...unit.querySelectorAll('[data-tex]')].map(n=>n.dataset.tex).join(' ');
+      assert.match(tex,/\\sum F_(x|\{x)/);assert.match(tex,/\\sum F_(y|\{y)/);
+      assert.match(tex,/0/);
+    }
+    const cards=[...view.querySelectorAll('.recall-card')];
+    assert.equal(cards.length,8);assert.ok(cards.every(c=>c.dataset.recallType==='fact'));
+    assert.doesNotMatch(cards.map(c=>c.querySelector('h3').textContent).join(' '),/เหตุใด|เพราะอะไร|\bwhy\b/i);
+    assert.equal(cards.reduce((n,c)=>n+c.querySelectorAll('.response-space').length,0),8);
+    assert.equal(view.querySelectorAll('.unit[data-kind="review"] .recall-card').length,0);
   }
 });
 

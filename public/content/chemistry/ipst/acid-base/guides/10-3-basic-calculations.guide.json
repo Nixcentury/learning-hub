@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "chemistry-ipst-acid-base-10-3-basic-calculations",
+    "revision": "2026-11-13-1",
+    "sha256": "f4aa02649d1692d861073417dd94c980d21c91bea92886634727fa3359c3df72"
+  },
+  "title": {
+    "th": "10.3 การแตกตัว · ฝึกคำนวณพื้นฐาน",
+    "en": "10.3 Ionization · Basic calculations"
+  },
+  "prerequisites": {
+    "th": "อ่านเลขยกกำลัง ความเข้มข้น อัตราส่วนสมการ และตาราง ICE ที่เติมให้แล้ว",
+    "en": "Read powers of ten, concentrations, equation ratios and completed ICE tables."
+  },
+  "goal": {
+    "th": "เลือกความสัมพันธ์ให้ตรงกับสิ่งที่ถาม แล้วแทนค่าจากโจทย์หรือแถว E พร้อมตรวจหน่วยและเงื่อนไข",
+    "en": "Choose the required relation, substitute values from the prompt or E row, and check units and conditions."
+  },
+  "steps": [
+    {
+      "id": "formulas",
+      "title": {
+        "th": "อ่านกรอบสูตรและเงื่อนไข",
+        "en": "Read the reference and conditions"
+      },
+      "summary": {
+        "th": "C₀ คือความเข้มข้นเริ่มต้น x คือส่วนที่แตกตัว ทั้งคู่เป็น mol/L\n[ ] คือความเข้มข้นสมดุล ใช้ K𝓌 = 1.0×10⁻¹⁴ ที่ 25 °C",
+        "en": "C₀ is the initial concentration and x is the ionized amount per litre, both in mol/L.\n[ ] denotes equilibrium concentration. K𝓌 = 1.0×10⁻¹⁴ at 25 °C."
+      },
+      "story": {
+        "th": "ชี้ปริมาณที่โจทย์ถามก่อนเลือกสูตร ระวังจำนวน OH⁻ ต่อสารหนึ่งหน่วย",
+        "en": "Identify the requested quantity before choosing a relation. Count OH⁻ ions per formula unit."
+      },
+      "action": {
+        "th": "อ่านสูตรทั้ง 6 แถว รวมทั้งเงื่อนไขของสูตรรากที่สองและค่าคงที่คู่กรด–เบส",
+        "en": "Read all six rows, including the square-root and conjugate-pair conditions."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "กรอบสูตร",
+            "en": "Formula box"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "Ba(OH)₂ ที่แตกตัวสมบูรณ์ให้ OH⁻ กี่หน่วยต่อสารหนึ่งหน่วย?",
+          "en": "How many OH⁻ ions does completely dissociated Ba(OH)₂ give per formula unit?"
+        },
+        "answer": {
+          "th": "2 หน่วย จึงใช้ [OH⁻] = 2C₀",
+          "en": "Two, so [OH⁻] = 2C₀."
+        }
+      },
+      "after": {
+        "th": "เริ่มข้อ 1 โดยเลือกความสัมพันธ์จากสิ่งที่ถาม",
+        "en": "Start Question 1 by identifying the requested relation."
+      }
+    },
+    {
+      "id": "first-pass",
+      "title": {
+        "th": "ฝึกรอบแรก 6 ทักษะ",
+        "en": "First pass through six skills"
+      },
+      "summary": {
+        "th": "ข้อ 1–6 คละไอออนจากสารแก่ ร้อยละ ไอออนในน้ำ ค่า K จาก ICE ค่าคงที่คู่กัน และกรดอ่อน\nเลือกสูตรใหม่ทุกข้อ ไม่ใช้สูตรเดียวตามข้อก่อน",
+        "en": "Questions 1–6 mix strong solutes, percentages, water ions, ICE constants, conjugate constants and a weak acid.\nChoose the relation afresh each time."
+      },
+      "story": {
+        "th": "ข้อ ICE ใช้ค่าจากแถว E ทุกตัว ส่วนข้อร้อยละใช้ C₀ เป็นตัวส่วน",
+        "en": "For ICE constants, use the E row throughout. For percentages, divide by C₀."
+      },
+      "action": {
+        "th": "ทำข้อ 1–6 ก่อนเปิดเฉลย แล้วเทียบสูตร การแทนค่า และคำตอบ",
+        "en": "Try Questions 1–6, then compare the formula, substitution and answer."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 1",
+            "en": "Question 1"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "strong-hcl"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 4 · ICE",
+            "en": "Question 4 · ICE"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ka-ice"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "นิพจน์ Kₐ ใช้ [HA] ตอนเริ่มต้นหรือตอนสมดุล?",
+          "en": "Does Kₐ use the initial or equilibrium [HA]?"
+        },
+        "answer": {
+          "th": "ตอนสมดุล จากแถว E; ข้อ 4 ใช้ 0.0990 mol/L",
+          "en": "Equilibrium, from the E row; Question 4 uses 0.0990 mol/L."
+        }
+      },
+      "after": {
+        "th": "ทำข้อ 7–12 เพื่อทวนทักษะเดิมด้วยข้อมูลอีกชุด",
+        "en": "Continue with Questions 7–12 to revisit the skills with new data."
+      }
+    },
+    {
+      "id": "second-pass",
+      "title": {
+        "th": "ทวนด้วยข้อมูลใหม่",
+        "en": "Repeat with new data"
+      },
+      "summary": {
+        "th": "ข้อ 7–12 ทวนครบทั้ง 6 ทักษะอีกครั้ง\nโจทย์ประมาณให้ตรวจเงื่อนไขไว้แล้ว คำตอบคงเครื่องหมาย ≈",
+        "en": "Questions 7–12 revisit all six skills.\nThe approximation prompts supply the condition check; retain ≈ in the answer."
+      },
+      "story": {
+        "th": "สังเกตไอออนที่ถาม และยืนยันว่า Kₐ กับ Kᵦ เป็นค่าของคู่กรด–เบสเดียวกัน",
+        "en": "Track the requested ion and ensure Kₐ and Kᵦ belong to the same conjugate pair."
+      },
+      "action": {
+        "th": "ทำข้อ 7–12 แล้วเลือกกลับมาฝึกข้อที่ยังสับสน",
+        "en": "Complete Questions 7–12 and revisit any uncertain skill."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 7",
+            "en": "Question 7"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "strong-baoh2"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 12",
+            "en": "Question 12"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "conjugate-ka"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ที่ 25 °C ถ้ารู้ Kᵦ ของ B จะหา Kₐ ของ BH⁺ อย่างไร?",
+          "en": "At 25 °C, how do you obtain Kₐ of BH⁺ from Kᵦ of B?"
+        },
+        "answer": {
+          "th": "Kₐ(BH⁺) = K𝓌/Kᵦ(B) โดย B/BH⁺ เป็นคู่กัน",
+          "en": "Kₐ(BH⁺) = K𝓌/Kᵦ(B), using the B/BH⁺ conjugate pair."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "กลับกรอบสูตร",
+            "en": "Return to formulas"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        }
+      ],
+      "after": {
+        "th": "เมื่อคล่องแล้วไปทำควิซทบทวน 10.3",
+        "en": "When confident, continue to the 10.3 review quiz."
+      }
+    }
+  ],
+  "finish": {
+    "th": "ตรวจสูตร แถวสมดุล ตัวคูณไอออน หน่วยความเข้มข้น และเงื่อนไขประมาณ",
+    "en": "Check the relation, equilibrium row, ion multiplier, concentration units and approximation condition."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "สรุป C₀, x และ [HA] ที่สมดุลสัมพันธ์กันอย่างไรในกรดหนึ่งโปรตอนที่เริ่มไม่มีไอออนผลิตภัณฑ์?",
+      "en": "How are C₀, x and equilibrium [HA] related for a monoprotic acid initially without added product ions?"
+    },
+    "answer": {
+      "th": "C₀ คือเริ่มต้น x คือส่วนที่แตกตัว และ [HA] ที่สมดุล = C₀ − x",
+      "en": "C₀ is initial, x is the ionized amount per litre, and equilibrium [HA] = C₀ − x."
+    }
+  }
+}

@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "chemistry-ipst-acid-base-10-3-basic-calculations",
-    "revision": "2026-11-13-2",
-    "sha256": "a6c020fa19bd261d1a756f75b8e46916bf172d39bc163498336bfa81af94e48a"
+    "revision": "2026-11-13-3",
+    "sha256": "d8fc1cfd4396f8196c06bef5b640138c56cb67ca8fd236bca7d231e1435d9197"
   },
   "title": {
     "th": "Classroom Lecture · 10.3",
@@ -14,8 +14,8 @@
     "en": "Read chemical formulas, coefficients, moles and basic concentrations."
   },
   "goal": {
-    "th": "จดตามบทเรียน วาด ICF/ICE เอง และใช้สมการอธิบายการแตกตัว หัวข้อจดใช้เป็นฐานของ Knowledge Recall เมื่อทำ Exit Ticket",
-    "en": "Take notes during class, draw ICF/ICE independently and explain ionization using equations. Reuse these headings for Exit Ticket Knowledge Recall."
+    "th": "เข้าใจการแตกตัวจากสมการ ตาราง ICF/ICE และค่าคงที่สมดุล",
+    "en": "Understand ionization through equations, ICF/ICE tables and equilibrium constants."
   },
   "steps": [
     {
@@ -69,8 +69,8 @@
         }
       },
       "after": {
-        "th": "ทวนหัวข้อที่จด แล้วเรียนช่วงถัดไปตามครู",
-        "en": "Review your completed notes, then follow the teacher to the next section."
+        "th": "สมการ เลขดุล และความเข้มข้นต้องสอดคล้องกัน",
+        "en": "Equations, coefficients and concentrations must be consistent."
       }
     },
     {
@@ -124,8 +124,8 @@
         }
       },
       "after": {
-        "th": "ทวนหัวข้อที่จด แล้วเรียนช่วงถัดไปตามครู",
-        "en": "Review your completed notes, then follow the teacher to the next section."
+        "th": "สมการ เลขดุล และความเข้มข้นต้องสอดคล้องกัน",
+        "en": "Equations, coefficients and concentrations must be consistent."
       }
     },
     {
@@ -135,16 +135,16 @@
         "en": "Percentages, water and conjugate pairs"
       },
       "summary": {
-        "th": "การเจือจางเพิ่มร้อยละของสารอ่อน แต่ไม่เปลี่ยน K ที่อุณหภูมิเดิม บทพิสูจน์ KₐKᵦ = K𝓌 พิมพ์ให้อ่านครบ",
-        "en": "Dilution increases weak-solute percent ionization without changing K at fixed temperature. The complete KₐKᵦ = K𝓌 derivation is preprinted."
+        "th": "การเจือจางเพิ่มร้อยละการแตกตัวของสารอ่อน แต่ไม่เปลี่ยน K ที่อุณหภูมิเดิม; KₐKᵦ = K𝓌 ใช้กับคู่กรด–เบสเดียวกัน",
+        "en": "Dilution increases weak-solute percent ionization without changing K at fixed temperature; KₐKᵦ = K𝓌 applies to a conjugate pair."
       },
       "story": {
-        "th": "จดหัวข้อร้อยละและน้ำ อ่านบทพิสูจน์โดยไม่ต้องคัด จดเฉพาะความสัมพันธ์สรุป",
-        "en": "Complete the percentage and water notes. Read the proof without copying it; write only the final relation."
+        "th": "การเจือจางเพิ่มร้อยละการแตกตัวของสารอ่อน แต่ไม่เปลี่ยน K ที่อุณหภูมิเดิม; KₐKᵦ = K𝓌 ใช้กับคู่กรด–เบสเดียวกัน",
+        "en": "Dilution increases weak-solute percent ionization without changing K at fixed temperature; KₐKᵦ = K𝓌 applies to a conjugate pair."
       },
       "action": {
-        "th": "จดหัวข้อร้อยละและน้ำ อ่านบทพิสูจน์โดยไม่ต้องคัด จดเฉพาะความสัมพันธ์สรุป",
-        "en": "Complete the percentage and water notes. Read the proof without copying it; write only the final relation."
+        "th": "เชื่อมโยงร้อยละการแตกตัว กรดหลายโปรตอน น้ำ และคู่กรด–เบส",
+        "en": "Connect percent ionization, polyprotic acids, water and conjugate pairs."
       },
       "links": [
         {
@@ -179,8 +179,8 @@
         },
         {
           "label": {
-            "th": "บทพิสูจน์ที่พิมพ์ให้",
-            "en": "Preprinted proof"
+            "th": "บทพิสูจน์",
+            "en": "Derivation"
           },
           "target": {
             "kind": "anchor",
@@ -190,17 +190,17 @@
       ],
       "check": {
         "question": {
-          "th": "ต้องคัดบทพิสูจน์ KₐKᵦ = K𝓌 หรือไม่?",
-          "en": "Must you copy the KₐKᵦ = K𝓌 derivation?"
+          "th": "Kₐ และ Kᵦ ที่นำมาคูณกันต้องเป็นของสารแบบใด?",
+          "en": "Which acid and base must the multiplied Kₐ and Kᵦ belong to?"
         },
         "answer": {
-          "th": "ไม่ต้อง อ่านบทพิสูจน์ที่พิมพ์ให้ แล้วจดเฉพาะความสัมพันธ์สรุป ใช้คู่กรด–เบสเดียวกันที่อุณหภูมิเดียวกัน",
-          "en": "No. Read the preprinted proof and write only the final relation; use the same conjugate pair at the same temperature."
+          "th": "เป็นคู่กรด–เบสเดียวกัน ณ อุณหภูมิเดียวกัน จึงได้ KₐKᵦ = K𝓌",
+          "en": "They must belong to the same conjugate pair at the same temperature, giving KₐKᵦ = K𝓌."
         }
       },
       "after": {
-        "th": "ทวนหัวข้อที่จด แล้วเรียนช่วงถัดไปตามครู",
-        "en": "Review your completed notes, then follow the teacher to the next section."
+        "th": "สมการ เลขดุล และความเข้มข้นต้องสอดคล้องกัน",
+        "en": "Equations, coefficients and concentrations must be consistent."
       }
     },
     {
@@ -264,14 +264,14 @@
         }
       },
       "after": {
-        "th": "ทวนหัวข้อที่จด แล้วเรียนช่วงถัดไปตามครู",
-        "en": "Review your completed notes, then follow the teacher to the next section."
+        "th": "สมการ เลขดุล และความเข้มข้นต้องสอดคล้องกัน",
+        "en": "Equations, coefficients and concentrations must be consistent."
       }
     }
   ],
   "finish": {
-    "th": "ใช้หัวข้อจดเดิมทวนจากความจำ แล้วจึงทำ Exit Ticket ตามกิจกรรมของครู",
-    "en": "Recall the same note headings from memory, then take the teacher’s Exit Ticket."
+    "th": "สรุปการแตกตัว ร้อยละ ค่าคงที่ของน้ำ และความสัมพันธ์ของคู่กรด–เบส",
+    "en": "Summarize ionization, percentages, water constants and conjugate-pair relations."
   },
   "exitCheck": {
     "question": {

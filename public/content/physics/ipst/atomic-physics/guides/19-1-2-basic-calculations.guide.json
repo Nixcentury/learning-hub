@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "physics-ipst-atomic-19-1-2-basic-calculations",
+    "revision": "2026-11-13-1",
+    "sha256": "93ce62139321e760910d546a6f57203b3092f1fc57425c5347797cf228fec569"
+  },
+  "title": {
+    "th": "โบร์ · ฝึกแทนค่าสูตร",
+    "en": "Bohr · Direct substitution"
+  },
+  "prerequisites": {
+    "th": "อ่าน n และหน่วยจากโจทย์ คำนวณยกกำลังสองและหารอย่างง่าย",
+    "en": "Read n and the units; square numbers and divide."
+  },
+  "goal": {
+    "th": "เลือกสูตรให้ตรงกับสิ่งที่ถาม แล้วแทนค่าตรง ๆ พร้อมหน่วย",
+    "en": "Choose the formula for the requested quantity and substitute directly with units."
+  },
+  "steps": [
+    {
+      "id": "formulas",
+      "title": {
+        "th": "อ่านกรอบสูตร",
+        "en": "Read the formula box"
+      },
+      "summary": {
+        "th": "ไฮโดรเจนใช้ rₙ = n²a₀, Eₙ = −13.6/n² eV และ vₙ = v₁/n\nโฟตอนใช้ Eγ = 1240/λ โดย λ เป็น nm และคำตอบเป็น eV",
+        "en": "For hydrogen use rₙ = n²a₀, Eₙ = −13.6/n² eV, and vₙ = v₁/n.\nFor photons use Eγ = 1240/λ with λ in nm and the result in eV."
+      },
+      "story": {
+        "th": "ชี้สิ่งที่โจทย์ถาม แล้วจับคู่กับตัวแปรในกรอบก่อนแทนค่า",
+        "en": "Identify the requested quantity, then match it to the variable in the box."
+      },
+      "action": {
+        "th": "อ่านสูตรและหน่วยทั้ง 4 แถว",
+        "en": "Read the four formulas and their units."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "กรอบสูตร",
+            "en": "Formula box"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้าโจทย์ถามรัศมี ต้องเลือกสูตรใด?",
+          "en": "Which formula gives the orbital radius?"
+        },
+        "answer": {
+          "th": "rₙ = n²a₀ ใช้ n จากโจทย์ และตอบเป็นเมตร",
+          "en": "rₙ = n²a₀. Use the given n and answer in metres."
+        }
+      },
+      "after": {
+        "th": "เริ่มข้อ 1 แล้วเลือกสูตรจากปริมาณที่โจทย์ถาม",
+        "en": "Start Question 1 and choose the formula for the requested quantity."
+      }
+    },
+    {
+      "id": "mixed",
+      "title": {
+        "th": "ฝึกคละสูตร",
+        "en": "Practise mixed formulas"
+      },
+      "summary": {
+        "th": "8 ข้อคละรัศมี พลังงาน อัตราเร็ว และพลังงานโฟตอน สูตรละ 2 ข้อ\nแต่ละข้อแทนค่าในสูตรเดียว เฉลยแสดงสูตร การแทนค่า และคำตอบพร้อมหน่วย",
+        "en": "8 mixed questions cover radius, electron energy, speed, and photon energy, with 2 per formula.\nEach uses one direct substitution; solutions show the formula, substitution, result, and unit."
+      },
+      "story": {
+        "th": "ให้เลือกสูตรใหม่ทุกข้อจากสิ่งที่ถาม แม้ข้อก่อนหน้าจะใช้สูตรอื่น",
+        "en": "Choose the formula afresh from the requested quantity in each question."
+      },
+      "action": {
+        "th": "ทำข้อ 1–4 แล้วทำข้อ 5–8 เพื่อทวนแต่ละสูตรอีกครั้ง",
+        "en": "Complete Questions 1–4, then Questions 5–8 to revisit each formula."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 1",
+            "en": "Question 1"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "simple-radius-n2"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 5",
+            "en": "Question 5"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "simple-energy-n2"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "สูตรพลังงานอิเล็กตรอนกับพลังงานโฟตอนให้เครื่องหมายเหมือนกันไหม?",
+          "en": "Do the electron-energy and photon-energy formulas give the same sign?"
+        },
+        "answer": {
+          "th": "ต่างกัน Eₙ ของอิเล็กตรอนที่ถูกยึดในอะตอมเป็นลบ ส่วน Eγ ของโฟตอนเป็นบวก",
+          "en": "No. The bound electron energy Eₙ is negative; photon energy Eγ is positive."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "กลับไปดูสูตร",
+            "en": "Review the formulas"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        }
+      ],
+      "after": {
+        "th": "ถ้ายังสับสน ให้เลือกทำซ้ำเฉพาะสูตรนั้นก่อนเข้า Exit Ticket",
+        "en": "If a formula is still unclear, repeat its two questions before the Exit Ticket."
+      }
+    }
+  ],
+  "finish": {
+    "th": "เลือกสูตรจากปริมาณที่ถาม แทน n หรือ λ แล้วตรวจหน่วยของคำตอบ",
+    "en": "Select the formula for the quantity, substitute n or λ, and check the answer unit."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "ในสูตร Eγ = 1240/λ ต้องใช้ λ หน่วยใด และได้พลังงานหน่วยใด?",
+      "en": "In Eγ = 1240/λ, what wavelength unit is required and what energy unit results?"
+    },
+    "answer": {
+      "th": "λ เป็นนาโนเมตร (nm) และพลังงานเป็นอิเล็กตรอนโวลต์ (eV)",
+      "en": "Use nanometres (nm) for λ; the result is in electronvolts (eV)."
+    }
+  }
+}

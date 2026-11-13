@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="th" data-learning-html data-learning-sheet="1"
+  data-sheet-guide="guides/19-1-2-basic-calculations.guide.json" data-sheet-revision="2026-11-13-1"
+  data-print-subject-th="ฟิสิกส์" data-print-subject-en="Physics"
+  data-print-chapter-th="บทที่ 19 ฟิสิกส์อะตอม" data-print-chapter-en="Chapter 19 Atomic Physics"
+  data-print-topic-th="19.1 โบร์ · ฝึกแทนค่าสูตร" data-print-topic-en="19.1 Bohr · Direct substitution"
+  data-print-work-th="ฝึกคำนวณโบร์อย่างง่าย · 8 ข้อ" data-print-work-en="Simple Bohr calculations · 8 questions">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>19.1 โบร์ · ฝึกแทนค่าสูตร / Bohr · Direct substitution</title>
+  <link rel="stylesheet" href="../../../../shared/learning-sheet.css">
+  <style>
+    * { box-sizing:border-box; }
+    body { margin:0; background:#fff; color:#23323b; font:17px/1.65 Tahoma,"Noto Sans Thai",sans-serif; }
+    .calc-sheet { max-width:900px; margin:auto; padding:22px 26px 40px; }
+    .calc-sheet h1 { font-size:24px; line-height:1.45; margin:0 0 8px; }
+    .calc-sheet h2 { font-size:18px; line-height:1.5; margin:0 0 8px; }
+    .calc-sheet h3 { font-size:17px; margin:0 0 5px; }
+    .calc-sheet p { margin:6px 0; overflow-wrap:anywhere; }
+    .calc-formulas { border:1px solid #59615d; padding:12px 14px; margin:15px 0 20px; }
+    .calc-formulas table { border-collapse:collapse; table-layout:fixed; width:100%; }
+    .calc-formulas th,.calc-formulas td { text-align:left; vertical-align:top; padding:7px 6px; border-bottom:1px solid #cbd0cc; overflow-wrap:anywhere; }
+    .calc-formulas th:nth-child(1) { width:24%; }
+    .calc-formulas th:nth-child(2) { width:43%; }
+    .calc-formulas tr:last-child td { border-bottom:0; }
+    .calc-formulas .formula { margin:3px 0; }
+    .calc-constants { font-size:14px; }
+    .calc-problem { margin:0 0 17px; }
+    .calc-problem [data-sheet-slot] { --sheet-width:100%; --sheet-print-height:28mm; }
+    .calc-solution p { margin:5px 0; }
+    .calc-solution .formula { margin:7px 0; }
+    .calc-source { margin-top:16px; font-size:12px; border-top:1px solid #aaa; padding-top:6px; }
+    @media(max-width:600px) {
+      .calc-sheet { padding:18px 12px 30px; }
+      .calc-sheet h1 { font-size:21px; }
+      .calc-formulas { padding:10px 8px; }
+      html:not([data-hub-print-snapshot]) .calc-formulas table,
+      html:not([data-hub-print-snapshot]) .calc-formulas tbody,
+      html:not([data-hub-print-snapshot]) .calc-formulas tr,
+      html:not([data-hub-print-snapshot]) .calc-formulas td { display:block; width:100%; }
+      html:not([data-hub-print-snapshot]) .calc-formulas thead { display:none; }
+      html:not([data-hub-print-snapshot]) .calc-formulas td { padding:4px; border:0; }
+      html:not([data-hub-print-snapshot]) .calc-formulas td:first-child { font-weight:700; }
+      html:not([data-hub-print-snapshot]) .calc-formulas tr { border-bottom:1px solid #cbd0cc; padding:7px 0; }
+      html:not([data-hub-print-snapshot]) .calc-formulas tr:last-child { border-bottom:0; }
+    }
+    html[data-hub-print-snapshot] .calc-sheet { max-width:none; margin:0; padding:0; }
+    html[data-hub-print-snapshot] .calc-sheet h1 { font-size:12pt; }
+    html[data-hub-print-snapshot] .calc-sheet h2,
+    html[data-hub-print-snapshot] .calc-sheet h3 { font-size:12pt; }
+    html[data-hub-print-snapshot] .calc-formulas { margin:9px 0 13px; padding:8px 10px; }
+    html[data-hub-print-snapshot] .calc-formulas th,
+    html[data-hub-print-snapshot] .calc-formulas td { font-size:10pt; padding:5px; }
+    @media print {
+      .calc-sheet { max-width:none; margin:0; padding:0; font-size:10pt; }
+      .calc-sheet h1,.calc-sheet h2,.calc-sheet h3 { font-size:12pt; }
+    }
+  </style>
+</head>
+<body>
+<div class="calc-sheet" data-content-lang="th" lang="th">
+<header><h1>19.1 โบร์ · ฝึกแทนค่าสูตร</h1><p>โจทย์คละ 8 ข้อ เลือกสูตรจากกรอบ แทนค่า และตอบพร้อมหน่วย</p></header>
+<section class="calc-formulas" data-guide-anchor="formula-box" data-print-keep>
+<h2>สูตรและตัวแปร</h2>
+<p class="calc-constants">สูตร \(r_n,E_n,v_n\) ใช้กับอะตอมไฮโดรเจน · \(n=1,2,3,\ldots\) คือชั้นพลังงาน</p>
+<table><thead><tr><th scope="col">ปริมาณ</th><th scope="col">สูตรที่ใช้</th><th scope="col">ตัวแปรและหน่วย</th></tr></thead><tbody>
+<tr><td>รัศมีวงโคจร</td><td><div class="formula">\(r_n=n^2a_0\)</div><div class="formula calc-constants">\(a_0=5.29\times10^{-11}\,\mathrm m\)</div></td><td>\(r_n\): รัศมี (m)<br>\(a_0\): รัศมีที่ \(n=1\)</td></tr>
+<tr><td>พลังงานของอิเล็กตรอน</td><td><div class="formula">\(E_n=-\dfrac{13.6}{n^2}\,\mathrm{eV}\)</div></td><td>\(E_n\): พลังงานที่ระดับ \(n\) (eV)</td></tr>
+<tr><td>อัตราเร็วของอิเล็กตรอน</td><td><div class="formula">\(v_n=\dfrac{v_1}{n}\)</div><div class="formula calc-constants">\(v_1=2.19\times10^6\,\mathrm{m/s}\)</div></td><td>\(v_n\): อัตราเร็ว (m/s)<br>\(v_1\): อัตราเร็วที่ \(n=1\)</td></tr>
+<tr><td>พลังงานโฟตอน</td><td><div class="formula">\(E_\gamma=\dfrac{hc}{\lambda}\)</div><div class="formula calc-constants">\(E_\gamma(\mathrm{eV})=\dfrac{1240}{\lambda(\mathrm{nm})}\)</div></td><td>\(E_\gamma\): พลังงานโฟตอน (eV)<br>\(\lambda\): ความยาวคลื่น (nm)</td></tr>
+</tbody></table>
+<p class="calc-constants">ในสูตรโฟตอน \(h\) คือค่าคงตัวของพลังค์ และ \(c\) คืออัตราเร็วแสง ใช้รูป \(1240/\lambda\) เมื่อ \(\lambda\) เป็น nm เพื่อได้คำตอบเป็น eV</p></section>
+<section data-guide-anchor="mixed-questions"><h2>โจทย์คำนวณ</h2>
+<div class="calc-problem" data-print-keep><h3>ข้อ 1</h3><p>อิเล็กตรอนในอะตอมไฮโดรเจนอยู่ที่ชั้นพลังงาน \(n=2\) จงหารัศมีวงโคจรของอิเล็กตรอนในหน่วยเมตร</p>
+<div data-sheet-slot="simple-radius-n2" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="รัศมีของไฮโดรเจนที่ n = 2" data-sheet-label-en="Hydrogen radius at n = 2"><div data-sheet-answer><div class="calc-solution">
+<p><strong>ใช้สูตร</strong></p><div class="formula">\(r_n=n^2a_0\)</div>
+<p>แทนค่า</p><div class="formula">\(r_2=(2)^2(5.29\times10^{-11})=2.116\times10^{-10}\,\mathrm m\)</div>
+<p><strong>คำตอบ</strong> \(r_2\approx2.12\times10^{-10}\,\mathrm m\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 2</h3><p>อิเล็กตรอนในอะตอมไฮโดรเจนอยู่ที่ชั้นพลังงาน \(n=4\) จงหาพลังงานของอิเล็กตรอนในหน่วย eV</p>
+<div data-sheet-slot="simple-energy-n4" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="พลังงานของไฮโดรเจนที่ n = 4" data-sheet-label-en="Hydrogen energy at n = 4"><div data-sheet-answer><div class="calc-solution">
+<p><strong>ใช้สูตร</strong></p><div class="formula">\(E_n=-\dfrac{13.6}{n^2}\,\mathrm{eV}\)</div>
+<p>แทนค่า</p><div class="formula">\(E_4=-\dfrac{13.6}{4^2}=-\dfrac{13.6}{16}\,\mathrm{eV}\)</div>
+<p><strong>คำตอบ</strong> \(E_4=-0.850\,\mathrm{eV}\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 3</h3><p>แสงมีความยาวคลื่น \(620\,\mathrm{nm}\) จงหาพลังงานของโฟตอนหนึ่งตัวในหน่วย eV โดยใช้สูตรที่มีความยาวคลื่นเป็น nm</p>
+<div data-sheet-slot="simple-photon-620" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="พลังงานโฟตอนที่ความยาวคลื่น 620 nm" data-sheet-label-en="Photon energy at wavelength 620 nm"><div data-sheet-answer><div class="calc-solution">
+<p><strong>ใช้สูตร</strong></p><div class="formula">\(E_\gamma(\mathrm{eV})=\dfrac{1240}{\lambda(\mathrm{nm})}\)</div>
+<p>แทนค่า</p><div class="formula">\(E_\gamma=\dfrac{1240}{620}\,\mathrm{eV}\)</div>
+<p><strong>คำตอบ</strong> \(E_\gamma=2.00\,\mathrm{eV}\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 4</h3><p>อิเล็กตรอนในอะตอมไฮโดรเจนอยู่ที่ชั้นพลังงาน \(n=3\) จงหาอัตราเร็วของอิเล็กตรอนในหน่วย m/s</p>
+<div data-sheet-slot="simple-speed-n3" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="อัตราเร็วของไฮโดรเจนที่ n = 3" data-sheet-label-en="Hydrogen speed at n = 3"><div data-sheet-answer><div class="calc-solution">
+<p><strong>ใช้สูตร</strong></p><div class="formula">\(v_n=\dfrac{v_1}{n}\)</div>
+<p>แทนค่า</p><div class="formula">\(v_3=\dfrac{2.19\times10^6}{3}\,\mathrm{m/s}\)</div>
+<p><strong>คำตอบ</strong> \(v_3=7.30\times10^5\,\mathrm{m/s}\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 5</h3><p>อิเล็กตรอนในอะตอมไฮโดรเจนอยู่ที่ชั้นพลังงาน \(n=2\) จงหาพลังงานของอิเล็กตรอนในหน่วย eV</p>
+<div data-sheet-slot="simple-energy-n2" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="พลังงานของไฮโดรเจนที่ n = 2" data-sheet-label-en="Hydrogen energy at n = 2"><div data-sheet-answer><div class="calc-solution">
+<p><strong>ใช้สูตร</strong></p><div class="formula">\(E_n=-\dfrac{13.6}{n^2}\,\mathrm{eV}\)</div>
+<p>แทนค่า</p><div class="formula">\(E_2=-\dfrac{13.6}{2^2}=-\dfrac{13.6}{4}\,\mathrm{eV}\)</div>
+<p><strong>คำตอบ</strong> \(E_2=-3.40\,\mathrm{eV}\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 6</h3><p>อิเล็กตรอนในอะตอมไฮโดรเจนอยู่ที่ชั้นพลังงาน \(n=3\) จงหารัศมีวงโคจรของอิเล็กตรอนในหน่วยเมตร</p>
+<div data-sheet-slot="simple-radius-n3" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="รัศมีของไฮโดรเจนที่ n = 3" data-sheet-label-en="Hydrogen radius at n = 3"><div data-sheet-answer><div class="calc-solution">
+<p><strong>ใช้สูตร</strong></p><div class="formula">\(r_n=n^2a_0\)</div>
+<p>แทนค่า</p><div class="formula">\(r_3=(3)^2(5.29\times10^{-11})=4.761\times10^{-10}\,\mathrm m\)</div>
+<p><strong>คำตอบ</strong> \(r_3\approx4.76\times10^{-10}\,\mathrm m\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 7</h3><p>อิเล็กตรอนในอะตอมไฮโดรเจนอยู่ที่ชั้นพลังงาน \(n=2\) จงหาอัตราเร็วของอิเล็กตรอนในหน่วย m/s</p>
+<div data-sheet-slot="simple-speed-n2" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="อัตราเร็วของไฮโดรเจนที่ n = 2" data-sheet-label-en="Hydrogen speed at n = 2"><div data-sheet-answer><div class="calc-solution">
+<p><strong>ใช้สูตร</strong></p><div class="formula">\(v_n=\dfrac{v_1}{n}\)</div>
+<p>แทนค่า</p><div class="formula">\(v_2=\dfrac{2.19\times10^6}{2}=1.095\times10^6\,\mathrm{m/s}\)</div>
+<p><strong>คำตอบ</strong> \(v_2\approx1.10\times10^6\,\mathrm{m/s}\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 8</h3><p>แสงมีความยาวคลื่น \(310\,\mathrm{nm}\) จงหาพลังงานของโฟตอนหนึ่งตัวในหน่วย eV โดยใช้สูตรที่มีความยาวคลื่นเป็น nm</p>
+<div data-sheet-slot="simple-photon-310" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="พลังงานโฟตอนที่ความยาวคลื่น 310 nm" data-sheet-label-en="Photon energy at wavelength 310 nm"><div data-sheet-answer><div class="calc-solution">
+<p><strong>ใช้สูตร</strong></p><div class="formula">\(E_\gamma(\mathrm{eV})=\dfrac{1240}{\lambda(\mathrm{nm})}\)</div>
+<p>แทนค่า</p><div class="formula">\(E_\gamma=\dfrac{1240}{310}\,\mathrm{eV}\)</div>
+<p><strong>คำตอบ</strong> \(E_\gamma=4.00\,\mathrm{eV}\)</p></div></div></div></div>
+</section><footer class="calc-source">โจทย์แต่งสำหรับฝึกแทนค่าสูตรจากใบเรียนรู้ 19.1 ตอนโบร์ · สูตรละ 2 ข้อ</footer></div>
+<div class="calc-sheet" data-content-lang="en" lang="en">
+<header><h1>19.1 Bohr · Direct substitution</h1><p>8 mixed questions. Choose a formula from the box, substitute, and give the unit.</p></header>
+<section class="calc-formulas" data-guide-anchor="formula-box" data-print-keep>
+<h2>Formulas and variables</h2>
+<p class="calc-constants">The \(r_n,E_n,v_n\) formulas apply to hydrogen atoms. \(n=1,2,3,\ldots\) is the energy-level number.</p>
+<table><thead><tr><th scope="col">Quantity</th><th scope="col">Formula</th><th scope="col">Variables and units</th></tr></thead><tbody>
+<tr><td>Orbital radius</td><td><div class="formula">\(r_n=n^2a_0\)</div><div class="formula calc-constants">\(a_0=5.29\times10^{-11}\,\mathrm m\)</div></td><td>\(r_n\): radius (m)<br>\(a_0\): radius at \(n=1\)</td></tr>
+<tr><td>Electron energy</td><td><div class="formula">\(E_n=-\dfrac{13.6}{n^2}\,\mathrm{eV}\)</div></td><td>\(E_n\): energy at level \(n\) (eV)</td></tr>
+<tr><td>Electron speed</td><td><div class="formula">\(v_n=\dfrac{v_1}{n}\)</div><div class="formula calc-constants">\(v_1=2.19\times10^6\,\mathrm{m/s}\)</div></td><td>\(v_n\): speed (m/s)<br>\(v_1\): speed at \(n=1\)</td></tr>
+<tr><td>Photon energy</td><td><div class="formula">\(E_\gamma=\dfrac{hc}{\lambda}\)</div><div class="formula calc-constants">\(E_\gamma(\mathrm{eV})=\dfrac{1240}{\lambda(\mathrm{nm})}\)</div></td><td>\(E_\gamma\): photon energy (eV)<br>\(\lambda\): wavelength (nm)</td></tr>
+</tbody></table>
+<p class="calc-constants">For photons, \(h\) is Planck’s constant and \(c\) is the speed of light. Use \(1240/\lambda\) with \(\lambda\) in nm to obtain eV.</p></section>
+<section data-guide-anchor="mixed-questions"><h2>Calculation questions</h2>
+<div class="calc-problem" data-print-keep><h3>Question 1</h3><p>An electron in a hydrogen atom is at energy level \(n=2\). Find its orbital radius in metres.</p>
+<div data-sheet-slot="simple-radius-n2" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="รัศมีของไฮโดรเจนที่ n = 2" data-sheet-label-en="Hydrogen radius at n = 2"><div data-sheet-answer><div class="calc-solution">
+<p><strong>Formula</strong></p><div class="formula">\(r_n=n^2a_0\)</div>
+<p>Substitute</p><div class="formula">\(r_2=(2)^2(5.29\times10^{-11})=2.116\times10^{-10}\,\mathrm m\)</div>
+<p><strong>Answer</strong> \(r_2\approx2.12\times10^{-10}\,\mathrm m\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 2</h3><p>An electron in a hydrogen atom is at energy level \(n=4\). Find its energy in eV.</p>
+<div data-sheet-slot="simple-energy-n4" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="พลังงานของไฮโดรเจนที่ n = 4" data-sheet-label-en="Hydrogen energy at n = 4"><div data-sheet-answer><div class="calc-solution">
+<p><strong>Formula</strong></p><div class="formula">\(E_n=-\dfrac{13.6}{n^2}\,\mathrm{eV}\)</div>
+<p>Substitute</p><div class="formula">\(E_4=-\dfrac{13.6}{4^2}=-\dfrac{13.6}{16}\,\mathrm{eV}\)</div>
+<p><strong>Answer</strong> \(E_4=-0.850\,\mathrm{eV}\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 3</h3><p>Light has a wavelength of \(620\,\mathrm{nm}\). Find the energy of one photon in eV using the formula with wavelength in nm.</p>
+<div data-sheet-slot="simple-photon-620" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="พลังงานโฟตอนที่ความยาวคลื่น 620 nm" data-sheet-label-en="Photon energy at wavelength 620 nm"><div data-sheet-answer><div class="calc-solution">
+<p><strong>Formula</strong></p><div class="formula">\(E_\gamma(\mathrm{eV})=\dfrac{1240}{\lambda(\mathrm{nm})}\)</div>
+<p>Substitute</p><div class="formula">\(E_\gamma=\dfrac{1240}{620}\,\mathrm{eV}\)</div>
+<p><strong>Answer</strong> \(E_\gamma=2.00\,\mathrm{eV}\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 4</h3><p>An electron in a hydrogen atom is at energy level \(n=3\). Find its speed in m/s.</p>
+<div data-sheet-slot="simple-speed-n3" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="อัตราเร็วของไฮโดรเจนที่ n = 3" data-sheet-label-en="Hydrogen speed at n = 3"><div data-sheet-answer><div class="calc-solution">
+<p><strong>Formula</strong></p><div class="formula">\(v_n=\dfrac{v_1}{n}\)</div>
+<p>Substitute</p><div class="formula">\(v_3=\dfrac{2.19\times10^6}{3}\,\mathrm{m/s}\)</div>
+<p><strong>Answer</strong> \(v_3=7.30\times10^5\,\mathrm{m/s}\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 5</h3><p>An electron in a hydrogen atom is at energy level \(n=2\). Find its energy in eV.</p>
+<div data-sheet-slot="simple-energy-n2" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="พลังงานของไฮโดรเจนที่ n = 2" data-sheet-label-en="Hydrogen energy at n = 2"><div data-sheet-answer><div class="calc-solution">
+<p><strong>Formula</strong></p><div class="formula">\(E_n=-\dfrac{13.6}{n^2}\,\mathrm{eV}\)</div>
+<p>Substitute</p><div class="formula">\(E_2=-\dfrac{13.6}{2^2}=-\dfrac{13.6}{4}\,\mathrm{eV}\)</div>
+<p><strong>Answer</strong> \(E_2=-3.40\,\mathrm{eV}\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 6</h3><p>An electron in a hydrogen atom is at energy level \(n=3\). Find its orbital radius in metres.</p>
+<div data-sheet-slot="simple-radius-n3" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="รัศมีของไฮโดรเจนที่ n = 3" data-sheet-label-en="Hydrogen radius at n = 3"><div data-sheet-answer><div class="calc-solution">
+<p><strong>Formula</strong></p><div class="formula">\(r_n=n^2a_0\)</div>
+<p>Substitute</p><div class="formula">\(r_3=(3)^2(5.29\times10^{-11})=4.761\times10^{-10}\,\mathrm m\)</div>
+<p><strong>Answer</strong> \(r_3\approx4.76\times10^{-10}\,\mathrm m\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 7</h3><p>An electron in a hydrogen atom is at energy level \(n=2\). Find its speed in m/s.</p>
+<div data-sheet-slot="simple-speed-n2" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="อัตราเร็วของไฮโดรเจนที่ n = 2" data-sheet-label-en="Hydrogen speed at n = 2"><div data-sheet-answer><div class="calc-solution">
+<p><strong>Formula</strong></p><div class="formula">\(v_n=\dfrac{v_1}{n}\)</div>
+<p>Substitute</p><div class="formula">\(v_2=\dfrac{2.19\times10^6}{2}=1.095\times10^6\,\mathrm{m/s}\)</div>
+<p><strong>Answer</strong> \(v_2\approx1.10\times10^6\,\mathrm{m/s}\)</p></div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 8</h3><p>Light has a wavelength of \(310\,\mathrm{nm}\). Find the energy of one photon in eV using the formula with wavelength in nm.</p>
+<div data-sheet-slot="simple-photon-310" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="พลังงานโฟตอนที่ความยาวคลื่น 310 nm" data-sheet-label-en="Photon energy at wavelength 310 nm"><div data-sheet-answer><div class="calc-solution">
+<p><strong>Formula</strong></p><div class="formula">\(E_\gamma(\mathrm{eV})=\dfrac{1240}{\lambda(\mathrm{nm})}\)</div>
+<p>Substitute</p><div class="formula">\(E_\gamma=\dfrac{1240}{310}\,\mathrm{eV}\)</div>
+<p><strong>Answer</strong> \(E_\gamma=4.00\,\mathrm{eV}\)</p></div></div></div></div>
+</section><footer class="calc-source">Authored substitution practice based on the 19.1 Bohr learning sheet · 2 questions per formula</footer></div>
+</body></html>

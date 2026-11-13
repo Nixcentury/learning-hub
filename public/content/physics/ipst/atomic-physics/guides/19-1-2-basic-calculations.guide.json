@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-atomic-19-1-2-basic-calculations",
-    "revision": "2026-11-13-1",
-    "sha256": "93ce62139321e760910d546a6f57203b3092f1fc57425c5347797cf228fec569"
+    "revision": "2026-11-13-2",
+    "sha256": "a41f317297ee41902ddb075aca119017ad8b3ea80c46aa1d9777498f8ea8b0d2"
   },
   "title": {
     "th": "โบร์ · ฝึกแทนค่าสูตร",
@@ -14,8 +14,8 @@
     "en": "Read n and the units; square numbers and divide."
   },
   "goal": {
-    "th": "เลือกสูตรให้ตรงกับสิ่งที่ถาม แล้วแทนค่าตรง ๆ พร้อมหน่วย",
-    "en": "Choose the formula for the requested quantity and substitute directly with units."
+    "th": "เลือกสูตรให้ตรงกับสิ่งที่ถาม แทนค่าพร้อมหน่วย และหาพลังงานแสงที่ใช้กระตุ้นอะตอมสมมติอย่างง่าย",
+    "en": "Choose the right formula, substitute with units, and find the light required for simple hypothetical-atom excitation."
   },
   "steps": [
     {
@@ -70,16 +70,16 @@
         "en": "Practise mixed formulas"
       },
       "summary": {
-        "th": "8 ข้อคละรัศมี พลังงาน อัตราเร็ว และพลังงานโฟตอน สูตรละ 2 ข้อ\nแต่ละข้อแทนค่าในสูตรเดียว เฉลยแสดงสูตร การแทนค่า และคำตอบพร้อมหน่วย",
-        "en": "8 mixed questions cover radius, electron energy, speed, and photon energy, with 2 per formula.\nEach uses one direct substitution; solutions show the formula, substitution, result, and unit."
+        "th": "โจทย์คละ 10 ข้อ ประกอบด้วยแทนค่าสูตรหลัก 8 ข้อ และการกระตุ้นอะตอมสมมติ 2 ข้อ\nโจทย์สมมติระบุ E₁ และแบบจำลอง Eₙ = E₁/n² ให้หาแต่ละระดับก่อนหาพลังงานโฟตอน",
+        "en": "10 mixed questions include 8 core substitutions and 2 hypothetical-atom excitations.\nHypothetical questions state E₁ and the model Eₙ = E₁/n²; find the levels before the photon energy."
       },
       "story": {
         "th": "ให้เลือกสูตรใหม่ทุกข้อจากสิ่งที่ถาม แม้ข้อก่อนหน้าจะใช้สูตรอื่น",
         "en": "Choose the formula afresh from the requested quantity in each question."
       },
       "action": {
-        "th": "ทำข้อ 1–4 แล้วทำข้อ 5–8 เพื่อทวนแต่ละสูตรอีกครั้ง",
-        "en": "Complete Questions 1–4, then Questions 5–8 to revisit each formula."
+        "th": "ทำข้อ 1–5 แล้วทำข้อ 6–10 เพื่อฝึกแต่ละสูตรซ้ำ",
+        "en": "Complete Questions 1–5, then Questions 6–10 to revisit the formulas."
       },
       "links": [
         {
@@ -94,8 +94,8 @@
         },
         {
           "label": {
-            "th": "ข้อ 5",
-            "en": "Question 5"
+            "th": "ข้อ 6",
+            "en": "Question 6"
           },
           "target": {
             "kind": "slot",
@@ -127,13 +127,80 @@
       ],
       "after": {
         "th": "ถ้ายังสับสน ให้เลือกทำซ้ำเฉพาะสูตรนั้นก่อนเข้า Exit Ticket",
-        "en": "If a formula is still unclear, repeat its two questions before the Exit Ticket."
+        "en": "If a formula is still unclear, repeat its questions before the Exit Ticket."
+      }
+    },
+    {
+      "id": "hypothetical-excitation",
+      "title": {
+        "th": "การกระตุ้นอะตอมสมมติ",
+        "en": "Hypothetical-atom excitation"
+      },
+      "summary": {
+        "th": "ใช้ Eₙ = E₁/n² ตามแบบจำลองที่โจทย์กำหนด แล้วหา Eγ = E_f − E_i สำหรับการขึ้นชั้น\nใช้ f = Eγ/h โดย h = 4.14 × 10⁻¹⁵ eV s หรือ λ = 1240/Eγ เพื่อได้ nm",
+        "en": "Use the specified Eₙ = E₁/n² model, then Eγ = E_f − E_i for upward excitation.\nUse f = Eγ/h with h = 4.14 × 10⁻¹⁵ eV s, or λ = 1240/Eγ for nm."
+      },
+      "story": {
+        "th": "เริ่มจาก E₁ ที่โจทย์ให้ หาพลังงานชั้นเริ่มและชั้นปลาย แล้วลบปลายลบต้นก่อนหาความถี่หรือความยาวคลื่น",
+        "en": "Start with the given E₁, find the initial and final levels, and subtract before finding frequency or wavelength."
+      },
+      "action": {
+        "th": "ทำข้อ 4 และข้อ 8 โดยเขียนพลังงานทั้งสองชั้นก่อน",
+        "en": "Complete Questions 4 and 8, writing both level energies first."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 4 · ความถี่",
+            "en": "Question 4 · Frequency"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "simple-atom-x-frequency"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 8 · ความยาวคลื่น",
+            "en": "Question 8 · Wavelength"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "simple-atom-y-wavelength"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้า E₁ ไม่ใช่ −13.6 eV ต้องใช้ตัวเลขใดหา Eₙ ในโจทย์สมมตินี้?",
+          "en": "If E₁ is not −13.6 eV, which value should be used for Eₙ in these model questions?"
+        },
+        "answer": {
+          "th": "ใช้ E₁ ที่โจทย์ให้ในแบบจำลอง Eₙ = E₁/n² และตรวจว่าการขึ้นชั้นให้พลังงานโฟตอนเป็นบวก",
+          "en": "Use the given E₁ in Eₙ = E₁/n², and check that upward excitation requires positive photon energy."
+        }
+      },
+      "review": [
+        {
+          "label": {
+            "th": "กรอบสูตร",
+            "en": "Formula box"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        }
+      ],
+      "after": {
+        "th": "ตรวจหน่วย eV, Hz และ nm ก่อนเปิดเฉลย แล้วกลับไปเลือกข้อที่ยังไม่คล่อง",
+        "en": "Check eV, Hz and nm before revealing the solution, then revisit any unclear question."
       }
     }
   ],
   "finish": {
-    "th": "เลือกสูตรจากปริมาณที่ถาม แทน n หรือ λ แล้วตรวจหน่วยของคำตอบ",
-    "en": "Select the formula for the quantity, substitute n or λ, and check the answer unit."
+    "th": "เลือกสูตรและตรวจหน่วย สำหรับการขึ้นชั้นให้หาพลังงานแต่ละระดับก่อนหาผลต่าง แล้วหาความถี่หรือความยาวคลื่น",
+    "en": "Choose the formula and check units. For excitation, find the levels and their difference before frequency or wavelength."
   },
   "exitCheck": {
     "question": {

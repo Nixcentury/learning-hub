@@ -6,6 +6,63 @@ import { applyContentLanguage } from '../js/content-language.js';
 import { buildHtmlPrintSnapshot } from '../js/html-print.js';
 import { isExitTicketRevision, exitTicketPages, exitTicketRanges, prepareExitTicketPrint } from '../js/exit-ticket-revision.js';
 
+test('4.3 revision: corrected self-study content and all 12 independent exports',async()=>{
+  const path='content/physics/ipst/equilibrium/4-3-exit-ticket-revision.html';
+  const {document:source}=parseHTML(await readFile(new URL('../public/'+path,import.meta.url),'utf8'));
+  Object.defineProperty(source,'URL',{value:'https://example.test/learning-hub/'+path});
+  Object.defineProperty(source,'defaultView',{value:undefined});
+  assert.equal(source.documentElement.dataset.contentRevision,'1.3');
+  assert.deepEqual(exitTicketRanges(source),['all','quiz','review']);
+  assert.equal(source.querySelectorAll('script,template,iframe,form,button,input,select,[data-sheet-slot],[data-learning-activity-content]').length,0);
+  const {document:menu}=parseHTML(await readFile(new URL('../public/content/bank/physics/b-d52412f9e1c700d9a5223472.html',import.meta.url),'utf8'));
+  assert.equal(menu.querySelector('nav').dataset.routeSlug,'translational-equilibrium');
+  const links=[...menu.querySelectorAll('a')];
+  assert.deepEqual(links.map(a=>a.dataset.toolKey),['learning-sheet','quiz-set-1','quiz-set-2','simulation','exit-ticket-revision']);
+  assert.equal(links.at(-1).dataset.contentId,'physics-ipst-equilibrium-4-3-exit-ticket-revision');
+  assert.equal(links.at(-1).dataset.toolKind,'html');
+  assert.equal(links.at(-1).dataset.th,'exit ticket revision');
+  for(const lang of ['th','en'])for(const answers of [false,true])for(const range of ['all','quiz','review']){
+    applyContentLanguage(source,lang);source.body.classList.toggle('answers-on',!answers);
+    const before=source.documentElement.outerHTML;
+    const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'4.3 revision'));
+    const counts=lang==='th'?[13,9,4]:answers?[14,9,5]:[16,11,5];
+    const count=prepareExitTicketPrint(copy,{range,answers});
+    assert.equal(count,counts[['all','quiz','review'].indexOf(range)]);
+    assert.equal(copy.querySelectorAll('.unit').length,{all:33,quiz:13,review:20}[range]);
+    assert.equal(new Set([...copy.querySelectorAll('.unit')].map(u=>u.dataset.unitKey)).size,copy.querySelectorAll('.unit').length);
+    const quiz=range!=='review',review=range!=='quiz';
+    assert.equal(copy.querySelectorAll('.question').length,quiz?10:0);
+    assert.equal(copy.querySelectorAll('.blank').length,quiz?7:0);
+    assert.equal(copy.querySelectorAll('.recall-card').length,quiz?8:0);
+    assert.equal(copy.querySelectorAll('.response-space').length,!answers&&quiz?38:0);
+    assert.equal(copy.querySelectorAll('.answer-inline,.teacher-key').length,answers&&quiz?25:0);
+    assert.equal(copy.querySelectorAll('.qa-fbd').length,answers&&quiz?3:0);
+    assert.equal(copy.querySelectorAll('.unit[data-kind="review"] .response-space,.unit[data-kind="review"] .recall-card').length,0);
+    assert.equal(copy.querySelectorAll('merror,[data-mjx-error]').length,0);
+    if(answers&&quiz){
+      const q1=copy.querySelector('.question[data-unit-key="2"]');
+      assert.ok([...q1.querySelectorAll('[data-tex]')].some(n=>n.dataset.tex.includes('\\sqrt{(6\\,\\mathrm N)^2+(8\\,\\mathrm N)^2}')));
+      const q10=copy.querySelector('.question[data-unit-key="11"]');
+      assert.match(q10.textContent,lang==='th'?/เชือกช่วงที่ดึง A ขนานพื้นเอียง/:/rope segment acting on A is parallel to the incline/);
+    }
+    if(review){
+      const reading=copy.querySelector('[data-unit-key="18"]');
+      assert.ok([...reading.querySelectorAll('[data-tex]')].some(n=>n.dataset.tex==='F_x=F\\cos\\theta,\\qquad F_y=F\\sin\\theta'));
+      assert.match(reading.textContent,/120°/);
+      assert.match(copy.querySelector('[data-unit-key="19"]').textContent,/4\.2/);
+      assert.doesNotMatch(copy.querySelector('[data-unit-key="19"]').textContent,/4\.1/);
+      assert.match(copy.querySelector('[data-unit-key="24"]').textContent,lang==='th'?/เชือกเบาดึง A ในแนวราบ/:/rope pulls A horizontally/);
+      assert.doesNotMatch(copy.querySelector('[data-unit-key="26"]').textContent,/90 N|37°/);
+      assert.doesNotMatch(copy.querySelector('[data-unit-key="28"]').textContent,/60 N|37°/);
+    }
+    for(const img of copy.querySelectorAll('img')){
+      assert.match(img.getAttribute('src'),/\/assets\/4-3\/exit-ticket\/[a-f0-9]+\.(jpg|png)$/);
+      assert.ok(+img.getAttribute('width')>0&&+img.getAttribute('height')>0);
+    }
+    assert.equal(source.documentElement.outerHTML,before);
+  }
+});
+
 const topics = [
   ['2-1','b-6622c75196960aae9364b231','atomic-models',4,2],
   ['2-2','b-c70956de38c1560a16651221','subatomic-particles-and-isotopes',4,2],

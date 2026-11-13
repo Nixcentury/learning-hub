@@ -2,202 +2,285 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "chemistry-ipst-acid-base-10-3-basic-calculations",
-    "revision": "2026-11-13-1",
-    "sha256": "f4aa02649d1692d861073417dd94c980d21c91bea92886634727fa3359c3df72"
+    "revision": "2026-11-13-2",
+    "sha256": "a6c020fa19bd261d1a756f75b8e46916bf172d39bc163498336bfa81af94e48a"
   },
   "title": {
-    "th": "10.3 การแตกตัว · ฝึกคำนวณพื้นฐาน",
-    "en": "10.3 Ionization · Basic calculations"
+    "th": "Classroom Lecture · 10.3",
+    "en": "Classroom Lecture · 10.3"
   },
   "prerequisites": {
-    "th": "อ่านเลขยกกำลัง ความเข้มข้น อัตราส่วนสมการ และตาราง ICE ที่เติมให้แล้ว",
-    "en": "Read powers of ten, concentrations, equation ratios and completed ICE tables."
+    "th": "อ่านสูตรเคมี เลขดุล โมล และความเข้มข้นพื้นฐาน",
+    "en": "Read chemical formulas, coefficients, moles and basic concentrations."
   },
   "goal": {
-    "th": "เลือกความสัมพันธ์ให้ตรงกับสิ่งที่ถาม แล้วแทนค่าจากโจทย์หรือแถว E พร้อมตรวจหน่วยและเงื่อนไข",
-    "en": "Choose the required relation, substitute values from the prompt or E row, and check units and conditions."
+    "th": "จดตามบทเรียน วาด ICF/ICE เอง และใช้สมการอธิบายการแตกตัว หัวข้อจดใช้เป็นฐานของ Knowledge Recall เมื่อทำ Exit Ticket",
+    "en": "Take notes during class, draw ICF/ICE independently and explain ionization using equations. Reuse these headings for Exit Ticket Knowledge Recall."
   },
   "steps": [
     {
-      "id": "formulas",
+      "id": "classify",
       "title": {
-        "th": "อ่านกรอบสูตรและเงื่อนไข",
-        "en": "Read the reference and conditions"
+        "th": "จดคำศัพท์และจำแนกสาร",
+        "en": "Take notes and classify solutes"
       },
       "summary": {
-        "th": "C₀ คือความเข้มข้นเริ่มต้น x คือส่วนที่แตกตัว ทั้งคู่เป็น mol/L\n[ ] คือความเข้มข้นสมดุล ใช้ K𝓌 = 1.0×10⁻¹⁴ ที่ 25 °C",
-        "en": "C₀ is the initial concentration and x is the ionized amount per litre, both in mol/L.\n[ ] denotes equilibrium concentration. K𝓌 = 1.0×10⁻¹⁴ at 25 °C."
+        "th": "เริ่มจากอิเล็กโทรไลต์และกรด–เบสแก่–อ่อน แยกความแรงออกจากความเข้มข้น",
+        "en": "Start with electrolytes and strong/weak acids and bases. Distinguish strength from concentration."
       },
       "story": {
-        "th": "ชี้ปริมาณที่โจทย์ถามก่อนเลือกสูตร ระวังจำนวน OH⁻ ต่อสารหนึ่งหน่วย",
-        "en": "Identify the requested quantity before choosing a relation. Count OH⁻ ions per formula unit."
+        "th": "เติมความหมายกับตัวอย่างตามครู แล้วลองปิดคำตอบทวน",
+        "en": "Fill meanings and examples with the teacher; hide answers to review."
       },
       "action": {
-        "th": "อ่านสูตรทั้ง 6 แถว รวมทั้งเงื่อนไขของสูตรรากที่สองและค่าคงที่คู่กรด–เบส",
-        "en": "Read all six rows, including the square-root and conjugate-pair conditions."
+        "th": "เติมความหมายกับตัวอย่างตามครู แล้วลองปิดคำตอบทวน",
+        "en": "Fill meanings and examples with the teacher; hide answers to review."
       },
       "links": [
         {
           "label": {
-            "th": "กรอบสูตร",
-            "en": "Formula box"
+            "th": "อิเล็กโทรไลต์",
+            "en": "Electrolytes"
           },
           "target": {
             "kind": "anchor",
-            "key": "formula-box"
+            "key": "electrolytes"
+          }
+        },
+        {
+          "label": {
+            "th": "กรด–เบสแก่และอ่อน",
+            "en": "Strong and weak acids/bases"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "strong-weak"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "Ba(OH)₂ ที่แตกตัวสมบูรณ์ให้ OH⁻ กี่หน่วยต่อสารหนึ่งหน่วย?",
-          "en": "How many OH⁻ ions does completely dissociated Ba(OH)₂ give per formula unit?"
+          "th": "NaCl เป็นอิเล็กโทรไลต์แก่ แล้วจำเป็นต้องเป็นกรดแก่หรือไม่?",
+          "en": "Does being a strong electrolyte make NaCl a strong acid?"
         },
         "answer": {
-          "th": "2 หน่วย จึงใช้ [OH⁻] = 2C₀",
-          "en": "Two, so [OH⁻] = 2C₀."
+          "th": "ไม่จำเป็น NaCl แตกตัวเป็นไอออน แต่ไม่ใช่กรดแก่",
+          "en": "No. NaCl dissociates into ions but is not a strong acid."
         }
       },
       "after": {
-        "th": "เริ่มข้อ 1 โดยเลือกความสัมพันธ์จากสิ่งที่ถาม",
-        "en": "Start Question 1 by identifying the requested relation."
+        "th": "ทวนหัวข้อที่จด แล้วเรียนช่วงถัดไปตามครู",
+        "en": "Review your completed notes, then follow the teacher to the next section."
       }
     },
     {
-      "id": "first-pass",
+      "id": "tables",
       "title": {
-        "th": "ฝึกรอบแรก 6 ทักษะ",
-        "en": "First pass through six skills"
+        "th": "เขียนสมการแล้ววาดตาราง",
+        "en": "Write equations and draw tables"
       },
       "summary": {
-        "th": "ข้อ 1–6 คละไอออนจากสารแก่ ร้อยละ ไอออนในน้ำ ค่า K จาก ICE ค่าคงที่คู่กัน และกรดอ่อน\nเลือกสูตรใหม่ทุกข้อ ไม่ใช้สูตรเดียวตามข้อก่อน",
-        "en": "Questions 1–6 mix strong solutes, percentages, water ions, ICE constants, conjugate constants and a weak acid.\nChoose the relation afresh each time."
+        "th": "ICF ใช้กับการแตกตัวสมบูรณ์ ICE ใช้กับสมดุล แถว C ตามเลขดุล แถว E ใช้ในนิพจน์ K",
+        "en": "ICF describes complete dissociation; ICE describes equilibrium. C follows coefficients and E supplies the concentrations in K."
       },
       "story": {
-        "th": "ข้อ ICE ใช้ค่าจากแถว E ทุกตัว ส่วนข้อร้อยละใช้ C₀ เป็นตัวส่วน",
-        "en": "For ICE constants, use the E row throughout. For percentages, divide by C₀."
+        "th": "ทำตัวอย่างสอน 3 แบบในพื้นที่ว่าง วาดตารางเองทั้งตาราง",
+        "en": "Work through all three teacher examples in the blank areas, drawing each entire table."
       },
       "action": {
-        "th": "ทำข้อ 1–6 ก่อนเปิดเฉลย แล้วเทียบสูตร การแทนค่า และคำตอบ",
-        "en": "Try Questions 1–6, then compare the formula, substitution and answer."
+        "th": "ทำตัวอย่างสอน 3 แบบในพื้นที่ว่าง วาดตารางเองทั้งตาราง",
+        "en": "Work through all three teacher examples in the blank areas, drawing each entire table."
       },
       "links": [
         {
           "label": {
-            "th": "ข้อ 1",
-            "en": "Question 1"
+            "th": "ICF และตัวอย่างจากมวล",
+            "en": "ICF and the mass example"
           },
           "target": {
-            "kind": "slot",
-            "key": "strong-hcl"
+            "kind": "anchor",
+            "key": "equations-tables"
           }
         },
         {
           "label": {
-            "th": "ข้อ 4 · ICE",
-            "en": "Question 4 · ICE"
+            "th": "ICE และตัวอย่างกรด–เบสอ่อน",
+            "en": "ICE and weak-solute examples"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "weak-equilibrium"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ตารางที่ใช้กับการแตกตัวสมบูรณ์และกับสมดุลต่างกันตรงไหน?",
+          "en": "How do tables for complete dissociation and equilibrium differ?"
+        },
+        "answer": {
+          "th": "ใช้ ICF และแถว F เมื่อสมบูรณ์; ใช้ ICE และแถว E เมื่อมีสมดุล",
+          "en": "Use ICF and row F for complete dissociation; use ICE and row E for equilibrium."
+        }
+      },
+      "after": {
+        "th": "ทวนหัวข้อที่จด แล้วเรียนช่วงถัดไปตามครู",
+        "en": "Review your completed notes, then follow the teacher to the next section."
+      }
+    },
+    {
+      "id": "extend",
+      "title": {
+        "th": "ร้อยละ น้ำ และคู่กรด–เบส",
+        "en": "Percentages, water and conjugate pairs"
+      },
+      "summary": {
+        "th": "การเจือจางเพิ่มร้อยละของสารอ่อน แต่ไม่เปลี่ยน K ที่อุณหภูมิเดิม บทพิสูจน์ KₐKᵦ = K𝓌 พิมพ์ให้อ่านครบ",
+        "en": "Dilution increases weak-solute percent ionization without changing K at fixed temperature. The complete KₐKᵦ = K𝓌 derivation is preprinted."
+      },
+      "story": {
+        "th": "จดหัวข้อร้อยละและน้ำ อ่านบทพิสูจน์โดยไม่ต้องคัด จดเฉพาะความสัมพันธ์สรุป",
+        "en": "Complete the percentage and water notes. Read the proof without copying it; write only the final relation."
+      },
+      "action": {
+        "th": "จดหัวข้อร้อยละและน้ำ อ่านบทพิสูจน์โดยไม่ต้องคัด จดเฉพาะความสัมพันธ์สรุป",
+        "en": "Complete the percentage and water notes. Read the proof without copying it; write only the final relation."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ร้อยละและการเจือจาง",
+            "en": "Percentages and dilution"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "percent-dilution"
+          }
+        },
+        {
+          "label": {
+            "th": "กรดหลายโปรตอน",
+            "en": "Polyprotic acids"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "polyprotic"
+          }
+        },
+        {
+          "label": {
+            "th": "น้ำ",
+            "en": "Water"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "water"
+          }
+        },
+        {
+          "label": {
+            "th": "บทพิสูจน์ที่พิมพ์ให้",
+            "en": "Preprinted proof"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "conjugate-constants"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ต้องคัดบทพิสูจน์ KₐKᵦ = K𝓌 หรือไม่?",
+          "en": "Must you copy the KₐKᵦ = K𝓌 derivation?"
+        },
+        "answer": {
+          "th": "ไม่ต้อง อ่านบทพิสูจน์ที่พิมพ์ให้ แล้วจดเฉพาะความสัมพันธ์สรุป ใช้คู่กรด–เบสเดียวกันที่อุณหภูมิเดียวกัน",
+          "en": "No. Read the preprinted proof and write only the final relation; use the same conjugate pair at the same temperature."
+        }
+      },
+      "after": {
+        "th": "ทวนหัวข้อที่จด แล้วเรียนช่วงถัดไปตามครู",
+        "en": "Review your completed notes, then follow the teacher to the next section."
+      }
+    },
+    {
+      "id": "practice",
+      "title": {
+        "th": "ฝึกด้วยตนเอง",
+        "en": "Independent practice"
+      },
+      "summary": {
+        "th": "โจทย์ 12 ข้อคละ 6 ทักษะ ไม่มีตารางในโจทย์ เฉลยเริ่มจากสมการและตารางก่อนจัดรูป",
+        "en": "Twelve questions mix six skills. No tables are supplied in the prompts. Solutions begin with equations and tables before rearrangement."
+      },
+      "story": {
+        "th": "ลองทำก่อนเปิดเฉลย ตรวจเลขดุล แถวสมดุล หน่วย และเงื่อนไขประมาณ",
+        "en": "Attempt before revealing. Check coefficients, equilibrium rows, units and approximation conditions."
+      },
+      "action": {
+        "th": "ลองทำก่อนเปิดเฉลย ตรวจเลขดุล แถวสมดุล หน่วย และเงื่อนไขประมาณ",
+        "en": "Attempt before revealing. Check coefficients, equilibrium rows, units and approximation conditions."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "โจทย์ฝึก",
+            "en": "Practice questions"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "mixed-questions"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 4 · วาด ICE หา Kₐ",
+            "en": "Question 4 · draw ICE for Kₐ"
           },
           "target": {
             "kind": "slot",
             "key": "ka-ice"
           }
-        }
-      ],
-      "check": {
-        "question": {
-          "th": "นิพจน์ Kₐ ใช้ [HA] ตอนเริ่มต้นหรือตอนสมดุล?",
-          "en": "Does Kₐ use the initial or equilibrium [HA]?"
-        },
-        "answer": {
-          "th": "ตอนสมดุล จากแถว E; ข้อ 4 ใช้ 0.0990 mol/L",
-          "en": "Equilibrium, from the E row; Question 4 uses 0.0990 mol/L."
-        }
-      },
-      "after": {
-        "th": "ทำข้อ 7–12 เพื่อทวนทักษะเดิมด้วยข้อมูลอีกชุด",
-        "en": "Continue with Questions 7–12 to revisit the skills with new data."
-      }
-    },
-    {
-      "id": "second-pass",
-      "title": {
-        "th": "ทวนด้วยข้อมูลใหม่",
-        "en": "Repeat with new data"
-      },
-      "summary": {
-        "th": "ข้อ 7–12 ทวนครบทั้ง 6 ทักษะอีกครั้ง\nโจทย์ประมาณให้ตรวจเงื่อนไขไว้แล้ว คำตอบคงเครื่องหมาย ≈",
-        "en": "Questions 7–12 revisit all six skills.\nThe approximation prompts supply the condition check; retain ≈ in the answer."
-      },
-      "story": {
-        "th": "สังเกตไอออนที่ถาม และยืนยันว่า Kₐ กับ Kᵦ เป็นค่าของคู่กรด–เบสเดียวกัน",
-        "en": "Track the requested ion and ensure Kₐ and Kᵦ belong to the same conjugate pair."
-      },
-      "action": {
-        "th": "ทำข้อ 7–12 แล้วเลือกกลับมาฝึกข้อที่ยังสับสน",
-        "en": "Complete Questions 7–12 and revisit any uncertain skill."
-      },
-      "links": [
-        {
-          "label": {
-            "th": "ข้อ 7",
-            "en": "Question 7"
-          },
-          "target": {
-            "kind": "slot",
-            "key": "strong-baoh2"
-          }
         },
         {
           "label": {
-            "th": "ข้อ 12",
-            "en": "Question 12"
+            "th": "ข้อ 6 · ICE ก่อนประมาณ",
+            "en": "Question 6 · ICE before approximation"
           },
           "target": {
             "kind": "slot",
-            "key": "conjugate-ka"
+            "key": "weak-acid"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "ที่ 25 °C ถ้ารู้ Kᵦ ของ B จะหา Kₐ ของ BH⁺ อย่างไร?",
-          "en": "At 25 °C, how do you obtain Kₐ of BH⁺ from Kᵦ of B?"
+          "th": "เมื่อหาค่า Kₐ ตัวส่วนใช้ความเข้มข้นเริ่มต้นหรือสมดุล?",
+          "en": "When finding Kₐ, does the denominator use initial or equilibrium concentration?"
         },
         "answer": {
-          "th": "Kₐ(BH⁺) = K𝓌/Kᵦ(B) โดย B/BH⁺ เป็นคู่กัน",
-          "en": "Kₐ(BH⁺) = K𝓌/Kᵦ(B), using the B/BH⁺ conjugate pair."
+          "th": "ใช้ความเข้มข้นสมดุลจากแถว E เช่น HA เหลือ C₀ − x",
+          "en": "Use equilibrium concentration from row E, for example remaining HA = C₀ − x."
         }
       },
-      "review": [
-        {
-          "label": {
-            "th": "กลับกรอบสูตร",
-            "en": "Return to formulas"
-          },
-          "target": {
-            "kind": "anchor",
-            "key": "formula-box"
-          }
-        }
-      ],
       "after": {
-        "th": "เมื่อคล่องแล้วไปทำควิซทบทวน 10.3",
-        "en": "When confident, continue to the 10.3 review quiz."
+        "th": "ทวนหัวข้อที่จด แล้วเรียนช่วงถัดไปตามครู",
+        "en": "Review your completed notes, then follow the teacher to the next section."
       }
     }
   ],
   "finish": {
-    "th": "ตรวจสูตร แถวสมดุล ตัวคูณไอออน หน่วยความเข้มข้น และเงื่อนไขประมาณ",
-    "en": "Check the relation, equilibrium row, ion multiplier, concentration units and approximation condition."
+    "th": "ใช้หัวข้อจดเดิมทวนจากความจำ แล้วจึงทำ Exit Ticket ตามกิจกรรมของครู",
+    "en": "Recall the same note headings from memory, then take the teacher’s Exit Ticket."
   },
   "exitCheck": {
     "question": {
-      "th": "สรุป C₀, x และ [HA] ที่สมดุลสัมพันธ์กันอย่างไรในกรดหนึ่งโปรตอนที่เริ่มไม่มีไอออนผลิตภัณฑ์?",
-      "en": "How are C₀, x and equilibrium [HA] related for a monoprotic acid initially without added product ions?"
+      "th": "ในกรดอ่อนหนึ่งโปรตอนที่เริ่มไม่มีผลิตภัณฑ์ C₀, x และ [HA] ที่สมดุลสัมพันธ์กันอย่างไร?",
+      "en": "For a monoprotic weak acid initially without product ions, how are C₀, x and equilibrium [HA] related?"
     },
     "answer": {
-      "th": "C₀ คือเริ่มต้น x คือส่วนที่แตกตัว และ [HA] ที่สมดุล = C₀ − x",
-      "en": "C₀ is initial, x is the ionized amount per litre, and equilibrium [HA] = C₀ − x."
+      "th": "C₀ คือเริ่มต้น x คือส่วนที่แตกตัวไป และ [HA] ที่สมดุล = C₀ − x",
+      "en": "C₀ is initial, x is the ionized concentration, and equilibrium [HA] = C₀ − x."
     }
   }
 }

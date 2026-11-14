@@ -1,4 +1,4 @@
-# Bohr calculation practice · current revision 2026-11-14-1
+# Bohr calculation practice · current revision 2026-11-14-2
 
 Teacher scope: the existing Learning Sheet tool before **exit ticket revision**. A formula/variable reference box comes first, followed by easy mixed calculations. Keep the eight direct substitutions (two per original core formula), and add two explicitly defined hypothetical-atom excitation problems. There are now ten questions per language in a fixed mixed order.
 
@@ -13,7 +13,9 @@ Teacher scope: the existing Learning Sheet tool before **exit ticket revision**.
 
 ## Question wording and solution typography
 
-Question 1 describes the second energy level in ordinary Thai/English prose. Introduce n = 2 in the worked solution, then select the radius formula. Keep the prompt self-contained and preserve the original numerical task. The other nine question prompts are unchanged.
+All ten questions must be ordinary Thai/English sentences, not variable-assignment stems. Describe energy levels using Arabic numerals: “ชั้นพลังงานที่ 1/2/3/4” and “energy level 1/2/3/4”, name the physical quantities and answer units, and retain the numerical givens. Numeric quantities and units may use inline MathJax. Introduce n, λ and E₁ only in each solution’s opening interpretation before the equations. Reveal labels follow the same prose rule.
+
+For the two hypothetical atoms, state the supplied energy model in words: each level’s energy is the energy in level 1 divided by the square of its level number. This preserves the necessary model assumption without requiring the student to read a symbolic prompt.
 
 All ten solutions use MathJax display equations with `aligned`, consistent fractions/powers/upright units, aligned equals signs and boxed final answers. Keep short explanations outside the aligned blocks. Use compact scoped equation margins and allow enough answer height on screen and paper.
 
@@ -38,23 +40,16 @@ For upward excitation by one absorbed photon, find the initial/final energies, t
 
 Hydrogen constants remain a₀ = 5.29 × 10⁻¹¹ m and v₁ = 2.19 × 10⁶ m/s. The photon shortcut takes nm and returns eV.
 
-## Verification of revision 2026-11-14-1
+## Verification of revision 2026-11-14-2
 
-- Strict HTML, ten paired slots, direct answer children, aligned display math and boxed results pass.
-- Q1 uses prose and introduces n = 2 in its solution. The nine other question prompts compare unchanged.
-- Guide schema, semantic targets and the final HTML fingerprint pass.
-- All final-answer numerical values and scientific-notation exponents compare unchanged in both languages after normalizing unit markup.
-- Chrome renders all 14 aligned solution blocks per language without math errors. Q1 prose and the n = 2 interpretation were visually inspected with its reveal open.
-- At a 525 px workspace width, TH and EN have no horizontal overflow.
-- All checked print snapshots retain 10 slots. Blanks contain zero answers; answer editions contain all ten and all 14 aligned blocks. No math errors or overflowing equations/tables were observed.
+- All ten stems and labels in each language use prose instead of variable assignments. Each solution begins by interpreting the given quantities as variables.
+- The energy model for each hypothetical atom remains explicit in words, with the same energies and transition levels.
+- Every aligned-equation block and final-answer paragraph compares exactly unchanged against the previous MathJax revision, in both languages.
+- Strict HTML, ten paired slots, direct answer children, guide schema/targets/fingerprint and revision pass.
+- Chrome confirms all ten prompts in each language are complete prose with Arabic energy-level numbers and no symbolic assignment stems. The example “ชั้นพลังงานที่ 4” was visually inspected with its interpretation and MathJax solution.
+- Both languages render all 14 aligned equation blocks with no math errors.
+- Six focused print snapshots pass: TH/EN standard blank, and TH/EN device-margin blank/answers. Each retains all ten slots; blanks have zero answers and answer editions have all ten. No math errors or overflowing equations/tables were observed.
+- Standard blank: TH 8 pages; EN 7 pages. Device-margin blank/answers: 8 pages in both languages. Standard answer editions were not repeated for this wording-only follow-up.
+- The 525 px workspace view was inspected in both languages; the text wraps and the preserved MathJax fits the window.
 
-| Language | Print profile | Blank pages | Answer pages |
-| --- | --- | --- | --- |
-| TH | Standard | 6 | 6 |
-| TH | Device margins | Not repeated | 8 |
-| EN | Standard | 7 | 7 |
-| EN | Device margins | 8 | 8 |
-
-The additional vertical space in some print modes comes from the clearer multi-line equations and final-answer boxes. Page counts are actual central-print-preview observations, not physical-device or paper-print claims.
-
-This is a content-only follow-up. The preview reuses the prior validated production runtime with the revised authored HTML/guide. The shared runtime, route identifiers and menu are unchanged. The full repository build and unrelated regression suites are not repeated. Native iPad/Safari and physical printing are not tested.
+This is a wording-only follow-up. The existing production runtime is reused for preview; shared runtime, route, menu and numerical tasks are unchanged. The full repository build and unrelated regression suites are not repeated. Native iPad/Safari and physical printing are not tested.

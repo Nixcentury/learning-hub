@@ -1,4 +1,4 @@
-# Bohr calculation practice · current revision 2026-11-13-2
+# Bohr calculation practice · current revision 2026-11-14-1
 
 Teacher scope: the existing Learning Sheet tool before **exit ticket revision**. A formula/variable reference box comes first, followed by easy mixed calculations. Keep the eight direct substitutions (two per original core formula), and add two explicitly defined hypothetical-atom excitation problems. There are now ten questions per language in a fixed mixed order.
 
@@ -11,6 +11,12 @@ Teacher scope: the existing Learning Sheet tool before **exit ticket revision**.
 - Central Learning Sheet owns reveal and blank/answer printing. Preserve the existing route and button placement.
 - These are authored basic/model drills based on the Bohr lesson, not textbook/exam transcriptions. No new assets are needed.
 
+## Question wording and solution typography
+
+Question 1 describes the second energy level in ordinary Thai/English prose. Introduce n = 2 in the worked solution, then select the radius formula. Keep the prompt self-contained and preserve the original numerical task. The other nine question prompts are unchanged.
+
+All ten solutions use MathJax display equations with `aligned`, consistent fractions/powers/upright units, aligned equals signs and boxed final answers. Keep short explanations outside the aligned blocks. Use compact scoped equation margins and allow enough answer height on screen and paper.
+
 ## Hypothetical atoms
 
 Ground-state energy alone does not determine an arbitrary atom’s excited-state energies. Therefore each new problem explicitly **defines** its model as Eₙ = E₁/n²; the reference box repeats that this relationship is used only when given. Do not substitute the hydrogen value −13.6 eV for the hypothetical atom’s supplied E₁.
@@ -19,7 +25,7 @@ For upward excitation by one absorbed photon, find the initial/final energies, t
 
 | Question | Type | Given | Result |
 | --- | --- | --- | --- |
-| 1 | Hydrogen radius | n = 2 | 2.12 × 10⁻¹⁰ m |
+| 1 | Hydrogen radius | Second energy level (n = 2) | 2.12 × 10⁻¹⁰ m |
 | 2 | Hydrogen energy | n = 4 | −0.850 eV |
 | 3 | Photon energy | λ = 620 nm | 2.00 eV |
 | 4 | Hypothetical X, excitation frequency | E₁ = −8.00 eV; n = 1 → 2 | E₂ = −2.00 eV; Eγ = 6.00 eV; f ≈ 1.45 × 10¹⁵ Hz |
@@ -32,13 +38,23 @@ For upward excitation by one absorbed photon, find the initial/final energies, t
 
 Hydrogen constants remain a₀ = 5.29 × 10⁻¹¹ m and v₁ = 2.19 × 10⁶ m/s. The photon shortcut takes nm and returns eV.
 
-## Verification of revision 2
+## Verification of revision 2026-11-14-1
 
-- Independently recalculated both new problems with Decimal arithmetic, including signs, energy differences, units and rounding.
-- Confirmed the eight pre-existing answer blocks are unchanged in both languages.
-- Focused checks pass: strict HTML metadata parsing, sequential 1–10 numbering, ten paired slot keys, one direct answer child per slot, explicit model in both new prompts, guide schema/targets/fingerprint, and menu order immediately before Exit Ticket.
-- Chrome Hub opens revision 2026-11-13-2. Both new answers reveal correctly; the guide loads all three authored stages with the new question numbers and formulas.
-- Central print preview is **6 pages** in every checked combination: TH/EN × blank/answers × standard/device margins. All ten slots remain; blank editions contain zero answers and answer editions contain all ten. There are no MathJax errors or overflowing formulas/tables.
-- The new reference formulas and worked solutions fit a 525 px workspace window in both languages without horizontal overflow.
+- Strict HTML, ten paired slots, direct answer children, aligned display math and boxed results pass.
+- Q1 uses prose and introduces n = 2 in its solution. The nine other question prompts compare unchanged.
+- Guide schema, semantic targets and the final HTML fingerprint pass.
+- All final-answer numerical values and scientific-notation exponents compare unchanged in both languages after normalizing unit markup.
+- Chrome renders all 14 aligned solution blocks per language without math errors. Q1 prose and the n = 2 interpretation were visually inspected with its reveal open.
+- At a 525 px workspace width, TH and EN have no horizontal overflow.
+- All checked print snapshots retain 10 slots. Blanks contain zero answers; answer editions contain all ten and all 14 aligned blocks. No math errors or overflowing equations/tables were observed.
 
-This is a content-only follow-up. The preview reuses the prior validated production runtime with the three revised authored content files copied in. The shared runtime and route identifiers are unchanged. The full repository build and unrelated regression suites are not repeated for these two questions. Native iPad/Safari and physical printing are not tested.
+| Language | Print profile | Blank pages | Answer pages |
+| --- | --- | --- | --- |
+| TH | Standard | 6 | 6 |
+| TH | Device margins | Not repeated | 8 |
+| EN | Standard | 7 | 7 |
+| EN | Device margins | 8 | 8 |
+
+The additional vertical space in some print modes comes from the clearer multi-line equations and final-answer boxes. Page counts are actual central-print-preview observations, not physical-device or paper-print claims.
+
+This is a content-only follow-up. The preview reuses the prior validated production runtime with the revised authored HTML/guide. The shared runtime, route identifiers and menu are unchanged. The full repository build and unrelated regression suites are not repeated. Native iPad/Safari and physical printing are not tested.

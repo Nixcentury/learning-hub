@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-atomic-19-1-2-basic-calculations",
-    "revision": "2026-11-13-2",
-    "sha256": "a41f317297ee41902ddb075aca119017ad8b3ea80c46aa1d9777498f8ea8b0d2"
+    "revision": "2026-11-14-1",
+    "sha256": "b5325801d34925178896bd33b6060491f283f5167bf9c7b12b458a60bd46e60c"
   },
   "title": {
     "th": "โบร์ · ฝึกแทนค่าสูตร",
@@ -29,8 +29,8 @@
         "en": "For hydrogen use rₙ = n²a₀, Eₙ = −13.6/n² eV, and vₙ = v₁/n.\nFor photons use Eγ = 1240/λ with λ in nm and the result in eV."
       },
       "story": {
-        "th": "ชี้สิ่งที่โจทย์ถาม แล้วจับคู่กับตัวแปรในกรอบก่อนแทนค่า",
-        "en": "Identify the requested quantity, then match it to the variable in the box."
+        "th": "อ่านโจทย์เป็นประโยคก่อน เช่น ชั้นพลังงานที่สองหมายถึง n = 2 แล้วจึงเลือกตัวแปรและสูตรจากกรอบ",
+        "en": "Read the sentence first: the second energy level means n = 2. Then identify the variable and choose the formula."
       },
       "action": {
         "th": "อ่านสูตรและหน่วยทั้ง 4 แถว",
@@ -54,8 +54,8 @@
           "en": "Which formula gives the orbital radius?"
         },
         "answer": {
-          "th": "rₙ = n²a₀ ใช้ n จากโจทย์ และตอบเป็นเมตร",
-          "en": "rₙ = n²a₀. Use the given n and answer in metres."
+          "th": "ชั้นพลังงานที่สองคือ n = 2 ใช้ rₙ = n²a₀ และตอบเป็นเมตร",
+          "en": "The second energy level means n = 2. Use rₙ = n²a₀ and answer in metres."
         }
       },
       "after": {

@@ -6,6 +6,13 @@ import { buildRouteCatalog, localCatalogPath } from './route-catalog.mjs';
 import { catalogFromRepository } from './build-route-catalog.mjs';
 import { readMetadata, metadataNodes } from './route-html-metadata.mjs';
 
+test('metadata lines include skipped raw blocks, comments and multiline attributes', () => {
+  const text = '<!doctype html>\n<html>\n<head><style>\n.a { color:red }\n</style>\n</head>\n<body><!--\nskipped\n-->\n<a\n href="x">x</a>\n<svg><path d="M0 0"/></svg>\n</body></html>';
+  const nodes = metadataNodes(readMetadata(text, { strict:true }), n => n.tag !== 'root');
+  for (const node of nodes) assert.equal(node.line, text.slice(0,node.offset).split('\n').length);
+  assert.throws(() => readMetadata(text.replace('</a>', '</wrong>'), {strict:true}), error => error.line === 11);
+});
+
 function fixture() {
   return new Map([
     ['index.html', '<button data-section="physics" data-page-src="pages/physics.html"></button>'],

@@ -1,4 +1,4 @@
-import { exitTicketPages, exitTicketRanges, prepareExitTicketPrint } from './exit-ticket-revision.js';
+import { exitTicketPages, exitTicketRanges, exitTicketPrintLabels, prepareExitTicketPrint } from './exit-ticket-revision.js';
 import { readPrintMetadata, buildPrintFilename, createPrintTitleSession } from './print-metadata.js';
 
 let active = null;
@@ -10,6 +10,7 @@ export function openExitTicketPrint({ frame, title, language, opener, context,
   if (active?.isConnected) { active.focus(); return; }
   const en = language === 'en', text = (th, english) => en ? english : th;
   const source = frame.contentDocument;
+  const labels = exitTicketPrintLabels(source, language);
   const allCount = exitTicketPages(source).length, quizCount = exitTicketPages(source, 'quiz').length;
   const dialog = document.createElement('dialog');
   dialog.className = 'html-print-dialog'; dialog.dataset.htmlPrintDialog = '';
@@ -29,19 +30,19 @@ export function openExitTicketPrint({ frame, title, language, opener, context,
     field.append(control); options.append(field); return control;
   }
   const rangeChoices = exitTicketRanges(source).length > 2 ? [
-    ['all',text('ทั้งชุด','Full set')], ['quiz',text('เฉพาะควิซ','Quiz only')],
-    ['recall',text('เฉพาะ Recall','Recall only')], ['review',text('เฉพาะสรุป','Review only')],
+    ['all',text('ทั้งชุด','Full set')], ['quiz',labels.quiz],
+    ['recall',text('เฉพาะ Recall','Recall only')], ['review',labels.review],
   ].filter(([value]) => exitTicketRanges(source).includes(value)) : [
     ['all',text(`ทั้งชุด (${allCount} หน้า)`,`Full set (${allCount} pages)`)],
-    ['quiz',text(`เฉพาะควิซ (${quizCount} หน้า)`,`Quiz only (${quizCount} pages)`)],
+    ['quiz',`${labels.quiz} (${quizCount} ${text('หน้า','pages')})`],
   ];
   const range = select('data-revision-print-range', text('ช่วงที่พิมพ์', 'Print range'), rangeChoices);
   const edition = select('data-revision-print-edition',text('ฉบับที่พิมพ์','Print edition'),[
     ['blank',text('ฉบับผู้เรียน — ไม่แสดงเฉลย','Student — answers hidden')],
     ['answers',text('ฉบับเฉลย','Teacher answers')],
   ]);
-  edition.value = source.body.classList.contains('answers-on') ? 'answers' : 'blank';
-  dialog.querySelector('h2').textContent = text('ตัวอย่างก่อนพิมพ์ · exit ticket revision','Print preview · exit ticket revision');
+  edition.value = !labels.studentDefault && source.body.classList.contains('answers-on') ? 'answers' : 'blank';
+  dialog.querySelector('h2').textContent = text('ตัวอย่างก่อนพิมพ์ · ','Print preview · ') + labels.document;
   dialog.querySelector('[data-print-close]').textContent = text('กลับไปอ่าน','Back to reading');
   confirm.textContent = text('พิมพ์ / บันทึก PDF','Print / Save PDF');
   dialog.querySelector('.html-print-help').textContent = text(

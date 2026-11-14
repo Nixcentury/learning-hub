@@ -353,3 +353,83 @@ test('4.2 reading covers cloze and Recall concepts without a numbered cloze key 
     }
   }
 });
+
+test('10.3 paired handouts: stable Classroom route and a separate ungraded Revision', async () => {
+  const {document} = parseHTML(await readFile(new URL('../public/content/bank/chemistry/b-c667274676708616e5923b20.html', import.meta.url),'utf8'));
+  const classroom=document.querySelector('[data-tool-key="basic-calculations"]');
+  assert.equal(classroom.dataset.contentId,'chemistry-ipst-acid-base-10-3-basic-calculations');
+  assert.equal(classroom.dataset.routeSlug,'basic-calculations');
+  assert.equal(classroom.dataset.routeAliases,'classroom-note');
+  assert.equal(classroom.dataset.th,'Classroom Note · 10.3');
+  assert.equal(classroom.getAttribute('href'),'../../chemistry/ipst/acid-base/10-3-basic-calculations-learning-sheet.html');
+  const revision=document.querySelectorAll('[data-tool-key="exit-ticket-revision"]');
+  assert.equal(revision.length,1);
+  assert.equal(revision[0].dataset.contentId,'chemistry-ipst-acid-base-10-3-exit-ticket-revision');
+  assert.equal(revision[0].dataset.toolKind,'html');
+  assert.equal(revision[0].getAttribute('href'),'../../chemistry/ipst/acid-base/10-3-exit-ticket-revision.html');
+  assert.ok(document.querySelector('[data-tool-key="learning-sheet"]'));
+  assert.ok(document.querySelector('[data-tool-key="quiz-set-1"]'));
+});
+
+for (const [name, classroom] of [['10-3-basic-calculations-learning-sheet',true],['10-3-exit-ticket-revision',false]]) {
+  test(`${name}: both languages and all six print selections retain content and isolate answers`, async () => {
+    const {exitTicketPrintLabels}=await import('../js/exit-ticket-revision.js');
+    const path=`content/chemistry/ipst/acid-base/${name}.html`;
+    const {document:source}=parseHTML(await readFile(new URL('../public/'+path,import.meta.url),'utf8'));
+    Object.defineProperty(source,'URL',{value:'https://example.test/learning-hub/'+path});
+    Object.defineProperty(source,'defaultView',{value:undefined});
+    assert.ok(isExitTicketRevision(source));
+    assert.equal(source.documentElement.dataset.contentRevision,'1.8');
+    assert.equal(source.querySelectorAll('script,template,iframe,form,button,input,select,[data-learning-activity-content],[data-sheet-slot]').length,0);
+    assert.deepEqual(exitTicketRanges(source),['all','quiz','review']);
+    for(const lang of ['th','en']){
+      applyContentLanguage(source,lang);
+      const labels=exitTicketPrintLabels(source,lang);
+      assert.equal(labels.studentDefault,true);
+      assert.equal(labels.document,classroom?'Classroom Note':'Exit Ticket Revision');
+      assert.equal(labels.quiz,lang==='en'?(classroom?'Guided examples':'Cloze and problems'):(classroom?'เฉพาะตัวอย่างพาทำ':'บทความและโจทย์'));
+      source.body.classList.add('answers-on');
+      const snapshot=buildHtmlPrintSnapshot(source,labels.document);
+      for(const answers of [false,true])for(const range of ['all','quiz','review']){
+        const {document:copy}=parseHTML(snapshot);
+        const selected=source.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="${answers?'answers':'blank'}"] [data-revision-range="${range}"]`);
+        const expectedKeys=[...selected.querySelectorAll('.unit')].map(n=>n.dataset.unitKey);
+        const count=prepareExitTicketPrint(copy,{range,answers});
+        assert.ok(count>0&&count<=20);
+        assert.equal(copy.querySelectorAll('.page').length,count);
+        assert.deepEqual([...copy.querySelectorAll('.unit')].map(n=>n.dataset.unitKey),expectedKeys);
+        assert.equal(new Set(expectedKeys).size,expectedKeys.length);
+        assert.equal(copy.querySelectorAll('[data-content-lang]').length,1);
+        assert.equal(copy.querySelectorAll('[data-revision-edition]').length,1);
+        assert.equal(copy.querySelectorAll('[data-revision-range]').length,1);
+        assert.equal(copy.documentElement.lang,lang);
+        assert.equal(copy.body.classList.contains('answers-on'),answers);
+        assert.equal(source.body.classList.contains('answers-on'),true);
+        assert.equal(copy.querySelectorAll('details.classroom-reveal').length,0);
+        if(!answers)assert.equal(copy.querySelectorAll('.teacher-key,.answer-inline').length,0);
+        else assert.equal(copy.querySelectorAll('.response-space').length,0);
+        assert.equal(copy.querySelectorAll('merror,[data-mjx-error]').length,0);
+        assert.ok([...copy.querySelectorAll('[data-tex]')].every(n=>n.querySelector('svg')));
+        const last=copy.querySelectorAll('[data-page-number]')[count-1];
+        assert.equal(last.textContent,`${lang==='en'?'Page':'หน้า'} ${count} / ${count}`);
+        if(classroom){
+          assert.equal(copy.querySelectorAll('.notation-unit').length,1);
+          assert.equal(copy.querySelectorAll('.worked').length,range==='review'?0:10);
+        }else{
+          assert.equal(copy.querySelectorAll('.notation-unit').length,0);
+          assert.equal(copy.querySelectorAll('.question').length,range==='review'?0:9);
+          assert.equal(copy.querySelectorAll('[data-part-key]').length,range==='review'?0:28);
+          assert.equal(copy.querySelectorAll('.reading-example').length,range==='quiz'?0:4);
+          assert.equal(copy.querySelectorAll('[data-recall-key]').length,range==='quiz'?0:18);
+          if(range==='all')assert.equal(([...copy.querySelectorAll('.page')].findIndex(p=>p.querySelector('[data-unit-key="review-title"]'))+1)%2,1);
+        }
+      }
+    }
+  });
+}
+
+test('print labels: existing revision defaults remain available', async () => {
+  const {exitTicketPrintLabels}=await import('../js/exit-ticket-revision.js');
+  const {document}=parseHTML('<html><body></body></html>');
+  assert.deepEqual(exitTicketPrintLabels(document,'en'),{document:'exit ticket revision',quiz:'Quiz only',review:'Review only',studentDefault:false});
+});

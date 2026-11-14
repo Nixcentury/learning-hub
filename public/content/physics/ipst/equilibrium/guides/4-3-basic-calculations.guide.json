@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "physics-ipst-equilibrium-4-3-basic-calculations",
+    "revision": "2026-11-14-1",
+    "sha256": "794ffd8b6a135ee7c710539fcb8486b330d9a7dae035c54797c0b8494ff867a0"
+  },
+  "title": {
+    "th": "4.3 สมดุลต่อการเลื่อนที่ · ฝึกคำนวณ",
+    "en": "4.3 Translational equilibrium · Calculation practice"
+  },
+  "prerequisites": {
+    "th": "รู้ sin, cos, tan ของมุมแหลม อ่านหน่วย N/kg ได้ และจัดรูปสมการอย่างง่าย",
+    "en": "Know sin, cos and tan for acute angles, read N/kg, and rearrange simple equations."
+  },
+  "goal": {
+    "th": "วาดแรงและเลือกแกนได้ ตั้งสมการสองแกน หามุมก่อนแทนกลับหาแรงเมื่อเหมาะสม และแยกแรงเสียดทานจริงจากค่าสูงสุด",
+    "en": "Draw forces, choose axes, form two component equations, find the angle before force when appropriate, and distinguish actual from limiting friction."
+  },
+  "steps": [
+    {
+      "id": "draw-and-resolve",
+      "title": {
+        "th": "วาดแรงและอ่านมุมก่อน",
+        "en": "Draw forces and read the angle"
+      },
+      "summary": {
+        "th": "สมดุลใช้ ΣFx = 0 และ ΣFy = 0\nมุมจากแนวระดับ: แนวระดับใช้ cos แนวดิ่งใช้ sin; มุมจากแนวดิ่งสลับกัน\nขนาดองค์ประกอบเป็นบวก ใส่เครื่องหมายตามทิศลูกศร",
+        "en": "Equilibrium requires ΣFx = 0 and ΣFy = 0.\nFor a horizontal angle use cos horizontally and sin vertically; swap for a vertical angle.\nAssign signed components from the arrows."
+      },
+      "story": {
+        "th": "ใช้ข้อ 1 เทียบข้อ 2 เพื่อชี้ว่ามุมวัดจากคนละแนว ไม่ท่องว่าแนวระดับต้องเป็น cos เสมอ",
+        "en": "Compare Questions 1 and 2: their angle references differ. Horizontal components do not always use cos."
+      },
+      "action": {
+        "th": "อ่านกรอบสูตร แล้วลองข้อ 1 และข้อ 2",
+        "en": "Read the formula box, then try Questions 1 and 2."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "กรอบสูตร",
+            "en": "Formula box"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 1 แรงสมดุล",
+            "en": "Question 1: equilibrant"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "balance-three-forces"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 2 มุมจากแนวดิ่ง",
+            "en": "Question 2: vertical angle"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "rope-angle-from-vertical"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ข้อ 2 มุมเชือกวัดจากแนวดิ่ง องค์ประกอบแนวระดับเป็นอะไร?",
+          "en": "In Question 2, what is the horizontal component when the angle is measured from the vertical?"
+        },
+        "answer": {
+          "th": "ขนาดเป็น T sin θ ชี้ซ้าย จึงใส่เครื่องหมายลบถ้ากำหนดขวาเป็นบวก",
+          "en": "Its magnitude is T sin θ, directed left: negative if right is positive."
+        }
+      },
+      "after": {
+        "th": "เมื่อแตกแรงถูกแล้ว ฝึกเขียนสมการและแก้ตัวไม่ทราบค่า",
+        "en": "Once components are correct, practise the equations and unknowns."
+      }
+    },
+    {
+      "id": "equations",
+      "title": {
+        "th": "สมการ (1), (2) แล้วแก้",
+        "en": "Equations (1), (2), then solve"
+      },
+      "summary": {
+        "th": "ถ้าไม่ทราบทั้งแรงและมุม ให้หารสมการที่มี F sin θ กับ F cos θ เพื่อตัด F แล้วหา θ\nจากนั้นแทนมุมกลับหาแรง ระบุมุมอ้างอิงและควอดแรนต์\nถ้ามุมทราบแล้วและมีแรงไม่ทราบสองแรง ใช้การแทนสมการ เช่น ข้อ 3",
+        "en": "If force and angle are unknown, divide equations containing F sin θ and F cos θ to eliminate F and find θ.\nSubstitute back for force; state the reference direction and quadrant.\nIf angles are known and two forces are unknown, use substitution, as in Question 3."
+      },
+      "story": {
+        "th": "ให้เห็นว่าเลขสมการช่วยอธิบายว่าขั้นต่อไปเอาอะไรไปทำอะไร ไม่ต้องหารสมการทุกข้อ",
+        "en": "Use equation numbers to explain which equation is divided or substituted. Division is not required in every problem."
+      },
+      "action": {
+        "th": "ตรวจขั้นหารสมการของข้อ 1–2 และขั้นแทนสมการของข้อ 3",
+        "en": "Check equation division in Questions 1–2 and substitution in Question 3."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ลำดับวิธีทำ",
+            "en": "Method"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "solution-method"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 3 เชือกสองเส้น",
+            "en": "Question 3: two ropes"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "two-support-ropes"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ข้อ 1 ได้มุม 60° ต่ำกว่าแนวซ้าย ต้องตอบจาก +x กี่องศา?",
+          "en": "Question 1 gives 60° below the leftward horizontal. What is the anticlockwise angle from +x?"
+        },
+        "answer": {
+          "th": "180° + 60° = 240° แรงสมดุลชี้ลงซ้าย",
+          "en": "180° + 60° = 240°; the equilibrant points down and left."
+        }
+      },
+      "after": {
+        "th": "เลือกฝึกกรณีพื้นและเชือกที่ต้องแปลสถานการณ์เพิ่ม",
+        "en": "Continue to floor and rope situations that require model interpretation."
+      }
+    },
+    {
+      "id": "friction-geometry",
+      "title": {
+        "th": "พื้นเอียง แรงเสียดทาน และเรขาคณิต",
+        "en": "Inclines, friction and geometry"
+      },
+      "summary": {
+        "th": "ข้อ 4 เคลื่อนด้วยความเร็วคงตัว: แรงลัพธ์ศูนย์ ใช้ fk = μkN โดยแรงดึงเอียงช่วยลด N\nข้อ 5 หาค่า fs จริงจากสมดุลก่อน แล้วเทียบกับ fs,max = μsN\nข้อ 6 เชือกสูงขึ้น 10 cm ทำให้ระยะดิ่งเหลือ 40 cm ใช้สามเหลี่ยมหาอัตราส่วน",
+        "en": "Question 4 has constant velocity: zero resultant and fk = μkN; the upward pull reduces N.\nQuestion 5 finds actual fs from equilibrium, then compares it with fs,max = μsN.\nIn Question 6 a 10 cm rise leaves a 40 cm vertical separation; use triangle ratios."
+      },
+      "story": {
+        "th": "เน้นว่า N ไม่เท่ากับ mg ทุกกรณี และ fs ไม่เท่าค่าสูงสุดเสมอ ให้เลือกแกนพื้นเอียงก่อนแตกน้ำหนัก",
+        "en": "Emphasise that N is not always mg and actual static friction is not always maximal. Choose slope axes before resolving weight."
+      },
+      "action": {
+        "th": "ทำข้อ 4–6 โดยเขียนแกนและทิศแรงก่อนแทนค่า",
+        "en": "Try Questions 4–6, writing axes and force directions before substituting."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 4 แรงเสียดทานจลน์",
+            "en": "Question 4: kinetic friction"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "uniform-oblique-pull"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 5 แรงเสียดทานจริง",
+            "en": "Question 5: actual static friction"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "rough-incline-static"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 6 เชือกกับสามเหลี่ยม",
+            "en": "Question 6: rope geometry"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "raised-load-geometry"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ข้อ 5 แรงเสียดทานสถิตจริงเท่ากับ μsN หรือไม่?",
+          "en": "Is actual static friction in Question 5 equal to μsN?"
+        },
+        "answer": {
+          "th": "ไม่เท่า ค่าจริง 10 N แต่ค่าสูงสุดประมาณ 13.9 N จึงยังอยู่นิ่งได้",
+          "en": "No. The actual value is 10 N; the maximum is about 13.9 N, so the box can remain at rest."
+        }
+      },
+      "after": {
+        "th": "กลับไปฝึกเฉพาะข้อที่ยังเลือกแกน มุม หรือชนิดแรงเสียดทานไม่คล่อง",
+        "en": "Revisit only questions whose axes, angles or friction types remain unclear."
+      }
+    }
+  ],
+  "finish": {
+    "th": "เริ่มจากวัตถุและรูปแรง ระบุมุม ตั้งสมการทั้งสองแกน แล้วแก้พร้อมตรวจเครื่องหมาย ทิศทางและหน่วย",
+    "en": "Start with the object and force diagram, identify angles, balance both axes, then solve and check signs, directions and units."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "ทำไมข้อ 2 ใช้ T sin θ แนวระดับ แต่ข้อ 1 ใช้ F₃ cos θ?",
+      "en": "Why is the horizontal component T sin θ in Question 2 but F₃ cos θ in Question 1?"
+    },
+    "answer": {
+      "th": "เพราะข้อ 2 วัดมุมจากแนวดิ่ง ส่วนข้อ 1 วัดจากแนวระดับ ต้องอ่านแนวอ้างอิงก่อนเลือก sin หรือ cos",
+      "en": "Question 2 measures from the vertical; Question 1 measures from the horizontal. Read the angle reference before selecting sin or cos."
+    }
+  }
+}

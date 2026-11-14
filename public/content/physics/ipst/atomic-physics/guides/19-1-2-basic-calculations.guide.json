@@ -2,16 +2,16 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-atomic-19-1-2-basic-calculations",
-    "revision": "2026-11-14-1",
-    "sha256": "b5325801d34925178896bd33b6060491f283f5167bf9c7b12b458a60bd46e60c"
+    "revision": "2026-11-14-2",
+    "sha256": "e472afd984d94b61c12c5b1665625f2633275c836a5b7355dec5f98cdb208b52"
   },
   "title": {
     "th": "โบร์ · ฝึกแทนค่าสูตร",
     "en": "Bohr · Direct substitution"
   },
   "prerequisites": {
-    "th": "อ่าน n และหน่วยจากโจทย์ คำนวณยกกำลังสองและหารอย่างง่าย",
-    "en": "Read n and the units; square numbers and divide."
+    "th": "อ่านปริมาณและหน่วยจากประโยค แปลเลขชั้นพลังงานเป็น n แล้วคำนวณยกกำลังสองและหารอย่างง่าย",
+    "en": "Read quantities and units from sentences, translate the energy-level number into n, then square numbers and divide."
   },
   "goal": {
     "th": "เลือกสูตรให้ตรงกับสิ่งที่ถาม แทนค่าพร้อมหน่วย และหาพลังงานแสงที่ใช้กระตุ้นอะตอมสมมติอย่างง่าย",
@@ -29,8 +29,8 @@
         "en": "For hydrogen use rₙ = n²a₀, Eₙ = −13.6/n² eV, and vₙ = v₁/n.\nFor photons use Eγ = 1240/λ with λ in nm and the result in eV."
       },
       "story": {
-        "th": "อ่านโจทย์เป็นประโยคก่อน เช่น ชั้นพลังงานที่สองหมายถึง n = 2 แล้วจึงเลือกตัวแปรและสูตรจากกรอบ",
-        "en": "Read the sentence first: the second energy level means n = 2. Then identify the variable and choose the formula."
+        "th": "ทุกข้อให้อ่านความหมายในประโยคก่อน แล้วแปลเป็นตัวแปร เช่น ชั้นพลังงานที่ 2 ใช้ n = 2 และพลังงานในชั้นพลังงานที่ 1 ใช้ E₁",
+        "en": "Read each complete question before assigning variables. For example, energy level 2 gives n = 2, and the energy in level 1 is E₁."
       },
       "action": {
         "th": "อ่านสูตรและหน่วยทั้ง 4 แถว",
@@ -54,8 +54,8 @@
           "en": "Which formula gives the orbital radius?"
         },
         "answer": {
-          "th": "ชั้นพลังงานที่สองคือ n = 2 ใช้ rₙ = n²a₀ และตอบเป็นเมตร",
-          "en": "The second energy level means n = 2. Use rₙ = n²a₀ and answer in metres."
+          "th": "ชั้นพลังงานที่ 2คือ n = 2 ใช้ rₙ = n²a₀ และตอบเป็นเมตร",
+          "en": "The energy level 2 means n = 2. Use rₙ = n²a₀ and answer in metres."
         }
       },
       "after": {
@@ -78,8 +78,8 @@
         "en": "Choose the formula afresh from the requested quantity in each question."
       },
       "action": {
-        "th": "ทำข้อ 1–5 แล้วทำข้อ 6–10 เพื่อฝึกแต่ละสูตรซ้ำ",
-        "en": "Complete Questions 1–5, then Questions 6–10 to revisit the formulas."
+        "th": "ทำข้อ 1–5 แล้วข้อ 6–10 โดยเขียนว่าข้อมูลในประโยคตรงกับตัวแปรใดก่อนแทนค่า",
+        "en": "Complete Questions 1–5, then 6–10, identifying the variables described by each sentence before substituting."
       },
       "links": [
         {
@@ -141,8 +141,8 @@
         "en": "Use the specified Eₙ = E₁/n² model, then Eγ = E_f − E_i for upward excitation.\nUse f = Eγ/h with h = 4.14 × 10⁻¹⁵ eV s, or λ = 1240/Eγ for nm."
       },
       "story": {
-        "th": "เริ่มจาก E₁ ที่โจทย์ให้ หาพลังงานชั้นเริ่มและชั้นปลาย แล้วลบปลายลบต้นก่อนหาความถี่หรือความยาวคลื่น",
-        "en": "Start with the given E₁, find the initial and final levels, and subtract before finding frequency or wavelength."
+        "th": "แปลพลังงานในชั้นพลังงานที่ 1 เป็น E₁ ใช้เลขชั้นเริ่มต้นและชั้นปลายแทน n แล้วหาผลต่างพลังงานก่อนหาความถี่หรือความยาวคลื่น",
+        "en": "Identify E₁ as the electron energy in level 1. Use the initial and final level numbers as n, then find the energy gap before frequency or wavelength."
       },
       "action": {
         "th": "ทำข้อ 4 และข้อ 8 โดยเขียนพลังงานทั้งสองชั้นก่อน",

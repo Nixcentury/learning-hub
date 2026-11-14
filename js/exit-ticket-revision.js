@@ -12,6 +12,19 @@ export function exitTicketRanges(doc) {
   return declared ? allowed.filter(range => range === 'all' || declared.split(/\s+/).includes(range)) : allowed;
 }
 
+// Paired classroom/revision documents share the existing A4 print engine.
+// Labels are plain text; older revisions retain their original defaults.
+export function exitTicketPrintLabels(doc, language = 'th') {
+  const en = language === 'en', lang = en ? 'en' : 'th';
+  const label = (name, fallback) => doc.documentElement.getAttribute(`data-revision-${name}-${lang}`)?.trim() || fallback;
+  return {
+    document: label('label', 'exit ticket revision'),
+    quiz: label('quiz', en ? 'Quiz only' : 'เฉพาะควิซ'),
+    review: label('review', en ? 'Review only' : 'เฉพาะสรุป'),
+    studentDefault: doc.documentElement.getAttribute('data-revision-student-default') === '1',
+  };
+}
+
 export function exitTicketPages(doc, range = 'all') {
   if (!isExitTicketRevision(doc)) throw Error('Not an exit ticket revision');
   if (!exitTicketRanges(doc).includes(range)) throw Error('Unknown revision print range');
@@ -47,7 +60,7 @@ export function prepareExitTicketPrint(doc, { range = 'all', answers = false } =
   else doc.querySelectorAll('.solution-text,.answer-key,.teacher-only,.teacher-work,.teacherkey,.answer-inline,.teacher-key').forEach(node => node.remove());
   const pages = exitTicketPages(doc);
   pages.forEach((page, index) => {
-    const number = page.querySelector('.footer span:last-child');
+    const number = page.querySelector('[data-page-number], .footer span:last-child');
     if (number) number.textContent = `${doc.documentElement.lang === 'en' ? 'Page' : 'หน้า'} ${index + 1} / ${pages.length}`;
   });
   const style = doc.createElement('style');

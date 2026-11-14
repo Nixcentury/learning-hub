@@ -1,0 +1,3 @@
+# Paired handout fonts
+
+These four font binaries were extracted without modification from the embedded `@font-face` data URLs in the user's approved Chemistry 10.3 Classroom Note and Exit Ticket Revision v1.8 HTML, 14 November 2026. The matching CSS retains its font-family and weight mappings: Roboto for Latin text/numerals, Noto Sans Thai for Thai; regular and bold. Filenames contain the first 20 characters of the binary's SHA-256. The source HTML hashes and import checks are recorded in `CHEMISTRY-10-3-PAIRED-HANDOUTS-QA.md` at repository root. MathJax-generated SVG and original TeX remain inside the HTML documents.

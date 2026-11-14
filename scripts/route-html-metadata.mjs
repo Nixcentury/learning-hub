@@ -17,6 +17,13 @@ export function readMetadata(source, { strict = false } = {}) {
   const stack = [root];
   const tokens = /<!--[\s\S]*?-->|<![^>]*>|<\/?[a-z][a-z0-9:-]*(?:[^"'<>]|"[^"]*"|'[^']*')*>|[^<]+|</gi;
   let rawTag = null, rawOffset = 0;
+  // Tokens arrive in source order. Count newlines once rather than rescanning
+  // the growing prefix for every SVG glyph in long printable documents.
+  let lineOffset = 0, line = 1;
+  const lineAt = offset => {
+    while (lineOffset < offset) if (source.charCodeAt(lineOffset++) === 10) line++;
+    return line;
+  };
   for (const match of source.matchAll(tokens)) {
     const token = match[0];
     if (rawTag) { if (new RegExp(`^</${rawTag}\\s*>$`, 'i').test(token)) rawTag = null; continue; }
@@ -46,7 +53,7 @@ export function readMetadata(source, { strict = false } = {}) {
       if (Object.hasOwn(attrs, key)) syntax(`Duplicate HTML attribute: ${key}`, match.index);
       attrs[key] = decodeMetadata(attr[2] ?? attr[3] ?? attr[4] ?? '');
     }
-    const node = { tag, attrs, children: [], text: '', offset: match.index, line: source.slice(0, match.index).split('\n').length };
+    const node = { tag, attrs, children: [], text: '', offset: match.index, line: lineAt(match.index) };
     stack.at(-1).children.push(node);
     if (!voidTags.has(tag) && !token.endsWith('/>')) stack.push(node);
   }

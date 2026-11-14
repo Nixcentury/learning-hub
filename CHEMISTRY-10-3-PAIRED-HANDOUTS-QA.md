@@ -29,6 +29,12 @@ Classroom keeps its Notation table and native individual answer disclosures. Dis
 
 These are WeasyPrint 70.0 page counts, not a claim of identical native browser pagination on every platform.
 
+### LaTeX correction after user review — web revision 1.8.1
+
+The upstream v1.8 inputs contained a literal tab followed by `imes` in the hydroxide concentration `2.0\times10^{-5}\,\mathrm{mol\,L^{-1}}`. MathJax accepts that as ordinary letters, so checking only parser errors or equality with the upstream TeX did not catch the mistake. The web correction restores the command and regenerates the SVG and ARIA label in all eight occurrences per document (TH/EN, student/answers and relevant print ranges). The source hashes above identify the original inputs; this repair is an explicit exception to unchanged upstream TeX preservation.
+
+Regression checks reject control characters and the stray `imes` token in every formula of both current documents, require all 16 corrected copies, and inspect the regenerated SVG for the multiplication glyph. No question data, numerical answer, page grouping or stored content ID changes.
+
 - 24 independently paginated states: unit order and uniqueness preserved, no fragmented units or horizontal/height issues in the measured source flow.
 - 24 sanitized print selections exercised through the real Hub snapshot/edition/range functions. Student snapshots contain no teacher keys or individual answer disclosures; answer snapshots contain no writing spaces. The teaching document remains unchanged.
 - Classroom: Notation, 30 note points and 10 worked examples retained. Revision: two cloze articles, nine main problems, 28 subparts, 30 reading points, four visible reading examples and 18 Recall prompts retained; no Notation table.

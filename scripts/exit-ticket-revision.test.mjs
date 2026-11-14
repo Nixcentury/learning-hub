@@ -379,7 +379,14 @@ for (const [name, classroom] of [['10-3-basic-calculations-learning-sheet',true]
     Object.defineProperty(source,'URL',{value:'https://example.test/learning-hub/'+path});
     Object.defineProperty(source,'defaultView',{value:undefined});
     assert.ok(isExitTicketRevision(source));
-    assert.equal(source.documentElement.dataset.contentRevision,'1.8');
+    assert.equal(source.documentElement.dataset.contentRevision,'1.8.1');
+    const equations=[...source.querySelectorAll('[data-tex]')];
+    assert.ok(equations.every(n=>!/[\u0000-\u0009\u000b-\u001f]|\bimes\b/.test(n.dataset.tex)),
+      'TeX commands must not become JavaScript/Python control-character escapes');
+    const hydroxide=equations.filter(n=>n.dataset.tex===String.raw`2.0\times10^{-5}\,\mathrm{mol\,L^{-1}}`);
+    assert.equal(hydroxide.length,8,'both languages, editions and relevant ranges must be repaired');
+    assert.ok(hydroxide.every(n=>n.querySelector('svg [data-c="D7"]')),
+      'regenerated MathJax SVG must contain the multiplication glyph');
     assert.equal(source.querySelectorAll('script,template,iframe,form,button,input,select,[data-learning-activity-content],[data-sheet-slot]').length,0);
     assert.deepEqual(exitTicketRanges(source),['all','quiz','review']);
     for(const lang of ['th','en']){

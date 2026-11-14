@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "physics-ipst-waves-9-4-3-basic-calculations",
+    "revision": "2026-11-14-1",
+    "sha256": "3086ecbee877acc629569fd31c3cc3cce0dfae62df0b0c43fe6c02cf36a74983"
+  },
+  "title": {
+    "th": "9.4.3 การแทรกสอด · ฝึกแทนค่าสูตร",
+    "en": "9.4.3 Interference · Direct substitution"
+  },
+  "prerequisites": {
+    "th": "หารอัตราส่วน แทนค่า จัดรูปสมการหนึ่งขั้น และแปลง cm/mm/nm เป็น m ได้",
+    "en": "Divide ratios, substitute, rearrange a one-step equation, and convert cm/mm/nm to m."
+  },
+  "goal": {
+    "th": "อ่านเฟสแหล่งกำเนิด เลือกเงื่อนไขบัพ–ปฏิบัพ และเชื่อมผลต่างทางเดินกับตำแหน่งและเฟส",
+    "en": "Read the source phase, choose node/antinode conditions, and connect path difference to position and phase."
+  },
+  "steps": [
+    {
+      "id": "source-phase",
+      "title": {
+        "th": "เริ่มที่เฟสแหล่งกำเนิด",
+        "en": "Start with source phase"
+      },
+      "summary": {
+        "th": "Δr = |r₂ − r₁| คือผลต่างระยะทาง\nเฟสเดียวกัน: ปฏิบัพ Δr = mλ; บัพ Δr = (m − ½)λ\nเฟสตรงข้าม: เงื่อนไขบัพกับปฏิบัพสลับกัน",
+        "en": "Δr = |r₂ − r₁| is the distance difference.\nIn phase: antinode Δr = mλ; node Δr = (m − ½)λ.\nOpposite phase: the node and antinode conditions swap."
+      },
+      "story": {
+        "th": "เปรียบเทียบข้อ 3 กับข้อ 10 ทั้งคู่ใช้ครึ่งความยาวคลื่น แต่ชนิดของแนวต่างกันเพราะเฟสแหล่งกำเนิด",
+        "en": "Compare Questions 3 and 10: both use half a wavelength, but their line types differ because of the source phase."
+      },
+      "action": {
+        "th": "ทำข้อ 1 และข้อ 4 ก่อน แล้วเปรียบเทียบข้อ 3 กับข้อ 10",
+        "en": "Try Questions 1 and 4, then compare Questions 3 and 10."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "กรอบสูตร",
+            "en": "Formula box"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 4 เฟสตรงข้าม",
+            "en": "Question 4: opposite phase"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "opposite-whole-node"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 10 ปฏิบัพแรก",
+            "en": "Question 10: first antinode"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "opposite-first-antinode"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ผลต่างทางเดินเท่ากับสองความยาวคลื่น เป็นปฏิบัพเสมอไหม?",
+          "en": "Is a path difference of two wavelengths always an antinode?"
+        },
+        "answer": {
+          "th": "ไม่เสมอ เฟสเดียวกันให้ปฏิบัพ แต่เฟสตรงข้ามให้บัพ",
+          "en": "No. In-phase sources give an antinode; opposite-phase sources give a node."
+        }
+      },
+      "after": {
+        "th": "ถ้าแยกเฟสได้แล้ว ลองข้อ 8 เพื่อจัดรูปหาความยาวคลื่น",
+        "en": "Once source phase is clear, try Question 8 to find a wavelength."
+      }
+    },
+    {
+      "id": "geometry",
+      "title": {
+        "th": "เลือกเรขาคณิตให้ตรงเงื่อนไข",
+        "en": "Choose the geometry for the conditions"
+      },
+      "summary": {
+        "th": "กรณีสังเกตไกล: Δr ≈ d sin θ ≈ dx/√(L² + x²)\nเมื่อ x ≪ L เพิ่มด้วย จึงใช้ Δr ≈ dx/L ได้\nใช้หน่วยความยาวเดียวกัน และวัด θ จากแนวตั้งฉากกึ่งกลาง",
+        "en": "Far field: Δr ≈ d sin θ ≈ dx/√(L² + x²).\nOnly with x ≪ L as well may you use Δr ≈ dx/L.\nUse consistent length units; measure θ from the perpendicular bisector."
+      },
+      "story": {
+        "th": "ชี้ว่าไกลเทียบกับระยะห่างแหล่งกำเนิดกับมุมเล็กเป็นคนละเงื่อนไข ใช้ข้อ 7 เทียบกับข้อ 2",
+        "en": "Distinguish a distance large compared with source separation from a small angle. Compare Questions 7 and 2."
+      },
+      "action": {
+        "th": "ทำข้อ 5 และข้อ 7 แล้วเลือกข้อ 2 หรือข้อ 9",
+        "en": "Try Questions 5 and 7, then Question 2 or 9."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ความหมายระยะและมุม",
+            "en": "Distances and angle"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "geometry-conditions"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 7 คงรากที่สอง",
+            "en": "Question 7: keep the square root"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "geometry-water"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 9 หาตำแหน่ง",
+            "en": "Question 9: find the position"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "small-angle-position"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "จุดสังเกตอยู่ไกล ใช้ dx/L ได้ทุกครั้งไหม?",
+          "en": "Can you always use dx/L at a far-field point?"
+        },
+        "answer": {
+          "th": "ไม่ได้ ต้องมี x เล็กมากเทียบกับ L ด้วย ถ้ามุมไม่เล็กให้คง √(L² + x²)",
+          "en": "No. x must also be much smaller than L. Keep √(L² + x²) when the angle is not small."
+        }
+      },
+      "after": {
+        "th": "ใช้ข้อ 12 ฝึกกรณีมุมไม่เล็กซ้ำ หากยังสับสน",
+        "en": "Repeat the non-small-angle case with Question 12 if needed."
+      }
+    },
+    {
+      "id": "phase-conversion",
+      "title": {
+        "th": "ทางเดินหนึ่งรอบคือเฟสหนึ่งรอบ",
+        "en": "One wavelength is one phase cycle"
+      },
+      "summary": {
+        "th": "Δφทางเดิน = 2πΔr/λ เรเดียน หรือ 360°Δr/λ\nหนึ่งความยาวคลื่นให้ 2π เรเดียนหรือ 360°\nสูตรนี้บอกเฟสจากทางเดิน ต้องพิจารณาเฟสตั้งต้นของแหล่งกำเนิดแยก",
+        "en": "Δφpath = 2πΔr/λ radians, or 360°Δr/λ.\nOne wavelength corresponds to 2π radians or 360°.\nThis is the phase due to propagation; consider the source phase separately."
+      },
+      "story": {
+        "th": "ให้คิดเป็นส่วนของหนึ่งความยาวคลื่นก่อนแทนค่า เช่น หนึ่งในสี่รอบได้ 90 องศา",
+        "en": "First express the path difference as a fraction of a wavelength: one quarter of a cycle is 90 degrees."
+      },
+      "action": {
+        "th": "ทำข้อ 6 แล้วข้อ 11 เพื่อฝึกเปลี่ยนกลับ",
+        "en": "Try Question 6, then Question 11 for the reverse conversion."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 6 ทางเดินเป็นเฟส",
+            "en": "Question 6: path to phase"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "path-to-phase"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 11 เฟสเป็นทางเดิน",
+            "en": "Question 11: phase to path"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "phase-to-path"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้าทางเดินต่างกันครึ่งความยาวคลื่น เฟสจากทางเดินต่างกันเท่าใด?",
+          "en": "What phase difference is caused by half a wavelength of path difference?"
+        },
+        "answer": {
+          "th": "π เรเดียนหรือ 180° ส่วนจะเสริมหรือหักล้างต้องดูเฟสแหล่งกำเนิดด้วย",
+          "en": "π radians or 180°. Whether the waves reinforce or cancel also depends on source phase."
+        }
+      },
+      "after": {
+        "th": "กลับไปทำเฉพาะข้อที่ยังเลือกสูตรหรือหน่วยไม่คล่อง",
+        "en": "Revisit only questions whose formulas or units remain unclear."
+      }
+    }
+  ],
+  "finish": {
+    "th": "อ่านเฟสแหล่งกำเนิดก่อนเลือกเงื่อนไข ตรวจระยะและมุมก่อนประมาณ และตอบพร้อมหน่วย",
+    "en": "Read the source phase before choosing conditions, check distances and angles before approximating, and include units."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "แหล่งกำเนิดเฟสตรงข้ามและผลต่างทางเดินครึ่งความยาวคลื่น ให้บัพหรือปฏิบัพ?",
+      "en": "Do opposite-phase sources with a half-wavelength path difference give a node or an antinode?"
+    },
+    "answer": {
+      "th": "ปฏิบัพ เพราะเฟสจากทางเดินครึ่งรอบชดเชยเฟสตั้งต้นที่ตรงข้ามกัน",
+      "en": "An antinode: the half-cycle propagation difference compensates for the opposite source phase."
+    }
+  }
+}

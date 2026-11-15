@@ -17,7 +17,7 @@ test('4.3 revision: corrected self-study content and all 12 independent exports'
   const {document:menu}=parseHTML(await readFile(new URL('../public/content/bank/physics/b-d52412f9e1c700d9a5223472.html',import.meta.url),'utf8'));
   assert.equal(menu.querySelector('nav').dataset.routeSlug,'translational-equilibrium');
   const links=[...menu.querySelectorAll('a')];
-  assert.deepEqual(links.map(a=>a.dataset.toolKey),['learning-sheet','quiz-set-1','quiz-set-2','simulation','exit-ticket-revision']);
+  assert.deepEqual(links.map(a=>a.dataset.toolKey),['learning-sheet','quiz-set-1','quiz-set-2','simulation','basic-calculations','exit-ticket-revision']);
   assert.equal(links.at(-1).dataset.contentId,'physics-ipst-equilibrium-4-3-exit-ticket-revision');
   assert.equal(links.at(-1).dataset.toolKind,'html');
   assert.equal(links.at(-1).dataset.th,'exit ticket revision');
@@ -439,4 +439,87 @@ test('print labels: existing revision defaults remain available', async () => {
   const {exitTicketPrintLabels}=await import('../js/exit-ticket-revision.js');
   const {document}=parseHTML('<html><body></body></html>');
   assert.deepEqual(exitTicketPrintLabels(document,'en'),{document:'exit ticket revision',quiz:'Quiz only',review:'Review only',studentDefault:false});
+});
+
+// Chemistry 2.5 uses the same trusted reader as 10.3. Compare every print
+// selection with the approved standalone source before publication.
+test('2.5 paired handouts: both entries use the existing transition-elements topic', async () => {
+  const {document} = parseHTML(await readFile(new URL('../public/content/bank/chemistry/b-cc6ef79219c6a07eb30a99f5.html', import.meta.url),'utf8'));
+  const nav=document.querySelector('nav');
+  assert.equal(nav.dataset.routeSlug,'transition-elements');
+  assert.deepEqual([...nav.querySelectorAll('a')].map(a=>a.dataset.toolKey),['classroom-note','exit-ticket-revision','review']);
+  for(const [key,path] of [['classroom-note','2-5-classroom-note.html'],['exit-ticket-revision','2-5-exit-ticket-revision.html']]){
+    const a=nav.querySelector(`[data-tool-key="${key}"]`);
+    assert.equal(a.dataset.contentId,`chemistry-transition-elements-${key}`);
+    assert.equal(a.dataset.toolKind,'html');
+    assert.equal(a.getAttribute('href'),`../../chemistry/atomic-properties/${path}`);
+  }
+  assert.equal(nav.querySelector('[data-tool-key="review"]').dataset.contentId,'chemistry-transition-elements-review');
+});
+
+for(const [kind,name] of [['classroom','classroom-note'],['exit','exit-ticket-revision']]){
+  test(`2.5 ${name}: preserve approved equations and units in all 12 sanitized print selections`, async () => {
+    const {createHash}=await import('node:crypto');
+    const {exitTicketPrintLabels}=await import('../js/exit-ticket-revision.js');
+    const manifest=JSON.parse(await readFile(new URL('../docs/learning-sheet/preparation/chemistry-transition-elements-2-5/source-manifest.json',import.meta.url),'utf8'));
+    const path=`content/chemistry/atomic-properties/2-5-${name}.html`;
+    const {document:source}=parseHTML(await readFile(new URL('../public/'+path,import.meta.url),'utf8'));
+    Object.defineProperty(source,'URL',{value:'https://example.test/learning-hub/'+path});
+    Object.defineProperty(source,'defaultView',{value:undefined});
+    assert.ok(isExitTicketRevision(source));
+    assert.equal(source.documentElement.dataset.revisionTopic,'2.5');
+    assert.equal(source.documentElement.dataset.contentRevision,'1.0');
+    assert.equal(source.documentElement.dataset.sourceSha256,manifest[kind].approvedSha256);
+    assert.equal(source.querySelectorAll('script,template,iframe,form,button,input,select,[data-learning-activity-content],[data-sheet-slot]').length,0);
+    assert.deepEqual(exitTicketRanges(source),['all','quiz','review']);
+    for(const lang of ['th','en']){
+      applyContentLanguage(source,lang);
+      assert.equal(exitTicketPrintLabels(source,lang).studentDefault,true);
+      source.body.classList.add('answers-on'); // Reading answers must not dictate the print edition.
+      const snapshot=buildHtmlPrintSnapshot(source,'Chemistry 2.5');
+      for(const answers of [false,true])for(const range of ['all','quiz','review']){
+        const {document:copy}=parseHTML(snapshot);
+        const pages=prepareExitTicketPrint(copy,{range,answers});
+        const expected=manifest[kind].selections[`${lang}-${answers?'answers':'blank'}-${range}`];
+        const keys=[...copy.querySelectorAll('.unit')].map(n=>n.dataset.unitKey);
+        assert.deepEqual(keys,expected.unitKeys);
+        assert.equal(new Set(keys).size,keys.length);
+        assert.ok(pages>0&&pages<=16);
+        const math=[...copy.querySelectorAll('[data-tex]')];
+        assert.equal(math.length,expected.texCount);
+        assert.equal(createHash('sha256').update(math.map(n=>n.dataset.tex).join('\n')).digest('hex'),expected.texSha256);
+        assert.ok(math.every(n=>n.querySelector('svg')&&!/[\u0000-\u0009\u000b-\u001f]|\bimes\b/.test(n.dataset.tex)));
+        assert.equal(copy.querySelectorAll('merror,[data-mjx-error]').length,0);
+        assert.equal(copy.querySelectorAll('details.classroom-reveal').length,0);
+        if(answers)assert.equal(copy.querySelectorAll('.response-space,.recall-space').length,0);
+        else assert.equal(copy.querySelectorAll('.teacher-key,.answer-inline').length,0);
+        assert.ok(source.body.classList.contains('answers-on'));
+        if(kind==='classroom'){
+          assert.equal(copy.querySelectorAll('.notation-unit').length,1);
+          assert.equal(copy.querySelectorAll('.worked').length,range==='review'?0:3);
+        }else{
+          assert.equal(copy.querySelectorAll('.notation-unit').length,0);
+          assert.equal(copy.querySelectorAll('.question').length,range==='review'?0:8);
+          assert.equal(copy.querySelectorAll('[data-part-key]').length,range==='review'?0:24);
+          assert.equal(copy.querySelectorAll('[data-recall-key]').length,range==='quiz'?0:13);
+          assert.equal(copy.querySelectorAll('.blank').length,range==='review'?0:12);
+          if(range!=='quiz'){
+            assert.ok(copy.querySelector('[data-unit-key="guide-configuration"]'));
+            assert.ok(copy.querySelector('[data-unit-key="guide-ratio"]'));
+            assert.ok(copy.querySelector('[data-unit-key="recall-6"]'));
+          }
+          if(range==='all')assert.equal(([...copy.querySelectorAll('.page')].findIndex(p=>p.querySelector('[data-unit-key="review-title"]'))+1)%2,1);
+        }
+      }
+    }
+  });
+}
+
+test('2.5 import: every original figure/font asset retains its approved bytes', async () => {
+  const {createHash}=await import('node:crypto');
+  const manifest=JSON.parse(await readFile(new URL('../docs/learning-sheet/preparation/chemistry-transition-elements-2-5/source-manifest.json',import.meta.url),'utf8'));
+  assert.equal(Object.keys(manifest.assets).length,7);
+  for(const [name,hash] of Object.entries(manifest.assets)){
+    assert.equal(createHash('sha256').update(await readFile(new URL('../public/content/chemistry/atomic-properties/assets/2-5-paired/'+name,import.meta.url))).digest('hex'),hash);
+  }
 });

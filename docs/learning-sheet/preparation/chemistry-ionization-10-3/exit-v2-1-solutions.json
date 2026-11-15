@@ -1,0 +1,1728 @@
+{
+  "revision": "2.1",
+  "method": "balanced equation; ICF/ICE when applicable; definitions; factor-label unit cancellation; checked approximation",
+  "reference": "public/content/chemistry/ipst/acid-base/10-3-basic-calculations-learning-sheet.html",
+  "constantConvention": {
+    "th": "ในนิพจน์ K ใช้ค่าตัวเลขความเข้มข้นในหน่วย mol L⁻¹ ตามแบบเรียน ไม่สร้างหน่วยให้ K หรือแสดงการตัดหน่วยของ K อย่างไม่ถูกต้อง",
+    "en": "Use numerical concentrations in mol L⁻¹ in K expressions, following the textbook convention; do not invent or incorrectly cancel units for K."
+  },
+  "solutions": {
+    "problem-2-1": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{KOH(aq) -> K+(aq) + OH-(aq)}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "จำนวนโมลจากนิยามมวลโมลาร์",
+          "en": "Amount from the molar-mass definition"
+        },
+        "tex": [
+          "n=\\frac{m}{M}",
+          "n(\\ce{KOH})=1.12\\,\\cancel{\\mathrm g}\\times\\frac{1\\,\\mathrm{mol}}{56.0\\,\\cancel{\\mathrm g}}=0.0200\\,\\mathrm{mol}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "แปลงปริมาตรและใช้ความเข้มข้นตามนิยาม",
+          "en": "Convert volume and use the concentration definition"
+        },
+        "tex": [
+          "400.0\\,\\cancel{\\mathrm{mL}}\\times\\frac{1\\,\\mathrm L}{1000\\,\\cancel{\\mathrm{mL}}}=0.4000\\,\\mathrm L",
+          "C=\\frac{n}{V}=\\frac{0.0200\\,\\mathrm{mol}}{0.4000\\,\\mathrm L}=0.0500\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICF",
+          "en": "ICF table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{KOH}&\\ce{K+}&\\ce{OH-}\\\\\\hline I&0.0500&0&0\\\\C&-0.0500&+0.0500&+0.0500\\\\F&0&0.0500&0.0500\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, F = หลังแตกตัวสมบูรณ์",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, F = Final."
+        }
+      },
+      {
+        "title": {
+          "th": "ใช้อัตราส่วนโมลและตัดหน่วยสาร",
+          "en": "Apply the mole ratio and cancel the species units"
+        },
+        "tex": [
+          "[\\ce{OH-}]=0.0500\\frac{\\cancel{\\mathrm{mol}\\,\\ce{KOH}}}{\\mathrm L}\\times\\frac{1\\,\\mathrm{mol}\\,\\ce{OH-}}{1\\,\\cancel{\\mathrm{mol}\\,\\ce{KOH}}}",
+          "\\boxed{[\\ce{OH-}]=0.0500\\,\\mathrm{mol\\,L^{-1}}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ],
+    "problem-2-2": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{Ba(OH)2(aq) -> Ba^2+(aq) + 2OH-(aq)}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICF",
+          "en": "ICF table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{Ba(OH)2}&\\ce{Ba^2+}&\\ce{OH-}\\\\\\hline I&0.0125&0&0\\\\C&-0.0125&+0.0125&+0.0250\\\\F&0&0.0125&0.0250\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, F = หลังแตกตัวสมบูรณ์",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, F = Final."
+        }
+      },
+      {
+        "title": {
+          "th": "หาไอออนด้วยอัตราส่วนโมล",
+          "en": "Use stoichiometric mole ratios"
+        },
+        "tex": [
+          "[\\ce{OH-}]=0.0125\\frac{\\cancel{\\mathrm{mol}\\,\\ce{Ba(OH)2}}}{\\mathrm L}\\times\\frac{2\\,\\mathrm{mol}\\,\\ce{OH-}}{1\\,\\cancel{\\mathrm{mol}\\,\\ce{Ba(OH)2}}}=0.0250\\,\\mathrm{mol\\,L^{-1}}",
+          "[\\ce{Ba^2+}]=0.0125\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "จำนวนโมลจากนิยามความเข้มข้น",
+          "en": "Amount from the concentration definition"
+        },
+        "tex": [
+          "150.0\\,\\cancel{\\mathrm{mL}}\\times\\frac{1\\,\\mathrm L}{1000\\,\\cancel{\\mathrm{mL}}}=0.1500\\,\\mathrm L",
+          "C=\\frac nV\\quad\\Longrightarrow\\quad n=CV",
+          "n(\\ce{OH-})=0.0250\\frac{\\mathrm{mol}}{\\cancel{\\mathrm L}}\\times0.1500\\,\\cancel{\\mathrm L}=0.00375\\,\\mathrm{mol}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ],
+    "problem-2-3": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HNO3 + H2O -> H3O+ + NO3-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "แปลงปริมาตร",
+          "en": "Convert the volumes"
+        },
+        "tex": [
+          "20.0\\,\\cancel{\\mathrm{mL}}\\times\\frac{1\\,\\mathrm L}{1000\\,\\cancel{\\mathrm{mL}}}=0.0200\\,\\mathrm L",
+          "250.0\\,\\cancel{\\mathrm{mL}}\\times\\frac{1\\,\\mathrm L}{1000\\,\\cancel{\\mathrm{mL}}}=0.2500\\,\\mathrm L"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "จำนวนโมลจากนิยามและการอนุรักษ์สาร",
+          "en": "Use the concentration definition and conserve the solute"
+        },
+        "tex": [
+          "C=\\frac nV\\quad\\Longrightarrow\\quad n=CV",
+          "n=0.500\\frac{\\mathrm{mol}}{\\cancel{\\mathrm L}}\\times0.0200\\,\\cancel{\\mathrm L}=0.0100\\,\\mathrm{mol}",
+          "n_{\\mathrm{before}}=n_{\\mathrm{after}}=0.0100\\,\\mathrm{mol}"
+        ],
+        "text": {
+          "th": "ใช้จำนวนโมลกรดรวมก่อนและหลังเติมน้ำ ไม่เริ่มจากสูตรลัดการเจือจาง",
+          "en": "Conserve the total acid amount before and after adding water, rather than starting from a dilution shortcut."
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICF",
+          "en": "ICF table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{HNO3}&\\ce{H3O+}&\\ce{NO3-}\\\\\\hline I&0.0100&0&0\\\\C&-0.0100&+0.0100&+0.0100\\\\F&0&0.0100&0.0100\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol; I = เริ่มต้น, C = เปลี่ยนแปลง, F = หลังแตกตัวสมบูรณ์",
+          "en": "All entries are in mol; I = Initial, C = Change, F = Final."
+        }
+      },
+      {
+        "title": {
+          "th": "หารด้วยปริมาตรสุดท้ายจากนิยาม",
+          "en": "Divide by the final solution volume"
+        },
+        "tex": [
+          "[\\ce{H3O+}]=\\frac{n(\\ce{H3O+})}{V_{\\mathrm{final}}}=\\frac{0.0100\\,\\mathrm{mol}}{0.2500\\,\\mathrm L}=0.0400\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ],
+    "problem-2-4": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HCl + H2O -> H3O+ + Cl-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "จำนวนโมลของแต่ละส่วนและตัดหน่วยลิตร",
+          "en": "Find each portion’s amount and cancel litres"
+        },
+        "tex": [
+          "40.0\\,\\cancel{\\mathrm{mL}}\\times\\frac{1\\,\\mathrm L}{1000\\,\\cancel{\\mathrm{mL}}}=0.0400\\,\\mathrm L",
+          "60.0\\,\\cancel{\\mathrm{mL}}\\times\\frac{1\\,\\mathrm L}{1000\\,\\cancel{\\mathrm{mL}}}=0.0600\\,\\mathrm L",
+          "n_1=0.100\\frac{\\mathrm{mol}}{\\cancel{\\mathrm L}}\\times0.0400\\,\\cancel{\\mathrm L}=0.00400\\,\\mathrm{mol}",
+          "n_2=0.200\\frac{\\mathrm{mol}}{\\cancel{\\mathrm L}}\\times0.0600\\,\\cancel{\\mathrm L}=0.0120\\,\\mathrm{mol}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "รวมจำนวนโมลของสารชนิดเดียวกัน",
+          "en": "Add the amounts of the same solute"
+        },
+        "tex": [
+          "n_{\\mathrm{total}}=0.00400+0.0120=0.0160\\,\\mathrm{mol}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICF",
+          "en": "ICF table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{HCl}&\\ce{H3O+}&\\ce{Cl-}\\\\\\hline I&0.0160&0&0\\\\C&-0.0160&+0.0160&+0.0160\\\\F&0&0.0160&0.0160\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol; I = เริ่มต้น, C = เปลี่ยนแปลง, F = หลังแตกตัวสมบูรณ์",
+          "en": "All entries are in mol; I = Initial, C = Change, F = Final."
+        }
+      },
+      {
+        "title": {
+          "th": "ความเข้มข้นจากนิยาม",
+          "en": "Concentration from its definition"
+        },
+        "tex": [
+          "100.0\\,\\cancel{\\mathrm{mL}}\\times\\frac{1\\,\\mathrm L}{1000\\,\\cancel{\\mathrm{mL}}}=0.1000\\,\\mathrm L",
+          "[\\ce{H3O+}]=\\frac{0.0160\\,\\mathrm{mol}}{0.1000\\,\\mathrm L}=0.160\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ],
+    "problem-3-1": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HA + H2O <=> H3O+ + A-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICE",
+          "en": "ICE table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{HA}&\\ce{H3O+}&\\ce{A-}\\\\\\hline I&0.100&0&0\\\\C&-x&+x&+x\\\\E&0.100-x&x&x\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, E = สมดุล",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, E = Equilibrium."
+        }
+      },
+      {
+        "title": {
+          "th": "ใช้ค่าที่วัดได้ในตาราง",
+          "en": "Insert the measured equilibrium value"
+        },
+        "tex": [
+          "x=0.00200\\,\\mathrm{mol\\,L^{-1}}",
+          "[\\ce{HA}]_{\\mathrm{eq}}=(0.100-0.00200)\\,\\mathrm{mol\\,L^{-1}}=0.0980\\,\\mathrm{mol\\,L^{-1}}",
+          "[\\ce{A-}]_{\\mathrm{eq}}=0.00200\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ],
+    "problem-3-2": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HA + H2O <=> H3O+ + A-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICE",
+          "en": "ICE table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{HA}&\\ce{H3O+}&\\ce{A-}\\\\\\hline I&0.100&0&0\\\\C&-x&+x&+x\\\\E&0.100-x&x&x\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, E = สมดุล",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, E = Equilibrium."
+        }
+      },
+      {
+        "title": {
+          "th": "นิพจน์ค่าคงที่จากสมดุล",
+          "en": "Write the equilibrium expression"
+        },
+        "tex": [
+          "K_a=\\frac{[\\ce{H3O+}][\\ce{A-}]}{[\\ce{HA}]}",
+          "K_a=\\frac{(0.00200)(0.00200)}{0.0980}=4.08\\times10^{-5}"
+        ],
+        "text": {
+          "th": "ในนิพจน์ K ใช้ค่าตัวเลขความเข้มข้นในหน่วย mol L⁻¹ ตามแบบเรียน",
+          "en": "In the K expression, use numerical concentrations measured in mol L⁻¹, following the textbook convention."
+        }
+      },
+      {
+        "title": {
+          "th": "ร้อยละจากนิยามและตัดหน่วย",
+          "en": "Percent ionization from its definition"
+        },
+        "tex": [
+          "\\%\\mathrm{ionization}=\\frac{\\text{amount ionized}}{\\text{initial amount}}\\times100\\%",
+          "=\\frac{0.00200\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}{0.100\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}\\times100\\%=2.00\\%"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ],
+    "problem-3-3": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HA + H2O <=> H3O+ + A-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{A- + H2O <=> HA + OH-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "เขียนนิพจน์จากนิยาม",
+          "en": "Write the defining equilibrium expressions"
+        },
+        "tex": [
+          "K_a=\\frac{[\\ce{H3O+}][\\ce{A-}]}{[\\ce{HA}]}",
+          "K_b=\\frac{[\\ce{HA}][\\ce{OH-}]}{[\\ce{A-}]}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "คูณนิพจน์และตัดพจน์ร่วม",
+          "en": "Multiply the expressions and cancel common factors"
+        },
+        "tex": [
+          "K_aK_b=\\frac{[\\ce{H3O+}]\\cancel{[\\ce{A-}]}}{\\cancel{[\\ce{HA}]}}\\times\\frac{\\cancel{[\\ce{HA}]}[\\ce{OH-}]}{\\cancel{[\\ce{A-}]}}",
+          "= [\\ce{H3O+}][\\ce{OH-}]=K_w"
+        ],
+        "text": {
+          "th": "ใช้กรด–เบสคู่กันในน้ำที่อุณหภูมิเดียวกัน การตัดในบรรทัดนี้เป็นการตัดพจน์ความเข้มข้นร่วม ไม่ใช่การตัดหน่วยของค่าคงที่",
+          "en": "Use the same conjugate pair in water at the same temperature. These cancellations remove common concentration factors, not units of the constants."
+        }
+      },
+      {
+        "title": {
+          "th": "แทนค่าหลังจัดรูป",
+          "en": "Substitute after rearranging"
+        },
+        "tex": [
+          "K_b=\\frac{K_w}{K_a}=\\frac{1.0\\times10^{-14}}{4.08163265\\times10^{-5}}=2.45\\times10^{-10}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ],
+    "problem-4-1": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{B + H2O <=> BH+ + OH-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICE",
+          "en": "ICE table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{B}&\\ce{BH+}&\\ce{OH-}\\\\\\hline I&0.0900&0&0\\\\C&-x&+x&+x\\\\E&0.0900-x&x&x\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, E = สมดุล",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, E = Equilibrium."
+        }
+      },
+      {
+        "title": {
+          "th": "เขียนนิพจน์จากนิยาม",
+          "en": "Write the defining expression"
+        },
+        "tex": [
+          "K_b=\\frac{[\\ce{BH+}][\\ce{OH-}]}{[\\ce B]}=\\frac{x\\cdot x}{0.0900-x}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ],
+    "problem-4-2": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{B + H2O <=> BH+ + OH-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICE",
+          "en": "ICE table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{B}&\\ce{BH+}&\\ce{OH-}\\\\\\hline I&0.0900&0&0\\\\C&-x&+x&+x\\\\E&0.0900-x&x&x\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, E = สมดุล",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, E = Equilibrium."
+        }
+      },
+      {
+        "title": {
+          "th": "ตั้งสมดุลก่อนประมาณ",
+          "en": "Set up equilibrium before approximating"
+        },
+        "tex": [
+          "K_b=\\frac{[\\ce{BH+}][\\ce{OH-}]}{[\\ce B]}=\\frac{x^2}{0.0900-x}",
+          "\\frac{0.0900}{9.0\\times10^{-6}}=10000>1000"
+        ],
+        "text": {
+          "th": "จึงทดลองใช้ 0.0900 − x ≈ 0.0900 แล้วตรวจร้อยละภายหลัง",
+          "en": "Try 0.0900 − x ≈ 0.0900, then check the ionized fraction."
+        }
+      },
+      {
+        "title": {
+          "th": "แทนค่าและแก้สมการทีละบรรทัด",
+          "en": "Substitute and solve step by step"
+        },
+        "tex": [
+          "9.0\\times10^{-6}\\approx\\frac{x^2}{0.0900}",
+          "x^2\\approx(9.0\\times10^{-6})(0.0900)=8.1\\times10^{-7}",
+          "x\\approx\\sqrt{8.1\\times10^{-7}}=9.0\\times10^{-4}",
+          "[\\ce{OH-}]\\approx9.0\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ร้อยละจากนิยามและตัดหน่วย",
+          "en": "Percent ionization from its definition"
+        },
+        "tex": [
+          "\\%\\mathrm{ionization}=\\frac{\\text{amount ionized}}{\\text{initial amount}}\\times100\\%",
+          "=\\frac{9.0\\times10^{-4}\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}{0.0900\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}\\times100\\%=1.0\\%"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตรวจค่าประมาณ",
+          "en": "Check the approximation"
+        },
+        "tex": [
+          "1.0\\%<5\\%"
+        ],
+        "text": {
+          "th": "ยอมรับค่าประมาณได้ ไม่ได้เริ่มคำนวณจากสูตรรากที่สองสำเร็จรูป",
+          "en": "The approximation is acceptable. The square root follows from the equilibrium equation, not a memorized shortcut."
+        }
+      }
+    ],
+    "problem-4-3": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{2H2O <=> H3O+ + OH-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "นิยามผลคูณไอออนของน้ำ",
+          "en": "Use the water-ion product definition"
+        },
+        "tex": [
+          "K_w=[\\ce{H3O+}][\\ce{OH-}]",
+          "1.0\\times10^{-14}=[\\ce{H3O+}](9.0\\times10^{-4})",
+          "[\\ce{H3O+}]\\approx1.1\\times10^{-11}\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{B + H2O <=> BH+ + OH-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{BH+ + H2O <=> B + H3O+}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "นิพจน์ของคู่กรด–เบส",
+          "en": "Write both conjugate-pair expressions"
+        },
+        "tex": [
+          "K_b=\\frac{[\\ce{BH+}][\\ce{OH-}]}{[\\ce B]}",
+          "K_a=\\frac{[\\ce B][\\ce{H3O+}]}{[\\ce{BH+}]}",
+          "K_aK_b=[\\ce{H3O+}][\\ce{OH-}]=K_w",
+          "K_a(\\ce{BH+})=\\frac{1.0\\times10^{-14}}{9.0\\times10^{-6}}=1.1\\times10^{-9}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ],
+    "problem-5-1": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HX + H2O <=> H3O+ + X-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICE",
+          "en": "ICE table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{HX}&\\ce{H3O+}&\\ce{X-}\\\\\\hline I&0.0200&0&0\\\\C&-x&+x&+x\\\\E&0.0200-x&x&x\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, E = สมดุล",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, E = Equilibrium."
+        }
+      },
+      {
+        "title": {
+          "th": "ตั้งสมดุลและทดสอบค่าประมาณตามโจทย์",
+          "en": "Set up equilibrium and test the requested trial"
+        },
+        "tex": [
+          "K_a=\\frac{[\\ce{H3O+}][\\ce{X-}]}{[\\ce{HX}]}=\\frac{x^2}{0.0200-x}",
+          "\\frac{0.0200}{2.0\\times10^{-4}}=100<1000"
+        ],
+        "text": {
+          "th": "ไม่ผ่านเกณฑ์คัดกรอง คำนวณค่าทดลองเพื่อทดสอบความคลาดเคลื่อนตามที่โจทย์ถาม",
+          "en": "The screening test fails. Evaluate the trial to test its error, as requested."
+        }
+      },
+      {
+        "title": {
+          "th": "แก้สมการประมาณ ไม่ใช้สูตรลัด",
+          "en": "Solve the approximated equation"
+        },
+        "tex": [
+          "2.0\\times10^{-4}\\approx\\frac{x^2}{0.0200}",
+          "x^2\\approx4.0\\times10^{-6}\\quad\\Longrightarrow\\quad x_{\\mathrm{trial}}=0.00200\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ร้อยละจากนิยามและตัดหน่วย",
+          "en": "Percent ionization from its definition"
+        },
+        "tex": [
+          "\\%\\mathrm{ionization}=\\frac{\\text{amount ionized}}{\\text{initial amount}}\\times100\\%",
+          "=\\frac{0.00200\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}{0.0200\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}\\times100\\%=10.0\\%"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตัดสินความเหมาะสม",
+          "en": "Decide whether the approximation is valid"
+        },
+        "tex": [
+          "10.0\\%>5\\%"
+        ],
+        "text": {
+          "th": "ต้องใช้สมการเต็มในข้อต่อไป ไม่ยอมรับค่าทดลองเป็นคำตอบสุดท้าย",
+          "en": "Use the full equation in the next part. The trial is not an acceptable final answer."
+        }
+      }
+    ],
+    "problem-5-2": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HX + H2O <=> H3O+ + X-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICE",
+          "en": "ICE table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{HX}&\\ce{H3O+}&\\ce{X-}\\\\\\hline I&0.0200&0&0\\\\C&-x&+x&+x\\\\E&0.0200-x&x&x\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, E = สมดุล",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, E = Equilibrium."
+        }
+      },
+      {
+        "title": {
+          "th": "แทนค่าในนิพจน์สมดุลเต็ม",
+          "en": "Substitute into the full equilibrium expression"
+        },
+        "tex": [
+          "2.0\\times10^{-4}=\\frac{x^2}{0.0200-x}",
+          "x^2+(2.0\\times10^{-4})x-4.0\\times10^{-6}=0"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "แก้สมการและเลือกรากที่มีความหมาย",
+          "en": "Solve and select the physical root"
+        },
+        "tex": [
+          "x=\\frac{-2.0\\times10^{-4}+\\sqrt{1.604\\times10^{-5}}}{2}",
+          "x=0.001902498\\ldots",
+          "[\\ce{H3O+}]=1.90\\times10^{-3}\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "รากลบใช้เป็นความเข้มข้นไม่ได้",
+          "en": "The negative root cannot represent a concentration."
+        }
+      },
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HCl + H2O -> H3O+ + Cl-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICF",
+          "en": "ICF table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{HCl}&\\ce{H3O+}&\\ce{Cl-}\\\\\\hline I&0.00150&0&0\\\\C&-0.00150&+0.00150&+0.00150\\\\F&0&0.00150&0.00150\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, F = หลังแตกตัวสมบูรณ์",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, F = Final."
+        }
+      },
+      {
+        "title": {
+          "th": "เปรียบเทียบความเข้มข้นไอออน",
+          "en": "Compare ion concentrations"
+        },
+        "tex": [
+          "1.90\\times10^{-3}>1.50\\times10^{-3}"
+        ],
+        "text": {
+          "th": "กรดอ่อนในโจทย์ให้ไฮโดรเนียมมากกว่า เพราะต้องพิจารณาทั้งความแรงและความเข้มข้นเริ่มต้น",
+          "en": "The weak-acid solution gives more hydronium here; both acid strength and initial concentration matter."
+        }
+      }
+    ],
+    "problem-5-3": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HA + H2O <=> H3O+ + A-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICE",
+          "en": "ICE table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{HA}&\\ce{H3O+}&\\ce{A-}\\\\\\hline I&C_0&0&0\\\\C&-x&+x&+x\\\\E&C_0-x&x&x\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, E = สมดุล",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, E = Equilibrium."
+        }
+      },
+      {
+        "title": {
+          "th": "แทนแต่ละความเข้มข้นในนิพจน์เดียวกัน",
+          "en": "Use the same expression for each initial concentration"
+        },
+        "tex": [
+          "K_a=\\frac{x^2}{C_0-x}",
+          "\\frac{0.160}{4.0\\times10^{-6}}=40000>1000",
+          "\\frac{0.0400}{4.0\\times10^{-6}}=10000>1000"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "สารละลายแรก: จัดรูปจากสมดุล",
+          "en": "First solution: rearrange the equilibrium equation"
+        },
+        "tex": [
+          "4.0\\times10^{-6}\\approx\\frac{x_1^2}{0.160}",
+          "x_1^2\\approx6.4\\times10^{-7}",
+          "[\\ce{H3O+}]_1\\approx\\sqrt{6.4\\times10^{-7}}=8.0\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ร้อยละจากนิยามและตัดหน่วย",
+          "en": "Percent ionization from its definition"
+        },
+        "tex": [
+          "\\%\\mathrm{ionization}=\\frac{\\text{amount ionized}}{\\text{initial amount}}\\times100\\%",
+          "=\\frac{8.0\\times10^{-4}\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}{0.160\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}\\times100\\%=0.50\\%"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "สารละลายที่สอง: จัดรูปจากสมดุล",
+          "en": "Second solution: rearrange the equilibrium equation"
+        },
+        "tex": [
+          "4.0\\times10^{-6}\\approx\\frac{x_2^2}{0.0400}",
+          "x_2^2\\approx1.6\\times10^{-7}",
+          "[\\ce{H3O+}]_2\\approx\\sqrt{1.6\\times10^{-7}}=4.0\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ร้อยละจากนิยามและตัดหน่วย",
+          "en": "Percent ionization from its definition"
+        },
+        "tex": [
+          "\\%\\mathrm{ionization}=\\frac{\\text{amount ionized}}{\\text{initial amount}}\\times100\\%",
+          "=\\frac{4.0\\times10^{-4}\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}{0.0400\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}\\times100\\%=1.0\\%"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตรวจและอธิบายการเจือจาง",
+          "en": "Check and explain dilution"
+        },
+        "tex": [],
+        "text": {
+          "th": "ทั้งสองร้อยละต่ำกว่า 5% จึงรับค่าประมาณได้ ที่อุณหภูมิคงที่ Ka คงเดิม ร้อยละเพิ่มเป็นสองเท่า แต่ความเข้มข้นไฮโดรเนียมลดครึ่งหนึ่ง",
+          "en": "Both percentages are below 5%, so the approximations are acceptable. At fixed temperature Ka is unchanged; the ionized percentage doubles while hydronium concentration halves."
+        }
+      }
+    ],
+    "problem-6-2": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{H2A + H2O <=> H3O+ + HA-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICE",
+          "en": "ICE table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{H2A}&\\ce{H3O+}&\\ce{HA-}\\\\\\hline I&0.100&0&0\\\\C&-x&+x&+x\\\\E&0.100-x&x&x\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, E = สมดุล",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, E = Equilibrium."
+        }
+      },
+      {
+        "title": {
+          "th": "นิยามขั้นแรกและการประมาณ",
+          "en": "First-step expression and approximation"
+        },
+        "tex": [
+          "K_{a1}=\\frac{[\\ce{H3O+}][\\ce{HA-}]}{[\\ce{H2A}]}=\\frac{x^2}{0.100-x}",
+          "\\frac{0.100}{9.0\\times10^{-6}}=1.11\\times10^4>1000",
+          "9.0\\times10^{-6}\\approx\\frac{x^2}{0.100}",
+          "x^2\\approx9.0\\times10^{-7}",
+          "x\\approx9.4868\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ร้อยละจากนิยามและตัดหน่วย",
+          "en": "Percent ionization from its definition"
+        },
+        "tex": [
+          "\\%\\mathrm{ionization}=\\frac{\\text{amount ionized}}{\\text{initial amount}}\\times100\\%",
+          "=\\frac{9.4868\\times10^{-4}\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}{0.100\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}\\times100\\%=0.95\\%"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HA- + H2O <=> H3O+ + A^2-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICE ของขั้นที่สอง",
+          "en": "ICE table for the second step"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{HA-}&\\ce{H3O+}&\\ce{A^2-}\\\\\\hline I&x&x&0\\\\C&-y&+y&+y\\\\E&x-y&x+y&y\\end{array}"
+        ],
+        "text": {
+          "th": "หน่วย mol L⁻¹; ใช้ x จากขั้นแรก และให้ y เป็นความเข้มข้นที่เพิ่มจากขั้นที่สอง",
+          "en": "Entries are in mol L⁻¹. Use x from the first step; y is the additional concentration produced in the second step."
+        }
+      },
+      {
+        "title": {
+          "th": "ประเมินขั้นสองจากนิยาม ไม่เหมารวมสองโปรตอน",
+          "en": "Estimate step two from its defining expression"
+        },
+        "tex": [
+          "K_{a2}=\\frac{(x+y)y}{x-y}",
+          "y\\ll x\\quad\\Longrightarrow\\quad K_{a2}\\approx\\frac{\\cancel{x}\\,y}{\\cancel{x}}=y",
+          "[\\ce{A^2-}]\\approx1.0\\times10^{-10}\\,\\mathrm{mol\\,L^{-1}}",
+          "\\frac{1.0\\times10^{-10}\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}{9.4868\\times10^{-4}\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}\\approx1.1\\times10^{-7}"
+        ],
+        "text": {
+          "th": "จึงยืนยันได้ว่า y น้อยกว่า x มาก และ [H₃O⁺] รวมยังประมาณ 9.5×10⁻⁴ mol L⁻¹",
+          "en": "This confirms y ≪ x. Total [H₃O⁺] remains approximately 9.5×10⁻⁴ mol L⁻¹."
+        }
+      }
+    ],
+    "problem-7-1": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{2H2O <=> H3O+ + OH-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "นิยามผลคูณไอออนของน้ำและแทนค่า",
+          "en": "Use the water-ion product definition"
+        },
+        "tex": [
+          "K_w=[\\ce{H3O+}][\\ce{OH-}]",
+          "1.0\\times10^{-14}=[\\ce{H3O+}](2.0\\times10^{-5})",
+          "[\\ce{H3O+}]=5.0\\times10^{-10}\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "จำแนกจากความเข้มข้นไอออน",
+          "en": "Classify by comparing ion concentrations"
+        },
+        "tex": [
+          "[\\ce{OH-}]>[\\ce{H3O+}]"
+        ],
+        "text": {
+          "th": "สารละลายเป็นเบส ไม่จำเป็นต้องตั้ง ICE เมื่อโจทย์ให้ความเข้มข้นไอออนที่สมดุลมาแล้ว",
+          "en": "The solution is basic. An ICE table is unnecessary when an equilibrium ion concentration is already given."
+        }
+      }
+    ],
+    "problem-7-2": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{2H2O <=> H3O+ + OH-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ใช้เงื่อนไขความเป็นกลางก่อน",
+          "en": "Apply the neutrality condition first"
+        },
+        "tex": [
+          "[\\ce{H3O+}]=[\\ce{OH-}]=x",
+          "K_w=[\\ce{H3O+}][\\ce{OH-}]=x\\cdot x",
+          "x^2=4.0\\times10^{-14}",
+          "x=2.0\\times10^{-7}\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "เลือกค่าบวก ไอออนทั้งสองมีความเข้มข้นเท่ากัน แต่ไม่จำเป็นต้องเท่ากับค่าที่ 25 °C",
+          "en": "Choose the positive value. The two concentrations are equal, but need not equal their values at 25 °C."
+        }
+      }
+    ],
+    "problem-7-3": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HX + H2O <=> H3O+ + X-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{X- + H2O <=> HX + OH-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "เขียนนิพจน์จากนิยาม",
+          "en": "Write the defining equilibrium expressions"
+        },
+        "tex": [
+          "K_a=\\frac{[\\ce{H3O+}][\\ce{X-}]}{[\\ce{HX}]}",
+          "K_b=\\frac{[\\ce{HX}][\\ce{OH-}]}{[\\ce{X-}]}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "คูณนิพจน์และตัดพจน์ร่วม",
+          "en": "Multiply the expressions and cancel common factors"
+        },
+        "tex": [
+          "K_aK_b=\\frac{[\\ce{H3O+}]\\cancel{[\\ce{X-}]}}{\\cancel{[\\ce{HX}]}}\\times\\frac{\\cancel{[\\ce{HX}]}[\\ce{OH-}]}{\\cancel{[\\ce{X-}]}}",
+          "= [\\ce{H3O+}][\\ce{OH-}]=K_w"
+        ],
+        "text": {
+          "th": "ใช้กรด–เบสคู่กันในน้ำที่อุณหภูมิเดียวกัน การตัดในบรรทัดนี้เป็นการตัดพจน์ความเข้มข้นร่วม ไม่ใช่การตัดหน่วยของค่าคงที่",
+          "en": "Use the same conjugate pair in water at the same temperature. These cancellations remove common concentration factors, not units of the constants."
+        }
+      },
+      {
+        "title": {
+          "th": "แทนค่าของกรดแต่ละชนิดหลังพิสูจน์ความสัมพันธ์",
+          "en": "Substitute for each acid after establishing the relation"
+        },
+        "tex": [
+          "K_b(\\ce{X-})=\\frac{1.0\\times10^{-14}}{1.0\\times10^{-4}}=1.0\\times10^{-10}",
+          "K_b(\\ce{Y-})=\\frac{1.0\\times10^{-14}}{1.0\\times10^{-6}}=1.0\\times10^{-8}"
+        ],
+        "text": {
+          "th": "ใช้การพิสูจน์แบบเดียวกันกับ HY/Y⁻; Y⁻ เป็นเบสแรงกว่า X⁻ เพราะมี Kb มากกว่า",
+          "en": "Apply the same derivation to HY/Y⁻. Y⁻ is the stronger base because its Kb is larger."
+        }
+      }
+    ],
+    "problem-8-1": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{A(s) + 2H+(aq) -> AH2^2+(aq)}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "แปลงหน่วยความเข้มข้นและปริมาตร",
+          "en": "Convert concentration and volume"
+        },
+        "tex": [
+          "25.0\\frac{\\cancel{\\mathrm{mmol}}}{\\mathrm L}\\times\\frac{1\\,\\mathrm{mol}}{1000\\,\\cancel{\\mathrm{mmol}}}=0.0250\\,\\mathrm{mol\\,L^{-1}}",
+          "200.0\\,\\cancel{\\mathrm{mL}}\\times\\frac{1\\,\\mathrm L}{1000\\,\\cancel{\\mathrm{mL}}}=0.2000\\,\\mathrm L"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "จำนวนโมลผลิตภัณฑ์จากนิยาม",
+          "en": "Product amount from the concentration definition"
+        },
+        "tex": [
+          "C=\\frac nV\\quad\\Longrightarrow\\quad n=CV",
+          "n(\\ce{AH2^2+})=0.0250\\frac{\\mathrm{mol}}{\\cancel{\\mathrm L}}\\times0.2000\\,\\cancel{\\mathrm L}=0.00500\\,\\mathrm{mol}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ],
+    "problem-8-2": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{A(s) + 2H+(aq) -> AH2^2+(aq)}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "อัตราส่วนโมลจากสมการและตัดหน่วยสาร",
+          "en": "Use the equation’s mole ratio and cancel species units"
+        },
+        "tex": [
+          "n(\\ce{H+})=0.00500\\,\\cancel{\\mathrm{mol}\\,\\ce{AH2^2+}}\\times\\frac{2\\,\\mathrm{mol}\\,\\ce{H+}}{1\\,\\cancel{\\mathrm{mol}\\,\\ce{AH2^2+}}}=0.0100\\,\\mathrm{mol}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICF",
+          "en": "ICF table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{A}&\\ce{H+}&\\ce{AH2^2+}\\\\\\hline I&0.00500&0.0100&0\\\\C&-0.00500&-0.0100&+0.00500\\\\F&0&0&0.00500\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol; I = เริ่มต้น, C = เปลี่ยนแปลง, F = หลังแตกตัวสมบูรณ์",
+          "en": "All entries are in mol; I = Initial, C = Change, F = Final."
+        }
+      },
+      {
+        "title": {
+          "th": "เชื่อมไฮโดรเนียมกับกรดไฮโดรคลอริก",
+          "en": "Relate supplied protons to hydrochloric acid"
+        },
+        "tex": [
+          "\\ce{HCl + H2O -> H3O+ + Cl-}",
+          "n(\\ce{HCl})=0.0100\\,\\cancel{\\mathrm{mol}\\,\\ce{H+}}\\times\\frac{1\\,\\mathrm{mol}\\,\\ce{HCl}}{1\\,\\cancel{\\mathrm{mol}\\,\\ce{H+}}}=0.0100\\,\\mathrm{mol}"
+        ],
+        "text": {
+          "th": "H⁺ ในสมการโจทย์แทนโปรตอนในสารละลาย สารละลายกรดถูกใช้พอดีตามเงื่อนไข",
+          "en": "H⁺ in the stated equation denotes aqueous protons. The acid is consumed exactly, as specified."
+        }
+      }
+    ],
+    "problem-8-3": [
+      {
+        "title": {
+          "th": "ใช้ปริมาตรกรดตั้งต้นและตัดหน่วยมิลลิลิตร",
+          "en": "Use the original acid volume and cancel millilitres"
+        },
+        "tex": [
+          "50.0\\,\\cancel{\\mathrm{mL}}\\times\\frac{1\\,\\mathrm L}{1000\\,\\cancel{\\mathrm{mL}}}=0.0500\\,\\mathrm L"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "นิยามความเข้มข้นและแทนค่า",
+          "en": "Apply the concentration definition"
+        },
+        "tex": [
+          "C(\\ce{HCl})=\\frac{n(\\ce{HCl})}{V_{\\mathrm{initial}}}",
+          "C(\\ce{HCl})=\\frac{0.0100\\,\\mathrm{mol}}{0.0500\\,\\mathrm L}=0.200\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "ไม่ใช้ปริมาตรผลิตภัณฑ์ 200.0 mL เป็นตัวหาร เพราะถามความเข้มข้นกรดก่อนทำปฏิกิริยา",
+          "en": "Do not divide by the 200.0 mL product-solution volume: the question asks for the original acid concentration."
+        }
+      }
+    ],
+    "problem-9-1": [
+      {
+        "title": {
+          "th": "จำนวนโมลกรดรวมจากนิยาม",
+          "en": "Total acid amount from the concentration definition"
+        },
+        "tex": [
+          "90.0\\,\\cancel{\\mathrm{mL}}\\times\\frac{1\\,\\mathrm L}{1000\\,\\cancel{\\mathrm{mL}}}=0.0900\\,\\mathrm L",
+          "n_{\\mathrm{acid,total}}=1.00\\frac{\\mathrm{mol}}{\\cancel{\\mathrm L}}\\times0.0900\\,\\cancel{\\mathrm L}=0.0900\\,\\mathrm{mol}"
+        ],
+        "text": {
+          "th": "จำนวนโมลกรดรวมคงเดิมเมื่อเจือจาง ไม่ได้หมายความว่าจำนวนโมลโมเลกุลที่ยังไม่แตกตัวคงเดิม",
+          "en": "Dilution conserves total acid amount, not necessarily the amount of undissociated molecules."
+        }
+      },
+      {
+        "title": {
+          "th": "หารด้วยปริมาตรสุดท้ายจากนิยาม",
+          "en": "Divide by final volume using the definition"
+        },
+        "tex": [
+          "C_0=\\frac{n_{\\mathrm{acid,total}}}{V_{\\mathrm{final}}}=\\frac{0.0900\\,\\mathrm{mol}}{2.00\\,\\mathrm L}=0.0450\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "นี่คือความเข้มข้นเชิงวิเคราะห์ที่ใช้เป็นค่าเริ่มต้นใน ICE",
+          "en": "This analytical concentration is the initial concentration used in the ICE table."
+        }
+      }
+    ],
+    "problem-9-2": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{CH3COOH + H2O <=> H3O+ + CH3COO-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICE",
+          "en": "ICE table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{CH3COOH}&\\ce{H3O+}&\\ce{CH3COO-}\\\\\\hline I&0.0450&0&0\\\\C&-x&+x&+x\\\\E&0.0450-x&x&x\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, E = สมดุล",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, E = Equilibrium."
+        }
+      },
+      {
+        "title": {
+          "th": "นิพจน์จากสมดุลและเกณฑ์คัดกรอง",
+          "en": "Equilibrium expression and screening criterion"
+        },
+        "tex": [
+          "K_a=\\frac{[\\ce{H3O+}][\\ce{CH3COO-}]}{[\\ce{CH3COOH}]}=\\frac{x^2}{0.0450-x}",
+          "\\frac{0.0450}{1.80\\times10^{-5}}=2500>1000"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "จัดรูปและแก้สมการหลังประมาณ",
+          "en": "Rearrange and solve after approximating"
+        },
+        "tex": [
+          "1.80\\times10^{-5}\\approx\\frac{x^2}{0.0450}",
+          "x^2\\approx8.10\\times10^{-7}",
+          "[\\ce{H3O+}]\\approx\\sqrt{8.10\\times10^{-7}}=9.00\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ร้อยละจากนิยามและตัดหน่วย",
+          "en": "Percent ionization from its definition"
+        },
+        "tex": [
+          "\\%\\mathrm{ionization}=\\frac{\\text{amount ionized}}{\\text{initial amount}}\\times100\\%",
+          "=\\frac{9.00\\times10^{-4}\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}{0.0450\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}\\times100\\%=2.00\\%"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตรวจค่าประมาณ",
+          "en": "Check the approximation"
+        },
+        "tex": [
+          "2.00\\%<5\\%"
+        ],
+        "text": {
+          "th": "จึงยอมรับค่าประมาณสำหรับใช้เทียบขวดที่สองได้",
+          "en": "The approximation is acceptable for comparing the second bottle."
+        }
+      }
+    ],
+    "problem-9-3": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HCl + H2O -> H3O+ + Cl-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICF",
+          "en": "ICF table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{HCl}&\\ce{H3O+}&\\ce{Cl-}\\\\\\hline I&9.00\\times10^{-4}&0&0\\\\C&-9.00\\times10^{-4}&+9.00\\times10^{-4}&+9.00\\times10^{-4}\\\\F&0&9.00\\times10^{-4}&9.00\\times10^{-4}\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, F = หลังแตกตัวสมบูรณ์",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, F = Final."
+        }
+      },
+      {
+        "title": {
+          "th": "จำนวนโมลกรดที่ต้องใช้จากนิยาม",
+          "en": "Required acid amount from the concentration definition"
+        },
+        "tex": [
+          "n(\\ce{HCl})=9.00\\times10^{-4}\\frac{\\mathrm{mol}}{\\cancel{\\mathrm L}}\\times5.00\\,\\cancel{\\mathrm L}=0.00450\\,\\mathrm{mol}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "แปลงโมลเป็นมวลและตัดหน่วยโมล",
+          "en": "Convert amount to mass and cancel moles"
+        },
+        "tex": [
+          "m(\\ce{HCl})=0.00450\\,\\cancel{\\mathrm{mol}}\\times\\frac{36.5\\,\\mathrm g}{1\\,\\cancel{\\mathrm{mol}}}=0.16425\\,\\mathrm g"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ใช้ความหมายของร้อยละโดยมวลต่อปริมาตร",
+          "en": "Use the mass-per-volume percent definition"
+        },
+        "tex": [
+          "7.30\\%\\ (\\mathrm{w/v})\\equiv\\frac{7.30\\,\\mathrm g\\ \\ce{HCl}}{100\\,\\mathrm{mL}\\ \\text{solution}}",
+          "V_{\\mathrm{stock}}=0.16425\\,\\cancel{\\mathrm g}\\times\\frac{100\\,\\mathrm{mL}}{7.30\\,\\cancel{\\mathrm g}}=\\boxed{2.25\\,\\mathrm{mL}}"
+        ],
+        "text": {
+          "th": "เก็บเลขระหว่างทางไว้แล้วปัดคำตอบสุดท้าย ไม่ต้องเริ่มจากสูตรสำเร็จรูปสำหรับร้อยละหรือการเจือจาง",
+          "en": "Keep guard digits and round the final result. No percent-conversion or dilution shortcut is needed."
+        }
+      }
+    ],
+    "guide-NaOH": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{NaOH -> Na+ + OH-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "นิยามมวลโมลาร์และการตัดหน่วย",
+          "en": "Molar-mass definition and unit cancellation"
+        },
+        "tex": [
+          "n=0.600\\,\\cancel{\\mathrm g}\\times\\frac{1\\,\\mathrm{mol}}{40.0\\,\\cancel{\\mathrm g}}=0.0150\\,\\mathrm{mol}",
+          "300.0\\,\\cancel{\\mathrm{mL}}\\times\\frac{1\\,\\mathrm L}{1000\\,\\cancel{\\mathrm{mL}}}=0.3000\\,\\mathrm L",
+          "C=\\frac{n}{V}=\\frac{0.0150\\,\\mathrm{mol}}{0.3000\\,\\mathrm L}=0.0500\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICF",
+          "en": "ICF table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{NaOH}&\\ce{Na+}&\\ce{OH-}\\\\\\hline I&0.0500&0&0\\\\C&-0.0500&+0.0500&+0.0500\\\\F&0&0.0500&0.0500\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, F = หลังแตกตัวสมบูรณ์",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, F = Final."
+        }
+      },
+      {
+        "title": {
+          "th": "อัตราส่วนจากสมการ",
+          "en": "Mole ratio from the equation"
+        },
+        "tex": [
+          "[\\ce{OH-}]=0.0500\\frac{\\cancel{\\mathrm{mol}\\,\\ce{NaOH}}}{\\mathrm L}\\times\\frac{1\\,\\mathrm{mol}\\,\\ce{OH-}}{1\\,\\cancel{\\mathrm{mol}\\,\\ce{NaOH}}}=0.0500\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ],
+    "guide-measured": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HA + H2O <=> H3O+ + A-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICE",
+          "en": "ICE table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{HA}&\\ce{H3O+}&\\ce{A-}\\\\\\hline I&0.200&0&0\\\\C&-0.00400&+0.00400&+0.00400\\\\E&0.196&0.00400&0.00400\\end{array}"
+        ],
+        "text": {
+          "th": "หน่วย mol L⁻¹",
+          "en": "Entries are in mol L⁻¹."
+        }
+      },
+      {
+        "title": {
+          "th": "นิยามค่าคงที่และแทนค่าที่สมดุล",
+          "en": "Define the constant and substitute equilibrium values"
+        },
+        "tex": [
+          "K_a=\\frac{[\\ce{H3O+}][\\ce{A-}]}{[\\ce{HA}]}=\\frac{(0.00400)(0.00400)}{0.196}=8.16\\times10^{-5}"
+        ],
+        "text": {
+          "th": "แทนค่าตัวเลขความเข้มข้นในหน่วย mol L⁻¹ ตามรูปแบบแบบเรียน",
+          "en": "Use numerical concentrations measured in mol L⁻¹, following the textbook convention."
+        }
+      }
+    ],
+    "guide-failed-approximation": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{HX + H2O <=> H3O+ + X-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ตาราง ICE",
+          "en": "ICE table"
+        },
+        "tex": [
+          "\\begin{array}{c|ccc}&\\ce{HX}&\\ce{H3O+}&\\ce{X-}\\\\\\hline I&0.0100&0&0\\\\C&-x&+x&+x\\\\E&0.0100-x&x&x\\end{array}"
+        ],
+        "text": {
+          "th": "ค่าทุกช่องใช้หน่วย mol L⁻¹; I = เริ่มต้น, C = เปลี่ยนแปลง, E = สมดุล",
+          "en": "All entries are in mol L⁻¹; I = Initial, C = Change, E = Equilibrium."
+        }
+      },
+      {
+        "title": {
+          "th": "ตั้งนิพจน์จากสมดุล",
+          "en": "Form the equilibrium expression"
+        },
+        "tex": [
+          "K_a=\\frac{[\\ce{H3O+}][\\ce{X-}]}{[\\ce{HX}]}=\\frac{x^2}{0.0100-x}",
+          "10^{-4}\\approx\\frac{x_{\\mathrm{trial}}^2}{0.0100}",
+          "x_{\\mathrm{trial}}^2=10^{-6}\\quad\\Longrightarrow\\quad x_{\\mathrm{trial}}=0.00100\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ร้อยละจากนิยามและตัดหน่วย",
+          "en": "Percent ionization from its definition"
+        },
+        "tex": [
+          "\\%\\mathrm{ionization}=\\frac{\\text{amount ionized}}{\\text{initial amount}}\\times100\\%",
+          "=\\frac{0.00100\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}{0.0100\\,\\cancel{\\mathrm{mol\\,L^{-1}}}}\\times100\\%=10.0\\%"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "ไม่ผ่านเกณฑ์: กลับไปใช้สมการเต็ม",
+          "en": "The trial fails: return to the full equation"
+        },
+        "tex": [
+          "10^{-4}=\\frac{x^2}{0.0100-x}",
+          "x^2+10^{-4}x-10^{-6}=0",
+          "x=\\frac{-10^{-4}+\\sqrt{(10^{-4})^2+4(10^{-6})}}{2}",
+          "[\\ce{H3O+}]=9.51\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}"
+        ],
+        "text": {
+          "th": "เลือกรากบวก เพราะความเข้มข้นเป็นลบไม่ได้",
+          "en": "Select the positive root because concentration cannot be negative."
+        }
+      }
+    ],
+    "guide-pair": [
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{CH3COOH + H2O <=> H3O+ + CH3COO-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "สมการที่ดุลแล้ว",
+          "en": "Balanced equation"
+        },
+        "tex": [
+          "\\ce{CH3COO- + H2O <=> CH3COOH + OH-}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "เขียนนิพจน์จากนิยาม",
+          "en": "Write the defining equilibrium expressions"
+        },
+        "tex": [
+          "K_a=\\frac{[\\ce{H3O+}][\\ce{CH3COO-}]}{[\\ce{CH3COOH}]}",
+          "K_b=\\frac{[\\ce{CH3COOH}][\\ce{OH-}]}{[\\ce{CH3COO-}]}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      },
+      {
+        "title": {
+          "th": "คูณนิพจน์และตัดพจน์ร่วม",
+          "en": "Multiply the expressions and cancel common factors"
+        },
+        "tex": [
+          "K_aK_b=\\frac{[\\ce{H3O+}]\\cancel{[\\ce{CH3COO-}]}}{\\cancel{[\\ce{CH3COOH}]}}\\times\\frac{\\cancel{[\\ce{CH3COOH}]}[\\ce{OH-}]}{\\cancel{[\\ce{CH3COO-}]}}",
+          "= [\\ce{H3O+}][\\ce{OH-}]=K_w"
+        ],
+        "text": {
+          "th": "ใช้กรด–เบสคู่กันในน้ำที่อุณหภูมิเดียวกัน การตัดในบรรทัดนี้เป็นการตัดพจน์ความเข้มข้นร่วม ไม่ใช่การตัดหน่วยของค่าคงที่",
+          "en": "Use the same conjugate pair in water at the same temperature. These cancellations remove common concentration factors, not units of the constants."
+        }
+      },
+      {
+        "title": {
+          "th": "แทนค่าหลังจัดรูป",
+          "en": "Substitute after rearranging"
+        },
+        "tex": [
+          "K_b=\\frac{K_w}{K_a}=\\frac{1.0\\times10^{-14}}{1.8\\times10^{-5}}=5.6\\times10^{-10}"
+        ],
+        "text": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ]
+  }
+}

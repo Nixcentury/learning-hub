@@ -1,0 +1,1704 @@
+{
+  "contentId": "chemistry-periodic-table-main-group-check-understanding",
+  "revision": "2026-11-15-1",
+  "questions": [
+    {
+      "number": 1,
+      "prompt": {
+        "th": "ตารางธาตุปัจจุบันจัดเรียงธาตุจากน้อยไปมากตามค่าของปริมาณใด?",
+        "en": "Which quantity determines the order of elements in the modern periodic table?"
+      },
+      "fields": [
+        {
+          "key": "modern-order",
+          "label": {
+            "th": "คำตอบข้อ 1",
+            "en": "Answer to Question 1"
+          },
+          "answer": {
+            "th": "เลขอะตอม หรือจำนวนโปรตอน",
+            "en": "Atomic number, or number of protons."
+          },
+          "note": {
+            "th": "เลขอะตอมกำหนดชนิดของธาตุและเท่ากับจำนวนโปรตอน",
+            "en": "Atomic number identifies the element and equals its proton number."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "prompt": {
+        "th": "เมนเดเลเอฟใช้มวลอะตอมร่วมกับข้อมูลด้านใดในการจัดธาตุให้อยู่กลุ่มเดียวกัน?",
+        "en": "In addition to atomic mass, what information did Mendeleev use to place elements in the same group?"
+      },
+      "fields": [
+        {
+          "key": "mendeleev-properties",
+          "label": {
+            "th": "คำตอบข้อ 2",
+            "en": "Answer to Question 2"
+          },
+          "answer": {
+            "th": "สมบัติของธาตุ/สมบัติทางเคมีและกายภาพที่คล้ายคลึงกัน",
+            "en": "Their chemical and physical properties, especially similarities in properties."
+          },
+          "note": {
+            "th": "พิจารณาสมบัติที่คล้ายคลึงร่วมกับมวลอะตอม ไม่ใช้มวลอะตอมเพียงอย่างเดียว",
+            "en": "Properties were considered together with atomic mass, rather than atomic mass alone."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "prompt": {
+        "th": "นักวิทยาศาสตร์คนใดทำให้การจัดเรียงตามเลขอะตอมเป็นหลักชัดเจนขึ้น?",
+        "en": "Which scientist established atomic number as the basis for ordering the elements?"
+      },
+      "fields": [
+        {
+          "key": "moseley",
+          "label": {
+            "th": "คำตอบข้อ 3",
+            "en": "Answer to Question 3"
+          },
+          "answer": {
+            "th": "เฮนรี โมสลีย์",
+            "en": "Henry Moseley."
+          },
+          "note": {
+            "th": "ผลงานของโมสลีย์สนับสนุนการใช้เลขอะตอมเป็นหลัก",
+            "en": "Moseley established the significance of atomic number for ordering the elements."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "prompt": {
+        "th": "แถวแนวนอนในตารางธาตุเรียกว่าอะไร?",
+        "en": "What is a horizontal row in the periodic table called?"
+      },
+      "fields": [
+        {
+          "key": "period-name",
+          "label": {
+            "th": "คำตอบข้อ 4",
+            "en": "Answer to Question 4"
+          },
+          "answer": {
+            "th": "คาบ",
+            "en": "A period."
+          },
+          "note": {
+            "th": "คาบอยู่ในแนวนอน",
+            "en": "Periods run horizontally."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "prompt": {
+        "th": "แนวตั้งในตารางธาตุเรียกว่าอะไร?",
+        "en": "What is a vertical column in the periodic table called?"
+      },
+      "fields": [
+        {
+          "key": "group-name",
+          "label": {
+            "th": "คำตอบข้อ 5",
+            "en": "Answer to Question 5"
+          },
+          "answer": {
+            "th": "หมู่",
+            "en": "A group."
+          },
+          "note": {
+            "th": "หมู่อยู่ในแนวตั้ง",
+            "en": "Groups run vertically."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "prompt": {
+        "th": "จงระบุหมายเลขหมู่ของธาตุหมู่หลักตามระบบหมู่ 1–18 ให้ครบ",
+        "en": "List all the main-group numbers in the 1–18 numbering system."
+      },
+      "fields": [
+        {
+          "key": "main-group-numbers",
+          "label": {
+            "th": "คำตอบข้อ 6",
+            "en": "Answer to Question 6"
+          },
+          "answer": {
+            "th": "1, 2, 13, 14, 15, 16, 17, 18",
+            "en": "Groups 1, 2, 13, 14, 15, 16, 17 and 18."
+          },
+          "note": {
+            "th": "เป็นกลุ่มธาตุในบล็อก s และ p",
+            "en": "These are the s- and p-block main-group elements."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "prompt": {
+        "th": "หมู่ IIIA ในระบบเดิม ตรงกับหมู่ใดในระบบ 1–18?",
+        "en": "Which group in the 1–18 system corresponds to Group IIIA in the older system?"
+      },
+      "fields": [
+        {
+          "key": "legacy-group-number",
+          "label": {
+            "th": "คำตอบข้อ 7",
+            "en": "Answer to Question 7"
+          },
+          "answer": {
+            "th": "13",
+            "en": "Group 13."
+          },
+          "note": {
+            "th": "ระบบเดิมและระบบ 1–18 อ้างถึงหมู่เดียวกัน",
+            "en": "Both numbering systems refer to the same group."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "prompt": {
+        "th": "ธาตุหมู่ 17 มีชื่อเรียกรวมว่าอะไร?",
+        "en": "What is the collective name for the Group 17 elements?"
+      },
+      "fields": [
+        {
+          "key": "halogen-name",
+          "label": {
+            "th": "คำตอบข้อ 8",
+            "en": "Answer to Question 8"
+          },
+          "answer": {
+            "th": "แฮโลเจน",
+            "en": "The halogens."
+          },
+          "note": {
+            "th": "ตัวอย่างเช่น F, Cl, Br และ I",
+            "en": "Examples include F, Cl, Br and I."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "prompt": {
+        "th": "ธาตุหมู่ 1 เมื่อยกเว้น H และธาตุหมู่ 2 มีชื่อเรียกรวมว่าอะไรตามลำดับ?",
+        "en": "State the collective names for the Group 1 elements, excluding H, and the Group 2 elements, respectively."
+      },
+      "fields": [
+        {
+          "key": "alkali-name",
+          "label": {
+            "th": "หมู่ 1",
+            "en": "Group 1"
+          },
+          "answer": {
+            "th": "โลหะแอลคาไล",
+            "en": "Alkali metals."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 10
+        },
+        {
+          "key": "alkaline-earth-name",
+          "label": {
+            "th": "หมู่ 2",
+            "en": "Group 2"
+          },
+          "answer": {
+            "th": "โลหะแอลคาไลน์เอิร์ท",
+            "en": "Alkaline earth metals."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 10
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "prompt": {
+        "th": "อะตอมเป็นกลาง X ในสถานะพื้นมีการจัดเรียงอิเล็กตรอน [Ne]3s²3p⁵ จงระบุหมู่และคาบของ X",
+        "en": "A neutral atom X in its ground state has the electron configuration [Ne]3s²3p⁵. Identify its group and period."
+      },
+      "fields": [
+        {
+          "key": "config-group",
+          "label": {
+            "th": "หมู่",
+            "en": "Group"
+          },
+          "answer": {
+            "th": "17 หรือ VIIA",
+            "en": "17 or VIIA."
+          },
+          "note": {
+            "th": "ชั้นนอกเป็น 3s²3p⁵ รวม 7 อิเล็กตรอน",
+            "en": "The outer configuration 3s²3p⁵ contains seven valence electrons."
+          },
+          "mm": 10
+        },
+        {
+          "key": "config-period",
+          "label": {
+            "th": "คาบ",
+            "en": "Period"
+          },
+          "answer": {
+            "th": "3",
+            "en": "3."
+          },
+          "note": {
+            "th": "ระดับพลังงานหลักสูงสุดที่มีอิเล็กตรอนคือ n = 3",
+            "en": "The highest occupied principal shell is n = 3."
+          },
+          "mm": 10
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "prompt": {
+        "th": "Ga ในสถานะพื้นมีการจัดเรียงอิเล็กตรอน [Ar]3d¹⁰4s²4p¹ มีเวเลนซ์อิเล็กตรอนกี่ตัว และอยู่หมู่ใด?",
+        "en": "Ga has the ground-state electron configuration [Ar]3d¹⁰4s²4p¹. How many valence electrons does it have, and which group is it in?"
+      },
+      "fields": [
+        {
+          "key": "ga-valence",
+          "label": {
+            "th": "เวเลนซ์อิเล็กตรอน",
+            "en": "Valence electrons"
+          },
+          "answer": {
+            "th": "3 ตัว",
+            "en": "3."
+          },
+          "note": {
+            "th": "นับ 4s² + 4p¹ ไม่ใช่ 4p¹ เพียงอย่างเดียว",
+            "en": "Count 4s² and 4p¹ together, not only 4p¹."
+          },
+          "mm": 10
+        },
+        {
+          "key": "ga-group",
+          "label": {
+            "th": "หมู่",
+            "en": "Group"
+          },
+          "answer": {
+            "th": "13 หรือ IIIA",
+            "en": "13 or IIIA."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 10
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "prompt": {
+        "th": "X²⁺ มี 18 อิเล็กตรอน เลขอะตอมของธาตุ X เท่ากับเท่าใด?",
+        "en": "An X²⁺ ion has 18 electrons. What is the atomic number of element X?"
+      },
+      "fields": [
+        {
+          "key": "number-from-ion",
+          "label": {
+            "th": "คำตอบข้อ 12",
+            "en": "Answer to Question 12"
+          },
+          "answer": {
+            "th": "20",
+            "en": "20."
+          },
+          "note": {
+            "th": "ไอออน X²⁺ สูญเสียอิเล็กตรอน 2 ตัว อะตอมเป็นกลางจึงมี 20 อิเล็กตรอน",
+            "en": "X²⁺ has lost two electrons, so the neutral atom has 20 electrons."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "prompt": {
+        "th": "จงจำแนก Na, Si และ Cl ว่าเป็นโลหะ กึ่งโลหะ หรืออโลหะ",
+        "en": "Classify Na, Si and Cl as a metal, metalloid or nonmetal."
+      },
+      "fields": [
+        {
+          "key": "classify-na",
+          "label": {
+            "th": "Na",
+            "en": "Na"
+          },
+          "answer": {
+            "th": "โลหะ",
+            "en": "Metal."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 10
+        },
+        {
+          "key": "classify-si",
+          "label": {
+            "th": "Si",
+            "en": "Si"
+          },
+          "answer": {
+            "th": "กึ่งโลหะ",
+            "en": "Metalloid."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 10
+        },
+        {
+          "key": "classify-cl",
+          "label": {
+            "th": "Cl",
+            "en": "Cl"
+          },
+          "answer": {
+            "th": "อโลหะ",
+            "en": "Nonmetal."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 10
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "prompt": {
+        "th": "พลังงานสำหรับ X(g) → X⁺(g) + e⁻ เรียกว่าอะไร? ระบุลำดับด้วย",
+        "en": "What is the name of the energy required for X(g) → X⁺(g) + e⁻? Specify its order."
+      },
+      "fields": [
+        {
+          "key": "first-ionization",
+          "label": {
+            "th": "คำตอบข้อ 14",
+            "en": "Answer to Question 14"
+          },
+          "answer": {
+            "th": "พลังงานไอออไนเซชันลำดับที่ 1 หรือ IE₁",
+            "en": "First ionization energy, IE₁."
+          },
+          "note": {
+            "th": "ดึงอิเล็กตรอนตัวแรกออกจากอะตอมอิสระในสถานะแก๊สและสถานะพื้น",
+            "en": "The first electron is removed from an isolated gaseous atom in its ground state."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "prompt": {
+        "th": "พลังงานสำหรับ X⁺(g) → X²⁺(g) + e⁻ ใช้สัญลักษณ์ใด?",
+        "en": "Which symbol denotes the energy required for X⁺(g) → X²⁺(g) + e⁻?"
+      },
+      "fields": [
+        {
+          "key": "second-ionization",
+          "label": {
+            "th": "คำตอบข้อ 15",
+            "en": "Answer to Question 15"
+          },
+          "answer": {
+            "th": "IE₂",
+            "en": "IE₂."
+          },
+          "note": {
+            "th": "เริ่มดึงจากไอออนประจุ +1 ไม่ใช่อะตอมเป็นกลาง",
+            "en": "The process starts from a +1 gaseous ion, not from a neutral atom."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "prompt": {
+        "th": "สมบัติที่เกี่ยวข้องกับ X(g) + e⁻ → X⁻(g) เรียกว่าอะไร?",
+        "en": "Which property is associated with the process X(g) + e⁻ → X⁻(g)?"
+      },
+      "fields": [
+        {
+          "key": "electron-affinity",
+          "label": {
+            "th": "คำตอบข้อ 16",
+            "en": "Answer to Question 16"
+          },
+          "answer": {
+            "th": "สัมพรรคภาพอิเล็กตรอน หรือ EA",
+            "en": "Electron affinity, EA."
+          },
+          "note": {
+            "th": "เป็นกระบวนการรับอิเล็กตรอนของอะตอมอิสระในสถานะแก๊ส",
+            "en": "This process concerns addition of an electron to an isolated gaseous atom."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "prompt": {
+        "th": "ความสามารถของอะตอมในการดึงอิเล็กตรอนที่ใช้ร่วมกันในพันธะเข้าหาตน เรียกว่าอะไร?",
+        "en": "What is the tendency of an atom to attract shared electrons in a chemical bond called?"
+      },
+      "fields": [
+        {
+          "key": "electronegativity",
+          "label": {
+            "th": "คำตอบข้อ 17",
+            "en": "Answer to Question 17"
+          },
+          "answer": {
+            "th": "อิเล็กโทรเนกาติวิตี หรือ EN",
+            "en": "Electronegativity, EN."
+          },
+          "note": {
+            "th": "ใช้กับการดึงอิเล็กตรอนในพันธะ ไม่ใช่การรับอิเล็กตรอนอิสระ",
+            "en": "It describes attraction for electrons in a bond, not addition of a free electron."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "prompt": {
+        "th": "ค่า EN บนสเกล Pauling มีหน่วยหรือไม่?",
+        "en": "Does electronegativity on the Pauling scale have a unit?"
+      },
+      "fields": [
+        {
+          "key": "pauling-unit",
+          "label": {
+            "th": "คำตอบข้อ 18",
+            "en": "Answer to Question 18"
+          },
+          "answer": {
+            "th": "ไม่มีหน่วย",
+            "en": "No unit."
+          },
+          "note": {
+            "th": "เป็นค่าความสามารถสัมพัทธ์บนสเกลที่ใช้",
+            "en": "It is a relative value on the specified scale."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "prompt": {
+        "th": "ธาตุหมู่หลัก X มี IE กระโดดมากระหว่าง IE₂ กับ IE₃ จึงคาดว่ามีเวเลนซ์อิเล็กตรอนกี่ตัว?",
+        "en": "A main-group element X shows a large increase from IE₂ to IE₃. How many valence electrons is it expected to have?"
+      },
+      "fields": [
+        {
+          "key": "valence-from-jump",
+          "label": {
+            "th": "คำตอบข้อ 19",
+            "en": "Answer to Question 19"
+          },
+          "answer": {
+            "th": "2 ตัว",
+            "en": "2 valence electrons."
+          },
+          "note": {
+            "th": "การดึงตัวที่ 3 เริ่มเข้าสู่อิเล็กตรอนชั้นใน จึงคาดว่ามีเวเลนซ์ 2",
+            "en": "Removal of the third electron begins the removal of core electrons."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "prompt": {
+        "th": "จงเขียนสัญลักษณ์ของ 10 ธาตุที่มี EN สูงสุดจากมากไปน้อยตามข้อมูลสเกล Pauling ของ RSC ที่ศึกษา โดยใช้เฉพาะค่าตัวเลขที่ RSC ระบุ รวมแก๊สมีสกุลที่มีค่า และใช้ = เมื่อค่าเท่ากัน ข้อนี้ทดสอบความจำ ไม่เปิดตารางอ้างอิง",
+        "en": "From memory, write the symbols of the ten elements with the highest electronegativities in decreasing order in the RSC dataset for the Pauling scale studied in this course. Include noble gases for which RSC reports a numerical value, and use = for equal values. Do not consult the reference table."
+      },
+      "fields": [
+        {
+          "key": "en-top-ten",
+          "label": {
+            "th": "คำตอบข้อ 20",
+            "en": "Answer to Question 20"
+          },
+          "answer": {
+            "th": "F > O > Cl > N > Br > I > Xe > S > C = Se",
+            "en": "F > O > Cl > N > Br > I > Xe > S > C = Se."
+          },
+          "note": {
+            "th": "RSC: F 3.98; O 3.44; Cl 3.16; N 3.04; Br 2.96; I 2.66; Xe 2.60; S 2.58; C และ Se 2.55 ยอมรับ C/Se สลับลำดับกัน ในชุดนี้ RSC ไม่ให้ค่าตัวเลขของ Kr",
+            "en": "RSC values: F 3.98; O 3.44; Cl 3.16; N 3.04; Br 2.96; I 2.66; Xe 2.60; S 2.58; C and Se 2.55. Accept either order for C/Se. RSC does not report a numerical value for Kr in this dataset."
+          },
+          "mm": 29
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "prompt": {
+        "th": "เรียง IE₁ ของ Li, Be, B, C, N, O, F และ Ne จากน้อยไปมาก ให้ครบทั้งคาบ 2",
+        "en": "Arrange Li, Be, B, C, N, O, F and Ne in order of increasing first ionization energy. Include all eight Period 2 elements."
+      },
+      "fields": [
+        {
+          "key": "period-two-ie",
+          "label": {
+            "th": "คำตอบข้อ 21",
+            "en": "Answer to Question 21"
+          },
+          "answer": {
+            "th": "Li < B < Be < C < O < N < F < Ne",
+            "en": "Li < B < Be < C < O < N < F < Ne."
+          },
+          "note": {
+            "th": "จุดลดลงจากแนวโน้มตามคาบคือ Be→B และ N→O ต้องพิจารณาระดับพลังงานย่อยและการจับคู่",
+            "en": "The decreases from the simple across-period trend occur at Be→B and N→O; subshell energy and electron pairing matter."
+          },
+          "mm": 15
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "prompt": {
+        "th": "เรียง IE₁ ของ Na, Mg, Al, Si, P, S, Cl และ Ar จากน้อยไปมาก ให้ครบทั้งคาบ 3",
+        "en": "Arrange Na, Mg, Al, Si, P, S, Cl and Ar in order of increasing first ionization energy. Include all eight Period 3 elements."
+      },
+      "fields": [
+        {
+          "key": "period-three-ie",
+          "label": {
+            "th": "คำตอบข้อ 22",
+            "en": "Answer to Question 22"
+          },
+          "answer": {
+            "th": "Na < Al < Mg < Si < S < P < Cl < Ar",
+            "en": "Na < Al < Mg < Si < S < P < Cl < Ar."
+          },
+          "note": {
+            "th": "จุดลดลงคือ Mg→Al และ P→S ไม่เรียงตามเลขอะตอมอย่างเดียว",
+            "en": "The corresponding decreases occur at Mg→Al and P→S. Atomic-number order alone is insufficient."
+          },
+          "mm": 15
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "prompt": {
+        "th": "ระหว่าง Cl กับ N ธาตุใดมี EN สูงกว่า เมื่อใช้ค่า Pauling ในชุดอ้างอิงนี้?",
+        "en": "Which has the higher electronegativity, Cl or N, using the Pauling values in the reference dataset?"
+      },
+      "fields": [
+        {
+          "key": "en-chlorine-nitrogen",
+          "label": {
+            "th": "คำตอบข้อ 23",
+            "en": "Answer to Question 23"
+          },
+          "answer": {
+            "th": "Cl",
+            "en": "Cl."
+          },
+          "note": {
+            "th": "ใช้ค่า Pauling: Cl 3.16 และ N 3.04",
+            "en": "Use the Pauling values Cl 3.16 and N 3.04."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "prompt": {
+        "th": "เรียง EN ของ F, O, N และ Cl จากมากไปน้อย",
+        "en": "Arrange F, O, N and Cl in order of decreasing electronegativity."
+      },
+      "fields": [
+        {
+          "key": "en-four-elements",
+          "label": {
+            "th": "คำตอบข้อ 24",
+            "en": "Answer to Question 24"
+          },
+          "answer": {
+            "th": "F > O > Cl > N",
+            "en": "F > O > Cl > N."
+          },
+          "note": {
+            "th": "O สูงกว่า Cl และ Cl สูงกว่า N ตามค่าที่อ้างอิง",
+            "en": "In the reference data, O is above Cl and Cl is above N."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "prompt": {
+        "th": "เรียงขนาดอะตอม Na, Mg และ Cl จากใหญ่ไปเล็ก โดยใช้แนวโน้มรัศมีชนิดเดียวกันในคาบ 3",
+        "en": "Arrange Na, Mg and Cl in order of decreasing atomic size, using the trend for the same type of atomic radius across Period 3."
+      },
+      "fields": [
+        {
+          "key": "period-three-size",
+          "label": {
+            "th": "คำตอบข้อ 25",
+            "en": "Answer to Question 25"
+          },
+          "answer": {
+            "th": "Na > Mg > Cl",
+            "en": "Na > Mg > Cl."
+          },
+          "note": {
+            "th": "อยู่คาบ 3 เหมือนกัน ประจุนิวเคลียสยังผลโดยทั่วไปเพิ่มจากซ้ายไปขวา",
+            "en": "All are in Period 3; effective nuclear charge generally increases from left to right."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "prompt": {
+        "th": "เปรียบเทียบขนาด Na กับ Na⁺ และ Cl กับ Cl⁻ โดยเติม > หรือ < แยกสองคู่",
+        "en": "Compare the sizes of Na and Na⁺, then Cl and Cl⁻. Insert > or < for each pair."
+      },
+      "fields": [
+        {
+          "key": "size-sodium",
+          "label": {
+            "th": "Na กับ Na⁺",
+            "en": "Na and Na⁺"
+          },
+          "answer": {
+            "th": "Na > Na⁺",
+            "en": "Na > Na⁺."
+          },
+          "note": {
+            "th": "สูญเสียอิเล็กตรอนชั้นนอกสุด จึงเล็กลง",
+            "en": "Losing the outermost electron reduces the size."
+          },
+          "mm": 10
+        },
+        {
+          "key": "size-chlorine",
+          "label": {
+            "th": "Cl กับ Cl⁻",
+            "en": "Cl and Cl⁻"
+          },
+          "answer": {
+            "th": "Cl < Cl⁻",
+            "en": "Cl < Cl⁻."
+          },
+          "note": {
+            "th": "รับอิเล็กตรอนเพิ่มที่จำนวนโปรตอนเท่าเดิม จึงมีแรงผลักเพิ่ม",
+            "en": "Electron addition increases repulsion while proton number is unchanged."
+          },
+          "mm": 10
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "prompt": {
+        "th": "เรียงรัศมีของ O²⁻, F⁻, Na⁺, Mg²⁺ และ Al³⁺ จากใหญ่ไปเล็ก กำหนดเลขอะตอม O = 8, F = 9, Na = 11, Mg = 12, Al = 13",
+        "en": "Arrange O²⁻, F⁻, Na⁺, Mg²⁺ and Al³⁺ in order of decreasing ionic radius. The atomic numbers are O = 8, F = 9, Na = 11, Mg = 12 and Al = 13."
+      },
+      "fields": [
+        {
+          "key": "isoelectronic-size",
+          "label": {
+            "th": "คำตอบข้อ 27",
+            "en": "Answer to Question 27"
+          },
+          "answer": {
+            "th": "O²⁻ > F⁻ > Na⁺ > Mg²⁺ > Al³⁺",
+            "en": "O²⁻ > F⁻ > Na⁺ > Mg²⁺ > Al³⁺."
+          },
+          "note": {
+            "th": "ทุกไอออนมี 10 อิเล็กตรอน ตัวที่มีโปรตอนมากกว่าจะดึงอิเล็กตรอนได้แรงกว่า",
+            "en": "Each ion has ten electrons. More protons attract that electron distribution more strongly."
+          },
+          "mm": 15
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "prompt": {
+        "th": "เมื่อ IE₂ ของ Na = 4562 และ Mg = 1451 kJ mol⁻¹ ธาตุใดต้องใช้พลังงานมากกว่าในการดึงอิเล็กตรอนตัวที่สอง?",
+        "en": "The second ionization energies of Na and Mg are 4562 and 1451 kJ mol⁻¹, respectively. Which element requires more energy for the removal of its second electron?"
+      },
+      "fields": [
+        {
+          "key": "second-ie-comparison",
+          "label": {
+            "th": "คำตอบข้อ 28",
+            "en": "Answer to Question 28"
+          },
+          "answer": {
+            "th": "Na",
+            "en": "Na."
+          },
+          "note": {
+            "th": "IE₂ ของ Na ดึงอิเล็กตรอนชั้นใน ส่วน Mg ยังดึงเวเลนซ์อิเล็กตรอน",
+            "en": "For Na, IE₂ removes a core electron; for Mg, it still removes a valence electron."
+          },
+          "mm": 9
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "prompt": {
+        "th": "จากตารางข้อมูลจำลองที่กำหนดให้ จงระบุหมู่ของธาตุหมู่หลัก A, B และ C",
+        "en": "Use the simulated data provided to identify the groups of main-group elements A, B and C."
+      },
+      "fields": [
+        {
+          "key": "group-a",
+          "label": {
+            "th": "ธาตุ A",
+            "en": "Element A"
+          },
+          "answer": {
+            "th": "หมู่ 1",
+            "en": "Group 1."
+          },
+          "note": {
+            "th": "จุดกระโดดหลัง IE₁",
+            "en": "The large increase follows IE₁."
+          },
+          "mm": 10
+        },
+        {
+          "key": "group-b",
+          "label": {
+            "th": "ธาตุ B",
+            "en": "Element B"
+          },
+          "answer": {
+            "th": "หมู่ 2",
+            "en": "Group 2."
+          },
+          "note": {
+            "th": "จุดกระโดดหลัง IE₂",
+            "en": "The large increase follows IE₂."
+          },
+          "mm": 10
+        },
+        {
+          "key": "group-c",
+          "label": {
+            "th": "ธาตุ C",
+            "en": "Element C"
+          },
+          "answer": {
+            "th": "หมู่ 13",
+            "en": "Group 13."
+          },
+          "note": {
+            "th": "จุดกระโดดหลัง IE₃",
+            "en": "The large increase follows IE₃."
+          },
+          "mm": 10
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "prompt": {
+        "th": "ใช้ตารางเดียวกัน เรียง A, B และ C ตาม IE₁ จากน้อยไปมาก แล้วเรียงตาม IE₂ จากน้อยไปมากอีกครั้ง",
+        "en": "Using the same data, arrange A, B and C in order of increasing IE₁, then arrange them in order of increasing IE₂."
+      },
+      "fields": [
+        {
+          "key": "rank-ie-one",
+          "label": {
+            "th": "ลำดับ IE₁",
+            "en": "IE₁ order"
+          },
+          "answer": {
+            "th": "A < C < B",
+            "en": "A < C < B."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 10
+        },
+        {
+          "key": "rank-ie-two",
+          "label": {
+            "th": "ลำดับ IE₂",
+            "en": "IE₂ order"
+          },
+          "answer": {
+            "th": "B < C < A",
+            "en": "B < C < A."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 10
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "prompt": {
+        "th": "He มีเวเลนซ์อิเล็กตรอน 2 ตัว แต่จัดไว้ในหมู่ 18 เพราะเหตุใด?",
+        "en": "Explain why He is placed in Group 18 even though it has only two valence electrons."
+      },
+      "fields": [
+        {
+          "key": "helium-position",
+          "label": {
+            "th": "คำตอบข้อ 31",
+            "en": "Answer to Question 31"
+          },
+          "answer": {
+            "th": "ชั้นแรกเต็มด้วย 1s² แล้ว จึงมีสมบัติแบบแก๊สมีสกุล แม้มีเวเลนซ์ 2",
+            "en": "Its first shell is complete with 1s², giving it the characteristic chemical behavior of a noble gas."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 19
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "prompt": {
+        "th": "Ca²⁺ มีการจัดเรียงอิเล็กตรอน 2,8,8 แต่ธาตุ Ca อยู่คาบ 4 เพราะเหตุใด?",
+        "en": "A Ca²⁺ ion has the electron arrangement 2,8,8. Explain why element Ca is in Period 4."
+      },
+      "fields": [
+        {
+          "key": "calcium-period",
+          "label": {
+            "th": "คำตอบข้อ 32",
+            "en": "Answer to Question 32"
+          },
+          "answer": {
+            "th": "ใช้อะตอม Ca เป็นกลางซึ่งชั้นนอกสุด n = 4 หาตำแหน่ง ไม่ใช้จำนวนชั้นของ Ca²⁺",
+            "en": "Use the neutral Ca atom, whose outermost occupied principal shell is n = 4, to determine the period."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 19
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "prompt": {
+        "th": "อะตอม Cl เล็กกว่า Na ทั้งที่มีโปรตอนและอิเล็กตรอนมากกว่า เพราะเหตุใด?",
+        "en": "Explain why a Cl atom is smaller than a Na atom even though it has more protons and electrons."
+      },
+      "fields": [
+        {
+          "key": "effective-charge-size",
+          "label": {
+            "th": "คำตอบข้อ 33",
+            "en": "Answer to Question 33"
+          },
+          "answer": {
+            "th": "เวเลนซ์อยู่ n = 3 เหมือนกัน แต่ Cl มีแรงดึงนิวเคลียสยังผลสูงกว่า",
+            "en": "The valence electrons occupy the same principal shell, but Cl has a greater effective nuclear charge and attracts them more strongly."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 19
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "prompt": {
+        "th": "อะตอม K ใหญ่กว่า Na เพราะเหตุใด?",
+        "en": "Explain why a K atom is larger than a Na atom."
+      },
+      "fields": [
+        {
+          "key": "new-shell-size",
+          "label": {
+            "th": "คำตอบข้อ 34",
+            "en": "Answer to Question 34"
+          },
+          "answer": {
+            "th": "K มีชั้นนอก n = 4 สูงกว่า Na ที่ n = 3 และมีการกำบังมากขึ้น",
+            "en": "The valence electron of K occupies n = 4 rather than n = 3 in Na and experiences greater shielding."
+          },
+          "note": {
+            "th": "ยอมรับประโยคเรื่องเริ่มมีชั้นพลังงานหลักที่สูงขึ้น หากสื่อเหตุผลได้ถูกต้อง",
+            "en": "Also accept the explanation that a higher principal shell begins to be occupied, when applied correctly."
+          },
+          "mm": 19
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "prompt": {
+        "th": "Na⁺ เล็กกว่าอะตอม Na เพราะเหตุใด?",
+        "en": "Explain why Na⁺ is smaller than a Na atom."
+      },
+      "fields": [
+        {
+          "key": "sodium-cation-size",
+          "label": {
+            "th": "คำตอบข้อ 35",
+            "en": "Answer to Question 35"
+          },
+          "answer": {
+            "th": "Na เสียอิเล็กตรอน 3s ชั้นนอกสุด เหลือชั้นสูงสุด n = 2 จึงเล็กลง",
+            "en": "Na loses its outermost 3s electron, leaving n = 2 as its highest occupied principal shell."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 19
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "prompt": {
+        "th": "IE₁ ของ Al ต่ำกว่า Mg เพราะเหตุใด?",
+        "en": "Explain why the first ionization energy of Al is lower than that of Mg."
+      },
+      "fields": [
+        {
+          "key": "subshell-ionization",
+          "label": {
+            "th": "คำตอบข้อ 36",
+            "en": "Answer to Question 36"
+          },
+          "answer": {
+            "th": "Al ดึงอิเล็กตรอน 3p¹ ที่มีพลังงานสูงกว่าออก ส่วน Mg ดึงจาก 3s²",
+            "en": "Al loses a higher-energy 3p electron, whereas Mg loses a more tightly bound 3s electron."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 19
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "prompt": {
+        "th": "IE₁ ของ O ต่ำกว่า N เพราะเหตุใด?",
+        "en": "Explain why the first ionization energy of O is lower than that of N."
+      },
+      "fields": [
+        {
+          "key": "pairing-ionization",
+          "label": {
+            "th": "คำตอบข้อ 37",
+            "en": "Answer to Question 37"
+          },
+          "answer": {
+            "th": "O มี 2p⁴ และมีอิเล็กตรอนจับคู่ เกิดแรงผลัก จึงดึงตัวหนึ่งออกง่ายกว่า N ที่มี 2p³",
+            "en": "O has a paired electron in its 2p subshell. The additional repulsion makes that electron easier to remove than an unpaired 2p electron in N."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 19
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "prompt": {
+        "th": "เมื่อพิจารณาธาตุจาก Ne ไปยัง Na ตามลำดับเลขอะตอม ค่า IE₁ ลดลงมาก เพราะเหตุใด?",
+        "en": "Explain the large decrease in first ionization energy on moving from Ne to Na in order of atomic number."
+      },
+      "fields": [
+        {
+          "key": "new-period-ionization",
+          "label": {
+            "th": "คำตอบข้อ 38",
+            "en": "Answer to Question 38"
+          },
+          "answer": {
+            "th": "Na เริ่มมีอิเล็กตรอนในชั้น n = 3 ซึ่งห่างและถูกกำบังมากกว่าอิเล็กตรอนชั้นนอกของ Ne ที่ n = 2",
+            "en": "A new principal shell begins to be occupied in Na. Its outermost electron is farther from the nucleus and more strongly shielded than the outermost electrons of Ne."
+          },
+          "note": {
+            "th": "ยอมรับประโยคเรื่องชั้นพลังงานหลักสูงขึ้นและการกำบังด้วย ไม่ได้หมายถึงการเติมอิเล็กตรอนให้ Ne แล้วเปลี่ยนเป็น Na",
+            "en": "Also accept the higher-shell and shielding sentence. This comparison does not mean adding an electron to Ne converts it into Na."
+          },
+          "mm": 19
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "prompt": {
+        "th": "ค่า IE ต่อเนื่องเพิ่มขึ้นมากเป็นพิเศษเมื่อเริ่มดึงอิเล็กตรอนชั้นใน เพราะเหตุใด?",
+        "en": "Explain why a particularly large increase in successive ionization energies occurs when removal of core electrons begins."
+      },
+      "fields": [
+        {
+          "key": "core-ionization",
+          "label": {
+            "th": "คำตอบข้อ 39",
+            "en": "Answer to Question 39"
+          },
+          "answer": {
+            "th": "หลังเวเลนซ์หมด ต้องเริ่มดึงอิเล็กตรอนชั้นในที่ถูกยึดแน่นกว่า",
+            "en": "After all valence electrons have been removed, the next electron must be removed from a more tightly bound core shell."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 19
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "prompt": {
+        "th": "อะตอม Cl ในสถานะแก๊สรับอิเล็กตรอนแล้วคายพลังงานมากกว่าอะตอม F เพราะเหตุใด?",
+        "en": "Explain why the addition of an electron to a gaseous Cl atom releases more energy than the addition of an electron to a gaseous F atom."
+      },
+      "fields": [
+        {
+          "key": "affinity-chlorine-fluorine",
+          "label": {
+            "th": "คำตอบข้อ 40",
+            "en": "Answer to Question 40"
+          },
+          "answer": {
+            "th": "F รับอิเล็กตรอนเข้า 2p ที่เล็กและมีแรงผลักมากกว่า ขณะที่ Cl รับเข้า 3p ที่มีบริเวณกว้างกว่า",
+            "en": "Electron addition to the compact 2p subshell of F involves greater electron–electron repulsion than addition to the more spacious 3p subshell of Cl."
+          },
+          "note": {
+            "th": "",
+            "en": ""
+          },
+          "mm": 19
+        }
+      ]
+    },
+    {
+      "number": 41,
+      "prompt": {
+        "th": "ตารางธาตุปัจจุบันจัดเรียงตามมวลอะตอมจากน้อยไปมากเป็นหลัก",
+        "en": "Elements in the modern periodic table are ordered primarily by increasing atomic mass."
+      },
+      "fields": [
+        {
+          "key": "tf-41",
+          "label": {
+            "th": "คำตอบข้อ 41",
+            "en": "Answer to Question 41"
+          },
+          "answer": {
+            "th": "✗",
+            "en": "✗"
+          },
+          "note": {
+            "th": "ปัจจุบันใช้เลขอะตอมเป็นหลัก",
+            "en": "Modern ordering is based on atomic number."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "prompt": {
+        "th": "กฎชุดสามของเดอเบอไรเนอร์ใช้จัดธาตุทั้งหมดได้อย่างถูกต้อง",
+        "en": "Döbereiner's law of triads can correctly classify all elements."
+      },
+      "fields": [
+        {
+          "key": "tf-42",
+          "label": {
+            "th": "คำตอบข้อ 42",
+            "en": "Answer to Question 42"
+          },
+          "answer": {
+            "th": "✗",
+            "en": "✗"
+          },
+          "note": {
+            "th": "กฎชุดสามอธิบายได้เพียงบางกลุ่มธาตุ",
+            "en": "The law of triads describes only some groups of elements."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 43,
+      "prompt": {
+        "th": "กฎของนิวแลนด์ที่กล่าวถึงสมบัติซ้ำทุกธาตุที่แปดใช้ได้กับธาตุทุกชนิดโดยไม่มีข้อจำกัด",
+        "en": "Newlands' law, which describes similar properties recurring at every eighth element, applies to all elements without limitation."
+      },
+      "fields": [
+        {
+          "key": "tf-43",
+          "label": {
+            "th": "คำตอบข้อ 43",
+            "en": "Answer to Question 43"
+          },
+          "answer": {
+            "th": "✗",
+            "en": "✗"
+          },
+          "note": {
+            "th": "กฎของนิวแลนด์มีข้อจำกัด ไม่ใช้ได้กับธาตุทุกชนิด",
+            "en": "Newlands’ law has limitations and does not describe every element."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "prompt": {
+        "th": "เมนเดเลเอฟเว้นช่องว่างไว้สำหรับธาตุที่ยังไม่ค้นพบ และใช้ตำแหน่งช่วยทำนายสมบัติได้",
+        "en": "Mendeleev left gaps for undiscovered elements and used their positions to predict their properties."
+      },
+      "fields": [
+        {
+          "key": "tf-44",
+          "label": {
+            "th": "คำตอบข้อ 44",
+            "en": "Answer to Question 44"
+          },
+          "answer": {
+            "th": "✓",
+            "en": "✓"
+          },
+          "note": {
+            "th": "เป็นแนวคิดสำคัญของการจัดตารางและการทำนายธาตุที่ยังไม่พบ",
+            "en": "The gaps supported predictions about undiscovered elements."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "prompt": {
+        "th": "ธาตุหมู่เดียวกันต้องมีสถานะทางกายภาพและสมบัติทุกอย่างเหมือนกัน",
+        "en": "Elements in the same group must have the same physical state and identical properties in every respect."
+      },
+      "fields": [
+        {
+          "key": "tf-45",
+          "label": {
+            "th": "คำตอบข้อ 45",
+            "en": "Answer to Question 45"
+          },
+          "answer": {
+            "th": "✗",
+            "en": "✗"
+          },
+          "note": {
+            "th": "คล้ายกันทางเคมีไม่ได้หมายถึงสถานะและสมบัติทุกอย่างเหมือนกัน",
+            "en": "Similar chemical behavior does not mean identical physical states or all other properties."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 46,
+      "prompt": {
+        "th": "H อยู่หมู่ 1 แต่ไม่จัดเป็นโลหะแอลคาไล",
+        "en": "H is in Group 1 but is not classified as an alkali metal."
+      },
+      "fields": [
+        {
+          "key": "tf-46",
+          "label": {
+            "th": "คำตอบข้อ 46",
+            "en": "Answer to Question 46"
+          },
+          "answer": {
+            "th": "✓",
+            "en": "✓"
+          },
+          "note": {
+            "th": "H เป็นอโลหะ แม้อยู่หมู่ 1",
+            "en": "H is a nonmetal despite its placement in Group 1."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 47,
+      "prompt": {
+        "th": "He อยู่หมู่ 18 แต่จัดอยู่ในบล็อก s ตามการจัดเรียงอิเล็กตรอน",
+        "en": "He is in Group 18 but belongs to the s block based on its electron configuration."
+      },
+      "fields": [
+        {
+          "key": "tf-47",
+          "label": {
+            "th": "คำตอบข้อ 47",
+            "en": "Answer to Question 47"
+          },
+          "answer": {
+            "th": "✓",
+            "en": "✓"
+          },
+          "note": {
+            "th": "He มีการจัดเรียง 1s² จึงอยู่บล็อก s",
+            "en": "Its configuration is 1s², so it belongs to the s block."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 48,
+      "prompt": {
+        "th": "Ga ที่มี [Ar]3d¹⁰4s²4p¹ มีเวเลนซ์อิเล็กตรอน 1 ตัว เพราะดูเฉพาะ 4p¹",
+        "en": "Ga, with the electron configuration [Ar]3d¹⁰4s²4p¹, has one valence electron because only 4p¹ is counted."
+      },
+      "fields": [
+        {
+          "key": "tf-48",
+          "label": {
+            "th": "คำตอบข้อ 48",
+            "en": "Answer to Question 48"
+          },
+          "answer": {
+            "th": "✗",
+            "en": "✗"
+          },
+          "note": {
+            "th": "ต้องนับ 4s² + 4p¹ รวมเป็นเวเลนซ์ 3",
+            "en": "Count 4s² and 4p¹ together: there are three valence electrons."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 49,
+      "prompt": {
+        "th": "อะตอมที่มีจำนวนอิเล็กตรอนมากกว่า ต้องมีขนาดใหญ่กว่าเสมอ",
+        "en": "An atom with more electrons must always be larger than an atom with fewer electrons."
+      },
+      "fields": [
+        {
+          "key": "tf-49",
+          "label": {
+            "th": "คำตอบข้อ 49",
+            "en": "Answer to Question 49"
+          },
+          "answer": {
+            "th": "✗",
+            "en": "✗"
+          },
+          "note": {
+            "th": "ในคาบเดียวกันจำนวนอิเล็กตรอนเพิ่ม แต่รัศมีโดยทั่วไปลดลง",
+            "en": "Across a period, electron number increases while atomic radius generally decreases."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 50,
+      "prompt": {
+        "th": "ในชุดไอออนที่มีการจัดเรียงอิเล็กตรอนเหมือนกัน ตัวที่มีโปรตอนมากกว่ามีแนวโน้มรัศมีเล็กกว่า",
+        "en": "In a series of ions with the same electron configuration, an ion with more protons tends to have a smaller radius."
+      },
+      "fields": [
+        {
+          "key": "tf-50",
+          "label": {
+            "th": "คำตอบข้อ 50",
+            "en": "Answer to Question 50"
+          },
+          "answer": {
+            "th": "✓",
+            "en": "✓"
+          },
+          "note": {
+            "th": "เมื่อการจัดเรียงอิเล็กตรอนเหมือนกัน โปรตอนมากขึ้นดึงอิเล็กตรอนได้แรงกว่า",
+            "en": "With the same electron configuration, a larger proton number gives stronger attraction."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 51,
+      "prompt": {
+        "th": "เมื่อ Mg เปลี่ยนเป็น Mg²⁺ จำนวนโปรตอนจะลดลง 2 ตัว",
+        "en": "When Mg forms Mg²⁺, its number of protons decreases by two."
+      },
+      "fields": [
+        {
+          "key": "tf-51",
+          "label": {
+            "th": "คำตอบข้อ 51",
+            "en": "Answer to Question 51"
+          },
+          "answer": {
+            "th": "✗",
+            "en": "✗"
+          },
+          "note": {
+            "th": "เปลี่ยนจำนวนอิเล็กตรอน ไม่เปลี่ยนจำนวนโปรตอน",
+            "en": "Ion formation changes the electron number, not the proton number."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 52,
+      "prompt": {
+        "th": "การดึงอิเล็กตรอนออกตามนิยาม IE₁ ของอะตอมสถานะแก๊สต้องใช้พลังงาน",
+        "en": "Removing an electron from a gaseous atom according to the definition of first ionization energy requires an input of energy."
+      },
+      "fields": [
+        {
+          "key": "tf-52",
+          "label": {
+            "th": "คำตอบข้อ 52",
+            "en": "Answer to Question 52"
+          },
+          "answer": {
+            "th": "✓",
+            "en": "✓"
+          },
+          "note": {
+            "th": "IE เป็นพลังงานที่ใช้ดึงอิเล็กตรอนออก จึงเป็นกระบวนการดูดพลังงาน",
+            "en": "Ionization requires energy to overcome attraction to the nucleus."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 53,
+      "prompt": {
+        "th": "สำหรับธาตุที่มีอิเล็กตรอนอย่างน้อย 2 ตัว ค่า IE₂ สูงกว่า IE₁ ของธาตุเดียวกัน",
+        "en": "For an element with at least two electrons, IE₂ is higher than IE₁ for that same element."
+      },
+      "fields": [
+        {
+          "key": "tf-53",
+          "label": {
+            "th": "คำตอบข้อ 53",
+            "en": "Answer to Question 53"
+          },
+          "answer": {
+            "th": "✓",
+            "en": "✓"
+          },
+          "note": {
+            "th": "อิเล็กตรอนที่เหลือถูกไอออนบวกยึดไว้แน่นขึ้น",
+            "en": "The remaining electron is more tightly bound by the positive ion."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 54,
+      "prompt": {
+        "th": "IE₁ เพิ่มขึ้นจากซ้ายไปขวาในคาบทุกคู่ธาตุ โดยไม่มีข้อยกเว้น",
+        "en": "First ionization energy increases between every adjacent pair of elements from left to right across a period, without exception."
+      },
+      "fields": [
+        {
+          "key": "tf-54",
+          "label": {
+            "th": "คำตอบข้อ 54",
+            "en": "Answer to Question 54"
+          },
+          "answer": {
+            "th": "✗",
+            "en": "✗"
+          },
+          "note": {
+            "th": "มีจุดลดลง เช่น Be→B, N→O, Mg→Al และ P→S",
+            "en": "Exceptions include Be→B, N→O, Mg→Al and P→S."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 55,
+      "prompt": {
+        "th": "IE₁ ของ Be สูงกว่า B",
+        "en": "The first ionization energy of Be is higher than that of B."
+      },
+      "fields": [
+        {
+          "key": "tf-55",
+          "label": {
+            "th": "คำตอบข้อ 55",
+            "en": "Answer to Question 55"
+          },
+          "answer": {
+            "th": "✓",
+            "en": "✓"
+          },
+          "note": {
+            "th": "อิเล็กตรอน 2p¹ ของ B ดึงออกง่ายกว่า 2s² ของ Be",
+            "en": "The 2p electron in B is easier to remove than a 2s electron in Be."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 56,
+      "prompt": {
+        "th": "IE₁ ของ P สูงกว่า S",
+        "en": "The first ionization energy of P is higher than that of S."
+      },
+      "fields": [
+        {
+          "key": "tf-56",
+          "label": {
+            "th": "คำตอบข้อ 56",
+            "en": "Answer to Question 56"
+          },
+          "answer": {
+            "th": "✓",
+            "en": "✓"
+          },
+          "note": {
+            "th": "S มี 3p⁴ ที่เกิดการจับคู่และแรงผลัก ต่างจาก P ที่มี 3p³",
+            "en": "S has a paired 3p electron; P has the 3p³ arrangement."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 57,
+      "prompt": {
+        "th": "ค่า EN บนสเกล Pauling เป็นค่าที่ไม่มีหน่วย",
+        "en": "Electronegativity on the Pauling scale has no unit."
+      },
+      "fields": [
+        {
+          "key": "tf-57",
+          "label": {
+            "th": "คำตอบข้อ 57",
+            "en": "Answer to Question 57"
+          },
+          "answer": {
+            "th": "✓",
+            "en": "✓"
+          },
+          "note": {
+            "th": "EN เป็นค่าความสามารถสัมพัทธ์บนสเกลที่ใช้",
+            "en": "It is a relative measure on the Pauling scale."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 58,
+      "prompt": {
+        "th": "เพราะ F มี EN สูงกว่า Cl จึงสรุปได้ว่า F ต้องรับอิเล็กตรอนแล้วคายพลังงานมากกว่า Cl",
+        "en": "Because F has a higher electronegativity than Cl, adding an electron to F must release more energy than adding an electron to Cl."
+      },
+      "fields": [
+        {
+          "key": "tf-58",
+          "label": {
+            "th": "คำตอบข้อ 58",
+            "en": "Answer to Question 58"
+          },
+          "answer": {
+            "th": "✗",
+            "en": "✗"
+          },
+          "note": {
+            "th": "EN กับ EA เป็นคนละสมบัติ Cl รับอิเล็กตรอนแล้วคายพลังงานมากกว่า F",
+            "en": "EN and EA describe different processes; Cl releases more energy on electron addition than F."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 59,
+      "prompt": {
+        "th": "การรับอิเล็กตรอนตามกระบวนการ EA ของทุกธาตุต้องคายพลังงานเสมอ",
+        "en": "Electron addition in the electron-affinity process must release energy for every element."
+      },
+      "fields": [
+        {
+          "key": "tf-59",
+          "label": {
+            "th": "คำตอบข้อ 59",
+            "en": "Answer to Question 59"
+          },
+          "answer": {
+            "th": "✗",
+            "en": "✗"
+          },
+          "note": {
+            "th": "การรับอิเล็กตรอนอาจดูดหรือคายพลังงาน ขึ้นกับธาตุ",
+            "en": "Electron addition can require or release energy, depending on the element."
+          },
+          "mm": 11
+        }
+      ]
+    },
+    {
+      "number": 60,
+      "prompt": {
+        "th": "การที่ตารางไม่ระบุค่า EN ของธาตุหนึ่ง ไม่ได้หมายความว่า EN ของธาตุนั้นเท่ากับศูนย์",
+        "en": "The absence of an electronegativity value in a table does not mean that the element has an electronegativity of zero."
+      },
+      "fields": [
+        {
+          "key": "tf-60",
+          "label": {
+            "th": "คำตอบข้อ 60",
+            "en": "Answer to Question 60"
+          },
+          "answer": {
+            "th": "✓",
+            "en": "✓"
+          },
+          "note": {
+            "th": "ไม่มีข้อมูลในตารางไม่เท่ากับมีค่าศูนย์",
+            "en": "An unreported value is not a value of zero."
+          },
+          "mm": 11
+        }
+      ]
+    }
+  ],
+  "sentenceBank": {
+    "th": [
+      "เวเลนซ์อิเล็กตรอนอยู่ในชั้นหลักเดียวกัน แต่มีประจุนิวเคลียสยังผลสูงกว่า จึงดึงดูดอิเล็กตรอนได้แรงกว่า",
+      "กำลังเปรียบเทียบการดึงอิเล็กตรอนที่ใช้ร่วมกันในพันธะ ไม่ใช่การรับอิเล็กตรอนของอะตอมอิสระ",
+      "เมื่ออะตอมเกิดเป็นไอออน หมู่และคาบของธาตุต้องเปลี่ยนตามการจัดเรียงอิเล็กตรอนของไอออน",
+      "ได้รับอิเล็กตรอนเพิ่มโดยจำนวนโปรตอนเท่าเดิม ทำให้แรงผลักระหว่างอิเล็กตรอนเพิ่มขึ้น",
+      "การจับคู่ในออร์บิทัลเดียวกันทำให้แรงผลักระหว่างอิเล็กตรอนลดลง จึงดึงอิเล็กตรอนออกได้ง่ายกว่า",
+      "ตำแหน่งของธาตุในตารางธาตุพิจารณาจากการจัดเรียงอิเล็กตรอนของอะตอมเป็นกลาง",
+      "อิเล็กตรอนที่ดึงออกเป็น 3p ซึ่งมีพลังงานสูงกว่าและดึงออกง่ายกว่า 3s ของอีกธาตุหนึ่ง",
+      "เมื่อดึงเวเลนซ์อิเล็กตรอนออกหมดแล้ว ต้องดึงอิเล็กตรอนชั้นในที่ถูกยึดไว้แน่นกว่า",
+      "ระดับพลังงานย่อย ns เต็มแล้ว อิเล็กตรอนที่รับเพิ่มต้องเข้า np ที่มีพลังงานสูงกว่า",
+      "อิเล็กตรอน 3p มีพลังงานต่ำกว่าอิเล็กตรอน 3s จึงถูกดึงออกได้ง่ายกว่า",
+      "ระดับพลังงานหลักชั้นนอกเต็มแล้ว จึงมีสมบัติใกล้เคียงกับแก๊สมีสกุล",
+      "อิเล็กตรอนที่ดึงออกเป็นตัวที่จับคู่ในออร์บิทัลเดียวกัน จึงมีแรงผลักระหว่างอิเล็กตรอนเพิ่มขึ้น",
+      "ออร์บิทัล 2p มีขนาดเล็กกว่า 3p จึงทำให้การรับอิเล็กตรอนคายพลังงานมากกว่าเสมอ",
+      "มีอิเล็กตรอนเท่ากัน แต่ตัวที่มีโปรตอนมากกว่าดึงอิเล็กตรอนได้แรงกว่า",
+      "มีเวเลนซ์อิเล็กตรอน 2 ตัว จึงต้องจัดอยู่ในหมู่ 2 โดยไม่มีข้อยกเว้น",
+      "สูญเสียอิเล็กตรอนชั้นนอกสุดจนระดับพลังงานหลักสูงสุดที่มีอิเล็กตรอนลดลง",
+      "อิเล็กตรอนที่รับเข้าไปใน 2p ซึ่งมีบริเวณเล็กได้รับแรงผลักมากกว่าการรับเข้าไปใน 3p",
+      "มีเวเลนซ์อิเล็กตรอนอยู่ในระดับพลังงานหลักที่สูงขึ้น และถูกอิเล็กตรอนชั้นในกำบังมากขึ้น",
+      "ในชั้นพลังงานหลักเดียวกัน จำนวนโปรตอนที่เพิ่มขึ้นทำให้แรงดึงดูดอิเล็กตรอนจากนิวเคลียสลดลง",
+      "เริ่มมีอิเล็กตรอนในระดับพลังงานหลักชั้นถัดไป ซึ่งอยู่ห่างนิวเคลียสมากขึ้น"
+    ],
+    "en": [
+      "The valence electrons occupy the same principal shell, but they experience a greater effective nuclear charge.",
+      "The comparison concerns attraction for shared electrons in a bond rather than electron addition to an isolated atom.",
+      "When an atom forms an ion, the element's group and period must change to match the ion's electron configuration.",
+      "Electrons are added while the number of protons remains unchanged, increasing electron–electron repulsion.",
+      "Pairing electrons in the same orbital reduces electron–electron repulsion, making an electron easier to remove.",
+      "An element's position in the periodic table is determined using the electron configuration of its neutral atom.",
+      "The electron removed occupies a higher-energy 3p subshell and is easier to remove than a 3s electron in the other element.",
+      "Once all valence electrons have been removed, the next electron must be removed from a more tightly bound core shell.",
+      "The ns subshell is full, so an additional electron must enter the higher-energy np subshell.",
+      "A 3p electron has lower energy than a 3s electron and is therefore easier to remove.",
+      "Its outermost occupied principal shell is complete, so its chemical behavior resembles that of the noble gases.",
+      "The electron removed is paired with another electron in the same orbital and therefore experiences additional electron–electron repulsion.",
+      "A 2p orbital is smaller than a 3p orbital, so electron addition must always release more energy.",
+      "The species have the same number of electrons, but the one with more protons attracts those electrons more strongly.",
+      "It has two valence electrons and must therefore belong to Group 2 without exception.",
+      "The outermost electron is removed, leaving a lower highest occupied principal shell.",
+      "An electron added to the compact 2p subshell experiences greater repulsion than one added to the more spacious 3p subshell.",
+      "Its valence electrons occupy a higher principal shell and experience greater shielding by inner electrons.",
+      "Within the same principal shell, an increase in the number of protons reduces the attraction between the nucleus and the electrons.",
+      "A new principal shell begins to be occupied, farther from the nucleus."
+    ]
+  },
+  "counts": {
+    "mainQuestions": 60,
+    "answerSlotsPerLanguage": 69,
+    "reasonQuestions": 10,
+    "bankSentencesPerLanguage": 20,
+    "calculations": 0
+  },
+  "authoredPagesPerLanguage": 10
+}

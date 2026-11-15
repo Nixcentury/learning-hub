@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "chemistry-periodic-table-main-group-check-understanding",
+    "revision": "2026-11-15-1",
+    "sha256": "deb517ad6efe8061c0d9fd2d8594cf846df6559173a6c7366365ccbcf2efac9a"
+  },
+  "title": {
+    "th": "2.4 ตรวจความเข้าใจ",
+    "en": "2.4 Check Your Understanding"
+  },
+  "prerequisites": {
+    "th": "อ่านการจัดเรียงอิเล็กตรอนของธาตุหมู่หลัก และรู้ความหมายหมู่ คาบ อะตอม และไอออน",
+    "en": "Read main-group electron configurations and distinguish groups, periods, atoms and ions."
+  },
+  "goal": {
+    "th": "ตรวจความรู้เรื่องตำแหน่งและแนวโน้มสมบัติ พร้อมเลือกเหตุผลที่ถูกต้องและตรวจคำตอบด้วยตนเอง",
+    "en": "Check knowledge of periodic positions and trends, select scientifically valid explanations and review your own answers."
+  },
+  "steps": [
+    {
+      "id": "position",
+      "title": {
+        "th": "หมู่ คาบ และชนิดของธาตุ",
+        "en": "Groups, periods and element classification"
+      },
+      "summary": {
+        "th": "ตารางธาตุปัจจุบันเรียงตามเลขอะตอม\nหาหมู่และคาบจากการจัดเรียงอิเล็กตรอนของอะตอมเป็นกลาง\nหมู่หลักมีทั้งโลหะ กึ่งโลหะ และอโลหะ",
+        "en": "The modern periodic table is ordered by atomic number.\nUse the neutral atom’s electron configuration to locate its group and period.\nMain-group elements include metals, metalloids and nonmetals."
+      },
+      "story": {
+        "th": "แยกเลขหมู่ในระบบ 1–18 ออกจากจำนวนเวเลนซ์อิเล็กตรอน และระวัง Ga กับ He",
+        "en": "Distinguish 1–18 group numbers from valence-electron counts; pay attention to Ga and He."
+      },
+      "action": {
+        "th": "ทำข้อ 1–19 แล้วตรวจข้อ 10–13 เป็นพิเศษ",
+        "en": "Attempt Questions 1–19, paying particular attention to Questions 10–13."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "หมู่จากการจัดเรียงอิเล็กตรอน",
+            "en": "Group from configuration"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "config-group"
+          }
+        },
+        {
+          "label": {
+            "th": "เวเลนซ์ของ Ga",
+            "en": "Valence electrons of Ga"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ga-valence"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้า Ca²⁺ มี 3 ชั้นอิเล็กตรอน ธาตุ Ca ต้องอยู่คาบ 3 หรือไม่?",
+          "en": "If Ca²⁺ has three occupied shells, must Ca be in Period 3?"
+        },
+        "answer": {
+          "th": "ไม่ใช่ ใช้อะตอม Ca เป็นกลางซึ่งมีชั้นนอก n = 4 จึงอยู่คาบ 4",
+          "en": "No. Neutral Ca has an outermost occupied shell of n = 4, so it is in Period 4."
+        }
+      },
+      "after": {
+        "th": "หากยังสับสน ให้เปรียบเทียบข้อ 10–12 กับข้อ 32",
+        "en": "If needed, compare Questions 10–12 with Question 32."
+      }
+    },
+    {
+      "id": "rankings",
+      "title": {
+        "th": "จำ EN และตรวจจุดลดลงของ IE₁",
+        "en": "Recall EN and identify IE₁ exceptions"
+      },
+      "summary": {
+        "th": "EN ใช้ข้อมูลสเกล Pauling จาก RSC ตามชุดที่กำหนด\nIE₁ โดยทั่วไปเพิ่มตามคาบ แต่มีข้อยกเว้นจากชั้นย่อยและการจับคู่\nคาบ 2 ระวัง Be/B และ N/O; คาบ 3 ระวัง Mg/Al และ P/S",
+        "en": "Use the specified RSC dataset for EN on the Pauling scale.\nIE₁ generally increases across a period, with subshell and pairing exceptions.\nCheck Be/B and N/O in Period 2, and Mg/Al and P/S in Period 3."
+      },
+      "story": {
+        "th": "ลองเรียงจากความจำก่อนเปิดเฉลย แล้วชี้คู่ที่ไม่เป็นไปตามแนวโน้มเรียบ",
+        "en": "Order the elements from memory before revealing the answers, then identify the deviations from a simple trend."
+      },
+      "action": {
+        "th": "ทำข้อ 20–24 โดยไม่เปิดตาราง แล้วทบทวนเฉพาะคู่ที่ยังสลับกัน",
+        "en": "Attempt Questions 20–24 without a reference table, then revisit the pairs you confused."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "EN 10 ธาตุ",
+            "en": "Ten-element EN ranking"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "en-top-ten"
+          }
+        },
+        {
+          "label": {
+            "th": "IE₁ คาบ 2",
+            "en": "Period 2 IE₁"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "period-two-ie"
+          }
+        },
+        {
+          "label": {
+            "th": "IE₁ คาบ 3",
+            "en": "Period 3 IE₁"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "period-three-ie"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เหตุใดจึงใช้ลำดับเลขอะตอมเป็นลำดับ IE₁ ทั้งคาบไม่ได้?",
+          "en": "Why does atomic-number order not give the exact IE₁ order across a whole period?"
+        },
+        "answer": {
+          "th": "ต้องพิจารณาพลังงานของชั้นย่อยและแรงผลักจากอิเล็กตรอนจับคู่ด้วย",
+          "en": "Subshell energies and the repulsion associated with paired electrons also matter."
+        }
+      },
+      "after": {
+        "th": "ใช้ข้อ 36–37 เชื่อมลำดับกับเหตุผล",
+        "en": "Connect the order to its explanation in Questions 36–37."
+      }
+    },
+    {
+      "id": "radii-data",
+      "title": {
+        "th": "เปรียบเทียบขนาดและอ่านข้อมูล IE",
+        "en": "Compare radii and interpret IE data"
+      },
+      "summary": {
+        "th": "แยกอะตอมกับไอออน และนับอิเล็กตรอนก่อนเปรียบเทียบ\nชุดไอโซอิเล็กทรอนิก: โปรตอนมากกว่าดึงอิเล็กตรอนแรงกว่า\nIE ต่อเนื่องกระโดดมากเมื่อเริ่มดึงอิเล็กตรอนชั้นใน",
+        "en": "Distinguish atoms from ions and count electrons before comparing sizes.\nIn an isoelectronic series, more protons give stronger electron attraction.\nA large successive-IE increase marks the start of core-electron removal."
+      },
+      "story": {
+        "th": "ใช้ข้อมูลตารางจำลองเป็นหลัก ไม่พยายามเดาชื่อธาตุจริงจากตัวเลข",
+        "en": "Use the simulated table as given; do not infer an actual element name from these model values."
+      },
+      "action": {
+        "th": "ทำข้อ 25–30 และตรวจว่าลำดับ IE₁ กับ IE₂ ต่างกันอย่างไร",
+        "en": "Attempt Questions 25–30 and compare the IE₁ and IE₂ orders."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ชุดไอโซอิเล็กทรอนิก",
+            "en": "Isoelectronic series"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "isoelectronic-size"
+          }
+        },
+        {
+          "label": {
+            "th": "ตาราง IE",
+            "en": "IE data table"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "successive-ie-data"
+          }
+        },
+        {
+          "label": {
+            "th": "หมู่ของธาตุ A",
+            "en": "Group of element A"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "group-a"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ทำไม IE₂ ของ Na จึงสูงกว่า IE₂ ของ Mg?",
+          "en": "Why is IE₂ of Na higher than IE₂ of Mg?"
+        },
+        "answer": {
+          "th": "Na เริ่มดึงอิเล็กตรอนชั้นในแล้ว ส่วน Mg ยังดึงเวเลนซ์",
+          "en": "Na has begun core-electron removal, whereas Mg is still losing a valence electron."
+        }
+      },
+      "after": {
+        "th": "หากจุดกระโดดยังไม่ชัด ให้กลับข้อ 19 และ 39",
+        "en": "If the large increase remains unclear, revisit Questions 19 and 39."
+      }
+    },
+    {
+      "id": "sentence-bank",
+      "title": {
+        "th": "เลือกและเขียนเหตุผล",
+        "en": "Select and write an explanation"
+      },
+      "summary": {
+        "th": "ข้อ 31–40 ใช้ Sentence Bank 20 ประโยคในหน้าด้านหลัง\nมีทั้งเหตุผลที่ไม่ตรงบริบทและข้อความคลาดเคลื่อน ต้องเลือกตามหลักวิทยาศาสตร์\nเขียนเป็นข้อความ ใช้ประโยคซ้ำได้เมื่ออธิบายได้จริง",
+        "en": "Questions 31–40 use the 20-sentence bank on the reverse page.\nSome statements do not apply; others are misconceptions, so choose scientifically.\nWrite the words. A valid sentence may be used more than once."
+      },
+      "story": {
+        "th": "เลือกประโยคที่อธิบายกลไก ไม่เลือกเพียงเพราะมีคำที่เหมือนในโจทย์",
+        "en": "Choose a statement that explains the mechanism, rather than merely matching a word in the question."
+      },
+      "action": {
+        "th": "ทำข้อ 31–40 และเขียนประโยคเหตุผลลงในพื้นที่ของแต่ละข้อ",
+        "en": "Attempt Questions 31–40 and write an explanation in each answer space."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เริ่มเติมเหตุผล",
+            "en": "Start the explanations"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "helium-position"
+          }
+        },
+        {
+          "label": {
+            "th": "Sentence Bank",
+            "en": "Sentence Bank"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "sentence-bank"
+          }
+        },
+        {
+          "label": {
+            "th": "เหตุผลของ Cl/F",
+            "en": "Cl/F explanation"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "affinity-chlorine-fluorine"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "มีคำว่า “โปรตอน” เหมือนโจทย์ เพียงพอที่จะเลือกประโยคนั้นหรือไม่?",
+          "en": "Is a sentence suitable simply because it contains the word “protons,” as the question does?"
+        },
+        "answer": {
+          "th": "ไม่เพียงพอ ต้องตรวจชนิดอนุภาค ชั้นพลังงาน และทิศทางของแรงดึงให้ตรงบริบท",
+          "en": "No. The species, occupied shells and direction of the attraction must fit the situation."
+        }
+      },
+      "after": {
+        "th": "ใช้เฉลยตรวจใจความ ยอมรับถ้อยคำสมมูลและเหตุผลที่ใช้ได้จริง",
+        "en": "Check the scientific meaning against the explanations; equivalent valid wording is acceptable."
+      }
+    },
+    {
+      "id": "true-false",
+      "title": {
+        "th": "ตัดสินข้อความและตรวจตัวเอง",
+        "en": "Judge the statements and self-check"
+      },
+      "summary": {
+        "th": "ข้อ 41–60 ตอบเพียง ✓ หรือ ✗ ไม่ต้องเขียนเหตุผล\nระวังข้อความเหมารวมและความสับสนระหว่าง IE, EA และ EN\nเฉลยบอกค่าความจริงและอธิบายประเด็นที่ต้องแก้",
+        "en": "Questions 41–60 require only ✓ or ✗; no written explanation is needed.\nWatch for overgeneralizations and confusion between IE, EA and EN.\nThe key gives the truth value and explains the relevant correction."
+      },
+      "story": {
+        "th": "อ่านทั้งข้อความก่อนตัดสิน ไม่ถือว่ามีคำว่า “ทุก” แล้วต้องผิดเสมอ",
+        "en": "Read the whole statement; the word “all” does not automatically make it false."
+      },
+      "action": {
+        "th": "ทำข้อ 41–60 ก่อนเปิดเฉลย แล้วกลับไปทบทวนประเด็นที่ยังผิด",
+        "en": "Attempt Questions 41–60 before revealing the key, then revisit the concepts you missed."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เริ่มถูก–ผิด",
+            "en": "Start true–false"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "tf-41"
+          }
+        },
+        {
+          "label": {
+            "th": "IE ตามคาบ",
+            "en": "Across-period IE"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "tf-54"
+          }
+        },
+        {
+          "label": {
+            "th": "EA กับ EN",
+            "en": "EA versus EN"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "tf-58"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "F มี EN สูงสุด จึงต้องคายพลังงานเมื่อรับอิเล็กตรอนมากกว่า Cl หรือไม่?",
+          "en": "Does the highest EN of F imply that electron addition must release more energy than for Cl?"
+        },
+        "answer": {
+          "th": "ไม่ใช่ EN กับ EA พิจารณาคนละกระบวนการ",
+          "en": "No. EN and EA concern different processes."
+        }
+      },
+      "after": {
+        "th": "กลับไปทำเฉพาะข้อที่ผิดหรือยังไม่มั่นใจ โดยไม่จำเป็นต้องเริ่มใหม่ทุกข้อ",
+        "en": "Revisit only incorrect or uncertain answers; a full restart is unnecessary."
+      }
+    }
+  ],
+  "finish": {
+    "th": "เชื่อมตำแหน่ง การจัดเรียงอิเล็กตรอน และแรงดึงจากนิวเคลียสกับสมบัติที่เปรียบเทียบ",
+    "en": "Connect periodic position, electron configuration and nuclear attraction with the property being compared."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "ก่อนเรียงรัศมีไอออน ควรตรวจข้อมูลใดบ้าง?",
+      "en": "What should you check before ordering ionic radii?"
+    },
+    "answer": {
+      "th": "ชนิดและประจุของอนุภาค จำนวนอิเล็กตรอน ชั้นพลังงานที่มีอิเล็กตรอน และจำนวนโปรตอน",
+      "en": "Check the species and charge, electron count, occupied principal shells and proton number."
+    }
+  }
+}

@@ -61,3 +61,7 @@ EA มีนิยามเครื่องหมายต่างกัน�
 EN คงชุด RSC ที่อนุมัติเดิม ไม่เปลี่ยนคำตอบหรือเติมค่าของธาตุจากคนละแหล่ง
 
 ผล QA และหน้าพิมพ์จริงอยู่ใน IMPLEMENTATION-QA.md
+
+## การเผยแพร่
+
+พบ HTTP cache เรียก HTML รุ่นแรกแม้ deployment.json เป็นรุ่นใหม่ จึงให้เมนูเรียก 2-4-check-understanding-v2.html พร้อม guide รุ่น v2 โดยคง contentId และ route เดิม ไฟล์ชื่อเดิมยังเป็น compatibility copy ที่มีเนื้อหา 49 ข้อ ไม่มี Bank และเนื้อหา body ตรงกัน

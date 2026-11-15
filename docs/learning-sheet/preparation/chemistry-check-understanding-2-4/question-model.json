@@ -1454,5 +1454,6 @@
     "bankSentencesPerLanguage": 0,
     "calculations": 0
   },
-  "authoredPagesPerLanguage": 6
+  "authoredPagesPerLanguage": 6,
+  "sourcePath": "public/content/chemistry/atomic-properties/2-4-check-understanding-v2.html"
 }

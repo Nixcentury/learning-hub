@@ -40,6 +40,7 @@
 - เก็บคำตอบใน data-sheet-answer ที่เป็นลูกโดยตรงของ data-sheet-slot; label ต้องไม่เปิดเผยคำตอบ
 - ใช้เครื่องมือภาษา เฉลย MathJax ไกด์ และพิมพ์กลาง ไม่เพิ่ม engine หรือ toolbar เฉพาะใบ
 - รักษา contentId, route และ bankKey เดิม; ปุ่มอยู่ก่อน Exit Ticket
+- ไฟล์ใช้งานปัจจุบันคือ 2-4-check-understanding-v2.html พร้อม guide รุ่น v2 เพื่อไม่ให้ HTTP cache เรียกเนื้อหารุ่นก่อน หน้าเดิมเก็บเป็น compatibility copy ที่มีเนื้อหา 49 ข้อเหมือนกัน ไม่ใช้ query ใน menu href เพราะสัญญาระบบไม่รองรับ
 - ปรับ guide JSON, เลขข้อ, target, revision และ SHA-256 ให้ตรงไฟล์จริงทุกครั้ง
 - ตรวจจำนวนข้อและคำตอบจาก model เปิดเว็บและพิมพ์จริง ไม่อ้างผลทดสอบอุปกรณ์ที่ยังไม่ได้ใช้
 

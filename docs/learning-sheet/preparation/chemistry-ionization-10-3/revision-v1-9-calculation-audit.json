@@ -1,0 +1,261 @@
+{
+  "method": "Independent stoichiometry and full quadratic equilibria; 2.5% bound accommodates the stated square-root approximations and two-significant-figure rounding. The deliberately rejected trial in 5A is checked as a trial.",
+  "tasks": [
+    {
+      "task": "problem-2-1",
+      "displayed": [
+        0.02,
+        0.05
+      ],
+      "recomputed": [
+        0.02,
+        0.049999999999999996
+      ],
+      "maxRelativeDifference": 1.3877787807814457e-16
+    },
+    {
+      "task": "problem-2-2",
+      "displayed": [
+        0.0125,
+        0.025,
+        0.00375
+      ],
+      "recomputed": [
+        0.0125,
+        0.025,
+        0.00375
+      ],
+      "maxRelativeDifference": 0.0
+    },
+    {
+      "task": "problem-2-3",
+      "displayed": [
+        0.01,
+        0.04
+      ],
+      "recomputed": [
+        0.01,
+        0.04
+      ],
+      "maxRelativeDifference": 0.0
+    },
+    {
+      "task": "problem-2-4",
+      "displayed": [
+        0.16
+      ],
+      "recomputed": [
+        0.16
+      ],
+      "maxRelativeDifference": 0.0
+    },
+    {
+      "task": "problem-3-1",
+      "displayed": [
+        0.098,
+        0.002
+      ],
+      "recomputed": [
+        0.098,
+        0.002
+      ],
+      "maxRelativeDifference": 0.0
+    },
+    {
+      "task": "problem-3-2",
+      "displayed": [
+        4.08e-05,
+        2.0
+      ],
+      "recomputed": [
+        4.081632653061224e-05,
+        2.0
+      ],
+      "maxRelativeDifference": 0.0003999999999997794
+    },
+    {
+      "task": "problem-3-3",
+      "displayed": [
+        2.4500000000000003e-10
+      ],
+      "recomputed": [
+        2.4500000000000003e-10
+      ],
+      "maxRelativeDifference": 0.0
+    },
+    {
+      "task": "problem-4-2",
+      "displayed": [
+        0.0009000000000000001,
+        1.0
+      ],
+      "recomputed": [
+        0.0008955112499296885,
+        0.9950124999218761
+      ],
+      "maxRelativeDifference": 0.005012499921875962
+    },
+    {
+      "task": "problem-4-3",
+      "displayed": [
+        1.1e-11,
+        1.1000000000000001e-09
+      ],
+      "recomputed": [
+        1.116680555468751e-11,
+        1.111111111111111e-09
+      ],
+      "maxRelativeDifference": 0.01493762507734258
+    },
+    {
+      "task": "problem-5-1",
+      "displayed": [
+        0.002,
+        10.0
+      ],
+      "recomputed": [
+        0.002,
+        10.0
+      ],
+      "maxRelativeDifference": 0.0
+    },
+    {
+      "task": "problem-5-2",
+      "displayed": [
+        0.0019
+      ],
+      "recomputed": [
+        0.0019024984394500788
+      ],
+      "maxRelativeDifference": 0.0013132412612128185
+    },
+    {
+      "task": "problem-5-3",
+      "displayed": [
+        0.0008,
+        0.5,
+        0.0004,
+        1.0
+      ],
+      "recomputed": [
+        0.0007980024999960937,
+        0.4987515624975586,
+        0.00039800499996875036,
+        0.9950124999218759
+      ],
+      "maxRelativeDifference": 0.005012499921876099
+    },
+    {
+      "task": "problem-6-2",
+      "displayed": [
+        0.00095,
+        0.95,
+        1e-10
+      ],
+      "recomputed": [
+        0.0009441939706775837,
+        0.9441939706775837,
+        1e-10
+      ],
+      "maxRelativeDifference": 0.0061491912707827045
+    },
+    {
+      "task": "problem-7-1",
+      "displayed": [
+        5e-10
+      ],
+      "recomputed": [
+        4.999999999999999e-10
+      ],
+      "maxRelativeDifference": 2.0679515313825694e-16
+    },
+    {
+      "task": "problem-7-2",
+      "displayed": [
+        2e-07
+      ],
+      "recomputed": [
+        2e-07
+      ],
+      "maxRelativeDifference": 0.0
+    },
+    {
+      "task": "problem-7-3",
+      "displayed": [
+        1e-10,
+        1e-08
+      ],
+      "recomputed": [
+        9.999999999999999e-11,
+        1e-08
+      ],
+      "maxRelativeDifference": 1.2924697071141057e-16
+    },
+    {
+      "task": "problem-8-1",
+      "displayed": [
+        0.025,
+        0.005
+      ],
+      "recomputed": [
+        0.025,
+        0.005000000000000001
+      ],
+      "maxRelativeDifference": 1.7347234759768068e-16
+    },
+    {
+      "task": "problem-8-2",
+      "displayed": [
+        0.01
+      ],
+      "recomputed": [
+        0.010000000000000002
+      ],
+      "maxRelativeDifference": 1.7347234759768068e-16
+    },
+    {
+      "task": "problem-8-3",
+      "displayed": [
+        0.2
+      ],
+      "recomputed": [
+        0.20000000000000004
+      ],
+      "maxRelativeDifference": 1.3877787807814454e-16
+    },
+    {
+      "task": "problem-9-1",
+      "displayed": [
+        0.045
+      ],
+      "recomputed": [
+        0.045
+      ],
+      "maxRelativeDifference": 0.0
+    },
+    {
+      "task": "problem-9-2",
+      "displayed": [
+        0.0009000000000000001,
+        2.0
+      ],
+      "recomputed": [
+        0.0008910449988750563,
+        1.980099997500125
+      ],
+      "maxRelativeDifference": 0.010049998750062584
+    },
+    {
+      "task": "problem-9-3",
+      "displayed": [
+        2.25
+      ],
+      "recomputed": [
+        2.227612497187641
+      ],
+      "maxRelativeDifference": 0.01004999875006233
+    }
+  ],
+  "fullEquationVolumeFor9C_mL": 2.227612497187641,
+  "acceptedFullEquationVolume_mL": 2.23
+}

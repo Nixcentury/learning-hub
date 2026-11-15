@@ -1,0 +1,636 @@
+{
+  "revision": "1.9",
+  "rulesVersion": "1.1",
+  "entries": [
+    {
+      "id": "electrolyte",
+      "kind": "word",
+      "answer": {
+        "th": "อิเล็กโทรไลต์",
+        "en": "electrolytes"
+      },
+      "distractor": {
+        "th": "ตัวทำละลาย",
+        "en": "solvents"
+      }
+    },
+    {
+      "id": "nonelectrolyte",
+      "kind": "word",
+      "answer": {
+        "th": "นอนอิเล็กโทรไลต์",
+        "en": "a nonelectrolyte"
+      },
+      "distractor": {
+        "th": "สารประกอบไอออนิก",
+        "en": "an ionic compound"
+      }
+    },
+    {
+      "id": "strong-electrolyte",
+      "kind": "word",
+      "answer": {
+        "th": "อิเล็กโทรไลต์แก่",
+        "en": "a strong electrolyte"
+      },
+      "distractor": {
+        "th": "กรดแก่เสมอ",
+        "en": "always a strong acid"
+      }
+    },
+    {
+      "id": "weak-electrolyte",
+      "kind": "word",
+      "answer": {
+        "th": "อิเล็กโทรไลต์อ่อน",
+        "en": "a weak electrolyte"
+      },
+      "distractor": {
+        "th": "เบสแก่",
+        "en": "a strong base"
+      }
+    },
+    {
+      "id": "strength",
+      "kind": "word",
+      "answer": {
+        "th": "ความแรง",
+        "en": "strength"
+      },
+      "distractor": {
+        "th": "มวลโมลาร์",
+        "en": "molar mass"
+      }
+    },
+    {
+      "id": "concentration",
+      "kind": "word",
+      "answer": {
+        "th": "ความเข้มข้น",
+        "en": "concentration"
+      },
+      "distractor": {
+        "th": "ความหนาแน่น",
+        "en": "density"
+      }
+    },
+    {
+      "id": "complete",
+      "kind": "word",
+      "answer": {
+        "th": "สมบูรณ์",
+        "en": "complete"
+      },
+      "distractor": {
+        "th": "ร้อยละห้าสิบ",
+        "en": "fifty-percent"
+      }
+    },
+    {
+      "id": "equilibrium",
+      "kind": "word",
+      "answer": {
+        "th": "สมดุล",
+        "en": "equilibrium"
+      },
+      "distractor": {
+        "th": "ขณะเริ่มละลาย",
+        "en": "the instant of dissolution"
+      }
+    },
+    {
+      "id": "initial",
+      "kind": "word",
+      "answer": {
+        "th": "เริ่มต้น",
+        "en": "initial"
+      },
+      "distractor": {
+        "th": "หลังแตกตัวจนหมด",
+        "en": "completely ionized"
+      }
+    },
+    {
+      "id": "small",
+      "kind": "word",
+      "answer": {
+        "th": "น้อยมาก",
+        "en": "very small"
+      },
+      "distractor": {
+        "th": "มากกว่าความเข้มข้นเริ่มต้น",
+        "en": "greater than the initial concentration"
+      }
+    },
+    {
+      "id": "polyprotic",
+      "kind": "word",
+      "answer": {
+        "th": "กรดหลายโปรตอน",
+        "en": "a polyprotic acid"
+      },
+      "distractor": {
+        "th": "กรดหนึ่งโปรตอน",
+        "en": "a monoprotic acid"
+      }
+    },
+    {
+      "id": "stepwise",
+      "kind": "word",
+      "answer": {
+        "th": "ทีละขั้น",
+        "en": "stepwise"
+      },
+      "distractor": {
+        "th": "เพียงขั้นเดียว",
+        "en": "a single step"
+      }
+    },
+    {
+      "id": "temperature",
+      "kind": "word",
+      "answer": {
+        "th": "อุณหภูมิ",
+        "en": "temperature"
+      },
+      "distractor": {
+        "th": "ปริมาตรภาชนะ",
+        "en": "container volume"
+      }
+    },
+    {
+      "id": "conjugate",
+      "kind": "word",
+      "answer": {
+        "th": "คู่กรด–เบส",
+        "en": "a conjugate acid–base pair"
+      },
+      "distractor": {
+        "th": "สารที่มีจำนวนโปรตอนเท่ากัน",
+        "en": "a pair with the same number of protons"
+      }
+    },
+    {
+      "id": "moles-conserved",
+      "kind": "sentence",
+      "answer": {
+        "th": "จำนวนโมลของตัวถูกละลายคงเดิม หากไม่ได้เติมหรือสูญเสียตัวถูกละลาย",
+        "en": "The amount of solute in moles remains unchanged, provided no solute is added or lost."
+      },
+      "distractor": {
+        "th": "เมื่อเติมน้ำ จำนวนโมลของตัวถูกละลายจะลดลงตามความเข้มข้นเสมอ",
+        "en": "Adding water always decreases the amount of solute in moles in proportion to its concentration."
+      }
+    },
+    {
+      "id": "mix-moles",
+      "kind": "sentence",
+      "answer": {
+        "th": "ต้องรวมจำนวนโมลของสารชนิดเดียวกัน แล้วหารด้วยปริมาตรสุดท้ายจริง",
+        "en": "Add the moles of the same solute and divide by the actual final solution volume."
+      },
+      "distractor": {
+        "th": "นำความเข้มข้นทั้งสองมาหาค่าเฉลี่ยได้เสมอ แม้ปริมาตรที่นำมาผสมต่างกัน",
+        "en": "The two concentrations can always be averaged, even when the mixed volumes differ."
+      }
+    },
+    {
+      "id": "approx-valid",
+      "kind": "sentence",
+      "answer": {
+        "th": "ตรวจสัดส่วนที่แตกตัวเทียบกับความเข้มข้นเริ่มต้น โดยบทเรียนนี้ยอมรับค่าประมาณเมื่อร้อยละที่ตรวจได้ไม่เกินประมาณร้อยละห้า",
+        "en": "Check the ionized fraction against the initial concentration; this lesson accepts the approximation when the calculated percentage is no more than about five percent."
+      },
+      "distractor": {
+        "th": "เมื่อใช้สูตรรากที่สองแล้ว ไม่ต้องตรวจสัดส่วนที่แตกตัว เพราะคำตอบจากสูตรประมาณใช้ได้เสมอ",
+        "en": "Once the square-root formula is used, no fraction check is needed because its result is always valid."
+      }
+    },
+    {
+      "id": "approx-full",
+      "kind": "sentence",
+      "answer": {
+        "th": "ต้องใช้สมการสมดุลเต็มและเลือกรากที่มีความหมายทางเคมี",
+        "en": "Use the full equilibrium equation and select the chemically meaningful root."
+      },
+      "distractor": {
+        "th": "ยังใช้ค่าประมาณเดิมได้ เพียงปัดคำตอบให้เหลือเลขนัยสำคัญน้อยลง",
+        "en": "Keep the approximate value and simply round it to fewer significant figures."
+      }
+    },
+    {
+      "id": "dilution-weak",
+      "kind": "sentence",
+      "answer": {
+        "th": "ค่าคงที่การแตกตัวคงเดิม ร้อยละการแตกตัวเพิ่มขึ้น แต่ความเข้มข้นไฮโดรเนียมไอออนจากกรดลดลง",
+        "en": "The ionization constant stays the same, the percentage ionization increases, and the hydronium concentration supplied by the acid decreases."
+      },
+      "distractor": {
+        "th": "ค่าคงที่การแตกตัวเพิ่มขึ้น และความเข้มข้นไฮโดรเนียมไอออนต้องเพิ่มขึ้นตามร้อยละการแตกตัว",
+        "en": "The ionization constant increases, and the hydronium concentration must rise with the percentage ionization."
+      }
+    },
+    {
+      "id": "poly-second",
+      "kind": "sentence",
+      "answer": {
+        "th": "การแตกตัวขั้นที่สองมีสมดุล จึงไม่ถือว่ากรดซัลฟิวริกทุกสารละลายให้ไฮโดรเนียมไอออนเป็นสองเท่าของความเข้มข้นเริ่มต้นเสมอ",
+        "en": "The second ionization is an equilibrium, so sulfuric acid does not always supply twice its initial concentration of hydronium ions."
+      },
+      "distractor": {
+        "th": "กรดที่มีไฮโดรเจนสองอะตอมต้องให้ไฮโดรเนียมไอออนเป็นสองเท่าของความเข้มข้นเริ่มต้นทุกกรณี",
+        "en": "Every acid with two hydrogen atoms always supplies twice its initial concentration of hydronium ions."
+      }
+    },
+    {
+      "id": "neutrality",
+      "kind": "sentence",
+      "answer": {
+        "th": "สารละลายเป็นกลางเมื่อความเข้มข้นไฮโดรเนียมไอออนเท่ากับไฮดรอกไซด์ไอออน โดยค่าของทั้งสองชนิดขึ้นกับอุณหภูมิ",
+        "en": "A solution is neutral when its hydronium and hydroxide concentrations are equal; their values depend on temperature."
+      },
+      "distractor": {
+        "th": "สารละลายเป็นกลางต้องมีความเข้มข้นของไอออนทั้งสองชนิดเท่ากับค่าที่อุณหภูมิยี่สิบห้าองศาเซลเซียสเสมอ",
+        "en": "A neutral solution must always have the same two ion concentrations as it does at twenty-five degrees Celsius."
+      }
+    },
+    {
+      "id": "pair-condition",
+      "kind": "sentence",
+      "answer": {
+        "th": "ต้องเป็นกรดกับเบสคู่กันในน้ำที่อุณหภูมิเดียวกัน",
+        "en": "The acid and base must form a conjugate pair in water at the same temperature."
+      },
+      "distractor": {
+        "th": "ใช้กรดชนิดใดจับคู่กับเบสชนิดใดก็ได้ โดยไม่ต้องคำนึงถึงตัวทำละลายและอุณหภูมิ",
+        "en": "Any acid can be paired with any base, regardless of solvent or temperature."
+      }
+    },
+    {
+      "id": "pair-inverse",
+      "kind": "sentence",
+      "answer": {
+        "th": "เมื่อเทียบที่อุณหภูมิเดียวกัน กรดที่มีค่าคงที่การแตกตัวมากกว่าจะมีคู่เบสที่มีค่าคงที่การแตกตัวน้อยกว่า",
+        "en": "At the same temperature, an acid with a larger ionization constant has a conjugate base with a smaller ionization constant."
+      },
+      "distractor": {
+        "th": "เมื่อกรดมีค่าคงที่การแตกตัวมากขึ้น คู่เบสของกรดนั้นจะต้องมีค่าคงที่การแตกตัวมากขึ้นด้วย",
+        "en": "An acid with a larger ionization constant must also have a conjugate base with a larger ionization constant."
+      }
+    },
+    {
+      "id": "strength-difference",
+      "kind": "sentence",
+      "answer": {
+        "th": "ความแรงของกรดบอกแนวโน้มการให้โปรตอนในน้ำ ส่วนความเข้มข้นบอกปริมาณสารต่อปริมาตร จึงเป็นคนละปริมาณ",
+        "en": "Acid strength describes the tendency to donate a proton in water, whereas concentration describes the amount of substance per solution volume."
+      },
+      "distractor": {
+        "th": "กรดแก่หมายถึงกรดที่มีปริมาณสารต่อปริมาตรมากกว่ากรดอ่อนทุกสารละลาย",
+        "en": "A strong acid always contains more acid per unit solution volume than any weak-acid solution."
+      }
+    },
+    {
+      "id": "conductivity",
+      "kind": "sentence",
+      "answer": {
+        "th": "การนำไฟฟ้าขึ้นกับจำนวนและการเคลื่อนที่ของไอออน ต้องควบคุมความเข้มข้น อุณหภูมิ และชุดทดลอง จึงไม่ใช้ความสว่างเพียงอย่างเดียวตัดสินความแรง",
+        "en": "Conductivity depends on ion numbers and mobility; concentration, temperature and apparatus must be controlled, so brightness alone does not establish acid strength."
+      },
+      "distractor": {
+        "th": "หลอดไฟที่สว่างกว่าพิสูจน์ได้ทันทีว่ากรดแก่กว่า โดยไม่ต้องควบคุมความเข้มข้นหรือชนิดของไอออน",
+        "en": "A brighter lamp immediately proves that an acid is stronger, without controlling concentration or considering the ions present."
+      }
+    },
+    {
+      "id": "barium-ratio",
+      "kind": "sentence",
+      "answer": {
+        "th": "แบเรียมไฮดรอกไซด์ส่วนที่ละลายแล้วแตกตัวเกือบสมบูรณ์ และสารหนึ่งโมลให้ไฮดรอกไซด์ไอออนสองโมล",
+        "en": "Dissolved barium hydroxide dissociates essentially completely, supplying two moles of hydroxide ions per mole of solute."
+      },
+      "distractor": {
+        "th": "แบเรียมไฮดรอกไซด์หนึ่งโมลให้ไฮดรอกไซด์ไอออนหนึ่งโมล เพราะคิดอัตราส่วนจากจำนวนชนิดของไอออน",
+        "en": "One mole of barium hydroxide supplies one mole of hydroxide ions because the ratio is based on the number of ion types."
+      }
+    },
+    {
+      "id": "denominators",
+      "kind": "sentence",
+      "answer": {
+        "th": "นิพจน์ค่าคงที่ใช้ความเข้มข้นที่สมดุล ส่วนร้อยละการแตกตัวเทียบกับความเข้มข้นเริ่มต้นของสาร",
+        "en": "An equilibrium-constant expression uses equilibrium concentrations, whereas percentage ionization is measured against the initial solute concentration."
+      },
+      "distractor": {
+        "th": "นิพจน์ค่าคงที่และร้อยละการแตกตัวต้องใช้ความเข้มข้นเริ่มต้นแทนทุกตำแหน่งเหมือนกัน",
+        "en": "Both the equilibrium-constant expression and percentage ionization use initial concentrations in every position."
+      }
+    },
+    {
+      "id": "weak-can-more",
+      "kind": "sentence",
+      "answer": {
+        "th": "ความเข้มข้นไฮโดรเนียมไอออนขึ้นกับทั้งความแรงและความเข้มข้นเริ่มต้น กรดอ่อนที่เข้มข้นกว่าจึงอาจให้ไฮโดรเนียมไอออนมากกว่ากรดแก่ที่เจือจางกว่า",
+        "en": "Hydronium concentration depends on both acid strength and initial concentration, so a more concentrated weak acid can supply more hydronium than a more dilute strong acid."
+      },
+      "distractor": {
+        "th": "กรดแก่ทุกสารละลายต้องมีความเข้มข้นไฮโดรเนียมไอออนมากกว่ากรดอ่อนทุกสารละลาย เพราะแตกตัวสมบูรณ์",
+        "en": "Every strong-acid solution must have a higher hydronium concentration than every weak-acid solution because strong acids ionize completely."
+      }
+    },
+    {
+      "id": "second-negligible",
+      "kind": "sentence",
+      "answer": {
+        "th": "ไฮโดรเนียมไอออนที่เพิ่มจากขั้นที่สองน้อยมากเมื่อเทียบกับขั้นแรก จึงละเลยผลเพิ่มนั้นได้ในกรณีที่กำหนด",
+        "en": "The second step adds very little hydronium compared with the first, so its extra contribution can be neglected in this case."
+      },
+      "distractor": {
+        "th": "ละเลยขั้นที่สองได้เพียงเพราะเป็นกรดหลายโปรตอน โดยไม่ต้องเปรียบเทียบผลที่เพิ่มจากขั้นนั้น",
+        "en": "The second step can be ignored simply because the acid is polyprotic, without comparing its extra contribution."
+      }
+    },
+    {
+      "id": "base-classification",
+      "kind": "sentence",
+      "answer": {
+        "th": "สารละลายเป็นเบส เพราะความเข้มข้นไฮดรอกไซด์ไอออนมากกว่าความเข้มข้นไฮโดรเนียมไอออน",
+        "en": "The solution is basic because its hydroxide concentration is greater than its hydronium concentration."
+      },
+      "distractor": {
+        "th": "สารละลายที่ยังมีไฮโดรเนียมไอออนอยู่ต้องเป็นกรด แม้มีไฮดรอกไซด์ไอออนมากกว่า",
+        "en": "Any solution containing hydronium ions must be acidic, even when its hydroxide concentration is greater."
+      }
+    },
+    {
+      "id": "base-order",
+      "kind": "sentence",
+      "answer": {
+        "th": "คู่เบสของกรดที่มีค่าคงที่การแตกตัวน้อยกว่าเป็นเบสที่แรงกว่า เมื่อเปรียบเทียบในน้ำที่อุณหภูมิเดียวกัน",
+        "en": "The conjugate base of the acid with the smaller ionization constant is the stronger base when compared in water at the same temperature."
+      },
+      "distractor": {
+        "th": "คู่เบสของกรดที่แรงกว่าจะต้องเป็นเบสที่แรงกว่า เพราะกรดและคู่เบสมีความแรงไปในทิศทางเดียวกัน",
+        "en": "The stronger acid must have the stronger conjugate base because their strengths increase together."
+      }
+    },
+    {
+      "id": "initial-volume",
+      "kind": "sentence",
+      "answer": {
+        "th": "การหาความเข้มข้นกรดตั้งต้นต้องใช้ปริมาตรสารละลายกรดก่อนนำไปทำปฏิกิริยา ไม่ใช้ปริมาตรสุดท้ายหลังปรับปริมาตร",
+        "en": "The original acid concentration refers to its volume before reaction, rather than the final volume after dilution."
+      },
+      "distractor": {
+        "th": "การหาความเข้มข้นกรดตั้งต้นต้องใช้ปริมาตรสุดท้ายหลังปรับปริมาตรเสมอ เพราะเป็นสารละลายที่วัดผลิตภัณฑ์",
+        "en": "The original acid concentration must always refer to the final diluted volume because that is where the product is measured."
+      }
+    }
+  ],
+  "articles": [
+    {
+      "key": "cloze-A",
+      "title": {
+        "th": "บทความสรุป A · จากอนุภาคในสารละลายสู่การคำนวณกรด–เบสแก่",
+        "en": "Summary article A · From dissolved particles to strong-acid and strong-base calculations"
+      },
+      "paragraphs": {
+        "th": [
+          "เมื่อละลายสารในน้ำ อนุภาคของตัวถูกละลายอาจอยู่เป็นโมเลกุลหรือไอออน สารที่ให้ไอออนเคลื่อนที่ได้และทำให้สารละลายนำไฟฟ้าเรียกว่า {{electrolyte}} ส่วนซูโครสยังอยู่เป็นโมเลกุลเป็นหลัก จึงจัดเป็น {{nonelectrolyte}} โซเดียมคลอไรด์ที่ละลายแล้วแยกเป็นไอออนเกือบสมบูรณ์ จึงเป็น {{strong-electrolyte}} ขณะที่กรดแอซิติกและแอมโมเนียเกิดไอออนเพียงบางส่วน จัดเป็น {{weak-electrolyte}} ทั้งนี้ การเป็นอิเล็กโทรไลต์แก่ไม่ได้หมายความว่าสารนั้นต้องเป็นกรดแก่เสมอไป",
+          "การอธิบายสารละลายต้องแยก {{strength}} ออกจาก {{concentration}} สำหรับกรด คำแรกบอกแนวโน้มการให้โปรตอนในน้ำ ส่วนคำหลังบอกปริมาณสารต่อปริมาตรสารละลาย กรดแก่จึงอาจมีความเข้มข้นต่ำได้ และการเปรียบเทียบหลอดไฟต้องควบคุมความเข้มข้น อุณหภูมิ และชุดทดลอง พร้อมคำนึงถึงการเคลื่อนที่ของไอออนด้วย",
+          "กรดและเบสแก่ที่พิจารณาในบทนี้ให้ไอออนเกือบ {{complete}} จึงใช้ตาราง Initial–Change–Final หรือ ICF เพื่อติดตามปริมาณสารตามสมการที่ดุลแล้วได้ การหาจำนวนโมลจากมวลใช้ \\(n=m/M\\) และความเข้มข้นเชิงโมลใช้ \\(C=n/V\\) โดยปริมาตรมีหน่วยลิตร สัมประสิทธิ์ในสมการบอกอัตราส่วนของสารกับไอออน เช่น แบเรียมไฮดรอกไซด์ที่ละลายแล้วหนึ่งโมลให้ไฮดรอกไซด์ไอออนสองโมล",
+          "เมื่อเติมน้ำเพื่อเจือจางโดยไม่มีปฏิกิริยาหรือการสูญเสียสาร หลักที่ใช้คือ {{moles-conserved}} ส่วนการผสมสารละลายของตัวถูกละลายชนิดเดียวกันโดยไม่มีปฏิกิริยา ต้องระวังว่าความเข้มข้นไม่ใช่ปริมาณที่นำมาบวกตรง ๆ เพราะ {{mix-moles}}"
+        ],
+        "en": [
+          "When a substance dissolves in water, its particles may remain as molecules or form ions. Substances that supply mobile ions and allow the solution to conduct electricity are called {{electrolyte}}. Sucrose remains mainly as molecules and is {{nonelectrolyte}}. Dissolved sodium chloride separates essentially completely into ions and is {{strong-electrolyte}}, whereas ethanoic acid and ammonia form ions only partially and are each {{weak-electrolyte}}. A strong electrolyte is not necessarily a strong acid.",
+          "A solution must be described in terms of both {{strength}} and {{concentration}}. For an acid, the first describes its tendency to donate a proton in water; the second describes the amount of substance per solution volume. A strong acid can therefore be dilute. Lamp comparisons require controlled concentration, temperature and apparatus, together with consideration of ion mobility.",
+          "The strong acids and bases considered here undergo essentially {{complete}} ionization or dissociation. An Initial–Change–Final, or ICF, table can therefore track amounts using the balanced equation. The amount in moles is found from \\(n=m/M\\), and molar concentration from \\(C=n/V\\), with volume in litres. Equation coefficients determine the solute-to-ion ratio: one mole of dissolved barium hydroxide, for example, supplies two moles of hydroxide ions.",
+          "Dilution without reaction or loss of solute relies on the following principle: {{moles-conserved}} When solutions of the same solute are mixed without reaction, their concentrations cannot simply be added: {{mix-moles}}"
+        ]
+      }
+    },
+    {
+      "key": "cloze-B",
+      "title": {
+        "th": "บทความสรุป B · สมดุลกรด–เบสอ่อนและการตรวจค่าประมาณ",
+        "en": "Summary article B · Weak-acid and weak-base equilibria and approximation checks"
+      },
+      "paragraphs": {
+        "th": [
+          "กรดและเบสอ่อนทำปฏิกิริยากับน้ำได้เพียงบางส่วน เมื่อเข้าสู่สมดุลจึงยังมีทั้งสารเดิมและไอออนอยู่ร่วมกัน ตาราง Initial–Change–Equilibrium หรือ ICE ช่วยแสดงความเข้มข้นเริ่มต้น การเปลี่ยนแปลง และค่าที่สมดุล นิพจน์ค่าคงที่ต้องใช้ความเข้มข้นที่ {{equilibrium}} ทุกตัว และไม่ใส่น้ำซึ่งเป็นตัวทำละลายบริสุทธิ์ลงในนิพจน์",
+          "สำหรับกรดอ่อนหนึ่งโปรตอนที่ไม่มีไอออนผลิตภัณฑ์เติมมาจากแหล่งอื่นและละเลยไอออนจากน้ำได้ ให้ความเข้มข้นเริ่มต้นเป็น \\(C_a\\) และความเข้มข้นที่แตกตัวเป็น \\(x\\) จะได้ \\(K_a=x^2/(C_a-x)\\) สำหรับเบสอ่อนที่รับโปรตอนได้หนึ่งตัวใช้ความสัมพันธ์ในรูปเดียวกันกับ \\(K_b\\) และความเข้มข้นไฮดรอกไซด์ไอออน ส่วนร้อยละการแตกตัวใช้ \\(x\\) เทียบกับความเข้มข้น {{initial}} ของสาร ไม่ใช้ความเข้มข้นของสารที่เหลืออยู่ ณ สมดุลเป็นตัวส่วน",
+          "การแทน \\(C_a-x\\) ด้วย \\(C_a\\) ทำได้เมื่อปริมาณที่แตกตัวมีค่า {{small}} เมื่อเทียบกับความเข้มข้นเริ่มต้น เกณฑ์อัตราส่วนความเข้มข้นเริ่มต้นต่อค่าคงที่มากกว่าหนึ่งพันในบทเรียนนี้ใช้คัดกรองก่อนคำนวณ ส่วนหลังคำนวณต้อง {{approx-valid}} หากการตรวจไม่ผ่าน {{approx-full}} จึงไม่ควรใช้สูตรรากที่สองกับกรดหรือเบสอ่อนทุกข้อโดยไม่ตรวจเงื่อนไข",
+          "เมื่อเจือจางกรดอ่อนชนิดเดิมที่อุณหภูมิคงที่ โดยไม่มีไอออนร่วมหรือสมดุลอื่นรบกวน จะพบว่า {{dilution-weak}} ร้อยละบอกสัดส่วนที่แตกตัวจากสารตั้งต้น จึงไม่ได้เปลี่ยนไปในทิศทางเดียวกับความเข้มข้นไอออนเสมอ"
+        ],
+        "en": [
+          "Weak acids and bases react only partially with water, so unchanged solute and ions coexist at equilibrium. An Initial–Change–Equilibrium, or ICE, table tracks the initial concentrations, their changes and their equilibrium values. An equilibrium-constant expression uses {{equilibrium}} concentrations throughout and omits pure liquid water as the solvent.",
+          "For a monoprotic weak acid with no added product ions and a negligible contribution from water, let \\(C_a\\) be the initial concentration and \\(x\\) the concentration ionized. Then \\(K_a=x^2/(C_a-x)\\). An analogous expression uses \\(K_b\\) and hydroxide concentration for a weak base that accepts one proton. Percentage ionization compares \\(x\\) with the {{initial}} solute concentration, rather than with the concentration of unchanged solute at equilibrium.",
+          "Replacing \\(C_a-x\\) with \\(C_a\\) requires the ionized amount to be {{small}} compared with the initial concentration. This lesson uses an initial-concentration-to-constant ratio greater than one thousand as a preliminary screen. After calculating, apply the following check: {{approx-valid}} If the check fails, {{approx-full}} The square-root approximation should therefore not be used for every weak acid or base without checking its conditions.",
+          "For the same weak acid at constant temperature, dilution without common ions or interfering equilibria has the following effects: {{dilution-weak}} Percentage ionization is a fraction of the original solute, so it need not change in the same direction as the ion concentration."
+        ]
+      }
+    },
+    {
+      "key": "cloze-C",
+      "title": {
+        "th": "บทความสรุป C · กรดหลายโปรตอน สมดุลน้ำ และคู่กรด–เบส",
+        "en": "Summary article C · Polyprotic acids, water and conjugate pairs"
+      },
+      "paragraphs": {
+        "th": [
+          "กรดที่ให้โปรตอนได้มากกว่าหนึ่งตัวต่อโมเลกุลเรียกว่า {{polyprotic}} การให้โปรตอนเกิดขึ้น {{stepwise}} โดยแต่ละขั้นมีสมการสมดุลและค่าคงที่ของตนเอง หากขั้นแรกให้ไอออนมากกว่าขั้นต่อไปอย่างชัดเจน อาจละเลยผลเพิ่มจากขั้นหลังได้ แต่ต้องเปรียบเทียบก่อน สำหรับกรดซัลฟิวริก ขั้นแรกถือว่าเกือบสมบูรณ์ ส่วน {{poly-second}}",
+          "น้ำเกิดไฮโดรเนียมไอออนและไฮดรอกไซด์ไอออนได้เล็กน้อย ความสัมพันธ์ \\(K_w=[\\ce{H3O+}][\\ce{OH-}]\\) ช่วยหาไอออนอีกชนิดเมื่อทราบชนิดหนึ่ง ค่าผลคูณไอออนของน้ำเปลี่ยนตาม {{temperature}} โดยมีค่า \\(1.0\\times10^{-14}\\) ที่ \\(25\\,^\\circ\\mathrm C\\) จึงต้องใช้ค่าที่ตรงกับสภาวะของโจทย์ เกณฑ์ความเป็นกลางคือ {{neutrality}} หากไฮโดรเนียมไอออนมากกว่าจะเป็นกรด และหากไฮดรอกไซด์ไอออนมากกว่าจะเป็นเบส",
+          "สารสองชนิดที่ต่างกันหนึ่งโปรตอนและเปลี่ยนกลับกันด้วยการให้หรือรับโปรตอนเป็น {{conjugate}} ความสัมพันธ์ \\(K_aK_b=K_w\\) ใช้ได้โดยมีเงื่อนไขว่า {{pair-condition}} ผลที่ตามมาคือ {{pair-inverse}} จึงต้องระบุคู่สารและอุณหภูมิก่อนใช้ความสัมพันธ์นี้ ไม่จับคู่ค่าคงที่ของกรดกับเบสต่างคู่กัน"
+        ],
+        "en": [
+          "An acid that can donate more than one proton per molecule is {{polyprotic}}. Proton donation is {{stepwise}}, with a separate equilibrium equation and constant for each step. If the first step supplies far more ions than later steps, a later contribution may be neglected after comparison. Sulfuric acid illustrates the need for care: its first ionization is treated as essentially complete, but {{poly-second}}",
+          "Water produces small amounts of hydronium and hydroxide ions. The relation \\(K_w=[\\ce{H3O+}][\\ce{OH-}]\\) gives one ion concentration when the other is known. The ion product of water varies with {{temperature}} and equals \\(1.0\\times10^{-14}\\) at \\(25\\,^\\circ\\mathrm C\\), so the value must match the conditions in the question. The neutrality criterion is: {{neutrality}} A higher hydronium concentration indicates an acidic solution; a higher hydroxide concentration indicates a basic solution.",
+          "Two species that differ by one proton and interconvert by proton transfer form {{conjugate}}. The relation \\(K_aK_b=K_w\\) has an essential condition: {{pair-condition}} It follows that {{pair-inverse}} Identify the conjugate pair and temperature before using this relation, rather than combining constants from unrelated acids and bases."
+        ]
+      }
+    }
+  ],
+  "finalAnswers": {
+    "problem-2-1": {
+      "th": "จำนวนโมล \\(0.0200\\,\\mathrm{mol}\\); ความเข้มข้นสารละลายและไฮดรอกไซด์ไอออนเท่ากับ \\(0.0500\\,\\mathrm{mol\\,L^{-1}}\\)",
+      "en": "Amount: \\(0.0200\\,\\mathrm{mol}\\); solute and hydroxide concentrations: \\(0.0500\\,\\mathrm{mol\\,L^{-1}}\\) each."
+    },
+    "problem-2-2": {
+      "th": "แบเรียมไอออน \\(0.0125\\,\\mathrm{mol\\,L^{-1}}\\); ไฮดรอกไซด์ไอออน \\(0.0250\\,\\mathrm{mol\\,L^{-1}}\\), จำนวน \\(0.00375\\,\\mathrm{mol}\\)",
+      "en": "Barium: \\(0.0125\\,\\mathrm{mol\\,L^{-1}}\\); hydroxide: \\(0.0250\\,\\mathrm{mol\\,L^{-1}}\\), amount \\(0.00375\\,\\mathrm{mol}\\)."
+    },
+    "problem-2-3": {
+      "th": "กรดไนตริกก่อนและหลังเจือจางอย่างละ \\(0.0100\\,\\mathrm{mol}\\); ไฮโดรเนียมไอออน \\(0.0400\\,\\mathrm{mol\\,L^{-1}}\\)",
+      "en": "Nitric acid before and after dilution: \\(0.0100\\,\\mathrm{mol}\\); hydronium: \\(0.0400\\,\\mathrm{mol\\,L^{-1}}\\)."
+    },
+    "problem-2-4": {
+      "th": "ไฮโดรเนียมไอออน \\(0.160\\,\\mathrm{mol\\,L^{-1}}\\)",
+      "en": "Hydronium: \\(0.160\\,\\mathrm{mol\\,L^{-1}}\\)."
+    },
+    "problem-3-1": {
+      "th": "กรดที่สมดุล \\(0.0980\\,\\mathrm{mol\\,L^{-1}}\\); คู่เบสที่สมดุล \\(0.00200\\,\\mathrm{mol\\,L^{-1}}\\)",
+      "en": "Equilibrium acid: \\(0.0980\\,\\mathrm{mol\\,L^{-1}}\\); equilibrium conjugate base: \\(0.00200\\,\\mathrm{mol\\,L^{-1}}\\)."
+    },
+    "problem-3-2": {
+      "th": "ค่าคงที่การแตกตัวของกรด \\(4.08\\times10^{-5}\\); ร้อยละการแตกตัว \\(2.00\\%\\)",
+      "en": "Acid ionization constant: \\(4.08\\times10^{-5}\\); percentage ionization: \\(2.00\\%\\)."
+    },
+    "problem-3-3": {
+      "th": "ค่าคงที่การแตกตัวของคู่เบส \\(2.45\\times10^{-10}\\)",
+      "en": "Conjugate-base ionization constant: \\(2.45\\times10^{-10}\\)."
+    },
+    "problem-4-2": {
+      "th": "ไฮดรอกไซด์ไอออนประมาณ \\(9.0\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}\\); ร้อยละการแตกตัวประมาณ \\(1.0\\%\\)",
+      "en": "Hydroxide: approximately \\(9.0\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}\\); percentage ionization: approximately \\(1.0\\%\\)."
+    },
+    "problem-4-3": {
+      "th": "ไฮโดรเนียมไอออนประมาณ \\(1.1\\times10^{-11}\\,\\mathrm{mol\\,L^{-1}}\\); ค่าคงที่การแตกตัวของคู่กรด \\(1.1\\times10^{-9}\\)",
+      "en": "Hydronium: approximately \\(1.1\\times10^{-11}\\,\\mathrm{mol\\,L^{-1}}\\); conjugate-acid ionization constant: \\(1.1\\times10^{-9}\\)."
+    },
+    "problem-5-1": {
+      "th": "ค่าทดลองจากการประมาณ \\(0.00200\\,\\mathrm{mol\\,L^{-1}}\\); ร้อยละที่ตรวจได้ \\(10.0\\%\\)",
+      "en": "Trial approximate concentration: \\(0.00200\\,\\mathrm{mol\\,L^{-1}}\\); calculated fraction: \\(10.0\\%\\)."
+    },
+    "problem-5-2": {
+      "th": "ไฮโดรเนียมไอออนของกรดอ่อน \\(1.90\\times10^{-3}\\,\\mathrm{mol\\,L^{-1}}\\)",
+      "en": "Weak-acid hydronium: \\(1.90\\times10^{-3}\\,\\mathrm{mol\\,L^{-1}}\\)."
+    },
+    "problem-5-3": {
+      "th": "สารละลายแรกประมาณ \\(8.0\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}\\), \\(0.50\\%\\); สารละลายที่สองประมาณ \\(4.0\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}\\), \\(1.0\\%\\)",
+      "en": "First solution: approximately \\(8.0\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}\\), \\(0.50\\%\\); second: approximately \\(4.0\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}\\), \\(1.0\\%\\)."
+    },
+    "problem-6-2": {
+      "th": "ไฮโดรเนียมไอออนประมาณ \\(9.5\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}\\); ร้อยละการแตกตัวประมาณ \\(0.95\\%\\); ไอออนจากขั้นที่สองประมาณ \\(1.0\\times10^{-10}\\,\\mathrm{mol\\,L^{-1}}\\)",
+      "en": "Hydronium: approximately \\(9.5\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}\\); percentage ionization: approximately \\(0.95\\%\\); second-step ion contribution: approximately \\(1.0\\times10^{-10}\\,\\mathrm{mol\\,L^{-1}}\\)."
+    },
+    "problem-7-1": {
+      "th": "ไฮโดรเนียมไอออน \\(5.0\\times10^{-10}\\,\\mathrm{mol\\,L^{-1}}\\)",
+      "en": "Hydronium: \\(5.0\\times10^{-10}\\,\\mathrm{mol\\,L^{-1}}\\)."
+    },
+    "problem-7-2": {
+      "th": "ไฮโดรเนียมไอออนและไฮดรอกไซด์ไอออนอย่างละ \\(2.0\\times10^{-7}\\,\\mathrm{mol\\,L^{-1}}\\)",
+      "en": "Hydronium and hydroxide: \\(2.0\\times10^{-7}\\,\\mathrm{mol\\,L^{-1}}\\) each."
+    },
+    "problem-7-3": {
+      "th": "ค่าคงที่การแตกตัวของ \\(\\ce{X-}\\) เท่ากับ \\(1.0\\times10^{-10}\\); ของ \\(\\ce{Y-}\\) เท่ากับ \\(1.0\\times10^{-8}\\)",
+      "en": "Ionization constants: \\(\\ce{X-}\\), \\(1.0\\times10^{-10}\\); \\(\\ce{Y-}\\), \\(1.0\\times10^{-8}\\)."
+    },
+    "problem-8-1": {
+      "th": "ความเข้มข้นผลิตภัณฑ์ \\(0.0250\\,\\mathrm{mol\\,L^{-1}}\\); จำนวนผลิตภัณฑ์ \\(0.00500\\,\\mathrm{mol}\\)",
+      "en": "Product concentration: \\(0.0250\\,\\mathrm{mol\\,L^{-1}}\\); product amount: \\(0.00500\\,\\mathrm{mol}\\)."
+    },
+    "problem-8-2": {
+      "th": "กรดไฮโดรคลอริกที่ใช้ไป \\(0.0100\\,\\mathrm{mol}\\)",
+      "en": "Hydrochloric acid consumed: \\(0.0100\\,\\mathrm{mol}\\)."
+    },
+    "problem-8-3": {
+      "th": "ความเข้มข้นกรดไฮโดรคลอริกตั้งต้น \\(0.200\\,\\mathrm{mol\\,L^{-1}}\\)",
+      "en": "Original hydrochloric acid concentration: \\(0.200\\,\\mathrm{mol\\,L^{-1}}\\)."
+    },
+    "problem-9-1": {
+      "th": "กรดแอซิติกหลังเจือจาง \\(0.0450\\,\\mathrm{mol\\,L^{-1}}\\)",
+      "en": "Ethanoic acid after dilution: \\(0.0450\\,\\mathrm{mol\\,L^{-1}}\\)."
+    },
+    "problem-9-2": {
+      "th": "ไฮโดรเนียมไอออนประมาณ \\(9.00\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}\\); ร้อยละการแตกตัวประมาณ \\(2.00\\%\\)",
+      "en": "Hydronium: approximately \\(9.00\\times10^{-4}\\,\\mathrm{mol\\,L^{-1}}\\); percentage ionization: approximately \\(2.00\\%\\)."
+    },
+    "problem-9-3": {
+      "th": "กรดไฮโดรคลอริกตั้งต้นประมาณ \\(2.25\\,\\mathrm{mL}\\)",
+      "en": "Original hydrochloric acid: approximately \\(2.25\\,\\mathrm{mL}\\)."
+    }
+  },
+  "reasoning": {
+    "problem-1-3": [
+      "strength-difference",
+      "conductivity"
+    ],
+    "problem-2-2": [
+      "barium-ratio"
+    ],
+    "problem-2-3": [
+      "moles-conserved"
+    ],
+    "problem-2-4": [
+      "mix-moles"
+    ],
+    "problem-3-2": [
+      "denominators"
+    ],
+    "problem-3-3": [
+      "pair-condition"
+    ],
+    "problem-4-2": [
+      "approx-valid"
+    ],
+    "problem-5-1": [
+      "approx-full"
+    ],
+    "problem-5-2": [
+      "weak-can-more"
+    ],
+    "problem-5-3": [
+      "dilution-weak"
+    ],
+    "problem-6-2": [
+      "second-negligible"
+    ],
+    "problem-6-3": [
+      "barium-ratio",
+      "poly-second"
+    ],
+    "problem-7-1": [
+      "base-classification"
+    ],
+    "problem-7-2": [
+      "neutrality"
+    ],
+    "problem-7-3": [
+      "base-order"
+    ],
+    "problem-8-3": [
+      "initial-volume"
+    ],
+    "problem-9-2": [
+      "approx-valid"
+    ]
+  },
+  "scope": [
+    "electrolytes",
+    "strength versus concentration",
+    "moles and molarity",
+    "complete dissociation and ICF",
+    "dilution and mixing",
+    "weak acid/base equilibrium and ICE",
+    "equilibrium constants",
+    "percentage ionization",
+    "approximation checks",
+    "dilution of weak acids",
+    "polyprotic acids",
+    "water equilibrium and neutrality",
+    "conjugate constants"
+  ],
+  "bankPolicy": {
+    "noVisibleCodes": true,
+    "noWorkedSolutions": true,
+    "distractorForEveryTarget": true,
+    "fontPt": 9.5
+  },
+  "solutionTextOverrides": {
+    "problem-1-3": {
+      "th": "ความแรงของกรดบอกแนวโน้มการให้โปรตอนในน้ำ ส่วนความเข้มข้นบอกปริมาณสารต่อปริมาตร จึงเป็นคนละปริมาณ โซเดียมคลอไรด์เป็นอิเล็กโทรไลต์แก่เพราะแยกเป็นไอออนเกือบสมบูรณ์ แต่ไม่ได้เป็นกรดแก่ การนำไฟฟ้าขึ้นกับทั้งจำนวนและการเคลื่อนที่ของไอออน จึงต้องควบคุมความเข้มข้น อุณหภูมิ และชุดอิเล็กโทรดก่อนเปรียบเทียบ และไม่ใช้ความสว่างเพียงอย่างเดียวตัดสินความแรงของกรด",
+      "en": "Acid strength describes the tendency to donate a proton in water; concentration describes the amount of substance per solution volume. Sodium chloride is a strong electrolyte because it separates essentially completely into ions, but it is not a strong acid. Conductivity depends on both ion numbers and mobility, so concentration, temperature and electrode conditions must be controlled. Lamp brightness alone does not establish acid strength."
+    }
+  },
+  "solutionNotes": {
+    "problem-9-3": {
+      "th": "คำตอบนี้ใช้ค่าประมาณที่ตรวจเงื่อนไขแล้ว หากแก้สมการสมดุลเต็มโดยไม่ประมาณ จะได้ปริมาตรประมาณ \\(2.23\\,\\mathrm{mL}\\) ซึ่งยอมรับได้เมื่อแสดงวิธีทำและหน่วยถูกต้อง",
+      "en": "This answer uses the checked approximation. Solving the full equilibrium equation gives approximately \\(2.23\\,\\mathrm{mL}\\); accept this result when the working and units are correct."
+    }
+  },
+  "clozeStyle": {
+    "word": "underline",
+    "sentence": "two-writing-lines",
+    "noRectangularFrames": true
+  }
+}

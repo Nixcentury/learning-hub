@@ -1,42 +1,45 @@
 # เคมี 2.4 — ตรวจความเข้าใจ / Check Your Understanding
 
-ตรวจเมื่อ 15 พฤศจิกายน 2026; ผลด้านล่างเป็น local managed preview ใน Chrome ก่อนเผยแพร่
+รุ่น 2026-11-15-2 | ตรวจ 15 พฤศจิกายน 2026 (Asia/Bangkok)
+รอบนี้ปรับตามโน้ตครู 4 หน้าและคำสั่งให้นำ Sentence Bank ออก
+รายละเอียดเทียบเลขข้อเดิมอยู่ใน TEACHER-REVISION-20261115.md
 
-## งานที่ส่ง
+## งานปัจจุบัน
 
-- ปุ่มชื่อ “ตรวจความเข้าใจ / Check Your Understanding” ก่อน Exit Ticket ใน bankKey `b-5e9670f48386783fee660857`
-- contentId `chemistry-periodic-table-main-group-check-understanding`; slug `check-understanding`
-- ใบใหม่ TH/EN ใช้ Learning Sheet และระบบพิมพ์เดิม ไม่มีการแก้ engine
-- 60 ข้อต่อภาษา: เติมความรู้ 20; เรียง/เปรียบเทียบ/ข้อมูล 10; เติมเหตุผล 10; ถูก–ผิด 20
-- 69 semantic answer slots ต่อภาษา แยกข้อย่อย; เฉลยไทยและอังกฤษครบ
-- Sentence Bank 20 ประโยคต่อภาษา ไม่มีเลข/รหัสกำกับ มีตัวลวงและคำเตือนว่าบางข้อความไม่ถูกต้อง
-- ไม่มีข้อคำนวณแสดงวิธีทำในชุดนี้ กติกาสำหรับงานคำนวณครั้งต่อไปเก็บใน CHECK-UNDERSTANDING-AUTHORING.md
-- แบบอนุมัติเดิมเก็บไว้ใน approved-design-and-ai-rules.md; ข้อมูลผลิตจริงและเฉลยอังกฤษอยู่ใน question-model.json
+- ปุ่ม “ตรวจความเข้าใจ / Check Your Understanding” ก่อน Exit Ticket เดิม
+- bankKey `b-5e9670f48386783fee660857`; contentId `chemistry-periodic-table-main-group-check-understanding`; slug `check-understanding`
+- 49 ข้อต่อภาษา; 50 semantic slots (ข้อจัดเรียงอะตอม–ไอออนมี 2 คู่คำตอบ)
+- ความรู้พื้นฐานรวม EN 17; เปรียบเทียบ 7; เหตุผล 10; ถูก–ผิด 15
+- ไม่มี Sentence Bank; เหตุผลเขียนด้วยตนเอง; ไม่มีข้อคำนวณแสดงวิธีทำ
+- รวมการเปิดเฉลยของข้อที่ครูระบุและตัดเลข IE₂ ที่ให้คำตอบตรง ๆ
+- มีจัดเรียงชั้นย่อย Na/Na⁺ และ Cl/Cl⁻; เหตุผล P/S; เครื่องหมาย EA ที่กำหนดนิยามชัด
+- ถูก–ผิดมีช่องทำเครื่องหมายหน้าข้อความ; ฉบับเฉลยให้ ✓/✗ และอธิบายแก้ความเข้าใจคลาดเคลื่อนสำหรับข้อความที่ผิด
+- ใช้ Learning Sheet และระบบพิมพ์เดิม ไม่แก้ engine
+- guide ปรับเลขข้อและ target จริงทั้ง 6 ช่วง พร้อม source revision/SHA-256 ใหม่
 
 ## ผลตรวจอัตโนมัติ
 
-- `pnpm build`: ผ่าน; content validation 0 errors; learning guides 12 sheets, 0 errors; typecheck/build/Pages artifact ผ่าน
-- validator มี draft warnings เดิม 33 รายการในเนื้อหาอื่น ไม่ใช่ใบใหม่นี้
+- `pnpm build`: ผ่าน; validator 0 errors; learning guides 12 sheets, 0 errors; typecheck/build/Pages artifact ผ่าน
+- draft warnings เดิม 33 รายการในเนื้อหาอื่น ไม่ใช่ใบนี้
 - `node --test --test-isolation=none scripts/learning-sheet.test.mjs scripts/learning-guide.test.mjs scripts/bank-html-menu.test.mjs`: ผ่าน 25/25
 - `git diff --check`: ผ่าน
 
-## ผลเปิดเว็บและพิมพ์จริงผ่าน UI
+## ผลทดสอบผ่าน UI ของ managed preview ใน Chrome
 
-| ภาษา | ฉบับ | พื้นที่พิมพ์ | หน้า | ข้อ | ช่องตอบ | Sentence Bank | ล้น body |
-|---|---|---|---:|---:|---:|---:|---:|
-| EN | ว่าง | standard | 10 | 60 | 69 | 20, หน้า 10 | 0 |
-| EN | เฉลย | standard | 10 | 60 | 69 | 20, หน้า 10 | 0 |
-| EN | ว่าง | device-margins | 10 | 60 | 69 | 20, หน้า 10 | 0 |
-| EN | เฉลย | device-margins | 10 | 60 | 69 | 20, หน้า 10 | 0 |
-| TH | ว่าง | standard | 10 | 60 | 69 | 20, หน้า 10 | 0 |
-| TH | เฉลย | standard | 10 | 60 | 69 | 20, หน้า 10 | 0 |
-| TH | ว่าง | device-margins | 10 | 60 | 69 | 20, หน้า 10 | 0 |
-| TH | เฉลย | device-margins | 10 | 60 | 69 | 20, หน้า 10 | 0 |
+| ภาษา | ฉบับ | พื้นที่พิมพ์ | หน้า | ข้อ | ช่องตอบ | Bank | ล้น body | Math errors |
+|---|---|---|---:|---:|---:|---:|---:|---:|
+| EN | ว่าง | standard | 6 | 49 | 50 | 0 | 0 | 0 |
+| EN | เฉลย | standard | 6 | 49 | 50 | 0 | 0 | 0 |
+| EN | ว่าง | device-margins | 6 | 49 | 50 | 0 | 0 | 0 |
+| EN | เฉลย | device-margins | 6 | 49 | 50 | 0 | 0 | 0 |
+| TH | ว่าง | standard | 6 | 49 | 50 | 0 | 0 | 0 |
+| TH | เฉลย | standard | 6 | 49 | 50 | 0 | 0 | 0 |
+| TH | ว่าง | device-margins | 6 | 49 | 50 | 0 | 0 | 0 |
+| TH | เฉลย | device-margins | 6 | 49 | 50 | 0 | 0 | 0 |
 
-ฉบับว่างลบ answer nodes ทั้งหมดและมี blank areas 69 ช่อง; ฉบับเฉลยมี answer nodes 69 ช่อง
-ตรวจไม่มี MathJax errors; ดูภาพหน้าต้นและคลังประโยคใน preview; หน้าคลังอยู่หน้าเลขคู่สำหรับพิมพ์สองหน้า
-เปิด/ปิดเฉลยทั้งหมดทำงาน และสถานะ 69 semantic slots ร่วมกันระหว่าง TH/EN
-Sheet guide เปิดได้ และปุ่ม Sentence Bank ไปยังส่วนจริงได้
-เมนูจริงเปิดใบผ่าน route ใหม่และวางก่อน Exit Ticket
+ฉบับว่างมี answer nodes 0 และ blank areas 50; ฉบับเฉลยมี answer nodes 50
+ตรวจภาพหน้าต้น หน้าจัดลำดับ และบรรทัดถูก–ผิดหน้า 6 ผ่าน print preview จริง
+ไกด์เปิดได้และข้อความ/เลขข้อเป็นรุ่นใหม่ ไม่มีปุ่มไปยัง Sentence Bank เดิม
+เฉลยเป็นลูกโดยตรงของ slot; ทั้งสองภาษาใช้ semantic keys ชุดเดียวกัน
 
-ขอบเขต: ทดสอบโปรไฟล์ device-margins ใน Chrome ไม่ได้ทดสอบ Safari/iPad/iPhone หรือเครื่องพิมพ์จริง ไม่ได้สร้าง PDF แนบแยกจากระบบพิมพ์ของ Hub
+ขอบเขต: device-margins เป็นโปรไฟล์ที่ทดสอบใน Chrome ไม่ใช่ผลทดสอบ Safari/iPad/iPhone หรือเครื่องพิมพ์จริง ไม่มีการส่ง PDF แยกจากปุ่มพิมพ์กลาง

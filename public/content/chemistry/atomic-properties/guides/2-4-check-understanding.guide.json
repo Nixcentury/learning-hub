@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "chemistry-periodic-table-main-group-check-understanding",
-    "revision": "2026-11-15-1",
-    "sha256": "deb517ad6efe8061c0d9fd2d8594cf846df6559173a6c7366365ccbcf2efac9a"
+    "revision": "2026-11-15-2",
+    "sha256": "64bed9b036ea224d1086ac34a9cee61191361bcc9e1574c0b20590c11710a6fc"
   },
   "title": {
     "th": "2.4 ตรวจความเข้าใจ",
@@ -14,8 +14,8 @@
     "en": "Read main-group electron configurations and distinguish groups, periods, atoms and ions."
   },
   "goal": {
-    "th": "ตรวจความรู้เรื่องตำแหน่งและแนวโน้มสมบัติ พร้อมเลือกเหตุผลที่ถูกต้องและตรวจคำตอบด้วยตนเอง",
-    "en": "Check knowledge of periodic positions and trends, select scientifically valid explanations and review your own answers."
+    "th": "ตรวจความรู้เรื่องตำแหน่งและแนวโน้มสมบัติ พร้อมอธิบายเหตุผลและตรวจคำตอบด้วยตนเอง",
+    "en": "Check periodic positions and trends, explain your reasoning and review your own answers."
   },
   "steps": [
     {
@@ -33,18 +33,18 @@
         "en": "Distinguish 1–18 group numbers from valence-electron counts; pay attention to Ga and He."
       },
       "action": {
-        "th": "ทำข้อ 1–19 แล้วตรวจข้อ 10–13 เป็นพิเศษ",
-        "en": "Attempt Questions 1–19, paying particular attention to Questions 10–13."
+        "th": "ทำข้อ 1–16 และตรวจการจัดเรียงอิเล็กตรอนของอะตอมกับไอออนในข้อ 9",
+        "en": "Attempt Questions 1–16, including the atom and ion configurations in Question 9."
       },
       "links": [
         {
           "label": {
-            "th": "หมู่จากการจัดเรียงอิเล็กตรอน",
-            "en": "Group from configuration"
+            "th": "หมู่และคาบ",
+            "en": "Group and period"
           },
           "target": {
             "kind": "slot",
-            "key": "config-group"
+            "key": "configuration-position"
           }
         },
         {
@@ -54,7 +54,17 @@
           },
           "target": {
             "kind": "slot",
-            "key": "ga-valence"
+            "key": "ga-valence-position"
+          }
+        },
+        {
+          "label": {
+            "th": "อะตอมและไอออน",
+            "en": "Atoms and ions"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "sodium-atom-ion-config"
           }
         }
       ],
@@ -69,8 +79,53 @@
         }
       },
       "after": {
-        "th": "หากยังสับสน ให้เปรียบเทียบข้อ 10–12 กับข้อ 32",
-        "en": "If needed, compare Questions 10–12 with Question 32."
+        "th": "ใช้ข้อ 6–9 เชื่อมจำนวนอิเล็กตรอนกับตำแหน่งในตารางธาตุ แล้วดูเหตุผลข้อ 26",
+        "en": "Connect electron counts and periodic positions in Questions 6–9, then revisit the explanation in Question 26."
+      }
+    },
+    {
+      "id": "ea-sign",
+      "title": {
+        "th": "เครื่องหมายของ EA",
+        "en": "The sign of EA"
+      },
+      "summary": {
+        "th": "ข้อ 13 กำหนด EA เป็นพลังงานที่คายออกในการรับอิเล็กตรอน\nตามนิยามนี้ EA บวกคือคายพลังงาน ส่วน EA ลบคือต้องใส่พลังงาน\nถ้าใช้ ΔE = Eหลัง − Eก่อน เครื่องหมายจะตรงข้าม",
+        "en": "Question 13 defines EA as energy released on electron attachment.\nPositive EA means energy release; negative EA means energy input.\nThe energy change ΔE = Eafter − Ebefore has the opposite sign."
+      },
+      "story": {
+        "th": "อ่านนิยามก่อนแปลความหมายเครื่องหมาย อย่าใช้คำว่า EA มากกว่าโดยไม่ตรวจนิยาม",
+        "en": "Read the definition before interpreting the sign; check the convention before comparing EA values."
+      },
+      "action": {
+        "th": "ทำข้อ 12–13 แล้วตรวจว่าแยก EA ออกจาก ΔE ได้หรือไม่",
+        "en": "Attempt Questions 12–13 and check that you can distinguish EA from ΔE."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เครื่องหมาย EA",
+            "en": "Sign of EA"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "electron-affinity-sign"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ตามนิยามของข้อ 13 ถ้าต้องใส่พลังงานในการรับอิเล็กตรอน ค่า EA มีเครื่องหมายใด?",
+          "en": "Under the convention in Question 13, what is the sign of EA if electron attachment requires energy?"
+        },
+        "answer": {
+          "th": "เป็นลบ ส่วน ΔE ของกระบวนการเดียวกันเป็นบวก",
+          "en": "EA is negative; ΔE for the same process is positive."
+        }
+      },
+      "after": {
+        "th": "แยกเครื่องหมายออกจากการเปรียบเทียบ EN ในข้อ 17 และ 48",
+        "en": "Keep this sign convention separate from the EN comparisons in Questions 17 and 48."
       }
     },
     {
@@ -88,8 +143,8 @@
         "en": "Order the elements from memory before revealing the answers, then identify the deviations from a simple trend."
       },
       "action": {
-        "th": "ทำข้อ 20–24 โดยไม่เปิดตาราง แล้วทบทวนเฉพาะคู่ที่ยังสลับกัน",
-        "en": "Attempt Questions 20–24 without a reference table, then revisit the pairs you confused."
+        "th": "ทำข้อ 17–19 จากความจำ แล้วทบทวนข้อยกเว้นที่ยังสลับกัน",
+        "en": "Attempt Questions 17–19 from memory, then review the exceptions you confused."
       },
       "links": [
         {
@@ -134,8 +189,8 @@
         }
       },
       "after": {
-        "th": "ใช้ข้อ 36–37 เชื่อมลำดับกับเหตุผล",
-        "en": "Connect the order to its explanation in Questions 36–37."
+        "th": "ใช้ข้อ 30–32 อธิบายคู่ Mg/Al, N/O และ P/S",
+        "en": "Use Questions 30–32 to explain the Mg/Al, N/O and P/S pairs."
       }
     },
     {
@@ -153,8 +208,8 @@
         "en": "Use the simulated table as given; do not infer an actual element name from these model values."
       },
       "action": {
-        "th": "ทำข้อ 25–30 และตรวจว่าลำดับ IE₁ กับ IE₂ ต่างกันอย่างไร",
-        "en": "Attempt Questions 25–30 and compare the IE₁ and IE₂ orders."
+        "th": "ทำข้อ 20–24 โดยแยกอะตอม ไอออน และลำดับการดึงอิเล็กตรอนให้ชัด",
+        "en": "Attempt Questions 20–24, distinguishing atoms, ions and successive electron removals."
       },
       "links": [
         {
@@ -179,12 +234,12 @@
         },
         {
           "label": {
-            "th": "หมู่ของธาตุ A",
-            "en": "Group of element A"
+            "th": "หมู่จากข้อมูล IE",
+            "en": "Groups from IE data"
           },
           "target": {
             "kind": "slot",
-            "key": "group-a"
+            "key": "groups-from-data"
           }
         }
       ],
@@ -199,32 +254,32 @@
         }
       },
       "after": {
-        "th": "หากจุดกระโดดยังไม่ชัด ให้กลับข้อ 19 และ 39",
-        "en": "If the large increase remains unclear, revisit Questions 19 and 39."
+        "th": "หากจุดกระโดดยังไม่ชัด ให้กลับข้อ 16 และ 33",
+        "en": "If the large increase remains unclear, revisit Questions 16 and 33."
       }
     },
     {
-      "id": "sentence-bank",
+      "id": "explanations",
       "title": {
-        "th": "เลือกและเขียนเหตุผล",
-        "en": "Select and write an explanation"
+        "th": "เขียนเหตุผลด้วยตนเอง",
+        "en": "Write your own explanations"
       },
       "summary": {
-        "th": "ข้อ 31–40 ใช้ Sentence Bank 20 ประโยคในหน้าด้านหลัง\nมีทั้งเหตุผลที่ไม่ตรงบริบทและข้อความคลาดเคลื่อน ต้องเลือกตามหลักวิทยาศาสตร์\nเขียนเป็นข้อความ ใช้ประโยคซ้ำได้เมื่ออธิบายได้จริง",
-        "en": "Questions 31–40 use the 20-sentence bank on the reverse page.\nSome statements do not apply; others are misconceptions, so choose scientifically.\nWrite the words. A valid sentence may be used more than once."
+        "th": "ข้อ 25–34 ให้เขียนเหตุผลสั้น ๆ ด้วยตนเอง\nระบุชั้นพลังงาน แรงดึงจากนิวเคลียส หรือแรงผลักให้ตรงกับคู่ที่เปรียบเทียบ\nไม่มีคลังประโยคให้เลือกคำตอบ",
+        "en": "Questions 25–34 require brief explanations in your own words.\nIdentify the relevant shells, nuclear attraction or electron repulsion.\nNo sentence bank is provided."
       },
       "story": {
-        "th": "เลือกประโยคที่อธิบายกลไก ไม่เลือกเพียงเพราะมีคำที่เหมือนในโจทย์",
-        "en": "Choose a statement that explains the mechanism, rather than merely matching a word in the question."
+        "th": "ใช้กลไกที่อธิบายการเปรียบเทียบได้จริง หลีกเลี่ยงการตอบเพียงว่าเสถียรกว่า",
+        "en": "Explain the mechanism behind the comparison, rather than saying only that one arrangement is more stable."
       },
       "action": {
-        "th": "ทำข้อ 31–40 และเขียนประโยคเหตุผลลงในพื้นที่ของแต่ละข้อ",
-        "en": "Attempt Questions 31–40 and write an explanation in each answer space."
+        "th": "ทำข้อ 25–34 ก่อนเปิดเฉลย แล้วตรวจใจความสำคัญ",
+        "en": "Attempt Questions 25–34 before revealing the key, then check the scientific reasoning."
       },
       "links": [
         {
           "label": {
-            "th": "เริ่มเติมเหตุผล",
+            "th": "เริ่มอธิบายเหตุผล",
             "en": "Start the explanations"
           },
           "target": {
@@ -234,38 +289,38 @@
         },
         {
           "label": {
-            "th": "Sentence Bank",
-            "en": "Sentence Bank"
+            "th": "K กับ Na",
+            "en": "K versus Na"
           },
           "target": {
-            "kind": "anchor",
-            "key": "sentence-bank"
+            "kind": "slot",
+            "key": "new-shell-size"
           }
         },
         {
           "label": {
-            "th": "เหตุผลของ Cl/F",
-            "en": "Cl/F explanation"
+            "th": "ข้อยกเว้น P/S",
+            "en": "P/S exception"
           },
           "target": {
             "kind": "slot",
-            "key": "affinity-chlorine-fluorine"
+            "key": "pairing-ionization-period-three"
           }
         }
       ],
       "check": {
         "question": {
-          "th": "มีคำว่า “โปรตอน” เหมือนโจทย์ เพียงพอที่จะเลือกประโยคนั้นหรือไม่?",
-          "en": "Is a sentence suitable simply because it contains the word “protons,” as the question does?"
+          "th": "เพราะเหตุใดการเปรียบเทียบ O กับ N จึงต้องพิจารณาการจับคู่ใน 2p?",
+          "en": "Why does comparing O and N require considering pairing in the 2p subshell?"
         },
         "answer": {
-          "th": "ไม่เพียงพอ ต้องตรวจชนิดอนุภาค ชั้นพลังงาน และทิศทางของแรงดึงให้ตรงบริบท",
-          "en": "No. The species, occupied shells and direction of the attraction must fit the situation."
+          "th": "O มีอิเล็กตรอนจับคู่ จึงมีแรงผลักเพิ่มและดึงออกง่ายกว่าอิเล็กตรอนที่ยังไม่จับคู่ของ N",
+          "en": "O has a paired electron; the added repulsion makes it easier to remove than an unpaired electron in N."
         }
       },
       "after": {
-        "th": "ใช้เฉลยตรวจใจความ ยอมรับถ้อยคำสมมูลและเหตุผลที่ใช้ได้จริง",
-        "en": "Check the scientific meaning against the explanations; equivalent valid wording is acceptable."
+        "th": "ยอมรับถ้อยคำต่างจากเฉลยเมื่ออธิบายหลักวิทยาศาสตร์ได้ถูกต้อง",
+        "en": "Equivalent wording is acceptable when the scientific explanation is correct."
       }
     },
     {
@@ -275,16 +330,16 @@
         "en": "Judge the statements and self-check"
       },
       "summary": {
-        "th": "ข้อ 41–60 ตอบเพียง ✓ หรือ ✗ ไม่ต้องเขียนเหตุผล\nระวังข้อความเหมารวมและความสับสนระหว่าง IE, EA และ EN\nเฉลยบอกค่าความจริงและอธิบายประเด็นที่ต้องแก้",
-        "en": "Questions 41–60 require only ✓ or ✗; no written explanation is needed.\nWatch for overgeneralizations and confusion between IE, EA and EN.\nThe key gives the truth value and explains the relevant correction."
+        "th": "ข้อ 35–49 เขียนเพียง ✓ หรือ ✗ หน้าข้อความ\nไม่ต้องเขียนเหตุผลหรือแก้ประโยค\nใช้เฉลยทบทวนความเข้าใจเรื่อง IE, EA และ EN",
+        "en": "Questions 35–49 require only ✓ or ✗ before each statement.\nNo explanation or correction is required.\nUse the key to review IE, EA and EN."
       },
       "story": {
         "th": "อ่านทั้งข้อความก่อนตัดสิน ไม่ถือว่ามีคำว่า “ทุก” แล้วต้องผิดเสมอ",
         "en": "Read the whole statement; the word “all” does not automatically make it false."
       },
       "action": {
-        "th": "ทำข้อ 41–60 ก่อนเปิดเฉลย แล้วกลับไปทบทวนประเด็นที่ยังผิด",
-        "en": "Attempt Questions 41–60 before revealing the key, then revisit the concepts you missed."
+        "th": "ทำข้อ 35–49 ก่อนเปิดเฉลย แล้วกลับไปทบทวนประเด็นที่ยังผิด",
+        "en": "Attempt Questions 35–49 before revealing the key, then revisit the concepts you missed."
       },
       "links": [
         {

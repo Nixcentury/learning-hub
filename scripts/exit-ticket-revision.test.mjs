@@ -372,14 +372,17 @@ test('10.3 paired handouts: stable Classroom route and a separate ungraded Revis
 });
 
 for (const [name, classroom] of [['10-3-basic-calculations-learning-sheet',true],['10-3-exit-ticket-revision',false]]) {
-  test(`${name}: both languages and all six print selections retain content and isolate answers`, async () => {
+  test(`${name}: both languages and all print selections retain content and isolate answers`, async () => {
     const {exitTicketPrintLabels}=await import('../js/exit-ticket-revision.js');
     const path=`content/chemistry/ipst/acid-base/${name}.html`;
-    const {document:source}=parseHTML(await readFile(new URL('../public/'+path,import.meta.url),'utf8'));
+    const html=await readFile(new URL('../public/'+path,import.meta.url),'utf8');
+    if(!classroom)assert.equal(/\bviewbox=/.test(html),false,'Newly authored SVG viewBox attributes retain their case');
+    const {document:source}=parseHTML(html);
     Object.defineProperty(source,'URL',{value:'https://example.test/learning-hub/'+path});
     Object.defineProperty(source,'defaultView',{value:undefined});
     assert.ok(isExitTicketRevision(source));
-    assert.equal(source.documentElement.dataset.contentRevision,'1.8.1');
+    assert.equal(source.documentElement.dataset.contentRevision,classroom?'1.8.1':'1.9');
+    assert.equal(source.documentElement.outerHTML.includes('\ufffd'),false,'Thai text must survive UTF-8 export without replacement characters');
     const equations=[...source.querySelectorAll('[data-tex]')];
     assert.ok(equations.every(n=>!/[\u0000-\u0009\u000b-\u001f]|\bimes\b/.test(n.dataset.tex)),
       'TeX commands must not become JavaScript/Python control-character escapes');
@@ -388,21 +391,21 @@ for (const [name, classroom] of [['10-3-basic-calculations-learning-sheet',true]
     assert.ok(hydroxide.every(n=>n.querySelector('svg [data-c="D7"]')),
       'regenerated MathJax SVG must contain the multiplication glyph');
     assert.equal(source.querySelectorAll('script,template,iframe,form,button,input,select,[data-learning-activity-content],[data-sheet-slot]').length,0);
-    assert.deepEqual(exitTicketRanges(source),['all','quiz','review']);
+    assert.deepEqual(exitTicketRanges(source),classroom?['all','quiz','review']:['all','quiz','review','bank']);
     for(const lang of ['th','en']){
       applyContentLanguage(source,lang);
       const labels=exitTicketPrintLabels(source,lang);
       assert.equal(labels.studentDefault,true);
       assert.equal(labels.document,classroom?'Classroom Note':'Exit Ticket Revision');
-      assert.equal(labels.quiz,lang==='en'?(classroom?'Guided examples':'Cloze and problems'):(classroom?'เฉพาะตัวอย่างพาทำ':'บทความและโจทย์'));
+      assert.equal(labels.quiz,lang==='en'?(classroom?'Guided examples':'Cloze and problems + Bank'):(classroom?'เฉพาะตัวอย่างพาทำ':'บทความและโจทย์ + Bank'));
       source.body.classList.add('answers-on');
       const snapshot=buildHtmlPrintSnapshot(source,labels.document);
-      for(const answers of [false,true])for(const range of ['all','quiz','review']){
+      for(const answers of [false,true])for(const range of exitTicketRanges(source)){
         const {document:copy}=parseHTML(snapshot);
         const selected=source.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="${answers?'answers':'blank'}"] [data-revision-range="${range}"]`);
         const expectedKeys=[...selected.querySelectorAll('.unit')].map(n=>n.dataset.unitKey);
         const count=prepareExitTicketPrint(copy,{range,answers});
-        assert.ok(count>0&&count<=20);
+        assert.ok(count>0&&count<=(classroom?20:24));
         assert.equal(copy.querySelectorAll('.page').length,count);
         assert.deepEqual([...copy.querySelectorAll('.unit')].map(n=>n.dataset.unitKey),expectedKeys);
         assert.equal(new Set(expectedKeys).size,expectedKeys.length);
@@ -417,6 +420,13 @@ for (const [name, classroom] of [['10-3-basic-calculations-learning-sheet',true]
         else assert.equal(copy.querySelectorAll('.response-space').length,0);
         assert.equal(copy.querySelectorAll('merror,[data-mjx-error]').length,0);
         assert.ok([...copy.querySelectorAll('[data-tex]')].every(n=>n.querySelector('svg')));
+        for(const svg of copy.querySelectorAll('svg')){
+          const ids=new Set([...svg.querySelectorAll('[id]')].map(node=>node.id));
+          for(const use of svg.querySelectorAll('use')){
+            const ref=use.getAttribute('href')||use.getAttribute('xlink:href');
+            assert.ok(ref?.startsWith('#')&&ids.has(ref.slice(1)),'Every printed equation retains its own glyph definitions');
+          }
+        }
         const last=copy.querySelectorAll('[data-page-number]')[count-1];
         assert.equal(last.textContent,`${lang==='en'?'Page':'หน้า'} ${count} / ${count}`);
         if(classroom){
@@ -424,16 +434,73 @@ for (const [name, classroom] of [['10-3-basic-calculations-learning-sheet',true]
           assert.equal(copy.querySelectorAll('.worked').length,range==='review'?0:10);
         }else{
           assert.equal(copy.querySelectorAll('.notation-unit').length,0);
-          assert.equal(copy.querySelectorAll('.question').length,range==='review'?0:9);
-          assert.equal(copy.querySelectorAll('[data-part-key]').length,range==='review'?0:28);
-          assert.equal(copy.querySelectorAll('.reading-example').length,range==='quiz'?0:4);
-          assert.equal(copy.querySelectorAll('[data-recall-key]').length,range==='quiz'?0:18);
+          const hasQuiz=range==='all'||range==='quiz',hasReview=range==='all'||range==='review';
+          assert.equal(copy.querySelectorAll('.question').length,hasQuiz?9:0);
+          assert.equal(copy.querySelectorAll('[data-part-key]').length,hasQuiz?28:0);
+          assert.equal(copy.querySelectorAll('.reading-example').length,hasReview?4:0);
+          assert.equal(copy.querySelectorAll('[data-recall-key]').length,hasReview?18:0);
+          assert.equal(copy.querySelectorAll('.bank-item').length,range==='review'?0:64);
+          assert.equal(copy.querySelectorAll('.task .final-answer').length,hasQuiz?22:0);
           if(range==='all')assert.equal(([...copy.querySelectorAll('.page')].findIndex(p=>p.querySelector('[data-unit-key="review-title"]'))+1)%2,1);
         }
       }
     }
   });
 }
+
+test('10.3: the final Bank covers every cloze and reasoning target without codes or worked calculations', async () => {
+  const data=JSON.parse(await readFile(new URL('../docs/learning-sheet/preparation/chemistry-ionization-10-3/revision-v1-9-content.json',import.meta.url),'utf8'));
+  const {document:doc}=parseHTML(await readFile(new URL('../public/content/chemistry/ipst/acid-base/10-3-exit-ticket-revision.html',import.meta.url),'utf8'));
+  const entries=new Map(data.entries.map(entry=>[entry.id,entry]));
+  const clozeTargets=data.articles.flatMap(article=>[...article.paragraphs.th.join(' ').matchAll(/\{\{([^}]+)\}\}/g)].map(match=>match[1]));
+  const reasoningTargets=Object.values(data.reasoning).flat();
+  assert.equal(clozeTargets.length,23);
+  assert.equal(Object.keys(data.finalAnswers).length,22);
+  assert.equal(Object.keys(data.reasoning).length,17);
+  for(const key of [...clozeTargets,...reasoningTargets]){
+    const entry=entries.get(key);
+    assert.ok(entry,`Missing Bank entry for ${key}`);
+    for(const lang of ['th','en'])assert.ok(entry.distractor[lang]&&entry.distractor[lang]!==entry.answer[lang]);
+  }
+  for(const lang of ['th','en'])for(const edition of ['blank','answers'])for(const range of ['all','quiz','review','bank']){
+    const view=doc.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="${edition}"] [data-revision-range="${range}"]`);
+    const hasBank=range!=='review',hasQuiz=range==='all'||range==='quiz';
+    const bank=[...view.querySelectorAll('.bank-item')];
+    assert.equal(bank.length,hasBank?64:0);
+    if(hasBank){
+      const text=bank.map(item=>item.textContent);
+      assert.equal(new Set(text).size,text.length);
+      for(const entry of data.entries)for(const type of ['answer','distractor'])assert.ok(text.includes(entry[type][lang]));
+      const units=[...view.querySelectorAll('.unit')],firstBank=units.findIndex(unit=>unit.dataset.kind==='bank');
+      assert.ok(firstBank>=0&&units.slice(firstBank).every(unit=>unit.dataset.kind==='bank'));
+      const lastPage=view.querySelector('.page:last-child');
+      assert.ok(lastPage.querySelector('[data-kind="bank"]'));
+      assert.equal(view.querySelectorAll('[data-kind="bank"] [data-tex],[data-kind="bank"] .teacher-key,[data-kind="bank"] .opt-code,[data-kind="bank"] .blank-num,[data-kind="bank"] ol,[data-kind="bank"] li').length,0);
+      assert.ok(bank.every(item=>item.attributes.length===1&&item.getAttribute('class')==='bank-item'));
+      assert.ok(bank.every(item=>!/^\s*(?:[A-Z]\d+|\d+[.)]|[A-Z][.)])\s/.test(item.textContent)));
+    }
+    if(hasQuiz){
+      assert.equal(view.querySelectorAll('.blank').length,23);
+      assert.equal(view.querySelectorAll('.cloze-article .bank,.cloze-article .opt-code').length,0);
+      for(const key of Object.keys(data.finalAnswers)){
+        const task=view.querySelector(`[data-part-key="${key}"]`);
+        const answer=task.querySelector('.final-answer');
+        assert.ok(answer&&!answer.closest('.teacher-key,.answer-inline'));
+        assert.equal(answer.previousElementSibling.tagName,'P');
+        if(edition==='blank')assert.ok(answer.nextElementSibling.classList.contains('response-space'));
+        assert.ok(answer.querySelector('[data-tex]'));
+      }
+      if(edition==='blank')assert.equal(view.querySelectorAll('.teacher-key,.answer-inline').length,0);
+    }
+  }
+});
+
+test('Bank-only printing is opt-in for authored documents', () => {
+  const {document}=parseHTML('<html data-learning-html data-exit-ticket-revision="1" data-exit-ticket-editions="1"><body></body></html>');
+  assert.deepEqual(exitTicketRanges(document),['all','quiz','recall','review']);
+  document.documentElement.setAttribute('data-exit-ticket-ranges','all quiz review bank unknown');
+  assert.deepEqual(exitTicketRanges(document),['all','quiz','review','bank']);
+});
 
 test('print labels: existing revision defaults remain available', async () => {
   const {exitTicketPrintLabels}=await import('../js/exit-ticket-revision.js');

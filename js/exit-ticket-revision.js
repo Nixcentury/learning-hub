@@ -7,9 +7,9 @@ export function isExitTicketRevision(doc) {
 
 export function exitTicketRanges(doc) {
   if (doc?.documentElement.getAttribute('data-exit-ticket-editions') !== '1') return ['all', 'quiz'];
-  const allowed = ['all', 'quiz', 'recall', 'review'];
+  const allowed = ['all', 'quiz', 'recall', 'review', 'bank'];
   const declared = doc.documentElement.getAttribute('data-exit-ticket-ranges');
-  return declared ? allowed.filter(range => range === 'all' || declared.split(/\s+/).includes(range)) : allowed;
+  return declared ? allowed.filter(range => range === 'all' || declared.split(/\s+/).includes(range)) : allowed.filter(range => range !== 'bank');
 }
 
 // Paired classroom/revision documents share the existing A4 print engine.
@@ -21,6 +21,7 @@ export function exitTicketPrintLabels(doc, language = 'th') {
     document: label('label', 'exit ticket revision'),
     quiz: label('quiz', en ? 'Quiz only' : 'เฉพาะควิซ'),
     review: label('review', en ? 'Review only' : 'เฉพาะสรุป'),
+    ...(exitTicketRanges(doc).includes('bank') ? { bank: label('bank', en ? 'Bank only' : 'เฉพาะ Bank') } : {}),
     studentDefault: doc.documentElement.getAttribute('data-revision-student-default') === '1',
   };
 }

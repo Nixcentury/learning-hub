@@ -105,6 +105,31 @@ body:not(.answers-on) [data-revision-edition="blank"],body.answers-on [data-revi
 .toolbar,.statusbar,#print-options{display:none!important}
 .page-foot{flex-shrink:0}
 @media print{.page{margin:0!important;box-shadow:none!important;break-after:page}.page:last-child{break-after:auto}}
+
+/* Distribute spare A4 body height to student working areas, independently in each
+   pre-paginated language/range. Existing writing heights remain minimum sizes.
+   Keep the running head, footer and teacher edition outside this layout. */
+[data-revision-edition="blank"] .page-body:has(> .question),
+[data-revision-edition="blank"] .page-body:has(> .recall-card){
+  display:flex;
+  flex-direction:column;
+}
+[data-revision-edition="blank"] .page-body > .question,
+[data-revision-edition="blank"] .page-body > .recall-card{
+  display:flex;
+  flex-direction:column;
+  flex:1 0 auto;
+}
+[data-revision-edition="blank"] .page-body > :is(.question,.recall-card) > .task-grid{
+  flex:1 0 auto;
+}
+[data-revision-edition="blank"] .page-body > :is(.question,.recall-card) > .task-grid > .task{
+  display:flex;
+  flex-direction:column;
+}
+[data-revision-edition="blank"] .page-body > :is(.question,.recall-card) .response-space{
+  flex:1 0 auto;
+}
 </style><style>
 .summary-article .article-instruction{font-size:9pt;line-height:1.4;margin:1mm 0 2mm;color:#40566a}
 .summary-article .passage{font-size:10.3pt;line-height:1.6;margin:2mm 0}

@@ -1,0 +1,103 @@
+[
+  {
+    "document": "classroom",
+    "lang": "th",
+    "edition": "answers",
+    "range": "all",
+    "bodyFont": "13.3333px",
+    "headingFont": "14.6667px",
+    "identity": 1,
+    "identityFont": "10.6667px",
+    "pages": 7
+  },
+  {
+    "document": "classroom",
+    "lang": "th",
+    "edition": "blank",
+    "range": "quiz",
+    "bodyFont": "13.3333px",
+    "headingFont": "14.6667px",
+    "identity": 1,
+    "identityFont": "10.6667px",
+    "pages": 6
+  },
+  {
+    "document": "classroom",
+    "lang": "th",
+    "edition": "answers",
+    "range": "review",
+    "bodyFont": "13.3333px",
+    "headingFont": "14.6667px",
+    "identity": 1,
+    "identityFont": "10.6667px",
+    "pages": 7
+  },
+  {
+    "document": "exit",
+    "lang": "th",
+    "edition": "blank",
+    "range": "all",
+    "examples": 12,
+    "exerciseAnswers": 0,
+    "identity": 1,
+    "noteAnswers": 17,
+    "notes": 7,
+    "pages": 15
+  },
+  {
+    "document": "exit",
+    "lang": "th",
+    "edition": "answers",
+    "range": "quiz",
+    "examples": 0,
+    "exerciseAnswers": 35,
+    "identity": 1,
+    "noteAnswers": 0,
+    "notes": 0,
+    "pages": 8
+  },
+  {
+    "document": "exit",
+    "lang": "th",
+    "edition": "blank",
+    "range": "review",
+    "examples": 12,
+    "exerciseAnswers": 0,
+    "identity": 1,
+    "noteAnswers": 17,
+    "notes": 7,
+    "pages": 7
+  },
+  {
+    "document": "exit",
+    "lang": "en",
+    "edition": "blank",
+    "range": "all",
+    "examples": 12,
+    "exerciseAnswers": 0,
+    "identity": 1,
+    "notes": 7,
+    "pages": 15
+  },
+  {
+    "document": "exit",
+    "lang": "en",
+    "edition": "blank",
+    "range": "quiz",
+    "exerciseAnswers": 0,
+    "identity": 1,
+    "notes": 0,
+    "pages": 8
+  },
+  {
+    "document": "exit",
+    "lang": "en",
+    "edition": "blank",
+    "range": "review",
+    "examples": 12,
+    "exerciseAnswers": 0,
+    "identity": 1,
+    "notes": 7,
+    "pages": 7
+  }
+]

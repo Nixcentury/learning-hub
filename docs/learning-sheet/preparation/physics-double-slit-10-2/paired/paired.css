@@ -130,3 +130,20 @@ p,li,.callout,.teacher-key,.lecture-note{overflow-wrap:anywhere}
 body:not(.answers-on) [data-revision-edition="blank"],body.answers-on [data-revision-edition="answers"]{display:block}
 [data-revision-range="all"]{display:block}
 @media print{.page{margin:0!important;box-shadow:none!important;break-after:page}.page:last-child{break-after:auto}.note-answer{color:#111!important}}
+/* Give the unused page height to actual writing areas, without adding rules or dots. */
+.page.quiz .page-body:has(.response-space){display:flex;flex-direction:column;gap:3mm}
+.page.quiz .page-body:has(.response-space)>.unit{margin-bottom:0;flex-shrink:0}
+.page.quiz .page-body>.question:has(.response-space),.page.quiz .page-body>.compact-recall:has(.response-space){display:flex;flex-direction:column;flex:1 0 auto;min-height:0}
+.page.quiz .question:has(.response-space)>.task-grid,.page.quiz .compact-recall:has(.response-space)>.task-grid{flex:1;grid-auto-rows:1fr}
+.page.quiz .task:has(>.response-space){display:flex;flex-direction:column}
+.page.quiz .task>.response-space{flex:1 0 auto;height:auto!important;min-height:22mm;margin-top:2mm}
+.page.lesson .shared-note:has(.note-write){height:100%;display:flex;flex-direction:column}
+.page.lesson .shared-note>.example:has(.note-write),.page.lesson .shared-note>.observe:has(.note-write){display:flex;flex-direction:column;flex:1 0 auto}
+.page.lesson .shared-note .note-write{flex:1 0 auto;min-height:22mm;height:auto}
+.proof-diagram img{max-height:47mm;width:auto;max-width:100%;margin:auto}
+.shared-note[data-note-key$="-proof"] p{margin-bottom:1.8mm}
+.shared-note[data-note-key$="-proof"] h3{margin-top:2mm}
+.page.lesson .page-body:has(.note-write){display:flex;flex-direction:column}
+.page.lesson .page-body>.shared-note:has(.note-write){height:auto;flex:1;min-height:0}
+.page.quiz [data-unit-key="problem-1"] .task>.response-space{min-height:14mm}
+.page.quiz .task-grid:has(.response-space)>.task:last-child:nth-child(odd){grid-column:1/-1;border-left:0;padding-left:0}

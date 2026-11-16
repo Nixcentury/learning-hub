@@ -1,3 +1,5 @@
+> ผลตรวจฉบับแรกใน PR #198 เก็บย้อนหลัง; ฉบับปัจจุบันดู [QA-v1.1.md](QA-v1.1.md)
+
 # QA — Double-slit paired handouts v1
 
 16 November 2026, based on main `94b954adf4460a992415610b9f63f16d3d26b39d`.

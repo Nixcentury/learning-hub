@@ -1,3 +1,4 @@
+import {parseHTML} from 'linkedom';
 // Canonical bilingual content. Both handouts are generated from these same pages.
 // Math uses TeX; the build renders it once to local SVG assets.
 const R=String.raw;
@@ -81,3 +82,68 @@ en:R`<div class="example"><h3>Example 10 · Two colours coincide</h3><p>The thir
 <div class="example"><h3>Example 12 · Beyond small angles</h3><p>\(\lambda=600\,\mathrm{nm},d=8.0\,\mu\mathrm m,L=0.50\,\mathrm m\). Locate bright order 2.</p><div class="note-answer"><p>\(\sin\theta\approx2\lambda/d=0.150\Rightarrow\theta\approx8.63^\circ\)</p><p>\(|x|=L\tan\theta\approx0.0759\,\mathrm m=75.9\,\mathrm{mm}\)</p><p>The small-angle result is 75.0 mm. Here use sin to find the angle, then tan for position. The distant-screen condition still applies.</p></div></div>
 <h2>Four final checks</h2><p>① Initially in phase? ② A coordinate or a separation? ③ Consistent units and a valid small-angle approximation? ④ Fringe type, order, side and unit stated as requested?</p><p>If the sources have an initial phase offset, combine that offset with the propagation phase before classifying fringes. A π offset swaps bright and dark conditions.</p><p class="source">Sources: IPST Physics Book 3, §10.2, printed pp.109–126 and double-slit chapter-end work, pp.150–155. Continue with the existing learning sheet and 50-question review. Examples combine selected book data with independently authored tasks.</p>`}}
 ];
+
+// Write the givens and requests in full words; retain symbols in the worked solutions.
+const fullPrompts={
+  "th": [
+    "แสงมีความยาวคลื่น 500 นาโนเมตร ผลต่างทางเดิน 1500 นาโนเมตร และ 1250 นาโนเมตร เป็นแถบใด?",
+    "แสงมีความยาวคลื่น 600 นาโนเมตร มีทางเดิน 65.00 เซนติเมตร และ 65.60 เซนติเมตร จงหาความต่างเฟส",
+    "แสงมีความยาวคลื่น 500 นาโนเมตร ระยะห่างสลิต 0.25 มิลลิเมตร ฉากห่าง 1.50 เมตร หาตำแหน่งแถบสว่างอันดับ 2",
+    "แสงมีความยาวคลื่น 600 นาโนเมตร ระยะห่างสลิต 0.20 มิลลิเมตร ฉากห่าง 1.0 เมตร จุดที่ห่างจากแถบกลาง 4.5 มิลลิเมตร เป็นแถบใด? ถ้าโจทย์ให้มุมแทนตำแหน่งจะคำนวณอย่างไร?",
+    "ศูนย์กลางแถบสว่างติดกัน 6 แถบเรียงจากตำแหน่ง 12.5 ถึง 27.5 มิลลิเมตร หาระยะห่างแถบ",
+    "แถบสว่างอันดับ 1 ถึง 4 ห่างกัน 9.0 มิลลิเมตร ระยะห่างสลิต 0.30 มิลลิเมตร และฉากห่าง 1.50 เมตร จงหาความยาวคลื่น",
+    "ที่ตำแหน่งห่างจากแถบกลาง 1.1 เซนติเมตร เฟสสะสมต่างกัน 4π เรเดียน แสงมีความยาวคลื่น 550 นาโนเมตร ฉากห่าง 1.0 เมตร จงหาระยะห่างสลิต",
+    "เพิ่มระยะถึงฉากเป็น 1.5 เท่า ระยะห่างสลิตเป็น 1.2 เท่า และความถี่เป็น 1.25 เท่า ระยะห่างแถบเปลี่ยนเท่าใด?",
+    "ลดความยาวคลื่นเหลือ 0.80 เท่า คงระยะห่างสลิต ต้องปรับระยะถึงฉากเป็นกี่เท่าเพื่อให้ระยะห่างแถบเป็น 2 เท่า?",
+    "แถบมืดอันดับ 3 ของแสงสีแรกตรงกับแถบสว่างอันดับ 2 ของแสงสีที่สอง ใช้สลิตและฉากเดียวกัน หาอัตราส่วนความยาวคลื่นของแสงสีแรกต่อแสงสีที่สอง",
+    "ระยะห่างแถบสว่างติดกันเท่ากับ 4.0 มิลลิเมตร หาระยะระหว่างสว่างอันดับ 1 กับมืดอันดับ 2 ทั้งกรณีด้านเดียวกันและคนละด้าน และหาระยะระหว่างสว่างอันดับ 3 ซ้าย–ขวา",
+    "แสงมีความยาวคลื่น 600 นาโนเมตร ระยะห่างสลิต 8.0 ไมโครเมตร ฉากห่าง 0.50 เมตร หาตำแหน่งแถบสว่างอันดับ 2"
+  ],
+  "en": [
+    "Light has wavelength 500 nanometres. Classify path differences of 1500 and 1250 nanometres.",
+    "For light of wavelength 600 nanometres, the paths are 65.00 and 65.60 centimetres. Find the phase difference.",
+    "Light has wavelength 500 nanometres, slit separation 0.25 millimetres and screen distance 1.50 metres. Locate the second bright fringe.",
+    "Light has wavelength 600 nanometres, slit separation 0.20 millimetres and screen distance 1.0 metres. Classify the point 4.5 millimetres from the central fringe. How would you calculate if an angle were given instead?",
+    "Six consecutive bright centres extend from 12.5 to 27.5 millimetres. Find the fringe spacing.",
+    "Bright orders 1 to 4 span 9.0 millimetres. The slit separation is 0.30 millimetres and screen distance 1.50 metres. Find the wavelength.",
+    "At 1.1 centimetres from the central fringe, the accumulated phase difference is 4π radians. Light has wavelength 550 nanometres and screen distance 1.0 metres. Find the slit separation.",
+    "Multiply the screen distance by 1.5, slit separation by 1.2 and frequency by 1.25. How does fringe spacing change?",
+    "Reduce the wavelength to 0.80 of its original value and keep slit separation fixed. By what factor must the screen distance change to double fringe spacing?",
+    "The third dark fringe of the first colour coincides with the second bright fringe of the second colour, using the same slits and screen. Find the ratio of the first wavelength to the second.",
+    "Adjacent bright fringes are 4.0 millimetres apart. Find the separation of bright order 1 and dark order 2 on the same side and on opposite sides. Also find the separation of the two third-order bright fringes.",
+    "Light has wavelength 600 nanometres, slit separation 8.0 micrometres and screen distance 0.50 metres. Locate the second bright fringe."
+  ]
+};
+for(const lang of ['th','en']){let index=0;for(const page of pages){const d=parseHTML('<html><body>'+page.html[lang]+'</body></html>').document;for(const example of d.querySelectorAll('.example'))example.querySelector('p').textContent=fullPrompts[lang][index++];for(const p of d.querySelectorAll('.observe>p')){p.innerHTML=p.innerHTML.replace('เพิ่ม L, เพิ่ม d หรือเพิ่ม f','เพิ่มระยะถึงฉาก เพิ่มระยะห่างสลิต หรือเพิ่มความถี่').replace('เพิ่ม d แต่คง λ และ L','เพิ่มระยะห่างสลิต แต่คงความยาวคลื่นและระยะถึงฉาก').replace('increase L, d or f','increase screen distance, slit separation or frequency').replace('If d increases with λ and L fixed','If slit separation increases with wavelength and screen distance fixed');}page.html[lang]=d.body.innerHTML;}if(index!==12)throw Error('Missing example prompt');}
+// Retain complete teacher-demonstrated derivations and the supplied diagrams.
+import {proofPages} from './proofs.mjs';
+pages.splice(pages.findIndex(p=>p.key==='geometry-position'),0,proofPages[0]);
+pages.splice(pages.findIndex(p=>p.key==='measure'),0,proofPages[1]);
+const reasoning={th:[
+'วิธีคิด: หารผลต่างทางเดินด้วยความยาวคลื่นก่อน แล้วเทียบจำนวนเต็มหรือครึ่งจำนวนคี่ ไม่ปัดเป็นอันดับเอง',
+'วิธีคิด: หักระยะทางก่อน แปลงเป็นเมตร แล้วคูณจำนวนรอบด้วย 2π แยกคำตอบเฟสสะสมจากเฟสเทียบเท่า',
+'วิธีคิด: ใช้เงื่อนไขสว่างอันดับ 2 ร่วมกับสูตรตำแหน่งมุมเล็ก จัดหน่วยเป็นเมตรก่อนแทนค่า',
+'วิธีคิด: หาผลต่างทางเดินเทียบความยาวคลื่นจากตำแหน่งหรือมุม ค่า 1.5 เท่าตรงกับมืดอันดับ 2',
+'วิธีคิด: ลบพิกัดแถบสุดท้ายกับแถบแรกก่อน มีศูนย์กลาง 6 แถบจึงหารด้วย 5 ช่วง',
+'วิธีคิด: อันดับ 1 ถึง 4 มี 3 ช่วง หาระยะห่างหนึ่งช่วงก่อน แล้วจัดรูปสูตรเพื่อหาความยาวคลื่น',
+'วิธีคิด: เฟสสะสม 4π คือ 2 รอบ จึงได้ผลต่างทางเดิน 2 ความยาวคลื่น แล้วใช้เรขาคณิตมุมเล็กย้อนหาระยะสลิต',
+'วิธีคิด: ความถี่อยู่ในตัวส่วนเมื่ออัตราเร็วคงเดิม จึงต้องหารด้วยตัวคูณความถี่ด้วย',
+'วิธีคิด: ตั้งอัตราส่วนระยะห่างใหม่ต่อเดิมเท่ากับ 2 แล้วแก้ตัวคูณระยะถึงฉาก ไม่บวกอัตราส่วนเข้าด้วยกัน',
+'วิธีคิด: จุดซ้อนกันมีพิกัดเท่ากัน เขียนสมการแต่ละสีให้ถูกชนิดและอันดับก่อนตัดปัจจัยร่วม',
+'วิธีคิด: กำหนดด้านซ้ายเป็นพิกัดลบ ด้านขวาเป็นบวก แล้วลบพิกัดและหาขนาด จึงไม่สับสนการบวกหรือลบระยะ',
+'วิธีคิด: สูตรแทรกสอดให้ไซน์ของมุม ส่วนเรขาคณิตของฉากให้แทนเจนต์ จึงหามุมก่อนคำนวณตำแหน่ง'
+],en:[
+'Method: divide path difference by wavelength, then test integer or half-integer conditions without rounding into an order.',
+'Method: subtract paths, convert to metres, then multiply cycles by 2π. Distinguish accumulated phase from equivalent phase.',
+'Method: apply the second-bright-fringe condition and small-angle geometry. Convert all distances to metres before substituting.',
+'Method: compare the path difference inferred from position or angle with wavelength. A ratio of 1.5 gives dark order 2.',
+'Method: subtract the end coordinates. Six bright centres span five intervals, so divide by five.',
+'Method: orders 1 to 4 span three intervals. Find one interval first, then rearrange for wavelength.',
+'Method: 4π accumulated phase means two cycles and two wavelengths of path difference. Then invert the small-angle geometry.',
+'Method: with fixed wave speed, frequency belongs in the denominator. Divide by its scale factor as well.',
+'Method: set the new-to-old spacing ratio equal to two and solve for the screen-distance factor. Do not add scale factors.',
+'Method: coincident fringes have equal coordinates. Use the correct bright/dark order before cancelling common factors.',
+'Method: assign negative coordinates on the left and positive on the right. Take the magnitude of their difference.',
+'Method: interference determines sine of the angle; screen geometry uses tangent. Find the angle before locating the fringe.'
+]};
+for(const lang of ['th','en']){let i=0;for(const page of pages){const d=parseHTML('<html><body>'+page.html[lang]+'</body></html>').document;for(const answer of d.querySelectorAll('.example>.note-answer')){const p=d.createElement('p');p.className='method-note';p.textContent=reasoning[lang][i++];answer.append(p);}page.html[lang]=d.body.innerHTML;}if(i!==12)throw Error('Missing example reasoning');}

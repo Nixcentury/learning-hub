@@ -1,4 +1,35 @@
-# Bohr calculation practice · current revision 2026-11-14-2
+# Bohr calculation practice · current revision 2026-11-16-1
+
+The teacher approved 14 questions: retain Questions 1–5 and 8, diversify the repeated skills in Questions 6, 7, 9 and 10, and add four hydrogen questions. Preserve the existing bank, contentId, route and shared runtime. The agreed scope excludes adding force/angular-momentum derivation drills or a separate K/U/E section to this set; this is a worksheet scope decision, not a claim that those topics are outside the official exam syllabus.
+
+| Question | Current task | Final answer |
+| --- | --- | --- |
+| 1 | Hydrogen radius at level 2, retained | 2.12 × 10⁻¹⁰ m |
+| 2 | Hydrogen total energy at level 4, retained | −0.850 eV |
+| 3 | Photon energy from 620 nm, retained | 2.00 eV |
+| 4 | Hypothetical X excitation frequency, retained | 1.45 × 10¹⁵ Hz |
+| 5 | Hydrogen speed at level 3, retained | 7.30 × 10⁵ m/s |
+| 6 | Rearrange energy formula from −3.40 eV | level 2 |
+| 7 | Radius ratio: level 4 to level 2 | 4 times |
+| 8 | Hypothetical Y excitation wavelength, retained | 413 nm |
+| 9 | Rearrange speed formula from 1.095 × 10⁶ m/s | level 2 |
+| 10 | Wavelength from a 4.00 eV photon | 310 nm |
+| 11 | Hydrogen Rydberg wavelength, 3 → 2 | 656 nm |
+| 12 | Rydberg inverse: approximately 486 nm, lower level 2 | initial level 4 |
+| 13 | Direct hydrogen emission, 3 → 1: photon energy and frequency | 12.1 eV; 2.92 × 10¹⁵ Hz |
+| 14 | Threshold ionization from level 2 | 3.40 eV |
+
+The formula box now includes positive photon energy for emission/absorption, the hydrogen Rydberg equation with lower/upper level definitions, and threshold ionization. Use R_H = 1.097 × 10⁷ m⁻¹ and wavelength in metres. Q12 gives approximately 486 nm: the unrounded calculation produces n ≈ 4.002, consistent with allowed level 4 and rounded givens. Keep the hypothetical-atom energy model explicit and separate from the hydrogen Rydberg constant.
+
+Every printed question has a short final answer between its prompt and writing area, in both blank and answer editions. This is the teacher-authorized exception to the usual no-answers-outside-slots rule, following PR #201. Short answers are hidden in ordinary screen reading. Detailed worked solutions remain the direct children of their semantic slots and are removed from blank print snapshots. All existing slot keys are retained to avoid breaking targets; their labels are updated to describe the new tasks without exposing the answer.
+
+Print styling follows the current 8/10/11 pt rule: one Name/Class line beneath the first-page title, body and reference text 10 pt, headings 11 pt. The menu and bilingual guide are updated to 14 questions. Validation evidence and limitations are in [QA-14-QUESTIONS-2026-11-16.md](QA-14-QUESTIONS-2026-11-16.md).
+
+Sources: the existing Bohr basic-calculation sheet and its main lesson; teacher-approved plan in this session; published interference self-check behavior from PR #201. These are authored practice questions, not transcriptions of official exam questions. No new textbook PDF was supplied or read in this change.
+
+---
+
+# Historical revision 2026-11-14-2
 
 Teacher scope: the existing Learning Sheet tool before **exit ticket revision**. A formula/variable reference box comes first, followed by easy mixed calculations. Keep the eight direct substitutions (two per original core formula), and add two explicitly defined hypothetical-atom excitation problems. There are now ten questions per language in a fixed mixed order.
 

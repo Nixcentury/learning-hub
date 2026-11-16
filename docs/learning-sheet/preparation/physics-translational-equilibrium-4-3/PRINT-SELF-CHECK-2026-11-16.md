@@ -33,7 +33,7 @@ Revision `2026-11-16-1`; อัปเดต guide revision/fingerprint และ
 
 ## QA
 
-- `node --test scripts/learning-sheet.test.mjs`: ผ่าน 8/8 รวมการพิมพ์ 4 แบบและการเทียบ HTML โจทย์/รูป/เฉลยกับฉบับก่อนแก้
+- `node --test scripts/learning-sheet.test.mjs`: ผ่าน 9/9 รวมการพิมพ์ 4 แบบและการเทียบ HTML โจทย์/รูป/เฉลยกับฉบับก่อนแก้
 - `pnpm build`: ผ่าน content/guide validation, TypeScript, Vite และตรวจ artifact 1476 public files
 - เปิดจาก route จริงใน Chrome ผ่าน Hub preview และใช้ปุ่มพิมพ์ของระบบ ไม่จำลองเป็นเอกสารพิมพ์อีกระบบ
 - ทั้ง 4 แบบมี 6 หัวข้อโจทย์/6 คำตอบสั้น ฉบับว่างมี 6 พื้นที่เขียนและไม่มีวิธีทำเต็ม; ฉบับเฉลยมี 6 วิธีทำเต็ม ไม่พบข้อผิดพลาด MathJax
@@ -45,3 +45,5 @@ Revision `2026-11-16-1`; อัปเดต guide revision/fingerprint และ
 | EN | 11 | 11 / 11 |
 
 ตรวจ A4 มาตรฐานในหน้าพิมพ์ Hub; ไม่ได้ตรวจเครื่องพิมพ์จริง, iPad/Safari หรือโหมดเผื่อขอบอุปกรณ์ในรอบนี้
+
+หลังเปิด PR รวม main ที่มีงานโบร์ #203 โดยเก็บการทดสอบทั้งสองชุดไว้ แล้วตรวจ focused tests และ build อีกครั้ง

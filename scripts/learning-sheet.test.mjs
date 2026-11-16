@@ -94,6 +94,40 @@ test('interference calculations: replace only Q7 with line counting and retain 1
   assert.equal(1+2*(antinodes.length-1),5);assert.equal(2*nodes.length,4);
 });
 
+test('Bohr calculations: 14 paired questions retain printed final answers without leaking blank-edition workings', async () => {
+  const { parseHTML } = await import('linkedom');
+  const { buildHtmlPrintSnapshot } = await import('../js/html-print.js');
+  const { applyContentLanguage } = await import('../js/content-language.js');
+  const file = 'content/physics/ipst/atomic-physics/19-1-2-basic-calculations-learning-sheet.html';
+  const html = await readFile(new URL('../public/' + file, import.meta.url), 'utf8');
+  assert.deepEqual(check(html), []);
+  const { document } = parseHTML(html);
+  const keys = lang => [...document.querySelectorAll(`[data-content-lang="${lang}"] [data-sheet-slot]`)].map(node => node.dataset.sheetSlot);
+  assert.equal(keys('th').length, 14);
+  assert.deepEqual(keys('th'), keys('en'));
+  for (const lang of ['th', 'en']) for (const edition of ['blank', 'answers']) {
+    const { document: source } = parseHTML(html);
+    Object.defineProperty(source, 'URL', { value: 'https://example.test/learning-hub/' + file });
+    Object.defineProperty(source, 'defaultView', { value: undefined });
+    applyContentLanguage(source, lang);
+    const { document: copy } = parseHTML(buildHtmlPrintSnapshot(source, 'Bohr self-check'));
+    for (const node of copy.querySelectorAll('[data-sheet-slot],[data-sheet-answer]')) node.getBoundingClientRect = () => ({ width: 600, height: 150 });
+    prepareLearningSheetPrint(copy, edition);
+    assert.equal(copy.querySelectorAll('.calc-problem').length, 14);
+    assert.equal(copy.querySelectorAll('[data-print-check-answer]').length, 14);
+    assert.equal(copy.querySelectorAll('[data-sheet-answer]').length, edition === 'blank' ? 0 : 14);
+    assert.equal(copy.querySelectorAll('[data-sheet-blank-area]').length, edition === 'blank' ? 14 : 0);
+    assert.equal(copy.querySelectorAll(`[data-content-lang="${lang === 'th' ? 'en' : 'th'}"]`).length, 0);
+    assert.equal(copy.querySelectorAll('.calc-student-info').length, 1);
+    for (const [i, problem] of [...copy.querySelectorAll('.calc-problem')].entries()) {
+      const finalAnswer = problem.querySelector('[data-print-check-answer]');
+      assert.equal(finalAnswer.dataset.printCheckAnswer, String(i + 1));
+      assert.equal(finalAnswer.nextElementSibling.hasAttribute('data-sheet-slot'), true);
+    }
+    assert.equal(source.querySelectorAll('[data-sheet-answer]').length, 28, 'Print must not mutate the reading document');
+  }
+});
+
 test('equilibrium calculations: preserve six questions, figures and workings while printing short answers in both editions',async()=>{
   const {parseHTML}=await import('linkedom');
   const {buildHtmlPrintSnapshot}=await import('../js/html-print.js');

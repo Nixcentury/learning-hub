@@ -70,3 +70,26 @@ test('interference calculations: all 12 printed self-check answers survive eithe
     assert.equal(source.querySelectorAll('[data-sheet-answer]').length,24,'printing must preserve live answers');
   }
 });
+
+test('interference calculations: replace only Q7 with line counting and retain 12 questions',async()=>{
+  const {parseHTML}=await import('linkedom');
+  const path='../public/content/physics/interference-9-4-3-basic-calculations-learning-sheet.html';
+  const {document:current}=parseHTML(await readFile(new URL(path,import.meta.url),'utf8'));
+  const {document:before}=parseHTML(await readFile(new URL('../docs/learning-sheet/preparation/physics-interference-9-4-3/basic-calculations-before-count-lines.html',import.meta.url),'utf8'));
+  for(const lang of ['th','en']){
+    const a=before.querySelector(`[data-content-lang="${lang}"]`).querySelectorAll('.calc-problem');
+    const b=current.querySelector(`[data-content-lang="${lang}"]`).querySelectorAll('.calc-problem');
+    assert.equal(b.length,12);
+    for(let i=0;i<12;i++)if(i!==6)assert.equal(b[i].outerHTML,a[i].outerHTML,`${lang} Question ${i+1} remains unchanged`);
+    assert.ok(b[6].querySelector('[data-sheet-slot="count-node-antinode-lines"]'));
+    assert.match(b[6].querySelector('[data-print-check-answer]').textContent,/5.*4/);
+    assert.match(b[6].querySelector('[data-sheet-answer]').textContent,/2\.4/);
+    assert.match(b[6].querySelector('[data-sheet-answer]').textContent,/2\.9/);
+    assert.ok(b[11].querySelector('[data-sheet-slot="geometry-sound"]'));
+  }
+  // Enumerate allowed orders from the physical path-difference bound.
+  const orders=Array.from({length:10},(_,m)=>m);
+  const antinodes=orders.filter(m=>m*10<=24),nodes=orders.filter(m=>m>=1&&(m-.5)*10<=24);
+  assert.deepEqual(antinodes,[0,1,2]);assert.deepEqual(nodes,[1,2]);
+  assert.equal(1+2*(antinodes.length-1),5);assert.equal(2*nodes.length,4);
+});

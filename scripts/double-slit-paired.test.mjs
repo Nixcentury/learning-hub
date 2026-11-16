@@ -1,22 +1,22 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile,access} from 'node:fs/promises';import {createHash} from 'node:crypto';import {parseHTML} from 'linkedom';
 import {applyContentLanguage} from '../js/content-language.js';import {buildHtmlPrintSnapshot} from '../js/html-print.js';import {prepareExitTicketPrint,exitTicketPages} from '../js/exit-ticket-revision.js';
 const base='content/physics/ipst/wave-optics/';
-const files={classroom:base+'10-2-double-slit-classroom-note-v1.html',exit:base+'10-2-double-slit-exit-ticket-revision-v1.html'};
+const files={classroom:base+'10-2-double-slit-classroom-note-v1-1.html',exit:base+'10-2-double-slit-exit-ticket-revision-v1-1.html'};
 async function load(kind){const {document}=parseHTML(await readFile(new URL('../public/'+files[kind],import.meta.url),'utf8'));Object.defineProperty(document,'URL',{value:'https://example.test/learning-hub/'+files[kind]});Object.defineProperty(document,'defaultView',{value:undefined});return document;}
 const view=(doc,lang,edition,range)=>doc.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="${edition}"] [data-revision-range="${range}"]`);
 function notes(node){return [...node.querySelectorAll('.shared-note')].map(n=>{const c=n.cloneNode(true);c.querySelectorAll('.identity').forEach(x=>x.remove());c.querySelectorAll('img[src]').forEach(x=>x.setAttribute('src',x.getAttribute('src').replace(/^.*\/assets\//,'assets/')));return c.outerHTML;});}
 test('double-slit: the complete canonical answer notes survive student printing in either language',async()=>{
  const classroom=await load('classroom'),exit=await load('exit');
- const model=await readFile(new URL('../docs/learning-sheet/preparation/physics-double-slit-10-2/paired/notes.mjs',import.meta.url));const sha=createHash('sha256').update(model).digest('hex');
+ const model=Buffer.concat(await Promise.all(['notes.mjs','proofs.mjs','proof-figures.json'].map(p=>readFile(new URL('../docs/learning-sheet/preparation/physics-double-slit-10-2/paired/'+p,import.meta.url)))));const sha=createHash('sha256').update(model).digest('hex');
  assert.equal(classroom.documentElement.dataset.sharedNotesSha256,sha);assert.equal(exit.documentElement.dataset.sharedNotesSha256,sha);
  for(const lang of ['th','en']){
-  const canonical=notes(view(classroom,lang,'answers','all'));assert.equal(canonical.length,7);
+  const canonical=notes(view(classroom,lang,'answers','all'));assert.equal(canonical.length,9);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('[data-note-key$="-proof"] .proof-diagram').length,2);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.example .method-note').length,12);
   const blankClassroom=view(classroom,lang,'blank','all');assert.equal(blankClassroom.querySelectorAll('.note-answer').length,0);assert.equal(blankClassroom.querySelectorAll('.example').length,12);
   for(const edition of ['blank','answers'])for(const range of ['all','review'])assert.deepEqual(notes(view(exit,lang,edition,range)),canonical);
   for(const kind of ['classroom','exit'])for(const answers of [false,true])for(const range of ['all','quiz','review']){
    const source=kind==='classroom'?classroom:exit;applyContentLanguage(source,lang);const before=source.documentElement.outerHTML;
    const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'10.2 paired handout'));const count=prepareExitTicketPrint(copy,{range,answers});
-   assert.equal(count,kind==='classroom'?(range==='quiz'?6:7):range==='all'?15:range==='quiz'?8:7);
+   assert.equal(count,kind==='classroom'?(range==='quiz'?6:9):range==='all'?17:range==='quiz'?8:9);
    assert.equal(copy.querySelectorAll('[data-content-lang]').length,1);assert.equal(copy.querySelectorAll('[data-revision-edition]').length,1);assert.equal(copy.querySelectorAll('.identity').length,1);assert.equal(exitTicketPages(copy).length,count);
    assert.equal(source.documentElement.outerHTML,before,'printing must not change the live lesson');
    if(kind==='exit'){

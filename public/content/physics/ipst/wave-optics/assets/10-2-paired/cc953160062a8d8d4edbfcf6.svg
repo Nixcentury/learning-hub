@@ -1,0 +1,15 @@
+<svg viewBox="0 0 800 267" aria-label="Double-slit geometry" role="img" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#fff" height="267" stroke="#e4e4e4" width="800" x="0" y="0" />
+<rect fill="#494949" height="197" width="10" x="111" y="28" /><rect fill="#fff" height="10" width="10" x="111" y="85" /><rect fill="#fff" height="10" width="10" x="111" y="155" />
+<line stroke="#888" stroke-dasharray="6 5" x1="116" x2="708" y1="124" y2="124" />
+<line stroke="#b03737" stroke-width="2" x1="116" x2="708" y1="90" y2="56" />
+<line stroke="#326dba" stroke-width="2" x1="116" x2="708" y1="160" y2="56" />
+<line stroke="#404040" stroke-width="5" x1="708" x2="708" y1="30" y2="225" />
+<line stroke="#888" stroke-width="1.5" x1="728" x2="728" y1="56" y2="124" /><path d="M723 60 l5 -7 5 7 M723 120 l5 7 5 -7" fill="none" stroke="#777" />
+<line stroke="#555" x1="103" x2="103" y1="90" y2="160" /><path d="M99 96l4 -7 4 7 M99 155l4 7 4 -7" fill="none" stroke="#555" />
+<path d="M175 124 A59 59 0 0 0 174 118" fill="none" stroke="#444" />
+<text font-size="15" x="74" y="87">S₁</text><text font-size="15" x="74" y="168">S₂</text><text font-size="14" x="94" y="128">O</text><text font-size="16" x="741" y="62">P</text><text font-size="16" x="741" y="129">C</text>
+<text font-size="18" x="85" y="129">d</text><text font-size="18" x="737" y="92">x</text><text font-size="17" x="388" y="142">L</text>
+<text font-size="15" x="193" y="112">θ</text><text fill="#a12b2b" font-size="16" x="390" y="68">S₁P</text><text fill="#245e9f" font-size="16" x="403" y="197">S₂P</text>
+<text font-size="14" x="678" y="247">Screen</text><text font-size="14" x="35" y="249">Slits</text><text fill="#666" font-size="13" x="306" y="160">Central axis</text>
+</svg>

@@ -1,0 +1,11 @@
+<svg class="spacing-visual" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 125" role="img" aria-label="Adjacent bright-fringe positions from the central fringe: x n and x n plus one; their difference is Delta x">
+      <defs><marker id="fringe-arrow-END" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M0 0 L6 3 L0 6Z" fill="#333" /></marker></defs>
+      <rect x="48" y="4" width="664" height="40" rx="5" fill="#192521" />
+      <g fill="#8ce0af"><rect x="103" y="12" width="10" height="24" rx="4" /><rect x="232" y="12" width="10" height="24" rx="4" /><rect x="361" y="12" width="10" height="24" rx="4" /><rect x="490" y="12" width="10" height="24" rx="4" /><rect x="619" y="12" width="10" height="24" rx="4" /></g>
+      <g font-family="Arial, Noto Sans Thai, sans-serif" font-size="14" fill="#222" text-anchor="middle"><text x="108" y="59">0</text><text x="237" y="59">1</text><text x="366" y="59">2</text><text x="495" y="59">3</text><text x="624" y="59">4</text></g>
+      <path d="M108 64 V116 M366 64 V116 M495 64 V116" stroke="#777" stroke-width="1" stroke-dasharray="2 4" />
+      <path d="M112 77 H362" stroke="#444" stroke-width="1.5" marker-start="url(#fringe-arrow-END)" marker-end="url(#fringe-arrow-END)" />
+      <path d="M112 96 H491" stroke="#444" stroke-width="1.5" marker-start="url(#fringe-arrow-END)" marker-end="url(#fringe-arrow-END)" />
+      <path d="M370 113 H491" stroke="#245b5b" stroke-width="2" marker-start="url(#fringe-arrow-END)" marker-end="url(#fringe-arrow-END)" />
+      <g font-family="Georgia, serif" text-anchor="middle" fill="#222" font-size="14"><text x="237" y="72" font-style="italic">xₙ</text><text x="301" y="91" font-style="italic">xₙ₊₁</text><text x="431" y="108" fill="#135b48" font-weight="bold">Δx</text></g>
+    </svg>

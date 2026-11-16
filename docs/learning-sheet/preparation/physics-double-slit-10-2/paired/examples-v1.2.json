@@ -1,0 +1,153 @@
+{
+  "revision": "1.2",
+  "languages": {
+    "th": [
+      {
+        "html": "<div class=\"example\"><h3>ตัวอย่าง 1 · อ่านอันดับ</h3><p>แสงมีความยาวคลื่น 500 นาโนเมตร ผลต่างทางเดิน 1500 นาโนเมตร และ 1250 นาโนเมตร เป็นแถบใด?</p><div class=\"note-answer\"><p><b>1500 นาโนเมตร · ตรวจปฏิบัพ (สว่าง)</b></p><p>\\(\\Delta r=m\\lambda\\Rightarrow m=\\Delta r/\\lambda\\)</p><p>\\(m=1500/500=3\\) เป็นจำนวนเต็มที่ยอมรับได้ → สว่างอันดับ 3</p><p><b>1250 นาโนเมตร · ตรวจบัพ (มืด)</b></p><p>\\(\\Delta r=(m-\\tfrac12)\\lambda\\Rightarrow m=\\Delta r/\\lambda+\\tfrac12\\)</p><p>\\(m=1250/500+0.5=3\\) เป็นจำนวนเต็มตั้งแต่ 1 → มืดอันดับ 3</p><p>ถ้าลองสูตรสว่างกับกรณีหลัง จะได้ \\(m=2.5\\) ไม่เป็นจำนวนเต็ม จึงไม่ใช่สว่างอันดับ 2.5</p><p class=\"method-note\">วิธีคิด: เลือกสูตรสว่างหรือมืด จัดรูปหาอันดับ แล้วตรวจว่าค่าอันดับเป็นจำนวนเต็มในช่วงที่สูตรกำหนด</p></div></div>",
+        "prompt": "แสงมีความยาวคลื่น 500 นาโนเมตร ผลต่างทางเดิน 1500 นาโนเมตร และ 1250 นาโนเมตร เป็นแถบใด?",
+        "title": "ตัวอย่าง 1 · อ่านอันดับ",
+        "pageKey": "path-phase"
+      },
+      {
+        "html": "<div class=\"example\"><h3>ตัวอย่าง 2 · เฟสสะสมกับเฟสในหนึ่งรอบ</h3><p>แสงมีความยาวคลื่น 600 นาโนเมตร มีทางเดิน 65.00 เซนติเมตร และ 65.60 เซนติเมตร จงหาความต่างเฟส</p><div class=\"note-answer\"><p>\\(\\Delta r=0.60\\,\\mathrm{cm}=6.0\\times10^{-3}\\,\\mathrm m\\)</p><p>\\(\\Delta\\phi=2\\pi\\frac{6.0\\times10^{-3}}{600\\times10^{-9}}=20000\\pi\\,\\mathrm{rad}\\)</p><p>ครบ 10000 รอบ → เฟสเทียบเท่า 0 rad (หรือ 2π rad) จึงเสริมกัน อย่าตอบว่าเฟสสะสมเท่ากับศูนย์</p><p class=\"method-note\">วิธีคิด: หักระยะทางก่อน แปลงเป็นเมตร แล้วคูณจำนวนรอบด้วย 2π แยกคำตอบเฟสสะสมจากเฟสเทียบเท่า</p></div></div>",
+        "prompt": "แสงมีความยาวคลื่น 600 นาโนเมตร มีทางเดิน 65.00 เซนติเมตร และ 65.60 เซนติเมตร จงหาความต่างเฟส",
+        "title": "ตัวอย่าง 2 · เฟสสะสมกับเฟสในหนึ่งรอบ",
+        "pageKey": "path-phase"
+      },
+      {
+        "html": "<div class=\"example\"><h3>ตัวอย่าง 3 · หาตำแหน่ง</h3><p>แสงมีความยาวคลื่น 500 นาโนเมตร ระยะห่างสลิต 0.25 มิลลิเมตร ฉากห่าง 1.50 เมตร หาตำแหน่งแถบสว่างอันดับ 2</p><div class=\"note-answer\"><p>\\(|x_2|\\approx\\frac{2(500\\times10^{-9})(1.50)}{0.25\\times10^{-3}}=6.0\\times10^{-3}\\,\\mathrm m=6.0\\,\\mathrm{mm}\\)</p><p>มีสองตำแหน่ง \\(x=\\pm6.0\\,\\mathrm{mm}\\); \\(|x|/L=0.004\\ll1\\)</p><p class=\"method-note\">วิธีคิด: ใช้เงื่อนไขสว่างอันดับ 2 ร่วมกับสูตรตำแหน่งมุมเล็ก จัดหน่วยเป็นเมตรก่อนแทนค่า</p></div></div>",
+        "prompt": "แสงมีความยาวคลื่น 500 นาโนเมตร ระยะห่างสลิต 0.25 มิลลิเมตร ฉากห่าง 1.50 เมตร หาตำแหน่งแถบสว่างอันดับ 2",
+        "title": "ตัวอย่าง 3 · หาตำแหน่ง",
+        "pageKey": "geometry-position"
+      },
+      {
+        "html": "<div class=\"example\"><h3>ตัวอย่าง 4 · มุมหรือตำแหน่งบอกชนิดได้</h3><p>แสงมีความยาวคลื่น 600 นาโนเมตร ระยะห่างสลิต 0.20 มิลลิเมตร ฉากห่าง 1.0 เมตร จุดที่ห่างจากแถบกลาง 4.5 มิลลิเมตร เป็นแถบใด? ถ้าโจทย์ให้มุมแทนตำแหน่งจะคำนวณอย่างไร?</p><div class=\"note-answer\"><p>เลือกสูตรบัพ (มืด) แล้วจัดรูปหาอันดับ</p><p>\\(|x_m|\\approx(m-\\tfrac12)\\lambda L/d\\Rightarrow m\\approx d|x|/(\\lambda L)+\\tfrac12\\)</p><p>\\(m\\approx\\frac{(0.20\\times10^{-3})(4.5\\times10^{-3})}{(600\\times10^{-9})(1.0)}+0.5=2\\)</p><p>เป็นจำนวนเต็มตั้งแต่ 1 → มืดอันดับ 2; ถ้าใช้สูตรสว่างจะได้ 1.5 จึงไม่เข้าเงื่อนไขสว่าง</p><p>ถ้าให้มุม เริ่มจาก \\(d|\\sin\\theta|\\approx(m-\\tfrac12)\\lambda\\) แล้วจัดรูปเป็น \\(m\\approx d|\\sin\\theta|/\\lambda+\\tfrac12\\) เช่น \\(\\sin\\theta=0.0045\\) ให้ \\(m=2\\) เช่นกัน</p><p>ข้อมูลมุมที่ปัดเศษอาจให้ค่าใกล้จำนวนเต็ม ให้ระบุว่าใกล้แถบนั้นตามความละเอียดข้อมูล ห้ามปัดค่าทั่วไปเป็นอันดับเอง</p><p class=\"method-note\">วิธีคิด: ใช้สูตรชนิดแถบที่เลือกหาอันดับจากตำแหน่งหรือมุม แล้วตรวจจำนวนเต็มก่อนสรุป</p></div></div>",
+        "prompt": "แสงมีความยาวคลื่น 600 นาโนเมตร ระยะห่างสลิต 0.20 มิลลิเมตร ฉากห่าง 1.0 เมตร จุดที่ห่างจากแถบกลาง 4.5 มิลลิเมตร เป็นแถบใด? ถ้าโจทย์ให้มุมแทนตำแหน่งจะคำนวณอย่างไร?",
+        "title": "ตัวอย่าง 4 · มุมหรือตำแหน่งบอกชนิดได้",
+        "pageKey": "geometry-position"
+      },
+      {
+        "html": "<div class=\"example\"><h3>ตัวอย่าง 5 · อ่านไม้บรรทัด</h3><p>ศูนย์กลางแถบสว่างติดกัน 6 แถบเรียงจากตำแหน่ง 12.5 ถึง 27.5 มิลลิเมตร หาระยะห่างแถบ</p><div class=\"note-answer\"><p>\\(\\beta=\\frac{27.5-12.5}{6-1}=3.0\\,\\mathrm{mm}\\); สว่าง–มืดข้างเคียงห่าง 1.5 mm</p><p class=\"method-note\">วิธีคิด: ลบพิกัดแถบสุดท้ายกับแถบแรกก่อน มีศูนย์กลาง 6 แถบจึงหารด้วย 5 ช่วง</p></div></div>",
+        "prompt": "ศูนย์กลางแถบสว่างติดกัน 6 แถบเรียงจากตำแหน่ง 12.5 ถึง 27.5 มิลลิเมตร หาระยะห่างแถบ",
+        "title": "ตัวอย่าง 5 · อ่านไม้บรรทัด",
+        "pageKey": "measure"
+      },
+      {
+        "html": "<div class=\"example\"><h3>ตัวอย่าง 6 · ย้อนหาความยาวคลื่น</h3><p>แถบสว่างอันดับ 1 ถึง 4 ห่างกัน 9.0 มิลลิเมตร ระยะห่างสลิต 0.30 มิลลิเมตร และฉากห่าง 1.50 เมตร จงหาความยาวคลื่น</p><div class=\"note-answer\"><p>\\(\\beta=9.0/(4-1)=3.0\\,\\mathrm{mm}\\)</p><p>\\(\\lambda\\approx\\frac{(3.0\\times10^{-3})(0.30\\times10^{-3})}{1.50}=6.0\\times10^{-7}\\,\\mathrm m=600\\,\\mathrm{nm}\\)</p><p class=\"method-note\">วิธีคิด: อันดับ 1 ถึง 4 มี 3 ช่วง หาระยะห่างหนึ่งช่วงก่อน แล้วจัดรูปสูตรเพื่อหาความยาวคลื่น</p></div></div>",
+        "prompt": "แถบสว่างอันดับ 1 ถึง 4 ห่างกัน 9.0 มิลลิเมตร ระยะห่างสลิต 0.30 มิลลิเมตร และฉากห่าง 1.50 เมตร จงหาความยาวคลื่น",
+        "title": "ตัวอย่าง 6 · ย้อนหาความยาวคลื่น",
+        "pageKey": "inverse"
+      },
+      {
+        "html": "<div class=\"example\"><h3>ตัวอย่าง 7 · ย้อนหาระยะสลิตจากเฟส</h3><p>ที่ตำแหน่งห่างจากแถบกลาง 1.1 เซนติเมตร เฟสสะสมต่างกัน 4π เรเดียน แสงมีความยาวคลื่น 550 นาโนเมตร ฉากห่าง 1.0 เมตร จงหาระยะห่างสลิต</p><div class=\"note-answer\"><p>\\(\\Delta r=\\lambda\\Delta\\phi/(2\\pi)=2\\lambda=1.10\\times10^{-6}\\,\\mathrm m\\)</p><p>\\(d\\approx\\frac{\\Delta r L}{|x|}=\\frac{(1.10\\times10^{-6})(1.0)}{1.1\\times10^{-2}}=1.0\\times10^{-4}\\,\\mathrm m=0.10\\,\\mathrm{mm}\\)</p><p class=\"method-note\">วิธีคิด: เฟสสะสม 4π คือ 2 รอบ จึงได้ผลต่างทางเดิน 2 ความยาวคลื่น แล้วใช้เรขาคณิตมุมเล็กย้อนหาระยะสลิต</p></div></div>",
+        "prompt": "ที่ตำแหน่งห่างจากแถบกลาง 1.1 เซนติเมตร เฟสสะสมต่างกัน 4π เรเดียน แสงมีความยาวคลื่น 550 นาโนเมตร ฉากห่าง 1.0 เมตร จงหาระยะห่างสลิต",
+        "title": "ตัวอย่าง 7 · ย้อนหาระยะสลิตจากเฟส",
+        "pageKey": "inverse"
+      },
+      {
+        "html": "<div class=\"example\"><h3>ตัวอย่าง 8 · หลายตัวแปรพร้อมกัน</h3><p>เพิ่มระยะถึงฉากเป็น 1.5 เท่า ระยะห่างสลิตเป็น 1.2 เท่า และความถี่เป็น 1.25 เท่า ระยะห่างแถบเปลี่ยนเท่าใด?</p><div class=\"note-answer\"><p>\\(\\beta_2/\\beta_1=1.5/(1.2\\times1.25)=1\\) ระยะห่างไม่เปลี่ยน</p><p class=\"method-note\">วิธีคิด: ความถี่อยู่ในตัวส่วนเมื่ออัตราเร็วคงเดิม จึงต้องหารด้วยตัวคูณความถี่ด้วย</p></div></div>",
+        "prompt": "เพิ่มระยะถึงฉากเป็น 1.5 เท่า ระยะห่างสลิตเป็น 1.2 เท่า และความถี่เป็น 1.25 เท่า ระยะห่างแถบเปลี่ยนเท่าใด?",
+        "title": "ตัวอย่าง 8 · หลายตัวแปรพร้อมกัน",
+        "pageKey": "changes"
+      },
+      {
+        "html": "<div class=\"example\"><h3>ตัวอย่าง 9 · ปรับความกว้างตามเป้าหมาย</h3><p>ลดความยาวคลื่นเหลือ 0.80 เท่า คงระยะห่างสลิต ต้องปรับระยะถึงฉากเป็นกี่เท่าเพื่อให้ระยะห่างแถบเป็น 2 เท่า?</p><div class=\"note-answer\"><p>\\(2=0.80(L_2/L_1)\\Rightarrow L_2/L_1=2.5\\) ต้องเลื่อนฉากให้ห่างเป็น 2.5 เท่า</p><p class=\"method-note\">วิธีคิด: ตั้งอัตราส่วนระยะห่างใหม่ต่อเดิมเท่ากับ 2 แล้วแก้ตัวคูณระยะถึงฉาก ไม่บวกอัตราส่วนเข้าด้วยกัน</p></div></div>",
+        "prompt": "ลดความยาวคลื่นเหลือ 0.80 เท่า คงระยะห่างสลิต ต้องปรับระยะถึงฉากเป็นกี่เท่าเพื่อให้ระยะห่างแถบเป็น 2 เท่า?",
+        "title": "ตัวอย่าง 9 · ปรับความกว้างตามเป้าหมาย",
+        "pageKey": "changes"
+      },
+      {
+        "html": "<div class=\"example\"><h3>ตัวอย่าง 10 · สองสีซ้อนตำแหน่งกัน</h3><p>แถบมืดอันดับ 3 ของแสงสีแรกตรงกับแถบสว่างอันดับ 2 ของแสงสีที่สอง ใช้สลิตและฉากเดียวกัน หาอัตราส่วนความยาวคลื่นของแสงสีแรกต่อแสงสีที่สอง</p><div class=\"note-answer\"><p>\\((3-\\tfrac12)\\lambda_1 L/d=2\\lambda_2 L/d\\)</p><p>\\(\\lambda_1/\\lambda_2=2/2.5=4/5\\) ใช้เงื่อนไข “ตำแหน่งเท่ากัน” ตัดปัจจัย L/d ร่วมกัน</p><p class=\"method-note\">วิธีคิด: จุดซ้อนกันมีพิกัดเท่ากัน เขียนสมการแต่ละสีให้ถูกชนิดและอันดับก่อนตัดปัจจัยร่วม</p></div></div>",
+        "prompt": "แถบมืดอันดับ 3 ของแสงสีแรกตรงกับแถบสว่างอันดับ 2 ของแสงสีที่สอง ใช้สลิตและฉากเดียวกัน หาอัตราส่วนความยาวคลื่นของแสงสีแรกต่อแสงสีที่สอง",
+        "title": "ตัวอย่าง 10 · สองสีซ้อนตำแหน่งกัน",
+        "pageKey": "synthesis"
+      },
+      {
+        "html": "<div class=\"example\"><h3>ตัวอย่าง 11 · ด้านเดียวกันหรือคนละด้าน</h3><p>ระยะห่างแถบสว่างติดกันเท่ากับ 4.0 มิลลิเมตร หาระยะระหว่างสว่างอันดับ 1 กับมืดอันดับ 2 ทั้งกรณีด้านเดียวกันและคนละด้าน และหาระยะระหว่างสว่างอันดับ 3 ซ้าย–ขวา</p><div class=\"note-answer\"><p>ด้านเดียวกัน: \\(|1.5\\beta-\\beta|=0.5\\beta=2.0\\,\\mathrm{mm}\\)</p><p>คนละด้าน: \\(|1.5\\beta-(-\\beta)|=2.5\\beta=10.0\\,\\mathrm{mm}\\)</p><p>สว่างอันดับ 3 สองข้าง: \\(|3\\beta-(-3\\beta)|=6\\beta=24.0\\,\\mathrm{mm}\\)</p><p class=\"method-note\">วิธีคิด: กำหนดด้านซ้ายเป็นพิกัดลบ ด้านขวาเป็นบวก แล้วลบพิกัดและหาขนาด จึงไม่สับสนการบวกหรือลบระยะ</p></div></div>",
+        "prompt": "ระยะห่างแถบสว่างติดกันเท่ากับ 4.0 มิลลิเมตร หาระยะระหว่างสว่างอันดับ 1 กับมืดอันดับ 2 ทั้งกรณีด้านเดียวกันและคนละด้าน และหาระยะระหว่างสว่างอันดับ 3 ซ้าย–ขวา",
+        "title": "ตัวอย่าง 11 · ด้านเดียวกันหรือคนละด้าน",
+        "pageKey": "synthesis"
+      },
+      {
+        "html": "<div class=\"example\"><h3>ตัวอย่าง 12 · เมื่อมุมไม่เล็ก</h3><p>แสงมีความยาวคลื่น 600 นาโนเมตร ระยะห่างสลิต 8.0 ไมโครเมตร ฉากห่าง 0.50 เมตร หาตำแหน่งแถบสว่างอันดับ 2</p><div class=\"note-answer\"><p>\\(\\sin\\theta\\approx2\\lambda/d=0.150\\Rightarrow\\theta\\approx8.63^\\circ\\)</p><p>\\(|x|=L\\tan\\theta\\approx0.0759\\,\\mathrm m=75.9\\,\\mathrm{mm}\\)</p><p>มุมเล็กให้ 75.0 mm; ที่นี่ใช้ sin หามุมก่อน แล้วใช้ tan หาตำแหน่ง ยังใช้เงื่อนไขฉากไกล</p><p class=\"method-note\">วิธีคิด: สูตรแทรกสอดให้ไซน์ของมุม ส่วนเรขาคณิตของฉากให้แทนเจนต์ จึงหามุมก่อนคำนวณตำแหน่ง</p></div></div>",
+        "prompt": "แสงมีความยาวคลื่น 600 นาโนเมตร ระยะห่างสลิต 8.0 ไมโครเมตร ฉากห่าง 0.50 เมตร หาตำแหน่งแถบสว่างอันดับ 2",
+        "title": "ตัวอย่าง 12 · เมื่อมุมไม่เล็ก",
+        "pageKey": "synthesis"
+      }
+    ],
+    "en": [
+      {
+        "html": "<div class=\"example\"><h3>Example 1 · Identify orders</h3><p>Light has wavelength 500 nanometres. Classify path differences of 1500 and 1250 nanometres.</p><div class=\"note-answer\"><p><b>1500 nanometres · test bright (antinode)</b></p><p>\\(\\Delta r=m\\lambda\\Rightarrow m=\\Delta r/\\lambda\\)</p><p>\\(m=1500/500=3\\): an allowed integer → third bright fringe.</p><p><b>1250 nanometres · test dark (node)</b></p><p>\\(\\Delta r=(m-\\tfrac12)\\lambda\\Rightarrow m=\\Delta r/\\lambda+\\tfrac12\\)</p><p>\\(m=1250/500+0.5=3\\): an integer at least 1 → third dark fringe.</p><p>Testing the second case with the bright formula gives \\(m=2.5\\), not an integer: there is no bright order 2.5.</p><p class=\"method-note\">Method: choose a bright or dark condition, rearrange for order, and verify an integer in its allowed range.</p></div></div>",
+        "prompt": "Light has wavelength 500 nanometres. Classify path differences of 1500 and 1250 nanometres.",
+        "title": "Example 1 · Identify orders",
+        "pageKey": "path-phase"
+      },
+      {
+        "html": "<div class=\"example\"><h3>Example 2 · Accumulated and equivalent phase</h3><p>For light of wavelength 600 nanometres, the paths are 65.00 and 65.60 centimetres. Find the phase difference.</p><div class=\"note-answer\"><p>\\(\\Delta r=0.60\\,\\mathrm{cm}=6.0\\times10^{-3}\\,\\mathrm m\\)</p><p>\\(\\Delta\\phi=2\\pi\\frac{6.0\\times10^{-3}}{600\\times10^{-9}}=20000\\pi\\,\\mathrm{rad}\\)</p><p>This is 10000 complete cycles, equivalent to 0 rad (or 2π rad): constructive interference. The accumulated phase itself is not zero.</p><p class=\"method-note\">Method: subtract paths, convert to metres, then multiply cycles by 2π. Distinguish accumulated phase from equivalent phase.</p></div></div>",
+        "prompt": "For light of wavelength 600 nanometres, the paths are 65.00 and 65.60 centimetres. Find the phase difference.",
+        "title": "Example 2 · Accumulated and equivalent phase",
+        "pageKey": "path-phase"
+      },
+      {
+        "html": "<div class=\"example\"><h3>Example 3 · Find a position</h3><p>Light has wavelength 500 nanometres, slit separation 0.25 millimetres and screen distance 1.50 metres. Locate the second bright fringe.</p><div class=\"note-answer\"><p>\\(|x_2|\\approx\\frac{2(500\\times10^{-9})(1.50)}{0.25\\times10^{-3}}=6.0\\times10^{-3}\\,\\mathrm m=6.0\\,\\mathrm{mm}\\)</p><p>Two positions: \\(x=\\pm6.0\\,\\mathrm{mm}\\); \\(|x|/L=0.004\\ll1\\).</p><p class=\"method-note\">Method: apply the second-bright-fringe condition and small-angle geometry. Convert all distances to metres before substituting.</p></div></div>",
+        "prompt": "Light has wavelength 500 nanometres, slit separation 0.25 millimetres and screen distance 1.50 metres. Locate the second bright fringe.",
+        "title": "Example 3 · Find a position",
+        "pageKey": "geometry-position"
+      },
+      {
+        "html": "<div class=\"example\"><h3>Example 4 · Classify from position or angle</h3><p>Light has wavelength 600 nanometres, slit separation 0.20 millimetres and screen distance 1.0 metres. Classify the point 4.5 millimetres from the central fringe. How would you calculate if an angle were given instead?</p><div class=\"note-answer\"><p>Choose the dark (node) condition and rearrange for order:</p><p>\\(|x_m|\\approx(m-\\tfrac12)\\lambda L/d\\Rightarrow m\\approx d|x|/(\\lambda L)+\\tfrac12\\)</p><p>\\(m\\approx\\frac{(0.20\\times10^{-3})(4.5\\times10^{-3})}{(600\\times10^{-9})(1.0)}+0.5=2\\)</p><p>An integer at least 1 → second dark fringe. The bright formula instead gives 1.5, which is not an allowed bright order.</p><p>For an angle, start from \\(d|\\sin\\theta|\\approx(m-\\tfrac12)\\lambda\\), then \\(m\\approx d|\\sin\\theta|/\\lambda+\\tfrac12\\). For \\(\\sin\\theta=0.0045\\), this also gives \\(m=2\\).</p><p>Rounded angle data may give an order near an integer; state “near” according to data precision. Do not round arbitrary results into orders.</p><p class=\"method-note\">Method: use the chosen fringe condition to obtain its order from position or angle, then check for an allowed integer.</p></div></div>",
+        "prompt": "Light has wavelength 600 nanometres, slit separation 0.20 millimetres and screen distance 1.0 metres. Classify the point 4.5 millimetres from the central fringe. How would you calculate if an angle were given instead?",
+        "title": "Example 4 · Classify from position or angle",
+        "pageKey": "geometry-position"
+      },
+      {
+        "html": "<div class=\"example\"><h3>Example 5 · Read a ruler</h3><p>Six consecutive bright centres extend from 12.5 to 27.5 millimetres. Find the fringe spacing.</p><div class=\"note-answer\"><p>\\(\\beta=\\frac{27.5-12.5}{6-1}=3.0\\,\\mathrm{mm}\\). The adjacent bright–dark separation is 1.5 mm.</p><p class=\"method-note\">Method: subtract the end coordinates. Six bright centres span five intervals, so divide by five.</p></div></div>",
+        "prompt": "Six consecutive bright centres extend from 12.5 to 27.5 millimetres. Find the fringe spacing.",
+        "title": "Example 5 · Read a ruler",
+        "pageKey": "measure"
+      },
+      {
+        "html": "<div class=\"example\"><h3>Example 6 · Find the wavelength</h3><p>Bright orders 1 to 4 span 9.0 millimetres. The slit separation is 0.30 millimetres and screen distance 1.50 metres. Find the wavelength.</p><div class=\"note-answer\"><p>\\(\\beta=9.0/(4-1)=3.0\\,\\mathrm{mm}\\)</p><p>\\(\\lambda\\approx\\frac{(3.0\\times10^{-3})(0.30\\times10^{-3})}{1.50}=6.0\\times10^{-7}\\,\\mathrm m=600\\,\\mathrm{nm}\\)</p><p class=\"method-note\">Method: orders 1 to 4 span three intervals. Find one interval first, then rearrange for wavelength.</p></div></div>",
+        "prompt": "Bright orders 1 to 4 span 9.0 millimetres. The slit separation is 0.30 millimetres and screen distance 1.50 metres. Find the wavelength.",
+        "title": "Example 6 · Find the wavelength",
+        "pageKey": "inverse"
+      },
+      {
+        "html": "<div class=\"example\"><h3>Example 7 · Slit separation from phase</h3><p>At 1.1 centimetres from the central fringe, the accumulated phase difference is 4π radians. Light has wavelength 550 nanometres and screen distance 1.0 metres. Find the slit separation.</p><div class=\"note-answer\"><p>\\(\\Delta r=\\lambda\\Delta\\phi/(2\\pi)=2\\lambda=1.10\\times10^{-6}\\,\\mathrm m\\)</p><p>\\(d\\approx\\frac{\\Delta r L}{|x|}=\\frac{(1.10\\times10^{-6})(1.0)}{1.1\\times10^{-2}}=1.0\\times10^{-4}\\,\\mathrm m=0.10\\,\\mathrm{mm}\\)</p><p class=\"method-note\">Method: 4π accumulated phase means two cycles and two wavelengths of path difference. Then invert the small-angle geometry.</p></div></div>",
+        "prompt": "At 1.1 centimetres from the central fringe, the accumulated phase difference is 4π radians. Light has wavelength 550 nanometres and screen distance 1.0 metres. Find the slit separation.",
+        "title": "Example 7 · Slit separation from phase",
+        "pageKey": "inverse"
+      },
+      {
+        "html": "<div class=\"example\"><h3>Example 8 · Several simultaneous changes</h3><p>Multiply the screen distance by 1.5, slit separation by 1.2 and frequency by 1.25. How does fringe spacing change?</p><div class=\"note-answer\"><p>\\(\\beta_2/\\beta_1=1.5/(1.2\\times1.25)=1\\). The spacing is unchanged.</p><p class=\"method-note\">Method: with fixed wave speed, frequency belongs in the denominator. Divide by its scale factor as well.</p></div></div>",
+        "prompt": "Multiply the screen distance by 1.5, slit separation by 1.2 and frequency by 1.25. How does fringe spacing change?",
+        "title": "Example 8 · Several simultaneous changes",
+        "pageKey": "changes"
+      },
+      {
+        "html": "<div class=\"example\"><h3>Example 9 · Reach a target spacing</h3><p>Reduce the wavelength to 0.80 of its original value and keep slit separation fixed. By what factor must the screen distance change to double fringe spacing?</p><div class=\"note-answer\"><p>\\(2=0.80(L_2/L_1)\\Rightarrow L_2/L_1=2.5\\). Move the screen to 2.5 times its original distance.</p><p class=\"method-note\">Method: set the new-to-old spacing ratio equal to two and solve for the screen-distance factor. Do not add scale factors.</p></div></div>",
+        "prompt": "Reduce the wavelength to 0.80 of its original value and keep slit separation fixed. By what factor must the screen distance change to double fringe spacing?",
+        "title": "Example 9 · Reach a target spacing",
+        "pageKey": "changes"
+      },
+      {
+        "html": "<div class=\"example\"><h3>Example 10 · Two colours coincide</h3><p>The third dark fringe of the first colour coincides with the second bright fringe of the second colour, using the same slits and screen. Find the ratio of the first wavelength to the second.</p><div class=\"note-answer\"><p>\\((3-\\tfrac12)\\lambda_1 L/d=2\\lambda_2 L/d\\)</p><p>\\(\\lambda_1/\\lambda_2=2/2.5=4/5\\). Equate positions and cancel the common factor L/d.</p><p class=\"method-note\">Method: coincident fringes have equal coordinates. Use the correct bright/dark order before cancelling common factors.</p></div></div>",
+        "prompt": "The third dark fringe of the first colour coincides with the second bright fringe of the second colour, using the same slits and screen. Find the ratio of the first wavelength to the second.",
+        "title": "Example 10 · Two colours coincide",
+        "pageKey": "synthesis"
+      },
+      {
+        "html": "<div class=\"example\"><h3>Example 11 · Same side or opposite sides?</h3><p>Adjacent bright fringes are 4.0 millimetres apart. Find the separation of bright order 1 and dark order 2 on the same side and on opposite sides. Also find the separation of the two third-order bright fringes.</p><div class=\"note-answer\"><p>Same side: \\(|1.5\\beta-\\beta|=0.5\\beta=2.0\\,\\mathrm{mm}\\).</p><p>Opposite sides: \\(|1.5\\beta-(-\\beta)|=2.5\\beta=10.0\\,\\mathrm{mm}\\).</p><p>Third bright fringes on both sides: \\(|3\\beta-(-3\\beta)|=6\\beta=24.0\\,\\mathrm{mm}\\).</p><p class=\"method-note\">Method: assign negative coordinates on the left and positive on the right. Take the magnitude of their difference.</p></div></div>",
+        "prompt": "Adjacent bright fringes are 4.0 millimetres apart. Find the separation of bright order 1 and dark order 2 on the same side and on opposite sides. Also find the separation of the two third-order bright fringes.",
+        "title": "Example 11 · Same side or opposite sides?",
+        "pageKey": "synthesis"
+      },
+      {
+        "html": "<div class=\"example\"><h3>Example 12 · Beyond small angles</h3><p>Light has wavelength 600 nanometres, slit separation 8.0 micrometres and screen distance 0.50 metres. Locate the second bright fringe.</p><div class=\"note-answer\"><p>\\(\\sin\\theta\\approx2\\lambda/d=0.150\\Rightarrow\\theta\\approx8.63^\\circ\\)</p><p>\\(|x|=L\\tan\\theta\\approx0.0759\\,\\mathrm m=75.9\\,\\mathrm{mm}\\)</p><p>The small-angle result is 75.0 mm. Here use sin to find the angle, then tan for position. The distant-screen condition still applies.</p><p class=\"method-note\">Method: interference determines sine of the angle; screen geometry uses tangent. Find the angle before locating the fringe.</p></div></div>",
+        "prompt": "Light has wavelength 600 nanometres, slit separation 8.0 micrometres and screen distance 0.50 metres. Locate the second bright fringe.",
+        "title": "Example 12 · Beyond small angles",
+        "pageKey": "synthesis"
+      }
+    ]
+  }
+}

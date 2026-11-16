@@ -14,7 +14,7 @@ import { createTopicReviewTool, reviewSelection } from "./topic-review-tools.js"
 import { bankKeyPattern } from "../public/shared/question-bank-model.js";
 import { pdfLinkEntry } from "./pdf-link.js";
 import { videoLinkEntry } from "./video-link.js";
-import { htmlLinkEntry } from "./html-link.js";
+import { htmlLinkEntry, simulationLinkEntry } from "./html-link.js";
 import { renderHtmlMath } from "./html-math.js";
 import { openHtmlPrint } from "./html-print.js";
 import { toolCatalog } from "./legacy-tool-catalog.js";
@@ -1214,14 +1214,15 @@ export function createWorkspace({
     if (!doc || htmlLinkDocuments.has(doc)) return;
     htmlLinkDocuments.add(doc);
     doc.addEventListener("click", event => {
-      const node = event.target?.closest?.("a[data-hub-html], button[data-hub-html], a[data-hub-pdf], button[data-hub-pdf], a[data-hub-video], button[data-hub-video]");
+      const node = event.target?.closest?.("a[data-hub-html], button[data-hub-html], a[data-hub-pdf], button[data-hub-pdf], a[data-hub-video], button[data-hub-video], a[data-hub-simulation], button[data-hub-simulation]");
       if (!node || node.disabled || event.defaultPrevented || event.button > 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
       if (!canOpen()) return; // Menus may be visible while the account is restoring.
       const subject = doc.querySelector("[data-subject-id]")?.dataset.subjectId;
       const isPdf = node.hasAttribute("data-hub-pdf");
       const isVideo = node.hasAttribute("data-hub-video");
-      const entry = (isVideo ? videoLinkEntry : isPdf ? pdfLinkEntry : htmlLinkEntry)(node, doc.URL, ownerRecord?.tool.context || { subjectId: subject });
+      const isSimulation = node.hasAttribute("data-hub-simulation");
+      const entry = (isVideo ? videoLinkEntry : isPdf ? pdfLinkEntry : isSimulation ? simulationLinkEntry : htmlLinkEntry)(node, doc.URL, ownerRecord?.tool.context || { subjectId: subject });
       const tool = createContentTool(entry, location.href);
       if (!tool || tool.preparing || !openContent(entry)) {
         let notice = doc.querySelector("[data-html-link-error]");

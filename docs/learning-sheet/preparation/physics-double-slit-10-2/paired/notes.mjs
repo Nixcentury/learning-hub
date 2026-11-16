@@ -1,159 +1,40 @@
 import {parseHTML} from 'linkedom';
-// Canonical bilingual content. Both handouts are generated from these same pages.
-// Math uses TeX; the build renders it once to local SVG assets.
-const R=String.raw;
-export const pages=[
-{key:'observe',title:{th:'1 · ดูการทดลอง แล้วบอกสิ่งที่เปลี่ยน',en:'1 · Observe the experiment and identify changes'},html:{
-th:R`<h1>Classroom Note · 10.2 สลิตคู่</h1><p>ดูครูทำ → สังเกต → อธิบายสั้น ๆ → ทดลองทำโจทย์เอง</p>
-<figure class="note-figure"><img src="assets/10-2/experiment-setup.jpg" alt="อุปกรณ์ทดลองสลิตคู่จากหนังสือ สสวท."><figcaption>อุปกรณ์ทดลอง สสวท. · ใช้สังเกต ไม่อ่านค่าที่ภาพไม่ได้กำหนด</figcaption></figure>
-<h2>คลื่นสองขบวนทำอะไร</h2><p>แสงเลี้ยวเบนผ่านแต่ละช่อง แล้วคลื่นจากสองช่องแทรกสอดกันบนฉาก เกิดริ้วสว่าง–มืดหลายริ้ว ไม่ใช่สองริ้วตามจำนวนช่อง</p>
-<p><b>แหล่งกำเนิดอาพันธ์:</b> ความถี่เท่ากันและความต่างเฟสคงที่ แหล่งกำเนิดอิสระทั่วไปให้รูปแบบที่ไม่คงที่ สลิตคู่รับแสงจากแหล่งเดียวช่วยให้เฟสสัมพันธ์กัน</p>
-<div class="observe"><h3>สังเกตสั้น ๆ</h3><p>คงสีและระยะฉาก เปลี่ยนระยะห่างสลิต: แถบถี่ขึ้นเมื่อใด? คงระยะทั้งสอง เปลี่ยนสี: แถบกว้างขึ้นเมื่อใด?</p><div class="note-answer"><p>เพิ่มระยะสลิต → แถบชิดขึ้น; เพิ่มความยาวคลื่น → แถบห่างขึ้น ต้องเปลี่ยนทีละตัวจึงสรุปเหตุได้</p></div></div>
-<h2>ข้อตกลงก่อนใช้สูตร</h2><p>เว้นแต่ระบุอย่างอื่น: แสงความถี่เดียว ตัวกลางเดียว คลื่นจากสลิตเริ่มเฟสตรงกัน ฉากอยู่ไกล \(L\gg d\) และใช้มุมเล็กเฉพาะใกล้แกน \(|x|\ll L\) การมืดสนิทต้องมีแอมพลิจูดเท่ากันด้วย</p>
-<p>ความกว้างช่อง \(a\) ต่างจากระยะระหว่างศูนย์กลางสองช่อง \(d\) ความกว้างช่องมีผลต่อซองการเลี้ยวเบน แต่ที่นี่ใช้สูตรตำแหน่งริ้วสลิตคู่</p>`,
-en:R`<h1>Classroom Note · 10.2 Double slit</h1><p>Watch the demonstration → observe → explain briefly → try independently.</p>
-<figure class="note-figure"><img src="assets/10-2/experiment-setup.jpg" alt="IPST double-slit experimental apparatus"><figcaption>IPST apparatus · observe the setup; do not infer unstated numerical data.</figcaption></figure>
-<h2>What do the two waves do?</h2><p>Light diffracts through each opening. The two emerging waves interfere on the screen, producing many bright and dark fringes, rather than one fringe per opening.</p><p><b>Coherent sources:</b> equal frequency and a constant phase difference. Ordinary independent sources do not maintain a stable pattern. Illuminating both slits from one source helps maintain their phase relationship.</p>
-<div class="observe"><h3>Quick observation</h3><p>Keep colour and screen distance fixed, then change slit separation. When are fringes closer? Now fix both distances and change colour. When are fringes wider?</p><div class="note-answer"><p>Larger slit separation → closer fringes; longer wavelength → wider spacing. Change one variable at a time to identify its effect.</p></div></div>
-<h2>Conditions before using equations</h2><p>Unless stated otherwise: monochromatic light, one medium, initially in-phase slits and a distant screen \(L\gg d\). Use the small-angle approximation only near the axis, \(|x|\ll L\). Complete darkness also requires equal amplitudes.</p><p>Opening width \(a\) differs from centre-to-centre slit separation \(d\). Opening width controls the diffraction envelope; this note treats double-slit interference-fringe positions.</p>`}},
-{key:'path-phase',title:{th:'2 · ผลต่างทางเดิน → เฟส → ชนิดแถบ',en:'2 · Path difference → phase → fringe type'},html:{
-th:R`<p>ใช้ขนาดผลต่างทางเดิน \(\Delta r=|S_2P-S_1P|\) และสำหรับคลื่นเริ่มเฟสตรงกัน \(\Delta\phi=2\pi\Delta r/\lambda\)</p>
-<table class="tbl"><tr><th>ชนิด</th><th>ผลต่างทางเดิน</th><th>อันดับ</th></tr><tr><td>สว่าง</td><td>\(\Delta r=m\lambda\)</td><td>\(m=0,1,2,\ldots\)</td></tr><tr><td>มืด</td><td>\(\Delta r=(m-\tfrac12)\lambda\)</td><td>\(m=1,2,3,\ldots\)</td></tr></table>
-<p>กลางเป็นสว่างอันดับ 0; มืดแรกมีผลต่างทางเดิน \(0.5\lambda\) เลือกสูตรปฏิบัพ (สว่าง) หรือบัพ (มืด) แล้วจัดรูปหาอันดับ \(m\) ค่าที่ได้ต้องเป็นจำนวนเต็มในช่วงที่สูตรกำหนด ถ้าทั้งสองสูตรไม่ให้จำนวนเต็ม จุดนั้นไม่ใช่ตำแหน่งสว่างสุดหรือมืดสุด ห้ามปัดอันดับเอง</p>
-<div class="example"><h3>ตัวอย่าง 1 · อ่านอันดับ</h3><p>แสง \(\lambda=500\,\mathrm{nm}\): ผลต่างทางเดิน 1500 nm และ 1250 nm เป็นแถบใด?</p><div class="note-answer"><p><b>1500 นาโนเมตร · ตรวจปฏิบัพ (สว่าง)</b></p><p>\(\Delta r=m\lambda\Rightarrow m=\Delta r/\lambda\)</p><p>\(m=1500/500=3\) เป็นจำนวนเต็มที่ยอมรับได้ → สว่างอันดับ 3</p><p><b>1250 นาโนเมตร · ตรวจบัพ (มืด)</b></p><p>\(\Delta r=(m-\tfrac12)\lambda\Rightarrow m=\Delta r/\lambda+\tfrac12\)</p><p>\(m=1250/500+0.5=3\) เป็นจำนวนเต็มตั้งแต่ 1 → มืดอันดับ 3</p><p>ถ้าลองสูตรสว่างกับกรณีหลัง จะได้ \(m=2.5\) ไม่เป็นจำนวนเต็ม จึงไม่ใช่สว่างอันดับ 2.5</p></div></div>
-<div class="example"><h3>ตัวอย่าง 2 · เฟสสะสมกับเฟสในหนึ่งรอบ</h3><p>แสง 600 nm มีทางเดิน 65.00 cm และ 65.60 cm จงหาความต่างเฟส</p><div class="note-answer"><p>\(\Delta r=0.60\,\mathrm{cm}=6.0\times10^{-3}\,\mathrm m\)</p><p>\(\Delta\phi=2\pi\frac{6.0\times10^{-3}}{600\times10^{-9}}=20000\pi\,\mathrm{rad}\)</p><p>ครบ 10000 รอบ → เฟสเทียบเท่า 0 rad (หรือ 2π rad) จึงเสริมกัน อย่าตอบว่าเฟสสะสมเท่ากับศูนย์</p></div></div>
-<div class="observe"><h3>ตรวจเร็ว</h3><p>ถ้า \(\Delta r=5.5\lambda\) ได้เฟสเท่าใดและมืดอันดับใด?</p><div class="note-answer"><p>\(\Delta\phi=11\pi\,\mathrm{rad}\equiv\pi\pmod{2\pi}\); มืดอันดับ 6</p></div></div>`,
-en:R`<p>Use the magnitude \(\Delta r=|S_2P-S_1P|\). For initially in-phase waves, \(\Delta\phi=2\pi\Delta r/\lambda\).</p>
-<table class="tbl"><tr><th>Fringe</th><th>Path difference</th><th>Order</th></tr><tr><td>Bright</td><td>\(\Delta r=m\lambda\)</td><td>\(m=0,1,2,\ldots\)</td></tr><tr><td>Dark</td><td>\(\Delta r=(m-\tfrac12)\lambda\)</td><td>\(m=1,2,3,\ldots\)</td></tr></table>
-<p>The central bright fringe has order 0; the first dark fringe has path difference \(0.5\lambda\). Choose the bright (antinode) or dark (node) condition, then rearrange for order \(m\). It must be an integer in the allowed range. If neither condition gives an integer, the point is neither an exact maximum nor minimum. Do not round an order into an integer.</p>
-<div class="example"><h3>Example 1 · Identify orders</h3><p>For \(\lambda=500\,\mathrm{nm}\), classify path differences 1500 nm and 1250 nm.</p><div class="note-answer"><p><b>1500 nanometres · test bright (antinode)</b></p><p>\(\Delta r=m\lambda\Rightarrow m=\Delta r/\lambda\)</p><p>\(m=1500/500=3\): an allowed integer → third bright fringe.</p><p><b>1250 nanometres · test dark (node)</b></p><p>\(\Delta r=(m-\tfrac12)\lambda\Rightarrow m=\Delta r/\lambda+\tfrac12\)</p><p>\(m=1250/500+0.5=3\): an integer at least 1 → third dark fringe.</p><p>Testing the second case with the bright formula gives \(m=2.5\), not an integer: there is no bright order 2.5.</p></div></div>
-<div class="example"><h3>Example 2 · Accumulated and equivalent phase</h3><p>For 600 nm light, the paths are 65.00 cm and 65.60 cm. Find the phase difference.</p><div class="note-answer"><p>\(\Delta r=0.60\,\mathrm{cm}=6.0\times10^{-3}\,\mathrm m\)</p><p>\(\Delta\phi=2\pi\frac{6.0\times10^{-3}}{600\times10^{-9}}=20000\pi\,\mathrm{rad}\)</p><p>This is 10000 complete cycles, equivalent to 0 rad (or 2π rad): constructive interference. The accumulated phase itself is not zero.</p></div></div>
-<div class="observe"><h3>Quick check</h3><p>If \(\Delta r=5.5\lambda\), find the phase difference and dark order.</p><div class="note-answer"><p>\(\Delta\phi=11\pi\,\mathrm{rad}\equiv\pi\pmod{2\pi}\); sixth dark fringe.</p></div></div>`}},
-{key:'geometry-position',title:{th:'3 · จากมุมและตำแหน่งไปหาอันดับ',en:'3 · Angle, position and order'},html:{
-th:R`<figure class="note-figure geometry"><img src="assets/10-2/geometry-angle-position.jpg" alt="แผนภาพ d มุม theta ระยะฉากและตำแหน่งแถบจาก สสวท."><figcaption>แผนภาพเรขาคณิต สสวท. · ระยะถึงฉากในหนังสืออาจใช้ D; ในใบนี้ใช้ L</figcaption></figure>
-<p>\(d\): ระยะห่างศูนย์กลางสลิต, \(L\): สลิตถึงฉาก, \(x\): พิกัดบนฉากจากแถบกลาง, \(\theta\): มุมจากแนวกลาง</p><p>ฉากไกล: \(\Delta r\approx d|\sin\theta|\); เรขาคณิตฉาก: \(x=L\tan\theta\)</p><p>ใกล้แกน: \(\sin\theta\approx\tan\theta=x/L\) จึง \(x_{\mathrm B,m}\approx\pm m\lambda L/d\), \(x_{\mathrm D,m}\approx\pm(m-\tfrac12)\lambda L/d\)</p>
-<div class="example"><h3>ตัวอย่าง 3 · หาตำแหน่ง</h3><p>\(\lambda=500\,\mathrm{nm},d=0.25\,\mathrm{mm},L=1.50\,\mathrm m\) หาสว่างอันดับ 2</p><div class="note-answer"><p>\(|x_2|\approx\frac{2(500\times10^{-9})(1.50)}{0.25\times10^{-3}}=6.0\times10^{-3}\,\mathrm m=6.0\,\mathrm{mm}\)</p><p>มีสองตำแหน่ง \(x=\pm6.0\,\mathrm{mm}\); \(|x|/L=0.004\ll1\)</p></div></div>
-<div class="example"><h3>ตัวอย่าง 4 · มุมหรือตำแหน่งบอกชนิดได้</h3><p>\(\lambda=600\,\mathrm{nm},d=0.20\,\mathrm{mm},L=1.0\,\mathrm m\): จุดที่ \(x=4.5\,\mathrm{mm}\) เป็นแถบใด? ถ้าให้มุม ใช้ค่าใดแทน?</p><div class="note-answer"><p>เลือกสูตรบัพ (มืด) แล้วจัดรูปหาอันดับ</p><p>\(|x_m|\approx(m-\tfrac12)\lambda L/d\Rightarrow m\approx d|x|/(\lambda L)+\tfrac12\)</p><p>\(m\approx\frac{(0.20\times10^{-3})(4.5\times10^{-3})}{(600\times10^{-9})(1.0)}+0.5=2\)</p><p>เป็นจำนวนเต็มตั้งแต่ 1 → มืดอันดับ 2; ถ้าใช้สูตรสว่างจะได้ 1.5 จึงไม่เข้าเงื่อนไขสว่าง</p><p>ถ้าให้มุม เริ่มจาก \(d|\sin\theta|\approx(m-\tfrac12)\lambda\) แล้วจัดรูปเป็น \(m\approx d|\sin\theta|/\lambda+\tfrac12\) เช่น \(\sin\theta=0.0045\) ให้ \(m=2\) เช่นกัน</p><p>ข้อมูลมุมที่ปัดเศษอาจให้ค่าใกล้จำนวนเต็ม ให้ระบุว่าใกล้แถบนั้นตามความละเอียดข้อมูล ห้ามปัดค่าทั่วไปเป็นอันดับเอง</p></div></div>`,
-en:R`<figure class="note-figure geometry"><img src="assets/10-2/geometry-angle-position.jpg" alt="IPST geometry showing slit separation, angle, screen distance and position"><figcaption>IPST geometry · the source may label screen distance D; this note uses L.</figcaption></figure>
-<p>\(d\): slit centre separation; \(L\): screen distance; \(x\): screen coordinate from the centre; \(\theta\): angle from the axis.</p><p>Distant screen: \(\Delta r\approx d|\sin\theta|\). Screen geometry: \(x=L\tan\theta\).</p><p>Near the axis, \(\sin\theta\approx\tan\theta=x/L\), so \(x_{\mathrm B,m}\approx\pm m\lambda L/d\) and \(x_{\mathrm D,m}\approx\pm(m-\tfrac12)\lambda L/d\).</p>
-<div class="example"><h3>Example 3 · Find a position</h3><p>\(\lambda=500\,\mathrm{nm},d=0.25\,\mathrm{mm},L=1.50\,\mathrm m\). Locate the second bright fringe.</p><div class="note-answer"><p>\(|x_2|\approx\frac{2(500\times10^{-9})(1.50)}{0.25\times10^{-3}}=6.0\times10^{-3}\,\mathrm m=6.0\,\mathrm{mm}\)</p><p>Two positions: \(x=\pm6.0\,\mathrm{mm}\); \(|x|/L=0.004\ll1\).</p></div></div>
-<div class="example"><h3>Example 4 · Classify from position or angle</h3><p>\(\lambda=600\,\mathrm{nm},d=0.20\,\mathrm{mm},L=1.0\,\mathrm m\). Classify \(x=4.5\,\mathrm{mm}\). What if an angle is given instead?</p><div class="note-answer"><p>Choose the dark (node) condition and rearrange for order:</p><p>\(|x_m|\approx(m-\tfrac12)\lambda L/d\Rightarrow m\approx d|x|/(\lambda L)+\tfrac12\)</p><p>\(m\approx\frac{(0.20\times10^{-3})(4.5\times10^{-3})}{(600\times10^{-9})(1.0)}+0.5=2\)</p><p>An integer at least 1 → second dark fringe. The bright formula instead gives 1.5, which is not an allowed bright order.</p><p>For an angle, start from \(d|\sin\theta|\approx(m-\tfrac12)\lambda\), then \(m\approx d|\sin\theta|/\lambda+\tfrac12\). For \(\sin\theta=0.0045\), this also gives \(m=2\).</p><p>Rounded angle data may give an order near an integer; state “near” according to data precision. Do not round arbitrary results into orders.</p></div></div>`}},
-{key:'measure',title:{th:'4 · วัดช่วง ไม่ใช่นับแถบ',en:'4 · Measure intervals, not the number of fringes'},html:{
-th:R`<p>ระยะสว่างติดกันหรือมืดติดกัน \(\beta=\Delta x\approx\lambda L/d\); สว่างถึงมืดข้างเคียงห่าง \(\beta/2\)</p><p>ศูนย์กลางสว่าง \(N\) แถบมี \(N-1\) ช่วง: \(\beta=(x_{\mathrm{last}}-x_{\mathrm{first}})/(N-1)\) วัดหลายช่วงช่วยลดผลความคลาดเคลื่อนการอ่านตำแหน่ง</p>
-<div class="example"><h3>ตัวอย่าง 5 · อ่านไม้บรรทัด</h3><p>ศูนย์กลางแถบสว่าง 6 แถบเรียงจาก 12.5 ถึง 27.5 mm หาระยะห่างแถบ</p><div class="note-answer"><p>\(\beta=\frac{27.5-12.5}{6-1}=3.0\,\mathrm{mm}\); สว่าง–มืดข้างเคียงห่าง 1.5 mm</p></div></div>
-<figure class="note-figure ruler"><img src="assets/10-2/exercise-q3.jpg" alt="ภาพต้นฉบับ สสวท. สำหรับวัดความกว้างแถบสว่างกลาง"><figcaption>แบบฝึกหัด สสวท. 10.2 ข้อ 3 · อ่านตามความละเอียดของภาพ</figcaption></figure>
-<div class="observe"><h3>สังเกตขอบของแถบกลาง</h3><p>ต้องวัดระหว่างจุดใด? อ่านค่าจากไม้บรรทัดในภาพ</p><div class="note-answer"><p>วัดระหว่างมืดสองข้างที่ขนาบสว่างกลาง อ่านประมาณ 1.20 และ 1.85 cm → กว้าง \(1.85-1.20\approx0.65\,\mathrm{cm}\)</p></div></div>
-<p><b>สลิตคู่ในแบบจำลองอุดมคติมุมเล็ก:</b> ความกว้างแถบกลางระหว่างมืดแรกซ้าย–ขวาเท่ากับ \(\beta\) ไม่ใช่ \(2\beta\) อย่าสับสนกับสลิตเดี่ยวหรือความกว้างซองการเลี้ยวเบน</p>
-<p>เทียบผลวัดกับค่าทฤษฎีโดยใช้ทฤษฎีเป็นฐาน: \(100|\mathrm{measured}-\mathrm{theory}|/|\mathrm{theory}|\%\) ระบุฐานทุกครั้ง</p><p><b>อย่าสลับ:</b> \(x\) คือพิกัดจากกลาง; \(\beta\) คือช่วงแถบติดกัน; ระยะระหว่างสองตำแหน่งใช้ \(|x_2-x_1|\) รวมเครื่องหมายด้านซ้าย–ขวา</p>`,
-en:R`<p>Adjacent bright–bright or dark–dark spacing: \(\beta=\Delta x\approx\lambda L/d\). Adjacent bright–dark separation is \(\beta/2\).</p><p>\(N\) bright centres span \(N-1\) intervals: \(\beta=(x_{\mathrm{last}}-x_{\mathrm{first}})/(N-1)\). Measuring several intervals reduces the effect of position-reading uncertainty.</p>
-<div class="example"><h3>Example 5 · Read a ruler</h3><p>Six consecutive bright centres extend from 12.5 to 27.5 mm. Find the fringe spacing.</p><div class="note-answer"><p>\(\beta=\frac{27.5-12.5}{6-1}=3.0\,\mathrm{mm}\). The adjacent bright–dark separation is 1.5 mm.</p></div></div>
-<figure class="note-figure ruler"><img src="assets/10-2/exercise-q3.jpg" alt="Original IPST ruler photograph for central bright-fringe width"><figcaption>IPST Exercise 10.2 Q3 · respect the photograph’s reading precision.</figcaption></figure>
-<div class="observe"><h3>Observe the central-fringe boundaries</h3><p>Which two points define its width? Read the ruler in the photograph.</p><div class="note-answer"><p>Use the two dark minima beside the central maximum. Read about 1.20 and 1.85 cm: width \(1.85-1.20\approx0.65\,\mathrm{cm}\).</p></div></div>
-<p><b>Ideal small-angle double slit:</b> the central width between the first minima is \(\beta\), not \(2\beta\). Distinguish this from a single-slit central maximum or the diffraction envelope.</p><p>Relative deviation using theory as the reference: \(100|\mathrm{measured}-\mathrm{theory}|/|\mathrm{theory}|\%\). State the reference explicitly.</p><p><b>Keep meanings separate:</b> \(x\) is a coordinate from the centre; \(\beta\) is adjacent-fringe spacing. Separation between two positions is \(|x_2-x_1|\), including left/right signs.</p>`}},
-{key:'inverse',title:{th:'5 · ย้อนหาตัวแปรและจัดหน่วย',en:'5 · Solve inversely and use consistent units'},html:{
-th:R`<p>เริ่มจากความสัมพันธ์เดียวแล้วจัดรูปตามสิ่งที่หา: \(\beta\approx\lambda L/d\)</p><p>\(\lambda\approx\beta d/L\), \(d\approx\lambda L/\beta\), \(L\approx\beta d/\lambda\); ถ้าให้แถบอันดับ \(m\) ใช้ \(\beta=|x_m|/m\)</p><p>ก่อนแทนค่าเลือกหน่วยให้สอดคล้อง เช่น \(1\,\mathrm{mm}=10^{-3}\,\mathrm m\), \(1\,\mu\mathrm m=10^{-6}\,\mathrm m\), \(1\,\mathrm{nm}=10^{-9}\,\mathrm m\) ไม่ต้องเขียนตัดหน่วยทุกบรรทัดเมื่อจัดฐานแล้ว แต่คำตอบต้องมีหน่วย</p>
-<div class="example"><h3>ตัวอย่าง 6 · ย้อนหาความยาวคลื่น</h3><p>สว่างอันดับ 1 ถึง 4 ห่าง 9.0 mm; \(d=0.30\,\mathrm{mm},L=1.50\,\mathrm m\)</p><div class="note-answer"><p>\(\beta=9.0/(4-1)=3.0\,\mathrm{mm}\)</p><p>\(\lambda\approx\frac{(3.0\times10^{-3})(0.30\times10^{-3})}{1.50}=6.0\times10^{-7}\,\mathrm m=600\,\mathrm{nm}\)</p></div></div>
-<div class="example"><h3>ตัวอย่าง 7 · ย้อนหาระยะสลิตจากเฟส</h3><p>ที่ \(x=1.1\,\mathrm{cm}\) เฟสสะสมต่างกัน \(4\pi\,\mathrm{rad}\); แสง 550 nm ฉากห่าง 1.0 m</p><div class="note-answer"><p>\(\Delta r=\lambda\Delta\phi/(2\pi)=2\lambda=1.10\times10^{-6}\,\mathrm m\)</p><p>\(d\approx\frac{\Delta r L}{|x|}=\frac{(1.10\times10^{-6})(1.0)}{1.1\times10^{-2}}=1.0\times10^{-4}\,\mathrm m=0.10\,\mathrm{mm}\)</p></div></div>
-<div class="observe"><h3>ตรวจความสมเหตุผล</h3><p>เพิ่ม d แต่คง λ และ L ระยะห่างแถบควรเพิ่มหรือลด? ถ้าผลคำนวณสวนทางควรเช็กอะไร?</p><div class="note-answer"><p>ต้องลด ตรวจตัวเศษ–ตัวส่วน การนับช่วง และเลขยกกำลังของหน่วยก่อนคำนวณซ้ำ</p></div></div>`,
-en:R`<p>Start from one relationship and rearrange for the unknown: \(\beta\approx\lambda L/d\).</p><p>\(\lambda\approx\beta d/L\), \(d\approx\lambda L/\beta\), \(L\approx\beta d/\lambda\). For bright order \(m\), use \(\beta=|x_m|/m\).</p><p>Convert to consistent units before substitution: \(1\,\mathrm{mm}=10^{-3}\,\mathrm m\), \(1\,\mu\mathrm m=10^{-6}\,\mathrm m\), \(1\,\mathrm{nm}=10^{-9}\,\mathrm m\). Once units are consistent, explicit cancellation on every line is unnecessary. Always include the answer’s unit.</p>
-<div class="example"><h3>Example 6 · Find the wavelength</h3><p>Bright orders 1 to 4 span 9.0 mm; \(d=0.30\,\mathrm{mm},L=1.50\,\mathrm m\).</p><div class="note-answer"><p>\(\beta=9.0/(4-1)=3.0\,\mathrm{mm}\)</p><p>\(\lambda\approx\frac{(3.0\times10^{-3})(0.30\times10^{-3})}{1.50}=6.0\times10^{-7}\,\mathrm m=600\,\mathrm{nm}\)</p></div></div>
-<div class="example"><h3>Example 7 · Slit separation from phase</h3><p>At \(x=1.1\,\mathrm{cm}\), the accumulated phase difference is \(4\pi\,\mathrm{rad}\). Use 550 nm light and a 1.0 m screen distance.</p><div class="note-answer"><p>\(\Delta r=\lambda\Delta\phi/(2\pi)=2\lambda=1.10\times10^{-6}\,\mathrm m\)</p><p>\(d\approx\frac{\Delta r L}{|x|}=\frac{(1.10\times10^{-6})(1.0)}{1.1\times10^{-2}}=1.0\times10^{-4}\,\mathrm m=0.10\,\mathrm{mm}\)</p></div></div>
-<div class="observe"><h3>Sense check</h3><p>If d increases with λ and L fixed, should spacing grow or shrink? What should you check if your calculation disagrees?</p><div class="note-answer"><p>It must shrink. Check numerator/denominator, interval counting and unit powers before recalculating.</p></div></div>`}},
-{key:'changes',title:{th:'6 · เปลี่ยนตัวแปร ใช้อัตราส่วน',en:'6 · Compare changes using ratios'},html:{
-th:R`<p>ตัวกลางเดิมมีอัตราเร็วคลื่น \(v\) คงที่: \(\lambda=v/f\) จึง \(\beta\approx vL/(fd)\)</p><table class="tbl"><tr><th>เปลี่ยนทีละตัว</th><th>ผลต่อระยะห่างแถบ</th></tr><tr><td>λ เพิ่ม / L เพิ่ม</td><td>แถบห่างขึ้น</td></tr><tr><td>d เพิ่ม / f เพิ่ม (v คงที่)</td><td>แถบชิดขึ้น</td></tr><tr><td>เพิ่มความเข้มแสงอย่างเดียว</td><td>แถบสว่างขึ้น แต่ตำแหน่งและระยะห่างไม่เปลี่ยนในแบบจำลอง</td></tr></table>
-<p>\(\frac{\beta_2}{\beta_1}=\frac{\lambda_2}{\lambda_1}\frac{L_2}{L_1}\frac{d_1}{d_2}=\frac{f_1}{f_2}\frac{L_2}{L_1}\frac{d_1}{d_2}\) เมื่อ v คงที่</p>
-<div class="example"><h3>ตัวอย่าง 8 · หลายตัวแปรพร้อมกัน</h3><p>เพิ่ม L เป็น 1.5 เท่า, d เป็น 1.2 เท่า และ f เป็น 1.25 เท่า ระยะห่างแถบเปลี่ยนเท่าใด?</p><div class="note-answer"><p>\(\beta_2/\beta_1=1.5/(1.2\times1.25)=1\) ระยะห่างไม่เปลี่ยน</p></div></div>
-<div class="observe"><h3>ออกแบบการปรับอุปกรณ์</h3><p>ต้องการให้แถบกลางกว้างขึ้น เลือกเพิ่ม L, เพิ่ม d หรือเพิ่ม f? แล้วถ้าเพิ่มกำลังเลเซอร์อย่างเดียวล่ะ?</p><div class="note-answer"><p>เพิ่ม L ทำให้กว้างขึ้น; เพิ่ม d หรือ f ทำให้แคบลง เพิ่มกำลังอย่างเดียวเปลี่ยนความสว่าง ไม่เปลี่ยนความกว้างตามแบบจำลอง</p></div></div>
-<div class="example"><h3>ตัวอย่าง 9 · ปรับความกว้างตามเป้าหมาย</h3><p>ลด λ เหลือ 0.80 เท่า คง d ต้องปรับ L เป็นกี่เท่าเพื่อให้แถบห่างเป็น 2 เท่า?</p><div class="note-answer"><p>\(2=0.80(L_2/L_1)\Rightarrow L_2/L_1=2.5\) ต้องเลื่อนฉากให้ห่างเป็น 2.5 เท่า</p></div></div>
-<p><b>สังเกต:</b> สีต่างกันแถบห่างต่างกันเพราะ λ ต่างกัน ไม่ใช่เพราะความสว่างต่างกัน เมื่อเทียบสีให้คง d และ L</p>`,
-en:R`<p>In the same medium with fixed wave speed \(v\), \(\lambda=v/f\), hence \(\beta\approx vL/(fd)\).</p><table class="tbl"><tr><th>One change at a time</th><th>Effect on spacing</th></tr><tr><td>Increase λ or L</td><td>Wider spacing</td></tr><tr><td>Increase d or f (fixed v)</td><td>Closer fringes</td></tr><tr><td>Increase intensity alone</td><td>Brighter fringes; unchanged positions and spacing in this model</td></tr></table>
-<p>\(\frac{\beta_2}{\beta_1}=\frac{\lambda_2}{\lambda_1}\frac{L_2}{L_1}\frac{d_1}{d_2}=\frac{f_1}{f_2}\frac{L_2}{L_1}\frac{d_1}{d_2}\) for fixed v.</p>
-<div class="example"><h3>Example 8 · Several simultaneous changes</h3><p>Multiply L by 1.5, d by 1.2 and f by 1.25. How does spacing change?</p><div class="note-answer"><p>\(\beta_2/\beta_1=1.5/(1.2\times1.25)=1\). The spacing is unchanged.</p></div></div>
-<div class="observe"><h3>Choose an adjustment</h3><p>To widen the central fringe, should you increase L, d or f? What if only laser power increases?</p><div class="note-answer"><p>Increasing L widens it; increasing d or f narrows it. Increasing power alone changes brightness, not width, in the model.</p></div></div>
-<div class="example"><h3>Example 9 · Reach a target spacing</h3><p>Reduce λ to 0.80 of its original value and keep d fixed. By what factor must L change to double spacing?</p><div class="note-answer"><p>\(2=0.80(L_2/L_1)\Rightarrow L_2/L_1=2.5\). Move the screen to 2.5 times its original distance.</p></div></div>
-<p><b>Observe:</b> different colours give different spacing because λ differs, rather than because brightness differs. Hold d and L fixed when comparing colours.</p>`}},
-{key:'synthesis',title:{th:'7 · รวมความสัมพันธ์ ก่อนลงมือทำโจทย์',en:'7 · Combine relationships before calculating'},html:{
-th:R`<div class="example"><h3>ตัวอย่าง 10 · สองสีซ้อนตำแหน่งกัน</h3><p>มืดอันดับ 3 ของแสง λ₁ ตรงกับสว่างอันดับ 2 ของแสง λ₂ ใช้สลิตและฉากเดียวกัน</p><div class="note-answer"><p>\((3-\tfrac12)\lambda_1 L/d=2\lambda_2 L/d\)</p><p>\(\lambda_1/\lambda_2=2/2.5=4/5\) ใช้เงื่อนไข “ตำแหน่งเท่ากัน” ตัดปัจจัย L/d ร่วมกัน</p></div></div>
-<div class="example"><h3>ตัวอย่าง 11 · ด้านเดียวกันหรือคนละด้าน</h3><p>ให้ \(\beta=4.0\,\mathrm{mm}\) หาระยะระหว่างสว่างอันดับ 1 กับมืดอันดับ 2 และระยะระหว่างสว่างอันดับ 3 ซ้าย–ขวา</p><div class="note-answer"><p>ด้านเดียวกัน: \(|1.5\beta-\beta|=0.5\beta=2.0\,\mathrm{mm}\)</p><p>คนละด้าน: \(|1.5\beta-(-\beta)|=2.5\beta=10.0\,\mathrm{mm}\)</p><p>สว่างอันดับ 3 สองข้าง: \(|3\beta-(-3\beta)|=6\beta=24.0\,\mathrm{mm}\)</p></div></div>
-<div class="example"><h3>ตัวอย่าง 12 · เมื่อมุมไม่เล็ก</h3><p>\(\lambda=600\,\mathrm{nm},d=8.0\,\mu\mathrm m,L=0.50\,\mathrm m\) หาตำแหน่งสว่างอันดับ 2</p><div class="note-answer"><p>\(\sin\theta\approx2\lambda/d=0.150\Rightarrow\theta\approx8.63^\circ\)</p><p>\(|x|=L\tan\theta\approx0.0759\,\mathrm m=75.9\,\mathrm{mm}\)</p><p>มุมเล็กให้ 75.0 mm; ที่นี่ใช้ sin หามุมก่อน แล้วใช้ tan หาตำแหน่ง ยังใช้เงื่อนไขฉากไกล</p></div></div>
-<h2>ตรวจตัวเอง 4 จุด</h2><p>① เริ่มเฟสตรงกันหรือไม่? ② ถามพิกัดหรือระยะระหว่างแถบ? ③ หน่วยสอดคล้องและมุมเล็กใช้ได้หรือไม่? ④ คำตอบมีชนิด อันดับ ด้าน และหน่วยตามที่ถามหรือยัง?</p><p>ถ้ามีเฟสเริ่มต้นต่างกัน ต้องรวมเฟสเริ่มต้นกับเฟสจากทางเดินก่อนตัดสินชนิดแถบ กรณีต่างกัน π เงื่อนไขสว่าง–มืดสลับกัน</p><p class="source">อ้างอิง: สสวท. ฟิสิกส์ เล่ม 3 หัวข้อ 10.2 หน้า 109–126 และท้ายบทส่วนสลิตคู่ หน้า 150–155; ฝึกต่อด้วยใบเรียนรู้และชุดทบทวน 50 ข้อเดิม · ตัวอย่างในใบนี้มีทั้งข้อมูลจากหนังสือและโจทย์เรียบเรียงใหม่</p>`,
-en:R`<div class="example"><h3>Example 10 · Two colours coincide</h3><p>The third dark fringe for λ₁ coincides with the second bright fringe for λ₂, using the same slits and screen.</p><div class="note-answer"><p>\((3-\tfrac12)\lambda_1 L/d=2\lambda_2 L/d\)</p><p>\(\lambda_1/\lambda_2=2/2.5=4/5\). Equate positions and cancel the common factor L/d.</p></div></div>
-<div class="example"><h3>Example 11 · Same side or opposite sides?</h3><p>Let \(\beta=4.0\,\mathrm{mm}\). Find the separation of bright order 1 and dark order 2, and of the two third-order bright fringes.</p><div class="note-answer"><p>Same side: \(|1.5\beta-\beta|=0.5\beta=2.0\,\mathrm{mm}\).</p><p>Opposite sides: \(|1.5\beta-(-\beta)|=2.5\beta=10.0\,\mathrm{mm}\).</p><p>Third bright fringes on both sides: \(|3\beta-(-3\beta)|=6\beta=24.0\,\mathrm{mm}\).</p></div></div>
-<div class="example"><h3>Example 12 · Beyond small angles</h3><p>\(\lambda=600\,\mathrm{nm},d=8.0\,\mu\mathrm m,L=0.50\,\mathrm m\). Locate bright order 2.</p><div class="note-answer"><p>\(\sin\theta\approx2\lambda/d=0.150\Rightarrow\theta\approx8.63^\circ\)</p><p>\(|x|=L\tan\theta\approx0.0759\,\mathrm m=75.9\,\mathrm{mm}\)</p><p>The small-angle result is 75.0 mm. Here use sin to find the angle, then tan for position. The distant-screen condition still applies.</p></div></div>
-<h2>Four final checks</h2><p>① Initially in phase? ② A coordinate or a separation? ③ Consistent units and a valid small-angle approximation? ④ Fringe type, order, side and unit stated as requested?</p><p>If the sources have an initial phase offset, combine that offset with the propagation phase before classifying fringes. A π offset swaps bright and dark conditions.</p><p class="source">Sources: IPST Physics Book 3, §10.2, printed pp.109–126 and double-slit chapter-end work, pp.150–155. Continue with the existing learning sheet and 50-question review. Examples combine selected book data with independently authored tasks.</p>`}}
-];
-
-// Write the givens and requests in full words; retain symbols in the worked solutions.
-const fullPrompts={
-  "th": [
-    "แสงมีความยาวคลื่น 500 นาโนเมตร ผลต่างทางเดิน 1500 นาโนเมตร และ 1250 นาโนเมตร เป็นแถบใด?",
-    "แสงมีความยาวคลื่น 600 นาโนเมตร มีทางเดิน 65.00 เซนติเมตร และ 65.60 เซนติเมตร จงหาความต่างเฟส",
-    "แสงมีความยาวคลื่น 500 นาโนเมตร ระยะห่างสลิต 0.25 มิลลิเมตร ฉากห่าง 1.50 เมตร หาตำแหน่งแถบสว่างอันดับ 2",
-    "แสงมีความยาวคลื่น 600 นาโนเมตร ระยะห่างสลิต 0.20 มิลลิเมตร ฉากห่าง 1.0 เมตร จุดที่ห่างจากแถบกลาง 4.5 มิลลิเมตร เป็นแถบใด? ถ้าโจทย์ให้มุมแทนตำแหน่งจะคำนวณอย่างไร?",
-    "ศูนย์กลางแถบสว่างติดกัน 6 แถบเรียงจากตำแหน่ง 12.5 ถึง 27.5 มิลลิเมตร หาระยะห่างแถบ",
-    "แถบสว่างอันดับ 1 ถึง 4 ห่างกัน 9.0 มิลลิเมตร ระยะห่างสลิต 0.30 มิลลิเมตร และฉากห่าง 1.50 เมตร จงหาความยาวคลื่น",
-    "ที่ตำแหน่งห่างจากแถบกลาง 1.1 เซนติเมตร เฟสสะสมต่างกัน 4π เรเดียน แสงมีความยาวคลื่น 550 นาโนเมตร ฉากห่าง 1.0 เมตร จงหาระยะห่างสลิต",
-    "เพิ่มระยะถึงฉากเป็น 1.5 เท่า ระยะห่างสลิตเป็น 1.2 เท่า และความถี่เป็น 1.25 เท่า ระยะห่างแถบเปลี่ยนเท่าใด?",
-    "ลดความยาวคลื่นเหลือ 0.80 เท่า คงระยะห่างสลิต ต้องปรับระยะถึงฉากเป็นกี่เท่าเพื่อให้ระยะห่างแถบเป็น 2 เท่า?",
-    "แถบมืดอันดับ 3 ของแสงสีแรกตรงกับแถบสว่างอันดับ 2 ของแสงสีที่สอง ใช้สลิตและฉากเดียวกัน หาอัตราส่วนความยาวคลื่นของแสงสีแรกต่อแสงสีที่สอง",
-    "ระยะห่างแถบสว่างติดกันเท่ากับ 4.0 มิลลิเมตร หาระยะระหว่างสว่างอันดับ 1 กับมืดอันดับ 2 ทั้งกรณีด้านเดียวกันและคนละด้าน และหาระยะระหว่างสว่างอันดับ 3 ซ้าย–ขวา",
-    "แสงมีความยาวคลื่น 600 นาโนเมตร ระยะห่างสลิต 8.0 ไมโครเมตร ฉากห่าง 0.50 เมตร หาตำแหน่งแถบสว่างอันดับ 2"
-  ],
-  "en": [
-    "Light has wavelength 500 nanometres. Classify path differences of 1500 and 1250 nanometres.",
-    "For light of wavelength 600 nanometres, the paths are 65.00 and 65.60 centimetres. Find the phase difference.",
-    "Light has wavelength 500 nanometres, slit separation 0.25 millimetres and screen distance 1.50 metres. Locate the second bright fringe.",
-    "Light has wavelength 600 nanometres, slit separation 0.20 millimetres and screen distance 1.0 metres. Classify the point 4.5 millimetres from the central fringe. How would you calculate if an angle were given instead?",
-    "Six consecutive bright centres extend from 12.5 to 27.5 millimetres. Find the fringe spacing.",
-    "Bright orders 1 to 4 span 9.0 millimetres. The slit separation is 0.30 millimetres and screen distance 1.50 metres. Find the wavelength.",
-    "At 1.1 centimetres from the central fringe, the accumulated phase difference is 4π radians. Light has wavelength 550 nanometres and screen distance 1.0 metres. Find the slit separation.",
-    "Multiply the screen distance by 1.5, slit separation by 1.2 and frequency by 1.25. How does fringe spacing change?",
-    "Reduce the wavelength to 0.80 of its original value and keep slit separation fixed. By what factor must the screen distance change to double fringe spacing?",
-    "The third dark fringe of the first colour coincides with the second bright fringe of the second colour, using the same slits and screen. Find the ratio of the first wavelength to the second.",
-    "Adjacent bright fringes are 4.0 millimetres apart. Find the separation of bright order 1 and dark order 2 on the same side and on opposite sides. Also find the separation of the two third-order bright fringes.",
-    "Light has wavelength 600 nanometres, slit separation 8.0 micrometres and screen distance 0.50 metres. Locate the second bright fringe."
-  ]
-};
-for(const lang of ['th','en']){let index=0;for(const page of pages){const d=parseHTML('<html><body>'+page.html[lang]+'</body></html>').document;for(const example of d.querySelectorAll('.example'))example.querySelector('p').textContent=fullPrompts[lang][index++];for(const p of d.querySelectorAll('.observe>p')){p.innerHTML=p.innerHTML.replace('เพิ่ม L, เพิ่ม d หรือเพิ่ม f','เพิ่มระยะถึงฉาก เพิ่มระยะห่างสลิต หรือเพิ่มความถี่').replace('เพิ่ม d แต่คง λ และ L','เพิ่มระยะห่างสลิต แต่คงความยาวคลื่นและระยะถึงฉาก').replace('increase L, d or f','increase screen distance, slit separation or frequency').replace('If d increases with λ and L fixed','If slit separation increases with wavelength and screen distance fixed');}page.html[lang]=d.body.innerHTML;}if(index!==12)throw Error('Missing example prompt');}
-// Retain complete teacher-demonstrated derivations and the supplied diagrams.
+import intro from './intro-v1.3.json' with {type:'json'};
+import originalExamples from './examples-v1.2.json' with {type:'json'};
 import {proofPages} from './proofs.mjs';
-pages.splice(pages.findIndex(p=>p.key==='geometry-position'),0,proofPages[0]);
-pages.splice(pages.findIndex(p=>p.key==='measure'),0,proofPages[1]);
-const reasoning={th:[
-'วิธีคิด: เลือกสูตรสว่างหรือมืด จัดรูปหาอันดับ แล้วตรวจว่าค่าอันดับเป็นจำนวนเต็มในช่วงที่สูตรกำหนด',
-'วิธีคิด: หักระยะทางก่อน แปลงเป็นเมตร แล้วคูณจำนวนรอบด้วย 2π แยกคำตอบเฟสสะสมจากเฟสเทียบเท่า',
-'วิธีคิด: ใช้เงื่อนไขสว่างอันดับ 2 ร่วมกับสูตรตำแหน่งมุมเล็ก จัดหน่วยเป็นเมตรก่อนแทนค่า',
-'วิธีคิด: ใช้สูตรชนิดแถบที่เลือกหาอันดับจากตำแหน่งหรือมุม แล้วตรวจจำนวนเต็มก่อนสรุป',
-'วิธีคิด: ลบพิกัดแถบสุดท้ายกับแถบแรกก่อน มีศูนย์กลาง 6 แถบจึงหารด้วย 5 ช่วง',
-'วิธีคิด: อันดับ 1 ถึง 4 มี 3 ช่วง หาระยะห่างหนึ่งช่วงก่อน แล้วจัดรูปสูตรเพื่อหาความยาวคลื่น',
-'วิธีคิด: เฟสสะสม 4π คือ 2 รอบ จึงได้ผลต่างทางเดิน 2 ความยาวคลื่น แล้วใช้เรขาคณิตมุมเล็กย้อนหาระยะสลิต',
-'วิธีคิด: ความถี่อยู่ในตัวส่วนเมื่ออัตราเร็วคงเดิม จึงต้องหารด้วยตัวคูณความถี่ด้วย',
-'วิธีคิด: ตั้งอัตราส่วนระยะห่างใหม่ต่อเดิมเท่ากับ 2 แล้วแก้ตัวคูณระยะถึงฉาก ไม่บวกอัตราส่วนเข้าด้วยกัน',
-'วิธีคิด: จุดซ้อนกันมีพิกัดเท่ากัน เขียนสมการแต่ละสีให้ถูกชนิดและอันดับก่อนตัดปัจจัยร่วม',
-'วิธีคิด: กำหนดด้านซ้ายเป็นพิกัดลบ ด้านขวาเป็นบวก แล้วลบพิกัดและหาขนาด จึงไม่สับสนการบวกหรือลบระยะ',
-'วิธีคิด: สูตรแทรกสอดให้ไซน์ของมุม ส่วนเรขาคณิตของฉากให้แทนเจนต์ จึงหามุมก่อนคำนวณตำแหน่ง'
-],en:[
-'Method: choose a bright or dark condition, rearrange for order, and verify an integer in its allowed range.',
-'Method: subtract paths, convert to metres, then multiply cycles by 2π. Distinguish accumulated phase from equivalent phase.',
-'Method: apply the second-bright-fringe condition and small-angle geometry. Convert all distances to metres before substituting.',
-'Method: use the chosen fringe condition to obtain its order from position or angle, then check for an allowed integer.',
-'Method: subtract the end coordinates. Six bright centres span five intervals, so divide by five.',
-'Method: orders 1 to 4 span three intervals. Find one interval first, then rearrange for wavelength.',
-'Method: 4π accumulated phase means two cycles and two wavelengths of path difference. Then invert the small-angle geometry.',
-'Method: with fixed wave speed, frequency belongs in the denominator. Divide by its scale factor as well.',
-'Method: set the new-to-old spacing ratio equal to two and solve for the screen-distance factor. Do not add scale factors.',
-'Method: coincident fringes have equal coordinates. Use the correct bright/dark order before cancelling common factors.',
-'Method: assign negative coordinates on the left and positive on the right. Take the magnitude of their difference.',
-'Method: interference determines sine of the angle; screen geometry uses tangent. Find the angle before locating the fringe.'
-]};
-for(const lang of ['th','en']){let i=0;for(const page of pages){const d=parseHTML('<html><body>'+page.html[lang]+'</body></html>').document;for(const answer of d.querySelectorAll('.example>.note-answer')){const p=d.createElement('p');p.className='method-note';p.textContent=reasoning[lang][i++];answer.append(p);}page.html[lang]=d.body.innerHTML;}if(i!==12)throw Error('Missing example reasoning');}
+import {equationStart,exampleReferences,separateWorkingMath} from './equation-starts.mjs';
 
-// Teacher prompts connect observations to the same equations used in the solutions.
-for(const lang of ['th','en']){
- const p=pages.find(p=>p.key==='observe'),d=parseHTML('<html><body>'+p.html[lang]+'</body></html>').document;
- const heading=[...d.querySelectorAll('h2')].find(h=>/คลื่นสอง|What do/.test(h.textContent));
- heading.insertAdjacentHTML('afterend',lang==='th'?'<p><b>แนววิเคราะห์:</b> ดูการกระจัดของสองคลื่นที่จุดและเวลาเดียวกัน ทิศเดียวกันเสริมกัน ทิศตรงข้ามหักล้างกัน แล้วดูเฟสที่มาถึงจุดนั้นเพื่อเลือกเงื่อนไขปฏิบัพ (สว่าง) หรือบัพ (มืด) อย่าสรุปจากคลื่นเพียงขบวนเดียว</p>':'<p><b>How to analyse:</b> compare both displacements at the same point and time. Same directions reinforce; opposite directions cancel. Use the arriving phase relationship to choose the bright (antinode) or dark (node) condition. Do not judge from just one wave.</p>');
- const answer=d.querySelector('.observe>.note-answer');
- answer.innerHTML=lang==='th'?String.raw`<p><b>เลือกความสัมพันธ์ที่อธิบายระยะห่างแถบก่อน:</b> \(\beta\approx\lambda L/d\)</p><p>คงความยาวคลื่นและระยะฉาก: จัดรูปเป็น \(\beta d\approx\lambda L\) ด้านขวาคงที่ เมื่อระยะสลิตเพิ่ม ระยะห่างแถบต้องลดลง</p><p>คงระยะสลิตและระยะฉาก: \(\beta\propto\lambda\) เมื่อความยาวคลื่นเพิ่ม แถบห่างขึ้น เปลี่ยนทีละตัวและบอกสิ่งที่คงที่ทุกครั้ง</p>`:String.raw`<p><b>Choose the spacing relationship first:</b> \(\beta\approx\lambda L/d\).</p><p>Fix wavelength and screen distance. Rearrange to \(\beta d\approx\lambda L\): the right side is constant, so greater slit separation requires smaller fringe spacing.</p><p>Fix both distances. Then \(\beta\propto\lambda\): longer wavelength gives wider spacing. Change one variable at a time and state what stays constant.</p>`;
- p.html[lang]=d.body.innerHTML;
-}
+// One canonical teacher answer Note supplies both Classroom Note and Revision Notes.
+const groups=[[1,2],[3],[4,5],[6,7],[8,9,10],[11,12]];
+const examplePages=groups.map((numbers,i)=>({
+  key:'examples-'+(i+1),kind:'examples',
+  title:{th:'ตัวอย่าง '+numbers[0]+'–'+numbers.at(-1),en:'Examples '+numbers[0]+'–'+numbers.at(-1)},
+  html:Object.fromEntries(['th','en'].map(lang=>[lang,numbers.map(n=>{
+    const original=originalExamples.languages[lang][n-1];
+    let html=original.html.replaceAll('\\beta','\\Delta x');
+    if(n===3)html=html.replaceAll('|x_2|','x_{\\mathrm B,2}');
+    if(n===4)html=html.replaceAll('|x_m|','x_{\\mathrm D,m}');
+    const {document}=parseHTML('<html><body>'+html+'</body></html>');
+    const example=document.querySelector('.example');example.dataset.exampleNumber=String(n);
+    const answer=example.querySelector('.note-answer');
+    // The original numerical givens and all original requests/results are retained.
+    // Only the common spacing symbol and the initial equation citation change.
+    answer.insertAdjacentHTML('afterbegin',equationStart(exampleReferences[n-1],lang));
+    if(n===4){
+      const angle=[...answer.querySelectorAll('p')].find(p=>/ถ้าให้มุม|For an angle/.test(p.textContent));
+      if(angle){
+        const math=[...angle.textContent.matchAll(/\\\(([\s\S]*?)\\\)/g)].map(m=>m[0]);
+        const labels=lang==='th'?['ถ้าให้มุม ใช้สมการ ','จัดรูปหาอันดับ:','ตัวอย่างค่ามุมที่สอดคล้องกับข้อมูล:','แทนค่าแล้วได้มืดอันดับเดิม:']:['For an angle, use equations ','Rearrange for the order:','For an angle consistent with the data:','Substitution gives the same dark order:'];
+        angle.outerHTML=math.map((tex,i)=>'<p>'+labels[i]+(i===0?'<span data-equation-ref="3">(3)</span>, <span data-equation-ref="4">(4)</span>:':'')+'</p><p>'+tex+'</p>').join('');
+      }
+      if(lang==='en'){
+        answer.innerHTML=answer.innerHTML.replace('An integer at least 1 → second dark fringe. The bright formula instead gives 1.5, which is not an allowed bright order.','Order 2 is an allowed dark order. The bright condition gives 1.5, so it fails.').replace('Rounded angle data may give an order near an integer; state “near” according to data precision. Do not round arbitrary results into orders.','For rounded data, report “near”. Never round arbitrary data into an order.').replace('Method: use the chosen fringe condition to obtain its order from position or angle, then check for an allowed integer.','Method: choose bright/dark, solve for order, then check the allowed integer range.');
+      }
+    }
+    if(n===10)answer.querySelector('.equation-start').insertAdjacentHTML('afterend','<p class="symbol-context">'+(lang==='th'?'ในข้อนี้ เลขห้อย 1 และ 2 ของความยาวคลื่นหมายถึงแสงสีแรกและสีที่สอง ตามลำดับ':'Here, wavelength subscripts 1 and 2 refer to the first and second colours, respectively.')+'</p>');
+    separateWorkingMath(answer);
+    return example.outerHTML;
+  }).join('')]))
+}));
+export const pages=[intro,...proofPages,...examplePages];
+export const noteSourceFiles=['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs'];

@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { createContentTool } from "../js/content-tool.js";
+import { htmlLinkEntry, simulationLinkEntry } from "../js/html-link.js";
+import { parseHTML } from "linkedom";
 
 const hub = "https://example.test/Physic-subject/index.html#chemistry";
 const entry = { toolKind: "quiz", subjectId: "chemistry", chapterId: "9", topicId: "le-chatelier",
@@ -36,6 +38,22 @@ test("simulation opens its own HTML without being given the quiz storage bridge"
   const tool = createContentTool({ ...entry, toolKind: "simulation" }, hub);
   assert.equal(tool.page, tool.source);
   assert.equal(tool.context.toolKind, "simulation");
+});
+
+test("a lesson's declarative simulation link reuses the lab window and preserves read-only HTML links", () => {
+  const { document } = parseHTML('<html><body><a data-hub-simulation data-html-src="10-2-double-slit-lab.html" data-content-id="physics-ipst-wave-optics-10-2-double-slit-lab">Lab</a></body></html>');
+  const link = document.querySelector('a');
+  const source = 'https://example.test/learning-hub/content/physics/ipst/wave-optics/10-2-double-slit-classroom-note-v1-3.html';
+  const context = { subjectId: 'physics', chapterId: 'bank', topicId: 'b-21460452889578f11c3a8bac' };
+  const entry = simulationLinkEntry(link, source, context);
+  const direct = { ...context, toolKind: 'simulation', contentId: link.dataset.contentId,
+    source: 'content/physics/ipst/wave-optics/10-2-double-slit-lab.html' };
+  const opened = createContentTool(entry, 'https://example.test/learning-hub/');
+  assert.equal(opened.id, createContentTool(direct, 'https://example.test/learning-hub/').id);
+  assert.equal(opened.context.toolKind, 'simulation');
+  assert.equal(htmlLinkEntry(link, source, context).toolKind, 'html');
+  link.setAttribute('data-html-src', 'https://untrusted.test/lab.html');
+  assert.equal(createContentTool(simulationLinkEntry(link, source, context), 'https://example.test/learning-hub/'), null);
 });
 
 test("read-only HTML opens directly in the shared workspace under the new Pages base", () => {

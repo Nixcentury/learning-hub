@@ -1,0 +1,351 @@
+{
+  "renderer": "WeasyPrint 66.0 (offline only)",
+  "source": "Existing Hub print snapshot and language/edition/range preparation functions",
+  "note": "Not browser, native PDF or iPad certification. Student writing-space flex/grid is not certified by this offline renderer.",
+  "selections": [
+    {
+      "stem": "classroom-th-answers-all",
+      "kind": "classroom",
+      "lang": "th",
+      "edition": "answers",
+      "range": "all",
+      "pages": 12,
+      "renderedPages": 12,
+      "bodies": [
+        {
+          "page": 1,
+          "usedMm": 229.79,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 2,
+          "usedMm": 200.37,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 3,
+          "usedMm": 226.53,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 4,
+          "usedMm": 201.36,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 5,
+          "usedMm": 210.36,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 6,
+          "usedMm": 215.7,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 7,
+          "usedMm": 193.05,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 8,
+          "usedMm": 98.16,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 9,
+          "usedMm": 206.68,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 10,
+          "usedMm": 193.36,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 11,
+          "usedMm": 213.1,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 12,
+          "usedMm": 167.96,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        }
+      ]
+    },
+    {
+      "stem": "classroom-en-answers-all",
+      "kind": "classroom",
+      "lang": "en",
+      "edition": "answers",
+      "range": "all",
+      "pages": 12,
+      "renderedPages": 12,
+      "bodies": [
+        {
+          "page": 1,
+          "usedMm": 245.47,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 2,
+          "usedMm": 212.18,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 3,
+          "usedMm": 237.87,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 4,
+          "usedMm": 207.07,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 5,
+          "usedMm": 226.61,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 6,
+          "usedMm": 231.95,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 7,
+          "usedMm": 200.11,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 8,
+          "usedMm": 112.4,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 9,
+          "usedMm": 203.14,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 10,
+          "usedMm": 201.19,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 11,
+          "usedMm": 224.57,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 12,
+          "usedMm": 198.58,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        }
+      ]
+    },
+    {
+      "stem": "exit-th-answers-quiz",
+      "kind": "exit",
+      "lang": "th",
+      "edition": "answers",
+      "range": "quiz",
+      "pages": 13,
+      "renderedPages": 13,
+      "bodies": [
+        {
+          "page": 1,
+          "usedMm": 204.98,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 2,
+          "usedMm": 105.21,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 3,
+          "usedMm": 190.09,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 4,
+          "usedMm": 159.84,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 5,
+          "usedMm": 188.18,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 6,
+          "usedMm": 160.56,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 7,
+          "usedMm": 148.95,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 8,
+          "usedMm": 182.15,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 9,
+          "usedMm": 127.92,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 10,
+          "usedMm": 166.36,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 11,
+          "usedMm": 148.87,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 12,
+          "usedMm": 81.89,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 13,
+          "usedMm": 172.01,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        }
+      ]
+    },
+    {
+      "stem": "exit-en-answers-quiz",
+      "kind": "exit",
+      "lang": "en",
+      "edition": "answers",
+      "range": "quiz",
+      "pages": 13,
+      "renderedPages": 13,
+      "bodies": [
+        {
+          "page": 1,
+          "usedMm": 205.78,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 2,
+          "usedMm": 112.69,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 3,
+          "usedMm": 210.79,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 4,
+          "usedMm": 157.09,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 5,
+          "usedMm": 185.33,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 6,
+          "usedMm": 162.81,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 7,
+          "usedMm": 151.14,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 8,
+          "usedMm": 189.23,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 9,
+          "usedMm": 131.2,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 10,
+          "usedMm": 173.25,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 11,
+          "usedMm": 155.86,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 12,
+          "usedMm": 81.11,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        },
+        {
+          "page": 13,
+          "usedMm": 170.56,
+          "overflowMm": 0.0,
+          "horizontalMm": 0.0
+        }
+      ]
+    }
+  ]
+}

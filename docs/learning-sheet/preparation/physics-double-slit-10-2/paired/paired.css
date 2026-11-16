@@ -147,3 +147,41 @@ body:not(.answers-on) [data-revision-edition="blank"],body.answers-on [data-revi
 .page.lesson .page-body>.shared-note:has(.note-write){height:auto;flex:1;min-height:0}
 .page.quiz [data-unit-key="problem-1"] .task>.response-space{min-height:14mm}
 .page.quiz .task-grid:has(.response-space)>.task:last-child:nth-child(odd){grid-column:1/-1;border-left:0;padding-left:0}
+
+/* v1.3: definition before use; one mathematical step per line. */
+.shared-note ul{padding-left:5mm;margin:1mm 0 2mm}
+.shared-note li{margin:0 0 1.2mm}
+.shared-note .theory-bridge{margin-top:3mm;padding-top:2mm;border-top:.6px solid #9aaeb9}
+.shared-note .experiment-plan th:first-child{width:27%}
+.shared-note .experiment-conclusions{border:0;padding-top:1mm;margin-top:1mm}
+.shared-note .variable-table th{width:24%;font-weight:400}
+.shared-note .variable-table td,.shared-note .variable-table th{padding:1mm 1.3mm}
+.shared-note .numbered-equation{display:grid;grid-template-columns:minmax(0,1fr) 10mm;align-items:center;gap:3mm;margin:2mm 0 2.5mm;break-inside:avoid}
+.shared-note .equation-box{border:1px solid #466279;padding:1.6mm 3mm;justify-self:start;max-width:100%;background:#fff}
+.shared-note .equation-number{justify-self:end;font-size:10pt;font-weight:400}
+.shared-note .derivation-line{display:block;margin:1.3mm 0 1.8mm;break-inside:avoid}
+.equation-start{margin:1mm 0 2mm;break-inside:avoid}
+.equation-start .equation-citation{font-weight:700;margin:0 0 1mm!important}
+.equation-start .derivation-line{margin:1mm 0}
+.math-line{display:block;margin:1.2mm 0;break-inside:avoid}
+.shared-note .setup img{max-height:35mm}
+.shared-note .geometry-map img{max-height:56mm;max-width:100%;width:100%}
+.shared-note .geometry-detail img{max-height:37mm}
+.shared-note[data-note-kind="theory"] p{margin-bottom:1.7mm}
+.shared-note[data-note-kind="theory"] h3{margin-top:2mm;margin-bottom:1.3mm}
+.shared-note[data-note-key="geometry-proof"] .numbered-equation{margin:1.3mm 0 1.8mm}
+.shared-note[data-note-key="geometry-proof"] .derivation-line{margin:1mm 0}
+.shared-note[data-note-kind="examples"] .example{margin:2.3mm 0;padding:2mm 2.5mm}
+.shared-note[data-note-kind="examples"] .note-answer{padding-top:1mm;margin-top:1mm}
+.shared-note[data-note-kind="examples"] p{margin-bottom:1.6mm}
+.shared-note[data-note-kind="examples"] .method-note{margin-top:2mm}
+@media print{.shared-note .equation-box{border-color:#333}.equation-citation{color:#111}}
+/* Worked answers use the page width so the referenced equation remains readable. */
+.answers-on .page.quiz .key-grid{display:block}
+.answers-on .page.quiz .solution-part{width:100%;max-width:100%;margin-top:2.5mm;padding-top:1.5mm;border-top:.45px solid #d5dfe5}
+.answers-on .page.quiz .solution-part:first-child{margin-top:0;padding-top:0;border-top:0}
+.answers-on .page.quiz .recall-group .task-grid{display:block}
+.answers-on .page.quiz .recall-group .task-grid>.task{width:100%;margin-top:3mm;padding:0;border:0}
+.shared-note .setup img{max-height:30mm}
+.question .experiment-data th{width:auto}
+.question .experiment-data th:first-child{width:18%}

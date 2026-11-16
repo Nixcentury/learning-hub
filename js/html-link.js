@@ -13,3 +13,10 @@ export function htmlLinkEntry(node, documentUrl, context = {}) {
       titleEn: d.en || d.titleEn || d.th || node.textContent.trim() };
   } catch { return null; }
 }
+
+// A declarative simulation link uses the same validated content opener, while
+// retaining the simulation's existing window identity and execution context.
+export function simulationLinkEntry(node, documentUrl, context = {}) {
+  const entry = htmlLinkEntry(node, documentUrl, context);
+  return entry ? { ...entry, toolKind: "simulation" } : null;
+}

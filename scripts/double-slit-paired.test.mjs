@@ -1,22 +1,22 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile,access} from 'node:fs/promises';import {createHash} from 'node:crypto';import {parseHTML} from 'linkedom';
 import {applyContentLanguage} from '../js/content-language.js';import {buildHtmlPrintSnapshot} from '../js/html-print.js';import {prepareExitTicketPrint,exitTicketPages} from '../js/exit-ticket-revision.js';
 const base='content/physics/ipst/wave-optics/';
-const files={classroom:base+'10-2-double-slit-classroom-note-v1-2.html',exit:base+'10-2-double-slit-exit-ticket-revision-v1-2.html'};
+const files={classroom:base+'10-2-double-slit-classroom-note-v1-3.html',exit:base+'10-2-double-slit-exit-ticket-revision-v1-3.html'};
 async function load(kind){const {document}=parseHTML(await readFile(new URL('../public/'+files[kind],import.meta.url),'utf8'));Object.defineProperty(document,'URL',{value:'https://example.test/learning-hub/'+files[kind]});Object.defineProperty(document,'defaultView',{value:undefined});return document;}
 const view=(doc,lang,edition,range)=>doc.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="${edition}"] [data-revision-range="${range}"]`);
-function notes(node){return [...node.querySelectorAll('.shared-note')].map(n=>{const c=n.cloneNode(true);c.querySelectorAll('.identity').forEach(x=>x.remove());c.querySelectorAll('img[src]').forEach(x=>x.setAttribute('src',x.getAttribute('src').replace(/^.*\/assets\//,'assets/')));return c.outerHTML;});}
+function notes(node){return [...node.querySelectorAll('.shared-note')].map(n=>{const c=n.cloneNode(true);c.querySelectorAll('.identity').forEach(x=>x.remove());c.querySelectorAll('[data-title-th]').forEach(x=>x.removeAttribute('title'));c.querySelectorAll('img[src]').forEach(x=>x.setAttribute('src',x.getAttribute('src').replace(/^.*\/assets\//,'assets/')));return c.outerHTML;});}
 test('double-slit: the complete canonical answer notes survive student printing in either language',async()=>{
  const classroom=await load('classroom'),exit=await load('exit');
- const model=Buffer.concat(await Promise.all(['notes.mjs','proofs.mjs','proof-figures.json'].map(p=>readFile(new URL('../docs/learning-sheet/preparation/physics-double-slit-10-2/paired/'+p,import.meta.url)))));const sha=createHash('sha256').update(model).digest('hex');
+ const model=Buffer.concat(await Promise.all(['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs'].map(p=>readFile(new URL('../docs/learning-sheet/preparation/physics-double-slit-10-2/paired/'+p,import.meta.url)))));const sha=createHash('sha256').update(model).digest('hex');
  assert.equal(classroom.documentElement.dataset.sharedNotesSha256,sha);assert.equal(exit.documentElement.dataset.sharedNotesSha256,sha);
  for(const lang of ['th','en']){
-  const canonical=notes(view(classroom,lang,'answers','all'));assert.equal(canonical.length,9);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('[data-note-key$="-proof"] .proof-diagram').length,2);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.example .method-note').length,12);
+  const canonical=notes(view(classroom,lang,'answers','all'));assert.equal(canonical.length,12);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.proof-diagram').length,2);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.example .method-note').length,12);
   const blankClassroom=view(classroom,lang,'blank','all');assert.equal(blankClassroom.querySelectorAll('.note-answer').length,0);assert.equal(blankClassroom.querySelectorAll('.example').length,12);
   for(const edition of ['blank','answers'])for(const range of ['all','review'])assert.deepEqual(notes(view(exit,lang,edition,range)),canonical);
   for(const kind of ['classroom','exit'])for(const answers of [false,true])for(const range of ['all','quiz','review']){
    const source=kind==='classroom'?classroom:exit;applyContentLanguage(source,lang);const before=source.documentElement.outerHTML;
    const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'10.2 paired handout'));const count=prepareExitTicketPrint(copy,{range,answers});
-   assert.equal(count,kind==='classroom'?(range==='quiz'?6:9):range==='all'?17:range==='quiz'?8:9);
+   assert.equal(count,kind==='classroom'?(range==='quiz'?6:range==='review'?6:12):range==='all'?(answers?25:20):range==='quiz'?(answers?13:8):12);
    assert.equal(copy.querySelectorAll('[data-content-lang]').length,1);assert.equal(copy.querySelectorAll('[data-revision-edition]').length,1);assert.equal(copy.querySelectorAll('.identity').length,1);assert.equal(exitTicketPages(copy).length,count);
    assert.equal(source.documentElement.outerHTML,before,'printing must not change the live lesson');
    if(kind==='exit'){
@@ -57,9 +57,87 @@ test('double-slit: classify fringes by rearranging the taught formula and checki
   assert.ok(steps.includes(String.raw`\Delta r=(m-\tfrac12)\lambda\Rightarrow m=\Delta r/\lambda+\tfrac12`));
   assert.match(first.textContent,/จำนวนเต็ม|integer/);
   assert.ok(first.querySelectorAll('[data-tex]').length>=4);
-  assert.match(full.querySelector('[data-note-key="observe"]').textContent,/คงที่|constant/);
+  assert.match(full.querySelector('[data-note-key="observe"]').textContent,/คงเดิม|คงที่|constant|fixed|unchanged/);
  }
  const bright=distance=>distance/500,dark=distance=>distance/500+.5;
  assert.equal(bright(1500),3);assert.equal(dark(1250),3);assert.equal(Number.isInteger(bright(1250)),false);
  assert.equal(Number.isInteger(bright(1125)),false);assert.equal(Number.isInteger(dark(1125)),false);
+});
+
+test('double-slit: experiment precedes 15 numbered formulas, every formula precedes all 12 examples',async()=>{
+ const classroom=await load('classroom');
+ const texByLanguage={};
+ for(const lang of ['th','en']){
+  const full=view(classroom,lang,'answers','all');
+  const intro=full.querySelector('[data-note-key="observe"]');
+  assert.equal(intro.querySelectorAll('[data-tex]').length,0,'experiment introduction must not reveal equations before the theory');
+  assert.equal(intro.querySelectorAll('.experiment-conclusions li').length,3);
+  const lab=intro.querySelector('a[data-hub-simulation]');
+  assert.equal(lab.dataset.contentId,'physics-ipst-wave-optics-10-2-double-slit-lab');
+  assert.equal(lab.dataset.htmlSrc,'10-2-double-slit-lab.html');
+  const boxes=[...full.querySelectorAll('[data-equation]')];
+  assert.deepEqual(boxes.map(x=>Number(x.dataset.equation)),Array.from({length:15},(_,i)=>i+1));
+  texByLanguage[lang]=boxes.map(x=>x.querySelector('[data-tex]').dataset.tex);
+  const sequence=[...full.querySelectorAll('[data-equation],.example')];
+  assert.ok(sequence.slice(0,15).every(x=>x.hasAttribute('data-equation')),'finish all theory before starting examples');
+  assert.ok(sequence.slice(15).every(x=>x.classList.contains('example')));
+  assert.ok(full.querySelector('.variable-table'));
+  for(const item of full.querySelectorAll('[data-equation-ref]'))assert.ok(boxes.some(x=>x.dataset.equation===item.dataset.equationRef));
+  for(const formula of full.querySelectorAll('[data-tex]'))assert.doesNotMatch(formula.dataset.tex,/\\beta/);
+  for(const example of full.querySelectorAll('.example')){
+   const start=example.querySelector('.note-answer').firstElementChild;
+   assert.ok(start.classList.contains('equation-start'));
+   assert.ok(start.querySelector('[data-equation-ref]'));
+   assert.ok(start.querySelector('[data-tex]'),'state the referenced symbolic equation before numerical substitution');
+  }
+ }
+ assert.deepEqual(texByLanguage.th,texByLanguage.en);
+});
+
+test('double-slit: original example questions and numerical workings survive equation citations and typography',async()=>{
+ const current=await load('classroom');
+ const original=JSON.parse(await readFile(new URL('../docs/learning-sheet/preparation/physics-double-slit-10-2/paired/examples-v1.2.json',import.meta.url),'utf8'));
+ const normalize=t=>t.replaceAll('\\beta','\\Delta x').replace(/\\displaystyle\s*/g,'').replace(/\\begin\{aligned\}|\\end\{aligned\}/g,'').replace(/\\\\/g,'').replaceAll('&','').replace(/\s+/g,'');
+ for(const lang of ['th','en']){
+  const examples=[...view(current,lang,'answers','all').querySelectorAll('.example')];
+  assert.equal(examples.length,12);
+  for(let i=0;i<12;i++){
+   const actual=examples[i],old=original.languages[lang][i];
+   assert.equal(actual.querySelector('p').textContent,old.prompt,lang+' example '+(i+1)+' question');
+   assert.equal(actual.querySelector('h3').textContent,old.title);
+   const expected=[...old.html.matchAll(/\\\(([\s\S]*?)\\\)/g)].map(m=>normalize(m[1].replaceAll(i===2?'|x_2|':i===3?'|x_m|':'__no_match__',i===2?'x_{\\mathrm B,2}':'x_{\\mathrm D,m}')));
+   const found=[...actual.querySelectorAll('[data-tex]')].map(x=>normalize(x.dataset.tex));
+   let previous=-1;
+   for(const formula of expected){
+    const next=found.findIndex((x,j)=>j>previous&&x===formula);
+    assert.ok(next>=0,lang+' example '+(i+1)+' lost an original calculation: '+formula);previous=next;
+   }
+  }
+ }
+});
+
+test('double-slit: original Exit questions, figures and calculations remain intact; all calculated solutions cite theory',async()=>{
+ const current=await load('exit');
+ const {document:before}=parseHTML(await readFile(new URL('../public/content/physics/ipst/wave-optics/10-2-double-slit-exit-ticket-revision-v1-2.html',import.meta.url),'utf8'));
+ const normalize=t=>t.replace(/\\displaystyle\s*/g,'').replace(/\\begin\{aligned\}|\\end\{aligned\}/g,'').replace(/\\\\/g,'').replaceAll('&','').replace(/\s+/g,'');
+ for(const lang of ['th','en']){
+  for(const edition of ['blank','answers']){
+   const old=view(before,lang,edition,'all'),now=view(current,lang,edition,'all');
+   const oldUnits=[...old.querySelectorAll('.unit')],units=[...now.querySelectorAll('.unit')];
+   assert.deepEqual(units.map(x=>x.dataset.unitKey),oldUnits.map(x=>x.dataset.unitKey));
+   for(let i=0;i<units.length;i++){
+    const clean=node=>{const copy=node.cloneNode(true);copy.querySelectorAll('.teacher-key,.answer-inline').forEach(x=>x.remove());return copy.outerHTML;};
+    assert.equal(clean(units[i]),clean(oldUnits[i]),lang+'/'+edition+'/'+units[i].dataset.unitKey+' question or figure changed');
+    if(edition!=='answers')continue;
+    const original=[...oldUnits[i].querySelectorAll('[data-tex]')].map(x=>normalize(x.dataset.tex));
+    const actual=[...units[i].querySelectorAll('[data-tex]')].map(x=>normalize(x.dataset.tex));
+    let previous=-1;
+    for(const formula of original){const next=actual.findIndex((x,j)=>j>previous&&x===formula);assert.ok(next>=0,lang+'/'+units[i].dataset.unitKey+' lost calculation '+formula);previous=next;}
+   }
+   for(const solution of now.querySelectorAll('[data-solution-key]')){
+    if(!solution.querySelector('[data-tex]'))continue;
+    assert.ok(solution.querySelector('.equation-start [data-equation-ref]'),solution.dataset.solutionKey+' needs an initial equation reference');
+   }
+  }
+ }
 });

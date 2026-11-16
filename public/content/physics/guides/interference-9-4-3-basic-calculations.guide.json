@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-waves-9-4-3-basic-calculations",
-    "revision": "2026-11-14-1",
-    "sha256": "3086ecbee877acc629569fd31c3cc3cce0dfae62df0b0c43fe6c02cf36a74983"
+    "revision": "2026-11-16-2",
+    "sha256": "9a481932f8736327f83d82830079c35501e8bb0680ac57b9447409d57ffd06d7"
   },
   "title": {
     "th": "9.4.3 การแทรกสอด · ฝึกแทนค่าสูตร",
@@ -205,8 +205,8 @@
     }
   ],
   "finish": {
-    "th": "อ่านเฟสแหล่งกำเนิดก่อนเลือกเงื่อนไข ตรวจระยะและมุมก่อนประมาณ และตอบพร้อมหน่วย",
-    "en": "Read the source phase before choosing conditions, check distances and angles before approximating, and include units."
+    "th": "อ่านเฟสแหล่งกำเนิดก่อนเลือกเงื่อนไข ตรวจระยะและมุมก่อนประมาณ และตอบพร้อมหน่วย ฉบับพิมพ์มีคำตอบสั้นใต้โจทย์แต่ละข้อ ให้แสดงวิธีทำก่อนเทียบคำตอบ และเปิดฉบับเฉลยเมื่อต้องการดูขั้นตอน",
+    "en": "Read the source phase before choosing conditions, check distances and angles before approximating, and include units. Printed copies include a short final answer under each question. Show your working before checking it; choose the answer edition for full solutions."
   },
   "exitCheck": {
     "question": {

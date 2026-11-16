@@ -41,3 +41,32 @@ test('sheet print requires an explicit edition; regular reading documents are un
   assert.throws(() => prepareLearningSheetPrint(source, 'screen'), /Choose blank or answers/);
   assert.doesNotThrow(() => prepareLearningSheetPrint({ documentElement: { hasAttribute: () => false } }));
 });
+
+test('interference calculations: all 12 printed self-check answers survive either edition without exposing blank-edition workings',async()=>{
+  const {parseHTML}=await import('linkedom');
+  const {buildHtmlPrintSnapshot}=await import('../js/html-print.js');
+  const {applyContentLanguage}=await import('../js/content-language.js');
+  const file='content/physics/interference-9-4-3-basic-calculations-learning-sheet.html';
+  const html=await readFile(new URL('../public/'+file,import.meta.url),'utf8');
+  for(const lang of ['th','en'])for(const edition of ['blank','answers']){
+    const {document:source}=parseHTML(html);
+    Object.defineProperty(source,'URL',{value:'https://example.test/learning-hub/'+file});
+    Object.defineProperty(source,'defaultView',{value:undefined});
+    applyContentLanguage(source,lang);
+    const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'Interference self-check'));
+    for(const el of copy.querySelectorAll('[data-sheet-slot],[data-sheet-answer]'))el.getBoundingClientRect=()=>({width:600,height:150});
+    prepareLearningSheetPrint(copy,edition);
+    assert.equal(copy.querySelectorAll('.calc-problem').length,12);
+    assert.equal(copy.querySelectorAll('[data-print-check-answer]').length,12);
+    assert.equal(copy.querySelectorAll('[data-sheet-answer]').length,edition==='blank'?0:12);
+    assert.equal(copy.querySelectorAll('[data-sheet-blank-area]').length,edition==='blank'?12:0);
+    for(const p of copy.querySelectorAll('.calc-problem')){
+      assert.ok(p.querySelector(':scope>[data-print-check-answer]'));
+      assert.equal(p.querySelectorAll('[data-print-check-answer] [data-sheet-answer]').length,0);
+    }
+    assert.match(copy.querySelector('[data-print-check-answer="1"]').textContent,/8\.0/);
+    assert.match(copy.querySelector('[data-print-check-answer="4"]').textContent,lang==='th'?/บัพ/:/node/);
+    assert.match(copy.querySelector('[data-print-check-answer="6"]').textContent,/90/);
+    assert.equal(source.querySelectorAll('[data-sheet-answer]').length,24,'printing must preserve live answers');
+  }
+});

@@ -1,0 +1,38 @@
+[
+  {
+    "language": "th",
+    "edition": "blank",
+    "status": "ฉบับว่าง · พร้อมพิมพ์ 7 หน้า",
+    "answer7": "คำตอบตรวจตนเอง: ปฏิบัพ 5 แนว · บัพ 4 แนว",
+    "checks": 12,
+    "mathErrors": 0,
+    "questions": 12
+  },
+  {
+    "language": "th",
+    "edition": "answers",
+    "status": "ฉบับเฉลย · พร้อมพิมพ์ 7 หน้า",
+    "checks": 12,
+    "mathErrors": 0,
+    "questions": 12,
+    "workings": 12
+  },
+  {
+    "language": "en",
+    "edition": "blank",
+    "status": "Blank · 8 pages ready to print",
+    "answer7": "Self-check answer: 5 antinodal lines · 4 nodal lines",
+    "checks": 12,
+    "mathErrors": 0,
+    "questions": 12
+  },
+  {
+    "language": "en",
+    "edition": "answers",
+    "status": "Answers · 8 pages ready to print",
+    "checks": 12,
+    "mathErrors": 0,
+    "questions": 12,
+    "workings": 12
+  }
+]

@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-waves-9-4-3-basic-calculations",
-    "revision": "2026-11-16-2",
-    "sha256": "9a481932f8736327f83d82830079c35501e8bb0680ac57b9447409d57ffd06d7"
+    "revision": "2026-11-16-3",
+    "sha256": "b5ffbcd13aa1269a54ac609843edbe0269aa91523df13db536b465fc729d777b"
   },
   "title": {
     "th": "9.4.3 การแทรกสอด · ฝึกแทนค่าสูตร",
@@ -66,6 +66,16 @@
             "kind": "slot",
             "key": "opposite-first-antinode"
           }
+        },
+        {
+          "label": {
+            "th": "ข้อ 7 นับจำนวนแนว",
+            "en": "Question 7: count the lines"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "count-node-antinode-lines"
+          }
         }
       ],
       "check": {
@@ -79,8 +89,8 @@
         }
       },
       "after": {
-        "th": "ถ้าแยกเฟสได้แล้ว ลองข้อ 8 เพื่อจัดรูปหาความยาวคลื่น",
-        "en": "Once source phase is clear, try Question 8 to find a wavelength."
+        "th": "ลองข้อ 7: ใช้ผลต่างทางเดินไม่เกินระยะห่างแหล่งกำเนิด เลือกอันดับจำนวนเต็ม แล้วนับแนวกลางกับทั้งสองข้าง แยกอันดับสูงสุดจากจำนวนแนวทั้งหมด จากนั้นลองข้อ 8 เพื่อจัดรูปหาความยาวคลื่น",
+        "en": "Try Question 7: bound path difference by source separation, select integer orders, then count the centre and both sides. Distinguish highest order from total lines. Then try Question 8 to rearrange for wavelength."
       }
     },
     {
@@ -94,12 +104,12 @@
         "en": "Far field: Δr ≈ d sin θ ≈ dx/√(L² + x²).\nOnly with x ≪ L as well may you use Δr ≈ dx/L.\nUse consistent length units; measure θ from the perpendicular bisector."
       },
       "story": {
-        "th": "ชี้ว่าไกลเทียบกับระยะห่างแหล่งกำเนิดกับมุมเล็กเป็นคนละเงื่อนไข ใช้ข้อ 7 เทียบกับข้อ 2",
-        "en": "Distinguish a distance large compared with source separation from a small angle. Compare Questions 7 and 2."
+        "th": "ชี้ว่าไกลเทียบกับระยะห่างแหล่งกำเนิดกับมุมเล็กเป็นคนละเงื่อนไข ใช้ข้อ 12 เทียบกับข้อ 2",
+        "en": "Distinguish a distance large compared with source separation from a small angle. Compare Questions 12 and 2."
       },
       "action": {
-        "th": "ทำข้อ 5 และข้อ 7 แล้วเลือกข้อ 2 หรือข้อ 9",
-        "en": "Try Questions 5 and 7, then Question 2 or 9."
+        "th": "ทำข้อ 5 และข้อ 12 แล้วเลือกข้อ 2 หรือข้อ 9",
+        "en": "Try Questions 5 and 12, then Question 2 or 9."
       },
       "links": [
         {
@@ -114,12 +124,12 @@
         },
         {
           "label": {
-            "th": "ข้อ 7 คงรากที่สอง",
-            "en": "Question 7: keep the square root"
+            "th": "ข้อ 12 คงรากที่สอง",
+            "en": "Question 12: keep the square root"
           },
           "target": {
             "kind": "slot",
-            "key": "geometry-water"
+            "key": "geometry-sound"
           }
         },
         {

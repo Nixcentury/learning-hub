@@ -11,7 +11,7 @@
 - tool-key / route slug: `basic-calculations`
 - Bank route: `#physics/bank/translational-equilibrium/basic-calculations`
 - Canonical route: `#content/physics-ipst-equilibrium-4-3-basic-calculations`
-- Revision: `2026-11-14-1`
+- Revision: `2026-11-16-1`
 
 ## สไตล์เฉลยตามรูปที่ครูส่ง
 
@@ -85,3 +85,7 @@
 | EN | 11 / 11 หน้า | 13 / 13 หน้า |
 
 ใช้ runtime production เดิมและ catalog ที่สร้างใหม่สำหรับ preview งานนี้ไม่แก้ระบบกลาง ไม่รัน full build หรือ regression ที่ไม่เกี่ยวข้องซ้ำ ยังไม่ได้ตรวจบนเครื่อง iPad/Safari หรือเครื่องพิมพ์จริง
+
+## อัปเดต 2026-11-16: คำตอบตรวจตนเอง
+
+เพิ่มคำตอบสั้นใต้รูปโจทย์ครบ 6 ข้อเฉพาะหน้าพิมพ์ ทั้งฉบับว่างและเฉลย โดยใช้พื้นที่คำบรรยายรูปเดิม คงโจทย์ รูปและวิธีทำเต็ม จำนวนหน้ามาตรฐานคงเดิม TH 10 / EN 11 ดูรายละเอียดและข้อเสนอเสริมเรื่องจวนไถลใน `PRINT-SELF-CHECK-2026-11-16.md`

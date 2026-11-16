@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "physics-ipst-equilibrium-4-3-basic-calculations",
-    "revision": "2026-11-14-1",
-    "sha256": "794ffd8b6a135ee7c710539fcb8486b330d9a7dae035c54797c0b8494ff867a0"
+    "revision": "2026-11-16-1",
+    "sha256": "812ae6f8fc64f6a386e93494f6c2090b6117efac50859b7b110ef9af67f222c4"
   },
   "title": {
     "th": "4.3 สมดุลต่อการเลื่อนที่ · ฝึกคำนวณ",
@@ -205,8 +205,8 @@
     }
   ],
   "finish": {
-    "th": "เริ่มจากวัตถุและรูปแรง ระบุมุม ตั้งสมการทั้งสองแกน แล้วแก้พร้อมตรวจเครื่องหมาย ทิศทางและหน่วย",
-    "en": "Start with the object and force diagram, identify angles, balance both axes, then solve and check signs, directions and units."
+    "th": "เริ่มจากวัตถุและรูปแรง ระบุมุม ตั้งสมการทั้งสองแกน แล้วแก้พร้อมตรวจเครื่องหมาย ทิศทางและหน่วย ฉบับพิมพ์มีคำตอบสั้นใต้โจทย์สำหรับตรวจตนเอง ให้ลองแสดงวิธีทำก่อนเทียบคำตอบ หากต้องการวิธีทำเต็มให้เลือกฉบับเฉลย",
+    "en": "Start with the object and force diagram, identify angles, balance both axes, then solve and check signs, directions and units. Printed editions include a short self-check answer below each question. Show your working before comparing; select the answer edition for full solutions."
   },
   "exitCheck": {
     "question": {

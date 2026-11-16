@@ -127,3 +127,46 @@ test('Bohr calculations: 14 paired questions retain printed final answers withou
     assert.equal(source.querySelectorAll('[data-sheet-answer]').length, 28, 'Print must not mutate the reading document');
   }
 });
+
+test('equilibrium calculations: preserve six questions, figures and workings while printing short answers in both editions',async()=>{
+  const {parseHTML}=await import('linkedom');
+  const {buildHtmlPrintSnapshot}=await import('../js/html-print.js');
+  const {applyContentLanguage}=await import('../js/content-language.js');
+  const file='content/physics/ipst/equilibrium/4-3-basic-calculations-learning-sheet.html';
+  const html=await readFile(new URL('../public/'+file,import.meta.url),'utf8');
+  const {document:before}=parseHTML(await readFile(new URL('../docs/learning-sheet/preparation/physics-translational-equilibrium-4-3/basic-calculations-before-print-self-check.html',import.meta.url),'utf8'));
+  for(const lang of ['th','en'])for(const edition of ['blank','answers']){
+    const {document:source}=parseHTML(html);
+    const oldProblems=before.querySelector(`[data-content-lang="${lang}"]`).querySelectorAll('.calc-problem');
+    const problems=source.querySelector(`[data-content-lang="${lang}"]`).querySelectorAll('.calc-problem');
+    assert.equal(problems.length,6);
+    for(let i=0;i<6;i++){
+      const copy=problems[i].cloneNode(true);
+      copy.querySelector('[data-print-check-answer]').remove();
+      const caption=copy.querySelector('.given-figure-caption');
+      caption.replaceWith(caption.textContent);
+      // Print-only answers share the existing diagram caption; original content is retained.
+      assert.equal(copy.outerHTML.replace(/>\s+</g,'><'),oldProblems[i].outerHTML.replace(/>\s+</g,'><'));
+    }
+    Object.defineProperty(source,'URL',{value:'https://example.test/learning-hub/'+file});
+    Object.defineProperty(source,'defaultView',{value:undefined});
+    applyContentLanguage(source,lang);
+    const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'Equilibrium self-check'));
+    for(const el of copy.querySelectorAll('[data-sheet-slot],[data-sheet-answer]'))el.getBoundingClientRect=()=>({width:600,height:150});
+    prepareLearningSheetPrint(copy,edition);
+    assert.equal(copy.querySelectorAll('[data-print-check-answer]').length,6);
+    assert.equal(copy.querySelectorAll('[data-sheet-answer]').length,edition==='blank'?0:6);
+    assert.equal(copy.querySelectorAll('[data-sheet-blank-area]').length,edition==='blank'?6:0);
+    for(const p of copy.querySelectorAll('.calc-problem')){
+      const key=p.querySelector('[data-print-check-answer]');
+      assert.ok(key);
+      assert.equal(key.closest('[data-sheet-slot]'),null);
+      assert.match(key.textContent,lang==='th'?/คำตอบตรวจตนเอง:/:/Self-check answer:/);
+    }
+    const key=n=>copy.querySelector(`[data-print-check-answer="${n}"]`).textContent;
+    assert.match(key(1),/240/); assert.match(key(2),/36\.9.*50\.0/);
+    assert.match(key(3),/10.*17\.3/); assert.match(key(4),/8\.66.*15.*0\.577/);
+    assert.match(key(5),/17\.3.*10.*13\.9/); assert.match(key(6),/15.*25/);
+    assert.equal(source.querySelectorAll('[data-sheet-answer]').length,12,'printing preserves live full workings');
+  }
+});

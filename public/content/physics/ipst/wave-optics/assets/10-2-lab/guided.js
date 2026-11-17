@@ -1,4 +1,4 @@
-import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
+import { doubleSlitPlayGuide } from './guide-data.js?v=smart-v1-20261117';
 
 (() => {
   'use strict';
@@ -8,11 +8,12 @@ import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
   function mission(id,reset=false){
     B.change(state=>{
       const m=state.missions;m.current=id;m.enabled=true;m.answerOpen=false;m.attempted[id]=false;
-      if(reset){m.answers[id]={};m.played[id]=false;m.completed=m.completed.filter(i=>i!==id);if(id===3){m.near=false;m.far=false;}}
-      state.water=W.initial();state.water.L=id===2?12:id===3?6:24;state.water.x=id===3?6:0;
+      if(reset){m.answers[id]={};m.played[id]=false;m.completed=m.completed.filter(i=>i!==id);m.frozen[id]=null;if(id===2)m.evidence.path=null;if(id===3)m.evidence.approx=null;if(id===5)m.evidence.wavelength=null;if(id===3){m.near=false;m.far=false;}}
+      state.reportOpen=false;state.water=W.initial();state.water.L=id===2?12:id===3?6:24;state.water.x=id===3?6:0;
       if(id===3)Object.assign(state.water.layers,{paths:true,variables:true,formulas:true});
       if(id<4)state.view='water';else{
         state.view='light';state.lightPhase=0;
+        if(id===5&&!m.frozen[id]&&state.records.length)m.frozen[id]={record:structuredClone(state.records.at(-1))};
         if(id===4){state.config={...M.presets.A};state.cursors={left:-8,right:8};state.moved={left:false,right:false};}
       }message=null;
     },true);
@@ -20,7 +21,7 @@ import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
   function waterChange(fn){const p=structuredClone(s().water);fn(p);if(!W.valid(p))return;s().water=p;event();render();B.notify();}
   function renderWater(){
     const p=s().water,g=W.geometry(p);
-    for(const key of ['wavelength','separation','L','x']){$('water-'+key).value=p[key];$('water-'+key+'-value').textContent=F(p[key],key==='x'?3:1)+' cm';}
+    for(const key of ['wavelength','separation','L','x']){$('water-'+key).value=p[key];const numeric=$('water-'+key+'-number');if(document.activeElement!==numeric)numeric.value=Number(p[key].toFixed(key==='x'?2:1));$('water-'+key+'-value').textContent=F(p[key],key==='x'?3:1)+' cm';}
     $('water-phase').value=p.phase;document.querySelectorAll('[data-layer]').forEach(n=>n.checked=p.layers[n.dataset.layer]);
     $('water-play').textContent=p.running?T('หยุดคลื่น','Pause waves'):T('เล่นคลื่น','Play waves');
     const possible=W.pointForDelta(p,p.wavelength/2)!==null;$('water-example').disabled=!possible;
@@ -140,6 +141,7 @@ import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
       answers[key] = input.value;
       event();
       $('mission-feedback').replaceChildren();
+      globalThis.SmartLabGuide?.render();
       B.notify();
     });
     const hint = document.createElement('details');
@@ -163,12 +165,14 @@ import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
     const state = s(), mission = state.missions, id = mission.current;
     const requirements = Q.requirements(state);
     const ready = requirements.every(([done]) => done);
-    $('mission-card').hidden = !mission.enabled;
+    $('mission-card').hidden = !mission.enabled || state.reportOpen;document.querySelector('.view-tabs').hidden=state.reportOpen;
     $('guided-toggle').textContent = mission.enabled ? T('สำรวจเอง', 'Explore freely') : T('กลับสู่ภารกิจ', 'Return to missions');
     $('mission-select').replaceChildren();
     Q.titles.forEach((title, index) => {
       const option = document.createElement('option');
       option.value = index;
+      const frontier=Q.titles.findIndex((_,i)=>!mission.completed.includes(i));
+      option.disabled=frontier!==-1&&index>frontier&&!mission.completed.includes(index);
       option.textContent = (mission.completed.includes(index) ? '✓ ' : '') + T(...title);
       $('mission-select').append(option);
     });
@@ -193,7 +197,7 @@ import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
     $('mission-check').disabled = !ready;
     $('mission-lock-note').textContent = ready
       ? T('ทดลองครบแล้ว ตอบให้ครบแล้วกดตรวจ', 'Experiment steps complete. Answer each question, then check.')
-      : T('ทำรายการที่มีวงกลม ○ ให้ครบก่อนตรวจ ใช้ปุ่มไปขั้นทดลองถัดไปด้านบนเพื่อหาเครื่องมือ', 'Complete the open-circle steps before checking. Use the next-step button above to find the control.');
+      : T('ทำรายการที่มีวงกลม ○ ให้ครบก่อนตรวจ ใช้ผู้ช่วยเพื่อดูขั้นตอนและหาเครื่องมือ', 'Complete the open-circle steps before checking. Use the guide to see the next action and locate its control.');
     const feedback = $('mission-feedback');
     feedback.replaceChildren();
     if (message) {
@@ -206,7 +210,7 @@ import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
       const heading = document.createElement('p');
       heading.className = passed ? 'correct' : 'retry';
       heading.textContent = passed
-        ? T('ผ่านภารกิจนี้แล้ว ไปภารกิจถัดไปได้', 'Mission completed. Continue to the next mission.')
+        ? T(id===5?(mission.completed.length===6?'ผ่านครบทั้ง 6 ภารกิจแล้ว กดดูรายงานผล':'ผ่านภารกิจนี้แล้ว กลับไปทำภารกิจที่ยังไม่ผ่านได้'):'ผ่านภารกิจนี้แล้ว ไปภารกิจถัดไปได้', id===5?(mission.completed.length===6?'All six missions passed. View your report.':'Mission passed. Continue with unfinished missions.'):'Mission completed. Continue to the next mission.')
         : T('ยังมีข้อให้ลองใหม่ ทบทวนข้อมูลแล้วตรวจอีกครั้งได้', 'Some answers need another try. Review the data and check again.');
       const statuses = document.createElement('ol');
       for (const correct of results) {
@@ -217,27 +221,35 @@ import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
       feedback.append(heading, statuses);
     }
     $('mission-next').disabled = !mission.completed.includes(id);
-    $('mission-next').textContent = id === 5 ? T('ทบทวนภารกิจแรก', 'Revisit mission 1') : T('ภารกิจถัดไป', 'Next mission');
+    $('mission-next').textContent = id === 5 ? (mission.completed.length===6?T('จบกิจกรรมและดูรายงาน', 'Finish and view report'):T('กลับไปทำภารกิจที่ยังไม่ผ่าน','Continue unfinished missions')) : T('ภารกิจถัดไป', 'Next mission');
+    $('mission-new-data').hidden=!mission.frozen[id]||![2,5].includes(id);
+    $('mission-new-data').textContent=T('ใช้ข้อมูลการทดลองใหม่ · ล้างคำตอบรอบนี้','Use new experiment data · clear current answers');
+    $('mission-frozen-note').hidden=!mission.frozen[id]||![2,5].includes(id);
+    $('mission-frozen-note').textContent=T('ข้อมูลโจทย์ชุดนี้ถูกเก็บไว้แล้ว การขยับเครื่องมือไม่เปลี่ยนโจทย์ หากต้องการเปลี่ยนให้กดใช้ข้อมูลการทดลองใหม่','Question data is fixed. Moving controls does not change this question. Use new experiment data to replace it.');
     updateCheckoutVisibility();
   }
 
   function render() {
+    Q.observe(s());
     document.querySelectorAll('.view-tabs button[id^="view-"]').forEach(button => {
       button.setAttribute('aria-pressed', String(button.id === 'view-' + s().view));
     });
     renderWater();
     renderMission();
+    globalThis.SmartLabGuide?.render();globalThis.DoubleSlitReport?.render();
   }
 
   function focusControl(control) {
+    if(globalThis.SmartLabGuide)return globalThis.SmartLabGuide.focus(control.id);
     control.scrollIntoView({ block: 'center' });
     control.focus({ preventScroll: true });
   }
 
   function openCheckout() {
+    Q.observe(s());if(Q.requirements(s()).every(([done])=>done))Q.capture(s());
     s().missions.answerOpen = true;
-    renderMission();
-    focusControl($('mission-answer').querySelector('summary'));
+    render();
+    $('mission-answer').querySelector('summary').scrollIntoView({block:'start'});
     B.notify();
   }
 
@@ -251,21 +263,6 @@ import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
     focusControl($(targetId || (view === 'water' ? 'water-play' : 'exact-measurement')));
   }
 
-  function nextExperimentStep() {
-    const state = s(), id = state.missions.current;
-    const next = Q.requirements(state).findIndex(([done]) => !done);
-    if (next === -1) return openCheckout();
-    if (id === 0) return returnToExperiment(next === 0 ? 'water-play' : state.water.phase !== 0 ? 'water-phase' : 'water-center');
-    if (id === 1) return returnToExperiment(['water-phase', 'layer-nodes', 'water-center', 'water-play'][next]);
-    if (id === 2) return returnToExperiment(next === 0 ? 'layer-paths' : $('water-example').disabled ? 'water-probe' : 'water-example');
-    if (id === 3) return returnToExperiment(next === 0 ? 'mission-near' : 'mission-far');
-    if (id === 4) {
-      const expected = ['A', 'B', 'C'][next];
-      if (M.preset(state.config) !== expected || state.lightPhase !== 0) return returnToExperiment(`preset-${expected}`);
-    }
-    returnToExperiment(state.moved.left && state.moved.right ? 'record' : 'exact-measurement');
-  }
-
   for (const view of ['water', 'light']) $('view-' + view).onclick = () => B.change(state => {
     state.view = view;
     state.water.running = false;
@@ -273,11 +270,18 @@ import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
   $('guided-toggle').onclick = () => B.change(state => state.missions.enabled = !state.missions.enabled);
   $('mission-select').onchange = () => mission(Number($('mission-select').value));
   $('mission-reset').onclick = () => mission(s().missions.current, true);
-  $('mission-next').onclick = () => {
-    mission((s().missions.current + 1) % 6);
-    $('mission-card').scrollIntoView({ block: 'start' });
+  function nextMission() {
+    const id=s().missions.current;
+    if(!s().missions.completed.includes(id))return;
+    if(id===5){const pending=Q.titles.findIndex((_,i)=>!s().missions.completed.includes(i));if(pending>=0){mission(pending);$('mission-card').scrollIntoView({block:'start'});return;}return globalThis.DoubleSlitReport.open();}
+    mission(id+1);$('mission-card').scrollIntoView({block:'start'});
+  }
+  $('mission-next').onclick = nextMission;
+  $('mission-next-action').onclick = () => globalThis.SmartLabGuide.act();
+  $('mission-new-data').onclick=()=>{
+    const m=s().missions,id=m.current;m.frozen[id]=null;m.answers[id]={};m.attempted[id]=false;m.completed=m.completed.filter(i=>i!==id);message=null;
+    Q.capture(s());render();B.notify();
   };
-  $('mission-next-action').onclick = nextExperimentStep;
   $('checkout-return').onclick = () => returnToExperiment();
   $('mission-answer').addEventListener('toggle', () => {
     s().missions.answerOpen = $('mission-answer').open;
@@ -291,10 +295,9 @@ import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
       message = ['ตอบคำถามให้ครบก่อนตรวจ', 'Answer every question before checking.'];
     } else {
       message = null;
-      mission.attempted[id] = true;
-      if (Q.grade(state).every(Boolean) && !mission.completed.includes(id)) mission.completed.push(id);
+      Q.check(state);
     }
-    renderMission();
+    render();
     B.notify();
   };
   function comparison(far) {
@@ -307,10 +310,15 @@ import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
   }
   $('mission-near').onclick = () => comparison(false);
   $('mission-far').onclick = () => comparison(true);
-  for(const key of ['wavelength','separation','L','x'])$('water-'+key).oninput=()=>waterChange(p=>p[key]=Number($('water-'+key).value));
+  for(const key of ['wavelength','separation','L','x']){
+    $('water-'+key).oninput=()=>waterChange(p=>p[key]=Number($('water-'+key).value));
+    const input=$('water-'+key+'-number');
+    input.onchange=()=>{if(!input.checkValidity()){input.reportValidity();return;}waterChange(p=>p[key]=Number(input.value));};
+    input.onkeydown=e=>{if(e.key==='Enter')input.blur();};
+  }
   $('water-phase').onchange=()=>waterChange(p=>p.phase=Number($('water-phase').value));
   document.querySelectorAll('[data-layer]').forEach(n=>n.onchange=()=>waterChange(p=>p.layers[n.dataset.layer]=n.checked));
-  $('water-play').onclick=()=>{const m=s().missions;waterChange(p=>p.running=!p.running);if(s().water.running)m.played[m.current]=true;renderMission();B.notify();};
+  $('water-play').onclick=()=>{const m=s().missions;waterChange(p=>p.running=!p.running);if(s().water.running)m.played[m.current]=true;render();B.notify();};
   $('water-center').onclick=()=>waterChange(p=>p.x=0);$('water-example').onclick=()=>{const x=W.pointForDelta(s().water,s().water.wavelength/2);if(x!==null)waterChange(p=>p.x=x);};
   $('water-answer').onclick = openCheckout;
   $('light-answer').onclick = openCheckout;
@@ -320,7 +328,7 @@ import { doubleSlitPlayGuide } from './guide-data.js?v=checkout-20261109';
   probe.onpointermove=e=>{if(!drag||e.pointerId!==drag.id)return;const q=local(e);if(q)waterChange(p=>p.x=Math.max(-8,Math.min(8,drag.x-(q.y-drag.y)/W.scale)));};
   for(const name of ['pointerup','pointercancel','lostpointercapture'])probe.addEventListener(name,()=>drag=null);
   probe.onkeydown=e=>{if(!['ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();waterChange(p=>p.x=Math.max(-8,Math.min(8,p.x+(e.key==='ArrowUp' ? .1 : -.1))));};
-  globalThis.GuidedInterference={render,event};
+  globalThis.GuidedInterference={render,event,openCheckout,returnToExperiment,next:nextMission};
   new ResizeObserver(()=>{if(s().view==='water')renderWater();}).observe($('water-stage'));
   document.addEventListener('visibilitychange',()=>last=null);
   function frame(now){const dt=last===null?0:Math.min(.05,(now-last)/1000);last=now;if(s().view==='water'&&s().water.running&&!document.hidden){time+=dt*.7;V.draw($('water-canvas'),s().water,time);}requestAnimationFrame(frame);}requestAnimationFrame(frame);render();

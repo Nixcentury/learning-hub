@@ -2,10 +2,12 @@
   'use strict';
   const M=globalThis.DoubleSlitLabModel,P=globalThis.DoubleSlitLabPlot,$=id=>document.getElementById(id),F=(n,d=2)=>Number(n).toFixed(d);
   let lang='th',identity='guest',subscriber=null,drag=null,notice='';
-  const initial=()=>({view:'water',lightPhase:0,autoMeasured:false,water:InterferenceWater.initial(),missions:InterferenceMissions.initial(),config:{...M.presets.A},zoom:1,cursors:{left:-8,right:8},moved:{left:false,right:false},records:[],formula:false,analysis:false,exercise:false,solution:false});
-  let state=initial();const T=(th,en)=>lang==='th'?th:en,publish=()=>subscriber?.();
+  let localSession=null,localReady=false,localStarted=false,identityEpoch=0,localStatus='loading';
+  const today=()=>new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Bangkok'});
+  const initial=()=>({view:'water',lightPhase:0,autoMeasured:false,water:InterferenceWater.initial(),missions:InterferenceMissions.initial(),config:{...M.presets.A},zoom:1,cursors:{left:-8,right:8},moved:{left:false,right:false},records:[],formula:false,analysis:false,exercise:false,solution:false,guideMode:'expanded',reportOpen:false,student:{name:'',className:'',date:today()}});
+  let state=initial();const T=(th,en)=>lang==='th'?th:en,publish=()=>{subscriber?.();if(localReady){localSession?.save(getState());}};
   function capturePanels(){for(const key of ['formula','analysis','exercise','solution'])state[key]=$(key).open;}
-  function getState(){capturePanels();state.missions.answerOpen=$('mission-answer').open;return {version:2,identity,...structuredClone(state)};}
+  function getState(){capturePanels();state.missions.answerOpen=$('mission-answer').open;return {version:3,identity,...structuredClone(state)};}
   function resetMarkers(){state.autoMeasured=false;state.cursors={left:-8,right:8};state.moved={left:false,right:false};state.analysis=false;state.solution=false;notice='';}
   function configChange(config,resetPhase=false){if(!M.validConfig(config))return;capturePanels();state.config={...config};if(resetPhase)state.lightPhase=0;resetMarkers();window.GuidedInterference?.event('config');render(true);publish();}
   function move(side,value){if(!Number.isFinite(value))return;state.autoMeasured=false;state.cursors[side]=Math.max(-40,Math.min(40,value));state.moved[side]=true;state.analysis=false;notice='';renderMeasurement();study();$('analysis').open=false;window.GuidedInterference?.event('measure');window.GuidedInterference?.render();publish();}
@@ -39,16 +41,16 @@
     $('solution-body').innerHTML=`<p class="equation">λ ≈ dΔx/L<br>≈ (${r.config.slit} × 10⁻⁶) × (${F(measured,4)} × 10⁻³)/${F(r.config.distance,1)}<br>≈ ${F(lambda,1)} nm</p><p>${T(`ค่าที่ตั้งให้เลเซอร์คือ ${M.wavelengths[r.config.color]} nm ความต่างจากค่าคำนวณสะท้อนการเลือกขอบแถบและการอ่านสเกล`,`The configured laser wavelength is ${M.wavelengths[r.config.color]} nm. Differences reflect boundary selection and scale reading.`)}</p><p class="equation">Δx₂/Δx₁ ≈ L₂/L₁ = 2</p><p>${T('ระยะแถบเพิ่มเป็น 2 เท่าเมื่อ λ และ d คงเดิม','Spacing doubles when λ and d remain fixed.')}</p>`;
   }
   function render(paint=false){
-    $('color').value=state.config.color;$('slit').value=state.config.slit;$('distance').value=state.config.distance;$('distance-value').textContent=F(state.config.distance,1)+' m';$('zoom').value=state.zoom;
+    $('color').value=state.config.color;$('slit').value=state.config.slit;$('distance').value=state.config.distance;$('distance-value').textContent=F(state.config.distance,1)+' m';$('distance-number').value=state.config.distance;$('zoom').value=state.zoom;
     const name=state.lightPhase===0?M.preset(state.config):null;$('preset-name').textContent=name?T('ชุด ','Set ')+name:T('กำหนดเอง','Custom settings');
     document.querySelectorAll('[data-preset]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.preset===name)));
     for(const key of ['formula','analysis','exercise','solution'])$(key).open=state[key];
-    $('light-view').hidden=state.view!=='light';$('water-view').hidden=state.view!=='water';$('light-phase').value=state.lightPhase;
+    $('light-view').hidden=state.reportOpen||state.view!=='light';$('water-view').hidden=state.reportOpen||state.view!=='water';$('light-phase').value=state.lightPhase;
     $('light-phase-note').textContent=state.lightPhase===180?T('เพิ่มตัวเลื่อนเฟส π ที่ช่องหนึ่ง: แนวกลางเป็นมืด ให้วัดแถบสว่างข้างกลางหนึ่งแถบ','Added π phase shifter at one slit: the centre is dark. Measure one adjacent bright fringe.'):T('เฟสตรงกัน: แนวกลางเป็นแถบสว่าง ชุด A/B/C ใช้กรณีนี้','In phase: the centre is bright. A/B/C use this case.');
     $('measurement-help').textContent=state.lightPhase===180?T('แนวกลางมืด เลือกแถบสว่างข้างกลางหนึ่งแถบ แล้ววาง L/R ที่มืดสองข้างของแถบนั้น','The centre is dark. Select one adjacent bright fringe and place L/R at its bounding minima.'):$('measurement-help').dataset[lang];
     if(paint&&state.view==='light')P.draw(state.config,state.zoom,lang,state.lightPhase);renderMeasurement();renderRecords();study();window.GuidedInterference?.render();
   }
-  function language(next){capturePanels();lang=next==='en'?'en':'th';document.documentElement.lang=lang;document.querySelectorAll('[data-th][data-en]').forEach(n=>n.textContent=n.dataset[lang]);$('language').textContent=lang==='th'?'English':'ภาษาไทย';render(true);}
+  function language(next){capturePanels();lang=next==='en'?'en':'th';document.documentElement.lang=lang;document.querySelectorAll('[data-th][data-en]').forEach(n=>n.textContent=n.dataset[lang]);$('language').textContent=lang==='th'?'English':'ภาษาไทย';render(true);storageLabel();}
   $('language').onclick=()=>language(lang==='th'?'en':'th');
   document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>configChange(M.presets[b.dataset.preset],true));
   $('light-phase').onchange=()=>{capturePanels();state.lightPhase=Number($('light-phase').value);resetMarkers();window.GuidedInterference?.event('phase');render(true);publish();};
@@ -72,15 +74,47 @@
   for(const key of ['formula','analysis','exercise','solution'])$(key).addEventListener('toggle',()=>{state[key]=$(key).open;publish();});
   function restoreState(snapshot){
     if(!M.validSnapshot(snapshot,identity))return false;
-    if(snapshot.version===2&&(!['water','light'].includes(snapshot.view)||!InterferenceWater.valid(snapshot.water)||!InterferenceMissions.valid(snapshot.missions)))return false;
-    const s=structuredClone(snapshot);state={config:s.config,zoom:s.zoom,cursors:s.cursors,moved:s.moved,records:s.records,formula:s.formula,analysis:s.analysis,exercise:s.exercise,solution:s.solution,view:s.version===2?s.view:'light',lightPhase:s.lightPhase||0,autoMeasured:s.autoMeasured||false,water:s.version===2?s.water:InterferenceWater.initial(),missions:s.version===2?s.missions:{...InterferenceMissions.initial(),enabled:false}};state.water.running=false;state.records=state.records.map(r=>({...r,phase:r.phase||0}));$('mission-answer').open=state.missions.answerOpen||false;drag=null;notice='';render(true);publish();return true;
+    const incoming=structuredClone(snapshot);
+    if(incoming.version>=2&&(!['water','light'].includes(incoming.view)||!InterferenceWater.valid(incoming.water)))return false;
+    const missions=incoming.version===3?incoming.missions:incoming.version===2?InterferenceMissions.migrate(incoming.missions):{...InterferenceMissions.initial(),enabled:false};
+    if(!InterferenceMissions.valid(missions))return false;
+    const student=incoming.version===3?incoming.student:{name:'',className:'',date:today()};
+    if(!student||typeof student.name!=='string'||student.name.length>100||typeof student.className!=='string'||student.className.length>60||typeof student.date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(student.date))return false;
+    if(incoming.version===3&&(!['expanded','mini','hidden'].includes(incoming.guideMode)||typeof incoming.reportOpen!=='boolean'))return false;
+    state={config:incoming.config,zoom:incoming.zoom,cursors:incoming.cursors,moved:incoming.moved,records:incoming.records,formula:incoming.formula,analysis:incoming.analysis,exercise:incoming.exercise,solution:incoming.solution,view:incoming.version>=2?incoming.view:'light',lightPhase:incoming.lightPhase||0,autoMeasured:incoming.autoMeasured||false,water:incoming.version>=2?incoming.water:InterferenceWater.initial(),missions,student,guideMode:incoming.guideMode||'expanded',reportOpen:incoming.reportOpen||false};
+    state.water.running=false;
+    state.records=state.records.map(r=>({...r,phase:r.phase||0}));
+    $('mission-answer').open=state.missions.answerOpen;
+    drag=null;notice='';render(true);publish();return true;
   }
-  window.LearningHubSimulation={getState,restoreState,subscribe:fn=>{subscriber=typeof fn==='function'?fn:null;return()=>{subscriber=null;};}};
+  function storageLabel(status=localStatus){
+    localStatus=status;
+    $('lab-load-status').textContent=status==='loading'?T('กำลังกู้คืนงานในเครื่อง…','Restoring work on this device…'):status==='indexed'?T('บันทึกในเครื่องแล้ว · ใช้เครื่องและบัญชีเดิมเพื่อทำต่อ','Saved on this device · Resume with the same device and account'):status==='local'?T('เก็บสำเนาในเครื่องแล้ว','Local backup saved'):status==='invalid'?T('อ่านงานเดิมไม่ได้ เก็บข้อมูลเดิมไว้แล้ว เริ่มทำงานรอบนี้ได้','Previous work could not be read and was left intact. You can start this session.'):T('บันทึกถาวรไม่ได้ งานยังอยู่ในหน้าต่างนี้ อย่าปิดก่อนพิมพ์รายงาน','Persistent storage is unavailable. Keep this window open until you print the report.');
+  }
+  async function startLocal(){
+    localStarted=true;localReady=false;const epoch=++identityEpoch;
+    document.querySelector('main').inert=true;storageLabel('loading');
+    localSession=DoubleSlitLabStorage.session(identity,status=>{if(epoch===identityEpoch)storageLabel(status);});
+    let candidates=[];
+    try{candidates=await localSession.load();}catch{/* Still allow the activity when storage is unavailable. */}
+    if(epoch!==identityEpoch)return;
+    let restored=false;for(const candidate of candidates){try{if(restoreState(candidate)){restored=true;break;}}catch{/* Invalid old snapshots never partially replace current work. */}}
+    localReady=true;document.querySelector('main').inert=false;
+    storageLabel(candidates.length&&!restored?'invalid':'local');
+    render(true);
+  }
+  const flushLocal=()=>{if(localReady){localSession?.save(getState());return localSession?.flush();}};
+  window.LearningHubSimulation={getState,restoreState,flushLocal,subscribe:fn=>{subscriber=typeof fn==='function'?fn:null;return()=>{subscriber=null;};}};
+  addEventListener('pagehide',flushLocal);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)flushLocal();});
   window.addEventListener('message',event=>{
     if(event.source!==parent||event.origin!==location.origin||event.data?.type!=='learning-hub-context')return;
-    const next=event.data.identity?.uid||'guest';if(next!==identity){identity=next;state=initial();drag=null;notice='';for(const key of ['formula','analysis','exercise','solution'])$(key).open=false;}language(event.data.language||lang);
+    const next=event.data.identity?.uid||'guest';if(next!==identity){flushLocal();localReady=false;identity=next;state=initial();drag=null;notice='';for(const key of ['formula','analysis','exercise','solution'])$(key).open=false;localStarted=false;}language(event.data.language||lang);if(!localStarted)void startLocal();
   });
   window.DoubleSlitLabBridge={read:()=>state,language:()=>lang,notify:publish,change:(fn,paint=false)=>{capturePanels();fn(state);render(paint);publish();}};
+  $('distance-number').onchange=()=>{const n=$('distance-number');if(!n.checkValidity()){n.reportValidity();return;}configChange({...state.config,distance:Number(n.value)});};
+  $('distance-number').onkeydown=e=>{if(e.key==='Enter')e.currentTarget.blur();};
   language('th');new ResizeObserver(()=>{if(state.view==='light'){P.draw(state.config,state.zoom,lang,state.lightPhase);renderMeasurement();}}).observe($('stage'));
+  if(parent===window)setTimeout(startLocal,0);
   if(parent!==window)parent.postMessage({type:'learning-hub-tool-ready'},location.origin);
 })();

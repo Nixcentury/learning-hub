@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import vm from 'node:vm';
-const c=vm.createContext({});for(const f of ['model.js','water-model.js','missions.js'])vm.runInContext(readFileSync(new URL('../public/content/physics/ipst/wave-optics/assets/10-2-lab/'+f,import.meta.url),'utf8'),c);
+const c=vm.createContext({structuredClone});for(const f of ['model.js','water-model.js','missions.js'])vm.runInContext(readFileSync(new URL('../public/content/physics/ipst/wave-optics/assets/10-2-lab/'+f,import.meta.url),'utf8'),c);
 const W=c.InterferenceWater,Q=c.InterferenceMissions,M=c.DoubleSlitLabModel,close=(a,b,t=1e-8)=>assert.ok(Math.abs(a-b)<t,`${a} != ${b}`);
 const fresh=()=>({water:W.initial(),missions:Q.initial(),records:[]});
 test('water geometry uses exact signed-source distances and stable absolute path difference',()=>{
@@ -29,17 +29,43 @@ test('missions 1/2 require experiment actions as well as phase-appropriate answe
  const s=fresh();assert.ok(Q.requirements(s).some(r=>!r[0]));s.missions.played[0]=true;s.missions.answers[0].q0='antinode';assert.ok(Q.requirements(s).every(r=>r[0]));assert.ok(Q.grade(s).every(Boolean));s.missions.current=1;s.missions.answers[1].q0='node';assert.ok(Q.requirements(s).some(r=>!r[0]));s.water.phase=180;s.water.layers.nodes=true;s.missions.played[1]=true;assert.ok(Q.requirements(s).every(r=>r[0]));assert.ok(Q.grade(s).every(Boolean));
 });
 test('point mission grades live path differences and accepts between-locus classification',()=>{
- const s=fresh();s.missions.current=2;s.water.x=.9;s.water.layers.paths=true;s.missions.answers[2]={q0:W.geometry(s.water).delta.toFixed(4),q1:'between'};assert.ok(Q.grade(s).every(Boolean));s.missions.answers[2].q1='node';assert.equal(Q.grade(s)[1],false);s.missions.answers[2].q0='';assert.equal(Q.grade(s)[0],false);
+ const s=fresh();s.missions.current=2;s.water.x=.9;s.water.layers.paths=true;s.missions.answers[2]={q0:W.geometry(s.water).delta.toFixed(4),q1:'between',q2:'1'};assert.ok(Q.grade(s).every(Boolean));s.missions.answers[2].q1='node';assert.equal(Q.grade(s)[1],false);s.missions.answers[2].q0='';assert.equal(Q.grade(s)[0],false);
 });
 test('approximation and A/B/C missions require both comparisons and in-phase records',()=>{
- const s=fresh();s.missions.current=3;s.missions.answers[3]={q0:'far',q1:'small'};s.missions.near=true;assert.ok(Q.requirements(s).some(r=>!r[0]));s.missions.far=true;assert.ok(Q.requirements(s).every(r=>r[0]));assert.ok(Q.grade(s).every(Boolean));s.missions.current=4;s.records=Object.values(M.presets).map((config,i)=>({id:i+1,config:{...config},cursors:{left:-1,right:1},phase:0}));s.missions.answers[4]={q0:'half',q1:'C'};assert.ok(Q.requirements(s).every(r=>r[0]));s.records[2].phase=180;assert.ok(Q.requirements(s).some(r=>!r[0]));assert.ok(Q.grade(s).every(Boolean));
+ const s=fresh();s.missions.current=3;s.missions.answers[3]={q0:'far',q1:'small',q2:'.8'};s.missions.near=true;assert.ok(Q.requirements(s).some(r=>!r[0]));s.missions.far=true;Object.assign(s.water,{L:60,x:6});s.water.layers.formulas=true;Q.observe(s);assert.ok(Q.requirements(s).every(r=>r[0]));assert.ok(Q.grade(s).every(Boolean));s.missions.current=4;s.records=Object.values(M.presets).map((config,i)=>({id:i+1,config:{...config},cursors:{left:-1,right:1},phase:0}));s.missions.answers[4]={q0:'half',q1:'C'};assert.ok(Q.requirements(s).every(r=>r[0]));s.records[2].phase=180;assert.ok(Q.requirements(s).some(r=>!r[0]));assert.ok(Q.grade(s).every(Boolean));
 });
 test('wavelength mission grades the student measurement, not the configured laser answer',()=>{
  const s=fresh();s.missions.current=5;s.records=[{id:1,config:{...M.presets.B},cursors:{left:-2.5,right:2.5},phase:0}];s.missions.answers[5].q0='500';assert.ok(Q.grade(s)[0]);s.missions.answers[5].q0='532';assert.equal(Q.grade(s)[0],false);
 });
 test('touch tolerance marks a point near a locus without changing its exact physical classification',()=>{
- const s=fresh();s.missions.current=2;s.water.L=12;s.water.x=W.pointForDelta(s.water,1.53);assert.equal(W.geometry(s.water).kind,'between');assert.equal(W.nearKind(s.water),'node');s.missions.answers[2]={q0:'1.53',q1:'node'};assert.ok(Q.grade(s).every(Boolean));
+ const s=fresh();s.missions.current=2;s.water.L=12;s.water.x=W.pointForDelta(s.water,1.53);assert.equal(W.geometry(s.water).kind,'between');assert.equal(W.nearKind(s.water),'node');s.missions.answers[2]={q0:'1.53',q1:'node',q2:'1'};assert.ok(Q.grade(s).every(Boolean));
 });
 test('mission progress snapshots reject duplicates, invalid answer shapes and nonboolean evidence',()=>{
  assert.ok(Q.valid(Q.initial()));for(const bad of [{current:6},{completed:[0,0]},{near:'true'},{answers:[]},{attempted:[true]}])assert.equal(Q.valid({...Q.initial(),...bad}),false);
+});
+
+test('all 12 questions retain the original six missions and require student-set experiment evidence',()=>{
+ const s=fresh();assert.equal(Q.counts.reduce((a,b)=>a+b,0),12);
+ s.missions.current=2;Object.assign(s.water,{wavelength:2,separation:8,L:12,phase:0});s.water.layers.paths=true;s.water.x=W.pointForDelta(s.water,1);Q.observe(s);
+ assert.ok(Q.requirements(s).every(([done])=>done));assert.ok(s.missions.evidence.path);assert.equal(Q.questions(2,s).length,3);
+ s.missions.current=3;Object.assign(s.water,{L:60,x:6});s.water.layers.formulas=true;s.missions.near=s.missions.far=true;Q.observe(s);assert.ok(Q.requirements(s).every(([done])=>done));assert.equal(Q.questions(3,s)[2].answer,.8);
+ s.missions.current=5;s.records=[{id:1,config:{...M.presets.C,distance:2},cursors:{left:-6,right:6},phase:0}];Q.observe(s);Q.capture(s);assert.ok(Q.requirements(s).every(([done])=>done));assert.equal(Q.questions(5,s)[1].answer,600);
+});
+test('first attempt is immutable across wrong answers, retries and review while mastery accumulates',()=>{
+ const s=fresh();s.missions.played[0]=true;
+ assert.equal(Q.check(s),false);assert.equal(Q.scores(s.missions).firstChecked,0);
+ s.missions.answers[0].q0='node';assert.equal(Q.check(s),true);assert.equal(Q.scores(s.missions).firstCorrect,0);assert.equal(Q.scores(s.missions).firstChecked,1);
+ s.missions.answers[0].q0='antinode';Q.check(s);assert.equal(Q.scores(s.missions).mastered,1);assert.equal(Q.scores(s.missions).firstCorrect,0);assert.equal(s.missions.firstChecks[0].items[0].answer,'node');assert.equal(s.missions.lastChecks[0].items[0].answer,'antinode');
+ s.missions.answers[0]={};s.missions.attempted[0]=false;assert.equal(Q.check(s),false);assert.equal(Q.scores(s.missions).mastered,1);assert.equal(Q.valid(s.missions),true);
+});
+test('captured P data and wavelength records are independent of later live control changes',()=>{
+ const s=fresh();s.missions.current=2;s.water.L=12;s.water.x=W.pointForDelta(s.water,1.5);Q.capture(s);
+ s.missions.answers[2]={q0:'1.5',q1:'node',q2:'1'};s.water.x=.9;s.water.phase=180;assert.ok(Q.grade(s).every(Boolean));
+ s.missions.current=5;s.records=[{id:1,config:{...M.presets.B},cursors:{left:-2.5,right:2.5},phase:0}];Q.capture(s);
+ s.records[0].cursors={left:-8,right:8};assert.equal(Q.questions(5,s)[0].answer,500);
+});
+test('legacy migration preserves original answers and evidence without inventing a first score',()=>{
+ const old={enabled:true,answerOpen:false,current:2,completed:[0,1,2],answers:[{q0:'antinode'},{q0:'node'},{q0:'1.5',q1:'node'},{},{},{}],attempted:[true,true,true,false,false,false],played:[true,true,false,false,false,false],near:false,far:false};
+ const m=Q.migrate(old);assert.ok(Q.valid(m));assert.equal(m.answers[2].q0,'1.5');assert.deepEqual(Array.from(m.completed),[0,1]);assert.deepEqual(Array.from(m.legacyCompleted),[0,1,2]);assert.equal(Q.scores(m).firstChecked,0);
+ assert.equal(Q.migrate({...old,completed:'bad'}),null);
 });

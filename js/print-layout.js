@@ -251,7 +251,12 @@ export function paginatePrintDocument(doc, metadata = {}, language = 'th', { pro
         }
         // Keep a heading with at least the beginning of what follows it.
         if (child.nodeType === 1 && child.matches('h1,h2,h3,h4,h5,h6') && children[i + 1] && items) {
-          const probe = child.cloneNode(true), spacer = doc.createElement('div'); spacer.style.height = '18mm';
+          const following = children[i + 1];
+          // A kept question cannot contribute just its first 18 mm: reserve
+          // the whole block so the section heading does not stay behind alone.
+          const probe = child.cloneNode(true), spacer = following.nodeType === 1 && following.hasAttribute('data-print-keep')
+            ? following.cloneNode(true) : doc.createElement('div');
+          if (!spacer.hasAttribute('data-print-keep')) spacer.style.height = '18mm';
           target([...path, node]).append(probe, spacer); const ok = fits(); probe.remove(); spacer.remove();
           if (!ok) nextPage();
         }

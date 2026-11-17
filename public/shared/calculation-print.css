@@ -1,0 +1,11 @@
+/* Paper typography is shared by the measured preview and native printing. */
+html[data-hub-print-snapshot][data-print-blank-sizing="preset"] .calc-sheet { font-size:10pt; line-height:1.45; }
+html[data-hub-print-snapshot][data-print-blank-sizing="preset"] .calc-sheet > header p { margin:4px 0; }
+html[data-hub-print-snapshot][data-print-blank-sizing="preset"] .calc-formulas { margin:8px 0 12px; padding:7px 9px; line-height:1.35; }
+html[data-hub-print-snapshot][data-print-blank-sizing="preset"] .calc-formulas th,
+html[data-hub-print-snapshot][data-print-blank-sizing="preset"] .calc-formulas td { font-size:9pt; padding:4px; }
+html[data-hub-print-snapshot][data-print-blank-sizing="preset"] .calc-formulas .calc-constants { font-size:9pt; }
+html[data-hub-print-snapshot][data-print-blank-sizing="preset"] .calc-transition { margin-top:6px; padding-top:6px; }
+html[data-hub-print-snapshot][data-print-blank-sizing="preset"] .calc-problem { margin-bottom:12px; }
+html[data-hub-print-snapshot][data-print-blank-sizing="preset"] .calc-problem [data-sheet-slot] { --sheet-print-height:38mm; }
+html[data-hub-print-snapshot][data-print-blank-sizing="preset"] .calc-sheet.calc-equilibrium .calc-problem [data-sheet-slot] { --sheet-print-height:48mm; }

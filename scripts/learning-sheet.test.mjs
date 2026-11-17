@@ -42,6 +42,25 @@ test('sheet print requires an explicit edition; regular reading documents are un
   assert.doesNotThrow(() => prepareLearningSheetPrint({ documentElement: { hasAttribute: () => false } }));
 });
 
+test('preset writing areas do not inherit long solutions; other sheets and answer editions retain their geometry', async () => {
+  const { parseHTML } = await import('linkedom');
+  for (const preset of [false, true]) for (const edition of ['blank', 'answers']) {
+    const { document } = parseHTML(sheet(`<div data-print-keep-blank>${slot('one', 'style="--sheet-print-height:55mm"', '<p>Long worked solution</p>')}</div>`));
+    if (preset) document.documentElement.dataset.printBlankSizing = 'preset';
+    const area = document.querySelector('[data-sheet-slot]');
+    const answer = document.querySelector('[data-sheet-answer]');
+    area.getBoundingClientRect = () => ({ width: 600, height: 750 });
+    answer.getBoundingClientRect = () => ({ width: 600, height: 750 });
+    prepareLearningSheetPrint(document, edition);
+    assert.equal(area.style.getPropertyValue('--sheet-print-height'), '55mm');
+    assert.equal(area.style.getPropertyValue('min-block-size'), preset && edition === 'blank'
+      ? 'var(--sheet-print-height,var(--sheet-height,1.8em))' : '750px');
+    assert.equal(document.querySelector('[data-sheet-answer]') !== null, edition === 'answers');
+    assert.equal(area.textContent.includes('Long worked solution'), edition === 'answers');
+    assert.equal(area.parentElement.hasAttribute('data-print-keep'), edition === 'blank');
+  }
+});
+
 test('interference calculations: all 12 printed self-check answers survive either edition without exposing blank-edition workings',async()=>{
   const {parseHTML}=await import('linkedom');
   const {buildHtmlPrintSnapshot}=await import('../js/html-print.js');
@@ -142,6 +161,7 @@ test('equilibrium calculations: preserve six questions, figures and workings whi
     assert.equal(problems.length,6);
     for(let i=0;i<6;i++){
       const copy=problems[i].cloneNode(true);
+      copy.removeAttribute('data-print-keep-blank');
       copy.querySelector('[data-print-check-answer]').remove();
       const caption=copy.querySelector('.given-figure-caption');
       caption.replaceWith(caption.textContent);

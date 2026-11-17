@@ -19,6 +19,8 @@ Repository: https://github.com/Nixcentury/learning-hub
 พรอมป์สำหรับ AI: public/content/templates/quiz-ai-prompt.txt และ quiz-drag-ai-prompt.txt
 จอวิดีโอ YouTube กลางและปุ่มเรียกจากบทเรียน/Quiz/Simulation: VIDEO-PLAYER-START-HERE.md
 สร้าง PDF ใหม่รูปแบบเดียวกัน A4 แนวตั้ง: PDF-AUTHORING-START-HERE.md
+สร้างผู้ช่วยนำทาง Simulation ทีละขั้น พร้อมโจทย์ทดลอง คะแนน และรายงาน: SMART-LAB-AUTHORING-START-HERE.md
+ลงทะเบียนคู่มือฉบับอ่านและเปิดคู่กับ Simulation: SIMULATION-GUIDE-START-HERE.md
 แม่แบบกลางและพรอมป์ AI: tools/pdf-authoring/README.md และ AI-PROMPT.txt
 หน้าต่างสไลด์ PDF: PDF-VIEWER-START-HERE.md (คู่มือเรียกจากทุกชั้น)
 แม่แบบปุ่ม PDF (ไฟล์ร่วม/TH/EN ช่องว่างได้): public/content/templates/pdf-button-template.html

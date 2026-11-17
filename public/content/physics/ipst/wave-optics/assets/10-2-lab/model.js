@@ -22,7 +22,7 @@
   function screenToPosition(x,zoom){return (x-400)/(9*zoom);}
   function canRecord(s){return s.moved.left&&s.moved.right&&measurement(s.cursors)>0&&s.records.length<30;}
   function validSnapshot(s,identity){
-    if(!s||![1,2].includes(s.version)||s.identity!==identity||!validConfig(s.config)||(s.lightPhase!==undefined&&![0,180].includes(s.lightPhase))||(s.autoMeasured!==undefined&&typeof s.autoMeasured!=='boolean')||![1,2,4].includes(s.zoom)||!validCursors(s.cursors)||!s.moved||!['left','right'].every(k=>typeof s.moved[k]==='boolean')||!['formula','analysis','exercise','solution'].every(k=>typeof s[k]==='boolean')||!Array.isArray(s.records)||s.records.length>30)return false;
+    if(!s||![1,2,3].includes(s.version)||s.identity!==identity||!validConfig(s.config)||(s.lightPhase!==undefined&&![0,180].includes(s.lightPhase))||(s.autoMeasured!==undefined&&typeof s.autoMeasured!=='boolean')||![1,2,4].includes(s.zoom)||!validCursors(s.cursors)||!s.moved||!['left','right'].every(k=>typeof s.moved[k]==='boolean')||!['formula','analysis','exercise','solution'].every(k=>typeof s[k]==='boolean')||!Array.isArray(s.records)||s.records.length>30)return false;
     const ids=new Set();
     for(const r of s.records){if(!r||!Number.isInteger(r.id)||r.id<1||r.id>1e9||ids.has(r.id)||!validConfig(r.config)||(r.phase!==undefined&&![0,180].includes(r.phase))||(r.source!==undefined&&!['manual','model'].includes(r.source))||!validCursors(r.cursors)||measurement(r.cursors)<=0)return false;ids.add(r.id);}
     return true;

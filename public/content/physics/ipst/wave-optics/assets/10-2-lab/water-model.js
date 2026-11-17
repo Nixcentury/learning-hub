@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const initial=()=>({wavelength:3,separation:8,phase:0,L:24,x:0,running:false,layers:{fronts:true,nodes:false,antinodes:false,paths:false,variables:false,formulas:false}});
+  const initial=()=>({wavelength:3,separation:8,phase:0,L:24,x:0,running:false,layers:{fronts:true,nodes:true,antinodes:true,paths:false,variables:false,formulas:false}});
   function valid(p){return !!p&&[0,180].includes(p.phase)&&typeof p.running==='boolean'&&[['wavelength',1,4],['separation',4,12],['L',6,60],['x',-8,8]].every(([k,lo,hi])=>Number.isFinite(p[k])&&p[k]>=lo&&p[k]<=hi)&&p.layers&&Object.keys(initial().layers).every(k=>typeof p.layers[k]==='boolean');}
   function geometry(p){
     const r1=Math.hypot(p.L,p.x+p.separation/2),r2=Math.hypot(p.L,p.x-p.separation/2),delta=Math.abs(2*p.x*p.separation/(r1+r2)),theta=Math.atan2(p.x,p.L),angular=p.separation*Math.abs(Math.sin(theta)),small=p.separation*Math.abs(p.x)/p.L;

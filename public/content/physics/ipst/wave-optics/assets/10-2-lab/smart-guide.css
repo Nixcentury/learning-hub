@@ -1,0 +1,327 @@
+:root {
+  --smart-height: 260px;
+}
+body {
+  padding-bottom: var(--smart-height);
+}
+.lab-status {
+  margin: 8px 0;
+  padding: 8px 12px;
+  background: #eaf3ed;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.number-pair {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.number-pair input[type='range'] {
+  flex: 1;
+  min-width: 80px;
+}
+.number-pair input[type='number'] {
+  width: 96px;
+  min-height: 44px;
+  border: 1px solid #9db7a9;
+  border-radius: 8px;
+  padding: 7px;
+  background: #fff;
+  color: inherit;
+}
+input:invalid {
+  border-color: #a44827 !important;
+}
+.number-error {
+  font-size: 13px;
+  color: #983b1d;
+  min-height: 1.5em;
+}
+.smart-guide {
+  position: fixed;
+  z-index: 20;
+  left: 16px;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  width: min(390px, calc(100vw - 112px));
+  max-height: 48dvh;
+  overflow: auto;
+  border: 2px solid #2c6c58;
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: #f9fff9;
+  box-shadow: 0 6px 24px #183e332b;
+  color: #203f34;
+}
+.smart-top {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.smart-top strong {
+  flex: 1;
+  min-width: 0;
+}
+.smart-top button {
+  font-size: 12px;
+  padding: 4px 9px;
+}
+.smart-guide p {
+  font-size: 14px;
+  margin: 7px 0;
+}
+.smart-guide #smart-instruction {
+  font-weight: 700;
+}
+.smart-guide #smart-step {
+  font-size: 12px;
+  color: #526a5e;
+}
+.smart-guide #smart-primary {
+  width: 100%;
+  min-height: 44px;
+}
+.smart-guide details {
+  font-size: 12px;
+}
+.smart-guide summary {
+  font-size: 12px;
+  min-height: 44px;
+  padding-top: 9px;
+}
+.smart-guide ul {
+  margin: 0;
+  padding-left: 20px;
+}
+.smart-guide.is-mini .smart-body {
+  display: none;
+}
+.smart-guide.is-mini {
+  max-width: 310px;
+}
+.smart-reopen {
+  position: fixed;
+  z-index: 20;
+  left: 16px;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  box-shadow: 0 3px 14px #153b312a;
+}
+.smart-target {
+  outline: 4px solid #ce9026 !important;
+  outline-offset: 4px;
+  scroll-margin-block: 100px var(--smart-height);
+  animation: smart-pulse 0.8s ease-in-out 3;
+}
+.smart-arrow {
+  position: fixed;
+  z-index: 25;
+  pointer-events: none;
+  color: #965400;
+  font-size: 28px;
+  line-height: 30px;
+  text-shadow: 0 1px white;
+}
+@keyframes smart-pulse {
+  50% {
+    outline-color: #f6cf73;
+    box-shadow: 0 0 0 7px #e4aa3229;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .smart-target {
+    animation: none;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
+.report-panel {
+  max-width: 1000px;
+  margin: 12px auto;
+  border: 1px solid #c3d6ca;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+}
+.report-panel h2 {
+  font-size: 23px;
+}
+.report-student {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.report-student label {
+  flex: 1;
+  min-width: 180px;
+  font-size: 14px;
+}
+.report-student input {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #a5bdb0;
+  border-radius: 6px;
+  padding: 8px;
+  font: inherit;
+}
+.report-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0;
+}
+.report-metrics div {
+  background: #eef5ef;
+  padding: 12px;
+  border-radius: 8px;
+}
+.report-metrics strong {
+  display: block;
+  font-size: 22px;
+}
+.report-table {
+  white-space: normal;
+  font-size: 13px;
+}
+.report-table td,
+.report-table th {
+  text-align: left;
+  vertical-align: top;
+}
+.report-table tr {
+  break-inside: avoid;
+}
+.report-panel details {
+  margin-top: 12px;
+}
+.report-panel ol {
+  padding-left: 20px;
+}
+.report-panel li {
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+}
+.report-panel .report-answer {
+  color: #315842;
+}
+.report-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+.report-note {
+  font-size: 13px;
+}
+.report-date {
+  margin: 8px 0;
+}
+.report-fixed-data {
+  font-size: 13px;
+  padding: 8px;
+  background: #fff4d9;
+  border-radius: 7px;
+}
+@media (max-width: 580px) {
+  .smart-guide {
+    left: 12px;
+    max-height: 43dvh;
+  }
+  .smart-top {
+    flex-wrap: wrap;
+  }
+  .smart-top strong {
+    flex-basis: 100%;
+  }
+  .report-panel {
+    padding: 12px;
+  }
+  .report-metrics {
+    grid-template-columns: 1fr;
+  }
+  .report-metrics strong {
+    display: inline;
+    margin-right: 8px;
+  }
+}
+@page {
+  size: A4 portrait;
+  margin: 14mm;
+}
+@media print {
+  body {
+    background: white;
+    padding: 0;
+    font:
+      11pt/1.5 Tahoma,
+      Arial,
+      sans-serif;
+  }
+  body > *:not(main),
+  main > *:not(#lab-report),
+  .report-actions,
+  .report-panel input,
+  .report-student {
+    display: none !important;
+  }
+  .report-panel details > summary {
+    display: block;
+    font-size: 11pt;
+    margin-top: 10px;
+    break-after: avoid;
+    list-style: none;
+  }
+  #lab-report {
+    display: block !important;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+  .report-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .report-metrics strong {
+    display: block;
+  }
+  .report-table {
+    font-size: 9pt;
+  }
+  .report-panel h2 {
+    font-size: 17pt;
+  }
+  .report-table td,
+  .report-table th {
+    padding: 6px;
+  }
+  .report-panel details {
+    display: block !important;
+  }
+  .report-student label {
+    min-width: 0;
+  }
+  .report-print-name {
+    display: block !important;
+  }
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+  .table-scroll {
+    overflow: visible;
+    border: 0;
+  }
+  .smart-target {
+    outline: none !important;
+  }
+  .report-panel .report-metrics div {
+    background: #fff;
+    border: 1px solid #aaa;
+  }
+}
+
+@media (max-height: 500px) {
+  .smart-guide .smart-body {
+    display: none;
+  }
+}

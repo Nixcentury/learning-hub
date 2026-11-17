@@ -11,8 +11,8 @@ export const doubleSlitPlayGuide = {
     'Work through one mission at a time, from waves to light measurements. The guide shows the controls, steps and observations. Answer each check-out yourself.'
   ),
   gettingStarted: [
-    bilingual('เลือกภารกิจจากเมนูบนการ์ด แล้วอ่านจุดประสงค์ของภารกิจนั้น', 'Choose a mission on the mission card and read its objectives.'),
-    bilingual('ใช้ปุ่ม “ไปขั้นทดลองถัดไป” เพื่อไปยังเครื่องมือของรายการที่ยังต้องทำ', 'Use “Go to next experiment step” to find the control for the next incomplete step.'),
+    bilingual('เริ่มจากภารกิจแรก อ่านจุดประสงค์ และใช้ Smart Lab Guide ทีละขั้น เส้นบัพ N และปฏิบัพ A เปิดให้ตั้งแต่เริ่ม', 'Start with mission 1, read its objectives and follow the Smart Lab Guide one step at a time. Nodal N and antinodal A lines start enabled.'),
+    bilingual('อ่านคำแนะนำและสิ่งที่ต้องสังเกตบนการ์ดลอย กด “พาไปยังเครื่องมือ” เพื่อชี้ตำแหน่ง แล้วลงมือเอง เมื่อทำสำเร็จจะขึ้น ✓', 'Read the floating instruction and observation. Use “Show the control” to locate it, then perform the action yourself. Completed steps are ticked automatically.'),
     bilingual('เมื่อทดลองครบ กด “ไปทำ Check-out” เลือกคำตอบจากรายการ หรือกรอกตัวเลขตามหน่วยที่ระบุ แล้วกดตรวจ', 'After completing the steps, open the check-out. Choose from the list or enter a number in the stated unit, then check your answers.'),
   ],
   sections: [
@@ -49,6 +49,7 @@ export const doubleSlitPlayGuide = {
         bilingual('เลือกภารกิจ 3 แล้วเปิด “เส้นทาง r₁/r₂” ให้เห็นเส้นจากแหล่งทั้งสองถึง P', 'Choose mission 3 and show “Paths r₁/r₂” from the two sources to P.'),
         bilingual('ลาก P ออกจากแนวกลาง หรือใช้ปุ่ม “P ตัวอย่าง” ใต้ภาพ', 'Move P away from the centre or use the example-point button below the picture.'),
         bilingual('อ่าน r₁ และ r₂ ในหน่วย cm พร้อมสังเกตความยาวคลื่นและเฟสของกรณีนี้', 'Read r₁ and r₂ in cm and note the wavelength and source phase for this case.'),
+        bilingual('ข้อทดลองเพิ่ม: พิมพ์ λ = 2, d = 8, L = 12 cm ตั้งเฟส 0° แล้วกด P ตัวอย่าง อ่านผลต่างทางเดินเพื่อตอบข้อเพิ่มเติม', 'Extra trial: enter λ = 2, d = 8 and L = 12 cm, set phase 0° and select Example P. Read the path difference for the added question.'),
         bilingual('เปิด Check-out ใช้ข้อมูลของ P ปัจจุบันทำข้อคำนวณ แล้วเลือกชนิดแนวของ P', 'Open the check-out. Use the current point’s data to calculate and classify P.'),
       ] }],
     },
@@ -63,6 +64,7 @@ export const doubleSlitPlayGuide = {
         bilingual('เลือกภารกิจ 4 แล้วกด “ดูกรณีใกล้ / มุมมาก”', 'Choose mission 4 and select the near / large-angle case.'),
         bilingual('สังเกตภาพทางเดิน มุม และค่าที่แสดง จากนั้นกด “ดูกรณีไกล / มุมเล็ก”', 'Observe the paths, angle and values, then select the far / small-angle case.'),
         bilingual('ใน Check-out ใช้ข้อมูลสองกรณีที่วางคู่กัน ดูว่าค่าประมาณแต่ละแบบใกล้ค่าจริงเพียงใด', 'In the check-out, compare the two cases side by side and look at how close each approximation is to the exact value.'),
+        bilingual('ข้อทดลองเพิ่ม: ตั้ง d = 8, L = 60, x = 6 cm เปิดสูตร แล้วคำนวณ d|x|/L โดยเทียบกับซิม', 'Extra trial: set d = 8, L = 60 and x = 6 cm, show the formulas and calculate d|x|/L alongside the simulation.'),
         bilingual('ตอบเงื่อนไขของแต่ละวิธีจากสิ่งที่เปรียบเทียบ แล้วกดตรวจ', 'Use the comparison to identify the conditions for each approximation, then check your answers.'),
       ] }],
     },
@@ -86,16 +88,17 @@ export const doubleSlitPlayGuide = {
       objectives: [bilingual('คำนวณความยาวคลื่นจากระยะสลิต ระยะฉาก และระยะห่างแถบที่วัดได้', 'Infer wavelength from slit separation, screen distance and the measured fringe spacing.')],
       parts: [{ id: 'steps', title: bilingual('อ่านบันทึกและจัดหน่วย', 'Read the record and align units'), items: [
         bilingual('เลือกภารกิจ 6 แล้วตรวจว่ามีบันทึกผลการวัด ถ้ายังไม่มี ให้เลือกชุด วางเส้นวัด และกดบันทึกก่อน', 'Choose mission 6 and check that a measurement exists. If needed, select a set, position the markers and record it.'),
+        bilingual('ข้อทดลองเพิ่ม: เลือกชุด C ตั้ง L = 2.0 m วัดและบันทึกอีกครั้ง ต้องขยับเส้นวัดทั้งสอง หรือเลือกวัดพอดีก่อนบันทึก', 'Extra trial: choose C, enter L = 2.0 m, measure and record again. Move both markers or use Exact measure before recording.'),
         bilingual('เปิด Check-out และอ่านหมายเลขบันทึกล่าสุด รวมทั้ง d, L และ Δx ที่โจทย์ยกมา', 'Open the check-out and read the latest trial number and its d, L and Δx values.'),
         bilingual('เลือกสูตรจากข้อมูลในบันทึก จัดหน่วยให้ตรงกันก่อนแทนค่า แล้วแปลงผลเป็น nm', 'Choose an equation using the recorded quantities, use consistent units and express the result in nm.'),
-        bilingual('กรอกตัวเลขในช่องที่กำกับหน่วย nm แล้วกดตรวจ หากเปลี่ยนบันทึกให้กลับมาอ่านข้อมูลโจทย์ชุดใหม่', 'Enter the numerical value in the nm field and check it. If you change the record, read the updated problem data.'),
+        bilingual('กรอกตัวเลขในช่อง nm ทั้งสองข้อแล้วกดตรวจ ข้อมูลโจทย์ถูกล็อกไว้ หากต้องการเปลี่ยน ให้กด “ใช้ข้อมูลการทดลองใหม่” ซึ่งล้างคำตอบรอบนี้ แต่ไม่ล้างคะแนนครั้งแรก', 'Enter numbers in both nm fields and check. Question data stays fixed. Use new experiment data to replace it; this clears current responses but preserves first-attempt scores.'),
       ] }],
     },
   ],
   troubleshooting: [
-    bilingual('ปุ่มตรวจยังไม่พร้อม ให้ดูรายการที่มีวงกลม ○ แล้วกด “ไปขั้นทดลองถัดไป”', 'If checking is unavailable, find the open-circle item and use “Go to next experiment step”.'),
+    bilingual('ปุ่มตรวจยังไม่พร้อม ให้ดูรายการ ○ และอ่านสิ่งที่ผู้ช่วยแนะนำ แล้วกด “พาไปยังเครื่องมือ”', 'If checking is unavailable, read the open-circle item and the guide, then use “Show the control”.'),
     bilingual('ปุ่มบันทึกผลการวัดพร้อมเมื่อวางเส้นซ้ายและขวาครบ ลองใช้ปุ่มเลื่อนละเอียดใต้ค่าของแต่ละเส้น', 'Recording becomes available after both markers have been positioned. Use the fine controls below the marker readings.'),
     bilingual('กลับไปดูภาพหรือสูตรด้วยปุ่ม “กลับไปทดลอง” แล้วเปิด Check-out อีกครั้งเมื่อพร้อมตอบ', 'Use “Return to experiment” to revisit the display or formulas, then reopen the check-out when ready.'),
   ],
-  finish: bilingual('เมื่อทำ Check-out ครบทั้งหกภารกิจ ลองเลือกย้อนดูภารกิจที่อยากทบทวน และอธิบายด้วยตัวเองว่าปรับอะไร สังเกตอะไร และใช้ข้อมูลไหนตอบ', 'After all six check-outs, revisit any mission and explain what you changed, what you observed and which evidence you used.'),
+  finish: bilingual('เมื่อผ่านครบ 6 ภารกิจ รวม 12 ข้อ กด “จบกิจกรรมและดูรายงาน” ใส่ชื่อและชั้น แล้วพิมพ์รายงาน A4 ได้ รายงานแยกความคืบหน้า คะแนนครั้งแรก และ Mastery การใช้ผู้ช่วยและคำใบ้ไม่หักคะแนน มีปุ่มทบทวนแยกจากการจบกิจกรรม งานบันทึกในเครื่องตามบัญชีหรือ Guest เดิม ไม่มีการส่งคะแนนขึ้น Cloud', 'After passing all 6 missions and 12 questions, choose Finish and view report, enter your name and class and print the A4 report. Progress, first-attempt score and Mastery are separate; guidance and hints carry no penalty. Review is a separate action. Work stays on this device under the same account or Guest; scores are not uploaded to Cloud.'),
 };

@@ -31,6 +31,7 @@ export function prepareLearningSheetPrint(doc, edition) {
   if (!doc.documentElement.hasAttribute('data-learning-sheet')) return;
   if (!['blank', 'answers'].includes(edition)) throw new Error('Choose blank or answers for a learning sheet.');
   const slots = [...doc.querySelectorAll('[data-sheet-slot]')];
+  if (edition === 'blank') doc.querySelectorAll('[data-print-keep-blank]').forEach(node => node.setAttribute('data-print-keep', ''));
   const sizes = slots.map(slot => {
     const answer = [...slot.children].find(node => node.hasAttribute('data-sheet-answer'));
     if (!answer) throw new PrintLayoutError('sheet-answer-missing', slot);
@@ -38,6 +39,15 @@ export function prepareLearningSheetPrint(doc, edition) {
   });
   for (const { slot, answer, box, answerBox } of sizes) {
     slot.setAttribute('data-print-keep', '');
+    // Calculation sheets can reserve an authored writing area without copying
+    // the height of a multi-step answer into the blank edition.
+    if (edition === 'blank' && doc.documentElement.dataset.printBlankSizing === 'preset') {
+      const space = doc.createElement('span'); space.dataset.sheetBlankArea = '';
+      space.setAttribute('aria-hidden', 'true');
+      answer.replaceWith(space);
+      slot.style.setProperty('min-block-size', 'var(--sheet-print-height,var(--sheet-height,1.8em))', 'important');
+      continue;
+    }
     // Equal geometry in both editions. Real answer layout can expand author presets.
     slot.style.setProperty('min-block-size', `${Math.ceil(box.height)}px`, 'important');
     slot.style.setProperty('inline-size', `${Math.ceil(box.width)}px`, 'important');

@@ -7,7 +7,7 @@ const view=(doc,lang,edition,range)=>doc.querySelector(`[data-content-lang="${la
 function notes(node){return [...node.querySelectorAll('.shared-note')].map(n=>{const c=n.cloneNode(true);c.querySelectorAll('.identity').forEach(x=>x.remove());c.querySelectorAll('[data-title-th]').forEach(x=>x.removeAttribute('title'));c.querySelectorAll('img[src]').forEach(x=>x.setAttribute('src',x.getAttribute('src').replace(/^.*\/assets\//,'assets/')));return c.outerHTML;});}
 test('double-slit: the complete canonical answer notes survive student printing in either language',async()=>{
  const classroom=await load('classroom'),exit=await load('exit');
- const model=Buffer.concat(await Promise.all(['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs'].map(p=>readFile(new URL('../docs/learning-sheet/preparation/physics-double-slit-10-2/paired/'+p,import.meta.url)))));const sha=createHash('sha256').update(model).digest('hex');
+ const model=Buffer.concat(await Promise.all(['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs','note-diagrams.mjs'].map(p=>readFile(new URL('../docs/learning-sheet/preparation/physics-double-slit-10-2/paired/'+p,import.meta.url)))));const sha=createHash('sha256').update(model).digest('hex');
  assert.equal(classroom.documentElement.dataset.sharedNotesSha256,sha);assert.equal(exit.documentElement.dataset.sharedNotesSha256,sha);
  for(const lang of ['th','en']){
   const canonical=notes(view(classroom,lang,'answers','all'));assert.equal(canonical.length,12);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.proof-diagram').length,2);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.example .method-note').length,12);
@@ -143,27 +143,34 @@ test('double-slit: original Exit questions, figures and calculations remain inta
 });
 
 
-test('double-slit: the measurement and final three worked examples have print-safe visuals',async()=>{
- const names=['measurement-13-15.svg','example-10-coincidence.svg','example-11-separation.svg','example-12-angle.svg'];
- for(const name of names){
-  const svg=await readFile(new URL('../public/'+base+'assets/10-2-paired/'+name,import.meta.url),'utf8');
-  assert.match(svg,/<svg\b[^>]*viewBox=/);
-  assert.doesNotMatch(svg,/<script\b|<foreignObject\b|(?:href|src)="https?:\/\//i,'diagram must not rely on remote or executable content');
- }
- for(const kind of ['classroom','exit']){
-  const doc=await load(kind);
-  for(const lang of ['th','en'])for(const edition of ['blank','answers']){
-   const selected=view(doc,lang,edition,'all');
-   const measurement=selected.querySelector('[data-note-key="measurement"]');
-   assert.equal(measurement.querySelectorAll('.measurement-visual img').length,1,kind+'/'+lang+'/'+edition);
-   assert.match(measurement.querySelector('.measurement-visual img').getAttribute('src'),/measurement-13-15\.svg$/);
-   for(const [n,file] of [[10,names[1]],[11,names[2]],[12,names[3]]]){
-    const example=selected.querySelector('[data-example-number="'+n+'"]');
-    assert.ok(example,'example '+n+' is missing');
-    const figure=example.querySelector('.worked-visual');
-    assert.ok(figure,kind+'/'+lang+'/'+edition+' example '+n+' needs its diagram');
-    assert.ok(figure.querySelector('img').getAttribute('src').endsWith(file));
-    assert.ok(figure.querySelector('figcaption').textContent.length>10);
+test('double-slit: added Notes diagrams use local, pre-rendered MathJax labels', async () => {
+ const visuals = [
+  ['.measurement-visual', String.raw`x_{\mathrm{first}}`, String.raw`\dfrac{0.2}{5.0}\times100\%=4\%`],
+  ['.worked-visual[data-visual-example="10"]', String.raw`\mathrm{D}_3`, String.raw`2.5\lambda_1=2\lambda_2`],
+  ['.worked-visual[data-visual-example="11"]', String.raw`\mathrm{D}_2`, String.raw`24\,\mathrm{mm}`],
+  ['.worked-visual[data-visual-example="12"]', String.raw`\theta\approx8.63^\circ`, String.raw`x=L\tan\theta`],
+ ];
+ const checked = new Set();
+ for (const kind of ['classroom','exit']) {
+  const doc = await load(kind);
+  for (const lang of ['th','en']) for (const edition of ['blank','answers']) {
+   const selected = view(doc,lang,edition,'all');
+   for (const [selector,...formulas] of visuals) {
+    const figure = selected.querySelector(selector);
+    assert.ok(figure, `${kind}/${lang}/${edition} needs ${selector}`);
+    assert.ok(figure.querySelector('figcaption').textContent.trim().length > 10);
+    const image = figure.querySelector('img.diagram-svg');
+    const src = image.getAttribute('src');
+    assert.match(src, /^assets\/10-2-paired\/[a-f0-9]{24}\.svg$/);
+    assert.ok(image.getAttribute('alt').trim());
+    if (checked.has(src)) continue;
+    checked.add(src);
+    const svg = await readFile(new URL('../public/'+base+src,import.meta.url),'utf8');
+    assert.match(svg, /<svg\b[^>]*viewBox=/);
+    assert.doesNotMatch(svg, /<(?:script|foreignObject|text)\b|(?:href|src)="https?:\/\//i);
+    const {document} = parseHTML(`<html><body>${svg}</body></html>`);
+    const labels = new Map([...document.querySelectorAll('svg[data-tex]')].map(node => [node.getAttribute('data-tex'),node]));
+    for (const formula of formulas) assert.ok(labels.get(formula)?.querySelector('path'), `Missing MathJax paths for ${formula}`);
    }
   }
  }

@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "chemistry-ipst-mole-4-2-basic-calculations",
+    "revision": "2026-11-18-1",
+    "sha256": "5795ded85d1aa8760d17c036ae92890a142180b4962cc95b6cac069f53279ccf"
+  },
+  "title": {
+    "th": "โมล · ฝึกคำนวณพื้นฐานและแนว A-Level",
+    "en": "The mole · Fundamentals and A-Level-style practice"
+  },
+  "prerequisites": {
+    "th": "อ่านเลขห้อยในสูตรเคมีและแปลงมิลลิลิตรเป็นลิตร",
+    "en": "Read chemical subscripts and convert millilitres to litres."
+  },
+  "goal": {
+    "th": "เลือกแฟกเตอร์ให้เหลือหน่วยที่ถาม และใช้โมลเชื่อมข้อมูลสองชนิด",
+    "en": "Orient conversion factors to obtain the requested unit and use moles to connect two measurements."
+  },
+  "steps": [
+    {
+      "id": "conversions",
+      "title": {
+        "th": "เลือกแฟกเตอร์และตัดหน่วย",
+        "en": "Choose and orient a factor"
+      },
+      "summary": {
+        "th": "มวลเชื่อมกับโมลผ่านมวลต่อโมล ส่วนจำนวนอนุภาคใช้ค่าคงตัวอาโวกาโดร\nสำหรับแก๊สอุดมคติที่ 0 °C และ 1 atm ใช้ 22.4 L/mol",
+        "en": "Molar mass connects grams and moles. The Avogadro constant connects counts and moles.\nAt 0 °C and 1 atm, use 22.4 L/mol for an ideal gas."
+      },
+      "story": {
+        "th": "ให้ขีดเส้นใต้หน่วยที่โจทย์ถามก่อนเลือกแฟกเตอร์",
+        "en": "Underline the requested unit before choosing a factor."
+      },
+      "action": {
+        "th": "เทียบข้อ 1 กับข้อ 2 แล้ววางแฟกเตอร์กลับทิศ ทำข้อ 4 และข้อ 6 โดยเขียนหน่วยทุกขั้น",
+        "en": "Compare Questions 1 and 2 and reverse the factor. Write the units at every step in Questions 4 and 6."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ตารางสูตร",
+            "en": "Formula table"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 1",
+            "en": "Question 1"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "mass-to-moles"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 2",
+            "en": "Question 2"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "moles-to-mass"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 4",
+            "en": "Question 4"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "entities-to-moles"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 6",
+            "en": "Question 6"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "volume-to-moles"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เมื่อเริ่มจากกรัม แฟกเตอร์ที่ใช้หาโมลต้องมีหน่วยอะไรอยู่ด้านล่าง",
+          "en": "Starting from grams, which unit belongs in the denominator to obtain moles?"
+        },
+        "answer": {
+          "th": "กรัม เพื่อให้ตัดกับหน่วยเริ่มต้นและเหลือโมล",
+          "en": "Grams, so they cancel the starting unit and leave moles."
+        }
+      },
+      "after": {
+        "th": "ลองข้อ 3 และ 5 เพื่อฝึกแปลงย้อนทิศด้วยตัวเอง",
+        "en": "Try Questions 3 and 5 to practise the opposite directions."
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ตารางสูตร",
+            "en": "Formula table"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        }
+      ]
+    },
+    {
+      "id": "entities",
+      "title": {
+        "th": "แยกชนิดของอนุภาคที่โจทย์ถาม",
+        "en": "Identify the entity being counted"
+      },
+      "summary": {
+        "th": "ใน CO₂ หนึ่งโมเลกุลมี O สองอะตอม อัตราส่วนนี้ใช้ในหน่วยโมลได้ด้วย\nเมื่อเปรียบเทียบจำนวนโมเลกุล ค่าคงตัวอาโวกาโดรของทั้งสองตัวอย่างตัดกัน",
+        "en": "Each CO₂ molecule contains two O atoms. This ratio also holds in moles.\nThe Avogadro constant cancels when dividing one molecule count by another."
+      },
+      "story": {
+        "th": "ให้วงชื่อสิ่งที่นับในข้อ 7 แล้วเปรียบเทียบกับสิ่งที่นับในข้อ 8",
+        "en": "Circle the entity in Question 7 and compare it with what is counted in Question 8."
+      },
+      "action": {
+        "th": "ทำข้อ 7 และ 8 โดยใส่ชนิดของอนุภาคไว้ข้างคำตอบ",
+        "en": "Work through Questions 7 and 8 and label each answer with the entity counted."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 7",
+            "en": "Question 7"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "oxygen-atoms"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 8",
+            "en": "Question 8"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "compare-samples"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้ามี CO₂ 0.10 mol จะมีอะตอม O กี่โมล",
+          "en": "How many moles of O atoms are in 0.10 mol of CO₂?"
+        },
+        "answer": {
+          "th": "0.20 mol ของอะตอม O",
+          "en": "0.20 mol of O atoms."
+        }
+      },
+      "after": {
+        "th": "เมื่ออ่านเลขห้อยได้คล่อง ลองระบุแก๊สจากข้อมูลการวัดในข้อ 9",
+        "en": "Once subscripts are clear, identify the gas in Question 9."
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ข้อ 3",
+            "en": "Question 3"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "moles-to-entities"
+          }
+        }
+      ]
+    },
+    {
+      "id": "unknowns",
+      "title": {
+        "th": "ระบุแก๊สและแยกองค์ประกอบของแก๊สผสม",
+        "en": "Identify a gas and determine a mixture"
+      },
+      "summary": {
+        "th": "แก๊สบริสุทธิ์ที่ทราบมวลและปริมาตรที่ STP หาโมลก่อนแล้วจึงหามวลต่อโมล\nแก๊สผสมสองชนิดที่ทราบทั้งโมลรวมและมวลรวม ให้ตั้งสมการหนึ่งสมการต่อข้อมูลแต่ละค่า",
+        "en": "For a pure gas, use STP volume to find moles and then use mass to find molar mass.\nFor a two-gas mixture, use one equation for total moles and one for total mass."
+      },
+      "story": {
+        "th": "แยกความหมายของข้อมูลทั้งสองบรรทัดในข้อ 10 ว่าบรรทัดใดชั่งได้ และบรรทัดใดบอกจำนวนโมล",
+        "en": "In Question 10, identify which measurement gives mass and which gives amount."
+      },
+      "action": {
+        "th": "ทำข้อ 9 และข้อ 10 แล้วแทนคำตอบกลับในสมการเดิมทั้งสองสมการ",
+        "en": "Complete Questions 9 and 10. Substitute your mixture amounts into both original equations."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 9",
+            "en": "Question 9"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "identify-gas"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 10",
+            "en": "Question 10"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "oxygen-mixture"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เหตุใดสมการมวลของ O₂ และ O₃ จึงต้องใช้ตัวคูณคนละค่า",
+          "en": "Why do O₂ and O₃ have different coefficients in the mass equation?"
+        },
+        "answer": {
+          "th": "หนึ่งโมลของ O₂ มีมวล 32.0 g ส่วนหนึ่งโมลของ O₃ มีมวล 48.0 g",
+          "en": "One mole of O₂ has mass 32.0 g, while one mole of O₃ has mass 48.0 g."
+        }
+      },
+      "after": {
+        "th": "ตรวจทั้งมวลรวมและจำนวนโมลรวมก่อนเปิดเฉลย",
+        "en": "Check total mass and total moles before revealing the solution."
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ตารางสูตร",
+            "en": "Formula table"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "th": "ตรวจหน่วย ชนิดอนุภาค และเงื่อนไขของแก๊ส แล้วลองทำข้อที่ติดอีกครั้งโดยปิดวิธีทำ",
+    "en": "Check units, entities and gas conditions. Retry difficult questions with the solution closed."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "แก๊ส O₂ 0.50 mol มีอะตอม O กี่โมล และต้องทราบอุณหภูมิหรือไม่",
+      "en": "How many moles of O atoms are in 0.50 mol of O₂, and is the temperature needed?"
+    },
+    "answer": {
+      "th": "1.0 mol ของอะตอม O ใช้อัตราส่วนจากสูตร O₂ จึงไม่ต้องทราบอุณหภูมิ",
+      "en": "1.0 mol of O atoms. The ratio comes from the O₂ formula, so temperature is unnecessary."
+    }
+  }
+}

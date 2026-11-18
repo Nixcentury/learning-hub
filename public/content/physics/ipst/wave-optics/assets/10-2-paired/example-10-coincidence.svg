@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 103" role="img" aria-label="The third dark fringe of wavelength one and second bright fringe of wavelength two occupy the same position">
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#1b3244} .head{font-size:15px;font-weight:700}.small{font-size:13px}.formula{font-size:15px;font-weight:700}.guide{stroke:#b8c8d2;stroke-width:1.2;stroke-dasharray:4 4}.axis{stroke:#526e7e;stroke-width:2} .bright{fill:#347999;stroke:#1f4559;stroke-width:1.5}.dark{fill:#fff;stroke:#a35033;stroke-width:3}.label{font-size:16px;font-weight:700}</style>
+<rect x="1" y="1" width="958" height="101" rx="6" fill="#fff" stroke="#b4c5cf"/><text x="18" y="31" class="head">λ₁</text><text x="18" y="76" class="head">λ₂</text>
+<path class="guide" d="M437 10 V95"/><line class="axis" x1="95" y1="38" x2="730" y2="38"/><line class="axis" x1="95" y1="78" x2="730" y2="78"/>
+<g fill="#c3e1ed" stroke="#236383" stroke-width="2"><rect x="109" y="22" width="7" height="32" rx="2"/><rect x="239" y="22" width="7" height="32" rx="2"/><rect x="369" y="22" width="7" height="32" rx="2"/><rect x="499" y="22" width="7" height="32" rx="2"/></g>
+<rect class="dark" x="432" y="25" width="10" height="25" rx="1"/><text x="454" y="21" class="small" fill="#a35033">D₃</text>
+<g fill="#f0be75" stroke="#936b30" stroke-width="2"><rect x="109" y="62" width="7" height="31" rx="2"/><rect x="272" y="62" width="7" height="31" rx="2"/><rect x="432" y="62" width="10" height="31" rx="2"/></g>
+<text x="453" y="93" class="small">B₂</text><text class="formula" x="758" y="36">(2.5) λ₁</text><text class="formula" x="758" y="76">= (2) λ₂</text>
+<text x="112" y="16" text-anchor="middle" class="small">0</text><text x="242" y="16" text-anchor="middle" class="small">1</text><text x="372" y="16" text-anchor="middle" class="small">2</text><text x="502" y="16" text-anchor="middle" class="small">3</text>
+</svg>

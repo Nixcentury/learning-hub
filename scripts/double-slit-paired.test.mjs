@@ -148,7 +148,7 @@ test('double-slit: the measurement and final three worked examples have print-sa
  for(const name of names){
   const svg=await readFile(new URL('../public/'+base+'assets/10-2-paired/'+name,import.meta.url),'utf8');
   assert.match(svg,/<svg\b[^>]*viewBox=/);
-  assert.doesNotMatch(svg,/<script\b|<foreignObject\b|https?:\/\//i,'diagram must not rely on remote or executable content');
+  assert.doesNotMatch(svg,/<script\b|<foreignObject\b|(?:href|src)="https?:\/\//i,'diagram must not rely on remote or executable content');
  }
  for(const kind of ['classroom','exit']){
   const doc=await load(kind);

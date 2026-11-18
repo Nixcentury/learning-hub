@@ -198,3 +198,8 @@ body:not(.answers-on) [data-revision-edition="blank"],body.answers-on [data-revi
 /* Recover the extra diagram height from prose gaps rather than reducing the body font. */
 .shared-note[data-note-key="measurement"] p{margin-bottom:1.05mm}
 .shared-note[data-note-key="measurement"] h3{margin-top:1.35mm;margin-bottom:.85mm}
+
+
+/* Two diagram-heavy examples share the last A4 Notes page. */
+.shared-note[data-note-key="examples-5"] .example,
+.shared-note[data-note-key="examples-6"] .example{margin:1.8mm 0;padding:1.7mm 2.1mm}

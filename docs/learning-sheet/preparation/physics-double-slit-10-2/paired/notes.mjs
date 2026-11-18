@@ -8,6 +8,47 @@ import {workedVisual} from './note-diagrams.mjs';
 // One canonical teacher answer Note supplies both Classroom Note and Revision Notes.
 const groups=[[1,2],[3],[4,5],[6,7],[8,9,10],[11,12]];
 
+const separationExplanation = {
+  th: [
+    'กำหนดให้แถบสว่างกลางอยู่ที่พิกัดศูนย์ ด้านขวาเป็นบวกและด้านซ้ายเป็นลบ หาพิกัดของทั้งสองแถบก่อน แล้วใช้ค่าสัมบูรณ์ของผลต่างเป็นระยะห่าง',
+    'ระยะห่างแถบสว่างติดกัน 1 ช่วงคือ 4.0 มม. สว่างอันดับ 1 จึงห่างจากกลาง 4.0 มม. มืดอันดับ 2 อยู่กึ่งกลางระหว่างสว่างอันดับ 1 กับ 2 จึงห่างจากกลาง 1.5 ช่วง หรือ 6.0 มม. ส่วนสว่างอันดับ 3 ห่างจากกลาง 3 ช่วง หรือ 12 มม.',
+  ],
+  en: [
+    'Set the central bright fringe at zero. Coordinates are positive to the right and negative to the left. Find both coordinates first, then take the absolute difference to get the separation.',
+    'One bright-fringe spacing is 4.0 mm. Bright order 1 is 4.0 mm from the centre. Dark order 2 is halfway between bright orders 1 and 2, so it is 1.5 spacings, or 6.0 mm, from the centre. Bright order 3 is three spacings, or 12 mm, from the centre.',
+  ],
+};
+const separationCases = [
+  {
+    th: '① ด้านเดียวกัน · เลือกสว่างอันดับ 1 และมืดอันดับ 2 ทางขวาทั้งคู่ พิกัดจึงเป็นบวกทั้งสองค่า',
+    en: '① Same side · Take bright order 1 and dark order 2 on the right, so both coordinates are positive.',
+    math: String.raw`\mathrm{separation}=|(+6.0)-(+4.0)|\,\mathrm{mm}=2.0\,\mathrm{mm}`,
+  },
+  {
+    th: '② คนละด้าน · เลือกสว่างอันดับ 1 ทางซ้ายและมืดอันดับ 2 ทางขวา จึงลบพิกัดลบของแถบทางซ้าย',
+    en: '② Opposite sides · Take bright order 1 on the left and dark order 2 on the right. Subtract the negative coordinate of the left fringe.',
+    math: String.raw`\mathrm{separation}=|(+6.0)-(-4.0)|\,\mathrm{mm}=10\,\mathrm{mm}`,
+  },
+  {
+    th: '③ สว่างอันดับ 3 ซ้าย–ขวา · ทั้งสองแถบอยู่ห่างจากกลางเท่ากันและอยู่คนละด้าน',
+    en: '③ Third bright fringe on each side · The two fringes lie equally far from the centre on opposite sides.',
+    math: String.raw`\mathrm{separation}=|(+12)-(-12)|\,\mathrm{mm}=24\,\mathrm{mm}`,
+  },
+];
+
+function expandSeparationAnswer(answer, lang) {
+  const [coordinates, spacing] = separationExplanation[lang];
+  const thinking = lang === 'th' ? 'อธิบายวิธีคิด' : 'Reasoning';
+  const working = lang === 'th' ? 'วิธีทำ' : 'Working';
+  answer.innerHTML = `
+    <p class="method-note"><b>${thinking}</b> ${coordinates}</p>
+    <p>${spacing}</p>
+    ${equationStart(exampleReferences[10], lang)}
+    ${separationCases.map(item => `<p>${item[lang]}<span class="math-line">\\(${item.math}\\)</span></p>`).join('')}
+  `;
+  answer.querySelector('.equation-citation').insertAdjacentHTML('afterbegin', `<b>${working}</b> · `);
+}
+
 const examplePages=groups.map((numbers,i)=>({
   key:'examples-'+(i+1),kind:'examples',
   title:{th:'ตัวอย่าง '+numbers[0]+'–'+numbers.at(-1),en:'Examples '+numbers[0]+'–'+numbers.at(-1)},
@@ -25,9 +66,8 @@ const examplePages=groups.map((numbers,i)=>({
       prompt.insertAdjacentHTML('afterend',visual);
     }
     const answer=example.querySelector('.note-answer');
-    // The original numerical givens and all original requests/results are retained.
-    // Only the common spacing symbol and the initial equation citation change.
-    answer.insertAdjacentHTML('afterbegin',equationStart(exampleReferences[n-1],lang));
+    if(n===11)expandSeparationAnswer(answer,lang);
+    else answer.insertAdjacentHTML('afterbegin',equationStart(exampleReferences[n-1],lang));
     if(n===4){
       const angle=[...answer.querySelectorAll('p')].find(p=>/ถ้าให้มุม|For an angle/.test(p.textContent));
       if(angle){

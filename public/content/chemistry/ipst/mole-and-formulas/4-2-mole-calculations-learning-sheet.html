@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="th" data-learning-html data-learning-sheet="1" data-sheet-guide="guides/4-2-mole-calculations.guide.json" data-sheet-revision="2026-11-18-1" data-print-blank-sizing="preset" data-print-subject-th="เคมี" data-print-subject-en="Chemistry" data-print-chapter-th="โมลและสูตรเคมี" data-print-chapter-en="The Mole and Chemical Formulas" data-print-topic-th="โมล" data-print-topic-en="The Mole" data-print-work-th="ฝึกคำนวณโมล" data-print-work-en="Mole calculations">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>โมล · ฝึกคำนวณพื้นฐานและแนว A-Level / Mole calculations</title>
+<link rel="stylesheet" href="../../../../shared/learning-sheet.css">
+<link rel="stylesheet" href="../../../../shared/calculation-print.css">
+<style>
+    * { box-sizing:border-box; }
+    body { margin:0; background:#fff; color:#23323b; font:17px/1.65 Tahoma,"Noto Sans Thai",sans-serif; }
+    .calc-sheet { max-width:900px; margin:auto; padding:22px 26px 40px; }
+    .calc-sheet h1 { font-size:24px; line-height:1.45; margin:0 0 8px; }
+    .calc-sheet h2 { font-size:18px; line-height:1.5; margin:0 0 8px; }
+    .calc-sheet h3 { font-size:17px; margin:0 0 5px; }
+    .calc-sheet p { margin:6px 0; overflow-wrap:anywhere; }
+    .calc-formulas { border:1px solid #59615d; padding:12px 14px; margin:15px 0 20px; }
+    .calc-formulas table { border-collapse:collapse; table-layout:fixed; width:100%; }
+    .calc-formulas th,.calc-formulas td { text-align:left; vertical-align:top; padding:7px 6px; border-bottom:1px solid #cbd0cc; overflow-wrap:anywhere; }
+    .calc-formulas th:nth-child(1) { width:24%; }
+    .calc-formulas th:nth-child(2) { width:43%; }
+    .calc-formulas tr:last-child td { border-bottom:0; }
+    .calc-formulas .formula { margin:3px 0; }
+    .calc-constants { font-size:14px; }
+    .calc-problem { margin:0 0 17px; }
+    .calc-problem [data-sheet-slot] { --sheet-width:100%; --sheet-print-height:28mm; }
+    .calc-solution p { margin:5px 0; }
+    .calc-solution .formula { margin:7px 0; }
+    .calc-source { margin-top:16px; font-size:12px; border-top:1px solid #aaa; padding-top:6px; }
+    @media(max-width:600px) {
+      .calc-sheet { padding:18px 12px 30px; }
+      .calc-sheet h1 { font-size:21px; }
+      .calc-formulas { padding:10px 8px; }
+      html:not([data-hub-print-snapshot]) .calc-formulas table,
+      html:not([data-hub-print-snapshot]) .calc-formulas tbody,
+      html:not([data-hub-print-snapshot]) .calc-formulas tr,
+      html:not([data-hub-print-snapshot]) .calc-formulas td { display:block; width:100%; }
+      html:not([data-hub-print-snapshot]) .calc-formulas thead { display:none; }
+      html:not([data-hub-print-snapshot]) .calc-formulas td { padding:4px; border:0; }
+      html:not([data-hub-print-snapshot]) .calc-formulas td:first-child { font-weight:700; }
+      html:not([data-hub-print-snapshot]) .calc-formulas tr { border-bottom:1px solid #cbd0cc; padding:7px 0; }
+      html:not([data-hub-print-snapshot]) .calc-formulas tr:last-child { border-bottom:0; }
+    }
+    html[data-hub-print-snapshot] .calc-sheet { max-width:none; margin:0; padding:0; }
+    html[data-hub-print-snapshot] .calc-sheet h1 { font-size:11pt; }
+    html[data-hub-print-snapshot] .calc-sheet h2,
+    html[data-hub-print-snapshot] .calc-sheet h3 { font-size:11pt; }
+    html[data-hub-print-snapshot] .calc-formulas { margin:9px 0 13px; padding:8px 10px; }
+    html[data-hub-print-snapshot] .calc-formulas th,
+    html[data-hub-print-snapshot] .calc-formulas td { font-size:10pt; padding:5px; }
+    @media print {
+      .calc-sheet { max-width:none; margin:0; padding:0; font-size:10pt; }
+      .calc-sheet h1,.calc-sheet h2,.calc-sheet h3 { font-size:11pt; }
+    }
+
+    .calc-math { margin:8px 0; max-width:100%; }
+    .calc-math mjx-container[display="true"] { text-align:left !important; margin:.45em 0 !important; }
+
+.print-check-answer{display:none}
+.calc-student-info{font-size:13px;white-space:normal}
+html[data-hub-print-snapshot] .calc-sheet .print-check-answer{display:block;font-size:10pt;line-height:1.45;margin:4px 0 6px;break-inside:avoid}
+html[data-hub-print-snapshot] .calc-sheet .calc-student-info{font-size:8pt;line-height:1.5;margin:6px 0 10px}
+html[data-hub-print-snapshot] .calc-sheet .calc-constants{font-size:10pt}
+@media print{.calc-sheet .print-check-answer{display:block;font-size:10pt;line-height:1.45;margin:4px 0 6px}.calc-sheet .calc-student-info{font-size:8pt}.calc-sheet .calc-constants{font-size:10pt}}
+
+
+    html[data-hub-print-snapshot] .calc-sheet .calc-formulas :is(td,th,.calc-constants) {font-size:10pt;}
+</style>
+</head>
+<body>
+<main class="calc-sheet" data-content-lang="th" lang="th">
+<header><h1>โมล · ฝึกคำนวณพื้นฐานและแนว A-Level</h1><p class="calc-student-info">ชื่อ ................................................................................ ชั้น ....................</p></header>
+<section class="calc-formulas" data-guide-anchor="formula-box" data-print-keep>
+<h2>สรุปสูตรและตัวแปร</h2>
+<table><thead><tr><th scope="col">ปริมาณที่เชื่อมกัน</th><th scope="col">ความสัมพันธ์</th><th scope="col">ตัวแปรและหน่วย</th></tr></thead><tbody>
+<tr><td>มวล ↔ โมล</td><td>\(n=m/M\)</td><td>m เป็น g · M เป็น g/mol · n เป็น mol</td></tr>
+<tr><td>โมล ↔ อนุภาค</td><td>\(N=nN_{\mathrm A}\)</td><td>N คือจำนวนอะตอม โมเลกุล ไอออน หรือหน่วยสูตร ตามที่โจทย์ระบุ</td></tr>
+<tr><td>ปริมาตรแก๊ส ↔ โมล</td><td>\(n=V/V_{\mathrm m}\)</td><td>V เป็น L · Vₘ เป็น L/mol ที่อุณหภูมิและความดันที่กำหนด</td></tr>
+</tbody></table>
+<p class="calc-constants">ใช้ \(N_{\mathrm A}=6.02\times10^{23}\,\mathrm{mol^{-1}}\). ในใบนี้ถือว่าแก๊สเป็นแก๊สอุดมคติ ที่ STP (0 °C และ 1 atm) ใช้ Vₘ = 22.4 L/mol</p>
+<p class="calc-constants">มวลต่อโมลของอะตอม (g/mol) · H 1.00, C 12.0, N 14.0, O 16.0, Na 23.0, Cl 35.5</p></section>
+<section data-guide-anchor="fundamentals">
+<h2>พื้นฐาน · ข้อ 1–6</h2>
+<div class="calc-problem" data-print-keep><h3>ข้อ 1</h3>
+<p>แก๊ส O₂ มวล 6.40 g มีจำนวนกี่โมล</p>
+<p class="print-check-answer" data-print-check-answer="1"><strong>คำตอบตรวจตนเอง</strong> 0.200 mol O₂</p>
+<div data-sheet-slot="mass-to-moles" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="มวลของออกซิเจนเป็นโมล" data-sheet-label-en="Mass of oxygen to moles" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution"><p>มวลต่อโมลของ O₂ เท่ากับ 2 × 16.0 = 32.0 g/mol วางกรัมไว้ด้านล่างของแฟกเตอร์เพื่อให้ตัดกับกรัมของตัวอย่าง</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm{O_2}) &amp;= 6.40\,\mathrm{g}\times\frac{1\,\mathrm{mol}}{32.0\,\mathrm{g}}\\[3pt]&amp;=0.200\,\mathrm{mol}\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> 0.200 mol O₂</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 2</h3>
+<p>ต้องชั่ง NaCl กี่กรัมจึงจะได้ 0.250 mol</p>
+<p class="print-check-answer" data-print-check-answer="2"><strong>คำตอบตรวจตนเอง</strong> 14.6 g NaCl</p>
+<div data-sheet-slot="moles-to-mass" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="โมลของโซเดียมคลอไรด์เป็นกรัม" data-sheet-label-en="Moles of sodium chloride to grams" style="--sheet-print-height:32mm">
+<div data-sheet-answer><div class="calc-solution"><p>NaCl หนึ่งหน่วยสูตรมี Na และ Cl อย่างละหนึ่งอะตอม เมื่อทราบโมลและต้องการกรัม ให้คูณด้วยมวลต่อโมล</p>
+<div class="calc-math">\[\begin{aligned}M(\mathrm{NaCl}) &amp;=(23.0+35.5)\,\mathrm{g/mol}=58.5\,\mathrm{g/mol}\\[3pt]m &amp;=0.250\,\mathrm{mol}\times\frac{58.5\,\mathrm{g}}{1\,\mathrm{mol}}\\[3pt]&amp;\approx14.6\,\mathrm{g}\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> 14.6 g NaCl</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 3</h3>
+<p>ผลึก NaCl จำนวน 0.150 mol มีกี่หน่วยสูตร</p>
+<p class="print-check-answer" data-print-check-answer="3"><strong>คำตอบตรวจตนเอง</strong> 9.03 × 10²² หน่วยสูตร NaCl</p>
+<div data-sheet-slot="moles-to-entities" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="จำนวนหน่วยสูตร" data-sheet-label-en="Counting formula units" style="--sheet-print-height:30mm">
+<div data-sheet-answer><div class="calc-solution"><p>โจทย์ให้นับหน่วยสูตรของผลึก NaCl ใช้จำนวนหน่วยสูตรในหนึ่งโมลเป็นแฟกเตอร์</p>
+<div class="calc-math">\[\begin{aligned}N &amp;= 0.150\,\mathrm{mol}\times\frac{6.02\times10^{23}}{1\,\mathrm{mol}}\\[3pt]&amp;=9.03\times10^{22}\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> 9.03 × 10²² หน่วยสูตร NaCl</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 4</h3>
+<p>ตัวอย่าง CO₂ มี 1.81 × 10²³ โมเลกุล ตัวอย่างนี้มี CO₂ กี่โมล</p>
+<p class="print-check-answer" data-print-check-answer="4"><strong>คำตอบตรวจตนเอง</strong> 0.301 mol CO₂</p>
+<div data-sheet-slot="entities-to-moles" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="จำนวนโมเลกุลเป็นโมล" data-sheet-label-en="Molecules to moles" style="--sheet-print-height:30mm">
+<div data-sheet-answer><div class="calc-solution"><p>ใน CO₂ หนึ่งโมลมี 6.02 × 10²³ โมเลกุล จึงหารจำนวนโมเลกุลที่มีด้วยจำนวนโมเลกุลต่อโมล</p>
+<div class="calc-math">\[\begin{aligned}n &amp;= 1.81\times10^{23}\times\frac{1\,\mathrm{mol}}{6.02\times10^{23}}\\[3pt]&amp;\approx0.301\,\mathrm{mol}\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> 0.301 mol CO₂</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 5</h3>
+<p>แก๊ส N₂ จำนวน 0.350 mol มีปริมาตรกี่ลิตรที่ STP</p>
+<p class="print-check-answer" data-print-check-answer="5"><strong>คำตอบตรวจตนเอง</strong> 7.84 L</p>
+<div data-sheet-slot="moles-to-volume" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="โมลเป็นปริมาตรแก๊ส" data-sheet-label-en="Moles to gas volume" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution"><p>ที่ STP ตามเงื่อนไขของใบนี้ แก๊สอุดมคติหนึ่งโมลมีปริมาตร 22.4 L จึงคูณโมลด้วยปริมาตรต่อโมล</p>
+<div class="calc-math">\[\begin{aligned}V &amp;=0.350\,\mathrm{mol}\times\frac{22.4\,\mathrm{L}}{1\,\mathrm{mol}}\\[3pt]&amp;=7.84\,\mathrm{L}\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> 7.84 L</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 6</h3>
+<p>เก็บแก๊ส He ได้ 5.60 × 10² mL ที่ STP จงหาจำนวนโมลของ He</p>
+<p class="print-check-answer" data-print-check-answer="6"><strong>คำตอบตรวจตนเอง</strong> 0.0250 mol He</p>
+<div data-sheet-slot="volume-to-moles" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ปริมาตรแก๊สเป็นโมล" data-sheet-label-en="Gas volume to moles" style="--sheet-print-height:35mm">
+<div data-sheet-answer><div class="calc-solution"><p>ปริมาตรที่ให้มาเป็นมิลลิลิตร แต่ปริมาตรต่อโมลใช้ลิตร จึงเปลี่ยนหน่วยแล้วใช้แฟกเตอร์กลับทิศจากข้อ 5</p>
+<div class="calc-math">\[\begin{aligned}V &amp;= 5.60\times10^2\,\mathrm{mL}\times\frac{1\,\mathrm{L}}{1000\,\mathrm{mL}}=0.560\,\mathrm{L}\\[3pt]n &amp;=0.560\,\mathrm{L}\times\frac{1\,\mathrm{mol}}{22.4\,\mathrm{L}}\\[3pt]&amp;=0.0250\,\mathrm{mol}\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> 0.0250 mol He</p>
+</div></div></div></div>
+</section>
+<section data-guide-anchor="exam-practice">
+<h2>แนว A-Level · ข้อ 7–10</h2>
+<div class="calc-problem" data-print-keep><h3>ข้อ 7</h3>
+<p>ถังตัวอย่างมี CO₂ บริสุทธิ์ 8.80 g ภายในถังมีออกซิเจนทั้งหมดกี่อะตอม</p>
+<p class="print-check-answer" data-print-check-answer="7"><strong>คำตอบตรวจตนเอง</strong> 2.41 × 10²³ อะตอมของ O</p>
+<div data-sheet-slot="oxygen-atoms" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="อะตอมออกซิเจนในคาร์บอนไดออกไซด์" data-sheet-label-en="Oxygen atoms in carbon dioxide" style="--sheet-print-height:48mm">
+<div data-sheet-answer><div class="calc-solution"><p>เริ่มจากโมลของ CO₂ แล้วอ่านเลขห้อย 2 ในหนึ่งโมเลกุล CO₂ มี O สองอะตอม จึงได้โมลของ O เป็นสองเท่าของโมล CO₂ ก่อนแปลงเป็นจำนวนอะตอม</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm{CO_2}) &amp;=8.80\,\mathrm{g}\times\frac{1\,\mathrm{mol}}{44.0\,\mathrm{g}}=0.200\,\mathrm{mol}\\[3pt]n(\mathrm O) &amp;=0.200\,\mathrm{mol\ CO_2}\times\frac{2\,\mathrm{mol\ O}}{1\,\mathrm{mol\ CO_2}}\\[3pt]N(\mathrm O) &amp;=0.400\times6.02\times10^{23}\\[3pt]&amp;\approx2.41\times10^{23}\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> 2.41 × 10²³ อะตอมของ O</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 8</h3>
+<p>ถุง A มี CO₂ 11.0 g ถุง B มี O₂ 9.60 g ถุงใดมีจำนวนโมเลกุลมากกว่า และเป็นกี่เท่าของอีกถุง</p>
+<p class="print-check-answer" data-print-check-answer="8"><strong>คำตอบตรวจตนเอง</strong> ถุง B มีจำนวนโมเลกุลเป็น 1.20 เท่าของถุง A</p>
+<div data-sheet-slot="compare-samples" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="เปรียบเทียบจำนวนโมเลกุล" data-sheet-label-en="Comparing molecule counts" style="--sheet-print-height:45mm">
+<div data-sheet-answer><div class="calc-solution"><p>เปรียบเทียบโมลของโมเลกุลในแต่ละถุง สารทั้งสองมีจำนวนโมเลกุลต่อโมลเท่ากัน เมื่อนำจำนวนโมเลกุลมาหารกัน ค่าคงตัวอาโวกาโดรจึงตัดกัน</p>
+<div class="calc-math">\[\begin{aligned}n_{\rm A} &amp;= \frac{11.0\,\mathrm{g}}{44.0\,\mathrm{g/mol}}=0.250\,\mathrm{mol}\\[3pt]n_{\rm B} &amp;= \frac{9.60\,\mathrm{g}}{32.0\,\mathrm{g/mol}}=0.300\,\mathrm{mol}\\[3pt]\frac{N(\mathrm B)}{N(\mathrm A)} &amp;=\frac{n_{\rm B}}{n_{\rm A}}=\frac{0.300}{0.250}=1.20\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> ถุง B มีจำนวนโมเลกุลเป็น 1.20 เท่าของถุง A</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 9</h3>
+<p>แก๊สบริสุทธิ์ชนิดหนึ่งมีปริมาตร 2.24 L ที่ STP และมีมวล 4.40 g แก๊สนี้คือ H₂, CH₄, N₂, O₂ หรือ CO₂ จงใช้ข้อมูลการวัดสนับสนุนคำตอบ</p>
+<p class="print-check-answer" data-print-check-answer="9"><strong>คำตอบตรวจตนเอง</strong> CO₂ มีมวลต่อโมล 44.0 g/mol</p>
+<div data-sheet-slot="identify-gas" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ระบุแก๊สจากข้อมูลการวัด" data-sheet-label-en="Identifying a gas from measurements" style="--sheet-print-height:45mm">
+<div data-sheet-answer><div class="calc-solution"><p>ปริมาตรที่ STP บอกจำนวนโมล ใช้มวลของตัวอย่างหารด้วยจำนวนโมลที่หาได้ แล้วเทียบมวลต่อโมลกับสารในตัวเลือก</p>
+<div class="calc-math">\[\begin{aligned}n &amp;=2.24\,\mathrm{L}\times\frac{1\,\mathrm{mol}}{22.4\,\mathrm{L}}=0.100\,\mathrm{mol}\\[3pt]M &amp;= \frac{4.40\,\mathrm{g}}{0.100\,\mathrm{mol}}=44.0\,\mathrm{g/mol}\\[3pt]M(\mathrm{CO_2}) &amp;=(12.0+2\times16.0)\,\mathrm{g/mol}\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> CO₂ มีมวลต่อโมล 44.0 g/mol</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>ข้อ 10</h3>
+<p>แก๊สผสมมีเฉพาะ O₂ และ O₃ รวม 0.3000 mol มีมวลรวม 11.20 g จงหาจำนวนโมลของแก๊สแต่ละชนิด</p>
+<p class="print-check-answer" data-print-check-answer="10"><strong>คำตอบตรวจตนเอง</strong> O₂ 0.200 mol และ O₃ 0.100 mol</p>
+<div data-sheet-slot="oxygen-mixture" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="องค์ประกอบของแก๊สผสม" data-sheet-label-en="Composition of a gas mixture" style="--sheet-print-height:57mm">
+<div data-sheet-answer><div class="calc-solution"><p>ให้ x และ y เป็นจำนวนโมลของ O₂ และ O₃ ตามลำดับ ตั้งสมการ (1) จากโมลรวม และสมการ (2) จากมวลรวม โดย O₂ และ O₃ มีมวลต่อโมล 32.0 และ 48.0 g/mol ตามลำดับ</p>
+<div class="calc-math">\[\begin{aligned}x+y &amp;=0.3000 \qquad (1)\\[3pt]32.0x+48.0y &amp;=11.20 \qquad (2)\\[3pt]x &amp;=0.3000-y\\[3pt]32.0(0.3000-y)+48.0y &amp;=11.20\\[3pt]16.0y &amp;=11.20-9.60=1.60\\[3pt]y &amp;=0.100,\qquad x=0.200\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> O₂ 0.200 mol และ O₃ 0.100 mol</p>
+<p>ตรวจกลับ \(0.200+0.100=0.300\,\mathrm{mol}\) · \(0.200(32.0)+0.100(48.0)=11.2\,\mathrm g\)</p>
+</div></div></div></div>
+</section></main>
+<main class="calc-sheet" data-content-lang="en" lang="en">
+<header><h1>The mole · Fundamentals and A-Level-style practice</h1><p class="calc-student-info">Name ................................................................................ Class ....................</p></header>
+<section class="calc-formulas" data-guide-anchor="formula-box" data-print-keep>
+<h2>Formulas and variables</h2>
+<table><thead><tr><th scope="col">Quantities</th><th scope="col">Relationship</th><th scope="col">Variables and units</th></tr></thead><tbody>
+<tr><td>Mass ↔ moles</td><td>\(n=m/M\)</td><td>m in g · M in g/mol · n in mol</td></tr>
+<tr><td>Moles ↔ entities</td><td>\(N=nN_{\mathrm A}\)</td><td>N counts the specified atoms, molecules, ions or formula units.</td></tr>
+<tr><td>Gas volume ↔ moles</td><td>\(n=V/V_{\mathrm m}\)</td><td>V in L · Vₘ in L/mol at the stated temperature and pressure.</td></tr>
+</tbody></table>
+<p class="calc-constants">Use \(N_{\mathrm A}=6.02\times10^{23}\,\mathrm{mol^{-1}}\). Treat gases as ideal. At STP (0 °C and 1 atm), use Vₘ = 22.4 L/mol.</p>
+<p class="calc-constants">Atomic molar masses (g/mol) · H 1.00, C 12.0, N 14.0, O 16.0, Na 23.0, Cl 35.5</p></section>
+<section data-guide-anchor="fundamentals">
+<h2>Fundamentals · Questions 1–6</h2>
+<div class="calc-problem" data-print-keep><h3>Question 1</h3>
+<p>How many moles of O₂ are in 6.40 g of oxygen gas?</p>
+<p class="print-check-answer" data-print-check-answer="1"><strong>Self-check answer</strong> 0.200 mol O₂</p>
+<div data-sheet-slot="mass-to-moles" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="มวลของออกซิเจนเป็นโมล" data-sheet-label-en="Mass of oxygen to moles" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution"><p>An O₂ molecule contains two O atoms, so its molar mass is 2 × 16.0 = 32.0 g/mol. Put grams in the denominator to cancel the sample unit.</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm{O_2}) &amp;= 6.40\,\mathrm{g}\times\frac{1\,\mathrm{mol}}{32.0\,\mathrm{g}}\\[3pt]&amp;=0.200\,\mathrm{mol}\end{aligned}\]</div>
+<p><strong>Answer</strong> 0.200 mol O₂</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 2</h3>
+<p>What mass of NaCl would you weigh out to obtain 0.250 mol?</p>
+<p class="print-check-answer" data-print-check-answer="2"><strong>Self-check answer</strong> 14.6 g NaCl</p>
+<div data-sheet-slot="moles-to-mass" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="โมลของโซเดียมคลอไรด์เป็นกรัม" data-sheet-label-en="Moles of sodium chloride to grams" style="--sheet-print-height:32mm">
+<div data-sheet-answer><div class="calc-solution"><p>The NaCl formula has one Na for each Cl. Multiply the amount in moles by the molar mass to obtain grams.</p>
+<div class="calc-math">\[\begin{aligned}M(\mathrm{NaCl}) &amp;=(23.0+35.5)\,\mathrm{g/mol}=58.5\,\mathrm{g/mol}\\[3pt]m &amp;=0.250\,\mathrm{mol}\times\frac{58.5\,\mathrm{g}}{1\,\mathrm{mol}}\\[3pt]&amp;\approx14.6\,\mathrm{g}\end{aligned}\]</div>
+<p><strong>Answer</strong> 14.6 g NaCl</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 3</h3>
+<p>How many formula units are there in 0.150 mol of crystalline NaCl?</p>
+<p class="print-check-answer" data-print-check-answer="3"><strong>Self-check answer</strong> 9.03 × 10²² formula units of NaCl</p>
+<div data-sheet-slot="moles-to-entities" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="จำนวนหน่วยสูตร" data-sheet-label-en="Counting formula units" style="--sheet-print-height:30mm">
+<div data-sheet-answer><div class="calc-solution"><p>The specified entity in crystalline NaCl is the formula unit. Multiply by the number of formula units in one mole.</p>
+<div class="calc-math">\[\begin{aligned}N &amp;= 0.150\,\mathrm{mol}\times\frac{6.02\times10^{23}}{1\,\mathrm{mol}}\\[3pt]&amp;=9.03\times10^{22}\end{aligned}\]</div>
+<p><strong>Answer</strong> 9.03 × 10²² formula units of NaCl</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 4</h3>
+<p>A sample contains 1.81 × 10²³ molecules of CO₂. How many moles of CO₂ are present?</p>
+<p class="print-check-answer" data-print-check-answer="4"><strong>Self-check answer</strong> 0.301 mol CO₂</p>
+<div data-sheet-slot="entities-to-moles" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="จำนวนโมเลกุลเป็นโมล" data-sheet-label-en="Molecules to moles" style="--sheet-print-height:30mm">
+<div data-sheet-answer><div class="calc-solution"><p>One mole of CO₂ contains 6.02 × 10²³ molecules. Divide the molecule count by the number of molecules per mole.</p>
+<div class="calc-math">\[\begin{aligned}n &amp;= 1.81\times10^{23}\times\frac{1\,\mathrm{mol}}{6.02\times10^{23}}\\[3pt]&amp;\approx0.301\,\mathrm{mol}\end{aligned}\]</div>
+<p><strong>Answer</strong> 0.301 mol CO₂</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 5</h3>
+<p>What volume in litres does 0.350 mol of N₂ occupy at STP?</p>
+<p class="print-check-answer" data-print-check-answer="5"><strong>Self-check answer</strong> 7.84 L</p>
+<div data-sheet-slot="moles-to-volume" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="โมลเป็นปริมาตรแก๊ส" data-sheet-label-en="Moles to gas volume" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution"><p>At the STP used here, one mole of an ideal gas occupies 22.4 L. Multiply the amount by the molar volume.</p>
+<div class="calc-math">\[\begin{aligned}V &amp;=0.350\,\mathrm{mol}\times\frac{22.4\,\mathrm{L}}{1\,\mathrm{mol}}\\[3pt]&amp;=7.84\,\mathrm{L}\end{aligned}\]</div>
+<p><strong>Answer</strong> 7.84 L</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 6</h3>
+<p>A helium sample occupies 5.60 × 10² mL at STP. How many moles of He does it contain?</p>
+<p class="print-check-answer" data-print-check-answer="6"><strong>Self-check answer</strong> 0.0250 mol He</p>
+<div data-sheet-slot="volume-to-moles" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ปริมาตรแก๊สเป็นโมล" data-sheet-label-en="Gas volume to moles" style="--sheet-print-height:35mm">
+<div data-sheet-answer><div class="calc-solution"><p>The gas volume is in millilitres, while molar volume uses litres. Convert to litres and invert the conversion factor from Question 5.</p>
+<div class="calc-math">\[\begin{aligned}V &amp;= 5.60\times10^2\,\mathrm{mL}\times\frac{1\,\mathrm{L}}{1000\,\mathrm{mL}}=0.560\,\mathrm{L}\\[3pt]n &amp;=0.560\,\mathrm{L}\times\frac{1\,\mathrm{mol}}{22.4\,\mathrm{L}}\\[3pt]&amp;=0.0250\,\mathrm{mol}\end{aligned}\]</div>
+<p><strong>Answer</strong> 0.0250 mol He</p>
+</div></div></div></div>
+</section>
+<section data-guide-anchor="exam-practice">
+<h2>A-Level-style practice · Questions 7–10</h2>
+<div class="calc-problem" data-print-keep><h3>Question 7</h3>
+<p>A sample contains 8.80 g of pure CO₂. How many oxygen atoms are present in the sample?</p>
+<p class="print-check-answer" data-print-check-answer="7"><strong>Self-check answer</strong> 2.41 × 10²³ O atoms</p>
+<div data-sheet-slot="oxygen-atoms" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="อะตอมออกซิเจนในคาร์บอนไดออกไซด์" data-sheet-label-en="Oxygen atoms in carbon dioxide" style="--sheet-print-height:48mm">
+<div data-sheet-answer><div class="calc-solution"><p>First find the moles of CO₂. The subscript 2 tells us that each CO₂ molecule contains two O atoms, so the amount of O atoms is twice the amount of CO₂ molecules.</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm{CO_2}) &amp;=8.80\,\mathrm{g}\times\frac{1\,\mathrm{mol}}{44.0\,\mathrm{g}}=0.200\,\mathrm{mol}\\[3pt]n(\mathrm O) &amp;=0.200\,\mathrm{mol\ CO_2}\times\frac{2\,\mathrm{mol\ O}}{1\,\mathrm{mol\ CO_2}}\\[3pt]N(\mathrm O) &amp;=0.400\times6.02\times10^{23}\\[3pt]&amp;\approx2.41\times10^{23}\end{aligned}\]</div>
+<p><strong>Answer</strong> 2.41 × 10²³ O atoms</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 8</h3>
+<p>Bag A contains 11.0 g of CO₂. Bag B contains 9.60 g of O₂. Which bag holds more molecules, and how many times as many?</p>
+<p class="print-check-answer" data-print-check-answer="8"><strong>Self-check answer</strong> Bag B has 1.20 times as many molecules as bag A</p>
+<div data-sheet-slot="compare-samples" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="เปรียบเทียบจำนวนโมเลกุล" data-sheet-label-en="Comparing molecule counts" style="--sheet-print-height:45mm">
+<div data-sheet-answer><div class="calc-solution"><p>Compare the amount of molecules in each bag. Each mole of either gas contains the same number of molecules, so the Avogadro constant cancels in the ratio.</p>
+<div class="calc-math">\[\begin{aligned}n_{\rm A} &amp;= \frac{11.0\,\mathrm{g}}{44.0\,\mathrm{g/mol}}=0.250\,\mathrm{mol}\\[3pt]n_{\rm B} &amp;= \frac{9.60\,\mathrm{g}}{32.0\,\mathrm{g/mol}}=0.300\,\mathrm{mol}\\[3pt]\frac{N(\mathrm B)}{N(\mathrm A)} &amp;=\frac{n_{\rm B}}{n_{\rm A}}=\frac{0.300}{0.250}=1.20\end{aligned}\]</div>
+<p><strong>Answer</strong> Bag B has 1.20 times as many molecules as bag A</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 9</h3>
+<p>A pure gas occupies 2.24 L at STP and has a mass of 4.40 g. Is it H₂, CH₄, N₂, O₂ or CO₂? Use the measurements to support your choice.</p>
+<p class="print-check-answer" data-print-check-answer="9"><strong>Self-check answer</strong> CO₂, with a molar mass of 44.0 g/mol</p>
+<div data-sheet-slot="identify-gas" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ระบุแก๊สจากข้อมูลการวัด" data-sheet-label-en="Identifying a gas from measurements" style="--sheet-print-height:45mm">
+<div data-sheet-answer><div class="calc-solution"><p>The STP volume gives the amount of gas. Divide sample mass by the calculated amount, then compare this molar mass with the candidate formulas.</p>
+<div class="calc-math">\[\begin{aligned}n &amp;=2.24\,\mathrm{L}\times\frac{1\,\mathrm{mol}}{22.4\,\mathrm{L}}=0.100\,\mathrm{mol}\\[3pt]M &amp;= \frac{4.40\,\mathrm{g}}{0.100\,\mathrm{mol}}=44.0\,\mathrm{g/mol}\\[3pt]M(\mathrm{CO_2}) &amp;=(12.0+2\times16.0)\,\mathrm{g/mol}\end{aligned}\]</div>
+<p><strong>Answer</strong> CO₂, with a molar mass of 44.0 g/mol</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep><h3>Question 10</h3>
+<p>A mixture contains only O₂ and O₃. Its total amount is 0.3000 mol and its total mass is 11.20 g. How many moles of each gas does it contain?</p>
+<p class="print-check-answer" data-print-check-answer="10"><strong>Self-check answer</strong> 0.200 mol O₂ and 0.100 mol O₃</p>
+<div data-sheet-slot="oxygen-mixture" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="องค์ประกอบของแก๊สผสม" data-sheet-label-en="Composition of a gas mixture" style="--sheet-print-height:57mm">
+<div data-sheet-answer><div class="calc-solution"><p>Let x and y be the amounts in moles of O₂ and O₃, respectively. Use total moles for equation (1) and total mass for equation (2). The molar masses are 32.0 and 48.0 g/mol.</p>
+<div class="calc-math">\[\begin{aligned}x+y &amp;=0.3000 \qquad (1)\\[3pt]32.0x+48.0y &amp;=11.20 \qquad (2)\\[3pt]x &amp;=0.3000-y\\[3pt]32.0(0.3000-y)+48.0y &amp;=11.20\\[3pt]16.0y &amp;=11.20-9.60=1.60\\[3pt]y &amp;=0.100,\qquad x=0.200\end{aligned}\]</div>
+<p><strong>Answer</strong> 0.200 mol O₂ and 0.100 mol O₃</p>
+<p>Check \(0.200+0.100=0.300\,\mathrm{mol}\) · \(0.200(32.0)+0.100(48.0)=11.2\,\mathrm g\)</p>
+</div></div></div></div>
+</section></main>
+</body></html>

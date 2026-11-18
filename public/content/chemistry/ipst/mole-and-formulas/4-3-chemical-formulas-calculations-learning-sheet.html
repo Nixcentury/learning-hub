@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="th" data-learning-html data-learning-sheet="1" data-sheet-guide="guides/4-3-chemical-formulas-calculations.guide.json" data-sheet-revision="2026-11-18-1" data-print-blank-sizing="preset" data-print-subject-th="เคมี" data-print-subject-en="Chemistry" data-print-chapter-th="โมลและสูตรเคมี" data-print-chapter-en="The Mole and Chemical Formulas" data-print-topic-th="สูตรเคมี" data-print-topic-en="Chemical Formulas" data-print-work-th="ฝึกคำนวณใบที่ 2" data-print-work-en="Calculation Practice 2">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>สูตรเคมี · ฝึกคำนวณใบที่ 2 / Chemical Formulas · Calculation Practice 2</title>
+<link rel="stylesheet" href="../../../../shared/learning-sheet.css">
+<link rel="stylesheet" href="../../../../shared/calculation-print.css">
+<style>
+    * { box-sizing:border-box; }
+    body { margin:0; background:#fff; color:#23323b; font:17px/1.65 Tahoma,"Noto Sans Thai",sans-serif; }
+    .calc-sheet { max-width:900px; margin:auto; padding:22px 26px 40px; }
+    .calc-sheet h1 { font-size:24px; line-height:1.45; margin:0 0 8px; }
+    .calc-sheet h2 { font-size:18px; line-height:1.5; margin:0 0 8px; }
+    .calc-sheet h3 { font-size:17px; margin:0 0 5px; }
+    .calc-sheet p { margin:6px 0; overflow-wrap:anywhere; }
+    .calc-formulas { border:1px solid #59615d; padding:12px 14px; margin:15px 0 20px; }
+    .calc-formulas table { border-collapse:collapse; table-layout:fixed; width:100%; }
+    .calc-formulas th,.calc-formulas td { text-align:left; vertical-align:top; padding:7px 6px; border-bottom:1px solid #cbd0cc; overflow-wrap:anywhere; }
+    .calc-formulas thead th:nth-child(1) { width:27%; }
+    .calc-formulas thead th:nth-child(2) { width:35%; }
+    .calc-formulas tbody tr:last-child :is(th,td) { border-bottom:0; }
+    .calc-constants { font-size:14px; }
+    .calc-problem { margin:0 0 17px; }
+    .calc-problem [data-sheet-slot] { --sheet-width:100%; --sheet-print-height:28mm; }
+    .calc-solution p { margin:5px 0; }
+    @media(max-width:600px) {
+      .calc-sheet { padding:18px 12px 30px; }
+      .calc-sheet h1 { font-size:21px; }
+      .calc-formulas { padding:10px 8px; }
+      html:not([data-hub-print-snapshot]) .calc-formulas table,
+      html:not([data-hub-print-snapshot]) .calc-formulas tbody,
+      html:not([data-hub-print-snapshot]) .calc-formulas tr,
+      html:not([data-hub-print-snapshot]) .calc-formulas :is(td,th[scope="row"]) { display:block; width:100%; }
+      html:not([data-hub-print-snapshot]) .calc-formulas thead { display:none; }
+      html:not([data-hub-print-snapshot]) .calc-formulas :is(td,th[scope="row"]) { padding:4px; border:0; }
+      html:not([data-hub-print-snapshot]) .calc-formulas tr { border-bottom:1px solid #cbd0cc; padding:7px 0; }
+      html:not([data-hub-print-snapshot]) .calc-formulas tr:last-child { border-bottom:0; }
+    }
+    html[data-hub-print-snapshot] .calc-sheet { max-width:none; margin:0; padding:0; }
+    html[data-hub-print-snapshot] .calc-sheet h1 { font-size:11pt; }
+    html[data-hub-print-snapshot] .calc-sheet h2,
+    html[data-hub-print-snapshot] .calc-sheet h3 { font-size:11pt; }
+    html[data-hub-print-snapshot] .calc-formulas { margin:9px 0 13px; padding:8px 10px; }
+    html[data-hub-print-snapshot] .calc-formulas th,
+    html[data-hub-print-snapshot] .calc-formulas td { font-size:10pt; padding:5px; }
+    @media print {
+      .calc-sheet { max-width:none; margin:0; padding:0; font-size:10pt; }
+      .calc-sheet h1,.calc-sheet h2,.calc-sheet h3 { font-size:11pt; }
+    }
+
+    .calc-math { margin:8px 0; max-width:100%; }
+    .calc-math mjx-container[display="true"] { text-align:left !important; margin:.45em 0 !important; }
+
+.print-check-answer{display:none}
+.calc-student-info{font-size:13px;white-space:normal}
+html[data-hub-print-snapshot] .calc-sheet .print-check-answer{display:block;font-size:10pt;line-height:1.45;margin:4px 0 6px;break-inside:avoid}
+html[data-hub-print-snapshot] .calc-sheet .calc-student-info{font-size:8pt;line-height:1.5;margin:6px 0 10px}
+html[data-hub-print-snapshot] .calc-sheet .calc-constants{font-size:10pt}
+@media print{.calc-sheet .print-check-answer{display:block;font-size:10pt;line-height:1.45;margin:4px 0 6px}.calc-sheet .calc-student-info{font-size:8pt}.calc-sheet .calc-constants{font-size:10pt}}
+
+
+    html[data-hub-print-snapshot] .calc-sheet .calc-formulas :is(td,th,.calc-constants) {font-size:10pt;}
+
+    .calc-formulas tbody th { font-weight:600; }
+    .calc-data { border-collapse:collapse; width:auto; margin:8px 0; }
+    .calc-data :is(th,td) { border:1px solid #cbd0cc; padding:4px 10px; text-align:center; }
+    .calc-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2px 14px;
+      list-style-position:inside; padding:0; margin:5px 0 10px; }
+    .calc-options li { padding:0 4px; }
+    html[data-hub-print-snapshot] :is(.calc-options,.calc-data) { font-size:10pt; line-height:1.4; }
+    html[data-hub-print-snapshot] .calc-data :is(th,td) { padding:2px 10px; }
+</style>
+</head>
+<body>
+<main class="calc-sheet" data-content-lang="th" lang="th">
+<header><h1>สูตรเคมี · ฝึกคำนวณใบที่ 2</h1><p class="calc-student-info">ชื่อ ................................................................................ ชั้น ....................</p></header>
+<section class="calc-formulas" data-guide-anchor="formula-box" data-print-keep>
+<h2>สรุปสูตรและวิธีใช้</h2>
+<p class="calc-constants">กรัมของธาตุ → โมลของธาตุ → อัตราส่วนจำนวนเต็ม → สูตรอย่างง่าย → สูตรโมเลกุลเมื่อทราบมวลต่อโมล</p>
+<table><thead><tr><th scope="col">หัวข้อ</th><th scope="col">ความสัมพันธ์</th><th scope="col">วิธีใช้</th></tr></thead><tbody>
+<tr><th scope="row">สัดส่วนคงที่</th><td>\(m_A:m_B\)</td><td>สารประกอบบริสุทธิ์ชนิดเดียวกันมีอัตราส่วนมวลของธาตุคงที่</td></tr>
+<tr><th scope="row">ร้อยละโดยมวล</th><td>\(\%A=\frac{m_A}{m_\mathrm{total}}\times100\)</td><td>ถ้าใช้ฐานสาร 100 g ตัวเลขร้อยละคือมวลของธาตุในหน่วย g</td></tr>
+<tr><th scope="row">สูตรอย่างง่าย</th><td>\(n_i=\frac{m_i}{M_i},\quad r_i=\frac{n_i}{n_\mathrm{min}}\)</td><td>อัตราส่วนจำนวนเต็มต่ำสุดของอะตอม ถ้ายังเป็นเศษส่วน ให้คูณทุกค่าด้วยตัวคูณเดียวกัน</td></tr>
+<tr><th scope="row">สูตรโมเลกุล</th><td>\(k=\frac{M_\mathrm{molecular}}{M_\mathrm{emp}}\)</td><td>คูณเลขห้อยทุกตัวด้วย k เพื่อได้จำนวนอะตอมจริงในหนึ่งโมเลกุล โดย M ทั้งคู่ใช้ g/mol</td></tr>
+</tbody></table>
+<p class="calc-constants">แก๊สที่ STP (0 °C และ 1 atm) ใช้ Vₘ = 22.4 L/mol · \(n=V/V_\mathrm m\) · \(M=m/n\) · \(M=\rho V_\mathrm m\)</p>
+<p class="calc-constants">มวลต่อโมลของอะตอม (g/mol) · H 1.00, C 12.0, N 14.0, O 16.0, Mg 24.0, P 31.0, S 32.0, Ca 40.0, Fe 56.0, Cu 64.0</p>
+</section>
+<section data-guide-anchor="fundamentals">
+<header data-print-keep><h2>พื้นฐาน · ข้อ 1–9</h2></header>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 1</h3>
+<p>แมกนีเซียมออกไซด์บริสุทธิ์มีอัตราส่วนโดยมวล Mg : O = 3 : 2 ถ้าตัวอย่างหนึ่งมี Mg 9.00 g ตัวอย่างนั้นมี O กี่กรัม</p>
+<p class="print-check-answer" data-print-check-answer="1"><strong>คำตอบตรวจตนเอง</strong> 6.00 g ของ O</p>
+<div data-sheet-slot="constant-ratio" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ใช้สัดส่วนโดยมวลคงที่" data-sheet-label-en="Use a fixed mass ratio" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ในสารประกอบเดียวกัน มวล O เป็น 2 ส่วนต่อมวล Mg ทุก 3 ส่วน วาง g Mg ไว้ด้านล่างเพื่อให้ตัดหน่วยได้</p>
+<div class="calc-math">\[\begin{aligned}m(\mathrm O)&amp;=9.00\,\mathrm{g\,Mg}\times\frac{2\,\mathrm{g\,O}}{3\,\mathrm{g\,Mg}}\\[3pt]&amp;=6.00\,\mathrm{g\,O}\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> 6.00 g ของ O</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 2</h3>
+<p>สารประกอบบริสุทธิ์ตัวอย่างหนึ่งมีมวล 10.0 g และมี C อยู่ 2.40 g จงหาร้อยละโดยมวลของ C</p>
+<p class="print-check-answer" data-print-check-answer="2"><strong>คำตอบตรวจตนเอง</strong> 24.0% โดยมวล</p>
+<div data-sheet-slot="percent-from-mass" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ร้อยละโดยมวลจากการชั่ง" data-sheet-label-en="Mass percent from measurements" style="--sheet-print-height:28mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>หารมวลของ C ด้วยมวลของตัวอย่างทั้งหมด แล้วคูณ 100</p>
+<div class="calc-math">\[\%\mathrm C=\frac{2.40\,\mathrm g}{10.0\,\mathrm g}\times100=24.0\%\]</div>
+<p><strong>คำตอบ</strong> 24.0% โดยมวล</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 3</h3>
+<p>จงหาร้อยละโดยมวลของ O ใน CaCO₃</p>
+<p class="print-check-answer" data-print-check-answer="3"><strong>คำตอบตรวจตนเอง</strong> 48.0% โดยมวล</p>
+<div data-sheet-slot="percent-from-formula" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ร้อยละโดยมวลจากสูตร" data-sheet-label-en="Mass percent from a formula" style="--sheet-print-height:33mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ใช้ CaCO₃ หนึ่งโมลเป็นฐาน ในหนึ่งหน่วยสูตรมี O สามอะตอม ดังนั้น CaCO₃ หนึ่งโมลมี O สามโมล</p>
+<div class="calc-math">\[\begin{aligned}M(\mathrm{CaCO_3}) &amp;=(40.0+12.0+3\times16.0)\,\mathrm{g/mol}=100.0\,\mathrm{g/mol}\\[3pt]\%\mathrm O &amp;= \frac{3\times16.0\,\mathrm g}{100.0\,\mathrm g}\times100=48.0\%\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> 48.0% โดยมวล</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 4</h3>
+<p>สารประกอบชนิดหนึ่งมี Mg 7.20 g และ N 2.80 g เท่านั้น จงหาสูตรอย่างง่าย</p>
+<p class="print-check-answer" data-print-check-answer="4"><strong>คำตอบตรวจตนเอง</strong> Mg₃N₂</p>
+<div data-sheet-slot="empirical-from-masses" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="สูตรอย่างง่ายจากมวลธาตุ" data-sheet-label-en="Empirical formula from element masses" style="--sheet-print-height:37mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>แปลงกรัมของแต่ละธาตุเป็นโมล แล้วหารทั้งสองค่าด้วยจำนวนโมลที่น้อยที่สุด</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm{Mg}) &amp;=7.20\,\mathrm g\times\frac{1\,\mathrm{mol}}{24.0\,\mathrm g}=0.300\,\mathrm{mol}\\[3pt]n(\mathrm N) &amp;=2.80\,\mathrm g\times\frac{1\,\mathrm{mol}}{14.0\,\mathrm g}=0.200\,\mathrm{mol}\\[3pt]\mathrm{Mg:N}&amp;=\frac{0.300}{0.200}:\frac{0.200}{0.200}=1.50:1=3:2\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> Mg₃N₂</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 5</h3>
+<p>สารประกอบชนิดหนึ่งมี Cu 88.9% และ O 11.1% โดยมวล จงหาสูตรอย่างง่าย</p>
+<p class="print-check-answer" data-print-check-answer="5"><strong>คำตอบตรวจตนเอง</strong> Cu₂O</p>
+<div data-sheet-slot="empirical-from-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="สูตรอย่างง่ายจากร้อยละ" data-sheet-label-en="Empirical formula from mass percentages" style="--sheet-print-height:38mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ตั้งฐานสารประกอบ 100 g จึงอ่านตัวเลขร้อยละเป็นกรัมของธาตุได้ จากนั้นแปลงเป็นโมลและเทียบอัตราส่วน</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm{Cu}) &amp;=\frac{88.9\,\mathrm g}{64.0\,\mathrm{g/mol}}\approx1.389\,\mathrm{mol}\\[3pt]n(\mathrm O)&amp;=\frac{11.1\,\mathrm g}{16.0\,\mathrm{g/mol}}\approx0.694\,\mathrm{mol}\\[3pt]\mathrm{Cu:O}&amp;\approx 2.00:1=2:1\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> Cu₂O</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 6</h3>
+<p>สารประกอบมวล 12.0 g ประกอบด้วย Fe และ S เท่านั้น ถ้ามี Fe 5.60 g จงหาสูตรอย่างง่าย</p>
+<p class="print-check-answer" data-print-check-answer="6"><strong>คำตอบตรวจตนเอง</strong> FeS₂</p>
+<div data-sheet-slot="empirical-by-difference" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="สูตรอย่างง่ายจากมวลส่วนที่เหลือ" data-sheet-label-en="Empirical formula using mass by difference" style="--sheet-print-height:41mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>มวลที่เหลือทั้งหมดเป็น S แปลงมวลของ Fe และ S เป็นโมล แล้วใช้เลขห้อยตามอัตราส่วนอย่างต่ำ</p>
+<div class="calc-math">\[\begin{aligned}m(\mathrm S)&amp;=12.0\,\mathrm g-5.60\,\mathrm g=6.40\,\mathrm g\\[3pt]n(\mathrm{Fe})&amp;=\frac{5.60\,\mathrm g}{56.0\,\mathrm{g/mol}}=0.100\,\mathrm{mol}\\[3pt]n(\mathrm S)&amp;=\frac{6.40\,\mathrm g}{32.0\,\mathrm{g/mol}}=0.200\,\mathrm{mol}\\[3pt]\mathrm{Fe:S}&amp;=0.100:0.200=1:2\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> FeS₂</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 7</h3>
+<p>กลูโคสมีสูตรโมเลกุล C₆H₁₂O₆ จงเขียนสูตรอย่างง่าย</p>
+<p class="print-check-answer" data-print-check-answer="7"><strong>คำตอบตรวจตนเอง</strong> CH₂O</p>
+<div data-sheet-slot="reduce-subscripts" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ย่อเลขห้อยเป็นสูตรอย่างง่าย" data-sheet-label-en="Reduce subscripts to an empirical formula" style="--sheet-print-height:28mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>สูตรอย่างง่ายแสดงอัตราส่วนจำนวนเต็มต่ำสุดของอะตอม ใช้ตัวหารร่วมมากของเลขห้อย ซึ่งในข้อนี้คือ 6</p>
+<div class="calc-math">\[\mathrm{C:H:O}=6:12:6=1:2:1\]</div>
+<p><strong>คำตอบ</strong> CH₂O</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 8</h3>
+<p>สารประกอบโมเลกุลชนิดหนึ่งมีสูตรอย่างง่าย HO และมวลต่อโมล 34.0 g/mol จงหาสูตรโมเลกุล</p>
+<p class="print-check-answer" data-print-check-answer="8"><strong>คำตอบตรวจตนเอง</strong> H₂O₂</p>
+<div data-sheet-slot="molecular-from-empirical" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="สูตรโมเลกุลจากมวลต่อโมล" data-sheet-label-en="Molecular formula from molar mass" style="--sheet-print-height:35mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>คำนวณมวลต่อโมลตามสูตร HO แล้วเทียบกับมวลต่อโมลของสาร ตัวคูณที่ได้ใช้กับเลขห้อยของทุกธาตุ</p>
+<div class="calc-math">\[\begin{aligned}M_\mathrm{emp}&amp;=(1.00+16.0)\,\mathrm{g/mol}=17.0\,\mathrm{g/mol}\\[3pt]k&amp;=\frac{34.0\,\mathrm{g/mol}}{17.0\,\mathrm{g/mol}}=2\\[3pt](\mathrm{HO})_2&amp;\longrightarrow\mathrm{H_2O_2}\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> H₂O₂</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 9</h3>
+<p>สารประกอบโมเลกุลมี P 43.66% และ O 56.34% โดยมวล ถ้ามวลต่อโมลของสารเป็น 284 g/mol จงหาสูตรโมเลกุล</p>
+<p class="print-check-answer" data-print-check-answer="9"><strong>คำตอบตรวจตนเอง</strong> P₄O₁₀</p>
+<div data-sheet-slot="molecular-from-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="จากร้อยละโดยมวลสู่สูตรโมเลกุล" data-sheet-label-en="From mass percentages to a molecular formula" style="--sheet-print-height:47mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ใช้ฐาน 100 g เพื่อหาสูตรอย่างง่าย ค่าใกล้ 2.50 คือ 5/2 จึงคูณอัตราส่วนทุกตัวด้วย 2 แล้วใช้มวลต่อโมลหาเลขห้อยจริง</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm P)&amp;=\frac{43.66\,\mathrm g}{31.0\,\mathrm{g/mol}}\approx1.408\,\mathrm{mol}\\[3pt]n(\mathrm O)&amp;=\frac{56.34\,\mathrm g}{16.0\,\mathrm{g/mol}}\approx3.521\,\mathrm{mol}\\[3pt]\mathrm{P:O}&amp;\approx1:2.50=2:5\\[3pt]M_\mathrm{emp}&amp;=(2\times31.0+5\times16.0)\,\mathrm{g/mol}=142\,\mathrm{g/mol}\\[3pt]k&amp;=\frac{284\,\mathrm{g/mol}}{142\,\mathrm{g/mol}}=2\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> P₄O₁₀</p>
+</div></div></div></div>
+</section>
+<section data-guide-anchor="multiple-choice">
+<header data-print-keep><h2>แนว A-Level · ข้อ 10–13</h2><p>เลือกคำตอบที่ถูกต้องเพียงข้อเดียว</p></header>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 10</h3>
+<p>ตารางแสดงมวลของ Mg และ O ในตัวอย่างสี่ตัวอย่าง คู่ใดมีอัตราส่วนโดยมวล Mg : O เท่ากัน</p>
+<table class="calc-data"><thead><tr><th scope="col">ตัวอย่าง</th><th scope="col">มวล Mg (g)</th><th scope="col">มวล O (g)</th></tr></thead><tbody>
+<tr><th scope="row">A</th><td>4.80</td><td>3.20</td></tr>
+<tr><th scope="row">B</th><td>7.20</td><td>4.80</td></tr>
+<tr><th scope="row">C</th><td>4.80</td><td>6.40</td></tr>
+<tr><th scope="row">D</th><td>8.40</td><td>4.80</td></tr>
+</tbody></table>
+<ol class="calc-options"><li>A และ C</li><li>A และ B</li><li>B และ C</li><li>B และ D</li><li>C และ D</li></ol>
+<p class="print-check-answer" data-print-check-answer="10"><strong>คำตอบตรวจตนเอง</strong> ตัวเลือก 2 · A และ B</p>
+<div data-sheet-slot="compare-mass-ratios" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="เปรียบเทียบอัตราส่วนจากตาราง" data-sheet-label-en="Compare mass ratios from a table" style="--sheet-print-height:37mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ใช้สัดส่วนเดียวกันทั้งตาราง โดยนำมวล Mg หารด้วยมวล O ทีละตัวอย่าง ค่าที่เท่ากันแสดงว่าอัตราส่วนโดยมวลเท่ากัน</p>
+<div class="calc-math">\[\begin{gathered}\mathrm A:\ \frac{4.80}{3.20}=1.50 \qquad \mathrm B:\ \frac{7.20}{4.80}=1.50\\[3pt]\mathrm C:\ \frac{4.80}{6.40}=0.750 \qquad \mathrm D:\ \frac{8.40}{4.80}=1.75\end{gathered}\]</div>
+<p><strong>คำตอบ</strong> ตัวเลือก 2 · A และ B</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 11</h3>
+<p>ออกไซด์ของเหล็กตัวอย่างหนึ่งประกอบด้วย Fe 5.60 g และ O 2.40 g สูตรอย่างง่ายตรงกับข้อใด</p>
+<ol class="calc-options"><li>FeO</li><li>FeO₂</li><li>Fe₂O₃</li><li>Fe₃O₂</li><li>FeO₃</li></ol>
+<p class="print-check-answer" data-print-check-answer="11"><strong>คำตอบตรวจตนเอง</strong> ตัวเลือก 3 · Fe₂O₃</p>
+<div data-sheet-slot="fractional-mole-ratio" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ทำอัตราส่วนโมลให้เป็นจำนวนเต็ม" data-sheet-label-en="Convert a fractional mole ratio to whole numbers" style="--sheet-print-height:40mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>หาอัตราส่วนจากโมลของอะตอม จะได้ 1 : 1.50 ซึ่งเท่ากับ 1 : 3/2 จึงคูณทั้งคู่ด้วย 2 เพื่อรักษาสัดส่วนเดิม</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm{Fe})&amp;=\frac{5.60\,\mathrm g}{56.0\,\mathrm{g/mol}}=0.100\,\mathrm{mol}\\[3pt]n(\mathrm O)&amp;=\frac{2.40\,\mathrm g}{16.0\,\mathrm{g/mol}}=0.150\,\mathrm{mol}\\[3pt]\mathrm{Fe:O}&amp;=0.100:0.150=1:1.50=2:3\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> ตัวเลือก 3 · Fe₂O₃</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 12</h3>
+<p>สารประกอบมีเพียง C, H และ O โดยมี C 54.55% โดยมวล และอัตราส่วนโดยโมล C : O = 2 : 1 ข้อใดคือมวลต่อโมลตามสูตรอย่างง่าย (g/mol)</p>
+<ol class="calc-options"><li>30.0</li><li>42.0</li><li>58.0</li><li>88.0</li><li>44.0</li></ol>
+<p class="print-check-answer" data-print-check-answer="12"><strong>คำตอบตรวจตนเอง</strong> ตัวเลือก 5 · 44.0 g/mol</p>
+<div data-sheet-slot="percent-and-mole-ratio" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="เชื่อมร้อยละกับอัตราส่วนโมล" data-sheet-label-en="Combine mass percentage and mole ratio" style="--sheet-print-height:53mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ตั้งฐานให้มี C 2 mol และ O 1 mol ร้อยละ C ให้มวลรวมของสารในฐานนี้ หักมวล C และ O เพื่อหา H แล้วตรวจว่าอัตราส่วนสุดท้ายย่อได้อีกหรือไม่</p>
+<div class="calc-math">\[\begin{aligned}m(\mathrm C)&amp;=2\,\mathrm{mol}\times12.0\,\mathrm{g/mol}=24.0\,\mathrm g\\[3pt]m(\mathrm O)&amp;=1\,\mathrm{mol}\times16.0\,\mathrm{g/mol}=16.0\,\mathrm g\\[3pt]m_\mathrm{total}&amp;=\frac{24.0\,\mathrm g}{0.5455}\approx44.0\,\mathrm g\\[3pt]n(\mathrm H)&amp;\approx\frac{(44.0-24.0-16.0)\,\mathrm g}{1.00\,\mathrm{g/mol}}=4.0\,\mathrm{mol}\\[3pt]M_\mathrm{emp}(\mathrm{C_2H_4O})&amp;=(2\times12.0+4\times1.00+16.0)\,\mathrm{g/mol}=44.0\,\mathrm{g/mol}\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> ตัวเลือก 5 · 44.0 g/mol</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 13</h3>
+<p>แก๊สบริสุทธิ์ชนิดหนึ่งมีสูตรอย่างง่าย CH₂ และความหนาแน่น 1.875 g/L ที่ STP สูตรโมเลกุลตรงกับข้อใด</p>
+<ol class="calc-options"><li>CH₂</li><li>C₂H₄</li><li>C₃H₈</li><li>C₃H₆</li><li>C₄H₈</li></ol>
+<p class="print-check-answer" data-print-check-answer="13"><strong>คำตอบตรวจตนเอง</strong> ตัวเลือก 4 · C₃H₆</p>
+<div data-sheet-slot="molecular-from-density" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หาสูตรโมเลกุลจากความหนาแน่น" data-sheet-label-en="Find a molecular formula using gas density" style="--sheet-print-height:43mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ความหนาแน่นบอกมวลต่อหนึ่งลิตร คูณด้วยปริมาตรต่อโมลที่ STP ให้หน่วย L ตัดกันและเหลือ g/mol แล้วเทียบกับมวลต่อโมลตามสูตรอย่างง่าย</p>
+<div class="calc-math">\[\begin{aligned}M&amp;=\frac{1.875\,\mathrm g}{1\,\mathrm L}\times\frac{22.4\,\mathrm L}{1\,\mathrm{mol}}=42.0\,\mathrm{g/mol}\\[3pt]M_\mathrm{emp}&amp;=(12.0+2\times1.00)\,\mathrm{g/mol}=14.0\,\mathrm{g/mol}\\[3pt]k&amp;=\frac{42.0}{14.0}=3\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> ตัวเลือก 4 · C₃H₆</p>
+</div></div></div></div>
+</section>
+<section data-guide-anchor="numeric-response">
+<header data-print-keep><h2>แนว A-Level · ข้อ 14–15</h2><p>เขียนคำตอบเป็นตัวเลข</p></header>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 14</h3>
+<p>เมื่อไฮโดรคาร์บอนบริสุทธิ์ชนิดหนึ่งเผาไหม้สมบูรณ์ จะได้ CO₂ 8.80 g และ H₂O 4.50 g จงหาเลขห้อยของ H ในสูตรอย่างง่าย</p>
+<p class="print-check-answer" data-print-check-answer="14"><strong>คำตอบตรวจตนเอง</strong> 5 · สูตรอย่างง่าย C₂H₅</p>
+<div data-sheet-slot="combustion-empirical" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="อ่านสูตรจากผลิตภัณฑ์การเผาไหม้" data-sheet-label-en="Find an empirical formula from combustion products" style="--sheet-print-height:52mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>C ทั้งหมดของตัวอย่างไปอยู่ใน CO₂ ส่วน H ทั้งหมดไปอยู่ใน H₂O ใช้เลขห้อยของผลิตภัณฑ์แปลงโมลของโมเลกุลเป็นโมลของอะตอม</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm{CO_2})&amp;=\frac{8.80\,\mathrm g}{44.0\,\mathrm{g/mol}}=0.200\,\mathrm{mol}\\[3pt]n(\mathrm C)&amp;=0.200\,\mathrm{mol\,CO_2}\times\frac{1\,\mathrm{mol\,C}}{1\,\mathrm{mol\,CO_2}}=0.200\,\mathrm{mol\,C}\\[3pt]n(\mathrm{H_2O})&amp;=\frac{4.50\,\mathrm g}{18.0\,\mathrm{g/mol}}=0.250\,\mathrm{mol}\\[3pt]n(\mathrm H)&amp;=0.250\,\mathrm{mol\,H_2O}\times\frac{2\,\mathrm{mol\,H}}{1\,\mathrm{mol\,H_2O}}=0.500\,\mathrm{mol\,H}\\[3pt]\mathrm{C:H}&amp;=0.200:0.500=1:2.50=2:5\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> 5 · สูตรอย่างง่าย C₂H₅</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 15</h3>
+<p>แก๊สไฮโดรคาร์บอนบริสุทธิ์มีสูตรโมเลกุล CₓHᵧ โดยมี C 92.31% โดยมวล แก๊ส 1.95 g มีปริมาตร 1.68 L ที่ STP จงหาค่า x + y</p>
+<p class="print-check-answer" data-print-check-answer="15"><strong>คำตอบตรวจตนเอง</strong> 4 · สูตรโมเลกุล C₂H₂</p>
+<div data-sheet-slot="molecular-from-gas-volume" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="รวมร้อยละโดยมวลกับปริมาตรที่ STP" data-sheet-label-en="Combine mass percentage with STP volume" style="--sheet-print-height:57mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ตั้งฐานสาร 100 g เพื่อหาสูตรอย่างง่าย โดยใช้มวลส่วนที่เหลือเป็น H อีกทางหนึ่งใช้ปริมาตรที่ STP หาโมลของแก๊ส แล้วนำไปคำนวณมวลต่อโมลเพื่อหาตัวคูณ</p>
+<div class="calc-math">\[\begin{aligned}\%\mathrm H&amp;=100.00\%-92.31\%=7.69\%\\[3pt]\mathrm{C:H}&amp;=\frac{92.31\,\mathrm g}{12.0\,\mathrm{g/mol}}:\frac{7.69\,\mathrm g}{1.00\,\mathrm{g/mol}}\approx1:1\\[3pt]n_\mathrm{gas}&amp;=1.68\,\mathrm L\times\frac{1\,\mathrm{mol}}{22.4\,\mathrm L}=0.0750\,\mathrm{mol}\\[3pt]M&amp;=\frac{1.95\,\mathrm g}{0.0750\,\mathrm{mol}}=26.0\,\mathrm{g/mol}\\[3pt]k&amp;=\frac{26.0\,\mathrm{g/mol}}{(12.0+1.00)\,\mathrm{g/mol}}=2\\[3pt]\mathrm{CH}&amp;\longrightarrow\mathrm{C_2H_2},\qquad x+y=2+2=4\end{aligned}\]</div>
+<p><strong>คำตอบ</strong> 4 · สูตรโมเลกุล C₂H₂</p>
+</div></div></div></div>
+</section>
+</main>
+<main class="calc-sheet" data-content-lang="en" lang="en">
+<header><h1>Chemical Formulas · Calculation Practice 2</h1><p class="calc-student-info">Name ................................................................................ Class ....................</p></header>
+<section class="calc-formulas" data-guide-anchor="formula-box" data-print-keep>
+<h2>Formulas and method</h2>
+<p class="calc-constants">Element masses → moles of each element → whole-number ratio → empirical formula → molecular formula when molar mass is known.</p>
+<table><thead><tr><th scope="col">Topic</th><th scope="col">Relationship</th><th scope="col">How to use it</th></tr></thead><tbody>
+<tr><th scope="row">Definite proportions</th><td>\(m_A:m_B\)</td><td>A given pure compound has a fixed element mass ratio.</td></tr>
+<tr><th scope="row">Mass percent</th><td>\(\%A=\frac{m_A}{m_\mathrm{total}}\times100\)</td><td>On a 100 g basis, each mass percent gives the mass of that element in grams.</td></tr>
+<tr><th scope="row">Empirical formula</th><td>\(n_i=\frac{m_i}{M_i},\quad r_i=\frac{n_i}{n_\mathrm{min}}\)</td><td>The smallest whole-number ratio of atoms. If fractions remain, multiply all entries by the same factor.</td></tr>
+<tr><th scope="row">Molecular formula</th><td>\(k=\frac{M_\mathrm{molecular}}{M_\mathrm{emp}}\)</td><td>Multiply all subscripts by k to get the actual atom counts in a molecule. Use g/mol for both M values.</td></tr>
+</tbody></table>
+<p class="calc-constants">For gases at STP (0 °C and 1 atm), use Vₘ = 22.4 L/mol. · \(n=V/V_\mathrm m\) · \(M=m/n\) · \(M=\rho V_\mathrm m\)</p>
+<p class="calc-constants">Atomic molar masses (g/mol) · H 1.00, C 12.0, N 14.0, O 16.0, Mg 24.0, P 31.0, S 32.0, Ca 40.0, Fe 56.0, Cu 64.0</p>
+</section>
+<section data-guide-anchor="fundamentals">
+<header data-print-keep><h2>Fundamentals · Questions 1–9</h2></header>
+<div class="calc-problem" data-print-keep>
+<h3>Question 1</h3>
+<p>Pure magnesium oxide has a Mg : O mass ratio of 3 : 2. If a sample contains 9.00 g of Mg, how many grams of O does it contain?</p>
+<p class="print-check-answer" data-print-check-answer="1"><strong>Self-check answer</strong> 6.00 g of O</p>
+<div data-sheet-slot="constant-ratio" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ใช้สัดส่วนโดยมวลคงที่" data-sheet-label-en="Use a fixed mass ratio" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>In the same compound, there are 2 parts by mass of O for every 3 parts of Mg. Put g Mg in the denominator so it cancels.</p>
+<div class="calc-math">\[\begin{aligned}m(\mathrm O)&amp;=9.00\,\mathrm{g\,Mg}\times\frac{2\,\mathrm{g\,O}}{3\,\mathrm{g\,Mg}}\\[3pt]&amp;=6.00\,\mathrm{g\,O}\end{aligned}\]</div>
+<p><strong>Answer</strong> 6.00 g of O</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 2</h3>
+<p>A pure compound has a sample mass of 10.0 g and contains 2.40 g of C. Find the mass percent of C.</p>
+<p class="print-check-answer" data-print-check-answer="2"><strong>Self-check answer</strong> 24.0% by mass</p>
+<div data-sheet-slot="percent-from-mass" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ร้อยละโดยมวลจากการชั่ง" data-sheet-label-en="Mass percent from measurements" style="--sheet-print-height:28mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Divide the mass of C by the mass of the whole sample, then multiply by 100.</p>
+<div class="calc-math">\[\%\mathrm C=\frac{2.40\,\mathrm g}{10.0\,\mathrm g}\times100=24.0\%\]</div>
+<p><strong>Answer</strong> 24.0% by mass</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 3</h3>
+<p>Find the mass percent of O in CaCO₃.</p>
+<p class="print-check-answer" data-print-check-answer="3"><strong>Self-check answer</strong> 48.0% by mass</p>
+<div data-sheet-slot="percent-from-formula" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ร้อยละโดยมวลจากสูตร" data-sheet-label-en="Mass percent from a formula" style="--sheet-print-height:33mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Use one mole of CaCO₃ as the basis. Each formula unit contains three O atoms, so one mole of CaCO₃ contains three moles of O atoms.</p>
+<div class="calc-math">\[\begin{aligned}M(\mathrm{CaCO_3}) &amp;=(40.0+12.0+3\times16.0)\,\mathrm{g/mol}=100.0\,\mathrm{g/mol}\\[3pt]\%\mathrm O &amp;= \frac{3\times16.0\,\mathrm g}{100.0\,\mathrm g}\times100=48.0\%\end{aligned}\]</div>
+<p><strong>Answer</strong> 48.0% by mass</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 4</h3>
+<p>A compound contains only 7.20 g of Mg and 2.80 g of N. Find its empirical formula.</p>
+<p class="print-check-answer" data-print-check-answer="4"><strong>Self-check answer</strong> Mg₃N₂</p>
+<div data-sheet-slot="empirical-from-masses" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="สูตรอย่างง่ายจากมวลธาตุ" data-sheet-label-en="Empirical formula from element masses" style="--sheet-print-height:37mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Convert grams of each element to moles, then divide both amounts by the smaller amount in moles.</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm{Mg}) &amp;=7.20\,\mathrm g\times\frac{1\,\mathrm{mol}}{24.0\,\mathrm g}=0.300\,\mathrm{mol}\\[3pt]n(\mathrm N) &amp;=2.80\,\mathrm g\times\frac{1\,\mathrm{mol}}{14.0\,\mathrm g}=0.200\,\mathrm{mol}\\[3pt]\mathrm{Mg:N}&amp;=\frac{0.300}{0.200}:\frac{0.200}{0.200}=1.50:1=3:2\end{aligned}\]</div>
+<p><strong>Answer</strong> Mg₃N₂</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 5</h3>
+<p>A compound contains 88.9% Cu and 11.1% O by mass. Find its empirical formula.</p>
+<p class="print-check-answer" data-print-check-answer="5"><strong>Self-check answer</strong> Cu₂O</p>
+<div data-sheet-slot="empirical-from-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="สูตรอย่างง่ายจากร้อยละ" data-sheet-label-en="Empirical formula from mass percentages" style="--sheet-print-height:38mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Use a 100 g basis so the mass percentages give the element masses in grams. Convert to moles and compare the amounts.</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm{Cu}) &amp;=\frac{88.9\,\mathrm g}{64.0\,\mathrm{g/mol}}\approx1.389\,\mathrm{mol}\\[3pt]n(\mathrm O)&amp;=\frac{11.1\,\mathrm g}{16.0\,\mathrm{g/mol}}\approx0.694\,\mathrm{mol}\\[3pt]\mathrm{Cu:O}&amp;\approx 2.00:1=2:1\end{aligned}\]</div>
+<p><strong>Answer</strong> Cu₂O</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 6</h3>
+<p>A 12.0 g compound contains only Fe and S. If it contains 5.60 g of Fe, find its empirical formula.</p>
+<p class="print-check-answer" data-print-check-answer="6"><strong>Self-check answer</strong> FeS₂</p>
+<div data-sheet-slot="empirical-by-difference" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="สูตรอย่างง่ายจากมวลส่วนที่เหลือ" data-sheet-label-en="Empirical formula using mass by difference" style="--sheet-print-height:41mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>The remaining mass belongs entirely to S. Convert the masses of Fe and S to moles and use the simplest ratio for the subscripts.</p>
+<div class="calc-math">\[\begin{aligned}m(\mathrm S)&amp;=12.0\,\mathrm g-5.60\,\mathrm g=6.40\,\mathrm g\\[3pt]n(\mathrm{Fe})&amp;=\frac{5.60\,\mathrm g}{56.0\,\mathrm{g/mol}}=0.100\,\mathrm{mol}\\[3pt]n(\mathrm S)&amp;=\frac{6.40\,\mathrm g}{32.0\,\mathrm{g/mol}}=0.200\,\mathrm{mol}\\[3pt]\mathrm{Fe:S}&amp;=0.100:0.200=1:2\end{aligned}\]</div>
+<p><strong>Answer</strong> FeS₂</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 7</h3>
+<p>Glucose has molecular formula C₆H₁₂O₆. Write its empirical formula.</p>
+<p class="print-check-answer" data-print-check-answer="7"><strong>Self-check answer</strong> CH₂O</p>
+<div data-sheet-slot="reduce-subscripts" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ย่อเลขห้อยเป็นสูตรอย่างง่าย" data-sheet-label-en="Reduce subscripts to an empirical formula" style="--sheet-print-height:28mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>The empirical formula gives the smallest whole-number ratio of atoms. Divide each subscript by their greatest common divisor, which is 6 here.</p>
+<div class="calc-math">\[\mathrm{C:H:O}=6:12:6=1:2:1\]</div>
+<p><strong>Answer</strong> CH₂O</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 8</h3>
+<p>A molecular compound has empirical formula HO and a molar mass of 34.0 g/mol. Find the molecular formula.</p>
+<p class="print-check-answer" data-print-check-answer="8"><strong>Self-check answer</strong> H₂O₂</p>
+<div data-sheet-slot="molecular-from-empirical" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="สูตรโมเลกุลจากมวลต่อโมล" data-sheet-label-en="Molecular formula from molar mass" style="--sheet-print-height:35mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Calculate the molar mass for HO and compare it with the compound’s molar mass. Apply the resulting multiplier to every subscript.</p>
+<div class="calc-math">\[\begin{aligned}M_\mathrm{emp}&amp;=(1.00+16.0)\,\mathrm{g/mol}=17.0\,\mathrm{g/mol}\\[3pt]k&amp;=\frac{34.0\,\mathrm{g/mol}}{17.0\,\mathrm{g/mol}}=2\\[3pt](\mathrm{HO})_2&amp;\longrightarrow\mathrm{H_2O_2}\end{aligned}\]</div>
+<p><strong>Answer</strong> H₂O₂</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 9</h3>
+<p>A molecular compound contains 43.66% P and 56.34% O by mass. Its molar mass is 284 g/mol. Find the molecular formula.</p>
+<p class="print-check-answer" data-print-check-answer="9"><strong>Self-check answer</strong> P₄O₁₀</p>
+<div data-sheet-slot="molecular-from-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="จากร้อยละโดยมวลสู่สูตรโมเลกุล" data-sheet-label-en="From mass percentages to a molecular formula" style="--sheet-print-height:47mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Use a 100 g basis to find the empirical formula. A ratio close to 2.50 is 5/2, so multiply both entries by 2, then use the molar mass to find the actual subscripts.</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm P)&amp;=\frac{43.66\,\mathrm g}{31.0\,\mathrm{g/mol}}\approx1.408\,\mathrm{mol}\\[3pt]n(\mathrm O)&amp;=\frac{56.34\,\mathrm g}{16.0\,\mathrm{g/mol}}\approx3.521\,\mathrm{mol}\\[3pt]\mathrm{P:O}&amp;\approx1:2.50=2:5\\[3pt]M_\mathrm{emp}&amp;=(2\times31.0+5\times16.0)\,\mathrm{g/mol}=142\,\mathrm{g/mol}\\[3pt]k&amp;=\frac{284\,\mathrm{g/mol}}{142\,\mathrm{g/mol}}=2\end{aligned}\]</div>
+<p><strong>Answer</strong> P₄O₁₀</p>
+</div></div></div></div>
+</section>
+<section data-guide-anchor="multiple-choice">
+<header data-print-keep><h2>A-Level style · Questions 10–13</h2><p>Choose one correct answer.</p></header>
+<div class="calc-problem" data-print-keep>
+<h3>Question 10</h3>
+<p>The table gives the masses of Mg and O in four samples. Which pair has the same Mg : O mass ratio?</p>
+<table class="calc-data"><thead><tr><th scope="col">Sample</th><th scope="col">Mass of Mg (g)</th><th scope="col">Mass of O (g)</th></tr></thead><tbody>
+<tr><th scope="row">A</th><td>4.80</td><td>3.20</td></tr>
+<tr><th scope="row">B</th><td>7.20</td><td>4.80</td></tr>
+<tr><th scope="row">C</th><td>4.80</td><td>6.40</td></tr>
+<tr><th scope="row">D</th><td>8.40</td><td>4.80</td></tr>
+</tbody></table>
+<ol class="calc-options"><li>A and C</li><li>A and B</li><li>B and C</li><li>B and D</li><li>C and D</li></ol>
+<p class="print-check-answer" data-print-check-answer="10"><strong>Self-check answer</strong> Option 2 · A and B</p>
+<div data-sheet-slot="compare-mass-ratios" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="เปรียบเทียบอัตราส่วนจากตาราง" data-sheet-label-en="Compare mass ratios from a table" style="--sheet-print-height:37mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Use the same ratio throughout the table. Divide the Mg mass by the O mass for each sample. Equal quotients mean equal mass ratios.</p>
+<div class="calc-math">\[\begin{gathered}\mathrm A:\ \frac{4.80}{3.20}=1.50 \qquad \mathrm B:\ \frac{7.20}{4.80}=1.50\\[3pt]\mathrm C:\ \frac{4.80}{6.40}=0.750 \qquad \mathrm D:\ \frac{8.40}{4.80}=1.75\end{gathered}\]</div>
+<p><strong>Answer</strong> Option 2 · A and B</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 11</h3>
+<p>An iron oxide sample contains 5.60 g of Fe and 2.40 g of O. Which is its empirical formula?</p>
+<ol class="calc-options"><li>FeO</li><li>FeO₂</li><li>Fe₂O₃</li><li>Fe₃O₂</li><li>FeO₃</li></ol>
+<p class="print-check-answer" data-print-check-answer="11"><strong>Self-check answer</strong> Option 3 · Fe₂O₃</p>
+<div data-sheet-slot="fractional-mole-ratio" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ทำอัตราส่วนโมลให้เป็นจำนวนเต็ม" data-sheet-label-en="Convert a fractional mole ratio to whole numbers" style="--sheet-print-height:40mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Use the moles of atoms to obtain 1 : 1.50, which is 1 : 3/2. Multiply both entries by 2 to preserve the ratio.</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm{Fe})&amp;=\frac{5.60\,\mathrm g}{56.0\,\mathrm{g/mol}}=0.100\,\mathrm{mol}\\[3pt]n(\mathrm O)&amp;=\frac{2.40\,\mathrm g}{16.0\,\mathrm{g/mol}}=0.150\,\mathrm{mol}\\[3pt]\mathrm{Fe:O}&amp;=0.100:0.150=1:1.50=2:3\end{aligned}\]</div>
+<p><strong>Answer</strong> Option 3 · Fe₂O₃</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 12</h3>
+<p>A compound contains only C, H and O. It is 54.55% C by mass, and its C : O mole ratio is 2 : 1. Which is the molar mass corresponding to its empirical formula (g/mol)?</p>
+<ol class="calc-options"><li>30.0</li><li>42.0</li><li>58.0</li><li>88.0</li><li>44.0</li></ol>
+<p class="print-check-answer" data-print-check-answer="12"><strong>Self-check answer</strong> Option 5 · 44.0 g/mol</p>
+<div data-sheet-slot="percent-and-mole-ratio" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="เชื่อมร้อยละกับอัตราส่วนโมล" data-sheet-label-en="Combine mass percentage and mole ratio" style="--sheet-print-height:53mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Use a basis of 2 mol C and 1 mol O. The carbon percentage gives the total mass on this basis. Subtract C and O to obtain H, then check whether the final ratio can be reduced.</p>
+<div class="calc-math">\[\begin{aligned}m(\mathrm C)&amp;=2\,\mathrm{mol}\times12.0\,\mathrm{g/mol}=24.0\,\mathrm g\\[3pt]m(\mathrm O)&amp;=1\,\mathrm{mol}\times16.0\,\mathrm{g/mol}=16.0\,\mathrm g\\[3pt]m_\mathrm{total}&amp;=\frac{24.0\,\mathrm g}{0.5455}\approx44.0\,\mathrm g\\[3pt]n(\mathrm H)&amp;\approx\frac{(44.0-24.0-16.0)\,\mathrm g}{1.00\,\mathrm{g/mol}}=4.0\,\mathrm{mol}\\[3pt]M_\mathrm{emp}(\mathrm{C_2H_4O})&amp;=(2\times12.0+4\times1.00+16.0)\,\mathrm{g/mol}=44.0\,\mathrm{g/mol}\end{aligned}\]</div>
+<p><strong>Answer</strong> Option 5 · 44.0 g/mol</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 13</h3>
+<p>A pure gas has empirical formula CH₂ and a density of 1.875 g/L at STP. Which is its molecular formula?</p>
+<ol class="calc-options"><li>CH₂</li><li>C₂H₄</li><li>C₃H₈</li><li>C₃H₆</li><li>C₄H₈</li></ol>
+<p class="print-check-answer" data-print-check-answer="13"><strong>Self-check answer</strong> Option 4 · C₃H₆</p>
+<div data-sheet-slot="molecular-from-density" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หาสูตรโมเลกุลจากความหนาแน่น" data-sheet-label-en="Find a molecular formula using gas density" style="--sheet-print-height:43mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Density gives mass per litre. Multiply by the molar volume at STP so litres cancel and g/mol remains, then compare with the empirical-formula molar mass.</p>
+<div class="calc-math">\[\begin{aligned}M&amp;=\frac{1.875\,\mathrm g}{1\,\mathrm L}\times\frac{22.4\,\mathrm L}{1\,\mathrm{mol}}=42.0\,\mathrm{g/mol}\\[3pt]M_\mathrm{emp}&amp;=(12.0+2\times1.00)\,\mathrm{g/mol}=14.0\,\mathrm{g/mol}\\[3pt]k&amp;=\frac{42.0}{14.0}=3\end{aligned}\]</div>
+<p><strong>Answer</strong> Option 4 · C₃H₆</p>
+</div></div></div></div>
+</section>
+<section data-guide-anchor="numeric-response">
+<header data-print-keep><h2>A-Level style · Questions 14–15</h2><p>Give each answer as a number.</p></header>
+<div class="calc-problem" data-print-keep>
+<h3>Question 14</h3>
+<p>Complete combustion of a pure hydrocarbon produces 8.80 g of CO₂ and 4.50 g of H₂O. Find the H subscript in the empirical formula.</p>
+<p class="print-check-answer" data-print-check-answer="14"><strong>Self-check answer</strong> 5 · Empirical formula C₂H₅</p>
+<div data-sheet-slot="combustion-empirical" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="อ่านสูตรจากผลิตภัณฑ์การเผาไหม้" data-sheet-label-en="Find an empirical formula from combustion products" style="--sheet-print-height:52mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>All C from the sample is in CO₂ and all H is in H₂O. Use the product subscripts to convert moles of molecules to moles of atoms.</p>
+<div class="calc-math">\[\begin{aligned}n(\mathrm{CO_2})&amp;=\frac{8.80\,\mathrm g}{44.0\,\mathrm{g/mol}}=0.200\,\mathrm{mol}\\[3pt]n(\mathrm C)&amp;=0.200\,\mathrm{mol\,CO_2}\times\frac{1\,\mathrm{mol\,C}}{1\,\mathrm{mol\,CO_2}}=0.200\,\mathrm{mol\,C}\\[3pt]n(\mathrm{H_2O})&amp;=\frac{4.50\,\mathrm g}{18.0\,\mathrm{g/mol}}=0.250\,\mathrm{mol}\\[3pt]n(\mathrm H)&amp;=0.250\,\mathrm{mol\,H_2O}\times\frac{2\,\mathrm{mol\,H}}{1\,\mathrm{mol\,H_2O}}=0.500\,\mathrm{mol\,H}\\[3pt]\mathrm{C:H}&amp;=0.200:0.500=1:2.50=2:5\end{aligned}\]</div>
+<p><strong>Answer</strong> 5 · Empirical formula C₂H₅</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 15</h3>
+<p>A pure hydrocarbon gas has molecular formula CₓHᵧ and contains 92.31% C by mass. A 1.95 g sample occupies 1.68 L at STP. Find x + y.</p>
+<p class="print-check-answer" data-print-check-answer="15"><strong>Self-check answer</strong> 4 · Molecular formula C₂H₂</p>
+<div data-sheet-slot="molecular-from-gas-volume" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="รวมร้อยละโดยมวลกับปริมาตรที่ STP" data-sheet-label-en="Combine mass percentage with STP volume" style="--sheet-print-height:57mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Use a 100 g basis to find the empirical formula from the percentages, assigning the remaining mass to H. Separately, use the STP volume to find the moles of gas and calculate its molar mass to obtain the multiplier.</p>
+<div class="calc-math">\[\begin{aligned}\%\mathrm H&amp;=100.00\%-92.31\%=7.69\%\\[3pt]\mathrm{C:H}&amp;=\frac{92.31\,\mathrm g}{12.0\,\mathrm{g/mol}}:\frac{7.69\,\mathrm g}{1.00\,\mathrm{g/mol}}\approx1:1\\[3pt]n_\mathrm{gas}&amp;=1.68\,\mathrm L\times\frac{1\,\mathrm{mol}}{22.4\,\mathrm L}=0.0750\,\mathrm{mol}\\[3pt]M&amp;=\frac{1.95\,\mathrm g}{0.0750\,\mathrm{mol}}=26.0\,\mathrm{g/mol}\\[3pt]k&amp;=\frac{26.0\,\mathrm{g/mol}}{(12.0+1.00)\,\mathrm{g/mol}}=2\\[3pt]\mathrm{CH}&amp;\longrightarrow\mathrm{C_2H_2},\qquad x+y=2+2=4\end{aligned}\]</div>
+<p><strong>Answer</strong> 4 · Molecular formula C₂H₂</p>
+</div></div></div></div>
+</section>
+</main>
+</body></html>

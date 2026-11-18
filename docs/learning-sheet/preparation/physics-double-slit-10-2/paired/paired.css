@@ -203,3 +203,13 @@ body:not(.answers-on) [data-revision-edition="blank"],body.answers-on [data-revi
 /* Two diagram-heavy examples share the last A4 Notes page. */
 .shared-note[data-note-key="examples-5"] .example,
 .shared-note[data-note-key="examples-6"] .example{margin:1.8mm 0;padding:1.7mm 2.1mm}
+
+.shared-note [data-example-number="11"] .equation-start {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  column-gap:3mm;
+  margin:1mm 0;
+}
+.shared-note [data-example-number="11"] .equation-start .derivation-line{margin:0}
+.shared-note [data-example-number="11"] .math-line{margin:.5mm 0}

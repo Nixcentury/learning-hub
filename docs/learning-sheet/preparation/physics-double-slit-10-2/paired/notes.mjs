@@ -14,24 +14,24 @@ const separationExplanation = {
     'ระยะห่างแถบสว่างติดกัน 1 ช่วงคือ 4.0 มม. สว่างอันดับ 1 จึงห่างจากกลาง 4.0 มม. มืดอันดับ 2 อยู่กึ่งกลางระหว่างสว่างอันดับ 1 กับ 2 จึงห่างจากกลาง 1.5 ช่วง หรือ 6.0 มม. ส่วนสว่างอันดับ 3 ห่างจากกลาง 3 ช่วง หรือ 12 มม.',
   ],
   en: [
-    'Set the central bright fringe at zero. Coordinates are positive to the right and negative to the left. Find both coordinates first, then take the absolute difference to get the separation.',
-    'One bright-fringe spacing is 4.0 mm. Bright order 1 is 4.0 mm from the centre. Dark order 2 is halfway between bright orders 1 and 2, so it is 1.5 spacings, or 6.0 mm, from the centre. Bright order 3 is three spacings, or 12 mm, from the centre.',
+    'Set the central bright fringe at zero. Coordinates are positive to the right and negative to the left. Take the absolute difference between the two coordinates.',
+    'Each spacing is 4.0 mm. Bright orders 1 and 3 are one and three spacings from the centre (4.0 and 12 mm). Dark order 2 is halfway between bright orders 1 and 2, or 1.5 spacings from the centre (6.0 mm).',
   ],
 };
 const separationCases = [
   {
     th: '① ด้านเดียวกัน · เลือกสว่างอันดับ 1 และมืดอันดับ 2 ทางขวาทั้งคู่ พิกัดจึงเป็นบวกทั้งสองค่า',
-    en: '① Same side · Take bright order 1 and dark order 2 on the right, so both coordinates are positive.',
+    en: '① Same side · Both fringes are on the right, so subtract two positive coordinates.',
     math: String.raw`\mathrm{separation}=|(+6.0)-(+4.0)|\,\mathrm{mm}=2.0\,\mathrm{mm}`,
   },
   {
     th: '② คนละด้าน · เลือกสว่างอันดับ 1 ทางซ้ายและมืดอันดับ 2 ทางขวา จึงลบพิกัดลบของแถบทางซ้าย',
-    en: '② Opposite sides · Take bright order 1 on the left and dark order 2 on the right. Subtract the negative coordinate of the left fringe.',
+    en: '② Opposite sides · Bright order 1 is on the left, so subtract its negative coordinate.',
     math: String.raw`\mathrm{separation}=|(+6.0)-(-4.0)|\,\mathrm{mm}=10\,\mathrm{mm}`,
   },
   {
     th: '③ สว่างอันดับ 3 ซ้าย–ขวา · ทั้งสองแถบอยู่ห่างจากกลางเท่ากันและอยู่คนละด้าน',
-    en: '③ Third bright fringe on each side · The two fringes lie equally far from the centre on opposite sides.',
+    en: '③ Third bright fringe on each side · Equal distances from the centre, opposite signs.',
     math: String.raw`\mathrm{separation}=|(+12)-(-12)|\,\mathrm{mm}=24\,\mathrm{mm}`,
   },
 ];

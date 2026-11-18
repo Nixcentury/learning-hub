@@ -10,22 +10,55 @@ export function exercises(lang, filled) {
   const t = (th, eng) => en ? eng : th;
   const p = (th, eng) => para(t(th, eng));
 
+  const response = (answer, mm) => filled
+    ? `<div class="teacher-key">${answer}</div>`
+    : `<div class="response-space" style="height:${mm}mm"></div>`;
+
   function part(index, prompt, answer, mm) {
     const label = t('กขคง'[index], 'abcd'[index]);
-    const response = filled
-      ? `<div class="teacher-key">${answer}</div>`
-      : `<div class="response-space" style="height:${mm}mm"></div>`;
-    return `<div class="task"><p><strong>${label}.</strong> ${prompt}</p>${response}</div>`;
+    return `<div class="task"><p><strong>${label}.</strong> ${prompt}</p>${response(answer, mm)}</div>`;
   }
 
   const group = (title, lead, parts, grid = false) => `<section class="question"><h3>${title}</h3>${lead ? para(lead) : ''}<div class="${grid ? 'task-grid' : 'task-list'}">${parts.map(([prompt,answer,height],i)=>part(i,prompt,answer,height)).join('')}</div></section>`;
   const use = numbers => p(`<strong>ใช้สมการ ${numbers}</strong>`,`<strong>Use ${numbers.includes('–')?'equations':'equation'} ${numbers}</strong>`);
   const ex = (number, th, eng, lead, parts, grid) => group(`${t('ข้อ','Problem')} ${number} · ${t(th,eng)}`,lead,parts,grid);
-  const gap = (id, width, answer) => filled
-    ? `<span class="answer-inline"><span class="blank-num">${id}</span> ${answer}</span>`
-    : `<span class="cloze-blank" style="--blank-width:${width}mm" aria-label="${t('ช่องเติมคำ','Fill-in space')} ${id}"><span class="blank-num">${id}</span></span>`;
-  const passage = (title, text) => `<section class="cloze-article"><h3>${title}</h3><p class="passage">${text}</p></section>`;
+  const bank = (name, prefix, choices) => `<div class="choice-bank"><h4>${name}</h4><ul>${choices.map((choice, i) =>
+    `<li><b>${prefix}${i + 1}</b> ${choice}</li>`).join('')}</ul></div>`;
+  function passage(id, title, words, sentences, body) {
+    const gap = (index, code) => {
+      const label = id + index;
+      const choices = code[0] === 'W' ? words : sentences;
+      return filled
+        ? `<span class="answer-inline"><span class="blank-num">${label} · ${code}</span> ${choices[Number(code.slice(1)) - 1]}</span>`
+        : `<span class="cloze-blank" aria-label="${t('ช่องเติมคำ','Fill-in space')} ${label}"><span class="blank-num">${label}</span></span>`;
+    };
+    return `<section class="cloze-article" data-passage="${id}"><h3>${title}</h3>${body(gap)}
+      <div class="passage-banks">${bank('Word Bank','W',words)}${bank('Sentence Bank','S',sentences)}</div>
+    </section>`;
+  }
 
+  const recallItem = (number, prompt, answer, mm) => `<div class="recall-item" data-recall-key="${number}">
+    <p><b>${number}.</b> ${prompt}</p>${response(answer, mm)}</div>`;
+  const recallRows = [
+    ['α', t('นิวเคลียสฮีเลียม','Helium nucleus'), '+2e', '−4', '−2'],
+    ['β⁻', t('อิเล็กตรอน','Electron'), '−e', '0', '+1'],
+    ['β⁺', t('โพซิตรอน','Positron'), '+e', '0', '−1'],
+    ['γ', t('โฟตอนพลังงานสูง','High-energy photon'), '0', '0', '0'],
+  ];
+  const radiationRecall = `<div class="recall-item">
+    <p data-recall-key="3"><b>3.</b> ${t('ระบุว่าแต่ละรังสีคืออะไรและมีประจุเท่าไร','State what each emission is and give its charge.')}</p>
+    <p data-recall-key="4"><b>4.</b> ${t('เติมการเปลี่ยนแปลงของ A และ Z จากนิวเคลียสแม่ไปลูก แล้วตอบคำถามใต้ตาราง','Fill in the changes in A and Z from parent to daughter. Then answer the question below.')}</p>
+    <table class="recall-table">
+      <thead><tr>${[t('รังสี','Emission'),t('สิ่งที่ปล่อย','What is emitted'),t('ประจุ','Charge'),'ΔA','ΔZ'].map(h=>
+        `<th scope="col">${h}</th>`).join('')}</tr></thead>
+      <tbody>${recallRows.map(([symbol,...answers]) => `<tr><th scope="row">${symbol}</th>${answers.map(answer=>
+        `<td>${filled ? answer : ''}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table>
+    <p>${t('ผลรวมอะไรต้องเท่ากันทั้งสองข้างของสมการนิวเคลียร์? เมื่อแผ่แกมมาอย่างเดียว พลังงานของนิวเคลียสเปลี่ยนอย่างไร?',
+      'Which totals must match on both sides of a nuclear equation? When only gamma is emitted, how does nuclear energy change?')}</p>
+    ${response(p('ผลรวม A และผลรวม Z เท่ากันทั้งสองข้าง เมื่อแผ่แกมมา พลังงานของนิวเคลียสลดลง',
+      'The sums of A and of Z match on both sides. Nuclear energy decreases during gamma emission.'),12)}
+  </div>`;
   const timeTitle = t('หาเวลา มวล และครึ่งชีวิต','Find time, mass and half-life');
   const elapsed = ex(5,'เวลาที่ผ่านไปและมวลที่เหลือ','Elapsed time and remaining mass',
     t('P-32 มีครึ่งชีวิตประมาณ 14 วัน เริ่มจาก 32 mg ให้ใช้ครึ่งชีวิต 14 วันตลอดข้อนี้',
@@ -48,24 +81,42 @@ export function exercises(lang, filled) {
 
   return [
     {key:'cloze',title:t('บทอ่านเติมคำ','Cloze passages'),body:
-      `<p class="instructions">${t('เติมคำหรือวลีให้บทอ่านสมบูรณ์ แล้วแสดงวิธีคิดสั้น ๆ ในช่อง B2',
-        'Complete each passage with a word or phrase. Show a short calculation in B2.')}</p>`+
-      passage(t('บทอ่าน A · สิ่งที่เปลี่ยนในนิวเคลียส','Passage A · What changes in the nucleus'),
-        t('ในห้องเรียน เด็กสองคนดูสมการสลายของไอโซโทปชนิดเดียวกันและติดตามเลขบนกับเลขล่างทีละขั้น เลขที่บอกชนิดของธาตุคือ',
-          'Two students read a decay equation and follow its upper and lower numbers step by step. The number that identifies an element is')+
-        ' '+gap('A1',65,t('เลขอะตอม Z ซึ่งเท่ากับจำนวนโปรตอน','atomic number Z, the number of protons'))+
-        t(' ในการสลายแบบบีตาลบ นิวเคลียสลูกมีเลขอะตอม','. In beta-minus decay, the daughter’s atomic number')+
-        ' '+gap('A2',36,t('เพิ่มขึ้น 1','increases by 1'))+' '+t('เพราะ','because')+
-        ' '+gap('A3',69,t('นิวตรอนหนึ่งตัวเปลี่ยนเป็นโปรตอน','a neutron becomes a proton'))+
-        t(' เมื่อปล่อยแกมมา เลขมวลและเลขอะตอม','. In gamma emission, mass number and atomic number')+
-        ' '+gap('A4',36,t('คงเดิม','stay the same'))+' '+t('สิ่งที่ลดลงคือ','and what decreases is')+
-        ' '+gap('A5',62,t('พลังงานของนิวเคลียส','the nuclear energy'))+t('','.'))+
-      passage(t('บทอ่าน B · ติดตามสารตั้งต้น','Passage B · Track the starting isotope'),
-        t('ทั้งคู่กลับมาดูข้อมูลตามเวลา คราวนี้ติดตามเฉพาะไอโซโทปเดิมที่ยังไม่สลาย หนึ่งครึ่งชีวิตคือช่วงเวลาที่จำนวนนิวเคลียสของไอโซโทปเดิมที่ยังไม่สลาย',
-          'They return to the time data and track the original isotope still present. One half-life is the time in which the number of undecayed nuclei of the original isotope')+
-        ' '+gap('B1',60,t('ลดลงเหลือครึ่งหนึ่ง','decreases to one half'))+
-        t(' ถ้าเหลือ 25% ส่วนที่สลายไปแล้วเป็น','. If 25% remains, the fraction already decayed is')+
-        ' '+gap('B2',65,math(tex`100\% - 25\% = 75\%`))+t('','.'))},
+      `<p class="instructions">${t('เติมรหัสคำหรือประโยคจากคลังใต้บทอ่านนั้น เช่น W1 หรือ S1 แล้วแสดงวิธีคิดในข้อ B3',
+        'Fill each gap with a word or sentence code from the banks under that passage, such as W1 or S1. Show your calculation in B3.')}</p>`+
+      passage('A',t('บทอ่าน A · อะไรเปลี่ยนในนิวเคลียส','Passage A · What changes in the nucleus'),[
+        t('พลังงานของนิวเคลียส','the energy of the nucleus'),
+        t('ลดลง 1','decreases by 1'),
+        t(`เลขมวล ${math('A')}`,`mass number ${math('A')}`),
+        t('คงเดิม','stay the same'),
+        t(`เลขอะตอม ${math('Z')}`,`atomic number ${math('Z')}`),
+        t('เพิ่มขึ้น 1','increases by 1'),
+      ],[
+        t('โปรตอนหนึ่งตัวเปลี่ยนเป็นนิวตรอน','a proton changes into a neutron'),
+        t('นิวเคลียสปล่อยอนุภาคแอลฟา','the nucleus emits an alpha particle'),
+        t('นิวตรอนหนึ่งตัวเปลี่ยนเป็นโปรตอน','a neutron changes into a proton'),
+      ],gap => `<p class="passage">${t(
+        `เวลานักเรียนอ่านสมการการสลาย เขาใช้ ${gap(1,'W5')} ซึ่งเท่ากับจำนวนโปรตอน เพื่อระบุว่านิวเคลียสนั้นเป็นธาตุใด`,
+        `When reading a decay equation, students use ${gap(1,'W5')}, the number of protons, to identify the element.`)}</p>
+        <p class="passage">${t(
+        `เมื่อเกิดการสลายแบบบีตาลบ เลขอะตอมของนิวเคลียสลูก ${gap(2,'W6')} เพราะ ${gap(3,'S3')} เมื่อแผ่รังสีแกมมาเพียงอย่างเดียว เลขมวลและเลขอะตอม ${gap(4,'W4')} ส่วนสิ่งที่ลดลงคือ ${gap(5,'W1')}`,
+        `In beta-minus decay, the daughter’s atomic number ${gap(2,'W6')} because ${gap(3,'S3')}. When only gamma is emitted, the mass and atomic numbers ${gap(4,'W4')} and the quantity that decreases is ${gap(5,'W1')}.`)}</p>`)+
+      passage('B',t('บทอ่าน B · เหลือเท่าไร สลายไปเท่าไร','Passage B · How much remains and how much decays'),[
+        t('สองครึ่งชีวิต','two half-lives'),
+        t('หนึ่งครึ่งชีวิต','one half-life'),
+        t('สามครึ่งชีวิต','three half-lives'),
+      ],[
+        t('ไอโซโทปเดิมจะเหลือ 50% ของปริมาณตั้งต้น','50% of the original amount remains'),
+        t('ไอโซโทปเดิมจะสลายหมด','all of the original isotope has decayed'),
+        t('ไอโซโทปเดิมจะเหลือ 25% ของปริมาณตั้งต้น','25% of the original amount remains'),
+      ],gap => `<p class="passage">${t(
+        `นักเรียนติดตามปริมาณไอโซโทปเดิมที่ยังไม่สลาย ผลการวัดพบว่าปริมาณลดจาก 100% เหลือ 50% ใน 6 วัน ช่วง 6 วันแรกจึงเท่ากับ ${gap(1,'W2')} เมื่อผ่านไปอีก 6 วัน ${gap(2,'S3')}`,
+        `Students track the original isotope still present. Measurements show a drop from 100% to 50% in 6 days. The first 6 days are therefore equal to ${gap(1,'W2')}. After another 6 days, ${gap(2,'S3')}.`)}</p>`)+
+      `<div class="cloze-calculation"><p><b>B3.</b> ${t('เมื่อครบ 12 วัน ไอโซโทปเดิมสลายไปแล้วกี่เปอร์เซ็นต์ของปริมาณตั้งต้น? แสดงวิธีคิดสั้น ๆ',
+        'After 12 days, what percentage of the original isotope has decayed? Show your working.')}</p>
+        ${response(p(
+          `เหลือ 25% ของปริมาณตั้งต้น จึงสลายไป ${math(tex`100\% - 25\% = 75\%`)}`,
+          `25% of the original amount remains, so ${math(tex`100\% - 25\% = 75\%`)} has decayed.`),22)}
+      </div>`},
     {key:'identify',title:t('อ่านข้อมูลและจำแนกรังสี','Read data and identify radiation'),body:
       ex(1,'ไอโซโทปและเสถียรภาพ','Isotopes and stability',
         t('พิจารณา C-12 (Z = 6), C-14 (Z = 6) และ Ra-226 (Z = 88) โดย C-12 เสถียร ส่วน C-14 และทุกไอโซโทปของ Ra ไม่เสถียร',
@@ -134,11 +185,34 @@ export function exercises(lang, filled) {
       ])+
       `<p class="source">${t('โจทย์ใหม่อิงทักษะ','New problem modelled on the skills in')} · <a href="https://drive.google.com/file/d/1Iq4_OwRN_Icg_DyRF0CgKDfpiY2Q6CMb/view">A-Level 2566 Q2</a></p>`},
     {key:'recall',title:'Knowledge Recall',body:
-      group(t('ทวนแนวคิดเรื่องรังสีและครึ่งชีวิต','Recall radiation and half-life'),'',[
-        [t('ถ้าไอโซโทปหนึ่งแผ่แกมมาเพียงอย่างเดียว อะไรเปลี่ยนและอะไรคงเดิม?','If an isotope emits only gamma radiation, what changes and what stays the same?'),
-         p('พลังงานของนิวเคลียสลดลง A กับ Z คงเดิม','The nucleus loses energy. A and Z stay the same.'),20],
-        [t('“ผ่านไปสองครึ่งชีวิตแล้วไอโซโทปเดิมหมดพอดี” แก้ข้อความให้ถูกต้อง','Correct this statement: “The original isotope is gone after two half-lives.”'),
-         p('ไอโซโทปเดิมเหลือ 1/4 ของปริมาณตั้งต้น เพราะแต่ละช่วงลดครึ่งหนึ่งของที่เหลือ','One quarter remains because each interval halves the amount then present.'),22],
-      ])},
+      `<p class="instructions">${t('ลองตอบจากความจำ แล้วใช้ Revision Notes ตรวจคำตอบ','Answer from memory, then check your answers against the Revision Notes.')}</p>
+      <div class="recall-grid">
+        ${recallItem(1,t('A และ Z ของนิวเคลียสหมายถึงอะไร? เขียนความสัมพันธ์สำหรับหาจำนวนนิวตรอน N',
+          'What do A and Z mean for a nucleus? Write the relation for finding neutron number N.'),
+          p('A คือเลขมวลหรือจำนวนโปรตอนรวมกับนิวตรอน Z คือเลขอะตอมหรือจำนวนโปรตอน',
+            'A is the mass number, the total of protons and neutrons. Z is the atomic number, the number of protons.')+line('N = A - Z'),17)}
+        ${recallItem(2,t('ไอโซโทปของธาตุเดียวกันมีเลขใดเท่ากัน เลขใดต่างกัน? ไอโซโทปกัมมันตรังสีมีลักษณะอย่างไร?',
+          'Which numbers are the same and different for isotopes of an element? What makes an isotope radioactive?'),
+          p('Z เท่ากัน แต่ A ต่างกัน ไอโซโทปกัมมันตรังสีมีนิวเคลียสไม่เสถียรและสลายได้เอง',
+            'They have the same Z and different A. A radioactive isotope has an unstable nucleus that decays spontaneously.'),17)}
+      </div>
+      ${radiationRecall}
+      <div class="recall-grid">
+        ${recallItem(5,t('ครึ่งชีวิตหมายถึงอะไร? เมื่อผ่านไปสองครึ่งชีวิต เหลือไอโซโทปเดิมกี่ส่วนของปริมาณตั้งต้น?',
+          'Define half-life. What fraction of the original isotope remains after two half-lives?'),
+          p('ครึ่งชีวิตคือเวลาที่จำนวนนิวเคลียสที่ยังไม่สลายลดเหลือครึ่งหนึ่ง หลังสองครึ่งชีวิตเหลือ 1/4 ของปริมาณตั้งต้น',
+            'A half-life is the time for the number of undecayed nuclei to halve. After two half-lives, 1/4 of the initial amount remains.'),24)}
+        ${recallItem(6,t('เขียนสูตรหาจำนวนครึ่งชีวิต สัดส่วนมวลที่เหลือ และมวลที่สลายไป เวลาที่ใช้ในสูตรต้องมีหน่วยอย่างไร?',
+          'Write formulas for the number of half-lives, fraction of mass remaining, and mass decayed. How must the time units be chosen?'),
+          line(nt)+line(f)+line(m)+p('เวลาที่ผ่านไปและครึ่งชีวิตใช้หน่วยเดียวกัน','Use the same units for elapsed time and half-life.'),31)}
+        ${recallItem(7,t('ฟิชชันและฟิวชันทำให้นิวเคลียสตั้งต้นเปลี่ยนไปอย่างไร?',
+          'How do fission and fusion change the starting nuclei?'),
+          p('ฟิชชันคือการแตกของนิวเคลียสหนัก ฟิวชันคือการรวมของนิวเคลียสเบา',
+            'Fission splits a heavy nucleus. Fusion joins light nuclei.'),13)}
+        ${recallItem(8,t('บอกหลักสามข้อสำหรับลดการรับรังสีจากแหล่งกำเนิดภายนอก',
+          'Name three ways to reduce exposure to an external radiation source.'),
+          p('ลดเวลา เพิ่มระยะห่าง ใช้กำบังที่เหมาะสม',
+            'Limit time, increase distance, and use suitable shielding.'),13)}
+      </div>`},
   ];
 }

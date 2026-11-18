@@ -7,31 +7,74 @@ import { applyContentLanguage } from '../js/content-language.js';
 import { buildHtmlPrintSnapshot } from '../js/html-print.js';
 import { isExitTicketRevision, exitTicketPages, exitTicketRanges, prepareExitTicketPrint } from '../js/exit-ticket-revision.js';
 
-test('2.7: practice comes first, followed by matching MathJax notes and Recall', async () => {
+test('2.7: passage banks, six-page notes and eight recall questions in both languages', async () => {
   const base = new URL('../public/content/chemistry/atomic-properties/', import.meta.url);
   const load = async name => parseHTML(await readFile(new URL(name, base), 'utf8')).document;
   const note = await load('2-7-classroom-note-v1-1.html');
-  const exit = await load('2-7-exit-ticket-revision-v1-1.html');
+  const exit = await load('2-7-exit-ticket-revision-v1-2.html');
+  const menu = parseHTML(await readFile(new URL('../public/content/bank/chemistry/b-a76ce47d04005d3231f6a440.html', import.meta.url), 'utf8')).document;
+  assert.equal(menu.querySelector('[data-tool-key="exit-ticket-revision"]').getAttribute('href'),
+    '../../chemistry/atomic-properties/2-7-exit-ticket-revision-v1-2.html');
+  assert.equal(exit.documentElement.dataset.contentRevision, '1.2');
+  Object.defineProperty(exit, 'URL', { value: 'https://example.test/learning-hub/content/chemistry/atomic-properties/2-7-exit-ticket-revision-v1-2.html' });
+  Object.defineProperty(exit, 'defaultView', { value: undefined });
+  // Compare the underlying note blocks and method steps across the physical page breaks.
+  const noteContent = view => [...view.querySelectorAll('.shared-note')].flatMap(section =>
+    [...section.children].filter(block => !block.matches('h2')).flatMap(block => {
+      if (!block.matches('.worked')) return [block.outerHTML];
+      const title = block.hasAttribute('data-worked-continuation') ? [] : [block.querySelector('h3').outerHTML];
+      const method = block.querySelector('.note-task');
+      return [...title, ...[...method.children].flatMap(step =>
+        step.matches('.note-answer') ? [...step.children].map(p => p.outerHTML) : [step.outerHTML])];
+    }));
   const mathAssets = new Set();
   for (const lang of ['th', 'en']) {
     const view = (doc, edition) => doc.querySelector(
       '[data-content-lang="' + lang + '"] [data-revision-edition="' + edition + '"] [data-revision-range="all"]',
     );
-    const canonical = [...view(note, 'answers').querySelectorAll('.shared-note')].map(n => n.outerHTML);
-    assert.equal(canonical.length, 8);
+    const canonical = noteContent(view(note, 'answers'));
+    applyContentLanguage(exit, lang);
     for (const edition of ['blank', 'answers']) {
       const handout = view(exit, edition);
       const pages = [...handout.querySelectorAll('.page')];
       const practicePages = edition === 'blank' ? 6 : 7;
       assert.deepEqual(pages.map(page => page.querySelector('.page-body > section').className),
-        [...Array(practicePages).fill('practice'), ...Array(8).fill('shared-note'), 'practice']);
+        [...Array(practicePages).fill('practice'), ...Array(6).fill('shared-note'), 'practice']);
       assert.equal(pages[0].querySelector('[data-practice-key]').dataset.practiceKey, 'cloze');
       assert.equal(pages.at(-1).querySelector('[data-practice-key]').dataset.practiceKey, 'recall');
-      assert.deepEqual([...handout.querySelectorAll('.shared-note')].map(n => n.outerHTML), canonical);
-      assert.equal(handout.querySelectorAll('.cloze-blank').length, edition === 'blank' ? 7 : 0);
-      assert.equal(handout.querySelectorAll('.response-space').length, edition === 'blank' ? 21 : 0);
-      assert.equal(handout.querySelectorAll('.teacher-key').length, edition === 'answers' ? 21 : 0);
-      assert.equal(handout.querySelectorAll('.answer-inline').length, edition === 'answers' ? 7 : 0);
+      assert.deepEqual(noteContent(handout), canonical);
+      assert.equal(handout.querySelectorAll('[data-worked-continuation]').length, 1);
+      const answered = edition === 'answers';
+      const cloze = handout.querySelector('[data-practice-key="cloze"]');
+      for (const [id, wordChoices, codes] of [
+        ['A', 6, ['W5', 'W6', 'S3', 'W4', 'W1']],
+        ['B', 3, ['W2', 'S3']],
+      ]) {
+        const article = cloze.querySelector('[data-passage="' + id + '"]');
+        assert.deepEqual([...article.querySelectorAll('.choice-bank h4')].map(heading => heading.textContent),
+          ['Word Bank', 'Sentence Bank']);
+        assert.deepEqual([...article.querySelectorAll('.choice-bank ul')].map(bank => bank.children.length),
+          [wordChoices, 3]);
+        const slots = [...article.querySelectorAll('.blank-num')].map(slot => slot.textContent);
+        assert.deepEqual(slots, codes.map((code, i) => id + (i + 1) + (answered ? ' · ' + code : '')));
+      }
+      assert.equal(cloze.querySelectorAll('.cloze-calculation .teacher-key').length, answered ? 1 : 0);
+      assert.equal(handout.querySelectorAll('.response-space').length, answered ? 0 : 27);
+      assert.equal(handout.querySelectorAll('.teacher-key').length, answered ? 27 : 0);
+      const recall = handout.querySelector('[data-practice-key="recall"]');
+      assert.deepEqual([...recall.querySelectorAll('[data-recall-key]')].map(item => +item.dataset.recallKey),
+        [1, 2, 3, 4, 5, 6, 7, 8]);
+      const recallCells = [...recall.querySelectorAll('.recall-table td')].map(cell => cell.textContent);
+      assert.deepEqual(recallCells.map(Boolean), Array(16).fill(answered));
+      if (answered) {
+        assert.deepEqual(recallCells.filter((_, index) => index % 4 !== 0),
+          ['+2e', '−4', '−2', '−e', '0', '+1', '+e', '0', '−1', '0', '0', '0']);
+      }
+      for (const [range, count] of [['all', practicePages + 7], ['quiz', practicePages + 1], ['review', 6]]) {
+        const { document: copy } = parseHTML(buildHtmlPrintSnapshot(exit, '2.7 revision'));
+        assert.equal(prepareExitTicketPrint(copy, { range, answers: answered }), count);
+        assert.equal(copy.querySelectorAll('.page .identity').length, 1);
+      }
       assert.equal(handout.querySelectorAll('.math-line:not(:has(img.math-svg)), .equation:not(:has(img.math-svg))').length, 0);
       const tex = [...handout.querySelectorAll('[data-tex]')].map(n => n.dataset.tex).join(' ');
       assert.match(tex, /\\frac\{m_t\}\{m_0\}/);

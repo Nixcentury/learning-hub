@@ -1,0 +1,46 @@
+.passage { line-height: 1.45; margin-bottom: 1.5mm; }
+.cloze-blank {
+  width: 14mm;
+  min-height: 6.5mm;
+  padding: .3mm .8mm;
+  margin-block: .45mm;
+}
+.passage-banks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 3mm;
+  margin-top: 2mm;
+}
+.choice-bank { background: #f2f6f8; padding: 1.5mm 2mm; }
+.choice-bank h4 { font-size: 11pt; margin: 0 0 .8mm; color: #173e59; }
+.choice-bank ul { margin: 0; padding: 0; list-style: none; }
+.choice-bank li { margin: 0 0 .5mm; }
+.choice-bank li:last-child { margin-bottom: 0; }
+.choice-bank li > b {
+  display: inline-block;
+  margin-inline-end: .6mm;
+  color: #365269;
+}
+[data-passage="A"] .choice-bank:first-child ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  column-gap: 1.5mm;
+}
+.cloze-calculation { padding: 0 3mm; }
+.recall-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 2.5mm;
+  margin-block: 2.5mm;
+}
+.recall-item { border: .6pt solid #a3b4c0; padding: 2mm 2.5mm; }
+.recall-item p { margin-bottom: 1mm; }
+.recall-item p:last-child { margin-bottom: 0; }
+.recall-table { margin: 2mm 0; }
+.recall-table th, .recall-table td { height: 8.5mm; vertical-align: middle; }
+.recall-table th:nth-child(2) { width: 42%; }
+.shared-note + .shared-note { margin-top: 3mm; }
+.review .worked { padding: 2mm 2.5mm; }
+.review .worked p:not(.math-line) { margin-bottom: 1.4mm; }
+.review .worked p:last-child { margin-bottom: 0; }
+.review .worked .math-line { margin-bottom: .65mm; }

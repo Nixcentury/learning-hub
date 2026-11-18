@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 116" role="img" aria-label="Screen geometry: an 8.63 degree ray from slit midpoint reaches bright fringe two, with tan theta equals x over L">
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#1b3244} .head{font-size:15px;font-weight:700}.small{font-size:13px}.formula{font-size:15px;font-weight:700}.guide{stroke:#b8c8d2;stroke-width:1.2;stroke-dasharray:4 4}.axis{stroke:#526e7e;stroke-width:2} .bright{fill:#347999;stroke:#1f4559;stroke-width:1.5}.dark{fill:#fff;stroke:#a35033;stroke-width:3}.label{font-size:16px;font-weight:700}</style>
+<rect x="1" y="1" width="958" height="114" rx="6" fill="#fff" stroke="#b4c5cf"/>
+<line x1="145" y1="94" x2="655" y2="94" stroke="#7b8a93" stroke-width="2" stroke-dasharray="6 4"/><line x1="145" y1="94" x2="655" y2="18" stroke="#2b7296" stroke-width="3"/><line x1="655" y1="7" x2="655" y2="107" stroke="#344e60" stroke-width="5"/><circle cx="145" cy="94" r="4" fill="#253e4c"/><circle cx="655" cy="18" r="5" fill="#287c9f"/><circle cx="655" cy="94" r="4" fill="#444"/>
+<path d="M217 94 A72 72 0 0 0 216.2 83.3" fill="none" stroke="#ab643d" stroke-width="2"/>
+<text x="122" y="86" class="small">O</text><text x="670" y="22" class="label">P: B₂</text><text x="670" y="99" class="small">C</text><text x="224" y="85" class="label">θ</text><text x="385" y="108" class="small">L = 0.50 m</text><text x="680" y="61" class="label">x = 75.9 mm</text>
+<path d="M645 23 H628 V89 H645" fill="none" stroke="#bf7443" stroke-width="1.6"/>
+<text class="formula" x="786" y="32">sin θ = 0.150</text><text class="formula" x="786" y="55">θ ≈ 8.63°</text><text class="formula" x="786" y="78">x = L tan θ</text>
+<text x="788" y="99" class="small">not x = L sin θ</text>
+</svg>

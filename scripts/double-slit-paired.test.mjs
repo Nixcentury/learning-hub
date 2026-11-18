@@ -141,3 +141,30 @@ test('double-slit: original Exit questions, figures and calculations remain inta
   }
  }
 });
+
+
+test('double-slit: the measurement and final three worked examples have print-safe visuals',async()=>{
+ const names=['measurement-13-15.svg','example-10-coincidence.svg','example-11-separation.svg','example-12-angle.svg'];
+ for(const name of names){
+  const svg=await readFile(new URL('../public/'+base+'assets/10-2-paired/'+name,import.meta.url),'utf8');
+  assert.match(svg,/<svg\b[^>]*viewBox=/);
+  assert.doesNotMatch(svg,/<script\b|<foreignObject\b|(?:href|src)="https?:\/\//i,'diagram must not rely on remote or executable content');
+ }
+ for(const kind of ['classroom','exit']){
+  const doc=await load(kind);
+  for(const lang of ['th','en'])for(const edition of ['blank','answers']){
+   const selected=view(doc,lang,edition,'all');
+   const measurement=selected.querySelector('[data-note-key="measurement"]');
+   assert.equal(measurement.querySelectorAll('.measurement-visual img').length,1,kind+'/'+lang+'/'+edition);
+   assert.match(measurement.querySelector('.measurement-visual img').getAttribute('src'),/measurement-13-15\.svg$/);
+   for(const [n,file] of [[10,names[1]],[11,names[2]],[12,names[3]]]){
+    const example=selected.querySelector('[data-example-number="'+n+'"]');
+    assert.ok(example,'example '+n+' is missing');
+    const figure=example.querySelector('.worked-visual');
+    assert.ok(figure,kind+'/'+lang+'/'+edition+' example '+n+' needs its diagram');
+    assert.ok(figure.querySelector('img').getAttribute('src').endsWith(file));
+    assert.ok(figure.querySelector('figcaption').textContent.length>10);
+   }
+  }
+ }
+});

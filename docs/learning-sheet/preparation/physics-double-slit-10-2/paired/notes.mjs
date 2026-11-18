@@ -6,6 +6,18 @@ import {equationStart,exampleReferences,separateWorkingMath} from './equation-st
 
 // One canonical teacher answer Note supplies both Classroom Note and Revision Notes.
 const groups=[[1,2],[3],[4,5],[6,7],[8,9,10],[11,12]];
+
+const workedVisuals={
+  10:{file:'example-10-coincidence.svg',th:'แผนภาพตำแหน่งซ้อนกัน: มืดอันดับ 3 ของสีแรกอยู่ตรงกับสว่างอันดับ 2 ของสีที่สอง',en:'Coincident positions: dark fringe 3 of colour 1 meets bright fringe 2 of colour 2.'},
+  11:{file:'example-11-separation.svg',th:'① ด้านเดียวกัน 2 mm  ② คนละด้าน 10 mm  ③ สว่างอันดับ 3 ซ้าย–ขวา 24 mm',en:'① Same side: 2 mm  ② Opposite sides: 10 mm  ③ Third bright fringes: 24 mm.'},
+  12:{file:'example-12-angle.svg',th:'ใช้ sin θ หาองศาจากเงื่อนไขแทรกสอด แล้วใช้ tan θ หาตำแหน่งบนฉาก',en:'Use sin θ for the interference angle, then tan θ to find the screen position.'}
+};
+function workedVisual(n,lang){
+  const v=workedVisuals[n];
+  if(!v)return '';
+  return '<figure class="note-figure compact-visual worked-visual" data-visual-example="'+n+'"><img src="assets/10-2-paired/'+v.file+'" alt="'+v[lang]+'"><figcaption>'+v[lang]+'</figcaption></figure>';
+}
+
 const examplePages=groups.map((numbers,i)=>({
   key:'examples-'+(i+1),kind:'examples',
   title:{th:'ตัวอย่าง '+numbers[0]+'–'+numbers.at(-1),en:'Examples '+numbers[0]+'–'+numbers.at(-1)},
@@ -16,6 +28,11 @@ const examplePages=groups.map((numbers,i)=>({
     if(n===4)html=html.replaceAll('|x_m|','x_{\\mathrm D,m}');
     const {document}=parseHTML('<html><body>'+html+'</body></html>');
     const example=document.querySelector('.example');example.dataset.exampleNumber=String(n);
+    if(workedVisuals[n]){
+      const prompt=example.querySelector('h3')?.nextElementSibling;
+      if(!prompt||prompt.tagName.toLowerCase()!=='p')throw Error('Example '+n+' requires a prompt paragraph');
+      prompt.insertAdjacentHTML('afterend',workedVisual(n,lang));
+    }
     const answer=example.querySelector('.note-answer');
     // The original numerical givens and all original requests/results are retained.
     // Only the common spacing symbol and the initial equation citation change.

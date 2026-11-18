@@ -185,3 +185,21 @@ body:not(.answers-on) [data-revision-edition="blank"],body.answers-on [data-revi
 .shared-note .setup img{max-height:30mm}
 .question .experiment-data th{width:auto}
 .question .experiment-data th:first-child{width:18%}
+
+
+/* Focused A4 diagrams for measurement and examples 10–12. Keep every label readable
+   in both languages and in the selected Notes / Exit Ticket print ranges. */
+.shared-note .compact-visual{margin:.7mm 0 1mm;text-align:center;break-inside:avoid;page-break-inside:avoid}
+.shared-note .compact-visual img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain;margin:0 auto}
+.shared-note .compact-visual figcaption{font-size:8pt;line-height:1.2;margin:.4mm 0 0}
+.shared-note .measurement-visual img{max-height:20mm}
+.shared-note .worked-visual img{max-height:21mm}
+.shared-note .worked-visual[data-visual-example="12"] img{max-height:22mm}
+/* Recover the extra diagram height from prose gaps rather than reducing the body font. */
+.shared-note[data-note-key="measurement"] p{margin-bottom:1.05mm}
+.shared-note[data-note-key="measurement"] h3{margin-top:1.35mm;margin-bottom:.85mm}
+
+
+/* Two diagram-heavy examples share the last A4 Notes page. */
+.shared-note[data-note-key="examples-5"] .example,
+.shared-note[data-note-key="examples-6"] .example{margin:1.8mm 0;padding:1.7mm 2.1mm}

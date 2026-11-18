@@ -10,12 +10,35 @@ const adaptor=liteAdaptor();RegisterHTMLHandler(adaptor);const math=mathjax.docu
 const hash=x=>createHash('sha256').update(x).digest('hex');const esc=x=>String(x).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;');
 const assetRel='assets/10-2-paired',assetDir=out+'/'+assetRel;mkdirSync(assetDir,{recursive:true});const inventory=new Map();
 function asset(bytes,ext){const sha=hash(bytes),file=sha.slice(0,24)+'.'+ext,path=assetDir+'/'+file;if(!existsSync(path))write(path,bytes);inventory.set(file,{file,sha256:sha});return assetRel+'/'+file;}
+function mathSvg(tex){
+ const markup=adaptor.outerHTML(math.convert(tex,{display:false}));
+ if(/merror|data-mjx-error/.test(markup))throw Error(tex);
+ const svg=parseHTML('<html><body>'+markup+'</body></html>').document.querySelector('svg');
+ svg.setAttribute('xmlns','http://www.w3.org/2000/svg');
+ return svg;
+}
+function renderDiagramLabels(doc,diagram){
+ for(const label of diagram.querySelectorAll('text[data-tex]')){
+  const tex=label.getAttribute('data-tex');
+  const svg=doc.importNode(mathSvg(tex),true);
+  const [,top,width,height]=(svg.getAttribute('viewBox')||svg.getAttribute('viewbox')).split(/\s+/).map(Number);
+  const scale=Number(label.getAttribute('font-size'))/1000;
+  const offset={start:0,middle:width/2,end:width}[label.getAttribute('text-anchor')];
+  svg.setAttribute('x',String(Number(label.getAttribute('x'))-offset*scale));
+  svg.setAttribute('y',String(Number(label.getAttribute('y'))+top*scale));
+  svg.setAttribute('width',String(width*scale));
+  svg.setAttribute('height',String(height*scale));
+  svg.removeAttribute('style');
+  svg.setAttribute('data-tex',tex);
+  label.replaceWith(svg);
+ }
+}
 function render(html){const doc=parseHTML('<html><body>'+html+'</body></html>').document;doc.body.normalize();
  function walk(node){for(const c of [...node.childNodes]){if(c.nodeType===1){walk(c);continue;}if(c.nodeType!==3)continue;const text=c.textContent,matches=[...text.matchAll(/\\\(([\s\S]*?)\\\)/g)];if(!matches.length)continue;let i=0;const nodes=[];
- for(const m of matches){nodes.push(doc.createTextNode(text.slice(i,m.index)));const tex=m[1],svg=adaptor.outerHTML(math.convert(tex,{display:false}));if(/merror|data-mjx-error/.test(svg))throw Error(tex);const s=parseHTML('<html><body>'+svg+'</body></html>').document.querySelector('svg');s.setAttribute('xmlns','http://www.w3.org/2000/svg');const src=asset(s.outerHTML,'svg');const span=doc.createElement('span');span.className='mj-asset';span.setAttribute('role','math');span.setAttribute('aria-label',tex);span.dataset.tex=tex;span.innerHTML=`<img class="math-svg" src="${src}" alt="" style="width:${s.getAttribute('width')};height:auto;${s.getAttribute('style')||''}">`;nodes.push(span);i=m.index+m[0].length;}
+ for(const m of matches){nodes.push(doc.createTextNode(text.slice(i,m.index)));const tex=m[1],s=mathSvg(tex);const src=asset(s.outerHTML,'svg');const span=doc.createElement('span');span.className='mj-asset';span.setAttribute('role','math');span.setAttribute('aria-label',tex);span.dataset.tex=tex;span.innerHTML=`<img class="math-svg" src="${src}" alt="" style="width:${s.getAttribute('width')};height:auto;${s.getAttribute('style')||''}">`;nodes.push(span);i=m.index+m[0].length;}
  nodes.push(doc.createTextNode(text.slice(i)));c.replaceWith(...nodes);}}
  walk(doc.body);
- for(const svg of [...doc.querySelectorAll('svg')]){if(svg.hasAttribute('viewbox')){svg.setAttribute('viewBox',svg.getAttribute('viewbox'));svg.removeAttribute('viewbox');}svg.setAttribute('xmlns','http://www.w3.org/2000/svg');const img=doc.createElement('img');img.setAttribute('src',asset(svg.outerHTML,'svg'));img.className='diagram-svg';img.setAttribute('alt',svg.getAttribute('aria-label')||svg.querySelector('title')?.textContent||'Double-slit fringe ruler');svg.replaceWith(img);}
+ for(const svg of [...doc.querySelectorAll('svg')]){if(svg.hasAttribute('viewbox')){svg.setAttribute('viewBox',svg.getAttribute('viewbox'));svg.removeAttribute('viewbox');}svg.setAttribute('xmlns','http://www.w3.org/2000/svg');renderDiagramLabels(doc,svg);const img=doc.createElement('img');img.setAttribute('src',asset(svg.outerHTML,'svg'));img.className='diagram-svg';img.setAttribute('alt',svg.getAttribute('aria-label')||svg.querySelector('title')?.textContent||'Double-slit fringe ruler');svg.replaceWith(img);}
  if(/\\[()]/.test(doc.body.textContent))throw Error('Unrendered TeX remains in the paired document');
  return doc.body.innerHTML;
 }

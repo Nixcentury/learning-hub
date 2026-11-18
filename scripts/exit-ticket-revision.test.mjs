@@ -7,6 +7,44 @@ import { applyContentLanguage } from '../js/content-language.js';
 import { buildHtmlPrintSnapshot } from '../js/html-print.js';
 import { isExitTicketRevision, exitTicketPages, exitTicketRanges, prepareExitTicketPrint } from '../js/exit-ticket-revision.js';
 
+test('2.7: practice comes first, followed by matching MathJax notes and Recall', async () => {
+  const base = new URL('../public/content/chemistry/atomic-properties/', import.meta.url);
+  const load = async name => parseHTML(await readFile(new URL(name, base), 'utf8')).document;
+  const note = await load('2-7-classroom-note-v1-1.html');
+  const exit = await load('2-7-exit-ticket-revision-v1-1.html');
+  const mathAssets = new Set();
+  for (const lang of ['th', 'en']) {
+    const view = (doc, edition) => doc.querySelector(
+      '[data-content-lang="' + lang + '"] [data-revision-edition="' + edition + '"] [data-revision-range="all"]',
+    );
+    const canonical = [...view(note, 'answers').querySelectorAll('.shared-note')].map(n => n.outerHTML);
+    assert.equal(canonical.length, 8);
+    for (const edition of ['blank', 'answers']) {
+      const handout = view(exit, edition);
+      const pages = [...handout.querySelectorAll('.page')];
+      const practicePages = edition === 'blank' ? 6 : 7;
+      assert.deepEqual(pages.map(page => page.querySelector('.page-body > section').className),
+        [...Array(practicePages).fill('practice'), ...Array(8).fill('shared-note'), 'practice']);
+      assert.equal(pages[0].querySelector('[data-practice-key]').dataset.practiceKey, 'cloze');
+      assert.equal(pages.at(-1).querySelector('[data-practice-key]').dataset.practiceKey, 'recall');
+      assert.deepEqual([...handout.querySelectorAll('.shared-note')].map(n => n.outerHTML), canonical);
+      assert.equal(handout.querySelectorAll('.cloze-blank').length, edition === 'blank' ? 7 : 0);
+      assert.equal(handout.querySelectorAll('.response-space').length, edition === 'blank' ? 21 : 0);
+      assert.equal(handout.querySelectorAll('.teacher-key').length, edition === 'answers' ? 21 : 0);
+      assert.equal(handout.querySelectorAll('.answer-inline').length, edition === 'answers' ? 7 : 0);
+      assert.equal(handout.querySelectorAll('.math-line:not(:has(img.math-svg)), .equation:not(:has(img.math-svg))').length, 0);
+      const tex = [...handout.querySelectorAll('[data-tex]')].map(n => n.dataset.tex).join(' ');
+      assert.match(tex, /\\frac\{m_t\}\{m_0\}/);
+      assert.match(tex, /\{\}\^\{24\}_\{11\}\\mathrm\{Na\} \\rightarrow \{\}\^\{24\}_\{12\}\\mathrm\{Mg\}/);
+      for (const img of handout.querySelectorAll('.math-svg')) mathAssets.add(img.getAttribute('src'));
+    }
+  }
+  await Promise.all([...mathAssets].map(async src => {
+    assert.match(src, /^assets\/2-7-radioactive\/math\/[0-9a-f]+\.svg$/);
+    assert.match(await readFile(new URL(src, base), 'utf8'), /^<svg [^>]*\bviewBox=/);
+  }));
+});
+
 test('4.3 revision: corrected self-study content and all 12 independent exports',async()=>{
   const path='content/physics/ipst/equilibrium/4-3-exit-ticket-revision.html';
   const {document:source}=parseHTML(await readFile(new URL('../public/'+path,import.meta.url),'utf8'));

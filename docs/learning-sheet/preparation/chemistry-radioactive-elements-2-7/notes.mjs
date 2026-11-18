@@ -1,19 +1,16 @@
+import { formulas, isotope, line, math, tex } from './math.mjs';
+
 const asset = 'assets/2-7-radioactive/';
 const ipst = 'https://www.scimath.org/ebook-chemistry/item/13172-e-book';
 const aksorn = 'https://drive.google.com/file/d/1282BmRDHm1gQPUxS3g-Zqa09IwrrkPL4/view';
 const mytcas68 = 'https://assets.mytcas.com/68/answer/tcas68-chem-a-level.pdf';
 const mytcas69 = 'https://assets.mytcas.com/69/answer/tcas69-chem-a-level.pdf';
 
-export function isotope(a, z, x) {
-  return `<span class="isotope"><span class="isotope-index"><sup>${a}</sup><sub>${z}</sub></span>${x}</span>`;
-}
-
-export const line = text => `<p class="math-line">${text}</p>`;
 export const para = text => `<p>${text}</p>`;
 const heading = text => `<h3>${text}</h3>`;
 const n = isotope;
 const na = n(24,11,'Na'), mg = n(24,12,'Mg'), alpha = n(4,2,'He'), beta = n(0,'−1','e'), positron = n(0,'+1','e');
-const equation = (id, math) => `<div class="equation"><span>${math}</span><b>(${id})</b></div>`;
+const equation = (id, source) => `<div class="equation"><span>${math(tex`\displaystyle ${source}`)}</span><b>(${id})</b></div>`;
 const table = (headers, rows) => `<table><thead><tr>${headers.map(x=>`<th scope="col">${x}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 
 export function noteCheck(prompt, answer, size = 15) {
@@ -45,11 +42,7 @@ export function notes(lang) {
   const t = (th, eng) => en ? eng : th;
   const p = (th, eng) => para(t(th,eng));
   const h = (th, eng) => heading(t(th,eng));
-  const aeq = '∑ A<sub>left</sub> = ∑ A<sub>right</sub>';
-  const zeq = '∑ Z<sub>left</sub> = ∑ Z<sub>right</sub>';
-  const half = 'n = t/T<sub>½</sub>';
-  const fraction = 'f = m<sub>t</sub>/m<sub>0</sub> = (½)<sup>n</sup>';
-  const decayed = 'm<sub>decay</sub> = m<sub>0</sub> − m<sub>t</sub>';
+  const {a: aeq, z: zeq, n: half, f: fraction, decayed} = formulas;
   const use = ids => p(`<strong>ใช้สมการ ${ids}</strong>`,`<strong>Use equation${ids.includes('–')?'s':''} ${ids}</strong>`);
   const sections = [
     ['isotopes', t('1. ธาตุเดียวกัน ทำไมบางไอโซโทปสลายตัว','1. Why do some isotopes of an element decay?'), `
@@ -59,14 +52,14 @@ export function notes(lang) {
       ${noteCheck(t('สังเกตที่ 0 และ 15 ชั่วโมง นิวเคลียสชนิดใดลดลง และชนิดใดเพิ่มขึ้น?', 'Compare 0 and 15 h. Which nuclei decrease and which increase?'),
         p('Na-24 ลดลง ส่วน Mg-24 เพิ่มขึ้น เพราะนิวเคลียสแม่เปลี่ยนเป็นนิวเคลียสลูก','Na-24 decreases and Mg-24 increases. A parent nucleus changes into a daughter nucleus.'))}
       ${h('อ่านสัญลักษณ์นิวเคลียร์','Read a nuclear symbol')}
-      ${p(`${n('A','Z','X')} โดย X คือสัญลักษณ์ธาตุ Z คือจำนวนโปรตอน A คือจำนวนโปรตอนรวมกับนิวตรอน และ N คือจำนวนนิวตรอน`,
-           `${n('A','Z','X')} where X is the element symbol, Z is the proton number, A counts protons and neutrons, and N is the neutron number.`)}
-      ${equation(1,'N = A − Z')}
+      ${p(`${math(n('A','Z','X'))} โดย X คือสัญลักษณ์ธาตุ Z คือจำนวนโปรตอน A คือจำนวนโปรตอนรวมกับนิวตรอน และ N คือจำนวนนิวตรอน`,
+           `${math(n('A','Z','X'))} where X is the element symbol, Z is the proton number, A counts protons and neutrons, and N is the neutron number.`)}
+      ${equation(1,'N = A - Z')}
       ${p('นิวเคลียสที่ไม่เสถียรอาจสลายได้เองพร้อมปล่อยอนุภาคหรือรังสี เรียกว่า <strong>กัมมันตภาพรังสี</strong> ความเสถียรขึ้นกับองค์ประกอบของนิวเคลียส รวมถึงสัดส่วนนิวตรอนต่อโปรตอน',
       'An unstable nucleus can decay spontaneously and emit particles or radiation. This is <strong>radioactivity</strong>. Stability depends on nuclear composition, including the neutron-to-proton ratio.')}
-      ${noteCheck(t(`เปรียบเทียบ ${n(12,6,'C')} กับ ${n(14,6,'C')} ซึ่งมีเพียง C-14 ที่สลายตัว ทั้งคู่เป็นคาร์บอนได้อย่างไร?`,
-      `Compare ${n(12,6,'C')} and ${n(14,6,'C')}. Only C-14 decays. Why are both carbon?`),
-      use('(1)')+line('N = A − Z')+p('ทั้งคู่มี Z = 6 จึงเป็นคาร์บอน แต่มีนิวตรอน 6 และ 8 ตามลำดับ C-14 เป็นไอโซโทปกัมมันตรังสี ธาตุกัมมันตรังสี เช่น เรเดียม เป็นธาตุที่ทุกไอโซโทปไม่เสถียร',
+      ${noteCheck(t(`เปรียบเทียบ ${math(n(12,6,'C'))} กับ ${math(n(14,6,'C'))} ซึ่งมีเพียง C-14 ที่สลายตัว ทั้งคู่เป็นคาร์บอนได้อย่างไร?`,
+      `Compare ${math(n(12,6,'C'))} and ${math(n(14,6,'C'))}. Only C-14 decays. Why are both carbon?`),
+      use('(1)')+line(tex`N = A - Z`)+p('ทั้งคู่มี Z = 6 จึงเป็นคาร์บอน แต่มีนิวตรอน 6 และ 8 ตามลำดับ C-14 เป็นไอโซโทปกัมมันตรังสี ธาตุกัมมันตรังสี เช่น เรเดียม เป็นธาตุที่ทุกไอโซโทปไม่เสถียร',
       'Both have Z = 6, so they are carbon. Their neutron numbers are 6 and 8, respectively. C-14 is a radioactive isotope. A radioactive element, such as radium, has only unstable isotopes.'),19)}
     `],
     ['radiation', t('2. ใช้หลักฐานจำแนกชนิดรังสี','2. Identify radiation from evidence'), `
@@ -76,10 +69,10 @@ export function notes(lang) {
       'Which radiation passes through paper but is blocked by the aluminium sheet in the figure? Refer to its path.'),
       p('บีตา เส้นทางผ่านกระดาษและสิ้นสุดที่อะลูมิเนียม','Beta. Its path passes through paper and ends at the aluminium.'),17)}
       ${table([t('รังสี','Radiation'),t('ลักษณะและสัญลักษณ์','Nature and symbol'),t('ประจุและสมบัติ','Charge and behaviour')],[
-        ['α',t(`นิวเคลียสฮีเลียม ${alpha}`,`Helium nucleus ${alpha}`),t('+2e · ทะลุผ่านต่ำ','+2e · low penetration')],
-        ['β⁻',t(`อิเล็กตรอนที่ปล่อยจากการสลาย ${beta}`,`Electron emitted in decay ${beta}`),t('−e · ทะลุผ่านได้มากกว่าแอลฟาในภาพ','−e · more penetrating than alpha in the figure')],
+        ['α',t(`นิวเคลียสฮีเลียม ${math(alpha)}`,`Helium nucleus ${math(alpha)}`),t('+2e · ทะลุผ่านต่ำ','+2e · low penetration')],
+        ['β⁻',t(`อิเล็กตรอนที่ปล่อยจากการสลาย ${math(beta)}`,`Electron emitted in decay ${math(beta)}`),t('−e · ทะลุผ่านได้มากกว่าแอลฟาในภาพ','−e · more penetrating than alpha in the figure')],
         ['γ',t('โฟตอนพลังงานสูง','High-energy photon'),t('0 · ตะกั่วช่วยลดความเข้ม','0 · lead reduces its intensity')],
-        ['β⁺',t(`โพซิตรอน ${positron}`,`Positron ${positron}`),t('+e · ใช้เลขล่าง +1 ในสมการ','+e · use +1 as the lower number in an equation')],
+        ['β⁺',t(`โพซิตรอน ${math(positron)}`,`Positron ${math(positron)}`),t('+e · ใช้เลขล่าง +1 ในสมการ','+e · use +1 as the lower number in an equation')],
       ])}
       ${p('e ในคอลัมน์ประจุคือขนาดประจุพื้นฐาน ในสนามไฟฟ้า แอลฟาและบีตาลบเบนไปคนละขั้ว แกมมาไม่เบน การทะลุผ่านขึ้นกับพลังงานของรังสีและตัวกลาง',
       'In the charge column, e is the elementary charge. In an electric field alpha and beta-minus deflect towards opposite plates, and gamma does not deflect. Penetration depends on radiation energy and the material.')}
@@ -100,9 +93,9 @@ export function notes(lang) {
       ])}
       ${p('ในโจทย์ดุลระดับนี้เขียนบีตาแบบย่อได้ นิวทริโนหรือแอนตินิวทริโนในสมการเต็มมี A = 0 และประจุเป็นศูนย์ จึงไม่เปลี่ยนการดุลเลขทั้งสอง',
       'The abbreviated beta equations are sufficient for this bookkeeping. The neutrino or antineutrino in the full equation has A = 0 and zero charge, so it does not alter either sum.')}
-      ${noteCheck(t(`เมื่อ ${na} เปลี่ยนเป็น ${mg} เลขบนและเลขล่างที่เหลือเป็นเท่าไร ตรงกับอนุภาคใด?`,
-      `When ${na} changes to ${mg}, which upper and lower numbers remain to balance? What particle matches them?`),
-      use('(2)–(3)')+line(aeq)+line('24 = 24 + 0')+line(zeq)+line('11 = 12 + (−1)')+line(`${na} → ${mg} + ${beta}`)+p('รังสีบีตาลบ','The emission is beta-minus.'),31)}
+      ${noteCheck(t(`เมื่อ ${math(na)} เปลี่ยนเป็น ${math(mg)} เลขบนและเลขล่างที่เหลือเป็นเท่าไร ตรงกับอนุภาคใด?`,
+      `When ${math(na)} changes to ${math(mg)}, which upper and lower numbers remain to balance? What particle matches them?`),
+      use('(2)–(3)')+line(aeq)+line(tex`24 = 24 + 0`)+line(zeq)+line(tex`11 = 12 + (-1)`)+line(tex`${na} \rightarrow ${mg} + ${beta}`)+p('รังสีบีตาลบ','The emission is beta-minus.'),31)}
       ${p('ถ้ามีอนุภาคเข้าทำปฏิกิริยาทางซ้าย เช่น นิวตรอน ให้รวมเลขบนและล่างของอนุภาคนั้นด้วย แล้วดุลด้วยหลักเดิม',
       'If a particle such as a neutron enters on the left, include its upper and lower numbers in the same sums.')}
     `],
@@ -113,13 +106,13 @@ export function notes(lang) {
       p('เหลือ 1/2, 1/4 และ 1/8 ตามลำดับ เมื่อถึง 3 ครึ่งชีวิต ส่วนที่สลายคือ 1 − 1/8 = 7/8','The fractions remaining are 1/2, 1/4 and 1/8. After 3 half-lives the decayed fraction is 1 − 1/8 = 7/8.'),19)}
       ${p('<strong>ครึ่งชีวิต</strong> คือเวลาที่จำนวนนิวเคลียสของไอโซโทปเดิมที่ยังไม่สลายลดลงเหลือครึ่งหนึ่ง การสลายของนิวเคลียสเดี่ยวเกิดแบบสุ่ม ครึ่งชีวิตอธิบายภาพรวมของนิวเคลียสจำนวนมาก',
       '<strong>Half-life</strong> is the time for the number of undecayed nuclei of the original isotope to halve. Individual decays are random. Half-life describes the behaviour of a large number of nuclei.')}
-      ${p('ให้ t เป็นเวลาที่ผ่านไป T<sub>½</sub> เป็นครึ่งชีวิตในหน่วยเดียวกัน และ n เป็นจำนวนช่วงครึ่งชีวิต',
-      'Let t be elapsed time, T<sub>½</sub> be the half-life in the same units, and n be the number of half-lives.')}
+      ${p(`ให้ t เป็นเวลาที่ผ่านไป ${math(tex`T_{1/2}`)} เป็นครึ่งชีวิตในหน่วยเดียวกัน และ n เป็นจำนวนช่วงครึ่งชีวิต ในวิธีคำนวณใช้ d แทนวัน`,
+      `Let t be elapsed time, ${math(tex`T_{1/2}`)} be the half-life in the same units, and n be the number of half-lives. In calculations, d denotes days.`)}
       ${equation(4,half)}
-      ${p('มวลไอโซโทปเดิมลดแบบคูณ ½ ซ้ำทุกช่วง ให้ m<sub>0</sub> เป็นมวลตั้งต้น m<sub>t</sub> เป็นมวลที่ยังไม่สลาย และ f เป็นสัดส่วนที่เหลือ จึงได้',
-      'The original isotope’s mass is multiplied by ½ at each interval. Let m<sub>0</sub> be its initial mass, m<sub>t</sub> its undecayed mass and f the fraction remaining. This gives')}
+      ${p(`มวลไอโซโทปเดิมลดแบบคูณ ½ ซ้ำทุกช่วง ให้ ${math(tex`m_0`)} เป็นมวลตั้งต้น ${math(tex`m_t`)} เป็นมวลที่ยังไม่สลาย และ f เป็นสัดส่วนที่เหลือ จึงได้`,
+      `The original isotope’s mass is multiplied by ½ at each interval. Let ${math(tex`m_0`)} be its initial mass, ${math(tex`m_t`)} its undecayed mass and f the fraction remaining. This gives`)}
       ${equation(5,fraction)}
-      ${p('ให้ m<sub>decay</sub> เป็นมวลของไอโซโทปเดิมส่วนที่สลายไป','Let m<sub>decay</sub> denote the mass of the original isotope that has decayed.')}
+      ${p(`ให้ ${math(tex`m_{\mathrm{decay}}`)} เป็นมวลของไอโซโทปเดิมส่วนที่สลายไป`,`Let ${math(tex`m_{\mathrm{decay}}`)} denote the mass of the original isotope that has decayed.`)}
       ${equation(6,decayed)}
     `],
     ['applications',t('5. ปฏิกิริยานิวเคลียร์และการใช้ประโยชน์','5. Nuclear reactions and uses'), `
@@ -147,13 +140,13 @@ export function notes(lang) {
     `],
     ['worked-decay',t('ตัวอย่างพาทำ · สมการนิวเคลียร์','Guided examples · Nuclear equations'), `
       ${worked(en,1,t('เติมอนุภาคที่เข้าปฏิกิริยา','Account for an incoming particle'),
-        t(`เติมอนุภาค X ในสมการ ${n(27,13,'Al')} + ${alpha} → ${n(30,14,'Si')} + X แล้วตรวจทั้งสองข้าง`,
-          `Identify X in ${n(27,13,'Al')} + ${alpha} → ${n(30,14,'Si')} + X and verify both sides.`),
-        use('(2)–(3)')+line(aeq)+line('A<sub>X</sub> = 27 + 4 − 30 = 1')+line(zeq)+line('Z<sub>X</sub> = 13 + 2 − 14 = 1')+p(`X คือโปรตอน ${n(1,1,'H')} ผลรวมทั้งสองข้างเป็น A = 31 และ Z = 15`,`X is a proton ${n(1,1,'H')}. Both sides sum to A = 31 and Z = 15.`),42)}
+        t(`เติมอนุภาค X ในสมการ ${math(tex`${n(27,13,'Al')} + ${alpha} \rightarrow ${n(30,14,'Si')} + X`)} แล้วตรวจทั้งสองข้าง`,
+          `Identify X in ${math(tex`${n(27,13,'Al')} + ${alpha} \rightarrow ${n(30,14,'Si')} + X`)} and verify both sides.`),
+        use('(2)–(3)')+line(aeq)+line(tex`A_{X} = 27 + 4 - 30 = 1`)+line(zeq)+line(tex`Z_{X} = 13 + 2 - 14 = 1`)+p(`X คือโปรตอน ${math(n(1,1,'H'))} ผลรวมทั้งสองข้างเป็น A = 31 และ Z = 15`,`X is a proton ${math(n(1,1,'H'))}. Both sides sum to A = 31 and Z = 15.`),42)}
       ${worked(en,2,t('ติดตามการสลายสองครั้ง','Follow two decays'),
-        t(`${n(140,56,'Ba')} แผ่บีตาลบสองครั้งต่อเนื่อง จงเขียนไอโซโทปหลังแต่ละครั้งและหาผลรวม A + Z สุดท้าย (La มี Z = 57, Ce มี Z = 58)`,
-          `${n(140,56,'Ba')} emits beta-minus twice in succession. Write both daughters and find the final A + Z (La has Z = 57, Ce has Z = 58).`),
-        use('(2)–(3)')+line(aeq)+line(zeq)+line(`${n(140,56,'Ba')} → ${n(140,57,'La')} + ${beta}`)+line(`${n(140,57,'La')} → ${n(140,58,'Ce')} + ${beta}`)+line('A + Z = 140 + 58 = 198')+
+        t(`${math(n(140,56,'Ba'))} แผ่บีตาลบสองครั้งต่อเนื่อง จงเขียนไอโซโทปหลังแต่ละครั้งและหาผลรวม A + Z สุดท้าย (La มี Z = 57, Ce มี Z = 58)`,
+          `${math(n(140,56,'Ba'))} emits beta-minus twice in succession. Write both daughters and find the final A + Z (La has Z = 57, Ce has Z = 58).`),
+        use('(2)–(3)')+line(aeq)+line(zeq)+line(tex`${n(140,56,'Ba')} \rightarrow ${n(140,57,'La')} + ${beta}`)+line(tex`${n(140,57,'La')} \rightarrow ${n(140,58,'Ce')} + ${beta}`)+line(tex`A + Z = 140 + 58 = 198`)+
         p('เลขบนคงเดิมทั้งสองขั้น ส่วนเลขล่างของนิวเคลียสลูกเพิ่มทีละ 1','A stays the same in both steps. The daughter Z increases by one each time.'),52)}
       <p class="source">${t('ทักษะอ้างอิง','Skill reference')} · <a href="${mytcas68}">A-Level 2568 Q31</a></p>
     `],
@@ -161,20 +154,20 @@ export function notes(lang) {
       ${worked(en,3,t('หาเวลาจากมวลที่เหลือ','Find the time from remaining mass'),
         t('I-131 มีครึ่งชีวิต 8 วัน ถ้าเริ่มจาก 12.0 mg ต้องใช้เวลากี่วันจึงจะเหลือ 3.0 mg?',
           'I-131 has a half-life of 8 days. Starting from 12.0 mg, how long until 3.0 mg remains?'),
-        use('(5)')+line(fraction)+line('f = 3.0 mg / 12.0 mg = 1/4')+line('1/4 = (½)<sup>2</sup>')+use('(4)')+line(half)+line('t = nT<sub>½</sub>')+line(t('t = 2 × 8 วัน = 16 วัน','t = 2 × 8 days = 16 days')),45)}
+        use('(5)')+line(fraction)+line(tex`f=\frac{3.0\,\mathrm{mg}}{12.0\,\mathrm{mg}}=\frac{1}{4}`)+line(tex`\frac{1}{4} = \left(\frac{1}{2}\right)^{2}`)+use('(4)')+line(half)+line("t = nT_{1/2}")+line(tex`t=2\times 8\,\mathrm{d}=16\,\mathrm{d}`),45)}
       ${worked(en,4,t('หาเวลาต่อหนึ่งครึ่งชีวิตจากส่วนที่สลาย','Find half-life from the decayed fraction'),
         t('ไอโซโทปชนิดหนึ่งสลายไป 87.5% ใน 36 ชั่วโมง จงหาครึ่งชีวิต',
           'An isotope has decayed by 87.5% in 36 h. Find its half-life.'),
-        use('(5)')+line(fraction)+line('f = 1 − 0.875 = 0.125')+line('0.125 = 1/8 = (½)<sup>3</sup>')+use('(4)')+line(half)+line('T<sub>½</sub> = t/n')+line('T<sub>½</sub> = 36 h / 3 = 12 h'),49)}
+        use('(5)')+line(fraction)+line(tex`f = 1 - 0.875 = 0.125`)+line(tex`0.125 = \frac{1}{8} = \left(\frac{1}{2}\right)^{3}`)+use('(4)')+line(half)+line(tex`T_{1/2}=\frac{t}{n}`)+line(tex`T_{1/2}=\frac{36\,\mathrm{h}}{3}=12\,\mathrm{h}`),49)}
       <p class="source">${t('ทักษะอ้างอิง','Skill reference')} · <a href="${mytcas69}">A-Level 2569 Q3</a></p>
     `],
     ['worked-mixed',t('ตัวอย่างพาทำ · จากสารแม่ที่สลายสู่สารลูก','Guided example · From decayed parent to daughter'), `
       ${worked(en,5,t('กลับมาที่ Na-24 และ Mg-24','Return to Na-24 and Mg-24'),
         t('เริ่มจาก Na-24 16.0 mg โดยไม่มี Mg-24 ตอนต้น หลัง 30 ชั่วโมง มี Na-24 เหลือเท่าไร เกิด Mg-24 ประมาณกี่ mg และแผ่อนุภาคใด? กำหนดครึ่งชีวิต 15 ชั่วโมง ให้มวลต่อโมลของไอโซโทปทั้งคู่ประมาณ 24 g/mol',
           'Start with 16.0 mg of Na-24 and no Mg-24. After 30 h, how much Na-24 remains, approximately how much Mg-24 forms, and what particle is emitted? Use a 15 h half-life and approximate both molar masses as 24 g/mol.'),
-        use('(2)–(3)')+line(aeq)+line(zeq)+line(`${na} → ${mg} + ${beta}`)+
-        use('(4)')+line(half)+line('n = 30 h / 15 h = 2')+use('(5)')+line(fraction)+line('m<sub>t</sub> = 16.0 mg × (½)<sup>2</sup> = 4.0 mg')+
-        use('(6)')+line(decayed)+line('m<sub>decay</sub> = 16.0 mg − 4.0 mg = 12.0 mg')+
+        use('(2)–(3)')+line(aeq)+line(zeq)+line(tex`${na} \rightarrow ${mg} + ${beta}`)+
+        use('(4)')+line(half)+line(tex`n=\frac{30\,\mathrm{h}}{15\,\mathrm{h}}=2`)+use('(5)')+line(fraction)+line(tex`m_{t} = 16.0\,\mathrm{mg} \times \left(\frac{1}{2}\right)^{2} = 4.0\,\mathrm{mg}`)+
+        use('(6)')+line(decayed)+line(tex`m_{\mathrm{decay}} = 16.0\,\mathrm{mg} - 4.0\,\mathrm{mg} = 12.0\,\mathrm{mg}`)+
         p('Na-24 ที่สลาย 1 นิวเคลียสให้ Mg-24 1 นิวเคลียส มวลต่อโมลที่โจทย์ให้มีค่าเท่ากันโดยประมาณ จึงเกิด Mg-24 ประมาณ 12.0 mg และอนุภาคที่ต้องเติมเพื่อดุลคือบีตาลบ',
           'Each decayed Na-24 nucleus gives one Mg-24 nucleus. Their given molar masses are approximately equal, so about 12.0 mg of Mg-24 forms. Beta-minus balances the equation.'),82)}
       <aside>${h('เลือกปริมาณก่อนแทนค่า','Choose the quantity before substituting')}

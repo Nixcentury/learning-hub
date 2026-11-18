@@ -71,3 +71,32 @@ Verification is limited to Chromium and the HTML print preview. No physical prin
 - Reopened the local Hub as a guest through Chemistry → Acids and bases → Ionization → Exit Ticket Revision. Confirmed revision 2.1, Thai/English switching, answer toggling, and no missing visible equation images. Visually inspected the barium-hydroxide ICF table and the crossed-out species/volume units.
 - Rechecked the English full-set print preview: it defaults to Student edition (26 pages) while reading answers; selecting Teacher answers gives 41 pages with no missing equation images. The full 16-selection regression and earlier print matrix remain recorded above; native printer/PDF export and Safari/iPad were not tested.
 - Delivery remains a PR only. The main branch and production deployment are not changed by this continuation.
+
+## Revision 2.2 · Alignment with Classroom Note
+
+The paired handout standard dated 16 November 2026 is in the [learning sheet guide](../../README.md). Revision Notes now reuse the v1.8.1 Classroom Note teacher text, section order, formulas and all ten guided examples in Thai and English. The notation table appears within Notes. The three cloze articles, nine multipart problems, 22 supplied calculation-answer lines, and 18 Recall prompts carry over from v2.1. The original sheet, menu key and content ID remain the source and entry point.
+
+| Revision task | Classroom coverage |
+| --- | --- |
+| 1 | Electrolyte categories, reaction arrows, strength vs concentration, and conditions for comparing conductivity. Part (b) applies the arrow rules to specific solutes. |
+| 2 | Guided examples 1–3 cover mass, dilution and ion ratios. The notes give the same-solute mixing relationship used in part (d). |
+| 3 | Guided examples 4, 8 and 10 cover measured equilibrium, percentage ionization and the conjugate constant. |
+| 4 | Guided example 5 provides weak-base ICE and the constant expression. Example 6 models the forward approximation using a weak acid. Examples 9–10 supply the water and conjugate-pair relationships. |
+| 5 | Guided examples 6–8 and the dilution notes cover valid and failed estimates, the full quadratic, and percentage ionization. |
+| 6 | Section 8 gives both reactions, the sulfuric acid qualification and a symbolic second-step estimate. Part (b) applies that estimate to numerical data. |
+| 7 | Guided examples 9–10 and section 9 cover ion concentration, neutrality at a different temperature and conjugate constants. |
+| 8 | The notation table supplies the mmol/L conversion. The concentration definition and ion ratios support working back from the product, with two explicitly different solution volumes. |
+| 9 | Guided examples 2 and 6 cover parts (a) and (b). The problem now defines percent mass per volume in one line for part (c), which combines this definition with the existing mole and concentration relationships. |
+
+The answer bank uses the same short answer text as the teacher keys for 22 subparts, with one shared entry for approximation checks in 4(b) and 9(b). Calculation workings remain in problem solutions. Example solutions in Notes remain readable in the student edition.
+
+The A4 layout uses 8 pt for Name/Class on each selected range's first page, 10 pt for body text and 11 pt for headings. Question frames continue at the subpart or solution-step boundary where needed.
+
+| Language | Edition | Full set | Cloze/problems + Bank | Notes/Recall | Bank only |
+| --- | --- | ---: | ---: | ---: | ---: |
+| TH | Student | 28 | 15 | 13 | 2 |
+| TH | Answers | 36 | 24 | 13 | 2 |
+| EN | Student | 28 | 16 | 13 | 2 |
+| EN | Answers | 37 | 24 | 13 | 2 |
+
+The table records Chromium pagination. The focused tests compare classroom and revision text and TeX, keep the approved prompts and numerical answer lines, check the answer bank, and exercise all 16 print selections.

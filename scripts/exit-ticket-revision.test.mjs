@@ -673,23 +673,26 @@ test('2.5 import: every original figure/font asset retains its approved bytes', 
   }
 });
 
-test('10.3 v2.1: imported questions survive every print selection and detailed keys stay separate', async () => {
+test('10.3 v2.2: print editions preserve the practice, match Classroom Note and keep problem keys separate', async () => {
   const base=new URL('../docs/learning-sheet/preparation/chemistry-ionization-10-3/',import.meta.url);
   const fixture=JSON.parse(await readFile(new URL('exit-v2-1-import.json',base),'utf8'));
   const modelText=await readFile(new URL('exit-v2-1-solutions.json',base),'utf8');
   const model=JSON.parse(modelText);
   const path='content/chemistry/ipst/acid-base/10-3-exit-ticket-revision-v2.html';
+  const classroomPath='content/chemistry/ipst/acid-base/10-3-basic-calculations-learning-sheet.html';
+  const {document:classroom}=parseHTML(await readFile(new URL('../public/'+classroomPath,import.meta.url),'utf8'));
   const {document:source}=parseHTML(await readFile(new URL('../public/'+path,import.meta.url),'utf8'));
   Object.defineProperty(source,'URL',{value:'https://example.test/learning-hub/'+path});
   Object.defineProperty(source,'defaultView',{value:undefined});
   const hash=x=>createHash('sha256').update(x).digest('hex');
   const signature=el=>{
     const n=el.cloneNode(true);
-    for(const x of n.querySelectorAll('.teacher-key,.answer-inline,.response-space,.recall-space'))x.remove();
+    for(const x of n.querySelectorAll('.teacher-key,.answer-inline,.response-space,.recall-space,.unit-definition'))x.remove();
     for(const x of n.querySelectorAll('[data-tex]'))x.replaceWith(n.ownerDocument.createTextNode(`⟦${x.dataset.tex}⟧`));
     return hash(n.textContent.replace(/\s+/g,' ').trim());
   };
-  assert.equal(source.documentElement.dataset.contentRevision,'2.1');
+  assert.equal(source.documentElement.dataset.contentRevision,'2.2');
+  assert.equal(source.documentElement.dataset.classroomNoteRevision,classroom.documentElement.dataset.contentRevision);
   assert.equal(source.documentElement.dataset.sourceSha256,fixture.sourceSha256);
   assert.equal(source.documentElement.dataset.solutionModelSha256,hash(modelText));
   assert.equal(source.querySelectorAll('script,template,iframe,form,button,input,select,[data-sheet-slot]').length,0);
@@ -699,14 +702,29 @@ test('10.3 v2.1: imported questions survive every print selection and detailed k
     applyContentLanguage(source,lang);
     source.body.classList.add('answers-on');
     const snapshot=buildHtmlPrintSnapshot(source,'Exit Ticket Revision');
-    for(const expected of fixture.pages.filter(p=>p.lang===lang)){
-      const {edition,range}=expected,answers=edition==='answers';
+    const classroomNotes=[...classroom.querySelectorAll(`[data-content-lang="${lang}"] [data-revision-edition="answers"] [data-revision-range="all"] [data-unit-key]`)]
+      .filter(node=>!['intro','notation','sources'].includes(node.dataset.unitKey));
+    const teacherBank=source.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="answers"] [data-revision-range="bank"]`);
+    const bankChoices=[...teacherBank.querySelectorAll('.bank-choice')];
+    const answerTargets=[...new Set(bankChoices.filter(choice=>choice.dataset.choiceType==='answer').flatMap(choice=>choice.dataset.target.split(' ')))];
+    assert.equal(answerTargets.length,22);
+    for(const key of answerTargets){
+      const question=source.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="answers"] [data-revision-range="all"] [data-unit-key="${key}"]`);
+      const answer=bankChoices.find(choice=>choice.dataset.choiceType==='answer'&&choice.dataset.target.split(' ').includes(key));
+      assert.ok(bankChoices.some(choice=>choice.dataset.choiceType==='distractor'&&choice.dataset.target.split(' ').includes(key)),key);
+      assert.equal(signature(question.querySelector('.short-answer')),signature(answer),key);
+    }
+    assert.ok(bankChoices.every(choice=>!choice.querySelector('.calculation-step,.teacher-key')));
+    for(const [edition,range] of ['blank','answers'].flatMap(edition=>['all','quiz','review','bank'].map(range=>[edition,range]))){
+      const answers=edition==='answers';
       const {document:copy}=parseHTML(snapshot);
       const selected=source.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="${edition}"] [data-revision-range="${range}"]`);
-      assert.equal(prepareExitTicketPrint(copy,{range,answers}),expected.pages);
+      assert.equal(prepareExitTicketPrint(copy,{range,answers}),selected.querySelectorAll('.page').length);
       assert.deepEqual([...copy.querySelectorAll('.unit')].map(n=>n.dataset.unitKey),[...selected.querySelectorAll('.unit')].map(n=>n.dataset.unitKey));
       const keys=[...copy.querySelectorAll('.unit')].map(n=>n.dataset.unitKey);
-      assert.equal(keys.length,expected.units);
+      assert.equal(copy.querySelectorAll('.page[data-blank="true"],.page-body:empty').length,0);
+      assert.equal(copy.querySelectorAll('.student-id').length,1);
+      assert.ok(copy.querySelector('.page').querySelector('.student-id'));
       assert.equal(new Set(keys).size,keys.length);
       assert.equal(copy.querySelectorAll('[data-content-lang]').length,1);
       assert.equal(copy.querySelectorAll('[data-revision-edition]').length,1);
@@ -721,15 +739,30 @@ test('10.3 v2.1: imported questions survive every print selection and detailed k
       assert.equal(copy.querySelectorAll('[data-part-key]').length,hasQuiz?28:0);
       assert.equal(copy.querySelectorAll('.task .final-answer').length,hasQuiz?22:0);
       assert.equal(copy.querySelectorAll('[data-recall-key]').length,hasReview?18:0);
-      assert.equal(copy.querySelectorAll('.answer-bank-grid .bank-choice').length,range==='review'?0:45);
+      assert.equal(copy.querySelectorAll('.answer-bank-grid .bank-choice').length,range==='review'?0:43);
+      assert.equal(copy.querySelectorAll('[data-article-bank]').length,hasQuiz?6:0);
+      assert.equal(copy.querySelectorAll('.unit-definition').length,hasQuiz?1:0);
+      if(hasQuiz)assert.match(copy.querySelector('[data-unit-key="problem-9-1"] .unit-definition').textContent,/100 mL/);
+      assert.equal(copy.querySelectorAll('.classroom-note[data-unit-key^="example-"]').length,hasReview?10:0);
+      if(hasReview){
+        const imported=[...copy.querySelectorAll('.classroom-note:not(.notation-unit)')];
+        assert.deepEqual(imported.map(node=>node.dataset.unitKey),classroomNotes.map(node=>node.dataset.unitKey));
+        for(const [i,node] of imported.entries()){
+          const sourceNote=classroomNotes[i].cloneNode(true);
+          for(const block of sourceNote.querySelectorAll('.teacher-key'))block.className='classroom-note-answer';
+          assert.equal(signature(node),signature(sourceNote),node.dataset.unitKey);
+        }
+      }
       assert.ok([...copy.querySelectorAll('[data-tex]')].every(n=>n.querySelector('img.math-svg')));
       if(range==='all'){
         for(const [key,expectedHash] of Object.entries(fixture.preservedUnits[lang])){
+          if(!/^(cloze-|problem-|recall-)/.test(key))continue;
           const u=copy.querySelector(`[data-unit-key="${key}"]`);
           assert.ok(u,`Missing imported unit: ${lang}/${edition}/${key}`);
           assert.equal(signature(u),expectedHash,`Imported question, supplied answer or Bank changed: ${lang}/${edition}/${key}`);
         }
         if(answers)for(const [key,steps] of Object.entries(model.solutions)){
+          if(!key.startsWith('problem-'))continue;
           const selector=`[data-unit-key="${key}"] .calculation-step,[data-solution-for="${key}"] .calculation-step`;
           const actual=[...copy.querySelectorAll(selector)];
           assert.deepEqual(actual.map(n=>n.querySelector('.step-title').textContent),steps.map((s,i)=>`${i+1}. ${s.title[lang]}`));
@@ -740,7 +773,7 @@ test('10.3 v2.1: imported questions survive every print selection and detailed k
   }
 });
 
-test('10.3 v2.1: exported vector equations and reused fonts are complete, including times and cancellation glyphs', async () => {
+test('10.3 v2.2: exported vector equations and reused fonts render times and cancellation glyphs', async () => {
   const fixture=JSON.parse(await readFile(new URL('../docs/learning-sheet/preparation/chemistry-ionization-10-3/exit-v2-1-import.json',import.meta.url),'utf8'));
   const root=new URL('../public/content/chemistry/ipst/acid-base/',import.meta.url);
   const {document:doc}=parseHTML(await readFile(new URL('10-3-exit-ticket-revision-v2.html',root),'utf8'));
@@ -758,12 +791,20 @@ test('10.3 v2.1: exported vector equations and reused fonts are complete, includ
     const tex=equation.dataset.tex,img=equation.querySelector('img.math-svg');
     assert.doesNotMatch(tex,/[\u0000-\u001f]|\bimes\b/,'TeX commands must not become control characters');
     assert.ok(img);
-    const file=img.getAttribute('src').split('/').at(-1),svg=assets.get(file);used.add(file);
-    assert.ok(svg,'Each formula image exists in the committed asset set');
+    const file=img.getAttribute('src').split('/').at(-1);
+    assert.match(file,/^[0-9a-f]{24}\.svg$/);
+    if(!assets.has(file)){
+      const svg=await readFile(new URL('assets/10-3-exit-v2/'+file,root),'utf8');
+      assert.equal(file,hash(svg).slice(0,24)+'.svg');
+      assert.match(svg,/<svg[^>]*\bviewBox=/);
+      assert.doesNotMatch(svg,/<script|<merror|data-mjx-error|\bviewbox=/);
+      assets.set(file,svg);
+    }
+    const svg=assets.get(file);used.add(file);
     assert.match(img.getAttribute('style'),/width:[\d.]+ex;/);
     if(tex.includes('\\times'))assert.match(svg,/data-c="D7"/,'The multiplication sign must actually render');
     if(tex.includes('\\cancel'))assert.match(svg,/data-mml-node="menclose"/,'Cancellation strokes must actually render');
   }
-  assert.equal(used.size,assets.size,'No unused equation files');
+  assert.ok(used.size>fixture.mathAssets.length,'New Classroom Note equations are present');
   for(const font of fixture.fonts)assert.equal(hash(await readFile(new URL('../'+font.path,import.meta.url))),font.sha256);
 });

@@ -85,8 +85,10 @@ test('double-slit: experiment precedes 15 numbered formulas, every formula prece
   for(const item of full.querySelectorAll('[data-equation-ref]'))assert.ok(boxes.some(x=>x.dataset.equation===item.dataset.equationRef));
   for(const formula of full.querySelectorAll('[data-tex]'))assert.doesNotMatch(formula.dataset.tex,/\\beta/);
   for(const example of full.querySelectorAll('.example')){
-   const start=example.querySelector('.note-answer').firstElementChild;
-   assert.ok(start.classList.contains('equation-start'));
+   const answer=example.querySelector('.note-answer');
+   const start=answer.querySelector('.equation-start');
+   assert.ok(start);
+   if(example.dataset.exampleNumber!=='11')assert.equal(start,answer.firstElementChild);
    assert.ok(start.querySelector('[data-equation-ref]'));
    assert.ok(start.querySelector('[data-tex]'),'state the referenced symbolic equation before numerical substitution');
   }
@@ -105,6 +107,7 @@ test('double-slit: original example questions and numerical workings survive equ
    const actual=examples[i],old=original.languages[lang][i];
    assert.equal(actual.querySelector('p').textContent,old.prompt,lang+' example '+(i+1)+' question');
    assert.equal(actual.querySelector('h3').textContent,old.title);
+   if(actual.dataset.exampleNumber==='11')continue; // The full signed-coordinate calculations are checked below.
    const expected=[...old.html.matchAll(/\\\(([\s\S]*?)\\\)/g)].map(m=>normalize(m[1].replaceAll(i===2?'|x_2|':i===3?'|x_m|':'__no_match__',i===2?'x_{\\mathrm B,2}':'x_{\\mathrm D,m}')));
    const found=[...actual.querySelectorAll('[data-tex]')].map(x=>normalize(x.dataset.tex));
    let previous=-1;
@@ -113,6 +116,23 @@ test('double-slit: original example questions and numerical workings survive equ
     assert.ok(next>=0,lang+' example '+(i+1)+' lost an original calculation: '+formula);previous=next;
    }
   }
+ }
+});
+
+test('double-slit: example 11 explains fringe position before substituting signed coordinates',async()=>{
+ const exit=await load('exit');
+ for(const lang of ['th','en']){
+  const answer=view(exit,lang,'blank','review').querySelector('[data-example-number="11"] .note-answer');
+  const [signs,spacing,start,...cases]=answer.children;
+  assert.ok(signs.matches('.method-note'));
+  assert.match(signs.textContent,lang==='th'?/ด้านขวาเป็นบวกและด้านซ้ายเป็นลบ/:/positive to the right and negative to the left/);
+  assert.match(spacing.textContent,lang==='th'?/กึ่งกลาง.*1\.5 ช่วง/:/halfway.*1\.5 spacings/);
+  assert.equal(start.querySelector('[data-equation-ref]').dataset.equationRef,'14');
+  assert.deepEqual(cases.map(item=>item.querySelector('[data-tex]').dataset.tex.match(/\|[^|]+\|.*=(2\.0|10|24)/)[0]),[
+   '|(+6.0)-(+4.0)|\\,\\mathrm{mm}=2.0',
+   '|(+6.0)-(-4.0)|\\,\\mathrm{mm}=10',
+   '|(+12)-(-12)|\\,\\mathrm{mm}=24',
+  ]);
  }
 });
 

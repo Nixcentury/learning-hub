@@ -1,5 +1,27 @@
 # Double-slit Smart Lab Guide V1.0
 
+## 18 November 2026: iPad guide dock correction
+
+The user's physical-iPad screenshot showed the bottom-fixed card extending below
+the visible iframe, including its primary action. Replace the bottom overlay
+with a sticky top dock inside the simulation's normal document flow. The header
+and primary action remain outside the independently scrollable guidance body;
+minimise, hide and reopen stay in the same top dock. The short-viewport rule no
+longer silently hides the guidance body. Dock height updates the scroll margin
+for highlighted controls and check-out/mission anchors. Print still hides the
+entire dock. Existing saved guide modes and all learning/scoring data are retained.
+
+Verified: 26 targeted model/mission tests, changed-file Oxlint, build and full
+six-mission/12-question browser regression on source and built output. Added
+1080x720, 768x1024 and 820x500 Hub viewport checks for visible header/action,
+scrollable body and minimise/expand without learning-state changes; retained
+390px target non-overlap, hide/reopen, print, scores and reload checks.
+Inspected the landscape screenshot. These are Chromium layout/touch tests;
+physical Safari confirmation still belongs to the user after merge.
+
+The historical R02 bottom/left placement description below is superseded by
+this top-dock correction. This change does not modify physics or grading.
+
 Base: `6cc166b59a0a5db3dbb97a111a5d9ac835cee8d4`.
 Activity ID and route remain `physics-ipst-wave-optics-10-2-double-slit-lab` and
 `#physics/bank/double-slit-interference/double-slit-lab`.

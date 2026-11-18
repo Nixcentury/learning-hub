@@ -1,8 +1,8 @@
 :root {
-  --smart-height: 260px;
+  --smart-height: 0px;
 }
 body {
-  padding-bottom: var(--smart-height);
+  padding-bottom: 0;
 }
 .lab-status {
   margin: 8px 0;
@@ -37,20 +37,32 @@ input:invalid {
   color: #983b1d;
   min-height: 1.5em;
 }
-.smart-guide {
-  position: fixed;
+.smart-dock {
+  position: sticky;
+  top: max(8px, env(safe-area-inset-top));
   z-index: 20;
-  left: 16px;
-  bottom: max(12px, env(safe-area-inset-bottom));
-  width: min(390px, calc(100vw - 112px));
-  max-height: 48dvh;
-  overflow: auto;
+  margin-bottom: 14px;
+}
+.smart-guide {
+  width: 100%;
+  min-width: 0;
   border: 2px solid #2c6c58;
   border-radius: 14px;
-  padding: 12px 14px;
+  padding: 10px 14px;
   background: #f9fff9;
-  box-shadow: 0 6px 24px #183e332b;
+  box-shadow: 0 4px 14px #183e3320;
   color: #203f34;
+}
+.smart-body {
+  max-height: min(24vh, 180px);
+  max-height: min(24dvh, 180px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+}
+.smart-actions {
+  margin-top: 8px;
 }
 .smart-top {
   display: flex;
@@ -92,24 +104,25 @@ input:invalid {
   margin: 0;
   padding-left: 20px;
 }
-.smart-guide.is-mini .smart-body {
+.smart-guide.is-mini .smart-body,
+.smart-guide.is-mini .smart-actions {
   display: none;
 }
 .smart-guide.is-mini {
-  max-width: 310px;
+  width: 100%;
 }
 .smart-reopen {
-  position: fixed;
-  z-index: 20;
-  left: 16px;
-  bottom: max(12px, env(safe-area-inset-bottom));
+  min-height: 44px;
   box-shadow: 0 3px 14px #153b312a;
 }
 .smart-target {
   outline: 4px solid #ce9026 !important;
   outline-offset: 4px;
-  scroll-margin-block: 100px var(--smart-height);
+  scroll-margin-block: calc(var(--smart-height) + 24px) 24px;
   animation: smart-pulse 0.8s ease-in-out 3;
+}
+#mission-card, #mission-answer > summary, #mission-select {
+  scroll-margin-top: calc(var(--smart-height) + 24px);
 }
 .smart-arrow {
   position: fixed;
@@ -224,14 +237,13 @@ input:invalid {
 }
 @media (max-width: 580px) {
   .smart-guide {
-    left: 12px;
-    max-height: 43dvh;
+    padding: 8px 10px;
   }
   .smart-top {
-    flex-wrap: wrap;
+    gap: 5px;
   }
   .smart-top strong {
-    flex-basis: 100%;
+    font-size: 14px;
   }
   .report-panel {
     padding: 12px;
@@ -321,7 +333,8 @@ input:invalid {
 }
 
 @media (max-height: 500px) {
-  .smart-guide .smart-body {
-    display: none;
+  .smart-body {
+    max-height: 18vh;
+    max-height: 18dvh;
   }
 }

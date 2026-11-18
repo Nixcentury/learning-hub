@@ -366,6 +366,8 @@
     $('smart-mini').ariaExpanded = String(state.guideMode !== 'mini');
     $('smart-hide').textContent = T('ซ่อน', 'Hide');
     $('smart-reopen').textContent = T('🎯 เรียกผู้ช่วย', '🎯 Show guide');
+    $('smart-dock').hidden = guide.hidden && $('smart-reopen').hidden;
+    resize();
     $('smart-history').replaceChildren(
       ...Q.requirements(state).map(([done, words]) => {
         const li = document.createElement('li');
@@ -377,10 +379,11 @@
   function resize() {
     cancelAnimationFrame(resizeFrame);
     resizeFrame = requestAnimationFrame(() => {
-      const card = $('smart-guide');
       document.documentElement.style.setProperty(
         '--smart-height',
-        card.hidden ? '76px' : `${card.getBoundingClientRect().height + 32}px`,
+        $('smart-dock').hidden
+          ? '0px'
+          : `${$('smart-dock').getBoundingClientRect().height}px`,
       );
       placeArrow();
     });

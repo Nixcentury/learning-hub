@@ -71,6 +71,20 @@ try {
  // A repeated guide jump highlights, never plays or resets the experiment.
  await next();await next();assert.equal((await state()).water.running,false);
  assert.match(await lab.locator('#smart-instruction').innerText(),/เล่นคลื่น/);
+ // Match iPad-like landscape/portrait iframe heights, plus a short keyboard viewport.
+ for(const viewport of [{width:1080,height:720},{width:768,height:1024},{width:820,height:500}]){
+   await page.setViewportSize(viewport);await next();await page.waitForTimeout(400);
+   const layout=await lab.locator('#smart-guide').evaluate(card=>{
+     const r=card.getBoundingClientRect(),h=card.querySelector('.smart-top').getBoundingClientRect(),b=card.querySelector('#smart-primary').getBoundingClientRect();
+     return {position:getComputedStyle(document.getElementById('smart-dock')).position,top:r.top,bottom:r.bottom,height:innerHeight,headerTop:h.top,buttonBottom:b.bottom,body: getComputedStyle(card.querySelector('.smart-body')).overflowY};
+   });
+   assert.equal(layout.position,'sticky');assert.equal(layout.body,'auto');
+   assert.ok(layout.headerTop>=0&&layout.buttonBottom<=layout.height,'Dock header and main action remain inside the iframe viewport');
+   const before=await state();await lab.locator('#smart-mini').click();assert.equal(await lab.locator('#smart-primary').isVisible(),false);
+   await lab.locator('#smart-mini').click();assert.equal(await lab.locator('#smart-primary').isVisible(),true);
+   assert.deepEqual((await state()).missions,before.missions);
+   await page.screenshot({path:resolve(output,`top-dock-${viewport.width}x${viewport.height}.png`)});
+ }
  await page.setViewportSize({width:390,height:1000});await next();await page.waitForTimeout(400);
  const controlBox=await lab.locator('#water-play').boundingBox(),guideBox=await lab.locator('#smart-guide').boundingBox();
  assert.ok(controlBox.y+controlBox.height<=guideBox.y||controlBox.x>=guideBox.x+guideBox.width||controlBox.x+controlBox.width<=guideBox.x||controlBox.y>=guideBox.y+guideBox.height,'Guide must not cover the target control');

@@ -34,12 +34,14 @@
       <button type="button" id="guide-reopen" data-th="เปิดผู้ช่วย" data-en="Show lab guide" hidden></button>
     </div>
     <section class="card mission">
-      <h2 id="mission-title"></h2>
+      <h2 id="mission-title" tabindex="-1"></h2>
       <p id="mission-objective"></p>
       <div class="actions">
         <label for="mission-select" data-th="เลือกหรือทบทวนภารกิจ" data-en="Choose or revisit a mission"></label>
         <select id="mission-select"></select>
+        <button type="button" id="reset-mission" data-th="เริ่มภารกิจนี้ใหม่" data-en="Restart this mission"></button>
       </div>
+      <p id="reset-status" role="status" hidden></p>
       <ul id="step-list"></ul>
       <button type="button" id="mission-action" class="primary"></button>
     </section>
@@ -223,6 +225,7 @@
     <p id="report-name"></p>
     <p id="report-date"></p>
     <div id="metrics"></div>
+    <p id="reset-score-note" hidden></p>
     <div id="report-detail"></div>
     <div class="actions print-hide">
       <button type="button" id="print" class="primary" data-th="พิมพ์รายงาน A4" data-en="Print A4 report"></button>
@@ -236,6 +239,6 @@
 <script defer src="assets/photoelectric/plots.js"></script>
 <script defer src="assets/photoelectric/missions.js"></script>
 <script defer src="assets/photoelectric/tube.js?v=glass-tube-1"></script>
-<script defer src="assets/photoelectric/lab.js?v=glass-tube-1"></script>
+<script defer src="assets/photoelectric/lab.js?v=mission-reset-1"></script>
 </body>
 </html>

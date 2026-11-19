@@ -1,0 +1,297 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "chemistry-ipst-chemical-formulas-4-3-basic-calculations",
+    "revision": "2026-11-18-1",
+    "sha256": "13db57ae773e2544d6f1ca7461d8e9895fd704d2a3e99336fa079a4612a412ab"
+  },
+  "title": {
+    "th": "สูตรเคมี · ฝึกคำนวณใบที่ 2",
+    "en": "Chemical Formulas · Calculation Practice 2"
+  },
+  "prerequisites": {
+    "th": "อ่านเลขห้อยและแปลงกรัมเป็นโมลได้ตามใบที่ 1",
+    "en": "Read subscripts and convert grams to moles as in Practice 1."
+  },
+  "goal": {
+    "th": "ใช้มวลของธาตุหาอัตราส่วนโมล และใช้มวลต่อโมลแยกสูตรอย่างง่ายออกจากสูตรโมเลกุล",
+    "en": "Use element masses to find mole ratios, then use molar mass to determine the molecular formula."
+  },
+  "steps": [
+    {
+      "id": "mass-composition",
+      "title": {
+        "th": "ตั้งฐานเปรียบเทียบมวล",
+        "en": "Choose a basis for comparing masses"
+      },
+      "summary": {
+        "th": "สารประกอบชนิดเดียวกันมีอัตราส่วนมวลของธาตุคงที่\nร้อยละโดยมวลใช้มวลของธาตุหารด้วยมวลรวมของสาร แล้วคูณ 100",
+        "en": "A given compound has a fixed ratio of element masses.\nFor mass percent, divide element mass by total compound mass and multiply by 100."
+      },
+      "story": {
+        "th": "ให้ชี้ว่าข้อ 3 ต้องนับ O กี่อะตอมต่อหนึ่งหน่วยสูตร CaCO₃",
+        "en": "Ask students to identify how many O atoms there are per formula unit of CaCO₃ in Question 3."
+      },
+      "action": {
+        "th": "ใช้ข้อ 1 ฝึกตัดหน่วยมวล ข้อ 3 ฝึกใช้เลขห้อย และข้อ 10 ฝึกอ่านข้อมูลจากตาราง",
+        "en": "Use Question 1 for mass conversion factors, Question 3 for subscripts, and Question 10 for reading a table."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "สรุปสูตร",
+            "en": "Formula summary"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 1",
+            "en": "Question 1"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "constant-ratio"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 3",
+            "en": "Question 3"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "percent-from-formula"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 10",
+            "en": "Question 10"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "compare-mass-ratios"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้าตัวอย่างใหญ่ขึ้นสองเท่า ร้อยละโดยมวลของธาตุในสารประกอบบริสุทธิ์เดิมเป็นอย่างไร",
+          "en": "If the sample becomes twice as large, what happens to the element mass percentages of the same pure compound?"
+        },
+        "answer": {
+          "th": "เท่าเดิม เพราะมวลของธาตุและมวลรวมเพิ่มเป็นสองเท่าทั้งคู่",
+          "en": "They stay the same because element mass and total mass both double."
+        }
+      },
+      "after": {
+        "th": "ลองแปลงข้อมูลร้อยละในข้อ 5 ให้เป็นกรัมบนฐาน 100 g",
+        "en": "Convert the percentages in Question 5 to grams on a 100 g basis."
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ข้อ 2",
+            "en": "Question 2"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "percent-from-mass"
+          }
+        }
+      ]
+    },
+    {
+      "id": "empirical-formulas",
+      "title": {
+        "th": "จากกรัมไปถึงเลขห้อย",
+        "en": "Go from grams to subscripts"
+      },
+      "summary": {
+        "th": "หาโมลของแต่ละธาตุด้วย n = m/M แล้วหารทุกค่าด้วยค่าโมลต่ำสุด\nเศษส่วนอย่าง 1.50 ต้องคูณอัตราส่วนทุกตัวด้วย 2 เพื่อให้ได้ 3 : 2 หรือ 2 : 3 ตามลำดับที่เขียน",
+        "en": "Find moles of each element using n = m/M, then divide by the smallest amount.\nFor a fractional ratio such as 1.50 : 1, multiply both entries by 2 to obtain 3 : 2."
+      },
+      "story": {
+        "th": "ชวนเด็กเทียบว่าข้อ 5 ให้มวลทางอ้อม ส่วนข้อ 6 ให้มวลรวมเพื่อหามวลธาตุที่เหลือ",
+        "en": "Compare Question 5, where mass comes from a percentage, with Question 6, where it comes from the total mass."
+      },
+      "action": {
+        "th": "ทำข้อ 5 และ 6 แล้วฝึกจัดเศษส่วนในข้อ 11 ก่อนลองใช้ฐานจากอัตราส่วนโมลในข้อ 12",
+        "en": "Work through Questions 5 and 6. Practise a fractional ratio in Question 11, then choose a mole-ratio basis in Question 12."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 5",
+            "en": "Question 5"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "empirical-from-percent"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 6",
+            "en": "Question 6"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "empirical-by-difference"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 11",
+            "en": "Question 11"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "fractional-mole-ratio"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 12",
+            "en": "Question 12"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "percent-and-mole-ratio"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้าได้อัตราส่วน 1 : 1.5 ควรเขียนเป็นเลขห้อยคู่ใด",
+          "en": "What subscripts should you use for a ratio of 1 : 1.5?"
+        },
+        "answer": {
+          "th": "2 : 3 เพราะคูณทั้งสองค่าด้วย 2",
+          "en": "2 : 3, obtained by multiplying both entries by 2."
+        }
+      },
+      "after": {
+        "th": "ลองข้อ 14 เพื่อฝึกหาโมลอะตอมจาก CO₂ และ H₂O ที่วัดจากการเผาไหม้",
+        "en": "Try Question 14 to practise finding moles of atoms from measured CO₂ and H₂O."
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ข้อ 4",
+            "en": "Question 4"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "empirical-from-masses"
+          }
+        }
+      ]
+    },
+    {
+      "id": "molecular-formulas",
+      "title": {
+        "th": "หาตัวคูณของสูตรโมเลกุล",
+        "en": "Find the molecular formula multiplier"
+      },
+      "summary": {
+        "th": "ตัวคูณ k คือมวลต่อโมลของสารหารด้วยมวลต่อโมลตามสูตรอย่างง่าย\nแก๊สที่ STP ใช้ n = V/22.4 เมื่อ V เป็น L และใช้ M = m/n หรือ M = ความหนาแน่น × 22.4 L/mol",
+        "en": "The multiplier k is the compound molar mass divided by the empirical-formula molar mass.\nAt STP, use n = V/22.4 for V in L, then M = m/n, or use M = density × 22.4 L/mol."
+      },
+      "story": {
+        "th": "ให้แยกข้อมูลของข้อ 15 ออกเป็นสองชุด ได้แก่ ข้อมูลหาอัตราส่วนอะตอมและข้อมูลหามวลต่อโมล",
+        "en": "In Question 15, identify which data give the atom ratio and which give the molar mass."
+      },
+      "action": {
+        "th": "เริ่มที่ข้อ 8 แล้วเปรียบเทียบว่าข้อ 13 และ 15 ต้องหามวลต่อโมลจากข้อมูลค่าใด",
+        "en": "Start with Question 8, then compare how Questions 13 and 15 give the molar mass."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 8",
+            "en": "Question 8"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "molecular-from-empirical"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 13",
+            "en": "Question 13"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "molecular-from-density"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 15",
+            "en": "Question 15"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "molecular-from-gas-volume"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "สูตรอย่างง่าย CH₂ และมวลต่อโมล 28.0 g/mol ให้สูตรโมเลกุลอะไร",
+          "en": "What molecular formula follows from empirical formula CH₂ and molar mass 28.0 g/mol?"
+        },
+        "answer": {
+          "th": "C₂H₄ เพราะสูตรอย่างง่ายมีมวลต่อโมล 14.0 g/mol และ k = 2",
+          "en": "C₂H₄, since the empirical-formula molar mass is 14.0 g/mol and k = 2."
+        }
+      },
+      "after": {
+        "th": "ตรวจว่าคูณเลขห้อยครบทุกธาตุและสูตรที่ได้ให้มวลต่อโมลตรงกับโจทย์",
+        "en": "Check that you multiplied every subscript and that the resulting formula gives the stated molar mass."
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ข้อ 7",
+            "en": "Question 7"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "reduce-subscripts"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 9",
+            "en": "Question 9"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "molecular-from-percent"
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "th": "ตรวจหน่วยที่ตัดกัน อัตราส่วนอย่างต่ำ และจำนวนเต็มของตัวคูณก่อนเขียนคำตอบ",
+    "en": "Check the units, simplest ratio and whole-number multiplier before recording the answer."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "เมื่อสารสองชนิดมีสูตรอย่างง่ายเหมือนกัน จะมีสูตรโมเลกุลเหมือนกันเสมอหรือไม่",
+      "en": "If two compounds have the same empirical formula, must their molecular formulas be the same?"
+    },
+    "answer": {
+      "th": "ไม่เสมอ เช่น C₂H₄ กับ C₃H₆ มีสูตรอย่างง่าย CH₂ เหมือนกัน แต่มวลต่อโมลและตัวคูณต่างกัน",
+      "en": "No. For example, C₂H₄ and C₃H₆ share empirical formula CH₂ but have different molar masses and multipliers."
+    }
+  }
+}

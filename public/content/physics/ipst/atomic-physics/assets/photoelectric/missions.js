@@ -22,6 +22,13 @@
     t.sweep.map(voltage => goal(
       `ตั้ง V = ${signed(voltage)} V แล้วบันทึกกระแส`,
       `Set V = ${signed(voltage)} V and record the current`, { voltage })),
+    [
+      goal('ใช้โลหะ A ที่ 6.40 × 10¹⁴ Hz แล้วบันทึก', 'Record metal A at 6.40 × 10¹⁴ Hz', { frequency: 6.4 }),
+      goal('คงความถี่เดิม เปลี่ยนเป็นโลหะ B แล้วบันทึก', 'Keep frequency fixed, switch to metal B and record', { metal: 'B', frequency: 6.4 }),
+      goal('ใช้โลหะ B เพิ่มความถี่เป็น 7.10 × 10¹⁴ Hz แล้วบันทึก', 'With metal B, raise frequency to 7.10 × 10¹⁴ Hz and record', { metal: 'B', frequency: 7.1 }),
+      goal('คงความถี่เดิม เปลี่ยนเป็นโลหะ C แล้วบันทึก', 'Keep frequency fixed, switch to metal C and record', { metal: 'C', frequency: 7.1 }),
+      goal('ใช้โลหะ C เพิ่มความถี่เป็น 7.60 × 10¹⁴ Hz แล้วบันทึก', 'With metal C, raise frequency to 7.60 × 10¹⁴ Hz and record', { metal: 'C', frequency: 7.6 }),
+    ],
   ];
   const number = (th, en) => ({ label: pair(th, en) });
   const choice = (th, en, options) => ({ label: pair(th, en), options: options.map(option => pair(...option)) });
@@ -100,6 +107,29 @@
           'Calculate the metal’s work function from the photon energy and maximum kinetic energy.',
           [number('W (eV)', 'W (eV)')], rows => [rows[0].energy + rows.find(row => row.current === 0).voltage],
           ['จัดรูปจาก Kₘₐₓ = Eγ − W', 'Rearrange Kₘₐₓ = Eγ − W.'], .005),
+      ],
+    },
+    {
+      title: pair('ชนิดโลหะกับความถี่ขีดเริ่ม', 'Metal and threshold frequency'),
+      objective: pair('คงความเข้มและแรงดันเก็บอิเล็กตรอน แล้วสลับโลหะที่ความถี่เดียวกันเพื่อเปรียบเทียบกระแส',
+        'Keep intensity and collecting voltage fixed, then switch metals at the same frequency to compare currents.'),
+      questions: [
+        question('จากผลทดลองที่ 6.40 × 10¹⁴ Hz และ 7.10 × 10¹⁴ Hz คู่ใดตรวจพบกระแส?',
+          'From your readings at 6.40 × 10¹⁴ Hz and 7.10 × 10¹⁴ Hz, which tested metal gives a current at each frequency?',
+          [choice('โลหะที่มีกระแสที่ 6.40 × 10¹⁴ Hz', 'Metal giving current at 6.40 × 10¹⁴ Hz', [
+            ['โลหะ A', 'Metal A'], ['โลหะ B', 'Metal B'], ['ไม่มีทั้ง A และ B', 'Neither A nor B'],
+          ]), choice('โลหะที่มีกระแสที่ 7.10 × 10¹⁴ Hz', 'Metal giving current at 7.10 × 10¹⁴ Hz', [
+            ['โลหะ B', 'Metal B'], ['โลหะ C', 'Metal C'], ['ไม่มีทั้ง B และ C', 'Neither B nor C'],
+          ])], rows => [rows[0].current > 0 ? '0' : '1', rows[2].current > 0 ? '0' : '1'],
+          ['เทียบค่ากระแสในสองแถวที่ความถี่เท่ากันทีละคู่', 'Compare the two rows at each common frequency.']),
+        question('เหตุใดโลหะ C ต้องใช้ความถี่สูงกว่าโลหะ A จึงเริ่มมีอิเล็กตรอนหลุด?',
+          'Why does metal C require a higher frequency than metal A to begin emitting electrons?',
+          [choice('เลือกคำอธิบาย', 'Choose an explanation', [
+            ['โลหะ C มีฟังก์ชันงานต่ำกว่าโลหะ A', 'Metal C has a lower work function than metal A.'],
+            ['ฟังก์ชันงานไม่เกี่ยวกับชนิดโลหะ', 'Work function does not depend on the metal.'],
+            ['โลหะ C มีฟังก์ชันงานสูงกว่า จึงต้องการพลังงานต่อโฟตอนมากกว่า', 'Metal C has a higher work function, so it requires more energy per photon.'],
+          ])], () => ['2'], ['เทียบความถี่ขีดเริ่ม f₀ ในเมนู แล้วใช้ความสัมพันธ์ W = hf₀',
+            'Compare the threshold frequencies f₀ in the selector and use W = hf₀.']),
       ],
     },
   ];

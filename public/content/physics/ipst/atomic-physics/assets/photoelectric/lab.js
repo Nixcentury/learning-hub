@@ -1,8 +1,9 @@
 (() => {
   'use strict';
   const activity = 'physics-photoelectric-lab';
-  const { initial, teaching, measure, signed, metals } = Photoelectric;
+  const { initial, teaching, measure, signed, metals, thresholdFrequency } = Photoelectric;
   const { pair, missions, targets, requirements, snapshot, grade } = PhotoelectricMissions;
+  const totalQuestions = missions.reduce((total, mission) => total + mission.questions.length, 0);
   const $ = id => document.getElementById(id);
   let lang = 'th', identity = 'guest', state, recordNotice, answerNotice, inputNotice, saved, highlightTimer;
   const pendingInputs = new Set();
@@ -12,13 +13,14 @@
   const t = (th, en) => lang === 'th' ? th : en;
   const txt = value => value?.[lang] || '';
   const setText = (id, value) => { if ($(id).textContent !== value) $(id).textContent = value; };
-  const questionAnswers = index => missions[index].questions.map(item => item.fields.map(() => ''));
+  const freshWork = index => ({
+    rows: [], frozen: null, answers: missions[index].questions.map(item => item.fields.map(() => '')),
+    first: null, firstAnswers: null, latest: null, latestAnswers: null, mastery: null,
+  });
   const blank = () => ({
     version: 1, identity, index: 0, explore: false, report: false, guide: 'open',
     setup: initial(), date: new Date().toISOString(), student: { name: '', className: '' },
-    benchRows: [], work: missions.map((_, i) => ({
-      rows: [], frozen: null, answers: questionAnswers(i), first: null, firstAnswers: null, latest: null, latestAnswers: null, mastery: null,
-    })),
+    benchRows: [], work: missions.map((_, i) => freshWork(i)),
   });
   const key = () => `learning-hub:${activity}:v1:${identity}`;
   const clone = value => JSON.parse(JSON.stringify(value));
@@ -68,6 +70,11 @@
     const validResult = result => result === null || (Array.isArray(result) &&
       result.length === missions[index].questions.length && result.every(x => typeof x === 'boolean'));
     if (![work.first, work.latest, work.mastery].every(validResult)) return false;
+    const past = work.previous;
+    if (past !== undefined && (!past || !Array.isArray(past.first) || !Array.isArray(past.mastery) ||
+      ![past.first, past.mastery].every(validResult) || !validAnswerSets(past.firstAnswers, index) ||
+      typeof past.passed !== 'boolean' || !past.mastery.every((correct, i) => correct || !past.first[i]) ||
+      (past.passed && !past.mastery.every(Boolean)))) return false;
     if ([work.first, work.latest, work.mastery].some(result => Boolean(result) !== Boolean(work.first))) return false;
     if (work.first ? !validAnswerSets(work.firstAnswers, index) || !validAnswerSets(work.latestAnswers, index)
       : work.firstAnswers !== null || work.latestAnswers !== null) return false;
@@ -90,17 +97,25 @@
         return row.current === actual.current && row.energy === actual.energy;
       }) &&
       Array.isArray(value.work) && value.work.length === missions.length && value.work.every(validWork) &&
-      (!value.index || value.work.slice(0, value.index).every(passed));
+      value.work.slice(0, value.index).every(everPassed);
+  }
+  function withAdditionalMission(value) {
+    if (value?.version === 1 && Array.isArray(value.work) && value.work.length === 3) {
+      return { ...value, work: [...value.work, freshWork(3)] };
+    }
+    return value;
   }
   function readLocal() {
     try {
-      const value = JSON.parse(localStorage.getItem(key()) || 'null');
+      const value = withAdditionalMission(JSON.parse(localStorage.getItem(key()) || 'null'));
       return validState(value) ? value : null;
     } catch { return null; }
   }
   function restoreState(value) {
-    if (!validState(value)) return false;
-    state = clone(value);
+    const upgraded = withAdditionalMission(value);
+    if (!validState(upgraded)) return false;
+    state = clone(upgraded);
+    $('reset-status').hidden = true;
     recordNotice = answerNotice = inputNotice = null;
     pendingInputs.clear();
     questionKey = '';
@@ -135,6 +150,7 @@
       void flushLocal();
       identity = next;
       state = readLocal() || blank();
+      $('reset-status').hidden = true;
       recordNotice = answerNotice = inputNotice = null;
       pendingInputs.clear();
       questionKey = '';
@@ -144,6 +160,12 @@
   });
   const workNow = () => state.work[state.index];
   function passed(work) { return Boolean(work.mastery?.every(Boolean)); }
+  function everPassed(work) { return passed(work) || work.previous?.passed === true; }
+  const firstResult = work => work.previous?.first ?? work.first;
+  const earnedMastery = work => work.previous
+    ? work.previous.mastery.map((correct, i) => correct || work.mastery?.[i] === true)
+    : work.mastery;
+  const firstAvailable = () => state.work.findIndex(work => !everPassed(work));
   const firstPending = () => state.work.findIndex(work => !passed(work));
   const asNumber = value => value === 0 ? '0.00' : signed(value);
   function jump(id, focus = false) {
@@ -189,10 +211,10 @@
     const steps = targets[state.index];
     const done = work.rows.length;
     const guideText = currentAction.text || (firstPending() === -1
-      ? t('ผ่านทั้งสามภารกิจแล้ว เปิดรายงานเพื่อดูผล', 'All three missions are complete. Open the report.')
+      ? t('ผ่านทุกภารกิจแล้ว เปิดรายงานเพื่อดูผล', 'All missions are complete. Open the report.')
       : t('ผ่าน Check-out แล้ว', 'Check-out passed.'));
-    setText('guide-status', t(`ภารกิจ ${state.index + 1}/3 · ขั้น ${Math.min(done + 1, steps.length)}/${steps.length} · ✓ ${done}`,
-      `Mission ${state.index + 1}/3 · Step ${Math.min(done + 1, steps.length)}/${steps.length} · ✓ ${done}`));
+    setText('guide-status', t(`ภารกิจ ${state.index + 1}/${missions.length} · ขั้น ${Math.min(done + 1, steps.length)}/${steps.length} · ✓ ${done}`,
+      `Mission ${state.index + 1}/${missions.length} · Step ${Math.min(done + 1, steps.length)}/${steps.length} · ✓ ${done}`));
     setText('guide-text', guideText);
     setText('guide-collapse', state.guide === 'collapsed' ? t('ขยาย', 'Expand') : t('ย่อ', 'Collapse'));
     $('guide-collapse').setAttribute('aria-expanded', String(state.guide === 'open'));
@@ -204,7 +226,7 @@
     applyButton('mission-action', currentAction);
     setText('mission-title', txt(missions[state.index].title));
     setText('mission-objective', txt(missions[state.index].objective));
-    const available = firstPending();
+    const available = firstAvailable();
     $('mission-select').replaceChildren(...missions.map((mission, i) => {
       const option = new Option(`${passed(state.work[i]) ? '✓ ' : ''}${i + 1} · ${txt(mission.title)}`, String(i));
       option.disabled = available >= 0 && i > available;
@@ -351,10 +373,10 @@
   const count = flags => flags?.filter(Boolean).length || 0;
   function renderReport() {
     if (!state.report) return;
-    const first = state.work.reduce((sum, work) => sum + count(work.first), 0);
-    const mastery = state.work.reduce((sum, work) => sum + count(work.mastery), 0);
+    const first = state.work.reduce((sum, work) => sum + count(firstResult(work)), 0);
+    const mastery = state.work.reduce((sum, work) => sum + count(earnedMastery(work)), 0);
     const completed = state.work.filter(passed).length;
-    const checked = state.work.reduce((sum, work, i) => sum + (work.first ? missions[i].questions.length : 0), 0);
+    const checked = state.work.reduce((sum, work, i) => sum + (firstResult(work) ? missions[i].questions.length : 0), 0);
     setText('report-name', t(`ชื่อ ${state.student.name || '—'} · ชั้น ${state.student.className || '—'}`,
       `Name ${state.student.name || '—'} · Class ${state.student.className || '—'}`));
     setText('report-date', new Date(state.date).toLocaleDateString(lang === 'th' ? 'th-TH' : 'en-GB', { dateStyle: 'long' }));
@@ -362,15 +384,18 @@
     $('student-class').value = state.student.className;
     const format = (value, total) => `${value}/${total} · ${(100 * value / total).toFixed(1).replace(/\.0$/, '')}%`;
     $('metrics').replaceChildren(...[
-      [t('ความคืบหน้า', 'Progress'), format(completed, 3)],
-      [t('คะแนนครั้งแรก', 'First-attempt score'), format(first, 10)],
-      [t('คะแนนหลังแก้ไข (Mastery)', 'Mastery after corrections'), format(mastery, 10)],
-      [t('ตรวจแล้ว / รอตรวจ', 'Graded / pending'), `${checked} / ${10 - checked}`],
+      [t('ความคืบหน้า', 'Progress'), format(completed, missions.length)],
+      [t('คะแนนครั้งแรก', 'First-attempt score'), format(first, totalQuestions)],
+      [t('คะแนนหลังแก้ไข (Mastery)', 'Mastery after corrections'), format(mastery, totalQuestions)],
+      [t('ตรวจแล้ว / รอตรวจ', 'Graded / pending'), `${checked} / ${totalQuestions - checked}`],
     ].map(([label, score]) => {
       const item = document.createElement('div');
       const strong = document.createElement('strong'); strong.textContent = score;
       item.append(label, strong); return item;
     }));
+    $('reset-score-note').hidden = !state.work.some(work => work.previous);
+    setText('reset-score-note', t('คะแนนครั้งแรกและ Mastery รวมผลที่เคยทำ ส่วนความคืบหน้าแสดงสถานะรอบปัจจุบัน',
+      'First-attempt and Mastery scores retain earlier results. Progress reflects the current mission attempts.'));
     $('report-detail').replaceChildren(...state.work.map((work, i) => {
       const block = document.createElement('section');
       block.className = 'report-mission';
@@ -378,8 +403,9 @@
       const max = missions[i].questions.length;
       heading.textContent = `${i + 1}. ${txt(missions[i].title)}`;
       const stats = document.createElement('p');
-      stats.textContent = t(`${passed(work) ? 'ผ่าน' : 'ยังทำไม่ครบ'} · ครั้งแรก ${work.first ? count(work.first) : '—'}/${max} · Mastery ${count(work.mastery)}/${max}`,
-        `${passed(work) ? 'Complete' : 'In progress'} · First attempt ${work.first ? count(work.first) : '—'}/${max} · Mastery ${count(work.mastery)}/${max}`);
+      const recordedFirst = firstResult(work);
+      stats.textContent = t(`${passed(work) ? 'ผ่าน' : 'ยังทำไม่ครบ'} · ครั้งแรก ${recordedFirst ? count(recordedFirst) : '—'}/${max} · Mastery ${count(earnedMastery(work))}/${max}`,
+        `${passed(work) ? 'Complete' : 'In progress'} · First attempt ${recordedFirst ? count(recordedFirst) : '—'}/${max} · Mastery ${count(earnedMastery(work))}/${max}`);
       block.append(heading, stats);
       if (work.rows.length) block.append(makeTable(work.rows));
       if (i === 2 && work.mastery?.some(Boolean)) {
@@ -402,6 +428,11 @@
     document.querySelectorAll('[data-th][data-en]').forEach(node => {
       if (node.textContent !== node.dataset[lang]) node.textContent = node.dataset[lang];
     });
+    $('metal').replaceChildren(...Object.keys(metals).map(metal => {
+      const frequency = thresholdFrequency(metal).toFixed(2);
+      return new Option(t(`โลหะ ${metal} · f₀ ≈ ${frequency} × 10¹⁴ Hz`,
+        `Metal ${metal} · f₀ ≈ ${frequency} × 10¹⁴ Hz`), metal);
+    }));
     setText('language', t('English', 'ไทย'));
     setText('explore', state.explore ? t('กลับสู่ภารกิจ', 'Return to missions') : t('สำรวจหลอดเอง', 'Explore the tube'));
     $('explore').hidden = $('show-report').hidden = stoppingDemo;
@@ -415,11 +446,35 @@
     renderSave();
   }
   function selectMission(index) {
-    const pending = firstPending();
+    const pending = firstAvailable();
     if (!Number.isInteger(index) || index < 0 || index >= missions.length || (pending !== -1 && index > pending)) return;
     state.index = index; state.report = false; state.explore = false;
+    $('reset-status').hidden = true;
     recordNotice = answerNotice = inputNotice = null; pendingInputs.clear();
     render(); changed(); jump('mission-title');
+  }
+  function resetMission() {
+    const work = workNow();
+    const message = t('เริ่มภารกิจนี้ใหม่? ค่าที่บันทึกและคำตอบรอบนี้จะถูกล้าง คะแนนครั้งแรกและ Mastery ที่เคยได้ยังอยู่ในรายงาน',
+      'Restart this mission? Its current measurements and answers will be cleared. Your original first-attempt and earned Mastery scores stay in the report.');
+    if ((work.rows.length || work.frozen) && !window.confirm(message)) return;
+    const fresh = freshWork(state.index);
+    const first = firstResult(work);
+    if (first) fresh.previous = {
+      first, firstAnswers: work.previous?.firstAnswers ?? work.firstAnswers,
+      mastery: earnedMastery(work), passed: everPassed(work),
+    };
+    state.work[state.index] = fresh;
+    state.setup = { ...initial(), overlays: state.setup.overlays };
+    recordNotice = answerNotice = inputNotice = null;
+    pendingInputs.clear();
+    questionKey = '';
+    $('questions').replaceChildren();
+    render();
+    setText('reset-status', t('เริ่มรอบใหม่แล้ว · ขั้นที่ 1', 'New attempt started · Step 1'));
+    $('reset-status').hidden = false;
+    changed();
+    jump('mission-title', true);
   }
   function openReport() {
     state.report = true;
@@ -431,6 +486,7 @@
     jump(state.explore ? 'tube-title' : 'mission-title');
   };
   $('mission-select').onchange = event => selectMission(Number(event.target.value));
+  $('reset-mission').onclick = resetMission;
   $('guide-collapse').onclick = () => { state.guide = state.guide === 'open' ? 'collapsed' : 'open'; renderNavigation(); changed(); };
   $('guide-hide').onclick = () => { state.guide = 'hidden'; renderNavigation(); changed(); $('guide-reopen').focus(); };
   $('guide-reopen').onclick = () => { state.guide = 'open'; renderNavigation(); changed(); $('guide-collapse').focus(); };
@@ -491,6 +547,7 @@
       if (!requirements(state.index, work.rows, state.setup).ready) return;
       work.rows.push(row);
     }
+    $('reset-status').hidden = true;
     recordNotice = pair('✓ บันทึกค่ามิเตอร์แล้ว', '✓ Meter reading recorded');
     render(); changed();
   };

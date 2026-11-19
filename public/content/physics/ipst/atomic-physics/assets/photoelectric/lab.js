@@ -1,8 +1,9 @@
 (() => {
   'use strict';
   const activity = 'physics-photoelectric-lab';
-  const { initial, teaching, measure, signed, metals } = Photoelectric;
+  const { initial, teaching, measure, signed, metals, thresholdFrequency } = Photoelectric;
   const { pair, missions, targets, requirements, snapshot, grade } = PhotoelectricMissions;
+  const totalQuestions = missions.reduce((total, mission) => total + mission.questions.length, 0);
   const $ = id => document.getElementById(id);
   let lang = 'th', identity = 'guest', state, recordNotice, answerNotice, inputNotice, saved, highlightTimer;
   const pendingInputs = new Set();
@@ -98,15 +99,22 @@
       Array.isArray(value.work) && value.work.length === missions.length && value.work.every(validWork) &&
       value.work.slice(0, value.index).every(everPassed);
   }
+  function withAdditionalMission(value) {
+    if (value?.version === 1 && Array.isArray(value.work) && value.work.length === 3) {
+      return { ...value, work: [...value.work, freshWork(3)] };
+    }
+    return value;
+  }
   function readLocal() {
     try {
-      const value = JSON.parse(localStorage.getItem(key()) || 'null');
+      const value = withAdditionalMission(JSON.parse(localStorage.getItem(key()) || 'null'));
       return validState(value) ? value : null;
     } catch { return null; }
   }
   function restoreState(value) {
-    if (!validState(value)) return false;
-    state = clone(value);
+    const upgraded = withAdditionalMission(value);
+    if (!validState(upgraded)) return false;
+    state = clone(upgraded);
     $('reset-status').hidden = true;
     recordNotice = answerNotice = inputNotice = null;
     pendingInputs.clear();
@@ -203,10 +211,10 @@
     const steps = targets[state.index];
     const done = work.rows.length;
     const guideText = currentAction.text || (firstPending() === -1
-      ? t('ผ่านทั้งสามภารกิจแล้ว เปิดรายงานเพื่อดูผล', 'All three missions are complete. Open the report.')
+      ? t('ผ่านทุกภารกิจแล้ว เปิดรายงานเพื่อดูผล', 'All missions are complete. Open the report.')
       : t('ผ่าน Check-out แล้ว', 'Check-out passed.'));
-    setText('guide-status', t(`ภารกิจ ${state.index + 1}/3 · ขั้น ${Math.min(done + 1, steps.length)}/${steps.length} · ✓ ${done}`,
-      `Mission ${state.index + 1}/3 · Step ${Math.min(done + 1, steps.length)}/${steps.length} · ✓ ${done}`));
+    setText('guide-status', t(`ภารกิจ ${state.index + 1}/${missions.length} · ขั้น ${Math.min(done + 1, steps.length)}/${steps.length} · ✓ ${done}`,
+      `Mission ${state.index + 1}/${missions.length} · Step ${Math.min(done + 1, steps.length)}/${steps.length} · ✓ ${done}`));
     setText('guide-text', guideText);
     setText('guide-collapse', state.guide === 'collapsed' ? t('ขยาย', 'Expand') : t('ย่อ', 'Collapse'));
     $('guide-collapse').setAttribute('aria-expanded', String(state.guide === 'open'));
@@ -376,10 +384,10 @@
     $('student-class').value = state.student.className;
     const format = (value, total) => `${value}/${total} · ${(100 * value / total).toFixed(1).replace(/\.0$/, '')}%`;
     $('metrics').replaceChildren(...[
-      [t('ความคืบหน้า', 'Progress'), format(completed, 3)],
-      [t('คะแนนครั้งแรก', 'First-attempt score'), format(first, 10)],
-      [t('คะแนนหลังแก้ไข (Mastery)', 'Mastery after corrections'), format(mastery, 10)],
-      [t('ตรวจแล้ว / รอตรวจ', 'Graded / pending'), `${checked} / ${10 - checked}`],
+      [t('ความคืบหน้า', 'Progress'), format(completed, missions.length)],
+      [t('คะแนนครั้งแรก', 'First-attempt score'), format(first, totalQuestions)],
+      [t('คะแนนหลังแก้ไข (Mastery)', 'Mastery after corrections'), format(mastery, totalQuestions)],
+      [t('ตรวจแล้ว / รอตรวจ', 'Graded / pending'), `${checked} / ${totalQuestions - checked}`],
     ].map(([label, score]) => {
       const item = document.createElement('div');
       const strong = document.createElement('strong'); strong.textContent = score;
@@ -420,6 +428,11 @@
     document.querySelectorAll('[data-th][data-en]').forEach(node => {
       if (node.textContent !== node.dataset[lang]) node.textContent = node.dataset[lang];
     });
+    $('metal').replaceChildren(...Object.keys(metals).map(metal => {
+      const frequency = thresholdFrequency(metal).toFixed(2);
+      return new Option(t(`โลหะ ${metal} · f₀ ≈ ${frequency} × 10¹⁴ Hz`,
+        `Metal ${metal} · f₀ ≈ ${frequency} × 10¹⁴ Hz`), metal);
+    }));
     setText('language', t('English', 'ไทย'));
     setText('explore', state.explore ? t('กลับสู่ภารกิจ', 'Return to missions') : t('สำรวจหลอดเอง', 'Explore the tube'));
     $('explore').hidden = $('show-report').hidden = stoppingDemo;

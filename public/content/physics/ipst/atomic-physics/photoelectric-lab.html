@@ -167,8 +167,9 @@
           <button type="button" id="light" aria-pressed="false"></button>
         </div>
         <label class="control" id="metal-control"><span data-th="โลหะขั้วปล่อย" data-en="Emitter metal"></span>
-          <select id="metal"><option value="A" data-th="โลหะ A" data-en="Metal A"></option><option value="B" data-th="โลหะ B" data-en="Metal B"></option></select>
+          <select id="metal" aria-describedby="threshold-help"></select>
         </label>
+        <p id="threshold-help" class="overlay-note" data-th="f₀ คือความถี่ขีดเริ่มของโลหะ ค่าที่แสดงเป็นค่าประมาณ" data-en="f₀ is the metal’s threshold frequency. Values shown are approximate."></p>
         <div class="control" id="frequency-control">
           <label for="frequency" data-th="ความถี่ f (10¹⁴ Hz)" data-en="Frequency f (10¹⁴ Hz)"></label>
           <div class="control-row"><input id="frequency-range" type="range" min="4" max="10" step=".01" aria-label="f (10¹⁴ Hz)">
@@ -212,7 +213,7 @@
     </section>
     <details class="card">
       <summary data-th="เงื่อนไขของแบบจำลอง" data-en="Model assumptions"></summary>
-      <p data-th="หลอดสุญญากาศอุดมคติ ใช้โลหะตัวอย่าง A/B และสมมติการกระจายพลังงานตามแนวหลอดแบบสม่ำเสมอ ขั้วรับที่ดึงอิเล็กตรอนเก็บได้หมด รูปร่างกราฟและค่ากระแสเป็นตัวอย่าง ภาพจำลองขยายอนุภาคและย่อเวลาเพื่อให้อ่านง่าย" data-en="This ideal vacuum tube uses sample metals A/B and assumes a uniform distribution of electron energies along the tube. An attracting collector collects all emitted electrons. The curve shape and currents are illustrative; particles are enlarged and time is rescaled for visibility."></p>
+      <p data-th="หลอดสุญญากาศอุดมคติ ใช้โลหะตัวอย่าง A/B/C และสมมติการกระจายพลังงานตามแนวหลอดแบบสม่ำเสมอ ขั้วรับที่ดึงอิเล็กตรอนเก็บได้หมด รูปร่างกราฟและค่ากระแสเป็นตัวอย่าง ภาพจำลองขยายอนุภาคและย่อเวลาเพื่อให้อ่านง่าย" data-en="This ideal vacuum tube uses sample metals A/B/C and assumes a uniform distribution of electron energies along the tube. An attracting collector collects all emitted electrons. The curve shape and currents are illustrative; particles are enlarged and time is rescaled for visibility."></p>
     </details>
   </div>
 
@@ -235,10 +236,10 @@
   </section>
   <p id="save-status" class="muted print-hide" role="status"></p>
 </main>
-<script defer src="assets/photoelectric/model.js"></script>
+<script defer src="assets/photoelectric/model.js?v=metal-threshold-1"></script>
 <script defer src="assets/photoelectric/plots.js"></script>
-<script defer src="assets/photoelectric/missions.js"></script>
+<script defer src="assets/photoelectric/missions.js?v=metal-threshold-1"></script>
 <script defer src="assets/photoelectric/tube.js?v=glass-tube-1"></script>
-<script defer src="assets/photoelectric/lab.js?v=mission-reset-1"></script>
+<script defer src="assets/photoelectric/lab.js?v=metal-threshold-1"></script>
 </body>
 </html>

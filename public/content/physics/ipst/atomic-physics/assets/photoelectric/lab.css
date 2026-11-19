@@ -28,7 +28,12 @@ main{max-width:74rem;margin:auto;padding:clamp(.65rem,2.4vw,2rem)}
 .instrument .unit{display:inline}
 .instrument output{font-size:clamp(1.35rem,4vw,2.35rem);font-variant-numeric:tabular-nums;line-height:1.2}
 .tube-labels{display:flex;justify-content:space-between;gap:.5rem;margin-top:.8rem;font-weight:600;font-size:.9rem}
-#tube{width:100%;height:auto;display:block}
+#tube{width:100%;height:auto;display:block;margin:.25rem 0 .55rem}
+.light-tint{stop-color:var(--light-color,#b2d8ef)}
+#spectrum-readout{display:flex;align-items:baseline;gap:.45rem;margin:0;color:var(--muted);font-size:.88rem}
+#spectrum-swatch{flex:none;width:.85em;height:.85em;background:var(--light-color,#b2d8ef);border:1px solid #566e80;border-radius:.2rem}
+#spectrum-swatch.invisible-band{border-style:dashed}
+.overlay-note{margin:.15rem 0 .45rem;font-size:.88rem;color:var(--muted)}
 .reading{background:var(--pale);padding:.6rem;border-radius:.45rem}
 .overlays{display:flex;flex-wrap:wrap;gap:0 .8rem}
 .overlays label{display:inline-flex;align-items:center;gap:.35rem;min-height:44px}

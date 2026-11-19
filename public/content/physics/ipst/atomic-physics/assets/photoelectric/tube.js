@@ -1,7 +1,27 @@
 (() => {
   'use strict';
   const ns = 'http://www.w3.org/2000/svg';
+  // Approximate screen RGB along the visible band, with separate guide colors for invisible light.
+  const visibleStops = [
+    [380, [155, 104, 255]], [435, [132, 123, 255]], [480, [60, 193, 255]],
+    [510, [73, 235, 142]], [560, [201, 246, 78]], [580, [255, 224, 64]],
+    [600, [255, 162, 64]], [635, [255, 90, 81]], [700, [232, 75, 85]],
+  ];
+  function spectrum(frequency) {
+    const wavelength = 2997.92458 / frequency; // Frequency input uses 10¹⁴ Hz, wavelength is in nm.
+    if (wavelength < 380) return { wavelength, region: 'uv', color: '#cbb4ff' };
+    if (wavelength > 700) return { wavelength, region: 'ir', color: '#ffae9a' };
+    const upper = visibleStops.findIndex(([nm]) => nm >= wavelength);
+    const [lowNm, low] = visibleStops[Math.max(0, upper - 1)];
+    const [highNm, high] = visibleStops[upper];
+    const fraction = highNm === lowNm ? 0 : (wavelength - lowNm) / (highNm - lowNm);
+    const rgb = low.map((value, index) => Math.round(value + (high[index] - value) * fraction));
+    return { wavelength, region: 'visible', color: `rgb(${rgb.join(', ')})` };
+  }
+  const overlays = Object.freeze(['beam', 'velocity', 'field', 'current', 'arrival']);
   function connect() {
+    const beam = document.getElementById('beam-layer');
+    const arrival = document.getElementById('arrival-layer');
     const layer = document.getElementById('electron-layer');
     const velocity = document.getElementById('velocity-layer');
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -54,13 +74,18 @@
     }
     document.addEventListener('visibilitychange', animate);
     reducedMotion.addEventListener('change', animate);
-    return (nextSetup, nextReading) => {
+    return (nextSetup, nextReading, light) => {
       setup = nextSetup;
       reading = nextReading;
       const show = (id, on) => { document.getElementById(id).style.display = on ? '' : 'none'; };
       const overlays = setup.overlays;
       show('beam-layer', setup.light && setup.intensity > 0 && overlays.includes('beam'));
-      document.getElementById('beam-layer').style.opacity = String(0.2 + setup.intensity / 125);
+      beam.ownerSVGElement.style.setProperty('--light-color', light.color);
+      beam.style.opacity = String(Math.sqrt(setup.intensity / 100));
+      show('visible-beam', light.region === 'visible');
+      show('invisible-beam', light.region !== 'visible');
+      show('arrival-layer', reading.current > 0 && overlays.includes('arrival'));
+      arrival.style.opacity = String(0.34 + 0.66 * Math.min(1, reading.rawCurrent / 4));
       show('velocity-layer', reading.emission && overlays.includes('velocity'));
       show('field-layer', setup.voltage !== 0 && overlays.includes('field'));
       show('current-layer', reading.current > 0 && overlays.includes('current'));
@@ -69,5 +94,5 @@
       animate();
     };
   }
-  globalThis.PhotoelectricTube = { connect };
+  globalThis.PhotoelectricTube = { connect, spectrum, overlays };
 })();

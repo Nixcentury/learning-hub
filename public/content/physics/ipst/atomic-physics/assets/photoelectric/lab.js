@@ -7,7 +7,8 @@
   let lang = 'th', identity = 'guest', state, recordNotice, answerNotice, inputNotice, saved, highlightTimer;
   const pendingInputs = new Set();
   const subscribers = new Set();
-  const tube = PhotoelectricTube.connect();
+  const { connect, spectrum, overlays } = PhotoelectricTube;
+  const tube = connect();
   const t = (th, en) => lang === 'th' ? th : en;
   const txt = value => value?.[lang] || '';
   const setText = (id, value) => { if ($(id).textContent !== value) $(id).textContent = value; };
@@ -82,7 +83,7 @@
       typeof value.student?.name === 'string' && value.student.name.length <= 100 &&
       typeof value.student?.className === 'string' && value.student.className.length <= 50 &&
       validSetup(value.setup) && Array.isArray(value.setup.overlays) &&
-      value.setup.overlays.every(item => ['beam', 'velocity', 'field', 'current'].includes(item)) &&
+      value.setup.overlays.every(item => overlays.includes(item)) &&
       Array.isArray(value.benchRows) && value.benchRows.length <= 20 && value.benchRows.every(row => {
         if (!validSetup(row)) return false;
         const actual = snapshot(row);
@@ -237,6 +238,13 @@
     $('light').setAttribute('aria-pressed', String(setup.light));
     setText('current', reading.current.toFixed(2));
     setText('photon-energy', t(`พลังงานโฟตอน ${reading.energy.toFixed(2)} eV`, `Photon energy ${reading.energy.toFixed(2)} eV`));
+    const light = spectrum(setup.frequency);
+    const band = light.region === 'visible' ? t('แสงที่มองเห็น · สีโดยประมาณ', 'Visible light · approximate color')
+      : light.region === 'uv' ? t('อัลตราไวโอเลต · เส้นประสีแทน', 'Ultraviolet · dashed guide color')
+        : t('อินฟราเรด · เส้นประสีแทน', 'Infrared · dashed guide color');
+    setText('light-spectrum', `λ ≈ ${light.wavelength.toFixed(1)} nm · ${band}`);
+    $('spectrum-swatch').style.setProperty('--light-color', light.color);
+    $('spectrum-swatch').classList.toggle('invisible-band', light.region !== 'visible');
     setText('signed-voltage', signed(setup.voltage) + ' V');
     setText('supply-label', signed(setup.voltage) + ' V');
     setText('polarity', setup.voltage > 0 ? t('ขั้วรับดึงอิเล็กตรอน', 'Attracting collector')
@@ -248,7 +256,7 @@
     setText('tube-description', description);
     setText('tube-state', description);
     for (const input of $('overlays').querySelectorAll('input')) input.checked = setup.overlays.includes(input.value);
-    tube(setup, reading);
+    tube(setup, reading, light);
     const need = requirements(state.index, workNow().rows, setup);
     $('record').disabled = Boolean(pendingInputs.size) || (!state.explore && !need.ready);
     setText('input-status', txt(inputNotice));

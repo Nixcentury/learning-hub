@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>แล็บโฟโตอิเล็กทริก | Photoelectric Effect Lab</title>
   <link rel="stylesheet" href="assets/photoelectric/common.css">
-  <link rel="stylesheet" href="assets/photoelectric/lab.css">
+  <link rel="stylesheet" href="assets/photoelectric/lab.css?v=glass-tube-1">
 </head>
 <body>
 <main>
@@ -65,29 +65,82 @@
         <svg id="tube" viewBox="0 0 560 258" role="img" aria-labelledby="tube-description">
           <title id="tube-description"></title>
           <defs>
+            <radialGradient id="bench-light" cx=".48" cy=".43" r=".67">
+              <stop stop-color="#273f53"/><stop offset="1" stop-color="#101923"/>
+            </radialGradient>
             <linearGradient id="glass" x2="0" y2="1">
-              <stop stop-color="#dbeaf0"/><stop offset=".6" stop-color="#f7fcfd"/><stop offset="1" stop-color="#cfe2eb"/>
+              <stop stop-color="#a1d4e9" stop-opacity=".72"/>
+              <stop offset=".12" stop-color="#8eb9cc" stop-opacity=".23"/>
+              <stop offset=".44" stop-color="#102d41" stop-opacity=".04"/>
+              <stop offset=".78" stop-color="#6c9eb7" stop-opacity=".13"/>
+              <stop offset="1" stop-color="#a7d3eb" stop-opacity=".58"/>
             </linearGradient>
+            <linearGradient id="glass-edge" x2="0" y2="1">
+              <stop stop-color="#d7f2ff"/><stop offset=".35" stop-color="#628ca5"/>
+              <stop offset=".65" stop-color="#2b485d"/><stop offset="1" stop-color="#a6d5ea"/>
+            </linearGradient>
+            <linearGradient id="tube-metal">
+              <stop stop-color="#2c3c47"/><stop offset=".28" stop-color="#d4e0e7"/>
+              <stop offset=".53" stop-color="#758a99"/><stop offset=".77" stop-color="#425662"/>
+              <stop offset="1" stop-color="#c8dce7"/>
+            </linearGradient>
+            <linearGradient id="lamp-beam" x1="1" x2="0" y2="1">
+              <stop offset="0" class="light-tint" stop-opacity=".16"/>
+              <stop offset=".47" class="light-tint" stop-opacity=".45"/>
+              <stop offset="1" class="light-tint" stop-opacity=".27"/>
+            </linearGradient>
+            <radialGradient id="lamp-spot">
+              <stop class="light-tint" stop-opacity=".8"/><stop offset="1" class="light-tint" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="arrival-spot">
+              <stop stop-color="#8dffe1" stop-opacity=".85"/><stop offset="1" stop-color="#75e7cd" stop-opacity="0"/>
+            </radialGradient>
             <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-              <path d="M0 0L10 5L0 10Z" fill="currentColor"/>
+              <path d="M0 0L10 5L0 10Z" fill="#c4e4ed"/>
             </marker>
           </defs>
-          <rect x="78" y="44" width="404" height="145" rx="65" fill="url(#glass)" stroke="#6790a0" stroke-width="2"/>
-          <path d="M135 156V228H425V156" fill="none" stroke="#586d79" stroke-width="3"/>
-          <rect id="supply" x="246" y="211" width="68" height="34" rx="5" fill="#f4f7f8" stroke="#58717e"/>
-          <text id="supply-label" x="280" y="234" text-anchor="middle" fill="#223b47" font-size="16"></text>
-          <path d="M135 78V157M425 78V157" stroke="#3f606e" stroke-width="13" stroke-linecap="round"/>
-          <g id="beam-layer" color="#9e5b0e" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)">
-            <path d="M35 30L121 112"/><path d="M57 23L122 85"/><path d="M24 51L120 143"/>
+          <rect x="4" y="4" width="552" height="250" rx="15" fill="url(#bench-light)" stroke="#496678"/>
+          <ellipse cx="280" cy="204" rx="203" ry="15" fill="#0b131c" opacity=".72"/>
+          <path d="M135 156V228H425V156" fill="none" stroke="#8da8b9" stroke-width="2.5"/>
+          <rect x="246" y="211" width="68" height="34" rx="5" fill="#172b36" stroke="#59788b"/>
+          <text id="supply-label" x="280" y="234" text-anchor="middle" fill="#dff3fa" font-size="16"></text>
+
+          <rect x="78" y="44" width="404" height="145" rx="65" fill="url(#glass)" stroke="url(#glass-edge)" stroke-width="2"/>
+          <rect x="84" y="49" width="392" height="135" rx="61" fill="none" stroke="#cfeeff" stroke-opacity=".25"/>
+          <path d="M106 71Q120 53 148 52H397M433 54Q458 61 470 87" fill="none" stroke="#e4f7ff" stroke-opacity=".68" stroke-width="3" stroke-linecap="round"/>
+          <path d="M101 162Q114 177 148 180H405" fill="none" stroke="#b7d6e7" stroke-opacity=".32" stroke-width="2" stroke-linecap="round"/>
+
+          <g aria-hidden="true">
+            <rect x="124" y="75" width="18" height="88" rx="5" fill="url(#tube-metal)" stroke="#b0c1ce" stroke-width=".7"/>
+            <rect x="419" y="76" width="13" height="86" rx="4" fill="url(#tube-metal)" stroke="#b0c1ce" stroke-width=".7"/>
+            <path d="M126 162H144V184H126ZM416 162H434V184H416Z" fill="url(#tube-metal)" opacity=".65"/>
           </g>
-          <g id="electron-layer" fill="#16776e" aria-hidden="true"></g>
-          <g id="velocity-layer" color="#0c625b" stroke="currentColor" stroke-width="2.5" marker-end="url(#arrow)"></g>
-          <g id="field-layer" color="#864e86" stroke="currentColor" stroke-width="2.5">
+          <g id="beam-layer" aria-hidden="true" style="display:none">
+            <g id="visible-beam">
+              <path d="M208 30L228 43L143 155V85Z" fill="url(#lamp-beam)"/>
+              <ellipse cx="144" cy="120" rx="22" ry="45" fill="url(#lamp-spot)"/>
+              <path d="M214 38L146 119" stroke="var(--light-color)" stroke-width="2" marker-end="url(#arrow)"/>
+            </g>
+            <path id="invisible-beam" d="M214 38L146 119" fill="none" stroke="var(--light-color)"
+              stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+          </g>
+          <g aria-hidden="true" transform="translate(216 37) rotate(40)">
+            <rect x="-11" y="-23" width="22" height="26" rx="5" fill="url(#tube-metal)" stroke="#8aa8bb"/>
+            <path d="M-12 0H12V5H-12Z" fill="#253a4a" stroke="#657f94" stroke-width="1"/>
+            <path d="M-8 5H8" stroke="#acccdc" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <g id="arrival-layer" style="display:none" aria-hidden="true">
+            <ellipse cx="418" cy="120" rx="29" ry="51" fill="url(#arrival-spot)"/>
+            <path d="M419 84V154" stroke="#a0ffe5" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <g id="electron-layer" fill="#83f4d9" stroke="#164c4a" stroke-width="1.2" aria-hidden="true"></g>
+          <g id="velocity-layer" color="#b4f6dc" stroke="currentColor" stroke-width="2.5"></g>
+          <g id="field-layer" color="#f0b8ff" stroke="currentColor" stroke-width="2.5">
             <path id="e-field" marker-end="url(#arrow)"/><path id="e-force" marker-end="url(#arrow)"/>
             <text x="225" y="68" stroke="none" fill="currentColor" font-size="15">E</text>
             <text x="225" y="177" stroke="none" fill="currentColor" font-size="15">Fₑ</text>
           </g>
-          <g id="current-layer" color="#9e5b0e" stroke="currentColor" stroke-width="3">
+          <g id="current-layer" color="#ffe0a6" stroke="currentColor" stroke-width="3">
             <path d="M155 228H208M341 228H413" marker-end="url(#arrow)"/>
             <text x="195" y="218" stroke="none" fill="currentColor" font-size="15">I</text>
           </g>
@@ -96,11 +149,13 @@
         <details>
           <summary data-th="เปิด–ปิดลูกศรและภาพประกอบ" data-en="Show or hide arrows and overlays"></summary>
           <div id="overlays" class="overlays">
-            <label><input type="checkbox" value="beam"><span data-th="ทิศแสง" data-en="Light direction"></span></label>
+            <label><input type="checkbox" value="beam"><span data-th="ลำแสงและทิศทาง" data-en="Light beam and direction"></span></label>
             <label><input type="checkbox" value="velocity"><span data-th="ความเร็วของอิเล็กตรอน v" data-en="Electron velocity v"></span></label>
             <label><input type="checkbox" value="field"><span data-th="สนาม E และแรง Fₑ" data-en="Field E and force Fₑ"></span></label>
             <label><input type="checkbox" value="current"><span data-th="กระแสตามแบบแผน I ในวงจรภายนอก" data-en="Conventional current I in the external circuit"></span></label>
+            <label><input type="checkbox" value="arrival"><span data-th="ไฮไลต์ขั้วรับ (ภาพช่วยดู)" data-en="Collector highlight (visual aid)"></span></label>
           </div>
+          <p class="overlay-note" data-th="ไฮไลต์ขั้วรับเป็นภาพจำลองเมื่อมีอิเล็กตรอนมาถึง ให้อ่านค่ากระแสจากมิเตอร์" data-en="The collector highlight marks electron arrival in the simulation. Read the current on the meter."></p>
         </details>
       </section>
 
@@ -118,6 +173,7 @@
             <input id="frequency" type="number" inputmode="decimal" min="4" max="10" step="any"></div>
           <button type="button" id="teaching-frequency" data-th="ตั้งแสงชุดสอน 3.00 eV" data-en="Set teaching light · 3.00 eV"></button>
           <output id="photon-energy"></output>
+          <p id="spectrum-readout"><span id="spectrum-swatch" aria-hidden="true"></span><span id="light-spectrum"></span></p>
         </div>
         <div class="control" id="intensity-control">
           <label for="intensity" data-th="ความเข้มแสง (%)" data-en="Light intensity (%)"></label>
@@ -179,7 +235,7 @@
 <script defer src="assets/photoelectric/model.js"></script>
 <script defer src="assets/photoelectric/plots.js"></script>
 <script defer src="assets/photoelectric/missions.js"></script>
-<script defer src="assets/photoelectric/tube.js"></script>
-<script defer src="assets/photoelectric/lab.js"></script>
+<script defer src="assets/photoelectric/tube.js?v=glass-tube-1"></script>
+<script defer src="assets/photoelectric/lab.js?v=glass-tube-1"></script>
 </body>
 </html>

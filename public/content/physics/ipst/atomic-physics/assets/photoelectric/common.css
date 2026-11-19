@@ -1,0 +1,24 @@
+:root{color-scheme:light;--ink:#192a36;--muted:#455d6e;--accent:#0c625b;--accent-dark:#11413e;--pale:#e9f4f1;--line:#c0d2d9;--paper:#fff;--bg:#eef3f6;--danger:#932827;font-family:system-ui,-apple-system,"Leelawadee UI",Tahoma,sans-serif;color:var(--ink);background:var(--bg)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-size:1rem;line-height:1.55}
+h1,h2,h3,p{margin-top:0}
+h1,h2,h3{line-height:1.28}
+button,select,input,textarea{font:inherit;color:inherit}
+button,select,input:not([type=checkbox]):not([type=range]){min-height:44px}
+button{border:1px solid var(--line);background:white;border-radius:.55rem;padding:.45rem .75rem;cursor:pointer}
+button:disabled{opacity:.55;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:white;font-weight:650}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #ac620b;outline-offset:3px}
+a{color:var(--accent-dark);text-underline-offset:.14em}
+[hidden]{display:none!important}
+small,.muted{color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:.42rem .55rem;text-align:left;border-bottom:1px solid var(--line)}
+thead{background:var(--pale);color:var(--accent-dark)}
+svg.chart{display:block;width:100%;max-width:34rem;height:auto}
+.chart text{font-size:13px;fill:var(--ink);font-family:system-ui,sans-serif}
+.chart .gridline{stroke:var(--line);stroke-width:1}
+.chart .axis,.chart .series{stroke:#24545e;stroke-width:2;fill:none}
+.chart .second{stroke:#77473e;stroke-dasharray:6 3}
+.chart .point{fill:#17766b;stroke:white;stroke-width:1}
+.chart .series-label{font-weight:700}

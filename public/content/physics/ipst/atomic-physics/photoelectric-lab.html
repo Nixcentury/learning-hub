@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="th" data-learning-simulation data-activity-id="physics-photoelectric-lab">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>แล็บโฟโตอิเล็กทริก | Photoelectric Effect Lab</title>
+  <link rel="stylesheet" href="assets/photoelectric/common.css">
+  <link rel="stylesheet" href="assets/photoelectric/lab.css">
+</head>
+<body>
+<main>
+  <header class="page-head print-hide">
+    <p class="eyebrow" data-th="ฟิสิกส์อะตอม · Learning Hub" data-en="Atomic Physics · Learning Hub"></p>
+    <h1 data-th="แล็บโฟโตอิเล็กทริก" data-en="Photoelectric Effect Lab"></h1>
+    <p data-th="เปิดแสง อ่านมิเตอร์ แล้วหาพลังงานจากศักย์หยุดยั้ง" data-en="Switch on the light, read the meter and find the energy from the stopping potential."></p>
+    <div class="actions">
+      <button type="button" id="language" aria-label="Language">English</button>
+      <button type="button" id="explore"></button>
+      <button type="button" id="show-report" data-th="รายงาน / คะแนน" data-en="Report / scores"></button>
+    </div>
+  </header>
+
+  <div id="work" class="print-hide">
+    <div id="dock" class="dock">
+      <aside id="guide" class="guide" aria-label="Smart Lab Guide">
+        <div class="guide-header">
+          <strong id="guide-status"></strong>
+          <button type="button" id="guide-collapse" aria-controls="guide-text guide-action"></button>
+          <button type="button" id="guide-hide" data-th="ซ่อน" data-en="Hide"></button>
+        </div>
+        <div id="guide-text" role="status" aria-live="polite"></div>
+        <button type="button" class="primary" id="guide-action"></button>
+      </aside>
+      <button type="button" id="guide-reopen" data-th="เปิดผู้ช่วย" data-en="Show lab guide" hidden></button>
+    </div>
+    <section class="card mission">
+      <h2 id="mission-title"></h2>
+      <p id="mission-objective"></p>
+      <div class="actions">
+        <label for="mission-select" data-th="เลือกหรือทบทวนภารกิจ" data-en="Choose or revisit a mission"></label>
+        <select id="mission-select"></select>
+      </div>
+      <ul id="step-list"></ul>
+      <button type="button" id="mission-action" class="primary"></button>
+    </section>
+
+    <div class="bench">
+      <section class="card apparatus" aria-labelledby="tube-title">
+        <h2 id="tube-title" data-th="หลอดสุญญากาศและมิเตอร์" data-en="Vacuum tube and current meter"></h2>
+        <div class="instrument">
+          <div class="meter">
+            <span data-th="ไมโครแอมมิเตอร์" data-en="Microammeter"></span>
+            <output id="current" aria-label="I (µA)">0.00</output><span class="unit">µA</span>
+          </div>
+          <div class="polarity">
+            <span data-th="ศักย์ขั้วรับเทียบขั้วปล่อย" data-en="Collector potential relative to emitter"></span>
+            <output id="signed-voltage"></output>
+            <span id="polarity"></span>
+          </div>
+        </div>
+        <div class="tube-labels">
+          <span data-th="ขั้วปล่อย · ผิวโลหะ" data-en="Emitter · metal surface"></span>
+          <span data-th="ขั้วรับ" data-en="Collector"></span>
+        </div>
+        <svg id="tube" viewBox="0 0 560 258" role="img" aria-labelledby="tube-description">
+          <title id="tube-description"></title>
+          <defs>
+            <linearGradient id="glass" x2="0" y2="1">
+              <stop stop-color="#dbeaf0"/><stop offset=".6" stop-color="#f7fcfd"/><stop offset="1" stop-color="#cfe2eb"/>
+            </linearGradient>
+            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10Z" fill="currentColor"/>
+            </marker>
+          </defs>
+          <rect x="78" y="44" width="404" height="145" rx="65" fill="url(#glass)" stroke="#6790a0" stroke-width="2"/>
+          <path d="M135 156V228H425V156" fill="none" stroke="#586d79" stroke-width="3"/>
+          <rect id="supply" x="246" y="211" width="68" height="34" rx="5" fill="#f4f7f8" stroke="#58717e"/>
+          <text id="supply-label" x="280" y="234" text-anchor="middle" fill="#223b47" font-size="16"></text>
+          <path d="M135 78V157M425 78V157" stroke="#3f606e" stroke-width="13" stroke-linecap="round"/>
+          <g id="beam-layer" color="#9e5b0e" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)">
+            <path d="M35 30L121 112"/><path d="M57 23L122 85"/><path d="M24 51L120 143"/>
+          </g>
+          <g id="electron-layer" fill="#16776e" aria-hidden="true"></g>
+          <g id="velocity-layer" color="#0c625b" stroke="currentColor" stroke-width="2.5" marker-end="url(#arrow)"></g>
+          <g id="field-layer" color="#864e86" stroke="currentColor" stroke-width="2.5">
+            <path id="e-field" marker-end="url(#arrow)"/><path id="e-force" marker-end="url(#arrow)"/>
+            <text x="225" y="68" stroke="none" fill="currentColor" font-size="15">E</text>
+            <text x="225" y="177" stroke="none" fill="currentColor" font-size="15">Fₑ</text>
+          </g>
+          <g id="current-layer" color="#9e5b0e" stroke="currentColor" stroke-width="3">
+            <path d="M155 228H208M341 228H413" marker-end="url(#arrow)"/>
+            <text x="195" y="218" stroke="none" fill="currentColor" font-size="15">I</text>
+          </g>
+        </svg>
+        <p id="tube-state" class="reading"></p>
+        <details>
+          <summary data-th="เปิด–ปิดลูกศรและภาพประกอบ" data-en="Show or hide arrows and overlays"></summary>
+          <div id="overlays" class="overlays">
+            <label><input type="checkbox" value="beam"><span data-th="ทิศแสง" data-en="Light direction"></span></label>
+            <label><input type="checkbox" value="velocity"><span data-th="ความเร็วของอิเล็กตรอน v" data-en="Electron velocity v"></span></label>
+            <label><input type="checkbox" value="field"><span data-th="สนาม E และแรง Fₑ" data-en="Field E and force Fₑ"></span></label>
+            <label><input type="checkbox" value="current"><span data-th="กระแสตามแบบแผน I ในวงจรภายนอก" data-en="Conventional current I in the external circuit"></span></label>
+          </div>
+        </details>
+      </section>
+
+      <section class="card controls" aria-labelledby="controls-title">
+        <h2 id="controls-title" data-th="เครื่องมือทดลอง" data-en="Experiment controls"></h2>
+        <div id="light-control" class="control">
+          <button type="button" id="light" aria-pressed="false"></button>
+        </div>
+        <label class="control" id="metal-control"><span data-th="โลหะขั้วปล่อย" data-en="Emitter metal"></span>
+          <select id="metal"><option value="A" data-th="โลหะ A" data-en="Metal A"></option><option value="B" data-th="โลหะ B" data-en="Metal B"></option></select>
+        </label>
+        <div class="control" id="frequency-control">
+          <label for="frequency" data-th="ความถี่ f (10¹⁴ Hz)" data-en="Frequency f (10¹⁴ Hz)"></label>
+          <div class="control-row"><input id="frequency-range" type="range" min="4" max="10" step=".01" aria-label="f (10¹⁴ Hz)">
+            <input id="frequency" type="number" inputmode="decimal" min="4" max="10" step="any"></div>
+          <button type="button" id="teaching-frequency" data-th="ตั้งแสงชุดสอน 3.00 eV" data-en="Set teaching light · 3.00 eV"></button>
+          <output id="photon-energy"></output>
+        </div>
+        <div class="control" id="intensity-control">
+          <label for="intensity" data-th="ความเข้มแสง (%)" data-en="Light intensity (%)"></label>
+          <div class="control-row"><input id="intensity-range" type="range" min="0" max="100" step="1" aria-label="Intensity (%)">
+            <input id="intensity" type="number" inputmode="numeric" min="0" max="100" step="1"></div>
+        </div>
+        <div class="control" id="voltage-control">
+          <label for="voltage" data-th="ความต่างศักย์ V (V)" data-en="Potential difference V (V)"></label>
+          <div class="control-row"><input id="voltage-range" type="range" min="-1" max="1" step=".01" aria-label="V (V)">
+            <input id="voltage" type="number" inputmode="decimal" min="-1" max="1" step=".01"></div>
+        </div>
+        <p id="input-status" role="status"></p>
+        <button type="button" id="record" class="primary" data-th="บันทึกค่ามิเตอร์" data-en="Record meter reading"></button>
+        <p id="record-status" role="status"></p>
+      </section>
+    </div>
+
+    <section id="observations" class="card">
+      <h2 data-th="ผลที่บันทึก" data-en="Recorded observations"></h2>
+      <div id="readings"></div>
+      <figure id="graph" hidden><svg id="iv" class="chart"></svg>
+        <figcaption data-th="จุดจากค่าที่บันทึก ภายใต้แสงและโลหะชุดเดียวกัน" data-en="Points from your recorded readings under the same light and metal settings."></figcaption>
+      </figure>
+    </section>
+    <section id="checkout" class="card" tabindex="-1" hidden>
+      <h2 data-th="Check-out · ตรวจความเข้าใจ" data-en="Check-out · Check understanding"></h2>
+      <p data-th="อ้างอิงผลที่บันทึกไว้สำหรับภารกิจนี้เมื่อเปิด Check-out" data-en="Use the observations saved for this mission when you opened Check-out."></p>
+      <form id="answer-form" novalidate>
+        <div id="questions"></div>
+        <button type="submit" id="check" class="primary" data-th="ตรวจคำตอบ" data-en="Check answers"></button>
+      </form>
+      <p id="answer-status" role="status"></p>
+      <button type="button" id="next" class="primary" hidden></button>
+    </section>
+    <details class="card">
+      <summary data-th="เงื่อนไขของแบบจำลอง" data-en="Model assumptions"></summary>
+      <p data-th="หลอดสุญญากาศอุดมคติ ใช้โลหะตัวอย่าง A/B และสมมติการกระจายพลังงานตามแนวหลอดแบบสม่ำเสมอ ขั้วรับที่ดึงอิเล็กตรอนเก็บได้หมด รูปร่างกราฟและค่ากระแสเป็นตัวอย่าง ภาพจำลองขยายอนุภาคและย่อเวลาเพื่อให้อ่านง่าย" data-en="This ideal vacuum tube uses sample metals A/B and assumes a uniform distribution of electron energies along the tube. An attracting collector collects all emitted electrons. The curve shape and currents are illustrative; particles are enlarged and time is rescaled for visibility."></p>
+    </details>
+  </div>
+
+  <section id="report" class="card" tabindex="-1" hidden>
+    <h2 id="report-title" data-th="รายงานการทดลองโฟโตอิเล็กทริก" data-en="Photoelectric effect lab report"></h2>
+    <div class="actions print-hide report-form">
+      <label><span data-th="ชื่อ" data-en="Name"></span><input id="student-name" autocomplete="name" maxlength="100"></label>
+      <label><span data-th="ชั้น" data-en="Class"></span><input id="student-class" maxlength="50"></label>
+    </div>
+    <p id="report-name"></p>
+    <p id="report-date"></p>
+    <div id="metrics"></div>
+    <div id="report-detail"></div>
+    <div class="actions print-hide">
+      <button type="button" id="print" class="primary" data-th="พิมพ์รายงาน A4" data-en="Print A4 report"></button>
+      <button type="button" id="review" data-th="ทบทวนภารกิจที่ผ่าน" data-en="Review completed missions"></button>
+      <button type="button" id="return" data-th="กลับไปที่หลอดทดลอง" data-en="Return to the tube"></button>
+    </div>
+  </section>
+  <p id="save-status" class="muted print-hide" role="status"></p>
+</main>
+<script defer src="assets/photoelectric/model.js"></script>
+<script defer src="assets/photoelectric/plots.js"></script>
+<script defer src="assets/photoelectric/missions.js"></script>
+<script defer src="assets/photoelectric/tube.js"></script>
+<script defer src="assets/photoelectric/lab.js"></script>
+</body>
+</html>

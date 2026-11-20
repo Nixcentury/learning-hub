@@ -58,14 +58,16 @@ export function exitPractice(th, answers) {
       `<div class="task" data-part="${i+1}">${p(letters[i]+'. '+question)}${answers?`<div class="teacher-key">${solution}</div>`:blanks}</div>`).join('')}</section>`;
   }
   const q1 = problem(1,t('พลังงานต่อโฟตอนและการแปลงหน่วย','Photon energy and unit conversion'),
-    p(t('แสงความยาวคลื่น 500 nm ในสุญญากาศ กำหนดให้','Light has a vacuum wavelength of 500 nm. Use')+' '+[speed,planck,conversion].join(' · ')),[
+    p(t('ลำแสงเดินทางในสุญญากาศและมีความยาวคลื่น 500 nm ใช้ค่าคงที่และค่าการแปลงหน่วยต่อไปนี้',
+      'A beam of light travels through a vacuum and has a wavelength of 500 nm. Use the following constants and conversion factor.')+' '+[speed,planck,conversion].join(' · ')),[
       [t('จงหาพลังงานต่อโฟตอนในหน่วย J','Find the photon energy in joules.'),
         working(th,[1],[m`\lambda=500\times10^{-9}\,\mathrm m`,m`E_\gamma=\frac{(6.626\times10^{-34})(3.00\times10^8)}{500\times10^{-9}}=3.98\times10^{-19}\,\mathrm J`],t('พลังงานต่อโฟตอนประมาณ 3.98 × 10⁻¹⁹ J','The photon energy is about 3.98 × 10⁻¹⁹ J.'))],
       [t('จงแปลงพลังงานเป็น eV','Convert the energy to electronvolts.'),
         working(th,[1],[m`E_\gamma=\frac{3.9756\times10^{-19}\,\mathrm J}{1.602\times10^{-19}\,\mathrm{J/eV}}=2.48\,\mathrm{eV}`],t('ใช้ค่าก่อนปัดจากข้อ ก.','Use the unrounded value from part a.'))],
     ]);
   const q2 = problem(2,t('แสงสองความถี่บนโลหะเดียวกัน','Two frequencies on the same metal'),
-    p(t('โลหะ B ในแล็บมี W = 2.80 eV ฉายแสงทีละครั้งที่ 6.50 × 10¹⁴ Hz และ 7.80 × 10¹⁴ Hz ใช้','Lab metal B has W = 2.80 eV. Illuminate it separately at 6.50 × 10¹⁴ Hz and 7.80 × 10¹⁴ Hz. Use')+' '+planck+'.'),[
+    p(t('โลหะ B ในแล็บมีฟังก์ชันงาน 2.80 eV นักเรียนฉายแสงลงบนโลหะครั้งแรกที่ความถี่ 6.50 × 10¹⁴ Hz แล้วทดลองซ้ำที่ 7.80 × 10¹⁴ Hz ใช้ค่าคงที่ของพลังค์',
+      'Metal B in the lab has a work function of 2.80 eV. A student illuminates it at 6.50 × 10¹⁴ Hz, then repeats at 7.80 × 10¹⁴ Hz. Use the Planck constant')+' '+planck+'.'),[
       [t('ตัดสินว่าแต่ละครั้งอิเล็กตรอนหลุดได้หรือไม่ พร้อมแสดงหลักฐานจากพลังงาน','Decide whether each beam produces emission and support the decision using energy.'),
         working(th,[1],[m`E_{\gamma,1}=(4.136\times10^{-15})(6.50\times10^{14})=2.69\,\mathrm{eV}`,m`E_{\gamma,2}=(4.136\times10^{-15})(7.80\times10^{14})=3.23\,\mathrm{eV}`],t('ครั้งแรกต่ำกว่า 2.80 eV จึงไม่หลุด ครั้งที่สองสูงกว่า 2.80 eV จึงหลุดได้','The first beam is below 2.80 eV, so it produces no emission. The second beam is above 2.80 eV, so emission occurs.'))],
       [t('คำนวณพลังงานจลน์สูงสุดในกรณีที่หลุด','Find maximum kinetic energy for the emitting case.'),
@@ -85,23 +87,27 @@ export function exitPractice(th, answers) {
          'Runs 1 → 2 remain at zero. Runs 4 → 3 increase from 1.60 to 2.80 µA. Equation (1) keeps energy per photon fixed when f is fixed. Higher intensity supplies more photons. With sufficient energy per photon, more electrons reach the collector each second.'))],
     ]);
   const q4 = problem(4,t('หน้าปัดเป็นศูนย์สามครั้ง','Three readings of zero'),
-    p(t('ใช้โลหะ A ที่มี W = 2.50 eV ภายใต้เงื่อนไขสามกรณีดังตาราง เครื่องวัดอ่านได้ 0.00 µA ทั้งสามครั้ง',
-      'Metal A has W = 2.50 eV. The meter reads 0.00 µA in all three cases.')) +
+    p(t('นักเรียนใช้โลหะ A ที่มีฟังก์ชันงาน 2.50 eV แล้วเปลี่ยนการตั้งค่าแสงและศักย์ของขั้วรับตามตาราง มิเตอร์อ่านได้ 0.00 µA ทั้งสามครั้ง',
+      'Students use metal A, which has a work function of 2.50 eV. They change the light and collector voltage as shown. The meter reads 0.00 µA in all three cases.')) +
     table([t('กรณี','Case'),t('แสง','Light'),'V (V)'],[
       ['A',t('ปิด','Off'),'+1.00'],['B',t('เปิด · 2.40 eV','On · 2.40 eV'),'+1.00'],['C',t('เปิด · 3.00 eV','On · 3.00 eV'),'−0.60'],
     ]),[
       ...[
         [t('กรณี A','Case A'),t('ปิดแหล่งกำเนิดแสง จึงไม่มีโฟตอนมากระตุ้นการหลุด','The source is off. No incident photons trigger emission.')],
         [t('กรณี B','Case B'),t('โฟตอน 2.40 eV มีพลังงานต่ำกว่า 2.50 eV จึงไม่ทำให้อิเล็กตรอนหลุด','Each 2.40 eV photon is below 2.50 eV, so no electron is emitted.')],
-        [t('กรณี C','Case C'),t('โฟตอน 3.00 eV ทำให้อิเล็กตรอนหลุดได้ สมการ (2) ให้ Kₘₐₓ = 0.50 eV แต่แรงดันต้านขนาด 0.60 V ต้องใช้พลังงาน 0.60 eV จึงไม่มีอิเล็กตรอนถึงขั้วรับ',
-          'The 3.00 eV photons can cause emission. Equation (2) gives Kₘₐₓ = 0.50 eV. The 0.60 V retarding setting requires 0.60 eV to reach the collector, so none arrives.')],
       ].map(([prefix,answer])=>[prefix+' '+t('อิเล็กตรอนหลุดจากผิวหรือไม่ เพราะอะไร?','Are electrons emitted? Explain the zero reading.'),p(answer)]),
+      [t('กรณี C อิเล็กตรอนหลุดจากผิวหรือไม่? ถ้าคงแสงเดิมแล้วปรับศักย์ขั้วรับจาก −0.60 V เป็น +1.00 V จะวัดกระแสได้ไหม เพราะอะไร?',
+        'In case C, are electrons emitted? If the light is kept fixed and the collector voltage is changed from −0.60 V to +1.00 V, will the meter detect current? Explain.'),
+        working(th,[2],[m`K_{\max}=3.00\,\mathrm{eV}-2.50\,\mathrm{eV}=0.50\,\mathrm{eV}`],
+          t('โฟตอนทำให้อิเล็กตรอนหลุดได้ แรงดันต้านที่ −0.60 V ต้องการพลังงาน 0.60 eV จึงยังวัดกระแสไม่ได้ เมื่อเปลี่ยนเป็น +1.00 V ขั้วรับดึงอิเล็กตรอนที่หลุดให้เคลื่อนถึงขั้วรับ จึงวัดกระแสได้',
+            'Photons cause emission. The −0.60 V setting requires 0.60 eV to reach the collector, so the current is initially zero. At +1.00 V the collector attracts the emitted electrons, and a current is measured.'))],
     ]);
   const q5 = problem(5,t('อ่านกราฟกระแสแล้วหาฟังก์ชันงาน','Use an I–V graph to find the work function'),
-    p(t('ข้อมูลจำลองชุดใหม่ใช้โฟตอน 3.50 eV กราฟมี V เป็นศักย์ขั้วรับเทียบขั้วปล่อย ให้ใช้จุดศูนย์จุดแรกตามเส้นกราฟเป็นค่าประมาณ',
-      'This new model data set uses 3.50 eV photons. V is collector voltage relative to the emitter. Estimate the cutoff using the first zero as V is reduced along the graph.')) +
+    p(t('นักเรียนฉายโฟตอนพลังงาน 3.50 eV ลงบนโลหะ แล้วค่อย ๆ ลดศักย์ขั้วรับเทียบกับขั้วปล่อยและบันทึกกระแสดังกราฟ',
+      'A student shines 3.50 eV photons on a metal, then gradually lowers the collector voltage relative to the emitter and records the current shown.')) +
     figure(practiceIV(th),t('กราฟ I–V ชุดฝึก','Practice I–V graph.')),[
-      [t('จงอ่านค่า V พร้อมเครื่องหมายและขนาด Vₛ','Read signed V and the magnitude Vₛ.'),
+      [t('กราฟเริ่มอ่านกระแสได้ 0.00 µA ที่ศักย์ขั้วรับกี่โวลต์? ตอบทั้งค่าพร้อมเครื่องหมายและขนาดศักย์หยุดยั้ง',
+        'At what collector voltage does the graph first show 0.00 µA? Give both the signed voltage and the stopping-potential magnitude.'),
        p(t('เมื่อกวาดไปทาง V ติดลบ จุดที่กระแสเริ่มเป็นศูนย์อยู่ที่ V ≈ −0.70 V จึงได้ Vₛ ≈ 0.70 V','Sweeping toward negative V, current first reaches zero at V ≈ −0.70 V, so Vₛ ≈ 0.70 V.'))],
       [t('จงหาพลังงานจลน์สูงสุดและฟังก์ชันงานใน eV','Find maximum kinetic energy and work function in eV.'),
        working(th,[4,2],[m`K_{\max}\approx e(0.70\,\mathrm V)=0.70\,\mathrm{eV}`,m`W=E_\gamma-K_{\max}\approx3.50-0.70=2.80\,\mathrm{eV}`],t('คำนวณจากขนาด Vₛ ที่เป็นบวก','Use the positive magnitude Vₛ.'))],
@@ -110,7 +116,8 @@ export function exitPractice(th, answers) {
     p(t('โจทย์แต่งแนว A-Level จุดที่ระบุบนกราฟมีพิกัดในหน่วยตามแกน เส้นประเป็นส่วนต่อของเส้นตรง',
       'A-Level-style practice. The labelled point coordinates use the scaled axis units. The dashed line is an extrapolation.')) +
     figure(practiceEnergy(th),t('กราฟพลังงานจลน์สูงสุดกับความถี่ชุดฝึก','Practice graph of maximum kinetic energy versus frequency.'))+
-    p(t('จุดที่ใช้คำนวณ','Use these points')+' (6.00 × 10¹⁴ Hz, 1.32 × 10⁻¹⁹ J) '+t('และ','and')+' (8.00 × 10¹⁴ Hz, 2.64 × 10⁻¹⁹ J).'),[
+    p(t('เมื่อฉายแสงความถี่ 6.00 × 10¹⁴ Hz วัดพลังงานจลน์สูงสุดได้ 1.32 × 10⁻¹⁹ J เมื่อเพิ่มความถี่เป็น 8.00 × 10¹⁴ Hz วัดได้ 2.64 × 10⁻¹⁹ J',
+      'At a light frequency of 6.00 × 10¹⁴ Hz, the maximum kinetic energy is 1.32 × 10⁻¹⁹ J. At 8.00 × 10¹⁴ Hz, it is 2.64 × 10⁻¹⁹ J.')),[
       [t('จงหาค่าคงที่ของพลังค์จากความชัน','Find the Planck constant from the slope.'),
        working(th,[2],[m`h=\frac{\Delta K_{\max}}{\Delta f}=\frac{(2.64-1.32)\times10^{-19}}{(8.00-6.00)\times10^{14}}=6.60\times10^{-34}\,\mathrm{J\,s}`],t('ตัวคูณกำลังสิบมาจากหน่วยบนแกนทั้งสอง','The powers of ten come from the axis scales.'))],
       [t('จงอ่านจุดตัดแกนนอน แล้วหาฟังก์ชันงานของโลหะในหน่วย J','Read the horizontal intercept and find the work function in joules.'),
@@ -128,12 +135,12 @@ export function recall(th, answers) {
       ['What does the meter measure, and what does a nonzero reading tell you about electrons?','It measures circuit current. Electrons emitted from the metal have reached the collector.']),
     t(['เขียนเงื่อนไขต่ำกว่า พอดี และสูงกว่าความถี่ขีดเริ่ม แล้วบอกผลของการเพิ่มความเข้มเมื่อคงความถี่','ต่ำกว่าไม่หลุด ที่ขีดเริ่ม Kₘₐₓ = 0 ในอุดมคติ สูงกว่าได้ Kₘₐₓ เป็นบวก เมื่อ f คงที่ การเพิ่มความเข้มเพิ่มจำนวนโฟตอนต่อวินาที และเพิ่มกระแสเมื่ออยู่เหนือขีดเริ่มในเงื่อนไขเก็บอิเล็กตรอนเดิม'],
       ['State the below, at and above threshold cases. What does increasing intensity do at fixed frequency?','Below threshold there is no emission. At threshold Kₘₐₓ = 0 in the ideal limit. Above threshold Kₘₐₓ is positive. At fixed f, higher intensity raises photon rate and, above threshold with the same collecting setup, raises current.']),
-    t(['เมื่อกระแสเป็นศูนย์ ให้ตรวจการตั้งค่าใดบ้างก่อนสรุปว่าอิเล็กตรอนหลุดหรือไม่?','ตรวจว่าเปิดแสงไหม f พอหรือไม่ และแรงดันต้านขัดขวางการถึงขั้วรับไหม'],
+    t(['เมื่อกระแสเป็นศูนย์ ให้ตรวจการตั้งค่าใดบ้างก่อนสรุปว่าอิเล็กตรอนหลุดหรือไม่?','ตรวจว่าเปิดแสงไหม ความถี่สูงพอหรือไม่ และแรงดันต้านขัดขวางการถึงขั้วรับไหม'],
       ['Which settings should you check before deciding whether electrons were emitted when current is zero?','Check whether the light is on, whether f is above threshold, and whether retarding voltage stops electrons from reaching the collector.']),
-    t(['เขียนความสัมพันธ์ระหว่าง V บนแกนกราฟที่จุดหยุดยั้ง ขนาด Vₛ และ Kₘₐₓ','ที่จุดหยุดยั้ง V = −Vₛ และ Kₘₐₓ = eVₛ'],
-      ['Relate the signed graph reading at cutoff, its magnitude Vₛ and Kₘₐₓ.','At cutoff, V = −Vₛ and Kₘₐₓ = eVₛ.']),
-    t(['ความชันและจุดตัดแกนทั้งสองของกราฟ Kₘₐₓ–f บอกอะไร?','ความชันคือ h เมื่อใช้หน่วยสอดคล้องกัน จุดตัดแกนนอนคือ f₀ จุดตัดแกนตั้งจากเส้นต่อคือ −W'],
-      ['What do the slope and the two intercepts of a Kₘₐₓ–f graph represent?','The slope is h in consistent units. The horizontal intercept is f₀, and the extrapolated vertical intercept is −W.']),
+    t(['เมื่อกระแสลดลงถึงศูนย์ ค่าศักย์ขั้วรับที่อ่านจากกราฟมีเครื่องหมายอะไร และจะใช้ขนาดศักย์หยุดยั้งหาพลังงานจลน์สูงสุดอย่างไร?','ที่จุดหยุดยั้ง V = −Vₛ และ Kₘₐₓ = eVₛ'],
+      ['When the current drops to zero, what sign does the collector voltage have? How can you use the stopping-potential magnitude to find the maximum kinetic energy?','At cutoff, V = −Vₛ and Kₘₐₓ = eVₛ.']),
+    t(['เมื่อเขียนกราฟพลังงานจลน์สูงสุดเทียบกับความถี่ของแสง ความชันและจุดตัดแกนทั้งสองบอกอะไร?','ความชันคือ h เมื่อใช้หน่วยสอดคล้องกัน จุดตัดแกนนอนคือ f₀ จุดตัดแกนตั้งจากเส้นต่อคือ −W'],
+      ['On a graph of maximum kinetic energy against light frequency, what do the slope and the two intercepts represent?','The slope is h in consistent units. The horizontal intercept is f₀, and the extrapolated vertical intercept is −W.']),
   ];
   return heading('Knowledge Recall')+p(t('พับหรือปิดส่วน Notes แล้วตอบจากความจำ','Cover or close the Notes and answer from memory.'))+
     prompts.map(([q,a],i)=>`<section class="block">${p((i+1)+'. '+q)}${answers?`<div class="teacher-key">${p(a)}</div>`:'<div class="writing" style="--space:24mm"></div>'}</section>`).join('');

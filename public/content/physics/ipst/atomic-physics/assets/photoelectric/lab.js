@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const activity = 'physics-photoelectric-lab';
+  const maxIrradiance = 1; // Reference at the metal surface in W/m².
   const { initial, teaching, measure, signed, metals, thresholdFrequency } = Photoelectric;
   const { pair, missions, targets, requirements, snapshot, grade } = PhotoelectricMissions;
   const totalQuestions = missions.reduce((total, mission) => total + mission.questions.length, 0);
@@ -259,6 +260,12 @@
     setText('light', setup.light ? t('ปิดแสง', 'Switch off light') : t('เปิดแสง', 'Switch on light'));
     $('light').setAttribute('aria-pressed', String(setup.light));
     setText('current', reading.current.toFixed(2));
+    const intensity = (maxIrradiance * setup.intensity / 100).toFixed(2);
+    setText('intensity-value', t(`ค่าที่ตั้งเมื่อเปิดแสง ${intensity} W/m²`,
+      `Setting when light is on ${intensity} W/m²`));
+    const fullScale = `100% = ${maxIrradiance.toFixed(2)} W/m²`;
+    setText('intensity-help', t(`ซิมกำหนดให้ ${fullScale} ที่ผิวโลหะ`,
+      `In this simulation, ${fullScale} at the metal surface.`));
     setText('photon-energy', t(`พลังงานโฟตอน ${reading.energy.toFixed(2)} eV`, `Photon energy ${reading.energy.toFixed(2)} eV`));
     const light = spectrum(setup.frequency);
     const band = light.region === 'visible' ? t('แสงที่มองเห็น · สีโดยประมาณ', 'Visible light · approximate color')

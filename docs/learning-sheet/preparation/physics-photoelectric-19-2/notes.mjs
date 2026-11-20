@@ -20,7 +20,7 @@ export function working(th, refs, lines, conclusion) {
 }
 
 function link(th) {
-  return `<a href="${labUrl}" data-hub-simulation data-content-id="physics-photoelectric-lab" data-html-src="photoelectric-lab.html">${th?'เปิด Simulation โฟโตอิเล็กทริก':'Open the Photoelectric Effect Lab'}</a>`;
+  return `<a href="${labUrl}" data-hub-simulation data-content-id="physics-photoelectric-lab" data-html-src="photoelectric-lab.html">${th?'แบบจำลองโฟโตอิเล็กทริก':'Photoelectric Effect Lab'}</a>`;
 }
 
 function activity(th, question, answer, filled) {
@@ -31,12 +31,18 @@ export function notebook(th, filled, lab) {
   const t = (thai, english) => th ? thai : english;
   const c = (thai, english) => p(t(thai, english));
   const m = String.raw;
-  const tableReading = (f, intensity, voltage) => lab.measure({light:true,metal:'A',frequency:f,intensity,voltage}).current.toFixed(2);
+  const tableReading = (f, intensity, voltage, metal = 'A') =>
+    lab.measure({light:true,metal,frequency:f,intensity,voltage}).current.toFixed(2);
   const measureRows = [6,6,6.1,6.1].map((f,i)=>{
     const intensity = [50,80,80,50][i];
     const current = tableReading(f,intensity,1);
-    return [f.toFixed(2),intensity,filled?current:'<span class="data-space"></span>'];
+    return [f.toFixed(2),intensity,current];
   });
+  const metalRows = [6.40, 7.10, 7.60].map(f => [f.toFixed(2),
+    ...['A', 'B', 'C'].map(metal => tableReading(f, 50, 1, metal))]);
+  const photonConstants = p(t('ค่าที่ใช้คำนวณ','Calculation data')+' · '+
+    [m`h=6.626\times10^{-34}\,\mathrm{J\,s}`,m`c=3.00\times10^8\,\mathrm{m/s}`,
+      m`1\,\mathrm{eV}=1.602\times10^{-19}\,\mathrm J`,m`1\,\mathrm{nm}=10^{-9}\,\mathrm m`].map(math).join(' · '));
   const sweep = lab.teaching.sweep.map(v=>[v,Number(tableReading(lab.teaching.frequency,50,v))]);
   const ex = (n, title, prompt, answer) => `<div class="block example" data-example-number="${n}"><h3>${t('ตัวอย่าง','Example')} ${n} · ${title}</h3>${p(prompt)}${filled?`<div class="note-answer">${answer}</div>`:'<div class="writing" style="--space:46mm"></div>'}</div>`;
   const pages = [
@@ -45,17 +51,14 @@ export function notebook(th, filled, lab) {
       c('การแทรกสอดของแสงทำให้เราเห็นริ้วสว่างและมืด คราวนี้ฉายแสงลงบนผิวโลหะ ถ้าเรามองไม่เห็นอิเล็กตรอน เราจะรู้ได้อย่างไรว่ามันหลุดออกมา?',
         'Light interference produces bright and dark fringes. Now shine light onto a metal surface. If we cannot see individual electrons, how can we tell whether they leave the surface?') +
       figure(tube(th),t('วงจรของแล็บ · แสงตกกระทบขั้วปล่อย ขั้วรับอยู่ฝั่งตรงข้าม มิเตอร์วัดกระแสในวงจร','Lab circuit · light hits the emitter, the collector faces it, and the meter measures circuit current.')) +
-      p(link(th)) +
-      c('ใช้ปุ่มตาม Smart Lab Guide ในแล็บ อ่านค่าบนไมโครแอมมิเตอร์แล้วกด “บันทึกค่ามิเตอร์” จุดอิเล็กตรอนในหลอดเป็นภาพจากแบบจำลอง',
-        'Follow the in-lab Smart Lab Guide. Read the microammeter and select Record meter reading. Dots in the tube visualize model electrons.') +
-      `<h3>${t('ภารกิจ 1 · เทียบก่อนและหลังเปิดแสง','Mission 1 · Compare light off and on')}</h3>` +
-      c('ใช้โลหะ A ความเข้ม 50% และขั้วรับที่ +1.00 V กดตั้งแสงชุดสอน 3.00 eV แล้วบันทึกเมื่อปิดแสงและเปิดแสงตามลำดับ',
-        'Use metal A, 50% intensity and +1.00 V at the collector relative to the emitter. Set the teaching light to 3.00 eV and record with the light off, then on.') +
+      `<h3>${t('เปรียบเทียบก่อนและหลังเปิดแสง','Compare light off and on')}</h3>` +
+      c('ใช้โลหะ A และศักย์ขั้วรับ +1.00 V เมื่อปิดแสง มิเตอร์อ่านได้ 0.00 µA เมื่อฉายโฟตอนพลังงาน 3.00 eV ที่ความเข้ม 50% มิเตอร์อ่านได้ 2.00 µA',
+        'Use metal A and a collector voltage of +1.00 V. With the light off the meter reads 0.00 µA. With 3.00 eV photons at 50% intensity, it reads 2.00 µA.') +
       activity(th,t('ค่ากระแสก่อนและหลังเปิดแสงบอกอะไร?', 'What do the readings before and after switching on the light show?'),
         t('0.00 → 2.00 µA กระแสที่ตรวจพบแสดงว่ามีอิเล็กตรอนเคลื่อนจากผิวโลหะไปถึงขั้วรับ','0.00 → 2.00 µA. The measured current shows that electrons travelled from the metal to the collector.'),filled) +
-      `<h3>${t('ภารกิจ 2 · เปลี่ยนทีละตัวแปร','Mission 2 · Change one variable at a time')}</h3>` +
-      c('เปิดแสง คงโลหะ A และ +1.00 V บันทึกตามลำดับจากบนลงล่าง แถว 1–2 และ 3–4 ใช้เทียบความเข้ม แถว 2–3 ใช้เทียบความถี่',
-        'Keep the light on, metal A and +1.00 V. Record from top to bottom. Compare intensity using rows 1–2 and 3–4, then compare frequency using rows 2–3.') +
+      `<h3>${t('ผลของความถี่และความเข้ม','Effects of frequency and intensity')}</h3>` +
+      c('ตารางให้ค่ากระแสเมื่อเปิดแสง โดยคงโลหะ A และศักย์ขั้วรับ +1.00 V แถว 1–2 และ 3–4 ใช้เทียบความเข้ม แถว 2–3 ใช้เทียบความถี่',
+        'The table gives the current with the light on, metal A and the collector at +1.00 V. Compare intensity using rows 1–2 and 3–4, then compare frequency using rows 2–3.') +
       table([t('ความถี่','Frequency')+` (${fUnit})`,t('ความเข้ม (%)','Intensity (%)'),'I (µA)'],measureRows) +
       activity(th,t('กระแสเริ่มปรากฏระหว่างความถี่คู่ใด? การเพิ่มความเข้มให้ผลต่างกันอย่างไรในสองช่วง?', 'Which pair brackets the onset of current? How does raising intensity affect the two regimes?'),
         t('อยู่ระหว่าง 6.00 กับ 6.10 × 10¹⁴ Hz ที่ 6.00 เพิ่มความเข้มแล้วยังอ่านได้ศูนย์ ที่ 6.10 กระแสเพิ่มเมื่อเพิ่มความเข้ม คำถามต่อไปคือความถี่เปลี่ยนพลังงานที่แสงส่งให้อิเล็กตรอนอย่างไร',
@@ -95,15 +98,16 @@ export function notebook(th, filled, lab) {
         [math('f=f_0'),t('ขีดเริ่มในอุดมคติ พลังงานพอดีและพลังงานจลน์สูงสุดเป็นศูนย์ ตัวจำลองเริ่มแสดงกระแสเมื่อสูงกว่าขีดเริ่ม','Ideal threshold: the energy just suffices and maximum kinetic energy is zero. The lab displays a current once frequency exceeds the threshold.')],
         [math('f>f_0'),t('อิเล็กตรอนหลุดได้และมีพลังงานจลน์สูงสุดเป็นบวก','Emission is possible and maximum kinetic energy is positive.')],
       ]) +
-      activity(th,t('กลับไปที่ภารกิจ 2 ทำไมแสงที่ต่ำกว่าขีดเริ่มยังให้กระแสเป็นศูนย์เมื่อเพิ่มความเข้ม?',
-        'Return to Mission 2. Why does the meter still read zero when intensity rises below threshold?'),
+      activity(th,t('จากตารางหน้าแรก ที่ 6.00 × 10¹⁴ Hz ทำไมมิเตอร์ยังอ่าน 0.00 µA เมื่อเพิ่มความเข้มจาก 50% เป็น 80%?',
+        'In the table on the first page, why does the meter still read 0.00 µA at 6.00 × 10¹⁴ Hz when intensity rises from 50% to 80%?'),
         t('เพิ่มจำนวนโฟตอน แต่ตามสมการ (1) พลังงานของแต่ละโฟตอนยังเท่าเดิมและต่ำกว่าฟังก์ชันงานในสมการ (3)',
           'More photons arrive, but by equation (1) each still carries the same energy, below the work function in equation (3).'),filled)
     ],
     [
       'ความถี่ขีดเริ่มของโลหะและกราฟพลังงาน','Metal thresholds and the energy graph',
-      c('กด “สำรวจหลอดเอง” หรือกลับมาที่ภารกิจ 4 หลังผ่าน Check-out ภารกิจ 3 ใช้ความเข้ม 50% และ +1.00 V ที่ 6.40 × 10¹⁴ Hz เทียบโลหะ A กับ B จากนั้นใช้ 7.10 × 10¹⁴ Hz เทียบ B กับ C และลอง C ที่ 7.60 × 10¹⁴ Hz บันทึกค่าแล้วดูค่า f₀ โดยประมาณในเมนูโลหะ',
-        'Select “Explore the tube” or return to Mission 4 after the Mission 3 Check-out. Use 50% intensity and +1.00 V. Compare metals A and B at 6.40 × 10¹⁴ Hz, compare B and C at 7.10 × 10¹⁴ Hz, and try C at 7.60 × 10¹⁴ Hz. Record the currents and check the approximate f₀ values in the metal selector.') +
+      c('ตารางแสดงกระแสของโลหะสามชนิดเมื่อใช้ความเข้ม 50% และศักย์ขั้วรับ +1.00 V เท่ากัน',
+        'The table gives the currents for three metals at the same 50% intensity and +1.00 V collector voltage.') +
+      table([t('ความถี่','Frequency')+` (${fUnit})`,'A (µA)','B (µA)','C (µA)'],metalRows) +
       activity(th,t('ที่ความถี่เดียวกัน เหตุใดการเปลี่ยนโลหะจึงทำให้บางครั้งกระแสเป็นศูนย์?', 'Why can changing the metal at the same frequency reduce the current to zero?'),
         t('ที่ 6.40 ตรวจพบกระแสใน A ที่ 7.10 ตรวจพบใน B เมื่อเทียบกับ C และที่ 7.60 ตรวจพบใน C โลหะที่มี W สูงกว่าต้องใช้ f₀ สูงกว่าตามสมการ (3)',
           'At 6.40, A gives a current. At 7.10, B gives a current when compared with C. At 7.60, C gives a current. By equation (3), larger W requires larger f₀.'),filled) +
@@ -128,32 +132,33 @@ export function notebook(th, filled, lab) {
           'Yes. Photon energy still exceeds W. The retarding voltage prevents electrons from reaching the collector, so the circuit current falls to zero.'),filled)
     ],
     [
-      'ภารกิจ 3 · อ่านศักย์หยุดยั้งจากกราฟ I–V','Mission 3 · Read the stopping potential from the I–V graph',
-      p(link(th)) +
-      c('คงโลหะ A และความเข้ม 50% เปิดแสง กด “ตั้งแสงชุดสอน 3.00 eV” แล้วบันทึกทีละค่าตาม Guide ลองเปิดลูกศรความเร็วหรือสนามไฟฟ้าเพื่อสังเกตการย้อนกลับ',
-        'Keep metal A and 50% intensity, switch on the light, and select Set teaching light · 3.00 eV. Record each setting prompted by the Guide. Turn on velocity or field arrows to observe electrons turning back.') +
+      'อ่านศักย์หยุดยั้งจากกราฟกระแส','Read the stopping potential from the current graph',
+      c('ฉายโฟตอนพลังงาน 3.00 eV ลงบนโลหะ A ที่ความเข้ม 50% กราฟและตารางแสดงผลเมื่อเปลี่ยนศักย์ขั้วรับเทียบกับขั้วปล่อย',
+        'Light with photons of 3.00 eV illuminates metal A at 50% intensity. The graph and table show how the current changes with collector voltage relative to the emitter.') +
       figure(teachingIV(th,sweep),t('จุดคือค่าบันทึกจากแบบจำลองของแล็บ เส้นคือแนวโน้มของแบบจำลองที่ใช้ในชุดสอน','Dots show readings from the lab model. The line shows the teaching model’s trend.')) +
       table([t('ศักย์ขั้วรับเทียบขั้วปล่อย V (V)','Collector voltage relative to emitter V (V)'), 'I (µA)'],sweep.map(([v,i])=>[lab.signed(v),i.toFixed(2)])) +
       activity(th,t('จุดสุดท้ายที่ยังมีกระแสและจุดแรกที่อ่านได้ศูนย์บอกช่วงใด? แยกค่า V ที่มีเครื่องหมายออกจากขนาด Vₛ',
         'Which interval is marked by the last nonzero reading and the first zero? Distinguish signed V from the magnitude Vₛ.'),
         t('ที่ −0.45 V ยังอ่านได้ 0.20 µA ที่ −0.50 V อ่านได้ศูนย์ ข้อมูลสองจุดจึงให้ 0.45 &lt; Vₛ ≤ 0.50 V ค่าประมาณจากจุดแรกที่เป็นศูนย์คือ V = −0.50 V หรือ Vₛ ≈ 0.50 V ชุดสอนตั้งให้จุดหยุดจริงในแบบจำลองอยู่ตรงค่านี้',
           'At −0.45 V the current is 0.20 µA. At −0.50 V it is zero. The two samples bracket 0.45 &lt; Vₛ ≤ 0.50 V. The first zero gives V ≈ −0.50 V or Vₛ ≈ 0.50 V, which equals the exact model cutoff for this preset.'),filled) +
-      c('ลองเปรียบเทียบกรณีปิดแสง แสงต่ำกว่าขีดเริ่ม และแรงดันต้านที่ศักย์หยุดยั้ง โดยเริ่มจากดูการตั้งค่า แล้วจึงอ่านว่าเหตุใดมิเตอร์จึงเป็นศูนย์',
-        'Compare light off, light below threshold, and retarding voltage at the stopping point. Inspect the settings first, then explain why each meter reads zero.')
+      c('เมื่อกระแสเป็นศูนย์ ให้พิจารณาทั้งพลังงานของแสงและศักย์ขั้วรับ กระแสจะเกิดเมื่อมีอิเล็กตรอนหลุดและไปถึงขั้วรับ',
+        'A zero current calls for checking both the photon energy and collector voltage. Current requires electrons to leave the surface and reach the collector.')
     ],
     [
       'ตัวอย่าง 1–2 · คำนวณจากพลังงานโฟตอน','Examples 1–2 · Calculations from photon energy',
-      ex(1,t('ชุดสอนในแล็บ','The lab teaching light'),
-        t('กดตั้งแสงชุดสอน แล็บแสดงความยาวคลื่นประมาณ 413.3 nm จงหาพลังงานต่อโฟตอนใน J และ eV',
-          'The teaching preset displays a wavelength of about 413.3 nm. Find the photon energy in joules and electronvolts.'),
-        working(th,[1],[m`\lambda=413.3\times10^{-9}\,\mathrm m`,m`E_\gamma=\frac{(6.626\times10^{-34})(3.00\times10^8)}{413.3\times10^{-9}}=4.81\times10^{-19}\,\mathrm J`,m`E_\gamma=\frac{4.81\times10^{-19}}{1.602\times10^{-19}}\,\mathrm{eV}\approx3.00\,\mathrm{eV}`],t('ค่า 3.00 eV ตรงกับแสงชุดสอนเมื่อปัดตามความละเอียดที่แสดง','The rounded 3.00 eV agrees with the teaching preset.'))) +
+      photonConstants +
+      ex(1,t('พลังงานของโฟตอน','Photon energy'),
+        t('แสงในสุญญากาศมีความยาวคลื่น 413.3 nm จงคำนวณพลังงานของโฟตอนหนึ่งตัวในหน่วยจูลและอิเล็กตรอนโวลต์',
+          'Light in vacuum has a wavelength of 413.3 nm. Calculate the energy of one photon in joules and electronvolts.'),
+        working(th,[1],[m`\lambda=413.3\times10^{-9}\,\mathrm m`,m`E_\gamma=\frac{(6.626\times10^{-34})(3.00\times10^8)}{413.3\times10^{-9}}=4.81\times10^{-19}\,\mathrm J`,m`E_\gamma=\frac{4.81\times10^{-19}}{1.602\times10^{-19}}\,\mathrm{eV}\approx3.00\,\mathrm{eV}`],t('โฟตอนหนึ่งตัวมีพลังงานประมาณ 3.00 eV','Each photon carries about 3.00 eV.'))) +
       ex(2,t('หาฟังก์ชันงานจากความถี่ขีดเริ่ม','Work function from threshold frequency'),
-        t('โลหะ A แสดงความถี่ขีดเริ่มประมาณ 6.04 × 10¹⁴ Hz จงคำนวณฟังก์ชันงานใน eV และพลังงานจลน์สูงสุดเมื่อฉายโฟตอน 3.00 eV',
-          'Metal A displays a threshold of about 6.04 × 10¹⁴ Hz. Find the work function in eV and the maximum kinetic energy under 3.00 eV photons.'),
+        t('โลหะ A มีความถี่ขีดเริ่มประมาณ 6.04 × 10¹⁴ Hz จงคำนวณฟังก์ชันงานใน eV และพลังงานจลน์สูงสุดเมื่อฉายโฟตอน 3.00 eV',
+          'Metal A has a threshold frequency of about 6.04 × 10¹⁴ Hz. Find the work function in eV and the maximum kinetic energy under 3.00 eV photons.'),
         working(th,[3,2],[m`W=(6.626\times10^{-34})(6.04\times10^{14})=4.00\times10^{-19}\,\mathrm J\approx2.50\,\mathrm{eV}`,m`K_{\max}=3.00-2.50=0.50\,\mathrm{eV}`],t('โฟตอนมีพลังงานมากกว่า W จึงเกิดการหลุด','Photon energy exceeds W, so emission occurs.')))
     ],
     [
       'ตัวอย่าง 3–4 · ตรวจการหลุดและเทียบโลหะ','Examples 3–4 · Check emission and compare metals',
+      photonConstants +
       ex(3,t('ความยาวคลื่นที่ยาวเกินขีดเริ่ม','A wavelength beyond threshold'),
         t('ฉายแสงความยาวคลื่น 600 nm ลงบนโลหะ A ที่มีฟังก์ชันงาน 2.50 eV จงคำนวณพลังงานต่อโฟตอนแล้วตัดสินว่าอิเล็กตรอนหลุดหรือไม่',
           'Shine 600 nm light on metal A, whose work function is 2.50 eV. Calculate the energy per photon and decide whether electrons are emitted.'),
@@ -177,5 +182,7 @@ export function notebook(th, filled, lab) {
           'The measurements bracket 0.45 &lt; Vₛ ≤ 0.50 V. The calculation uses the first zero as an estimate.')))
     ],
   ];
-  return pages.map(([thai,english,body],i)=>`<section class="shared-note" data-note-key="${i+1}">${heading(t(thai,english))}${body}</section>`);
+  const references = p(t('อ่านเสริม','Further reading')+' · '+link(th)+' · '+
+    `<a href="https://pubhtml5.com/yffk/rmif/basic/51-100">${t('คู่มือครูฟิสิกส์ สสวท. เล่ม 6','IPST Physics Book 6 teacher guide')}</a>`);
+  return pages.map(([thai,english,body],i)=>`<section class="shared-note" data-note-key="${i+1}">${heading(t(thai,english))}${body}${i === pages.length - 1 ? references : ''}</section>`);
 }

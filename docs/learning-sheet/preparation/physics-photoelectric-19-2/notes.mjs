@@ -155,24 +155,24 @@ export function notebook(th, filled, lab) {
     [
       'ตัวอย่าง 3–4 · ตรวจการหลุดและเทียบโลหะ','Examples 3–4 · Check emission and compare metals',
       ex(3,t('ความยาวคลื่นที่ยาวเกินขีดเริ่ม','A wavelength beyond threshold'),
-        t('ฉายแสง 600 nm ลงบนโลหะ A ซึ่งมี W = 2.50 eV อิเล็กตรอนหลุดหรือไม่?',
-          'Shine 600 nm light on metal A with W = 2.50 eV. Is there emission?'),
+        t('ฉายแสงความยาวคลื่น 600 nm ลงบนโลหะ A ที่มีฟังก์ชันงาน 2.50 eV จงคำนวณพลังงานต่อโฟตอนแล้วตัดสินว่าอิเล็กตรอนหลุดหรือไม่',
+          'Shine 600 nm light on metal A, whose work function is 2.50 eV. Calculate the energy per photon and decide whether electrons are emitted.'),
         working(th,[1],[m`E_\gamma=\frac{(6.626\times10^{-34})(3.00\times10^8)}{600\times10^{-9}}=3.31\times10^{-19}\,\mathrm J\approx2.07\,\mathrm{eV}`],t('2.07 eV ต่ำกว่า 2.50 eV จึงไม่มีโฟโตอิเล็กตรอนให้หาพลังงานจลน์','2.07 eV is below 2.50 eV, so no photoelectrons are available for a kinetic-energy calculation.'))) +
       ex(4,t('ฉายแสงชุดเดียวกันลงบนโลหะสามชนิด','One light setting, three metals'),
-        t('ใช้โฟตอน 3.00 eV กับโลหะ A, B, C ซึ่งมี W เท่ากับ 2.50, 2.80 และ 3.10 eV ตามลำดับ โลหะใดปล่อยอิเล็กตรอนและมีพลังงานจลน์สูงสุดเท่าไร?',
-          'Use 3.00 eV photons on metals A, B and C with W of 2.50, 2.80 and 3.10 eV respectively. Which emit, and what are the maximum kinetic energies?'),
+        t('ฉายโฟตอนพลังงาน 3.00 eV ลงบนโลหะ A, B และ C ซึ่งมีฟังก์ชันงาน 2.50, 2.80 และ 3.10 eV ตามลำดับ โลหะใดปล่อยอิเล็กตรอน และอิเล็กตรอนจากแต่ละโลหะที่ปล่อยได้มีพลังงานจลน์สูงสุดกี่ eV?',
+          'Shine 3.00 eV photons on metals A, B and C, whose work functions are 2.50, 2.80 and 3.10 eV, respectively. Which metals emit electrons, and what is the maximum kinetic energy in eV for each emitting metal?'),
         working(th,[2],[m`K_{\max,\mathrm A}=3.00-2.50=0.50\,\mathrm{eV}`,m`K_{\max,\mathrm B}=3.00-2.80=0.20\,\mathrm{eV}`],t('A และ B ปล่อยโฟโตอิเล็กตรอน ส่วน C มี W สูงกว่า 3.00 eV จึงไม่เกิดการหลุด',
           'A and B emit. Metal C has W greater than 3.00 eV, so it does not emit.')))
     ],
     [
       'ตัวอย่าง 5–6 · ใช้กราฟหาค่าที่ต้องการ','Examples 5–6 · Extract quantities from graphs',
       ex(5,t('หาค่าคงที่ของพลังค์จากจุดบนกราฟ','Planck constant from two graph points'),
-        t('เส้น Kₘₐₓ–f ของโลหะ A ตัวอย่างหนึ่งผ่านจุด (7.00 × 10¹⁴ Hz, 0.395 eV) และ (9.00 × 10¹⁴ Hz, 1.222 eV) จงหาความชันใน eV·s และหาฟังก์ชันงานจากจุดแรก',
-          'An example Kₘₐₓ–f line for metal A goes through (7.00 × 10¹⁴ Hz, 0.395 eV) and (9.00 × 10¹⁴ Hz, 1.222 eV). Find the slope in eV·s and the work function using the first point.'),
+        t('ฉายแสงลงบนโลหะ A ที่ 7.00 × 10¹⁴ Hz วัดพลังงานจลน์สูงสุดได้ 0.395 eV และที่ 9.00 × 10¹⁴ Hz วัดได้ 1.222 eV จงคำนวณความชันของกราฟพลังงานจลน์สูงสุดกับความถี่ใน eV·s และใช้ข้อมูลจุดแรกหาฟังก์ชันงานใน eV',
+          'For metal A, a frequency of 7.00 × 10¹⁴ Hz gives a maximum kinetic energy of 0.395 eV, and 9.00 × 10¹⁴ Hz gives 1.222 eV. Find the slope of the maximum kinetic energy versus frequency graph in eV·s, then use the first point to find the work function in eV.'),
         working(th,[2],[m`h=\frac{\Delta K_{\max}}{\Delta f}=\frac{1.222-0.395}{(9.00-7.00)\times10^{14}}=4.14\times10^{-15}\,\mathrm{eV\,s}`,m`W=hf-K_{\max}=(4.135\times10^{-15})(7.00\times10^{14})-0.395\approx2.50\,\mathrm{eV}`],t('เก็บความชันก่อนปัดไว้ใช้คำนวณ W','Retain the unrounded slope when calculating W.'))) +
       ex(6,t('อ่านกราฟชุดสอนแล้วย้อนหาฟังก์ชันงาน','Use the teaching I–V graph to find the work function'),
-        t('จากกราฟชุดสอนหน้า 6 ที่ V = −0.45 V ยังมีกระแส แต่ที่ −0.50 V กระแสเริ่มอ่านได้ศูนย์ เมื่อใช้แสง 3.00 eV จงประมาณ Vₛ และหา Kₘₐₓ กับ W',
-          'In the teaching I–V graph, current remains at V = −0.45 V and first reads zero at −0.50 V. With 3.00 eV photons, estimate Vₛ and find Kₘₐₓ and W.'),
+        t('ใช้โฟตอนพลังงาน 3.00 eV กราฟกระแสของชุดสอนอ่านได้ 0.20 µA ที่ศักย์ขั้วรับ −0.45 V และเริ่มอ่านได้ 0.00 µA ที่ −0.50 V จงประมาณขนาดศักย์หยุดยั้งใน V แล้วหาพลังงานจลน์สูงสุดและฟังก์ชันงานใน eV',
+          'With 3.00 eV photons, the teaching graph shows 0.20 µA at a collector voltage of −0.45 V, and a first zero reading of 0.00 µA at −0.50 V. Estimate the stopping-potential magnitude in V, then find the maximum kinetic energy and work function in eV.'),
         working(th,[4,2],[m`V\approx-0.50\,\mathrm V,\qquad V_s\approx0.50\,\mathrm V`,m`K_{\max}\approx(1.602\times10^{-19}\,\mathrm C)(0.50\,\mathrm V)=8.01\times10^{-20}\,\mathrm J=0.50\,\mathrm{eV}`,m`W=E_\gamma-K_{\max}\approx3.00-0.50=2.50\,\mathrm{eV}`],t('ข้อมูลที่วัดคร่อม 0.45 &lt; Vₛ ≤ 0.50 V การคำนวณใช้จุดศูนย์แรกเป็นค่าประมาณ',
           'The measurements bracket 0.45 &lt; Vₛ ≤ 0.50 V. The calculation uses the first zero as an estimate.')))
     ],

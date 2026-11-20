@@ -1,4 +1,4 @@
-import { figure, heading, math, p, table, working } from './notes.mjs';
+import { figure, heading, intensityScale, math, p, table, working } from './notes.mjs';
 import { practiceIV, practiceEnergy } from './figures.mjs';
 
 const m = String.raw;
@@ -76,6 +76,7 @@ export function exitPractice(th, answers) {
   const q3 = problem(3,t('ความถี่กับความเข้มให้ผลอย่างไร','Effects of frequency and intensity'),
     p(t('นักเรียนตั้งขั้วรับที่ +1.00 V ใช้โลหะ A เดิมและเปิดแสงทุกครั้ง ได้ผลจำลองดังตาราง',
       'With the collector at +1.00 V relative to the emitter, students use the same metal A and keep the light on. The model readings are:')) +
+    p(intensityScale(th)) +
     table([t('ครั้ง','Run'),'f (10¹⁴ Hz)',t('ความเข้ม (%)','Intensity (%)'),'I (µA)'],[[1,'5.90',40,'0.00'],[2,'5.90',70,'0.00'],[3,'6.30',70,'2.80'],[4,'6.30',40,'1.60']]),[
       [t('คู่ใดใช้คร่อมความถี่ขีดเริ่ม? ระบุสิ่งที่ควบคุมและช่วงที่สรุปได้',
         'Which pair brackets the threshold? State what was controlled and the inferred interval.'),

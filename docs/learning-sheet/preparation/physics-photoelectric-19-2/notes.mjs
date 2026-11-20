@@ -13,6 +13,9 @@ export const p = text => `<p>${text}</p>`;
 export const table = (headers, rows) => `<table><thead><tr>${headers.map(s=>`<th scope="col">${s}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(s=>`<td>${s}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 export const figure = (image, caption) => `<figure>${image}<figcaption>${caption}</figcaption></figure>`;
 export const list = lines => `<ol>${lines.map(s=>`<li>${s}</li>`).join('')}</ol>`;
+export const intensityScale = th => th
+  ? 'ความเข้มแสง (%) เทียบกับระดับสูงสุดที่ตั้งได้ในแบบจำลอง โดยระดับนั้นคือ 100% และ 50% คือครึ่งหนึ่งของระดับนั้น'
+  : 'Light intensity (%) is relative to the highest setting in the model. The highest setting is 100%, and 50% is half that level.';
 const fUnit = '10¹⁴ Hz';
 const box = n => `<div class="equation" data-equation="${n}"><span>${math(equations[n-1])}</span><span>(${n})</span></div>`;
 export function working(th, refs, lines, conclusion) {
@@ -52,6 +55,7 @@ export function notebook(th, filled, lab) {
         'Light interference produces bright and dark fringes. Now shine light onto a metal surface. If we cannot see individual electrons, how can we tell whether they leave the surface?') +
       figure(tube(th),t('วงจรของแล็บ · แสงตกกระทบขั้วปล่อย ขั้วรับอยู่ฝั่งตรงข้าม มิเตอร์วัดกระแสในวงจร','Lab circuit · light hits the emitter, the collector faces it, and the meter measures circuit current.')) +
       `<h3>${t('เปรียบเทียบก่อนและหลังเปิดแสง','Compare light off and on')}</h3>` +
+      p(intensityScale(th)) +
       c('ใช้โลหะ A และศักย์ขั้วรับ +1.00 V เมื่อปิดแสง มิเตอร์อ่านได้ 0.00 µA เมื่อฉายโฟตอนพลังงาน 3.00 eV ที่ความเข้ม 50% มิเตอร์อ่านได้ 2.00 µA',
         'Use metal A and a collector voltage of +1.00 V. With the light off the meter reads 0.00 µA. With 3.00 eV photons at 50% intensity, it reads 2.00 µA.') +
       activity(th,t('ค่ากระแสก่อนและหลังเปิดแสงบอกอะไร?', 'What do the readings before and after switching on the light show?'),

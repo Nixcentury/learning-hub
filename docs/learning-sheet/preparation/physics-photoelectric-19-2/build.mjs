@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { notebook } from './notes.mjs';
 import { exitPractice, recall } from './practice.mjs';
+import { pastExams } from './past-exams.mjs';
 import '../../../../public/content/physics/ipst/atomic-physics/assets/photoelectric/model.js';
 
 const css = readFileSync(new URL('paired.css', import.meta.url), 'utf8');
@@ -27,7 +28,7 @@ function writeDocument(kind) {
       const notePage = text => [text, classroom ? 'Classroom Note' : 'Revision Notes'];
       const quizPage = text => [text,'Exit Ticket'];
       const notes = notebook(th, !classroom || filled, globalThis.Photoelectric).map(notePage);
-      const practice = classroom ? [] : exitPractice(th,filled).map(quizPage);
+      const practice = classroom ? [] : [...exitPractice(th,filled), ...pastExams(th,filled)].map(quizPage);
       const knowledgeRecall = classroom ? [] : [quizPage(recall(th,filled))];
       const groups = {
         all:[...practice,...notes,...knowledgeRecall],
@@ -49,7 +50,7 @@ function writeDocument(kind) {
   const html = `<!doctype html>
 <html lang="th" data-learning-html data-exit-ticket-revision="1" data-exit-ticket-editions="1"
   data-exit-ticket-ranges="all quiz review" data-revision-student-default="1" data-revision-topic="19.2"
-  data-content-revision="1.0" data-shared-notes-sha256="${noteHash}"
+  data-content-revision="${classroom?'1.0':'1.1'}" data-shared-notes-sha256="${noteHash}"
   data-print-subject-th="ฟิสิกส์" data-print-subject-en="Physics"
   data-print-chapter-th="ฟิสิกส์อะตอม" data-print-chapter-en="Atomic physics"
   data-print-topic-th="19.2 ปรากฏการณ์โฟโตอิเล็กทริก" data-print-topic-en="19.2 Photoelectric effect" ${labels}>

@@ -179,9 +179,11 @@
           <p id="spectrum-readout"><span id="spectrum-swatch" aria-hidden="true"></span><span id="light-spectrum"></span></p>
         </div>
         <div class="control" id="intensity-control">
-          <label for="intensity" data-th="ความเข้มแสง (%)" data-en="Light intensity (%)"></label>
-          <div class="control-row"><input id="intensity-range" type="range" min="0" max="100" step="1" aria-label="Intensity (%)">
-            <input id="intensity" type="number" inputmode="numeric" min="0" max="100" step="1"></div>
+          <label for="intensity" data-th="ความเข้มแสงสัมพัทธ์ (%)" data-en="Relative light intensity (%)"></label>
+          <div class="control-row"><input id="intensity-range" type="range" min="0" max="100" step="1" aria-label="Intensity (%)" aria-describedby="intensity-help">
+            <input id="intensity" type="number" inputmode="numeric" min="0" max="100" step="1" aria-describedby="intensity-help"></div>
+          <output id="intensity-value" for="intensity intensity-range"></output>
+          <p id="intensity-help" class="overlay-note"></p>
         </div>
         <div class="control" id="voltage-control">
           <label for="voltage" data-th="ความต่างศักย์ V (V)" data-en="Potential difference V (V)"></label>
@@ -240,6 +242,6 @@
 <script defer src="assets/photoelectric/plots.js"></script>
 <script defer src="assets/photoelectric/missions.js?v=metal-threshold-1"></script>
 <script defer src="assets/photoelectric/tube.js?v=glass-tube-1"></script>
-<script defer src="assets/photoelectric/lab.js?v=metal-threshold-1"></script>
+<script defer src="assets/photoelectric/lab.js?v=irradiance-reference-1"></script>
 </body>
 </html>

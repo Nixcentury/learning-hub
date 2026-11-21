@@ -16,12 +16,20 @@ test('double-slit: the complete canonical answer notes survive student printing 
   for(const kind of ['classroom','exit'])for(const answers of [false,true])for(const range of ['all','quiz','review']){
    const source=kind==='classroom'?classroom:exit;applyContentLanguage(source,lang);const before=source.documentElement.outerHTML;
    const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'10.2 paired handout'));const count=prepareExitTicketPrint(copy,{range,answers});
-   assert.equal(count,kind==='classroom'?(range==='quiz'?6:range==='review'?6:12):range==='all'?(answers?25:20):range==='quiz'?(answers?13:8):12);
+   assert.equal(count,kind==='classroom'?(range==='quiz'?6:range==='review'?6:12):range==='all'?(answers?26:21):range==='quiz'?(answers?14:9):12);
    assert.equal(copy.querySelectorAll('[data-content-lang]').length,1);assert.equal(copy.querySelectorAll('[data-revision-edition]').length,1);assert.equal(copy.querySelectorAll('.identity').length,1);assert.equal(exitTicketPages(copy).length,count);
    assert.equal(source.documentElement.outerHTML,before,'printing must not change the live lesson');
    if(kind==='exit'){
     assert.equal(copy.querySelectorAll('[data-unit-key^="problem-"]').length,range==='review'?0:9);
     assert.equal(copy.querySelectorAll('[data-recall-key]').length,range==='review'?0:14);
+    const exams=[...copy.querySelectorAll('[data-unit-key^="a-level-"]')];
+    assert.deepEqual(exams.map(exam=>exam.dataset.unitKey),range==='review'?[]:['a-level-2566-11','a-level-2568-9']);
+    if(exams.length){
+     assert.equal(exams[0].querySelector('a').getAttribute('href'),'https://krutuii-physics.com/uploads/download_index/639259255.pdf#page=12');
+     assert.equal(exams[1].querySelector('a').getAttribute('href'),'https://assets.mytcas.com/68/answer/tcas68-phy-a-level.pdf#page=8');
+     assert.equal(exams[0].querySelector('.teacher-key strong')?.textContent,answers?(lang==='th'?'ตัวเลือก 5 (ข. และ ค.)':'Choice 5 (statements B and C)'):undefined);
+     assert.equal(exams[1].querySelector('.teacher-key strong')?.textContent,answers?(lang==='th'?'ตัวเลือก 1':'Choice 1.'):undefined);
+    }
     if(range!=='quiz'){assert.deepEqual(notes(copy),canonical);assert.equal(copy.querySelectorAll('.shared-note .teacher-key,.shared-note .answer-inline').length,0);assert.equal(copy.querySelectorAll('.shared-note .example').length,12);}
    }
    if(!answers)assert.equal(copy.querySelectorAll('.teacher-key,.answer-inline').length,0);
@@ -143,7 +151,7 @@ test('double-slit: original Exit questions, figures and calculations remain inta
  for(const lang of ['th','en']){
   for(const edition of ['blank','answers']){
    const old=view(before,lang,edition,'all'),now=view(current,lang,edition,'all');
-   const oldUnits=[...old.querySelectorAll('.unit')],units=[...now.querySelectorAll('.unit')];
+   const oldUnits=[...old.querySelectorAll('.unit')],units=[...now.querySelectorAll('.unit:not([data-unit-key^="a-level-"])')];
    assert.deepEqual(units.map(x=>x.dataset.unitKey),oldUnits.map(x=>x.dataset.unitKey));
    for(let i=0;i<units.length;i++){
     const clean=node=>{const copy=node.cloneNode(true);copy.querySelectorAll('.teacher-key,.answer-inline').forEach(x=>x.remove());return copy.outerHTML;};

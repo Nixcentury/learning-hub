@@ -100,14 +100,14 @@
       "lang": "th",
       "edition": "blank",
       "range": "all",
-      "pages": 20
+      "pages": 21
     },
     {
       "kind": "exit",
       "lang": "th",
       "edition": "blank",
       "range": "quiz",
-      "pages": 8
+      "pages": 9
     },
     {
       "kind": "exit",
@@ -121,14 +121,14 @@
       "lang": "th",
       "edition": "answers",
       "range": "all",
-      "pages": 25
+      "pages": 26
     },
     {
       "kind": "exit",
       "lang": "th",
       "edition": "answers",
       "range": "quiz",
-      "pages": 13
+      "pages": 14
     },
     {
       "kind": "exit",
@@ -142,14 +142,14 @@
       "lang": "en",
       "edition": "blank",
       "range": "all",
-      "pages": 20
+      "pages": 21
     },
     {
       "kind": "exit",
       "lang": "en",
       "edition": "blank",
       "range": "quiz",
-      "pages": 8
+      "pages": 9
     },
     {
       "kind": "exit",
@@ -163,14 +163,14 @@
       "lang": "en",
       "edition": "answers",
       "range": "all",
-      "pages": 25
+      "pages": 26
     },
     {
       "kind": "exit",
       "lang": "en",
       "edition": "answers",
       "range": "quiz",
-      "pages": 13
+      "pages": 14
     },
     {
       "kind": "exit",

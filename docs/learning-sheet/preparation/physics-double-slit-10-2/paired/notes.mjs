@@ -2,6 +2,7 @@ import {parseHTML} from 'linkedom';
 import intro from './intro-v1.3.json' with {type:'json'};
 import originalExamples from './examples-v1.2.json' with {type:'json'};
 import {proofPages} from './proofs.mjs';
+import {labToExit} from './lab-to-exit.mjs';
 import {equationStart,exampleReferences,separateWorkingMath} from './equation-starts.mjs';
 import {workedVisual} from './note-diagrams.mjs';
 
@@ -84,5 +85,5 @@ const examplePages=groups.map((numbers,i)=>({
     return example.outerHTML;
   }).join('')]))
 }));
-export const pages=[intro,...proofPages,...examplePages];
-export const noteSourceFiles=['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs','note-diagrams.mjs'];
+export const pages=[intro,...proofPages,labToExit,...examplePages];
+export const noteSourceFiles=['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs','note-diagrams.mjs','lab-to-exit.mjs'];

@@ -213,3 +213,14 @@ body:not(.answers-on) [data-revision-edition="blank"],body.answers-on [data-revi
 }
 .shared-note [data-example-number="11"] .equation-start .derivation-line{margin:0}
 .shared-note [data-example-number="11"] .math-line{margin:.5mm 0}
+
+.lab-photo-pair{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4mm}
+.lab-photo-pair .note-figure img{max-height:37mm}
+.trial-log td:last-child,.trial-log td:nth-last-child(2){width:16%;height:8mm}
+.shared-note[data-note-key='lab-to-exit'] .note-answer{margin-block:2mm;padding-block:1mm}
+
+.compact-question .exam-procedure,.compact-question .exam-options{margin:1.5mm 0;padding-inline-start:6mm}
+.compact-question .exam-statements{margin:1.5mm 0;padding:0;list-style:none}
+.compact-question .exam-procedure li,.compact-question .exam-statements li,.compact-question .exam-options li{margin-block:.5mm}
+.page.lesson [data-note-key='observe']>.note-write{flex:none;height:25mm;min-height:25mm}
+.page.lesson [data-note-key='lab-to-exit']>.note-write{flex:none;height:29mm;min-height:29mm}

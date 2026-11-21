@@ -52,3 +52,23 @@ test('snapshot validation rejects malformed identity, geometry and historical me
   assert.equal(M.validSnapshot(s,'guest'),true);assert.equal(M.validSnapshot(s,'other'),false);
   for(const mutate of [x=>x.config.distance=NaN,x=>x.config.color='blue',x=>x.config.slit=80,x=>x.zoom=3,x=>x.cursors.left=Infinity,x=>x.cursors.right=41,x=>x.records.push(x.records[0]),x=>x.records[0].cursors.left=8,x=>x.moved.left='true']){const copy=structuredClone(s);mutate(copy);assert.equal(M.validSnapshot(copy,'guest'),false);}
 });
+
+test('light Check-out binds each question to its two manual readings and uses displayed precision',()=>{
+  vm.runInContext(readFileSync(new URL('../public/content/physics/ipst/wave-optics/assets/10-2-lab/light-activity.js',import.meta.url),'utf8'),context);
+  const A=context.DoubleSlitLightActivity;
+  const record=(id,trial,w,extra={})=>({id,config:A.trials[trial].config,cursors:{left:-w/2,right:w/2},phase:0,source:'manual',...extra});
+  const trials=[record(1,'A1',10.65),record(2,'B1',5.31),record(3,'C1',6.49),record(4,'B2',10.62),record(5,'C2',12.99)];
+  const observations=A.latestReadings([...trials,record(6,'B1',5.32,{source:'model'}),record(7,'B1',7,{phase:180}),record(8,'B1',2,{cursors:{left:1,right:3}})]);
+  assert.deepEqual(Object.keys(observations),['A1','B1','C1','B2','C2']);
+  assert.equal(observations.B1.id,2);
+  for(const [index,trend] of ['narrower','wider','wider'].entries()){
+    assert.equal(A.evidence(A.comparisons[index],observations).trend,trend);
+  }
+  const slits=A.comparisons[0];
+  assert.equal(A.evidence(slits,A.latestReadings(trials.filter(r=>r.id!==2))),null);
+  const equalWidths=A.latestReadings([...trials,record(9,'B1',10.6501)]);
+  assert.equal(A.evidence(slits,equalWidths).trend,'same');
+  assert.notEqual(A.evidence(slits,equalWidths).key,A.evidence(slits,observations).key);
+  assert.equal(A.trialKey({color:'green',slit:50,distance:2}),undefined);
+  close(M.inferLambda(observations.C2.config,Number(A.width(observations.C2))),649.5);
+});

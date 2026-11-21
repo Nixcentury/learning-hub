@@ -100,20 +100,38 @@
       Array.isArray(value.work) && value.work.length === missions.length && value.work.every(validWork) &&
       value.work.slice(0, value.index).every(everPassed);
   }
-  function withAdditionalMission(value) {
-    if (value?.version === 1 && Array.isArray(value.work) && value.work.length === 3) {
-      return { ...value, work: [...value.work, freshWork(3)] };
-    }
-    return value;
+  function upgradeState(value) {
+    if (value?.version !== 1 || !Array.isArray(value.work) || ![3, 4].includes(value.work.length)) return value;
+    // Match retained questions by their original indices, including earlier attempts.
+    const layouts = [null, [3, [0, 2]], [5, [0, 1]], [2, [0]]];
+    const work = value.work.map((attempt, index) => {
+      const layout = layouts[index];
+      if (!layout || !Array.isArray(attempt?.answers) || attempt.answers.length !== layout[0]) return attempt;
+      const [oldCount, retained] = layout;
+      const select = items => Array.isArray(items) && items.length === oldCount
+        ? retained.map(i => items[i]) : items;
+      const updated = {
+        ...attempt, answers: select(attempt.answers),
+        first: select(attempt.first), firstAnswers: select(attempt.firstAnswers),
+        latest: select(attempt.latest), latestAnswers: select(attempt.latestAnswers), mastery: select(attempt.mastery),
+      };
+      const past = attempt.previous;
+      if (past) updated.previous = {
+        ...past, first: select(past.first), firstAnswers: select(past.firstAnswers), mastery: select(past.mastery),
+      };
+      return updated;
+    });
+    if (work.length === 3) work.push(freshWork(3));
+    return { ...value, work };
   }
   function readLocal() {
     try {
-      const value = withAdditionalMission(JSON.parse(localStorage.getItem(key()) || 'null'));
+      const value = upgradeState(JSON.parse(localStorage.getItem(key()) || 'null'));
       return validState(value) ? value : null;
     } catch { return null; }
   }
   function restoreState(value) {
-    const upgraded = withAdditionalMission(value);
+    const upgraded = upgradeState(value);
     if (!validState(upgraded)) return false;
     state = clone(upgraded);
     $('reset-status').hidden = true;
@@ -415,17 +433,6 @@
         `${passed(work) ? 'Complete' : 'In progress'} · First attempt ${recordedFirst ? count(recordedFirst) : '—'}/${max} · Mastery ${count(earnedMastery(work))}/${max}`);
       block.append(heading, stats);
       if (work.rows.length) block.append(makeTable(work.rows));
-      if (i === 2 && work.mastery?.some(Boolean)) {
-        const resolved = [2, 3, 4].filter(n => work.mastery[n]).flatMap(n => {
-          const labels = [['V', 'Vₛ'], ['Kₘₐₓ'], ['W']][n - 2];
-          return work.answers[n].map((value, j) => `${labels[j]} = ${value} ${n === 2 ? 'V' : 'eV'}`);
-        });
-        if (resolved.length) {
-          const calculation = document.createElement('p');
-          calculation.textContent = resolved.join(' · ');
-          block.append(calculation);
-        }
-      }
       return block;
     }));
     $('review').disabled = !completed;

@@ -6,99 +6,41 @@ export const doubleSlitPlayGuide = {
   contentId: 'physics-ipst-wave-optics-10-2-double-slit-lab',
   source: 'content/physics/ipst/wave-optics/10-2-double-slit-lab.html',
   title: bilingual('คู่มือเล่น 10.2 แล็บสลิตคู่', '10.2 Double-slit lab play guide'),
-  introduction: bilingual(
-    'ทำทีละภารกิจจากภาพคลื่นไปสู่การวัดแถบแสง คู่มือนี้บอกตำแหน่งปุ่ม ขั้นทดลอง และสิ่งที่ต้องสังเกต ให้ตอบ Check-out ด้วยตัวเอง',
-    'Work through one mission at a time, from waves to light measurements. The guide shows the controls, steps and observations. Answer each check-out yourself.'
-  ),
+  introduction: bilingual('วัดแถบสว่างจากแสงผ่านสลิตคู่ แล้วใช้ผลใน Classroom Note', 'Measure bright fringes from light passing through two slits, then use the results in the Classroom Note.'),
   gettingStarted: [
-    bilingual('เริ่มจากภารกิจแรก อ่านจุดประสงค์ และใช้ Smart Lab Guide ทีละขั้น เส้นบัพ N และปฏิบัพ A เปิดให้ตั้งแต่เริ่ม', 'Start with mission 1, read its objectives and follow the Smart Lab Guide one step at a time. Nodal N and antinodal A lines start enabled.'),
-    bilingual('อ่านคำแนะนำและสิ่งที่ต้องสังเกตบนการ์ดลอย กด “พาไปยังเครื่องมือ” เพื่อชี้ตำแหน่ง แล้วลงมือเอง เมื่อทำสำเร็จจะขึ้น ✓', 'Read the floating instruction and observation. Use “Show the control” to locate it, then perform the action yourself. Completed steps are ticked automatically.'),
-    bilingual('เมื่อทดลองครบ กด “ไปทำ Check-out” เลือกคำตอบจากรายการ หรือกรอกตัวเลขตามหน่วยที่ระบุ แล้วกดตรวจ', 'After completing the steps, open the check-out. Choose from the list or enter a number in the stated unit, then check your answers.'),
-  ],
-  sections: [
-    {
-      id: 'in-phase',
-      title: bilingual('1 · ดูแนวกลางเมื่อเฟสตรงกัน', '1 · Observe the in-phase centre line'),
-      objectives: [bilingual('ใช้ภาพคลื่นจำแนกจุดบนแนวกลางเมื่อสองแหล่งเริ่มเฟสตรงกัน', 'Use the wave display to classify a point on the centre line for in-phase sources.')],
-      parts: [{ id: 'steps', title: bilingual('เล่นคลื่นและสังเกต P', 'Play the waves and watch P'), items: [
-        bilingual('เลือก “1 · แนวกลางเมื่อเฟสตรงกัน” ในเมนูภารกิจ ดูที่มุมมอง “คลื่นน้ำ · เข้าใจภาพ”', 'Choose “1 · In-phase centre line” and use the Water waves view.'),
-        bilingual('ตรวจว่าเฟสเป็น “ตรงกัน · 0°” แล้วกด “P กลาง” ใต้ภาพ', 'Set the sources to “In phase · 0°” and use “Centre P” below the picture.'),
-        bilingual('กด “เล่นคลื่น” แล้วสังเกตการเปลี่ยนของผิวน้ำที่ P ต่อเนื่องหลายจังหวะ', 'Press “Play waves” and watch how the surface at P changes over several cycles.'),
-        bilingual('กด “ไปทำ Check-out” แล้วเลือกคำตอบที่สอดคล้องกับสิ่งที่สังเกต', 'Open the check-out and choose the option that matches your observation.'),
-      ] }],
-    },
-    {
-      id: 'opposite-phase',
-      title: bilingual('2 · เปรียบเทียบเมื่อเปลี่ยนเฟส', '2 · Compare after changing the source phase'),
-      objectives: [bilingual('จำแนกแนวกลางเมื่อสลับเป็นเฟสตรงข้าม โดยเปรียบเทียบกับกรณีก่อนหน้า', 'Classify the centre line after reversing the source phase and compare with the first case.')],
-      parts: [{ id: 'steps', title: bilingual('เปลี่ยนเฟสแล้วดูจุดเดิม', 'Change phase and observe the same point'), items: [
-        bilingual('เลือกภารกิจ 2 ตั้ง “เฟสเริ่มต้นของสองแหล่ง” เป็น “ตรงข้าม · 180°”', 'Choose mission 2 and set the initial source phase to “Opposite · 180°”.'),
-        bilingual('กด “P กลาง” แล้วเปิด “แนวบัพ N (เส้นประสีส้ม)” ในส่วนเส้นช่วยอธิบาย', 'Use “Centre P” and enable “Nodal N (orange dashes)” in the display layers.'),
-        bilingual('กด “เล่นคลื่น” แล้วเปรียบเทียบพฤติกรรมที่ P กับภารกิจแรก โดยใช้แนวกลางเดิม', 'Press “Play waves” and compare the motion at the same centre-line point with mission 1.'),
-        bilingual('ไปทำ Check-out แล้วเลือกชนิดแนวที่ตรงกับกรณีที่เพิ่งทดลอง', 'Open the check-out and identify the locus in the case you just tested.'),
-      ] }],
-    },
-    {
-      id: 'point-paths',
-      title: bilingual('3 · เลือก P และอ่านทางเดินคลื่น', '3 · Choose P and read the wave paths'),
-      objectives: [
-        bilingual('คำนวณขนาดผลต่างทางเดินจากระยะของคลื่นทั้งสองเส้น', 'Calculate the magnitude of the path difference from the two path lengths.'),
-        bilingual('ใช้ผลต่างทางเดินร่วมกับเฟสเริ่มต้นเพื่อจำแนกตำแหน่ง P', 'Use path difference and initial phase to classify P.'),
-      ],
-      parts: [{ id: 'steps', title: bilingual('อ่านค่าของจุดเดียวกัน', 'Read the values for the same point'), items: [
-        bilingual('เลือกภารกิจ 3 แล้วเปิด “เส้นทาง r₁/r₂” ให้เห็นเส้นจากแหล่งทั้งสองถึง P', 'Choose mission 3 and show “Paths r₁/r₂” from the two sources to P.'),
-        bilingual('ลาก P ออกจากแนวกลาง หรือใช้ปุ่ม “P ตัวอย่าง” ใต้ภาพ', 'Move P away from the centre or use the example-point button below the picture.'),
-        bilingual('อ่าน r₁ และ r₂ ในหน่วย cm พร้อมสังเกตความยาวคลื่นและเฟสของกรณีนี้', 'Read r₁ and r₂ in cm and note the wavelength and source phase for this case.'),
-        bilingual('ข้อทดลองเพิ่ม: พิมพ์ λ = 2, d = 8, L = 12 cm ตั้งเฟส 0° แล้วกด P ตัวอย่าง อ่านผลต่างทางเดินเพื่อตอบข้อเพิ่มเติม', 'Extra trial: enter λ = 2, d = 8 and L = 12 cm, set phase 0° and select Example P. Read the path difference for the added question.'),
-        bilingual('เปิด Check-out ใช้ข้อมูลของ P ปัจจุบันทำข้อคำนวณ แล้วเลือกชนิดแนวของ P', 'Open the check-out. Use the current point’s data to calculate and classify P.'),
-      ] }],
-    },
-    {
-      id: 'approximations',
-      title: bilingual('4 · เทียบค่าจริงกับค่าประมาณ', '4 · Compare the exact and approximate paths'),
-      objectives: [
-        bilingual('อธิบายเงื่อนไขที่ค่าประมาณจาก sin θ ใช้ได้ดีขึ้น', 'Identify when the sine approximation becomes more accurate.'),
-        bilingual('ระบุเงื่อนไขที่ต้องเพิ่มเมื่อประมาณจากระยะบนฉาก x', 'Identify the additional condition for using the screen-offset approximation.'),
-      ],
-      parts: [{ id: 'steps', title: bilingual('เปรียบเทียบสองกรณี', 'Compare the two cases'), items: [
-        bilingual('เลือกภารกิจ 4 แล้วกด “ดูกรณีใกล้ / มุมมาก”', 'Choose mission 4 and select the near / large-angle case.'),
-        bilingual('สังเกตภาพทางเดิน มุม และค่าที่แสดง จากนั้นกด “ดูกรณีไกล / มุมเล็ก”', 'Observe the paths, angle and values, then select the far / small-angle case.'),
-        bilingual('ใน Check-out ใช้ข้อมูลสองกรณีที่วางคู่กัน ดูว่าค่าประมาณแต่ละแบบใกล้ค่าจริงเพียงใด', 'In the check-out, compare the two cases side by side and look at how close each approximation is to the exact value.'),
-        bilingual('ข้อทดลองเพิ่ม: ตั้ง d = 8, L = 60, x = 6 cm เปิดสูตร แล้วคำนวณ d|x|/L โดยเทียบกับซิม', 'Extra trial: set d = 8, L = 60 and x = 6 cm, show the formulas and calculate d|x|/L alongside the simulation.'),
-        bilingual('ตอบเงื่อนไขของแต่ละวิธีจากสิ่งที่เปรียบเทียบ แล้วกดตรวจ', 'Use the comparison to identify the conditions for each approximation, then check your answers.'),
-      ] }],
-    },
-    {
-      id: 'light-trials',
-      title: bilingual('5 · วัดแถบแสงชุด A/B/C', '5 · Measure light fringes in A/B/C'),
-      objectives: [
-        bilingual('ใช้ผลวัด A/B เปรียบเทียบผลของระยะห่างสลิตต่อระยะห่างแถบ', 'Use A/B measurements to compare the effect of slit separation on fringe spacing.'),
-        bilingual('ใช้ผลวัด B/C เปรียบเทียบผลของความยาวคลื่นต่อระยะห่างแถบ', 'Use B/C measurements to compare the effect of wavelength on fringe spacing.'),
-      ],
-      parts: [{ id: 'steps', title: bilingual('เลือกชุด → วัด → บันทึก', 'Choose a set, measure, then record'), items: [
-        bilingual('เลือกภารกิจ 5 ในมุมมอง “แสง · วัดแถบ” แล้วเลือกชุด A', 'Choose mission 5 in the Light view and select set A.'),
-        bilingual('วางเส้น L และ R ที่ตำแหน่งมืดสองข้างที่ติดกับแถบสว่างกลาง หรือกด “วัดพอดี · แบบจำลอง” เพื่อวางเส้นตามแบบจำลอง', 'Place L and R on the two dark positions next to the central bright fringe, or use “Exact measure · model” to position the markers.'),
-        bilingual('กด “บันทึกผลการวัด” แล้วทำซ้ำกับชุด B และ C ตรวจว่าทั้งสามชุดขึ้นเครื่องหมาย ✓', 'Press “Record measurement”, then repeat for B and C. Check that all three sets are ticked.'),
-        bilingual('ไปทำ Check-out เทียบ A กับ B และ B กับ C จากบันทึกล่าสุดของแต่ละชุดในแผงข้อมูล', 'Open the check-out and compare A with B, then B with C, using the latest record for each set in the data panel.'),
-      ] }],
-    },
-    {
-      id: 'infer-wavelength',
-      title: bilingual('6 · คำนวณจากบันทึกที่วัด', '6 · Calculate from a measurement record'),
-      objectives: [bilingual('คำนวณความยาวคลื่นจากระยะสลิต ระยะฉาก และระยะห่างแถบที่วัดได้', 'Infer wavelength from slit separation, screen distance and the measured fringe spacing.')],
-      parts: [{ id: 'steps', title: bilingual('อ่านบันทึกและจัดหน่วย', 'Read the record and align units'), items: [
-        bilingual('เลือกภารกิจ 6 แล้วตรวจว่ามีบันทึกผลการวัด ถ้ายังไม่มี ให้เลือกชุด วางเส้นวัด และกดบันทึกก่อน', 'Choose mission 6 and check that a measurement exists. If needed, select a set, position the markers and record it.'),
-        bilingual('ข้อทดลองเพิ่ม: เลือกชุด C ตั้ง L = 2.0 m วัดและบันทึกอีกครั้ง ต้องขยับเส้นวัดทั้งสอง หรือเลือกวัดพอดีก่อนบันทึก', 'Extra trial: choose C, enter L = 2.0 m, measure and record again. Move both markers or use Exact measure before recording.'),
-        bilingual('เปิด Check-out และอ่านหมายเลขบันทึกล่าสุด รวมทั้ง d, L และ Δx ที่โจทย์ยกมา', 'Open the check-out and read the latest trial number and its d, L and Δx values.'),
-        bilingual('เลือกสูตรจากข้อมูลในบันทึก จัดหน่วยให้ตรงกันก่อนแทนค่า แล้วแปลงผลเป็น nm', 'Choose an equation using the recorded quantities, use consistent units and express the result in nm.'),
-        bilingual('กรอกตัวเลขในช่อง nm ทั้งสองข้อแล้วกดตรวจ ข้อมูลโจทย์ถูกล็อกไว้ หากต้องการเปลี่ยน ให้กด “ใช้ข้อมูลการทดลองใหม่” ซึ่งล้างคำตอบรอบนี้ แต่ไม่ล้างคะแนนครั้งแรก', 'Enter numbers in both nm fields and check. Question data stays fixed. Use new experiment data to replace it; this clears current responses but preserves first-attempt scores.'),
-      ] }],
-    },
+    bilingual('ซิมเปิดที่โต๊ะแสง ชุด A/B/C ใช้แสงที่สองช่องเริ่มเฟสตรงกัน', 'The lab opens on the optical bench. A/B/C use initially in-phase light at both slits.'),
   ],
   troubleshooting: [
-    bilingual('ปุ่มตรวจยังไม่พร้อม ให้ดูรายการ ○ และอ่านสิ่งที่ผู้ช่วยแนะนำ แล้วกด “พาไปยังเครื่องมือ”', 'If checking is unavailable, read the open-circle item and the guide, then use “Show the control”.'),
-    bilingual('ปุ่มบันทึกผลการวัดพร้อมเมื่อวางเส้นซ้ายและขวาครบ ลองใช้ปุ่มเลื่อนละเอียดใต้ค่าของแต่ละเส้น', 'Recording becomes available after both markers have been positioned. Use the fine controls below the marker readings.'),
-    bilingual('กลับไปดูภาพหรือสูตรด้วยปุ่ม “กลับไปทดลอง” แล้วเปิด Check-out อีกครั้งเมื่อพร้อมตอบ', 'Use “Return to experiment” to revisit the display or formulas, then reopen the check-out when ready.'),
+    bilingual('ถ้ายังตอบไม่ได้ ให้ตรวจว่าบันทึกครบทั้งสองชุดของคู่นั้นและวางเส้นคนละด้านของแถบกลาง', 'If a question is unavailable, check for both trial records and place the markers on opposite sides of the central fringe.'),
   ],
-  finish: bilingual('เมื่อผ่านครบ 6 ภารกิจ รวม 12 ข้อ กด “จบกิจกรรมและดูรายงาน” ใส่ชื่อและชั้น แล้วพิมพ์รายงาน A4 ได้ รายงานแยกความคืบหน้า คะแนนครั้งแรก และ Mastery การใช้ผู้ช่วยและคำใบ้ไม่หักคะแนน มีปุ่มทบทวนแยกจากการจบกิจกรรม งานบันทึกในเครื่องตามบัญชีหรือ Guest เดิม ไม่มีการส่งคะแนนขึ้น Cloud', 'After passing all 6 missions and 12 questions, choose Finish and view report, enter your name and class and print the A4 report. Progress, first-attempt score and Mastery are separate; guidance and hints carry no penalty. Review is a separate action. Work stays on this device under the same account or Guest; scores are not uploaded to Cloud.'),
+  finish: bilingual('นำบันทึกของกลุ่มไปใช้ในการคำนวณและอธิบายบน Classroom Note', 'Use your group’s readings for calculations and explanations in the Classroom Note.'),
+  sections: [
+    {
+      id: 'measure',
+      title: bilingual('วัดและบันทึก', 'Measure and record'),
+      objectives: [bilingual('วัดแถบกลางซ้ำเมื่อเปลี่ยนเพียงปัจจัยเดียว', 'Repeat the central-fringe measurement with one variable changed at a time.')],
+      parts: [{id:'steps', title:bilingual('สี่บันทึกก่อนเรียน', 'Four trials before the lesson'), items:[
+        bilingual('ใช้ L และ R จับตำแหน่งมืดที่อยู่ติดกับแถบสว่างตรงกลางคนละด้าน แล้วบันทึกความกว้างเป็น mm ใช้สเกลฉากเท่าเดิมเมื่อเปรียบเทียบ', 'Use L and R to mark the dark positions immediately either side of the central bright fringe. Record the width in mm. Keep the screen zoom fixed when comparing.'),
+        bilingual('วัดชุด A, B, C ที่ระยะฉาก 1 m แล้วเลือก B อีกครั้ง เลื่อนฉากไปที่ 2 m และวัดใหม่', 'Measure A, B and C at 1 m. Select B again, move the screen to 2 m and record another measurement.'),
+      ]}],
+    },
+    {
+      id: 'compare',
+      title: bilingual('เปรียบเทียบบันทึก', 'Compare your readings'),
+      objectives: [bilingual('อ่านค่าก่อนและหลังเปลี่ยนระยะสลิต สี หรือระยะฉาก', 'Read the before-and-after widths when slit separation, colour or screen distance changes.')],
+      parts: [{id:'checkout', title:bilingual('Check-out', 'Check-out'), items:[
+        bilingual('เปิด Check-out ดูทีละคู่ ได้แก่ A กับ B, B กับ C และ B ที่ 1 m กับ B ที่ 2 m ตอบจากความกว้างที่แสดง', 'Open the check-out. For each pair (A and B, B and C, and B at 1 m and 2 m), answer from the two recorded widths.'),
+        bilingual('คัดเลขบันทึกและความกว้างสี่ชุดลงในตารางหน้าแรกของ Classroom Note', 'Copy the four trial numbers and widths into the table on page one of the Classroom Note.'),
+      ]}],
+    },
+    {
+      id: 'retest',
+      title: bilingual('กลับมาวัดหลังเรียน', 'Return to measure after the lesson'),
+      objectives: [bilingual('นำผลวัดใหม่ไปเปรียบเทียบกับค่าที่ทำนาย', 'Compare a new measurement with your prediction.')],
+      parts: [{id:'predict-and-test', title:bilingual('แสงแดงชุด C', 'Red light, set C'), items:[
+        bilingual('ใช้ค่าชุด C ที่ 1 m ทำนายใน Classroom Note ก่อน จากนั้นเลือก C เลื่อนฉากไปที่ 2 m แล้ววัดและบันทึก', 'Make a prediction in the Classroom Note using your C reading at 1 m. Then select C, move the screen to 2 m, measure and record.'),
+        bilingual('นำผลวัดกลับไปเทียบกับที่ทำนาย และใช้ประมาณความยาวคลื่นใน Classroom Note', 'Take the new reading back to compare with your prediction and estimate the wavelength in the Classroom Note.'),
+      ]}],
+    },
+  ],
 };

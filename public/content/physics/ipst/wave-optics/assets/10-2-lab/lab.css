@@ -60,3 +60,67 @@
 @media (max-width: 580px) {
   .checkout-comparison-cases { grid-template-columns: minmax(0, 1fr); }
 }
+
+.light-instructions {
+  margin-block: 1rem;
+  padding: .8rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+}
+.light-instructions summary { font-weight: 700; cursor: pointer; }
+.light-instructions > ol { padding-inline-start: 1.4rem; }
+.light-instructions h2 { margin-top: 0; }
+.trial-progress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin: .6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.trial-progress li {
+  padding: .15rem .5rem;
+  border: 1px solid var(--line);
+  border-radius: .4rem;
+}
+.trial-progress li[data-complete="true"] { background: #e1f2e5; }
+.light-comparison { padding-block: .75rem; border-top: 1px solid var(--line); }
+.light-comparison label { font-weight: 700; }
+.light-comparison ul { margin-block: .25rem .6rem; }
+.light-comparison .small { margin-bottom: 0; }
+.record-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
+.measurement-report {
+  width: min(52rem, 94vw);
+  max-height: 90vh;
+  color: inherit;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+.measurement-report::backdrop { background: #192e29a0; }
+
+@media print {
+  @page { size: A4 portrait; margin: 14mm; }
+  body:has(.measurement-report[open]) { background: white; }
+  main:has(.measurement-report[open]) { padding: 0; }
+  main:has(.measurement-report[open]) > :not(.measurement-report),
+  .measurement-report .record-actions,
+  #mission-answer { display: none !important; }
+  .measurement-report[open] {
+    position: static;
+    width: auto;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    overflow: visible;
+  }
+  .measurement-report::backdrop { display: none; }
+  .measurement-report .table-scroll { overflow: visible; }
+  .measurement-report table { width: 100%; min-width: 0; font-size: 9pt; }
+  .measurement-report th, .measurement-report td { white-space: normal; }
+  .measurement-report tr { break-inside: avoid; }
+}

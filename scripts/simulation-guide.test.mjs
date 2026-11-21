@@ -23,7 +23,7 @@ test('guide windows bind only authored simulation identities and leave other act
   assert.equal(simulationGuideFor(tool,hub),null);
 });
 
-test('the double-slit lab opens its six-mission reading guide through the actual simulation identity', () => {
+test('the double-slit lab opens its light measurement reading guide through the actual simulation identity', () => {
   const guide = doubleSlitPlayGuide;
   const lab = { ...tool, source: new URL(guide.source, hub).href, context: { ...tool.context, contentId: guide.contentId } };
   assert.equal(simulationGuideFor(lab, hub), guide);
@@ -38,7 +38,7 @@ test('the double-slit lab opens its six-mission reading guide through the actual
       assert.ok(document.getElementById(anchor).textContent.includes(section.objectives[0][language]));
     }
   }
-  assert.equal(guide.sections.length, 6);
+  assert.deepEqual(guide.sections.map(section=>section.id), ['measure','compare','retest']);
   assert.equal(document.querySelector('button'), null);
   controller.dispose();
 });

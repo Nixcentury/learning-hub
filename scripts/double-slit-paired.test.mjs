@@ -4,19 +4,19 @@ const base='content/physics/ipst/wave-optics/';
 const files={classroom:base+'10-2-double-slit-classroom-note-v1-3.html',exit:base+'10-2-double-slit-exit-ticket-revision-v1-3.html'};
 async function load(kind){const {document}=parseHTML(await readFile(new URL('../public/'+files[kind],import.meta.url),'utf8'));Object.defineProperty(document,'URL',{value:'https://example.test/learning-hub/'+files[kind]});Object.defineProperty(document,'defaultView',{value:undefined});return document;}
 const view=(doc,lang,edition,range)=>doc.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="${edition}"] [data-revision-range="${range}"]`);
-function notes(node){return [...node.querySelectorAll('.shared-note')].map(n=>{const c=n.cloneNode(true);c.querySelectorAll('.identity').forEach(x=>x.remove());c.querySelectorAll('[data-title-th]').forEach(x=>x.removeAttribute('title'));c.querySelectorAll('img[src]').forEach(x=>x.setAttribute('src',x.getAttribute('src').replace(/^.*\/assets\//,'assets/')));return c.outerHTML;});}
+function notes(node){return [...node.querySelectorAll('.shared-note')].map(n=>{const c=n.cloneNode(true);c.querySelectorAll('.identity, [data-hub-html]').forEach(x=>x.remove());c.querySelectorAll('[data-title-th]').forEach(x=>x.removeAttribute('title'));c.querySelectorAll('img[src]').forEach(x=>x.setAttribute('src',x.getAttribute('src').replace(/^.*\/assets\//,'assets/')));return c.outerHTML;});}
 test('double-slit: the complete canonical answer notes survive student printing in either language',async()=>{
  const classroom=await load('classroom'),exit=await load('exit');
- const model=Buffer.concat(await Promise.all(['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs','note-diagrams.mjs'].map(p=>readFile(new URL('../docs/learning-sheet/preparation/physics-double-slit-10-2/paired/'+p,import.meta.url)))));const sha=createHash('sha256').update(model).digest('hex');
+ const model=Buffer.concat(await Promise.all(['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs','note-diagrams.mjs','lab-to-exit.mjs'].map(p=>readFile(new URL('../docs/learning-sheet/preparation/physics-double-slit-10-2/paired/'+p,import.meta.url)))));const sha=createHash('sha256').update(model).digest('hex');
  assert.equal(classroom.documentElement.dataset.sharedNotesSha256,sha);assert.equal(exit.documentElement.dataset.sharedNotesSha256,sha);
  for(const lang of ['th','en']){
-  const canonical=notes(view(classroom,lang,'answers','all'));assert.equal(canonical.length,12);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.proof-diagram').length,2);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.example .method-note').length,12);
+  const canonical=notes(view(classroom,lang,'answers','all'));assert.equal(canonical.length,13);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.proof-diagram').length,2);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.example .method-note').length,12);
   const blankClassroom=view(classroom,lang,'blank','all');assert.equal(blankClassroom.querySelectorAll('.note-answer').length,0);assert.equal(blankClassroom.querySelectorAll('.example').length,12);
   for(const edition of ['blank','answers'])for(const range of ['all','review'])assert.deepEqual(notes(view(exit,lang,edition,range)),canonical);
   for(const kind of ['classroom','exit'])for(const answers of [false,true])for(const range of ['all','quiz','review']){
    const source=kind==='classroom'?classroom:exit;applyContentLanguage(source,lang);const before=source.documentElement.outerHTML;
    const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'10.2 paired handout'));const count=prepareExitTicketPrint(copy,{range,answers});
-   assert.equal(count,kind==='classroom'?(range==='quiz'?6:range==='review'?6:12):range==='all'?(answers?26:21):range==='quiz'?(answers?14:9):12);
+   assert.equal(count,kind==='classroom'?(range==='quiz'?6:range==='review'?7:13):range==='all'?(answers?28:23):range==='quiz'?(answers?15:10):13);
    assert.equal(copy.querySelectorAll('[data-content-lang]').length,1);assert.equal(copy.querySelectorAll('[data-revision-edition]').length,1);assert.equal(copy.querySelectorAll('.identity').length,1);assert.equal(exitTicketPages(copy).length,count);
    assert.equal(source.documentElement.outerHTML,before,'printing must not change the live lesson');
    if(kind==='exit'){
@@ -45,6 +45,13 @@ test('double-slit: the complete canonical answer notes survive student printing 
      assert.match(practice.textContent,lang==='th'?/ความเข้ม/:/light intensity/);
     }
     if(exams.length){
+     assert.equal(exams[0].querySelectorAll('.exam-procedure li').length,4);
+     assert.equal(exams[0].querySelectorAll('.exam-statements li').length,3);
+     for(const exam of exams){
+      assert.equal(exam.querySelectorAll('.exam-options li').length,5);
+      assert.equal(exam.querySelectorAll('img, table').length,0);
+     }
+     assert.match(exams[0].textContent,/2\.0[\s\S]+100 μm[\s\S]+250 μm/);
      assert.equal(exams[0].querySelector('a').getAttribute('href'),'https://jamionstudio.com/wp-content/uploads/2025/11/physics-alevel-66.pdf#page=17');
      assert.equal(exams[1].querySelector('a').getAttribute('href'),'https://assets.mytcas.com/68/answer/tcas68-phy-a-level.pdf#page=8');
      assert.equal(exams[0].querySelector('.teacher-key strong')?.textContent,answers?(lang==='th'?'ตัวเลือก 5 (ข. และ ค.)':'Choice 5 (statements B and C)'):undefined);
@@ -100,6 +107,13 @@ test('double-slit: experiment precedes 15 numbered formulas, every formula prece
   const intro=full.querySelector('[data-note-key="observe"]');
   assert.equal(intro.querySelectorAll('[data-tex]').length,0,'experiment introduction must not reveal equations before the theory');
   assert.equal(intro.querySelectorAll('.experiment-conclusions li').length,3);
+  const rows = [...intro.querySelectorAll('.trial-log tbody tr')].map(row=>Array.from(row.children).slice(0,4).map(cell=>cell.textContent));
+  assert.deepEqual(rows.map(([set,light,d,L])=>[set,light.split(' ').at(-1),d,L]),[['A','532','50','1'],['B','532','100','1'],['C','650','100','1'],['B','532','100','2']]);
+  const bridge=full.querySelector('[data-note-key="lab-to-exit"]');
+  assert.ok(bridge.querySelector('a[data-hub-simulation]'));
+  assert.equal(bridge.querySelector('a[data-hub-html]').dataset.contentId,'physics-ipst-wave-optics-10-2-exit-ticket-revision');
+  assert.ok([...bridge.querySelectorAll('[data-tex]')].some(node=>node.dataset.tex.includes('650')));
+  assert.match(bridge.textContent,/2566[\s\S]*11[\s\S]*2568[\s\S]*9/);
   const lab=intro.querySelector('a[data-hub-simulation]');
   assert.equal(lab.dataset.contentId,'physics-ipst-wave-optics-10-2-double-slit-lab');
   assert.equal(lab.dataset.htmlSrc,'10-2-double-slit-lab.html');

@@ -96,7 +96,7 @@
               resolve(null);
             }
           });
-        return [local, record]
+        const candidates = [local, record]
           .filter(
             (v) =>
               v &&
@@ -104,8 +104,9 @@
               Number.isFinite(v.savedAt) &&
               v.snapshot?.identity === identity,
           )
-          .sort((a, b) => b.savedAt - a.savedAt)
-          .map((v) => v.snapshot);
+          .sort((a, b) => b.savedAt - a.savedAt);
+        last = Math.max(last, candidates[0]?.savedAt || 0);
+        return candidates.map((v) => v.snapshot);
       },
       save(snapshot) {
         last = Math.max(Date.now(), last + 1);

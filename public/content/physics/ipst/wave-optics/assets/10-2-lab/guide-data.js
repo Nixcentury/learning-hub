@@ -9,9 +9,11 @@ export const doubleSlitPlayGuide = {
   introduction: bilingual('วัดแถบสว่างจากแสงผ่านสลิตคู่ แล้วใช้ผลใน Classroom Note', 'Measure bright fringes from light passing through two slits, then use the results in the Classroom Note.'),
   gettingStarted: [
     bilingual('ซิมเปิดที่โต๊ะแสง ชุด A/B/C ใช้แสงที่สองช่องเริ่มเฟสตรงกัน', 'The lab opens on the optical bench. A/B/C use initially in-phase light at both slits.'),
+    bilingual('กดผู้ช่วยทำแล็บที่มุมล่างซ้ายเพื่อดูขั้นต่อไปและชี้เครื่องมือ กดย่อได้ระหว่างทดลอง', 'Open the lab helper at the bottom left to see the next step and locate its control. Collapse it while experimenting.'),
   ],
   troubleshooting: [
     bilingual('ถ้ายังตอบไม่ได้ ให้ตรวจว่าบันทึกครบทั้งสองชุดของคู่นั้นและวางเส้นคนละด้านของแถบกลาง', 'If a question is unavailable, check for both trial records and place the markers on opposite sides of the central fringe.'),
+    bilingual('หากต้องการทำซ้ำ ให้กดรีเซ็ตภารกิจและยืนยันเพื่อล้างผลวัดและคำตอบที่เก็บไว้ของแล็บนี้', 'To repeat the activity, choose Reset activity and confirm to clear this lab’s stored measurements and answers.'),
   ],
   finish: bilingual('นำบันทึกของกลุ่มไปใช้ในการคำนวณและอธิบายบน Classroom Note', 'Use your group’s readings for calculations and explanations in the Classroom Note.'),
   sections: [

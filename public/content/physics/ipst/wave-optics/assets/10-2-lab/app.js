@@ -3,7 +3,7 @@
   const M=globalThis.DoubleSlitLabModel,P=globalThis.DoubleSlitLabPlot,A=globalThis.DoubleSlitLightActivity,$=id=>document.getElementById(id),F=(n,d=2)=>Number(n).toFixed(d);
   let lang='th',identity='guest',subscriber=null,drag=null,notice='';
   let localSession=null,localReady=false,localStarted=false,identityEpoch=0,localStatus='loading';
-  const today=()=>new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Bangkok'});
+  let guideAfterLesson=false, guideTarget=null, guideTimer, resetDone=false;
   const initial=()=>({
     config:{...M.presets.A},zoom:1,cursors:{left:-8,right:8},moved:{left:false,right:false},records:[],
     formula:false,analysis:false,exercise:false,solution:false,lightPhase:0,autoMeasured:false,
@@ -34,6 +34,7 @@
     state.moved[side]=true;
     notice='';
     renderMeasurement();
+    if(!$('light-guide-panel').hidden)renderGuide();
     publish();
   }
   function renderMeasurement(){
@@ -78,6 +79,7 @@
     document.documentElement.lang=lang;
     document.querySelectorAll('[data-th][data-en]').forEach(n=>n.textContent=n.dataset[lang]);
     $('language').textContent=lang==='th'?'English':'ภาษาไทย';
+    $('activity-reset-status').textContent=resetDone?T('เริ่มรอบใหม่ได้แล้ว ลองวัดชุด A','New round ready. Start with set A.'):'';
     render(true);
     storageLabel();
   }
@@ -101,6 +103,8 @@
     state.records.push({id,config:{...state.config},cursors:{...state.cursors},phase:0,source:'manual'});
     state.moved={left:false,right:false};
     notice='saved';
+    resetDone=false;
+    $('activity-reset-status').textContent='';
     render(false);
     publish();
   };
@@ -137,7 +141,8 @@
   }
   function renderActivity(){
     const readings=A.latestReadings(state.records);
-    const trialItems=Object.entries(A.trials).slice(0,4).map(([key,{label}])=>{
+    const trialItems=A.firstTrials.map(key=>{
+      const {label}=A.trials[key];
       const item=document.createElement('li');
       const record=readings[key];
       item.textContent=label+' · '+(record?T('บันทึกแล้ว','Recorded'):T('รอวัด','To measure'));
@@ -150,6 +155,7 @@
       ? T('C ที่ 2 m · บันทึกครั้งที่ ','C at 2 m · Trial ')+returned.id+' · '+A.width(returned)+' mm'
       : T('ยังไม่มีผลวัดชุด C ที่ 2 เมตร','No C measurement at 2 metres yet.');
     $('light-comparisons').replaceChildren(...A.comparisons.map(comparison=>renderComparison(comparison,readings)));
+    if(!$('light-guide-panel').hidden)renderGuide(readings);
   }
   function renderComparison(comparison,readings){
     const section=document.createElement('section');
@@ -202,6 +208,7 @@
       if(!evidence)return;
       state.checkout[comparison.id]={key:evidence.key,value:select.value};
       showFeedback(select.value);
+      if(!$('light-guide-panel').hidden)renderGuide();
       publish();
     };
     section.append(select,feedback);
@@ -225,6 +232,82 @@
     $('checkout-heading').focus();
     $('mission-answer').scrollIntoView({block:'start'});
     publish();
+  };
+  function renderGuide(readings=A.latestReadings(state.records)){
+    const step=A.guideStep(state,readings,guideAfterLesson);
+    const count=A.firstTrials.filter(key=>readings[key]).length;
+    $('light-guide-progress').textContent=T(`บันทึกก่อนเรียน ${count}/4 ครั้ง`,`Before-lesson records: ${count}/4`);
+    $('light-guide-step').textContent=[step.label,step[lang]].filter(Boolean).join(' · ');
+    $('light-guide-cue').textContent=step.target==='record'
+      ? T('อ่านความกว้างเป็น mm แล้วใช้ผลที่บันทึกไว้','Read the width in mm and use the saved reading.')
+      : '';
+    $('light-guide-go').textContent=step.target.startsWith('trend-')
+      ? T('ไปยัง Check-out','Go to the check-out')
+      : step.target==='return-heading'
+        ? T('ดูขั้นหลังเรียน','Show the after-lesson step')
+        : step.target==='records-heading'
+          ? T('ดูบันทึกผล','Show measurement records')
+          : T('พาไปยังเครื่องมือ','Show the control');
+  }
+  function setGuideOpen(open){
+    $('light-guide-panel').hidden=!open;
+    $('light-guide-toggle').hidden=open;
+    $('light-guide-toggle').setAttribute('aria-expanded',String(open));
+    if(open)renderGuide();
+  }
+  function clearGuideHighlight(){
+    clearTimeout(guideTimer);
+    guideTarget?.classList.remove('light-guide-target');
+    guideTarget=null;
+  }
+  $('light-guide-toggle').onclick=()=>{
+    setGuideOpen(true);
+    $('light-guide-go').focus();
+  };
+  $('light-guide-close').onclick=()=>{
+    setGuideOpen(false);
+    $('light-guide-toggle').focus();
+  };
+  $('light-guide-go').onclick=()=>{
+    const step=A.guideStep(state,A.latestReadings(state.records),guideAfterLesson);
+    if(step.target.startsWith('trend-')){
+      state.checkoutOpen=true;
+      $('mission-answer').open=true;
+      publish();
+    }
+    setGuideOpen(false);
+    clearGuideHighlight();
+    guideTarget=$(step.target);
+    guideTarget.classList.add('light-guide-target');
+    guideTarget.scrollIntoView({block:'center',inline:'nearest'});
+    guideTarget.focus({preventScroll:true});
+    guideTimer=setTimeout(clearGuideHighlight,2400);
+  };
+  $('guide-after-lesson').onclick=()=>{
+    guideAfterLesson=true;
+    setGuideOpen(true);
+    $('light-guide-go').focus();
+  };
+  $('activity-reset').onclick=()=>{
+    if(localReady)$('activity-reset-dialog').showModal();
+  };
+  $('activity-reset-cancel').onclick=()=>$('activity-reset-dialog').close();
+  $('activity-reset-confirm').onclick=()=>{
+    if(!localReady||!$('activity-reset-dialog').open)return;
+    $('activity-reset-dialog').close();
+    state=initial();
+    previousSnapshot={};
+    drag=null;
+    notice='';
+    guideAfterLesson=false;
+    resetDone=true;
+    clearGuideHighlight();
+    setGuideOpen(false);
+    $('activity-reset-status').textContent=T('เริ่มรอบใหม่ได้แล้ว ลองวัดชุด A','New round ready. Start with set A.');
+    render(true);
+    publish();
+    void localSession.flush();
+    $('preset-A').focus();
   };
   $('report-open').onclick=()=>{renderReport();$('lab-report').showModal();};
   $('report-return').onclick=()=>$('lab-report').close();
@@ -252,7 +335,7 @@
   document.addEventListener('visibilitychange',()=>{if(document.hidden)flushLocal();});
   window.addEventListener('message',event=>{
     if(event.source!==parent||event.origin!==location.origin||event.data?.type!=='learning-hub-context')return;
-    const next=event.data.identity?.uid||'guest';if(next!==identity){flushLocal();localReady=false;identity=next;state=initial();previousSnapshot={};drag=null;notice='';$('lab-report').close();localStarted=false;}language(event.data.language||lang);if(!localStarted)void startLocal();
+    const next=event.data.identity?.uid||'guest';if(next!==identity){flushLocal();localReady=false;identity=next;state=initial();previousSnapshot={};drag=null;notice='';guideAfterLesson=false;resetDone=false;clearGuideHighlight();setGuideOpen(false);$('activity-reset-dialog').close();$('lab-report').close();localStarted=false;}language(event.data.language||lang);if(!localStarted)void startLocal();
   });
   $('distance-number').onchange=()=>{const n=$('distance-number');if(!n.checkValidity()){n.reportValidity();return;}configChange({...state.config,distance:Number(n.value)});};
   $('distance-number').onkeydown=e=>{if(e.key==='Enter')e.currentTarget.blur();};

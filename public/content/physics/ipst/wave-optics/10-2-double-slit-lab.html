@@ -1,8 +1,12 @@
 <!doctype html>
 <html lang="th" data-learning-simulation data-activity-id="physics-ipst-wave-optics-10-2-double-slit-lab">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>10.2 แล็บสลิตคู่ • Double-slit Measurement Lab</title><link rel="stylesheet" href="assets/10-2-lab/lab.css?v=light-activity-1"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>10.2 แล็บสลิตคู่ • Double-slit Measurement Lab</title><link rel="stylesheet" href="assets/10-2-lab/lab.css?v=light-activity-2"></head>
 <body><main><p id="lab-load-status" class="lab-status" role="status">กำลังเตรียมห้องทดลอง / Preparing lab…</p>
   <header><div><p class="eyebrow" data-th="ฟิสิกส์ 10.2 · การแทรกสอดของแสง" data-en="PHYSICS 10.2 · LIGHT INTERFERENCE">ฟิสิกส์ 10.2 · การแทรกสอดของแสง</p><h1 data-th="แล็บสลิตคู่ · วัดแถบสว่างของแสง" data-en="Double-slit lab · Measure light fringes">แล็บสลิตคู่ · วัดแถบสว่างของแสง</h1><p class="lead" data-th="ทำภารกิจ → ทดลองคลื่น → ตอบคำถาม → วัดแถบแสง" data-en="Follow missions → explore waves → answer questions → measure light fringes.">ทำภารกิจ → ทดลองคลื่น → ตอบคำถาม → วัดแถบแสง</p></div><button id="language" class="quiet">English</button></header>
+    <div class="record-actions">
+      <button id="activity-reset" type="button" data-th="รีเซ็ตภารกิจ" data-en="Reset activity">รีเซ็ตภารกิจ</button>
+      <span id="activity-reset-status" role="status"></span>
+    </div>
   <details class="light-instructions" open>
     <summary data-th="วิธีทดลอง · เก็บผลก่อนเรียน" data-en="Experiment guide · Collect results before the lesson">วิธีทดลอง · เก็บผลก่อนเรียน</summary>
     <ol>
@@ -27,7 +31,7 @@
       <hr><h2 data-th="2 · วัดและบันทึก" data-en="2 · Measure and record">2 · วัดและบันทึก</h2><button id="record" class="primary" data-th="บันทึกผลการวัด" data-en="Record measurement">บันทึกผลการวัด</button><p id="record-help" class="small" role="status" aria-live="polite"></p><button id="reset-measurement" class="quiet" data-th="วางเส้นวัดใหม่" data-en="Reset markers">วางเส้นวัดใหม่</button><button id="light-answer" type="button" data-th="ไปทำ Check-out" data-en="Open check-out">ไปทำ Check-out</button><p class="small" data-th="เปลี่ยนเงื่อนไขแล้ววัดใหม่ บันทึกก่อนหน้ายังเก็บค่าชุดเดิมไว้" data-en="Measure again after changing a condition. Earlier records keep their original settings.">เปลี่ยนเงื่อนไขแล้ววัดใหม่ บันทึกก่อนหน้ายังเก็บค่าชุดเดิมไว้</p>
     </aside>
   </div>
-<section class="records" aria-labelledby="records-heading"><div class="section-heading"><h2 id="records-heading" data-th="3 · บันทึกผลการวัด" data-en="3 · Measurement records">3 · บันทึกผลการวัด</h2><span id="record-count"></span></div><p class="small" data-th="เก็บเลขบันทึกและความกว้างของแต่ละชุดไว้ใช้ใน Classroom Note · ตารางเลื่อนแนวนอนได้" data-en="Use each set’s trial number and width in the Classroom Note. Scroll the table horizontally if needed.">เก็บเลขบันทึกและความกว้างของแต่ละชุดไว้ใช้ใน Classroom Note · ตารางเลื่อนแนวนอนได้</p><p id="empty-records" data-th="ยังไม่มีบันทึก เริ่มจากวางเส้นวัดทั้งสองข้างของแถบกลาง" data-en="No records yet. Position both markers around the central bright fringe.">ยังไม่มีบันทึก เริ่มจากวางเส้นวัดทั้งสองข้างของแถบกลาง</p><div id="record-table-wrap" class="table-scroll" tabindex="0" hidden><table><thead><tr><th data-th="ครั้ง / ชุด" data-en="Trial / set">ครั้ง / ชุด</th><th data-th="วิธีวัด" data-en="Method">วิธีวัด</th><th>φ₀</th><th>λ (nm)</th><th>d (μm)</th><th>L (m)</th><th data-th="ซ้าย (mm)" data-en="Left (mm)">ซ้าย (mm)</th><th data-th="ขวา (mm)" data-en="Right (mm)">ขวา (mm)</th><th data-th="วัดได้ (mm)" data-en="Measured (mm)">วัดได้ (mm)</th><th data-th="จัดการ" data-en="Action">จัดการ</th></tr></thead><tbody id="records-body"></tbody></table></div></section>
+<section class="records" aria-labelledby="records-heading"><div class="section-heading"><h2 id="records-heading" tabindex="-1" data-th="3 · บันทึกผลการวัด" data-en="3 · Measurement records">3 · บันทึกผลการวัด</h2><span id="record-count"></span></div><p class="small" data-th="เก็บเลขบันทึกและความกว้างของแต่ละชุดไว้ใช้ใน Classroom Note · ตารางเลื่อนแนวนอนได้" data-en="Use each set’s trial number and width in the Classroom Note. Scroll the table horizontally if needed.">เก็บเลขบันทึกและความกว้างของแต่ละชุดไว้ใช้ใน Classroom Note · ตารางเลื่อนแนวนอนได้</p><p id="empty-records" data-th="ยังไม่มีบันทึก เริ่มจากวางเส้นวัดทั้งสองข้างของแถบกลาง" data-en="No records yet. Position both markers around the central bright fringe.">ยังไม่มีบันทึก เริ่มจากวางเส้นวัดทั้งสองข้างของแถบกลาง</p><div id="record-table-wrap" class="table-scroll" tabindex="0" hidden><table><thead><tr><th data-th="ครั้ง / ชุด" data-en="Trial / set">ครั้ง / ชุด</th><th data-th="วิธีวัด" data-en="Method">วิธีวัด</th><th>φ₀</th><th>λ (nm)</th><th>d (μm)</th><th>L (m)</th><th data-th="ซ้าย (mm)" data-en="Left (mm)">ซ้าย (mm)</th><th data-th="ขวา (mm)" data-en="Right (mm)">ขวา (mm)</th><th data-th="วัดได้ (mm)" data-en="Measured (mm)">วัดได้ (mm)</th><th data-th="จัดการ" data-en="Action">จัดการ</th></tr></thead><tbody id="records-body"></tbody></table></div></section>
     <div class="record-actions"><button id="report-open" type="button" data-th="ดู / พิมพ์บันทึกผล" data-en="View / print measurement records">ดู / พิมพ์บันทึกผล</button></div>
   </section>
 
@@ -37,11 +41,33 @@
     <div id="light-comparisons"></div>
   </details>
   <section class="light-instructions" aria-labelledby="return-heading">
-    <h2 id="return-heading" data-th="กลับมาทดลองหลังเรียน" data-en="Return after the lesson">กลับมาทดลองหลังเรียน</h2>
+    <h2 id="return-heading" tabindex="-1" data-th="กลับมาทดลองหลังเรียน" data-en="Return after the lesson">กลับมาทดลองหลังเรียน</h2>
     <p data-th="ใช้ค่าที่วัดจาก C ที่ 1 เมตร ทำนายความกว้างเมื่อฉากอยู่ที่ 2 เมตรใน Classroom Note จากนั้นเลือก C เลื่อนฉากไปที่ 2 เมตร วัดอีกครั้ง แล้วนำบันทึกไปเทียบกับที่ทำนายไว้และประมาณความยาวคลื่น" data-en="Use your C measurement at 1 metre to predict the width at 2 metres in the Classroom Note. Then choose C, move the screen to 2 metres and measure again. Take the new record back to compare with your prediction and estimate the wavelength.">ใช้ค่าที่วัดจาก C ที่ 1 เมตร ทำนายความกว้างเมื่อฉากอยู่ที่ 2 เมตรใน Classroom Note จากนั้นเลือก C เลื่อนฉากไปที่ 2 เมตร วัดอีกครั้ง แล้วนำบันทึกไปเทียบกับที่ทำนายไว้และประมาณความยาวคลื่น</p>
     <p id="return-reading"></p>
+    <p><button id="guide-after-lesson" type="button" data-th="ทำนายแล้ว · ช่วยชี้เครื่องมือวัด" data-en="Prediction ready · Show the measurement controls">ทำนายแล้ว · ช่วยชี้เครื่องมือวัด</button></p>
     <p><a href="https://nixcentury.github.io/learning-hub/#physics/bank/double-slit-interference/classroom-note" data-hub-html data-html-src="10-2-double-slit-classroom-note-v1-3.html" data-content-id="physics-ipst-wave-optics-10-2-classroom-note" data-subject-id="physics" data-chapter-id="bank" data-topic-id="b-21460452889578f11c3a8bac" data-title-th="Classroom Note 10.2" data-title-en="Classroom Note 10.2" data-th="เปิด Classroom Note 10.2" data-en="Open Classroom Note 10.2">เปิด Classroom Note 10.2</a></p>
   </section>
+  <div id="light-guide" class="light-guide">
+    <section id="light-guide-panel" aria-labelledby="light-guide-heading" hidden>
+      <h2 id="light-guide-heading" data-th="ผู้ช่วยทำแล็บ" data-en="Lab helper">ผู้ช่วยทำแล็บ</h2>
+      <p id="light-guide-progress"></p>
+      <p id="light-guide-step"></p>
+      <p id="light-guide-cue"></p>
+      <div class="light-guide-actions">
+        <button id="light-guide-go" class="primary" type="button"></button>
+        <button id="light-guide-close" type="button" data-th="ย่อ" data-en="Collapse">ย่อ</button>
+      </div>
+    </section>
+    <button id="light-guide-toggle" class="primary" aria-expanded="false" aria-controls="light-guide-panel" type="button" data-th="ผู้ช่วยทำแล็บ" data-en="Lab helper">ผู้ช่วยทำแล็บ</button>
+  </div>
+  <dialog id="activity-reset-dialog" class="measurement-report activity-reset-dialog" aria-labelledby="activity-reset-title" aria-describedby="activity-reset-description">
+    <h2 id="activity-reset-title" data-th="เริ่มทำแล็บ 10.2 ใหม่?" data-en="Start Lab 10.2 over?">เริ่มทำแล็บ 10.2 ใหม่?</h2>
+    <p id="activity-reset-description" data-th="ผลวัดและคำตอบ Check-out ของแล็บนี้จะถูกล้าง รวมถึงความคืบหน้าจากเวอร์ชันเก่าที่เก็บไว้ในเครื่องนี้สำหรับบัญชีที่เปิดอยู่หรือโหมด Guest" data-en="This clears this lab’s measurements and check-out answers, including progress from older versions saved on this device for the current account or Guest.">ผลวัดและคำตอบ Check-out ของแล็บนี้จะถูกล้าง รวมถึงความคืบหน้าจากเวอร์ชันเก่าที่เก็บไว้ในเครื่องนี้สำหรับบัญชีที่เปิดอยู่หรือโหมด Guest</p>
+    <div class="record-actions">
+      <button id="activity-reset-cancel" type="button" autofocus data-th="เก็บงานเดิม" data-en="Keep my work">เก็บงานเดิม</button>
+      <button id="activity-reset-confirm" type="button" data-th="ล้างแล้วเริ่มใหม่" data-en="Clear and restart">ล้างแล้วเริ่มใหม่</button>
+    </div>
+  </dialog>
   <dialog id="lab-report" class="measurement-report" aria-labelledby="report-title">
     <h2 id="report-title" data-th="10.2 · บันทึกผลการวัดแถบสว่าง" data-en="10.2 · Bright-fringe measurement record">10.2 · บันทึกผลการวัดแถบสว่าง</h2>
     <p id="report-student"></p>
@@ -53,7 +79,7 @@
 </main>
 <script src="assets/10-2-lab/model.js?v=light-activity-1"></script>
 <script src="assets/10-2-lab/plot.js?v=light-activity-1"></script>
-<script src="assets/10-2-lab/storage.js?v=light-activity-1"></script>
-<script src="assets/10-2-lab/light-activity.js?v=light-activity-1"></script>
-<script src="assets/10-2-lab/app.js?v=light-activity-1"></script>
+<script src="assets/10-2-lab/storage.js?v=light-activity-2"></script>
+<script src="assets/10-2-lab/light-activity.js?v=light-activity-2"></script>
+<script src="assets/10-2-lab/app.js?v=light-activity-2"></script>
 </body></html>

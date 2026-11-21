@@ -55,7 +55,7 @@ function notePages(lang,edition,filled,kind,range='all'){return rendered[lang].f
  return [page(d.body.innerHTML,lang,edition,kind==='classroom'?'lesson':'review')];});}
 // Explicit page groups; measured in the real browser after every content change.
 const groups={blank:[['quiz-intro','cloze-A'],['cloze-B','problem-1'],['problem-2','problem-3'],['problem-4','problem-5'],['problem-6','problem-7'],['problem-8','problem-9']],answers:[['quiz-intro','cloze-A','cloze-B'],['problem-1'],['problem-2'],['problem-3'],['problem-4'],['problem-5'],['problem-6'],['problem-7'],['problem-8'],['problem-9']]};
-const pastExamPage=['a-level-2566-11','a-level-2568-9'];
+const pastExamPage=['practice-ipst-10-2-2c','a-level-2566-11','a-level-2568-9'];
 for(const pages of Object.values(groups))pages.push(pastExamPage);
 const recallGroups={blank:[['recall-1','recall-2'],['recall-3','recall-4']],answers:[['recall-1','recall-2'],['recall-3'],['recall-4']]};
 function quizPages(lang,edition,which){const byKey=new Map(exercises.languages[lang].map(x=>[x.key,prepareExerciseWorking(x.html,lang)]));return which.map(keys=>{const d=parseHTML('<html><body>'+keys.map(k=>byKey.get(k)).join('')+'</body></html>').document;

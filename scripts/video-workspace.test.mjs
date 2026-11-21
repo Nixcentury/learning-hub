@@ -87,6 +87,23 @@ test('revision answers use parent controls, retain language/state and never rece
   button.click(); assert.equal(child.document.body.classList.contains('answers-on'),false);
   assert.equal(button.getAttribute('aria-pressed'),'false');
 });
+test('only the verified double-slit Exit Ticket may open linked exam PDFs in new tabs', () => {
+  const contentId = 'physics-ipst-wave-optics-10-2-exit-ticket-revision';
+  const source = 'content/physics/ipst/wave-optics/10-2-double-slit-exit-ticket-revision-v1-3.html';
+  for (const [id, path, allowed] of [
+    [contentId, source, true],
+    ['another-handout', source, false],
+    [contentId, 'content/qa-guide/one.html', false],
+  ]) {
+    const h = harness();
+    assert.equal(h.workspace.openContent({ ...context, toolKind: 'html', contentId: id,
+      source: path, titleTh: 'Exit Ticket', titleEn: 'Exit Ticket' }), true);
+    const frame = h.document.querySelector('.workspace-tool-frame');
+    assert.equal(frame.getAttribute('sandbox'), allowed
+      ? 'allow-same-origin allow-popups allow-popups-to-escape-sandbox'
+      : 'allow-same-origin');
+  }
+});
 const guideHtml = readFileSync(new URL('../public/pages/tools/simulation-guide-player.html', import.meta.url), 'utf8');
 const simulationEntry = suffix => ({ ...context, toolKind: 'simulation', contentId: 'qa-guide-' + suffix,
   source: `content/qa-guide/${suffix}.html`, titleTh: 'ทดลอง ' + suffix, titleEn: 'Experiment ' + suffix });

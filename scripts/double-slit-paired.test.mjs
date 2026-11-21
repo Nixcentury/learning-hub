@@ -24,8 +24,14 @@ test('double-slit: the complete canonical answer notes survive student printing 
     assert.equal(copy.querySelectorAll('[data-recall-key]').length,range==='review'?0:14);
     const exams=[...copy.querySelectorAll('[data-unit-key^="a-level-"]')];
     assert.deepEqual(exams.map(exam=>exam.dataset.unitKey),range==='review'?[]:['a-level-2566-11','a-level-2568-9']);
+    const practice=copy.querySelector('[data-unit-key="practice-ipst-10-2-2c"]');
+    assert.equal(Boolean(practice),range!=='review');
+    if(practice){
+     assert.equal(Boolean(practice.querySelector('.teacher-key')),answers);
+     assert.match(practice.textContent,lang==='th'?/ความเข้ม/:/light intensity/);
+    }
     if(exams.length){
-     assert.equal(exams[0].querySelector('a').getAttribute('href'),'https://krutuii-physics.com/uploads/download_index/639259255.pdf#page=12');
+     assert.equal(exams[0].querySelector('a').getAttribute('href'),'https://jamionstudio.com/wp-content/uploads/2025/11/physics-alevel-66.pdf#page=17');
      assert.equal(exams[1].querySelector('a').getAttribute('href'),'https://assets.mytcas.com/68/answer/tcas68-phy-a-level.pdf#page=8');
      assert.equal(exams[0].querySelector('.teacher-key strong')?.textContent,answers?(lang==='th'?'ตัวเลือก 5 (ข. และ ค.)':'Choice 5 (statements B and C)'):undefined);
      assert.equal(exams[1].querySelector('.teacher-key strong')?.textContent,answers?(lang==='th'?'ตัวเลือก 1':'Choice 1.'):undefined);
@@ -151,7 +157,7 @@ test('double-slit: original Exit questions, figures and calculations remain inta
  for(const lang of ['th','en']){
   for(const edition of ['blank','answers']){
    const old=view(before,lang,edition,'all'),now=view(current,lang,edition,'all');
-   const oldUnits=[...old.querySelectorAll('.unit')],units=[...now.querySelectorAll('.unit:not([data-unit-key^="a-level-"])')];
+   const oldUnits=[...old.querySelectorAll('.unit')],units=[...now.querySelectorAll('.unit:not([data-unit-key^="a-level-"]):not([data-unit-key="practice-ipst-10-2-2c"])')];
    assert.deepEqual(units.map(x=>x.dataset.unitKey),oldUnits.map(x=>x.dataset.unitKey));
    for(let i=0;i<units.length;i++){
     const clean=node=>{const copy=node.cloneNode(true);copy.querySelectorAll('.teacher-key,.answer-inline').forEach(x=>x.remove());return copy.outerHTML;};

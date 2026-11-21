@@ -944,7 +944,14 @@ export function createWorkspace({
     `;
 
     // Static chapter overviews cannot run scripts or access the parent/account.
-    if (["html", "simulation-guide"].includes(tool.context.toolKind)) element.querySelector("iframe").setAttribute("sandbox", "allow-same-origin");
+    if (["html", "simulation-guide"].includes(tool.context.toolKind)) {
+      const opensExamPdfs = tool.context.toolKind === "html"
+        && tool.context.contentId === "physics-ipst-wave-optics-10-2-exit-ticket-revision"
+        && new URL(tool.page, location.href).pathname.endsWith("/content/physics/ipst/wave-optics/10-2-double-slit-exit-ticket-revision-v1-3.html");
+      element.querySelector("iframe").setAttribute("sandbox", opensExamPdfs
+        ? "allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+        : "allow-same-origin");
+    }
 
     const record = {
       tool,

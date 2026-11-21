@@ -16,12 +16,40 @@ test('double-slit: the complete canonical answer notes survive student printing 
   for(const kind of ['classroom','exit'])for(const answers of [false,true])for(const range of ['all','quiz','review']){
    const source=kind==='classroom'?classroom:exit;applyContentLanguage(source,lang);const before=source.documentElement.outerHTML;
    const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'10.2 paired handout'));const count=prepareExitTicketPrint(copy,{range,answers});
-   assert.equal(count,kind==='classroom'?(range==='quiz'?6:range==='review'?6:12):range==='all'?(answers?25:20):range==='quiz'?(answers?13:8):12);
+   assert.equal(count,kind==='classroom'?(range==='quiz'?6:range==='review'?6:12):range==='all'?(answers?26:21):range==='quiz'?(answers?14:9):12);
    assert.equal(copy.querySelectorAll('[data-content-lang]').length,1);assert.equal(copy.querySelectorAll('[data-revision-edition]').length,1);assert.equal(copy.querySelectorAll('.identity').length,1);assert.equal(exitTicketPages(copy).length,count);
    assert.equal(source.documentElement.outerHTML,before,'printing must not change the live lesson');
    if(kind==='exit'){
     assert.equal(copy.querySelectorAll('[data-unit-key^="problem-"]').length,range==='review'?0:9);
     assert.equal(copy.querySelectorAll('[data-recall-key]').length,range==='review'?0:14);
+    const exams=[...copy.querySelectorAll('[data-unit-key^="a-level-"]')];
+    assert.deepEqual(exams.map(exam=>exam.dataset.unitKey),range==='review'?[]:['a-level-2566-11','a-level-2568-9']);
+    if(range!=='review'){
+     const practice7=copy.querySelector('[data-unit-key="problem-7"]');
+     assert.equal(practice7.querySelectorAll('.experiment-data tr').length,3);
+     assert.match(practice7.querySelector('.exam-source').textContent,/133–134, 153/);
+     assert.match(copy.querySelector('[data-unit-key="problem-9"] .exam-source').textContent,/155, 163–165/);
+     if(answers){
+      const getMath=(name)=>[...copy.querySelectorAll('[data-solution-key="' + name + '"] [data-tex]')].map(node=>node.dataset.tex).join(' ');
+      assert.match(getMath('problem-6-3'),/=1\.2/);
+      assert.match(getMath('problem-7-3'),/=525/);
+      assert.match(getMath('problem-9-1'),/=120/);
+      assert.match(getMath('problem-9-2'),/=4\.0/);
+      assert.match(getMath('problem-9-3'),/=600/);
+     }
+    }
+    const practice=copy.querySelector('[data-unit-key="practice-ipst-10-2-2c"]');
+    assert.equal(Boolean(practice),range!=='review');
+    if(practice){
+     assert.equal(Boolean(practice.querySelector('.teacher-key')),answers);
+     assert.match(practice.textContent,lang==='th'?/ความเข้ม/:/light intensity/);
+    }
+    if(exams.length){
+     assert.equal(exams[0].querySelector('a').getAttribute('href'),'https://jamionstudio.com/wp-content/uploads/2025/11/physics-alevel-66.pdf#page=17');
+     assert.equal(exams[1].querySelector('a').getAttribute('href'),'https://assets.mytcas.com/68/answer/tcas68-phy-a-level.pdf#page=8');
+     assert.equal(exams[0].querySelector('.teacher-key strong')?.textContent,answers?(lang==='th'?'ตัวเลือก 5 (ข. และ ค.)':'Choice 5 (statements B and C)'):undefined);
+     assert.equal(exams[1].querySelector('.teacher-key strong')?.textContent,answers?(lang==='th'?'ตัวเลือก 1':'Choice 1.'):undefined);
+    }
     if(range!=='quiz'){assert.deepEqual(notes(copy),canonical);assert.equal(copy.querySelectorAll('.shared-note .teacher-key,.shared-note .answer-inline').length,0);assert.equal(copy.querySelectorAll('.shared-note .example').length,12);}
    }
    if(!answers)assert.equal(copy.querySelectorAll('.teacher-key,.answer-inline').length,0);
@@ -40,9 +68,9 @@ test('double-slit: numerical reference cases include phase, inverse, ratios and 
  close(2*Math.PI*.006/600e-9/(2*Math.PI),10000); // complete phase cycles
  close((4*Math.PI/(2*Math.PI))*550e-9*1/.011,1e-4); // d from phase and x
  close((3e-3*.3e-3/1.5)/1e-9,600); // wavelength from three intervals
- close(1.5/(1.2*1.25),1);close(2/.8,2.5);
+ close(.80*6/4,1.2);close(5.4*2,10.8);close(100e-6*10.5e-3/2/1e-9,525);
  close(2/(3-.5),.8);close(Math.abs(1.5-(-1))*4,10);close(Math.abs(3-(-3))*4,24);
- close((1.35-1.3)/1.3*100,3.8461538461538494);
+ close(3*500e-9*1.2/.015/1e-6,120);close(600e-9/150e-6*1000,4);close(150e-6*.012/3/1e-9,600);
  assert.ok(Math.abs(.5*.15/Math.sqrt(1-.15**2)*1000-75.9)<.05);
 });
 test('double-slit: classify fringes by rearranging the taught formula and checking integer m',async()=>{
@@ -136,21 +164,22 @@ test('double-slit: example 11 explains fringe position before substituting signe
  }
 });
 
-test('double-slit: original Exit questions, figures and calculations remain intact; all calculated solutions cite theory',async()=>{
+test('double-slit: remaining original Exit questions and figures are preserved; all calculated solutions cite theory',async()=>{
  const current=await load('exit');
  const {document:before}=parseHTML(await readFile(new URL('../public/content/physics/ipst/wave-optics/10-2-double-slit-exit-ticket-revision-v1-2.html',import.meta.url),'utf8'));
  const normalize=t=>t.replace(/\\displaystyle\s*/g,'').replace(/\\begin\{aligned\}|\\end\{aligned\}/g,'').replace(/\\\\/g,'').replaceAll('&','').replace(/\s+/g,'');
  for(const lang of ['th','en']){
   for(const edition of ['blank','answers']){
    const old=view(before,lang,edition,'all'),now=view(current,lang,edition,'all');
-   const oldUnits=[...old.querySelectorAll('.unit')],units=[...now.querySelectorAll('.unit')];
+   const oldUnits=[...old.querySelectorAll('.unit')],units=[...now.querySelectorAll('.unit:not([data-unit-key^="a-level-"]):not([data-unit-key="practice-ipst-10-2-2c"])')];
    assert.deepEqual(units.map(x=>x.dataset.unitKey),oldUnits.map(x=>x.dataset.unitKey));
    for(let i=0;i<units.length;i++){
-    const clean=node=>{const copy=node.cloneNode(true);copy.querySelectorAll('.teacher-key,.answer-inline').forEach(x=>x.remove());return copy.outerHTML;};
+    if(['problem-7','problem-9'].includes(units[i].dataset.unitKey))continue;
+    const clean=node=>{const copy=node.cloneNode(true);copy.querySelectorAll('.teacher-key,.answer-inline,[data-part-key="problem-6-3"]').forEach(x=>x.remove());return copy.outerHTML;};
     assert.equal(clean(units[i]),clean(oldUnits[i]),lang+'/'+edition+'/'+units[i].dataset.unitKey+' question or figure changed');
     if(edition!=='answers')continue;
-    const original=[...oldUnits[i].querySelectorAll('[data-tex]')].map(x=>normalize(x.dataset.tex));
-    const actual=[...units[i].querySelectorAll('[data-tex]')].map(x=>normalize(x.dataset.tex));
+    const original=[...oldUnits[i].querySelectorAll('[data-tex]:not([data-solution-key="problem-6-3"] [data-tex])')].map(x=>normalize(x.dataset.tex));
+    const actual=[...units[i].querySelectorAll('[data-tex]:not([data-solution-key="problem-6-3"] [data-tex])')].map(x=>normalize(x.dataset.tex));
     let previous=-1;
     for(const formula of original){const next=actual.findIndex((x,j)=>j>previous&&x===formula);assert.ok(next>=0,lang+'/'+units[i].dataset.unitKey+' lost calculation '+formula);previous=next;}
    }

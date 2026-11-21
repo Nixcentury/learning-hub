@@ -7,9 +7,13 @@ const view=(doc,lang,edition,range)=>doc.querySelector(`[data-content-lang="${la
 function notes(node){return [...node.querySelectorAll('.shared-note')].map(n=>{const c=n.cloneNode(true);c.querySelectorAll('.identity, [data-hub-html]').forEach(x=>x.remove());c.querySelectorAll('[data-title-th]').forEach(x=>x.removeAttribute('title'));c.querySelectorAll('img[src]').forEach(x=>x.setAttribute('src',x.getAttribute('src').replace(/^.*\/assets\//,'assets/')));return c.outerHTML;});}
 test('double-slit: the complete canonical answer notes survive student printing in either language',async()=>{
  const classroom=await load('classroom'),exit=await load('exit');
- const model=Buffer.concat(await Promise.all(['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs','note-diagrams.mjs','lab-to-exit.mjs'].map(p=>readFile(new URL('../docs/learning-sheet/preparation/physics-double-slit-10-2/paired/'+p,import.meta.url)))));const sha=createHash('sha256').update(model).digest('hex');
+ const model=Buffer.concat(await Promise.all(['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs','note-diagrams.mjs','lab-to-exit.mjs','lab-sample.mjs'].map(p=>readFile(new URL('../docs/learning-sheet/preparation/physics-double-slit-10-2/paired/'+p,import.meta.url)))));const sha=createHash('sha256').update(model).digest('hex');
  assert.equal(classroom.documentElement.dataset.sharedNotesSha256,sha);assert.equal(exit.documentElement.dataset.sharedNotesSha256,sha);
  for(const lang of ['th','en']){
+  const observed=(node,selector)=>[...node.querySelectorAll(selector)].map(row=>row.lastElementChild.textContent);
+  assert.deepEqual(observed(view(classroom,lang,'answers','all'),'.trial-log tbody tr'),['10.64','5.32','6.50','10.64']);
+  assert.deepEqual(observed(view(classroom,lang,'blank','all'),'.trial-log tbody tr'),['','','','']);
+  assert.deepEqual(observed(view(classroom,lang,'blank','all'),'.lab-sample tbody tr'),['10.64','5.32','6.50','10.64','13.00']);
   const canonical=notes(view(classroom,lang,'answers','all'));assert.equal(canonical.length,13);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.proof-diagram').length,2);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.example .method-note').length,12);
   const blankClassroom=view(classroom,lang,'blank','all');assert.equal(blankClassroom.querySelectorAll('.note-answer').length,0);assert.equal(blankClassroom.querySelectorAll('.example').length,12);
   for(const edition of ['blank','answers'])for(const range of ['all','review'])assert.deepEqual(notes(view(exit,lang,edition,range)),canonical);

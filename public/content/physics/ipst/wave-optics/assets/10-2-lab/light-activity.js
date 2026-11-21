@@ -22,7 +22,7 @@
   function latestReadings(records) {
     const readings = {};
     for (const record of records) {
-      if (record.phase || record.source === 'model' || !surroundsCentre(record.cursors)) continue;
+      if (record.phase || !surroundsCentre(record.cursors)) continue;
       const key = trialKey(record.config);
       if (key) readings[key] = record;
     }
@@ -47,7 +47,7 @@
       return { target: 'distance', label, th: 'ปรับระยะฉากเป็น 2 m', en: 'Set the screen distance to 2 m' };
     }
     if (!state.moved.left || state.cursors.left >= 0) {
-      return { target: 'handle-left', label, th: 'ลากตัววัด L ไปที่ขอบมืดติดกับแถบกลางด้านซ้าย', en: 'Drag L to the nearest dark edge on the left of the central bright fringe' };
+      return { target: 'handle-left', label, th: 'วาง L และ R ที่ขอบมืดติดกับแถบกลาง หรือกดวัดพอดี', en: 'Place L and R on the nearest dark boundaries of the central bright fringe, or use Exact measurement' };
     }
     if (!state.moved.right || state.cursors.right <= 0) {
       return { target: 'handle-right', label, th: 'ลากตัววัด R ไปที่ขอบมืดติดกับแถบกลางด้านขวา', en: 'Drag R to the nearest dark edge on the right of the central bright fringe' };

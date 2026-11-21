@@ -66,9 +66,9 @@ export const exerciseReferences={
   'problem-4-1':[13],'problem-4-2':[13],'problem-4-3':[8,9],
   'problem-5-1':[9],'problem-5-2':[9],'problem-5-3':[8,9],
   'problem-6-1':[10],'problem-6-2':[10],'problem-6-3':[10],
-  'problem-7-1':[9],'problem-7-2':[9],'problem-7-3':[15],
+  'problem-7-2':[10],'problem-7-3':[9],
   'problem-8-1':[2,4],'problem-8-2':[5],
-  'problem-9-1':[9,11],'problem-9-2':[12],'problem-9-3':[10]
+  'problem-9-1':[1,6],'problem-9-2':[8,14],'problem-9-3':[2,4]
 };
 export function prepareExerciseWorking(html,lang){
   const {document}=parseHTML('<html><body>'+html+'</body></html>');

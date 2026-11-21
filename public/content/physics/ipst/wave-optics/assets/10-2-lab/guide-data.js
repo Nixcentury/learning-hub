@@ -9,7 +9,7 @@ export const doubleSlitPlayGuide = {
   introduction: bilingual('วัดแถบสว่างจากแสงผ่านสลิตคู่ แล้วใช้ผลใน Classroom Note', 'Measure bright fringes from light passing through two slits, then use the results in the Classroom Note.'),
   gettingStarted: [
     bilingual('ซิมเปิดที่โต๊ะแสง ชุด A/B/C ใช้แสงที่สองช่องเริ่มเฟสตรงกัน', 'The lab opens on the optical bench. A/B/C use initially in-phase light at both slits.'),
-    bilingual('กดผู้ช่วยทำแล็บที่มุมล่างซ้ายเพื่อดูขั้นต่อไปและชี้เครื่องมือ กดย่อได้ระหว่างทดลอง', 'Open the lab helper at the bottom left to see the next step and locate its control. Collapse it while experimenting.'),
+    bilingual('ใช้การ์ดผู้ช่วยใต้หัวแล็บเพื่อดูขั้นต่อไปและชี้เครื่องมือ กดย่อหรือซ่อนแล้วเปิดกลับได้', 'Use the guide below the lab header to see the next step and locate its control. Collapse it or hide and reopen it.'),
   ],
   troubleshooting: [
     bilingual('ถ้ายังตอบไม่ได้ ให้ตรวจว่าบันทึกครบทั้งสองชุดของคู่นั้นและวางเส้นคนละด้านของแถบกลาง', 'If a question is unavailable, check for both trial records and place the markers on opposite sides of the central fringe.'),
@@ -22,7 +22,7 @@ export const doubleSlitPlayGuide = {
       title: bilingual('วัดและบันทึก', 'Measure and record'),
       objectives: [bilingual('วัดแถบกลางซ้ำเมื่อเปลี่ยนเพียงปัจจัยเดียว', 'Repeat the central-fringe measurement with one variable changed at a time.')],
       parts: [{id:'steps', title:bilingual('สี่บันทึกก่อนเรียน', 'Four trials before the lesson'), items:[
-        bilingual('ใช้ L และ R จับตำแหน่งมืดที่อยู่ติดกับแถบสว่างตรงกลางคนละด้าน แล้วบันทึกความกว้างเป็น mm ใช้สเกลฉากเท่าเดิมเมื่อเปรียบเทียบ', 'Use L and R to mark the dark positions immediately either side of the central bright fringe. Record the width in mm. Keep the screen zoom fixed when comparing.'),
+        bilingual('วาง L และ R ที่ขอบมืดติดกับแถบกลางสองข้าง หรือกดวัดพอดีให้แบบจำลองช่วยวางเส้น อ่านและบันทึกความกว้างเป็น mm', 'Place L and R on the two dark boundaries nearest the central bright fringe, or use Exact measurement to have the model place them. Read and record the width in mm.'),
         bilingual('วัดชุด A, B, C ที่ระยะฉาก 1 m แล้วเลือก B อีกครั้ง เลื่อนฉากไปที่ 2 m และวัดใหม่', 'Measure A, B and C at 1 m. Select B again, move the screen to 2 m and record another measurement.'),
       ]}],
     },

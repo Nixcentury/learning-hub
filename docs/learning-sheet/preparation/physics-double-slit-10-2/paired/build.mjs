@@ -1,5 +1,6 @@
 import {readFileSync as read,writeFileSync as write,mkdirSync,existsSync,readdirSync,unlinkSync} from 'node:fs';
 import {createHash} from 'node:crypto';import {createRequire} from 'node:module';import {resolve,dirname} from 'node:path';import {fileURLToPath} from 'node:url';import {parseHTML} from 'linkedom';import {pages,noteSourceFiles} from './notes.mjs';
+import {sampleTrials} from './lab-sample.mjs';
 import {prepareExerciseWorking} from './equation-starts.mjs';
 const here=dirname(fileURLToPath(import.meta.url)),root=resolve(here,'../../../../..'),out=resolve(root,'public/content/physics/ipst/wave-optics');
 const require=createRequire(resolve(root,'tools/pdf-authoring/package.json'));
@@ -51,6 +52,16 @@ function page(body,lang,edition,kind){return `<section class="page ${kind}"><hea
 function notePages(lang,edition,filled,kind,range='all'){return rendered[lang].flatMap(p=>{const d=parseHTML('<html><body>'+p.content+'</body></html>').document;
  if(kind==='classroom'&&range==='quiz'){const examples=[...d.querySelectorAll('.example')];if(!examples.length)return [];const section=d.querySelector('.shared-note');section.innerHTML='<h2>'+p.title[lang]+'</h2>'+examples.map(e=>e.outerHTML).join('');}
  if(kind==='classroom'&&range==='review'&&p.kind==='examples')return [];
+ if(filled && p.key==='observe'){
+   const table=d.querySelector('.trial-log');
+   const caption=d.createElement('caption');
+   caption.textContent=lang==='th'?'ตัวอย่างผล 4 ชุดแรกจากปุ่ม «วัดพอดี»':'Sample results for the first four trials from Exact measurement';
+   table.prepend(caption);
+   table.querySelectorAll('tbody tr').forEach((row,i)=>{
+     row.children[4].textContent=String(i+1);
+     row.children[5].textContent=sampleTrials[i].width;
+   });
+ }
  if(!filled)for(const a of d.querySelectorAll('.note-answer')){const space=d.createElement('div');space.className='note-write';a.replaceWith(space);}
  return [page(d.body.innerHTML,lang,edition,kind==='classroom'?'lesson':'review')];});}
 // Explicit page groups; measured in the real browser after every content change.
@@ -66,7 +77,7 @@ const report={modelSha256:modelHash,sources:{classroom:classroomSource,exit:exer
 for(const kind of ['classroom','exit']){const ranges=['all','quiz','review'];let views='';
  for(const lang of ['th','en']){let editions='';for(const edition of ['blank','answers']){const notes=notePages(lang,edition,kind==='exit'||edition==='answers',kind);const quiz=kind==='exit'?quizPages(lang,edition,groups[edition]):[];const recall=kind==='exit'?quizPages(lang,edition,recallGroups[edition]):[];let rs='';for(const range of ranges){const selected=kind==='classroom'?notePages(lang,edition,edition==='answers',kind,range):range==='quiz'?[...quiz,...recall]:range==='review'?notes:[...quiz,...notes,...recall];const content=finish(selected,lang,kind);report.views.push({kind,lang,edition,range,pages:selected.length});rs+=`<div class="document-shell" data-revision-range="${range}">${content}</div>`;}editions+=`<div data-revision-edition="${edition}">${rs}</div>`;}views+=`<section class="language-view" data-content-lang="${lang}" lang="${lang}"${lang==='en'?' hidden':''}>${editions}</section>`;}
  const labels=kind==='classroom'?['Classroom Note','Classroom Note']:['Exit Ticket Revision','Exit Ticket Revision'];
- const attrs={'lang':'th','data-learning-html':'','data-exit-ticket-revision':'1','data-exit-ticket-editions':'1','data-exit-ticket-ranges':ranges.join(' '),'data-revision-topic':'10.2','data-content-revision':kind==='exit'?'1.3.2':'1.3.1','data-rules-version':'1.5','data-source-sha256':(kind==='classroom'?classroomSource:exercises.source).sha256,'data-shared-notes-sha256':modelHash,'data-revision-student-default':'1','data-revision-label-th':labels[0],'data-revision-label-en':labels[1],'data-revision-quiz-th':kind==='classroom'?'เฉพาะตัวอย่างพาทำ':'ควิซและ Recall','data-revision-quiz-en':kind==='classroom'?'Guided examples':'Quiz and Recall','data-revision-review-th':kind==='classroom'?'ทฤษฎีและการทดลอง':'Revision Notes ฉบับอ่านครบ','data-revision-review-en':kind==='classroom'?'Theory and experiment':'Complete Revision Notes','data-print-subject-th':'ฟิสิกส์','data-print-subject-en':'Physics','data-print-chapter-th':'แสงเชิงคลื่น','data-print-chapter-en':'Wave optics','data-print-topic-th':'10.2 สลิตคู่','data-print-topic-en':'10.2 Double slit'};
+ const attrs={'lang':'th','data-learning-html':'','data-exit-ticket-revision':'1','data-exit-ticket-editions':'1','data-exit-ticket-ranges':ranges.join(' '),'data-revision-topic':'10.2','data-content-revision':kind==='exit'?'1.3.3':'1.3.2','data-rules-version':'1.5','data-source-sha256':(kind==='classroom'?classroomSource:exercises.source).sha256,'data-shared-notes-sha256':modelHash,'data-revision-student-default':'1','data-revision-label-th':labels[0],'data-revision-label-en':labels[1],'data-revision-quiz-th':kind==='classroom'?'เฉพาะตัวอย่างพาทำ':'ควิซและ Recall','data-revision-quiz-en':kind==='classroom'?'Guided examples':'Quiz and Recall','data-revision-review-th':kind==='classroom'?'ทฤษฎีและการทดลอง':'Revision Notes ฉบับอ่านครบ','data-revision-review-en':kind==='classroom'?'Theory and experiment':'Complete Revision Notes','data-print-subject-th':'ฟิสิกส์','data-print-subject-en':'Physics','data-print-chapter-th':'แสงเชิงคลื่น','data-print-chapter-en':'Wave optics','data-print-topic-th':'10.2 สลิตคู่','data-print-topic-en':'10.2 Double slit'};
  const filename=kind==='classroom'?'10-2-double-slit-classroom-note-v1-3.html':'10-2-double-slit-exit-ticket-revision-v1-3.html';
  write(out+'/'+filename,`<!doctype html>\n<html ${Object.entries(attrs).map(([k,v])=>`${k}="${esc(v)}"`).join(' ')}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Physics 10.2 · ${labels[0]}</title><style>${css}</style></head><body><main>${views}</main></body></html>\n`);
 }

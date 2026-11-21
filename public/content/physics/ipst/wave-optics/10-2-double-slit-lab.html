@@ -1,8 +1,20 @@
 <!doctype html>
 <html lang="th" data-learning-simulation data-activity-id="physics-ipst-wave-optics-10-2-double-slit-lab">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>10.2 แล็บสลิตคู่ • Double-slit Measurement Lab</title><link rel="stylesheet" href="assets/10-2-lab/lab.css?v=light-activity-2"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>10.2 แล็บสลิตคู่ • Double-slit Measurement Lab</title><link rel="stylesheet" href="assets/10-2-lab/lab.css?v=light-activity-3"></head>
 <body><main><p id="lab-load-status" class="lab-status" role="status">กำลังเตรียมห้องทดลอง / Preparing lab…</p>
   <header><div><p class="eyebrow" data-th="ฟิสิกส์ 10.2 · การแทรกสอดของแสง" data-en="PHYSICS 10.2 · LIGHT INTERFERENCE">ฟิสิกส์ 10.2 · การแทรกสอดของแสง</p><h1 data-th="แล็บสลิตคู่ · วัดแถบสว่างของแสง" data-en="Double-slit lab · Measure light fringes">แล็บสลิตคู่ · วัดแถบสว่างของแสง</h1><p class="lead" data-th="ทำภารกิจ → ทดลองคลื่น → ตอบคำถาม → วัดแถบแสง" data-en="Follow missions → explore waves → answer questions → measure light fringes.">ทำภารกิจ → ทดลองคลื่น → ตอบคำถาม → วัดแถบแสง</p></div><button id="language" class="quiet">English</button></header>
+  <div id="light-guide" class="light-guide">
+    <aside id="light-guide-panel" aria-label="Smart Lab Guide">
+      <div class="light-guide-header">
+        <strong id="light-guide-progress"></strong>
+        <button id="light-guide-close" aria-controls="light-guide-step light-guide-go" type="button"></button>
+        <button id="light-guide-hide" type="button" data-th="ซ่อน" data-en="Hide">ซ่อน</button>
+      </div>
+      <p id="light-guide-step" role="status" aria-live="polite"></p>
+      <button id="light-guide-go" class="primary" type="button"></button>
+    </aside>
+    <button id="light-guide-toggle" aria-controls="light-guide-panel" type="button" data-th="เปิดผู้ช่วย" data-en="Show lab guide" hidden>เปิดผู้ช่วย</button>
+  </div>
     <div class="record-actions">
       <button id="activity-reset" type="button" data-th="รีเซ็ตภารกิจ" data-en="Reset activity">รีเซ็ตภารกิจ</button>
       <span id="activity-reset-status" role="status"></span>
@@ -24,6 +36,10 @@
       <div id="stage" class="stage"><canvas id="pattern" width="800" height="360" aria-hidden="true"></canvas><svg id="overlay" viewBox="0 0 800 360" aria-hidden="true"><g id="ruler"></g><path id="cursor-line-left" class="cursor-line left"/><path id="cursor-line-right" class="cursor-line right"/></svg><button id="handle-left" class="handle left" role="slider" aria-valuemin="-40" aria-valuemax="40" aria-orientation="horizontal">L</button><button id="handle-right" class="handle right" role="slider" aria-valuemin="-40" aria-valuemax="40" aria-orientation="horizontal">R</button></div>
       <div class="screen-tools"><label for="zoom" data-th="ขยายฉาก" data-en="Screen zoom">ขยายฉาก</label><select id="zoom"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select><span id="scale-note"></span></div>
       <p id="measurement-help" class="bench-help" data-th="ลาก L และ R ไปยังตำแหน่งมืดที่ติดกับแถบสว่างกลางทั้งสองข้าง ใช้ปุ่มด้านล่างเลื่อนละเอียด หรือโฟกัสเส้นแล้วกดลูกศร เลือกใช้ปุ่มวัดพอดีเพื่อเทียบกับขอบแถบตามแบบจำลองได้" data-en="Drag L and R to the dark minima immediately bounding the central bright fringe. Use the fine buttons below, or focus a handle and press arrow keys. Use Exact measure to compare with model minima.">ลาก L และ R ไปยังตำแหน่งมืดที่ติดกับแถบสว่างกลางทั้งสองข้าง ใช้ปุ่มด้านล่างเลื่อนละเอียด หรือโฟกัสเส้นแล้วกดลูกศร เลือกใช้ปุ่มวัดพอดีเพื่อเทียบกับขอบแถบตามแบบจำลองได้</p>
+      <div class="record-actions">
+        <button id="exact-measurement" type="button" aria-describedby="exact-measurement-note" data-th="วัดพอดี" data-en="Exact measurement">วัดพอดี</button>
+        <span id="exact-measurement-note" class="small" data-th="จัดเส้นวัดที่ขอบมืดตามแบบจำลอง" data-en="Place markers on modelled dark boundaries">จัดเส้นวัดที่ขอบมืดตามแบบจำลอง</span>
+      </div>
       <div class="readings"><div class="reading"><h3 data-th="เส้นซ้าย L" data-en="Left marker L">เส้นซ้าย L</h3><output id="reading-left"></output><div class="fine"><button data-side="left" data-delta="-0.1">−0.1 mm</button><button data-side="left" data-delta="0.1">+0.1 mm</button></div></div><div class="reading"><h3 data-th="เส้นขวา R" data-en="Right marker R">เส้นขวา R</h3><output id="reading-right"></output><div class="fine"><button data-side="right" data-delta="-0.1">−0.1 mm</button><button data-side="right" data-delta="0.1">+0.1 mm</button></div></div><div class="reading width"><h3 data-th="ระยะระหว่างเส้นวัด" data-en="Distance between markers">ระยะระหว่างเส้นวัด</h3><output id="reading-width"></output><p data-th="เลือกขอบแถบเองก่อนบันทึก" data-en="Choose the fringe boundaries before recording.">เลือกขอบแถบเองก่อนบันทึก</p></div></div>
     </section>
     <aside class="controls"><h2 data-th="1 · เลือกชุดทดลอง" data-en="1 · Choose an experiment">1 · เลือกชุดทดลอง</h2><div class="presets"><button id="preset-A" data-preset="A"><strong>A</strong><span data-th="เขียว · 50 μm" data-en="Green · 50 μm">เขียว · 50 μm</span></button><button id="preset-B" data-preset="B"><strong>B</strong><span data-th="เขียว · 100 μm" data-en="Green · 100 μm">เขียว · 100 μm</span></button><button id="preset-C" data-preset="C"><strong>C</strong><span data-th="แดง · 100 μm" data-en="Red · 100 μm">แดง · 100 μm</span></button></div><p class="small" data-th="A/B/C เริ่มที่ระยะฉาก 1 เมตร สเกลฉากจะคงเดิมเมื่อเปลี่ยนชุด" data-en="A/B/C start at a 1 m screen distance. Switching presets keeps the screen scale.">A/B/C เริ่มที่ระยะฉาก 1 เมตร สเกลฉากจะคงเดิมเมื่อเปลี่ยนชุด</p>
@@ -47,19 +63,6 @@
     <p><button id="guide-after-lesson" type="button" data-th="ทำนายแล้ว · ช่วยชี้เครื่องมือวัด" data-en="Prediction ready · Show the measurement controls">ทำนายแล้ว · ช่วยชี้เครื่องมือวัด</button></p>
     <p><a href="https://nixcentury.github.io/learning-hub/#physics/bank/double-slit-interference/classroom-note" data-hub-html data-html-src="10-2-double-slit-classroom-note-v1-3.html" data-content-id="physics-ipst-wave-optics-10-2-classroom-note" data-subject-id="physics" data-chapter-id="bank" data-topic-id="b-21460452889578f11c3a8bac" data-title-th="Classroom Note 10.2" data-title-en="Classroom Note 10.2" data-th="เปิด Classroom Note 10.2" data-en="Open Classroom Note 10.2">เปิด Classroom Note 10.2</a></p>
   </section>
-  <div id="light-guide" class="light-guide">
-    <section id="light-guide-panel" aria-labelledby="light-guide-heading" hidden>
-      <h2 id="light-guide-heading" data-th="ผู้ช่วยทำแล็บ" data-en="Lab helper">ผู้ช่วยทำแล็บ</h2>
-      <p id="light-guide-progress"></p>
-      <p id="light-guide-step"></p>
-      <p id="light-guide-cue"></p>
-      <div class="light-guide-actions">
-        <button id="light-guide-go" class="primary" type="button"></button>
-        <button id="light-guide-close" type="button" data-th="ย่อ" data-en="Collapse">ย่อ</button>
-      </div>
-    </section>
-    <button id="light-guide-toggle" class="primary" aria-expanded="false" aria-controls="light-guide-panel" type="button" data-th="ผู้ช่วยทำแล็บ" data-en="Lab helper">ผู้ช่วยทำแล็บ</button>
-  </div>
   <dialog id="activity-reset-dialog" class="measurement-report activity-reset-dialog" aria-labelledby="activity-reset-title" aria-describedby="activity-reset-description">
     <h2 id="activity-reset-title" data-th="เริ่มทำแล็บ 10.2 ใหม่?" data-en="Start Lab 10.2 over?">เริ่มทำแล็บ 10.2 ใหม่?</h2>
     <p id="activity-reset-description" data-th="ผลวัดและคำตอบ Check-out ของแล็บนี้จะถูกล้าง รวมถึงความคืบหน้าจากเวอร์ชันเก่าที่เก็บไว้ในเครื่องนี้สำหรับบัญชีที่เปิดอยู่หรือโหมด Guest" data-en="This clears this lab’s measurements and check-out answers, including progress from older versions saved on this device for the current account or Guest.">ผลวัดและคำตอบ Check-out ของแล็บนี้จะถูกล้าง รวมถึงความคืบหน้าจากเวอร์ชันเก่าที่เก็บไว้ในเครื่องนี้สำหรับบัญชีที่เปิดอยู่หรือโหมด Guest</p>
@@ -80,6 +83,6 @@
 <script src="assets/10-2-lab/model.js?v=light-activity-1"></script>
 <script src="assets/10-2-lab/plot.js?v=light-activity-1"></script>
 <script src="assets/10-2-lab/storage.js?v=light-activity-2"></script>
-<script src="assets/10-2-lab/light-activity.js?v=light-activity-2"></script>
-<script src="assets/10-2-lab/app.js?v=light-activity-2"></script>
+<script src="assets/10-2-lab/light-activity.js?v=light-activity-3"></script>
+<script src="assets/10-2-lab/app.js?v=light-activity-3"></script>
 </body></html>

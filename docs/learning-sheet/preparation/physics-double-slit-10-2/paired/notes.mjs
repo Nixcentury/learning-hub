@@ -86,4 +86,4 @@ const examplePages=groups.map((numbers,i)=>({
   }).join('')]))
 }));
 export const pages=[intro,...proofPages,labToExit,...examplePages];
-export const noteSourceFiles=['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs','note-diagrams.mjs','lab-to-exit.mjs'];
+export const noteSourceFiles=['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs','note-diagrams.mjs','lab-to-exit.mjs','lab-sample.mjs'];

@@ -54,14 +54,15 @@ test('snapshot validation rejects malformed identity, geometry and historical me
   for(const mutate of [x=>x.config.distance=NaN,x=>x.config.color='blue',x=>x.config.slit=80,x=>x.zoom=3,x=>x.cursors.left=Infinity,x=>x.cursors.right=41,x=>x.records.push(x.records[0]),x=>x.records[0].cursors.left=8,x=>x.moved.left='true']){const copy=structuredClone(s);mutate(copy);assert.equal(M.validSnapshot(copy,'guest'),false);}
 });
 
-test('light Check-out binds each question to its two manual readings and uses displayed precision',()=>{
+test('light Check-out binds each question to its two recorded readings and uses displayed precision',()=>{
   vm.runInContext(readFileSync(new URL('../public/content/physics/ipst/wave-optics/assets/10-2-lab/light-activity.js',import.meta.url),'utf8'),context);
   const A=context.DoubleSlitLightActivity;
   const record=(id,trial,w,extra={})=>({id,config:A.trials[trial].config,cursors:{left:-w/2,right:w/2},phase:0,source:'manual',...extra});
   const trials=[record(1,'A1',10.65),record(2,'B1',5.31),record(3,'C1',6.49),record(4,'B2',10.62),record(5,'C2',12.99)];
   const observations=A.latestReadings([...trials,record(6,'B1',5.32,{source:'model'}),record(7,'B1',7,{phase:180}),record(8,'B1',2,{cursors:{left:1,right:3}})]);
   assert.deepEqual(Object.keys(observations),['A1','B1','C1','B2','C2']);
-  assert.equal(observations.B1.id,2);
+  assert.equal(observations.B1.id,6);
+  assert.equal(observations.B1.source,'model');
   for(const [index,trend] of ['narrower','wider','wider'].entries()){
     assert.equal(A.evidence(A.comparisons[index],observations).trend,trend);
   }
@@ -178,10 +179,17 @@ test('confirmed reset replaces both old backups for the current user and reloads
 test('floating helper points to the real next control without changing experiment settings or answers',async()=>{
   const app=await openLightLab();
   const start=app.api.getState();
-  app.click('light-guide-toggle');
   assert.equal(app.node('light-guide-panel').hidden,false);
-  app.click('light-guide-go');
+  app.click('light-guide-close');
+  assert.equal(app.node('light-guide-panel').hidden,false);
+  assert.equal(app.node('light-guide-go').hidden,true);
+  app.click('light-guide-hide');
   assert.equal(app.node('light-guide-panel').hidden,true);
+  assert.equal(app.node('light-guide-toggle').hidden,false);
+  app.click('light-guide-toggle');
+  app.click('light-guide-go');
+  assert.equal(app.node('light-guide-panel').hidden,false);
+  assert.equal(app.node('light-guide-go').hidden,false);
   assert.equal(app.active.at(-1),'handle-left');
   assert.equal(app.node('handle-left').classList.contains('light-guide-target'),true);
   assert.deepEqual(app.api.getState(),start);
@@ -220,4 +228,28 @@ test('floating helper points to the real next control without changing experimen
   assert.match(app.node('light-guide-step').textContent,/Measurements complete/);
   app.click('light-guide-go');
   assert.equal(app.active.at(-1),'records-heading');
+});
+
+
+test('Exact measurement places both markers, waits for Record and labels its provenance',async()=>{
+  const app=await openLightLab();
+  assert.equal(app.node('record').disabled,true);
+  app.click('exact-measurement');
+  assert.equal(app.node('reading-width').textContent,'10.64 mm');
+  assert.equal(app.node('record').disabled,false);
+  assert.equal(app.api.getState().records.length,0);
+  assert.equal(app.api.getState().autoMeasured,true);
+  app.click('record');
+  assert.equal(app.api.getState().records[0].source,'model');
+  assert.equal(app.activity.latestReadings(app.api.getState().records).A1.id,1);
+  app.click('preset-B');
+  app.click('exact-measurement');
+  app.click('record');
+  assert.equal(app.node('trend-slits').disabled,false);
+  assert.match(app.node('trials-slits').textContent,/10\.64 mm.*5\.32 mm/);
+  app.click('exact-measurement');
+  const tweaked=app.node('handle-left').ownerDocument.querySelector('[data-side="left"]');
+  tweaked.onclick();
+  app.click('record');
+  assert.equal(app.api.getState().records.at(-1).source,'manual');
 });

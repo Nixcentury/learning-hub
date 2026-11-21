@@ -33,6 +33,18 @@ test('double-slit: the complete canonical answer notes survive student printing 
      assert.equal(practice7.querySelectorAll('.experiment-data tr').length,3);
      assert.match(practice7.querySelector('.exam-source').textContent,/133–134, 153/);
      assert.match(copy.querySelector('[data-unit-key="problem-9"] .exam-source').textContent,/155, 163–165/);
+     const checks=[...copy.querySelectorAll('[data-calculation-check]')];
+     assert.equal(checks.length,answers?0:18);
+     if(!answers){
+      for(const check of checks){
+       assert.equal(check.parentElement.dataset.partKey,check.dataset.calculationCheck);
+       assert.equal(check.previousElementSibling.localName,'p');
+       assert.ok(check.parentElement.querySelector('.calculation-check ~ .response-space'));
+       assert.equal(check.querySelector('strong').textContent,lang==='th'?'ตรวจคำตอบ':'Check Answer');
+      }
+      assert.match(copy.querySelector('[data-calculation-check="problem-5-1"]').textContent,/550 nm/);
+      assert.match(copy.querySelector('[data-calculation-check="problem-5-2"]').textContent,/0.200 mm/);
+     }
      if(answers){
       const getMath=(name)=>[...copy.querySelectorAll('[data-solution-key="' + name + '"] [data-tex]')].map(node=>node.dataset.tex).join(' ');
       assert.match(getMath('problem-6-3'),/=1\.2/);
@@ -193,7 +205,7 @@ test('double-slit: remaining original Exit questions and figures are preserved; 
    assert.deepEqual(units.map(x=>x.dataset.unitKey),oldUnits.map(x=>x.dataset.unitKey));
    for(let i=0;i<units.length;i++){
     if(['problem-7','problem-9'].includes(units[i].dataset.unitKey))continue;
-    const clean=node=>{const copy=node.cloneNode(true);copy.querySelectorAll('.teacher-key,.answer-inline,[data-part-key="problem-6-3"]').forEach(x=>x.remove());return copy.outerHTML;};
+    const clean=node=>{const copy=node.cloneNode(true);copy.querySelectorAll('.teacher-key,.answer-inline,.calculation-check,[data-part-key="problem-6-3"]').forEach(x=>x.remove());return copy.outerHTML;};
     assert.equal(clean(units[i]),clean(oldUnits[i]),lang+'/'+edition+'/'+units[i].dataset.unitKey+' question or figure changed');
     if(edition!=='answers')continue;
     const original=[...oldUnits[i].querySelectorAll('[data-tex]:not([data-solution-key="problem-6-3"] [data-tex])')].map(x=>normalize(x.dataset.tex));

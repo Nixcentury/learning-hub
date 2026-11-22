@@ -9,6 +9,14 @@ import { pastExams } from './past-exams.mjs';
 import '../../../../public/content/physics/ipst/atomic-physics/assets/photoelectric/model.js';
 
 const css = readFileSync(new URL('paired.css', import.meta.url), 'utf8');
+const exitPrintCSS = `
+  html[data-hub-print-snapshot] .page { padding-block:11mm; }
+  html[data-hub-print-snapshot] .running-head { border-bottom:1px solid #466279; line-height:1.35; }
+  html[data-hub-print-snapshot] .page-foot { border-top:.6px solid #96a8b5; padding-top:2mm; line-height:1.4; }
+  /* Questions 3–4 share a page in the blank edition. Reserve the full space for 4c. */
+  html[data-hub-print-snapshot] [data-problem="3"] .writing,
+  html[data-hub-print-snapshot] [data-problem="4"] .task:not(:last-child) .writing { height:20mm; }
+`;
 const output = new URL('../../../../public/content/physics/ipst/atomic-physics/', import.meta.url);
 const classroomTheoryPages = 7;
 const noteHash = createHash('sha256')
@@ -19,9 +27,12 @@ const notesDigest = noteHash.digest('hex');
 
 function page(body, th, filled, part, title, first, number, total) {
   const label = th ? 'ปรากฏการณ์โฟโตอิเล็กทริก' : 'Photoelectric Effect';
-  const answerLabel = filled ? (th ? 'เฉลย' : 'Answers') : (th ? 'ลงมือทำ' : 'Practise');
+  const classroom = part === 'Classroom Note';
+  const blankLabel = classroom ? (th ? 'ลงมือทำ' : 'Practise') : (th ? 'เรียนรู้ / ลงมือทำ' : 'Learn / practise');
+  const answerLabel = filled ? (th ? 'เฉลย' : 'Answers') : blankLabel;
+  const credit = classroom ? 'Learning Hub' : 'Nix-century';
   const nameLine = `<p class="identity">${th?'ชื่อ':'Name'} <span class="name-space"></span> ${th?'ห้อง':'Class'} <span class="class-space"></span></p>`;
-  return `<section class="page ${part==='Exit Ticket'?'quiz':'review'}"><header class="running-head"><span>PHYSICS · 19.2 · ${label}</span><span>${part} · ${part==='Revision Notes'?(th?'อ่านทบทวน':'Read and revise'):answerLabel}</span></header><div class="page-body">${first?`<h1>${title} · 19.2</h1>${nameLine}`:''}${body}</div><footer class="page-foot"><span>Learning Hub</span><span data-page-number>${th?'หน้า':'Page'} ${number} / ${total}</span></footer></section>\n`;
+  return `<section class="page ${part==='Exit Ticket'?'quiz':'review'}"><header class="running-head"><span>PHYSICS · 19.2 · ${label}</span><span>${part} · ${part==='Revision Notes'?(th?'อ่านทบทวน':'Read and revise'):answerLabel}</span></header><div class="page-body">${first?`<h1>${title} · 19.2</h1>${nameLine}`:''}${body}</div><footer class="page-foot"><span>${credit}</span><span data-page-number>${th?'หน้า':'Page'} ${number} / ${total}</span></footer></section>\n`;
 }
 const formulaCues = [
   ['พลังงานต่อโฟตอน','Energy per photon'],
@@ -74,12 +85,12 @@ function writeDocument(kind) {
   const html = `<!doctype html>
 <html lang="th" data-learning-html data-exit-ticket-revision="1" data-exit-ticket-editions="1"
   data-exit-ticket-ranges="all quiz review" data-revision-student-default="1" data-revision-topic="19.2"
-  data-content-revision="${classroom ? '1.8' : '1.7'}" data-shared-notes-sha256="${notesDigest}"
+  data-content-revision="1.8" data-shared-notes-sha256="${notesDigest}"
   data-print-subject-th="ฟิสิกส์" data-print-subject-en="Physics"
   data-print-chapter-th="ฟิสิกส์อะตอม" data-print-chapter-en="Atomic physics"
   data-print-topic-th="19.2 ปรากฏการณ์โฟโตอิเล็กทริก" data-print-topic-en="19.2 Photoelectric effect" ${labels}>
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Physics 19.2 · ${title}</title><style>\n${css}${classroom ? formulaRecallCSS : ''}</style></head>
+<title>Physics 19.2 · ${title}</title><style>\n${css}${classroom ? formulaRecallCSS : exitPrintCSS}</style></head>
 <body><main>${langSets}</main></body>
 </html>
 `;

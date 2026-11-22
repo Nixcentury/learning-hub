@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "chemistry-ipst-acid-base-10-7-10-8-classroom-note",
+    "revision": "2026-11-22-1",
+    "sha256": "15597a56e2466e0f67ad107a012ef9ddcb9565e74236d07d59a69d534d5583b1"
+  },
+  "title": {
+    "th": "Classroom Note · ไทเทรตและบัฟเฟอร์",
+    "en": "Classroom Note · Titration and buffers"
+  },
+  "prerequisites": {
+    "th": "ทวน mol/L, pH และคู่กรด–เบส",
+    "en": "Review mol/L, pH and conjugate acid–base pairs."
+  },
+  "goal": {
+    "th": "ใช้ผลแล็บและสารที่เหลือเลือกรูปแบบการคำนวณ pH",
+    "en": "Use lab data and remaining species to choose a pH calculation."
+  },
+  "steps": [
+    {
+      "id": "lab",
+      "title": {
+        "th": "เก็บค่าจากแล็บจริง",
+        "en": "Use your lab data"
+      },
+      "summary": {
+        "th": "ไทเทรตจดบิวเรตเริ่มและสุดท้าย\nบัฟเฟอร์จด pH ที่ 0.00, 0.25 และ 0.50 mL",
+        "en": "Record initial and final burette readings.\nRecord buffer readings at 0.00, 0.25 and 0.50 mL."
+      },
+      "story": {
+        "th": "ชี้สารในบิวเรตและขวดจากรูป",
+        "en": "Use the image to locate the burette and flask solutions."
+      },
+      "action": {
+        "th": "เติมตารางผลจริงของกลุ่ม",
+        "en": "Complete both tables using your group data."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เก็บค่าจากแล็บจริง",
+            "en": "Use your lab data"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "lab-results"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "สองแล็บวัดค่าใดต่างกัน?",
+          "en": "What differs between the measurements in the two labs?"
+        },
+        "answer": {
+          "th": "ไทเทรตใช้ปริมาตร ส่วนแล็บบัฟเฟอร์ใช้ pH",
+          "en": "Titration uses a volume and the buffer lab uses pH."
+        }
+      },
+      "after": {
+        "th": "นำค่าบิวเรตไปทำตัวอย่าง 1",
+        "en": "Use the burette readings in Example 1."
+      }
+    },
+    {
+      "id": "titration",
+      "title": {
+        "th": "คำนวณจากบิวเรต",
+        "en": "Calculate from burette readings"
+      },
+      "summary": {
+        "th": "ปริมาตรที่ใช้เท่ากับค่าสุดท้ายลบค่าเริ่มต้น\nใช้ mmol และสัมประสิทธิ์จากสมการดุล",
+        "en": "Delivered volume is final minus initial.\nUse mmol and the balanced coefficients."
+      },
+      "story": {
+        "th": "เทียบสีที่เห็นกับการสะเทินพอดี",
+        "en": "Relate the observed colour to stoichiometric equivalence."
+      },
+      "action": {
+        "th": "หาความเข้มข้นและทวนโจทย์ 1:2",
+        "en": "Find the concentration and work through a 1:2 example."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "คำนวณจากบิวเรต",
+            "en": "Calculate from burette readings"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "example-1"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เติมน้ำหลังปิเปต โมลในขวดเปลี่ยนไหม?",
+          "en": "Does adding water after pipetting change the amount in the flask?"
+        },
+        "answer": {
+          "th": "โมลคงเดิม แต่ความเข้มข้นเปลี่ยน",
+          "en": "The amount is unchanged but concentration changes."
+        }
+      },
+      "after": {
+        "th": "ต่อไปดูสารที่เหลือหลัง ICF",
+        "en": "Next identify what remains after ICF."
+      }
+    },
+    {
+      "id": "cases",
+      "title": {
+        "th": "แยกกรณีจากแถว F",
+        "en": "Decide the case from row F"
+      },
+      "summary": {
+        "th": "กรด–เบสแก่เหลือให้ใช้โมลส่วนเกิน\nที่สมมูลของกรดอ่อนหรือเบสอ่อนให้ตรวจสมดุลเกลือ",
+        "en": "Use excess mmol for residual strong acid or base.\nAt equivalence with a weak reagent, check salt equilibrium."
+      },
+      "story": {
+        "th": "ใช้ขวดหลายใบที่เปลี่ยนเฉพาะปริมาตร",
+        "en": "Compare flasks differing only in the volume added."
+      },
+      "action": {
+        "th": "ทำตัวอย่าง 2–5 และบอกสารที่คุม pH",
+        "en": "Solve Examples 2–5 and name the species controlling pH."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "แยกกรณีจากแถว F",
+            "en": "Decide the case from row F"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "example-2"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เมื่อ CH₃COOH กับ NaOH พอดี ไอออนใดไฮโดรลิซิส?",
+          "en": "At equivalence for CH₃COOH and NaOH, which ion hydrolyses?"
+        },
+        "answer": {
+          "th": "CH₃COO⁻ รับโปรตอนจากน้ำและเกิด OH⁻",
+          "en": "CH₃COO⁻ accepts a proton from water and produces OH⁻."
+        }
+      },
+      "after": {
+        "th": "กลับไปอธิบายบัฟเฟอร์ที่วัด",
+        "en": "Return to the buffer data."
+      }
+    },
+    {
+      "id": "buffer",
+      "title": {
+        "th": "เทียบผลวัดกับแบบจำลอง",
+        "en": "Compare experimental and model pH"
+      },
+      "summary": {
+        "th": "คำนวณ |ΔpH| จากสองแถวที่วัด\nใช้ ICF แล้ว ICE กับ B เพื่อหา pH ก่อนและหลังเติม",
+        "en": "Calculate |ΔpH| from two measured rows.\nUse ICF and ICE to predict B before and after addition."
+      },
+      "story": {
+        "th": "สังเกตว่าเมื่อเติม HCl เท่ากัน B เปลี่ยนเพียงเล็กน้อยในข้อมูลตัวอย่าง",
+        "en": "Notice how B changes little under equal HCl addition in the example."
+      },
+      "action": {
+        "th": "ใช้ผลกลุ่มและยกตัวเลขสองค่าเป็นหลักฐาน",
+        "en": "Cite both values from your group."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เทียบผลวัดกับแบบจำลอง",
+            "en": "Compare experimental and model pH"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "example-6"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ใน B ไอออนใดรับกรด?",
+          "en": "Which ion in B takes up added acid?"
+        },
+        "answer": {
+          "th": "HPO₄²⁻ เปลี่ยนเป็น H₂PO₄⁻",
+          "en": "HPO₄²⁻ becomes H₂PO₄⁻."
+        }
+      },
+      "after": {
+        "th": "ต่อไปใช้แถว F อธิบายกราฟ",
+        "en": "Use row F to explain the curves next."
+      }
+    },
+    {
+      "id": "curves",
+      "title": {
+        "th": "อ่านกราฟและอินดิเคเตอร์",
+        "en": "Curves and indicators"
+      },
+      "summary": {
+        "th": "อ่าน V ที่สมมูลจากแกนนอน แล้วหารสอง\nใช้ช่วงชันรอบสมมูลเลือกอินดิเคเตอร์",
+        "en": "Read equivalence volume on the x-axis, then halve it.\nUse the steep region near equivalence to select an indicator."
+      },
+      "story": {
+        "th": "เทียบกราฟขึ้น กราฟลง และกราฟกรดสองเส้น",
+        "en": "Compare a rising curve, a falling curve, and two acid curves."
+      },
+      "action": {
+        "th": "ตอบจากแกนและช่วงสีที่โจทย์ให้",
+        "en": "Use the axes and stated colour interval."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "อ่านกราฟและอินดิเคเตอร์",
+            "en": "Curves and indicators"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "example-7"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ที่ครึ่งสมมูลของกรดอ่อนโมโนโพรติก เหตุใด pH ≈ pKₐ?",
+          "en": "Why is pH ≈ pKₐ at half-equivalence for a weak monoprotic acid?"
+        },
+        "answer": {
+          "th": "ความเข้มข้นกรดอ่อนและเบสคู่กรดใกล้กัน",
+          "en": "The acid and conjugate base concentrations are nearly equal."
+        }
+      },
+      "after": {
+        "th": "พร้อมลอง Exit Ticket Revision",
+        "en": "Continue to Exit Ticket Revision."
+      }
+    }
+  ],
+  "finish": {
+    "th": "บอกด้วยข้อมูลว่าอะไรควบคุม pH ในกรณีนั้น",
+    "en": "Use the evidence to identify what controls pH in each case."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "เมื่อผสมกรดกับเบส ขั้นใดมาก่อนสมดุล?",
+      "en": "When mixing acid and base, what comes before equilibrium?"
+    },
+    "answer": {
+      "th": "ดุลสมการและใช้ ICF หาสารที่เหลือ สำหรับคู่ที่ทำปฏิกิริยาเกือบสมบูรณ์",
+      "en": "Balance the equation and use ICF for reactions that go essentially to completion."
+    }
+  }
+}

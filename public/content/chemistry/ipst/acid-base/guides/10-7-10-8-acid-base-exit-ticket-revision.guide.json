@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "chemistry-ipst-acid-base-10-7-10-8-exit-ticket-revision",
+    "revision": "2026-11-22-1",
+    "sha256": "da00f5013ff3b2551aee6fc9142c89edca2dee1b5554376e9d6021dcf387f5f9"
+  },
+  "title": {
+    "th": "Exit Ticket Revision · ไทเทรตและบัฟเฟอร์",
+    "en": "Exit Ticket Revision · Titration and buffers"
+  },
+  "prerequisites": {
+    "th": "ทวน mol/L, pH และคู่กรด–เบส",
+    "en": "Review mol/L, pH and conjugate acid–base pairs."
+  },
+  "goal": {
+    "th": "ใช้ผลแล็บและสารที่เหลือเลือกรูปแบบการคำนวณ pH",
+    "en": "Use lab data and remaining species to choose a pH calculation."
+  },
+  "steps": [
+    {
+      "id": "review",
+      "title": {
+        "th": "ทวนจาก Classroom Note",
+        "en": "Review the Classroom Note"
+      },
+      "summary": {
+        "th": "อ่านเฉลย Classroom Note ฉบับเต็ม\nทวน ICF, ICE และการเลือกวิธีจากสารที่เหลือ",
+        "en": "Read the complete Classroom Note solutions.\nReview ICF, ICE and method selection."
+      },
+      "story": {
+        "th": "ใช้เลขสมการเดิมตามกลับไปที่ตัวอย่าง",
+        "en": "Use the original equation numbering to revisit examples."
+      },
+      "action": {
+        "th": "ทวนเฉพาะส่วนที่ยังติด",
+        "en": "Review the steps you are unsure about."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ทวนจาก Classroom Note",
+            "en": "Review the Classroom Note"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "lab-results"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ต้องใช้หน่วยใดใน ICF และ ICE?",
+          "en": "Which units are used for ICF and ICE?"
+        },
+        "answer": {
+          "th": "ICF ใช้ mmol และ ICE ใช้ mol/L ในใบนี้",
+          "en": "Use mmol for ICF and mol/L for ICE in this worksheet."
+        }
+      },
+      "after": {
+        "th": "ลองทำข้อ 1–7",
+        "en": "Attempt questions 1–7."
+      }
+    },
+    {
+      "id": "practice",
+      "title": {
+        "th": "ลงมือทำโจทย์ใหม่",
+        "en": "Solve the new problems"
+      },
+      "summary": {
+        "th": "เลือกวิธีจากแถว F\nใช้ Check Answer หลังลองทำ",
+        "en": "Choose from row F.\nUse Check Answer after attempting each problem."
+      },
+      "story": {
+        "th": "แยกจุดที่เลือกวิธีพลาดจากจุดที่คำนวณพลาด",
+        "en": "Distinguish method-selection errors from calculation errors."
+      },
+      "action": {
+        "th": "ใช้ผลตรวจแล้วกลับไปแก้ทีละข้อ",
+        "en": "Use the check and revise one problem at a time."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ลงมือทำโจทย์ใหม่",
+            "en": "Solve the new problems"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "exit-start"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เมื่อบัฟเฟอร์หมดให้ดูอะไร?",
+          "en": "What do you examine when the buffer is depleted?"
+        },
+        "answer": {
+          "th": "เริ่มที่สารเหลือในแถว F",
+          "en": "Start with the species remaining in row F."
+        }
+      },
+      "after": {
+        "th": "ต่อด้วยโจทย์แนวท้ายบท สสวท.",
+        "en": "Move to IPST-style practice."
+      }
+    },
+    {
+      "id": "exam",
+      "title": {
+        "th": "ลองข้อสอบย้อนหลัง",
+        "en": "Attempt past exam questions"
+      },
+      "summary": {
+        "th": "เปิดฉบับอ้างอิงก่อนตอบ\nตรวจตัวเลือก ตัวเลข และกราฟจากแหล่งที่ลิงก์ไว้",
+        "en": "Open the cited paper before answering.\nCheck its choices, numbers and figures there."
+      },
+      "story": {
+        "th": "จับคู่ข้อสอบกับตัวอย่างที่ใช้หลักเดียวกัน",
+        "en": "Match each exam question to an example using the same principle."
+      },
+      "action": {
+        "th": "ลองตอบแล้วเปิดวิธีทำทีละข้อ",
+        "en": "Attempt the question, then reveal its solution."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ลองข้อสอบย้อนหลัง",
+            "en": "Attempt past exam questions"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "exam-start"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ถ้าอัตราส่วนไม่ใช่ 1:1 ให้ดูจากไหน?",
+          "en": "Where do you find the ratio if it is not 1:1?"
+        },
+        "answer": {
+          "th": "ใช้สัมประสิทธิ์ในสมการดุล",
+          "en": "Use coefficients from the balanced equation."
+        }
+      },
+      "after": {
+        "th": "ทวน Knowledge Recall ท้ายใบ",
+        "en": "Finish with Knowledge Recall."
+      }
+    }
+  ],
+  "finish": {
+    "th": "บอกด้วยข้อมูลว่าอะไรควบคุม pH ในกรณีนั้น",
+    "en": "Use the evidence to identify what controls pH in each case."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "เมื่อผสมกรดกับเบส ขั้นใดมาก่อนสมดุล?",
+      "en": "When mixing acid and base, what comes before equilibrium?"
+    },
+    "answer": {
+      "th": "ดุลสมการและใช้ ICF หาสารที่เหลือ สำหรับคู่ที่ทำปฏิกิริยาเกือบสมบูรณ์",
+      "en": "Balance the equation and use ICF for reactions that go essentially to completion."
+    }
+  }
+}

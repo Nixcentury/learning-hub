@@ -1,0 +1,238 @@
+import { writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { classroom } from './classroom.mjs';
+import { exitProblems } from './exit.mjs';
+import { examProblems } from './exams.mjs';
+
+const revision = '2026-11-22-1';
+const out = new URL('../../../../public/content/chemistry/ipst/acid-base/', import.meta.url);
+const escape = value => String(value).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+const pair = (th, en) => ({th, en});
+const css = `
+  body { background:#eef4f2; color:#172c28; font:16px/1.55 Tahoma,"Noto Sans Thai",sans-serif; margin:0; }
+  main { max-width:880px; box-sizing:border-box; margin:auto; padding:16px; }
+  .lesson, .opening { background:#fff; border:1px solid #c9dbd7; border-radius:9px; margin:0 0 14px; padding:16px; }
+  h1,h2 { color:#163e34; line-height:1.3; margin:0 0 .5em; }
+  h1 { font-size:1.5rem; } h2 { font-size:1.25rem; }
+  p { margin:.35em 0 .55em; }
+  .task { margin:.6em 0 .85em; }
+  .prompt { font-weight:700; } .source { font-size:.9em; }
+  .result-slot { font-size:.9em; }
+  .result-print { display:none; }
+  .callout { border-inline-start:3px solid #568478; background:#eef6f2; padding:.35em .7em; }
+  .eq { display:flex; align-items:center; gap:.5em; justify-content:space-between; flex-wrap:wrap; }
+  .eq-number { text-align:end; }
+  .formula-row { display:grid; grid-template-columns:minmax(0,1fr) max-content; gap:.55rem; align-items:center; }
+  [data-sheet-slot] { margin-block:.36em; }
+  .lab-figures { display:grid; grid-template-columns:1fr 2fr; gap:12px; align-items:center; }
+  figure { margin:8px 0; } figure img,figure svg { display:block; max-width:100%; height:auto; }
+  .lab-figures img { max-height:145px; object-fit:contain; }
+  figcaption { font-size:.9em; margin-top:3px; }
+  .graph svg { width:min(100%,510px); }
+  .graph text { font:15px Tahoma,Arial,sans-serif; fill:#172c28; }
+  .graph .caption { font-size:17px; }
+  table { border-collapse:collapse; width:100%; margin:.55em 0; }
+  td,th { border:1px solid #c3d7d0; text-align:left; padding:.28em .42em; overflow-wrap:anywhere; }
+  th { background:#edf5f1; }
+  td { height:1.25em; }
+  a { color:#115c52; }
+  @media(max-width:560px) { main {padding:8px} .lesson,.opening {padding:10px} .lab-figures {grid-template-columns:1fr} td,th {padding:.2em} }
+  html[data-hub-print-snapshot] body { background:white; font-size:10pt; line-height:1.4; }
+  html[data-hub-print-snapshot] main { max-width:none; margin:0; padding:0; }
+  html[data-hub-print-snapshot] .lesson, html[data-hub-print-snapshot] .opening { border:0; border-radius:0; margin:0 0 4mm; padding:0; }
+  html[data-hub-print-snapshot] h2 { font-size:13pt; border-block-end:1px solid #568478; padding-block-end:1mm; }
+  html[data-hub-print-snapshot] .graph svg { width:113mm; }
+  html[data-hub-print-snapshot] .result-slot { display:none; }
+  html[data-hub-print-snapshot][data-sheet-print-edition="answers"] .result-print,
+  html[data-hub-print-snapshot][data-sheet-print-edition="blank"] .result-print[data-self-check] {
+    display:block; font-size:.88em; margin:.2em 0;
+  }
+`;
+
+function pH(volume, sample, constant, weakBase) {
+  const total = sample + volume;
+  const analyte = 0.100 * sample / total;
+  const titrant = 0.100 * volume / total;
+  const acidKa = weakBase ? 1e-14 / constant : constant;
+  let minimum = 0, maximum = 14;
+  // Charge balance includes water and the salt ion throughout the curve.
+  for (let step = 0; step < 48; step++) {
+    const position = (minimum + maximum) / 2;
+    const h = 10 ** -position;
+    const difference = weakBase
+      ? h + analyte * h / (h + acidKa) - 1e-14 / h - titrant
+      : h + titrant - 1e-14 / h - analyte * acidKa / (h + acidKa);
+    if (difference > 0) minimum = position;
+    else maximum = position;
+  }
+  return (minimum + maximum) / 2;
+}
+
+function toolkit(lang) {
+  const t = (th, en) => lang === 'th' ? th : en;
+  const card = (key, title, content, { keepTogether = false } = {}) =>
+    `<section class="lesson" data-guide-anchor="${key}"${keepTogether ? ' data-print-keep' : ''}><h2>${title}</h2>${content}</section>`;
+  const slot = (id, label, content, height, revisionNote = false, placeholder = '') => revisionNote
+    ? `<div class="fully-worked">${content}</div>`
+    : `<div data-sheet-slot="${id}" data-sheet-size="small" data-sheet-layout="block" data-sheet-label-th="${escape(label?.th ?? 'เปิดวิธีทำ')}" data-sheet-label-en="${escape(label?.en ?? 'Reveal worked solution')}" style="--sheet-print-height:${height}mm"><div data-sheet-answer>${content}</div>${placeholder ? '<div data-sheet-placeholder>'+placeholder+'</div>' : ''}</div>`;
+  const eq = tex => `<p class="eq">\\(${tex}\\)</p>`;
+  const task = (id, prompt, answer, {height = 18, result, revision: revisionNote, printResult = true} = {}) => {
+    const check = t('ตรวจคำตอบ','Check Answer');
+    const resultControl = result && !revisionNote
+      ? `<div class="result-slot"><span>${check}</span>${slot(id+'-check',pair('ตรวจคำตอบสุดท้าย','Check the final answer'),result,7)}</div><p class="result-print"${printResult ? ' data-self-check' : ''}>${check} · ${result}</p>`
+      : '';
+    return `<div class="task" data-print-keep><p class="prompt">${prompt}</p>${resultControl}${slot(id,null,answer.startsWith('<p>') ? answer : '<p>'+answer+'</p>',height,revisionNote)}</div>`;
+  };
+  const labImage = (name, caption) => `<figure><img src="assets/lab-guide/${name}.png" alt="${escape(caption)}"><figcaption>${caption}</figcaption></figure>`;
+  const table = (headers, rows) => `<table><thead><tr>${headers.map(h=>`<th scope="col">${h}</th>`).join('')}</tr></thead><tbody>${rows.map(([name,...values])=>`<tr><th scope="row">${name}</th>${values.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  const link = (url, title) => `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${title}</a>`;
+  const graph = type => {
+    const weakBase = type === 'base';
+    const comparison = type === 'comparison';
+    const sample = type === 'acid20' ? 20 : (comparison ? 10 : 25);
+    const max = comparison ? 15 : 35;
+    const x = v => 59 + v/max*474;
+    const y = p => 242 - p/14*205;
+    const format = value => value.toFixed(2);
+    const volumes = Array.from({length:max*8+1},(_,i)=>i/8);
+    volumes.push(sample-.10,sample-.01,sample+.01,sample+.10);
+    volumes.sort((a,b)=>a-b);
+    const line = (constant, stroke, dash='') => `<polyline fill="none" stroke="${stroke}" stroke-width="2.7" ${dash ? 'stroke-dasharray="'+dash+'"' : ''} points="${volumes.map(v=>format(x(v))+','+format(y(pH(v,sample,constant,weakBase)))).join(' ')}"/>`;
+    const caption = weakBase ? t('แบบจำลอง NH₃–HCl','NH₃–HCl model') : comparison
+      ? t('ตัวอย่างเปรียบเทียบ HX (เส้นทึบ) และ HY (เส้นประ)','Comparison model: HX (solid) and HY (dashed)')
+      : t('แบบจำลอง CH₃COOH–NaOH','CH₃COOH–NaOH model');
+    const constant = comparison ? 1.8e-6 : 1.8e-5;
+    const label = t(`ปริมาตร ${weakBase?'HCl':'NaOH'} ที่เติม (mL)`, `Added ${weakBase?'HCl':'NaOH'} (mL)`);
+    const grids = Array.from({length:8},(_,i)=>`<path d="M59 ${y(i*2)}H533" stroke="#cfdfd9"/><text x="50" y="${y(i*2)+5}" text-anchor="end">${i*2}</text>`).join('');
+    const ticks = Array.from({length:max/5+1},(_,i)=>`<text y="263" x="${x(i*5)}" text-anchor="middle">${i*5}</text>`).join('');
+    return `<figure class="graph"><svg viewBox="0 0 558 300" role="img" aria-label="${escape(caption)}">
+      <text x="21" y="25" class="caption">pH</text>${grids}${ticks}
+      <path d="M59 35V242H533" fill="none" stroke="#203c36"/>
+      ${line(constant,'#00665a')}${comparison ? line(1.8e-4,'#864508','7 5') : ''}
+      <text x="296" y="288" class="caption" text-anchor="middle">${label}</text>
+      </svg><figcaption>${caption}</figcaption></figure>`;
+  };
+  return {t, eq, slot, task, card, table, labImage, graph, link};
+}
+
+const data = {
+  classroom: {name:pair('Classroom Note · ไทเทรตและบัฟเฟอร์','Classroom Note · Titration and buffers'), contentId:'chemistry-ipst-acid-base-10-7-10-8-classroom-note'},
+  exit: {name:pair('Exit Ticket Revision · ไทเทรตและบัฟเฟอร์','Exit Ticket Revision · Titration and buffers'), contentId:'chemistry-ipst-acid-base-10-7-10-8-exit-ticket-revision'},
+};
+const stem = '10-7-10-8-acid-base';
+function render(kind) {
+  const isExit = kind === 'exit';
+  const {name} = data[kind];
+  const suffix = isExit ? 'exit-ticket-revision' : 'classroom-note';
+  const hub = '../../../../#chemistry/bank/buffer-solutions/';
+  const body = ['th','en'].map(lang=>{
+    const kit = toolkit(lang);
+    const {t, link} = kit;
+    const practiceLink = isExit ? ` · <a href="#${lang}-practice">${t('ไปส่วนโจทย์','Jump to practice')}</a>` : '';
+    const heading = `<header class="opening"><h1>${name[lang]}</h1><nav class="no-print">${link(hub+'lab-guide',t('คู่มือแล็บ','Lab Guide'))} · ${link(hub+(isExit?'classroom-note':'exit-ticket-revision'),isExit?'Classroom Note':'Exit Ticket Revision')}${practiceLink}</nav></header>`;
+    const sections = isExit
+      ? `<section data-print-zone="learning"><h2 class="opening">${t('สรุปทบทวน','Revision Notes')}</h2>${classroom(kit,true)}</section>
+<div id="${lang}-practice" data-print-zone="problem">${exitProblems(kit)}${examProblems(kit)}</div>`
+      : heading + classroom(kit,false);
+    return `<div data-content-lang="${lang}" lang="${lang}">${isExit ? heading : ''}${sections}</div>`;
+  }).join('\n');
+  const html = `<!doctype html>
+<html lang="th" data-learning-html data-learning-sheet="1" data-print-blank-sizing="preset"
+  data-sheet-guide="guides/${stem}-${suffix}.guide.json" data-sheet-revision="${revision}"
+  data-print-subject-th="เคมี ม.5" data-print-subject-en="Grade 11 Chemistry" data-print-chapter-th="กรด–เบส" data-print-chapter-en="Acids and bases"
+  data-print-topic-th="ไทเทรต ไฮโดรลิซิส และบัฟเฟอร์" data-print-topic-en="Titration, hydrolysis and buffers"
+  data-print-work-th="${isExit?'Exit Ticket Revision':'Classroom Note'}" data-print-work-en="${isExit?'Exit Ticket Revision':'Classroom Note'}">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${name.th} | ${name.en}</title><link rel="stylesheet" href="../../../../shared/learning-sheet.css"><style>${css}</style></head>
+<body><main>${body}</main></body>
+</html>
+`;
+  writeFileSync(new URL(stem+'-'+suffix+'.html',out),html);
+  writeFileSync(new URL('guides/'+stem+'-'+suffix+'.guide.json',out), JSON.stringify(makeGuide(kind,html),null,2)+'\n');
+}
+
+function step(id,key,th,en,summary,story,action,question,answer,after) {
+  return {id,title:pair(th,en),summary,story,action,
+    links:[{label:pair(th,en),target:{kind:'anchor',key}}],
+    check:{question,answer},after};
+}
+const classSteps = [
+  step('lab','lab-results','เก็บค่าจากแล็บจริง','Use your lab data',
+    pair('ไทเทรตจดบิวเรตเริ่มและสุดท้าย\nบัฟเฟอร์จด pH ที่ 0.00, 0.25 และ 0.50 mL','Record initial and final burette readings.\nRecord buffer readings at 0.00, 0.25 and 0.50 mL.'),
+    pair('ชี้สารในบิวเรตและขวดจากรูป','Use the image to locate the burette and flask solutions.'),
+    pair('เติมตารางผลจริงของกลุ่ม','Complete both tables using your group data.'),
+    pair('สองแล็บวัดค่าใดต่างกัน?','What differs between the measurements in the two labs?'),
+    pair('ไทเทรตใช้ปริมาตร ส่วนแล็บบัฟเฟอร์ใช้ pH','Titration uses a volume and the buffer lab uses pH.'),
+    pair('นำค่าบิวเรตไปทำตัวอย่าง 1','Use the burette readings in Example 1.')),
+  step('titration','example-1','คำนวณจากบิวเรต','Calculate from burette readings',
+    pair('ปริมาตรที่ใช้เท่ากับค่าสุดท้ายลบค่าเริ่มต้น\nใช้ mmol และสัมประสิทธิ์จากสมการดุล','Delivered volume is final minus initial.\nUse mmol and the balanced coefficients.'),
+    pair('เทียบสีที่เห็นกับการสะเทินพอดี','Relate the observed colour to stoichiometric equivalence.'),
+    pair('หาความเข้มข้นและทวนโจทย์ 1:2','Find the concentration and work through a 1:2 example.'),
+    pair('เติมน้ำหลังปิเปต โมลในขวดเปลี่ยนไหม?','Does adding water after pipetting change the amount in the flask?'),
+    pair('โมลคงเดิม แต่ความเข้มข้นเปลี่ยน','The amount is unchanged but concentration changes.'),
+    pair('ต่อไปดูสารที่เหลือหลัง ICF','Next identify what remains after ICF.')),
+  step('cases','example-2','แยกกรณีจากแถว F','Decide the case from row F',
+    pair('กรด–เบสแก่เหลือให้ใช้โมลส่วนเกิน\nที่สมมูลของกรดอ่อนหรือเบสอ่อนให้ตรวจสมดุลเกลือ','Use excess mmol for residual strong acid or base.\nAt equivalence with a weak reagent, check salt equilibrium.'),
+    pair('ใช้ขวดหลายใบที่เปลี่ยนเฉพาะปริมาตร','Compare flasks differing only in the volume added.'),
+    pair('ทำตัวอย่าง 2–5 และบอกสารที่คุม pH','Solve Examples 2–5 and name the species controlling pH.'),
+    pair('เมื่อ CH₃COOH กับ NaOH พอดี ไอออนใดไฮโดรลิซิส?','At equivalence for CH₃COOH and NaOH, which ion hydrolyses?'),
+    pair('CH₃COO⁻ รับโปรตอนจากน้ำและเกิด OH⁻','CH₃COO⁻ accepts a proton from water and produces OH⁻.'),
+    pair('กลับไปอธิบายบัฟเฟอร์ที่วัด','Return to the buffer data.')),
+  step('buffer','example-6','เทียบผลวัดกับแบบจำลอง','Compare experimental and model pH',
+    pair('คำนวณ |ΔpH| จากสองแถวที่วัด\nใช้ ICF แล้ว ICE กับ B เพื่อหา pH ก่อนและหลังเติม','Calculate |ΔpH| from two measured rows.\nUse ICF and ICE to predict B before and after addition.'),
+    pair('สังเกตว่าเมื่อเติม HCl เท่ากัน B เปลี่ยนเพียงเล็กน้อยในข้อมูลตัวอย่าง','Notice how B changes little under equal HCl addition in the example.'),
+    pair('ใช้ผลกลุ่มและยกตัวเลขสองค่าเป็นหลักฐาน','Cite both values from your group.'),
+    pair('ใน B ไอออนใดรับกรด?','Which ion in B takes up added acid?'),
+    pair('HPO₄²⁻ เปลี่ยนเป็น H₂PO₄⁻','HPO₄²⁻ becomes H₂PO₄⁻.'),
+    pair('ต่อไปใช้แถว F อธิบายกราฟ','Use row F to explain the curves next.')),
+  step('curves','example-7','อ่านกราฟและอินดิเคเตอร์','Curves and indicators',
+    pair('อ่าน V ที่สมมูลจากแกนนอน แล้วหารสอง\nใช้ช่วงชันรอบสมมูลเลือกอินดิเคเตอร์','Read equivalence volume on the x-axis, then halve it.\nUse the steep region near equivalence to select an indicator.'),
+    pair('เทียบกราฟขึ้น กราฟลง และกราฟกรดสองเส้น','Compare a rising curve, a falling curve, and two acid curves.'),
+    pair('ตอบจากแกนและช่วงสีที่โจทย์ให้','Use the axes and stated colour interval.'),
+    pair('ที่ครึ่งสมมูลของกรดอ่อนโมโนโพรติก เหตุใด pH ≈ pKₐ?','Why is pH ≈ pKₐ at half-equivalence for a weak monoprotic acid?'),
+    pair('ความเข้มข้นกรดอ่อนและเบสคู่กรดใกล้กัน','The acid and conjugate base concentrations are nearly equal.'),
+    pair('พร้อมลอง Exit Ticket Revision','Continue to Exit Ticket Revision.')),
+];
+const exitSteps = [
+  step('review','lab-results','ทวนจาก Classroom Note','Review the Classroom Note',
+    pair('อ่านเฉลย Classroom Note ฉบับเต็ม\nทวน ICF, ICE และการเลือกวิธีจากสารที่เหลือ','Read the complete Classroom Note solutions.\nReview ICF, ICE and method selection.'),
+    pair('ใช้เลขสมการเดิมตามกลับไปที่ตัวอย่าง','Use the original equation numbering to revisit examples.'),
+    pair('ทวนเฉพาะส่วนที่ยังติด','Review the steps you are unsure about.'),
+    pair('ต้องใช้หน่วยใดใน ICF และ ICE?','Which units are used for ICF and ICE?'),
+    pair('ICF ใช้ mmol และ ICE ใช้ mol/L ในใบนี้','Use mmol for ICF and mol/L for ICE in this worksheet.'),
+    pair('ลองทำข้อ 1–7','Attempt questions 1–7.')),
+  step('practice','exit-start','ลงมือทำโจทย์ใหม่','Solve the new problems',
+    pair('เลือกวิธีจากแถว F\nใช้ Check Answer หลังลองทำ','Choose from row F.\nUse Check Answer after attempting each problem.'),
+    pair('แยกจุดที่เลือกวิธีพลาดจากจุดที่คำนวณพลาด','Distinguish method-selection errors from calculation errors.'),
+    pair('ใช้ผลตรวจแล้วกลับไปแก้ทีละข้อ','Use the check and revise one problem at a time.'),
+    pair('เมื่อบัฟเฟอร์หมดให้ดูอะไร?','What do you examine when the buffer is depleted?'),
+    pair('เริ่มที่สารเหลือในแถว F','Start with the species remaining in row F.'),
+    pair('ต่อด้วยโจทย์แนวท้ายบท สสวท.','Move to IPST-style practice.')),
+  step('exam','exam-start','ลองข้อสอบย้อนหลัง','Attempt past exam questions',
+    pair('เปิดฉบับอ้างอิงก่อนตอบ\nตรวจตัวเลือก ตัวเลข และกราฟจากแหล่งที่ลิงก์ไว้','Open the cited paper before answering.\nCheck its choices, numbers and figures there.'),
+    pair('จับคู่ข้อสอบกับตัวอย่างที่ใช้หลักเดียวกัน','Match each exam question to an example using the same principle.'),
+    pair('ลองตอบแล้วเปิดวิธีทำทีละข้อ','Attempt the question, then reveal its solution.'),
+    pair('ถ้าอัตราส่วนไม่ใช่ 1:1 ให้ดูจากไหน?','Where do you find the ratio if it is not 1:1?'),
+    pair('ใช้สัมประสิทธิ์ในสมการดุล','Use coefficients from the balanced equation.'),
+    pair('ทวน Knowledge Recall ท้ายใบ','Finish with Knowledge Recall.')),
+];
+
+function makeGuide(kind, html) {
+  const exit = kind === 'exit';
+  return {
+    schemaVersion:1,
+    source:{contentId:data[kind].contentId,revision,sha256:createHash('sha256').update(html).digest('hex')},
+    title:data[kind].name,
+    prerequisites:pair('ทวน mol/L, pH และคู่กรด–เบส','Review mol/L, pH and conjugate acid–base pairs.'),
+    goal:pair('ใช้ผลแล็บและสารที่เหลือเลือกรูปแบบการคำนวณ pH','Use lab data and remaining species to choose a pH calculation.'),
+    steps:exit ? exitSteps : classSteps,
+    finish:pair('บอกด้วยข้อมูลว่าอะไรควบคุม pH ในกรณีนั้น','Use the evidence to identify what controls pH in each case.'),
+    exitCheck:{
+      question:pair('เมื่อผสมกรดกับเบส ขั้นใดมาก่อนสมดุล?','When mixing acid and base, what comes before equilibrium?'),
+      answer:pair('ดุลสมการและใช้ ICF หาสารที่เหลือ สำหรับคู่ที่ทำปฏิกิริยาเกือบสมบูรณ์','Balance the equation and use ICF for reactions that go essentially to completion.'),
+    },
+  };
+}
+
+render('classroom');
+render('exit');

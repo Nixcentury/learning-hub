@@ -29,7 +29,7 @@ export function pastExams(th, answers) {
     [t('ไม่มีอิเล็กตรอนหลุดจากแผ่นโลหะ', 'No electrons are emitted from the metal plate.'), '0.6', '1.1', '1.8', '2.2'], source67, 40,
       working(th, [2], [
         m`W=E_{\gamma,1}-K_{\max,1}=4.0\,\mathrm{eV}-1.80\,\mathrm{eV}=2.2\,\mathrm{eV}`,
-        m`E_{\gamma,2}=2.0\,\mathrm{eV}&lt;W=2.2\,\mathrm{eV}`,
+        m`E_{\gamma,2}=2.0\,\mathrm{eV}\lt W=2.2\,\mathrm{eV}`,
       ], t('ตอบตัวเลือก 1 พลังงานต่อโฟตอนไม่พอให้อิเล็กตรอนหลุด สมการพลังงานจลน์ใช้คำนวณเมื่อมีการหลุด ค่า −0.2 eV ที่ได้จากการลบคือพลังงานที่ขาดอยู่',
         'Choice 1. The photon energy is too low for emission. The kinetic-energy equation applies when emission occurs. Subtracting here gives −0.2 eV, which indicates an energy shortfall.')));
 
@@ -47,8 +47,9 @@ export function pastExams(th, answers) {
       working(th, [2], [
         m`h=\frac{\Delta K_{\max}}{\Delta f}=\frac{0-(-y)}{x-0}=\frac{y}{x}`,
         m`-W=-y\quad\Rightarrow\quad W=y`,
-      ], t('ตอบตัวเลือก 5 ความชันคือ h จุดตัดแกนตั้งจากการต่อแนวเส้นคือ −W ตรวจซ้ำด้วยสมการ (3) ที่ความถี่ขีดเริ่ม f₀ = x จึงได้ W = hx = y',
-        'Choice 5. The slope gives h and the extrapolated vertical intercept gives −W. Check with equation (3): the threshold frequency is f₀ = x, so W = hx = y.')) +
+        m`W=hf_0=\left(\frac{y}{x}\right)x=y`,
+      ], t('ตอบตัวเลือก 5 โดยใช้ความชันและจุดตัดแกน ตรวจซ้ำได้จากสมการ (3)',
+        'Choice 5 follows from the slope and intercept. Equation (3) provides the check.')) +
         p(link(key68, t('เฉลยทางการ MyTCAS', 'Official MyTCAS answer key'))));
 
   const q9 = problem(9, t('9 วิชาสามัญ 2565 ข้อ 23', 'Nine Common Subjects 2022 · Question 23 (2565)'),

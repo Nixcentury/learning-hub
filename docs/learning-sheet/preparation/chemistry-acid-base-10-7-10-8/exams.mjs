@@ -11,7 +11,7 @@ const copies = {
 };
 const key69 = 'https://assets.mytcas.com/69/alevel/69_answers_61-89.pdf#page=5';
 
-export function examProblems({t, task, card, link}) {
+export function examProblems({t, work, task, card, link}) {
   function exam(year, question, page, prompts, solutions, result, extra = '') {
     const [url, th, en] = copies[year];
     const source = url + (page ? '#page=' + page : '');
@@ -20,7 +20,7 @@ export function examProblems({t, task, card, link}) {
       '<p class="source">'+link(source,t(th,en))+
       (page ? t(` · หน้า ${page}`,` · Page ${page}`) : '')+
       (year === 2569 ? ' · '+link(key69,t('เฉลยทางการ MyTCAS ชุด 1','Official MyTCAS key, Set 1')) : '')+'</p>'+extra+
-      task(`a${year}-${question}`,t(...prompts),t(...solutions),{height:26,result,printResult:false}),
+      task(`a${year}-${question}`,t(...prompts),Array.isArray(solutions) ? t(...solutions) : solutions,{height:26,result,printResult:false}),
       {keepTogether:true});
   }
   return [
@@ -31,18 +31,37 @@ export function examProblems({t, task, card, link}) {
     exam(2566,28,19,
       ['เปิดข้อ 28 แล้วเรียง pH ของเกลือสามชนิดตามโจทย์ อธิบายว่าไอออนใดมีผลต่อ pH',
        'Open question 28 and rank the three salts by pH. Explain which ions influence pH.'],
-      ['A⁻ มาจากกรดแก่ จึงแทบไม่รับโปรตอน HZ⁺ เป็นกรดด้วย Kₐ = Kᵥ/Kᵦ(Z) = 1.0 × 10⁻¹⁰ ส่วน X⁻ เป็นเบสด้วย Kᵦ = Kᵥ/Kₐ(HX) = 1.0 × 10⁻⁹ ดังนั้น NaX มีแต่ผลของเบส [HZ]X มีไอออนกรดและเบสแต่ด้านเบสเด่นกว่า และ [HZ]A มีแต่ผลของกรด เรียง NaX > [HZ]X > [HZ]A',
-       'A⁻ is the conjugate base of a strong acid and has negligible basicity. HZ⁺ is acidic with Kₐ = Kᵥ/Kᵦ(Z) = 1.0 × 10⁻¹⁰, and X⁻ is basic with Kᵦ = Kᵥ/Kₐ(HX) = 1.0 × 10⁻⁹. NaX supplies only the basic effect, [HZ]X supplies both with basicity stronger, and [HZ]A supplies the acidic effect. Rank NaX > [HZ]X > [HZ]A.'], '5'),
+      work(t('เทียบไอออนที่ไฮโดรลิซิส A⁻ เป็นคู่เบสของกรดแก่', 'Compare the hydrolysing ions. A⁻ is the conjugate base of a strong acid.'), [
+          String.raw`K_a(\mathrm{HZ^+}) &= \frac{K_w}{K_b(\mathrm Z)}=1.0\times10^{-10}`,
+          String.raw`K_b(\mathrm{X^-}) &= \frac{K_w}{K_a(\mathrm{HX})}=1.0\times10^{-9}`,
+          String.raw`\mathrm{pH}(\mathrm{NaX}) &> \mathrm{pH}(\mathrm{[HZ]X})>\mathrm{pH}(\mathrm{[HZ]A})`,
+        ],
+          t('ตัวเลือก 5 ใน [HZ]X ไอออน X⁻ มีผลด้านเบสมากกว่า HZ⁺ ด้านกรด', 'Choice 5. In [HZ]X the basic effect of X⁻ exceeds the acidic effect of HZ⁺.')), '5'),
     exam(2566,29,19,
       ['เปิดข้อ 29 แล้วหาปริมาณเกลือที่จุดสมมูลก่อนใช้สมดุลหา pH ตามแบบจำลองที่โจทย์กำหนด',
        'Open question 29. Find the salt concentration at equivalence, then calculate pH using the model specified in the question.'],
-      ['ใช้ปฏิกิริยา 1:1 ตามที่โจทย์กำหนด ได้เกลือ 70.0 mmol ใน 100.00 mL จึงได้ความเข้มข้นเริ่มต้น 0.700 mol/L ในแบบจำลองของโจทย์ Kᵦ = (1.0 × 10⁻¹⁴)/(7.00 × 10⁻¹⁰) = 1.43 × 10⁻⁵ ตั้ง ICE ได้ [OH⁻] ≈ √(0.700 × 1.43 × 10⁻⁵) ≈ 3.16 × 10⁻³ mol/L คิดเป็น 0.45% ของค่าเริ่มต้น ได้ pOH 2.50 และ pH 11.50',
-       'Use the 1:1 reaction given in the question. It forms 70.0 mmol of salt in 100.00 mL, or 0.700 mol/L initially. In the stated model Kᵦ = (1.0 × 10⁻¹⁴)/(7.00 × 10⁻¹⁰) = 1.43 × 10⁻⁵. ICE gives [OH⁻] ≈ √(0.700 × 1.43 × 10⁻⁵) ≈ 3.16 × 10⁻³ mol/L, 0.45% of the initial value. The pOH is 2.50 and pH 11.50.'],'5 · 11.50'),
+      work(t('ใช้สัดส่วน 1:1 ที่สมมูล แล้วตั้ง ICE ตามแบบจำลองของโจทย์', 'Use the 1:1 ratio at equivalence and set up ICE for the stated model.'), [
+          String.raw`C_0 &= \frac{70.0\,\mathrm{mmol}}{100.00\,\mathrm{mL}}=0.700\,\mathrm{mol/L}`,
+          String.raw`K_b &= \frac{1.0\times10^{-14}}{7.00\times10^{-10}}\approx1.43\times10^{-5}`,
+          String.raw`K_b &= \frac{x^2}{0.700-x}\approx\frac{x^2}{0.700}`,
+          String.raw`x &= [\mathrm{OH^-}]\approx \sqrt{(0.700)(1.43\times10^{-5})}`,
+          String.raw`&\approx3.16\times10^{-3}\,\mathrm{mol/L}`,
+          String.raw`\frac{x}{0.700}\times100\% &\approx0.45\%`,
+          String.raw`\mathrm{pOH} &= -\log(3.16\times10^{-3})\approx2.50`,
+          String.raw`\mathrm{pH} &= 14.00-2.50=11.50`,
+        ],
+          t('ตัวเลือก 5', 'Choice 5.')),'5 · 11.50'),
     exam(2567,18,10,
       ['เปิดข้อ 18 แล้วหาสารส่วนเกิน อย่าลืมนับจำนวน OH⁻ ต่อหนึ่งหน่วยสูตรของเบส',
        'Open question 18 and find the excess species. Count the hydroxide ions per formula unit of base.'],
-      ['Ba(OH)₂ มี 4.00 mmol จึงให้ OH⁻ 8.00 mmol HCl ให้กรด 6.00 mmol แถว F เหลือ OH⁻ 2.00 mmol ใน 100.00 mL ได้ 0.0200 mol/L จึงได้ pOH 1.70 และ pH 12.30',
-       'There are 4.00 mmol Ba(OH)₂, giving 8.00 mmol OH⁻. HCl provides 6.00 mmol acid. Row F leaves 2.00 mmol OH⁻ in 100.00 mL, or 0.0200 mol/L. The pOH is 1.70 and pH 12.30.'],'4 · 12.3'),
+      work(t('Ba(OH)₂ ให้ OH⁻ สองโมลต่อหนึ่งโมล ใช้สารส่วนเกินในแถว F', 'Each mole of Ba(OH)₂ supplies two moles of OH⁻. Use the excess in row F.'), [
+          String.raw`n(\mathrm{OH^-}) &=2(4.00\,\mathrm{mmol})=8.00\,\mathrm{mmol}`,
+          String.raw`n_{\mathrm F}(\mathrm{OH^-}) &= (8.00-6.00)\,\mathrm{mmol}=2.00\,\mathrm{mmol}`,
+          String.raw`[\mathrm{OH^-}] &= \frac{2.00\,\mathrm{mmol}}{100.00\,\mathrm{mL}}=0.0200\,\mathrm{mol/L}`,
+          String.raw`\mathrm{pOH} &= -\log(0.0200)\approx1.70`,
+          String.raw`\mathrm{pH} &=14.00-1.70=12.30`,
+        ],
+          t('ตัวเลือก 4', 'Choice 4.')),'4 · 12.3'),
     exam(2567,19,10,
       ['เปิดกราฟสองเส้นในข้อ 19 แล้วพิจารณาทีละข้อความเกี่ยวกับเบสคู่กรด สารที่เหลือ และอินดิเคเตอร์',
        'Open the two-curve figure in question 19. Evaluate each claim about conjugate bases, the remaining species and the indicator.'],
@@ -56,13 +75,25 @@ export function examProblems({t, task, card, link}) {
     exam(2568,23,19,
       ['เปิดตารางบิวเรตในข้อ 23 แล้วใช้ทั้งสามรอบ ย้อนจากสารละลายที่ปิเปตไปเป็นปริมาตรกรดที่ใช้เตรียม',
        'Open the burette table in question 23. Use all three trials and work back from the aliquot to the volume of acid used to prepare the solution.'],
-      ['ปริมาตร NaOH 20.00, 19.95 และ 20.05 mL เฉลี่ย 20.00 mL ใช้ 5.000 mmol ต่อกรดตัวอย่าง 50.00 mL อัตราส่วน 1:1 จึงมีกรด 25.00 mmol ในขวด 250 mL หรือ 2.200 g เมื่อมวลต่อโมล 88.0 g/mol ใช้ V = m/ρ ได้ 2.20/d mL',
-       'The NaOH volumes are 20.00, 19.95 and 20.05 mL, averaging 20.00 mL. This is 5.000 mmol in a 50.00 mL aliquot. The 1:1 ratio gives 25.00 mmol acid in 250 mL, or 2.200 g at 88.0 g/mol. From V = m/ρ the volume is 2.20/d mL.'],'3 · 2.20/d mL'),
+      work(t('เฉลี่ยปริมาตรจากสามรอบ แล้วใช้สัดส่วน 1:1 ย้อนหามวลกรดทั้งขวด', 'Average the three trials and use the 1:1 ratio to recover the acid mass in the full flask.'), [
+          String.raw`\overline V &= \frac{20.00+19.95+20.05}{3}\,\mathrm{mL}=20.00\,\mathrm{mL}`,
+          String.raw`n_{50} &= (20.00\,\mathrm{mL})(0.2500\,\mathrm{mmol/mL})=5.000\,\mathrm{mmol}`,
+          String.raw`n_{250} &= (5.000\,\mathrm{mmol})\frac{250}{50.00}=25.00\,\mathrm{mmol}`,
+          String.raw`m &= (25.00\,\mathrm{mmol})(0.0880\,\mathrm{g/mmol})=2.200\,\mathrm g`,
+          String.raw`V &= \frac{m}{\rho}=\frac{2.20\,\mathrm g}{d\,\mathrm{g/mL}} =\frac{2.20}{d}\,\mathrm{mL}`,
+        ],
+          t('ตัวเลือก 3', 'Choice 3.')),'3 · 2.20/d mL'),
     exam(2568,24,20,
       ['เปิดข้อ 24 แล้วอธิบายครึ่งสมมูล แยกสิ่งที่สรุปจากปริมาณสารออกจากสิ่งที่สรุปได้จากช่วงสี',
        'Open question 24 and explain half-equivalence. Separate conclusions from stoichiometry from those supported by the indicator range.'],
-      ['ถ้าใช้จุดยุติประมาณจุดสมมูล ใช้ HCl 12.50 × 0.0400 = 0.500 mmol จึงได้ [A⁻] เดิม 0.500/25.00 = 0.0200 mol/L ที่ 6.25 mL แถว F เหลือ A⁻ และเกิด HA อย่างละ 0.250 mmol เป็นบัฟเฟอร์และ pH ≈ pKₐ = 6.00 ช่วงเปลี่ยนสี 4.2–6.3 บอกว่าอยู่ในช่วงเปลี่ยนสี แต่ตารางช่วงสีอย่างเดียวระบุเฉดที่แน่นอนไม่ได้',
-       'Using the endpoint to estimate equivalence gives 12.50 × 0.0400 = 0.500 mmol HCl and original [A⁻] = 0.500/25.00 = 0.0200 mol/L. At 6.25 mL, ICF leaves 0.250 mmol each of A⁻ and HA, making a buffer with pH ≈ pKₐ = 6.00. The 4.2–6.3 interval places it in the transition region. The range alone does not determine an exact shade.'],null,
+      work(t('ใช้จุดยุติประมาณจุดสมมูล แล้วคำนวณที่ครึ่งสมมูล', 'Use the endpoint to estimate equivalence, then calculate at half-equivalence.'), [
+          String.raw`n_{\mathrm{eq}}(\mathrm{HCl}) &= (12.50\,\mathrm{mL})(0.0400\,\mathrm{mmol/mL}) =0.500\,\mathrm{mmol}`,
+          String.raw`C_0(\mathrm{A^-}) &= \frac{0.500\,\mathrm{mmol}}{25.00\,\mathrm{mL}}=0.0200\,\mathrm{mol/L}`,
+          String.raw`V_{1/2} &= \frac{12.50}{2}\,\mathrm{mL}=6.25\,\mathrm{mL}`,
+          String.raw`n_{\mathrm F}(\mathrm{HA}) &= n_{\mathrm F}(\mathrm{A^-})=0.250\,\mathrm{mmol}`,
+          String.raw`\mathrm{pH} &\approx \mathrm{p}K_a=6.00`,
+        ],
+          t('pH 6.00 อยู่ในช่วงเปลี่ยนสี 4.2–6.3 ตารางช่วงสีระบุเฉดที่แน่นอนไม่ได้', 'The pH of 6.00 lies in the 4.2–6.3 transition range. The interval alone cannot determine the exact shade.')),null,
       '<p class="callout">'+t('ข้ออภิปราย · ทปอ. ให้คะแนนฟรีข้อนี้ในเฉลยชุด 1','Discussion · The official Set 1 key awarded credit for all responses.')+'</p>'),
     exam(2569,22,null,
       ['เปิดข้อ 22 แล้วใช้ช่วงเปลี่ยนสีสองช่วงของไทมอลบลู ตรวจทีละข้อความ',
@@ -72,8 +103,13 @@ export function examProblems({t, task, card, link}) {
     exam(2569,23,null,
       ['เปิดข้อ 23 แล้วใช้ปริมาตรตัวอย่างก่อนเติมน้ำหา Ba(OH)₂ หลังคำนวณจากอัตราส่วนการไทเทรต',
        'Open question 23 and use the aliquot volume before adding water to find the original Ba(OH)₂ concentration after applying the titration ratio.'],
-      ['Ba(OH)₂ + 2HCl → BaCl₂ + 2H₂O ใช้ HCl 4.00 mmol จึงได้ Ba(OH)₂ 2.00 mmol น้ำกลั่นที่เติมไม่ได้เปลี่ยนจำนวนโมล เมื่อหารด้วยปริมาตรตัวอย่างเดิม 5.00 mL ได้ 0.400 mol/L',
-       'Ba(OH)₂ + 2HCl → BaCl₂ + 2H₂O. The titration uses 4.00 mmol of HCl, so the aliquot contains 2.00 mmol Ba(OH)₂. Added water does not change the amount. Divide by the original 5.00 mL aliquot to obtain 0.400 mol/L.'],'3 · 0.400 mol/L'),
+      work(t('ใช้ปริมาตรที่ปิเปตก่อนเติมน้ำในการหาความเข้มข้นเดิม', 'Use the volume pipetted before adding water to find the original concentration.'), [
+          String.raw`&\mathrm{Ba(OH)_2+2HCl\longrightarrow BaCl_2+2H_2O}`,
+          String.raw`n(\mathrm{HCl}) &=4.00\,\mathrm{mmol}`,
+          String.raw`n(\mathrm{Ba(OH)_2}) &= \frac{4.00}{2}\,\mathrm{mmol}=2.00\,\mathrm{mmol}`,
+          String.raw`C(\mathrm{Ba(OH)_2}) &= \frac{2.00\,\mathrm{mmol}}{5.00\,\mathrm{mL}}=0.400\,\mathrm{mol/L}`,
+        ],
+          t('ตัวเลือก 3 น้ำกลั่นที่เติมเปลี่ยนปริมาตร แต่จำนวนโมลในตัวอย่างคงเดิม', 'Choice 3. Adding distilled water changes the volume while the amount in the aliquot stays the same.')),'3 · 0.400 mol/L'),
     card('recall',t('Knowledge Recall · ลองตอบจากความจำ','Knowledge Recall · Retrieve from memory'),[
       task('recall-1',t('หลัง ICF เหลืออะไรในกรณีบัฟเฟอร์ และเมื่อพอดีจะดูอะไรต่อ?',
         'What remains after ICF for a buffer, and what do you examine at equivalence?'),

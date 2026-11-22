@@ -1,10 +1,11 @@
 import { writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { alignedMath } from '../aligned-math.mjs';
 import { classroom } from './classroom.mjs';
 import { exitProblems } from './exit.mjs';
 import { examProblems } from './exams.mjs';
 
-const revision = '2026-11-22-2';
+const revision = '2026-11-22-3';
 const out = new URL('../../../../public/content/chemistry/ipst/acid-base/', import.meta.url);
 const escape = value => String(value).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const pair = (th, en) => ({th, en});
@@ -27,6 +28,8 @@ const css = `
   .callout { border-inline-start:1.2pt solid #7895a9; background:#edf2f6; padding:.35em .7em; }
   .eq { display:flex; align-items:center; gap:.5em; justify-content:space-between; flex-wrap:wrap; }
   .eq-number { text-align:end; }
+  .worked-equations { margin:.45em 0 .65em; overflow-x:auto; }
+  .worked-equations [data-hub-math="display"] { text-align:left; margin:0; padding:.15em 0; }
   .formula-row { display:grid; grid-template-columns:minmax(0,1fr) max-content; gap:.55rem; align-items:center; border:.65pt solid #758fa4; margin:2mm 0 3mm; padding:0 2mm; }
   [data-sheet-slot] { margin-block:.36em; }
   .lab-figures { display:grid; grid-template-columns:1fr 2fr; gap:12px; align-items:center; }
@@ -81,6 +84,7 @@ function toolkit(lang) {
     ? `<div class="fully-worked">${content}</div>`
     : `<div data-sheet-slot="${id}" data-sheet-size="small" data-sheet-layout="block" data-sheet-label-th="${escape(label?.th ?? 'เปิดวิธีทำ')}" data-sheet-label-en="${escape(label?.en ?? 'Reveal worked solution')}" style="--sheet-print-height:${height}mm"><div data-sheet-answer>${content}</div>${placeholder ? '<div data-sheet-placeholder>'+placeholder+'</div>' : ''}</div>`;
   const eq = tex => `<p class="eq">\\(${tex}\\)</p>`;
+  const work = (intro, rows, conclusion) => `<p>${intro}</p>${alignedMath(rows)}${conclusion ? '<p>'+conclusion+'</p>' : ''}`;
   const task = (id, prompt, answer, {height = 18, result, revision: revisionNote, printResult = true} = {}) => {
     const check = t('ตรวจคำตอบ','Check Answer');
     const resultControl = result && !revisionNote
@@ -117,7 +121,7 @@ function toolkit(lang) {
       <text x="296" y="288" class="caption" text-anchor="middle">${label}</text>
       </svg><figcaption>${caption}</figcaption></figure>`;
   };
-  return {t, eq, slot, task, card, table, labImage, graph, link};
+  return {t, eq, work, slot, task, card, table, labImage, graph, link};
 }
 
 const data = {

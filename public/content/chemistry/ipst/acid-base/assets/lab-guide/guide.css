@@ -1,0 +1,142 @@
+:root {
+  color-scheme: light;
+  font-family: system-ui, "Noto Sans Thai", sans-serif;
+  color: #13282e;
+  background: #edf4f3;
+  --accent: #106651;
+  --line: #c6d9d5;
+}
+* { box-sizing: border-box; }
+html[lang="th"] [data-en],
+html[lang="en"] [data-th],
+[hidden],
+.print-value { display: none; }
+main { max-width: 830px; margin: auto; padding: 1.25rem; }
+h1, h2, p { margin: 0; }
+h1 { font-size: clamp(1.6rem, 4vw, 2.25rem); line-height: 1.25; }
+h2 { font-size: 1.1rem; line-height: 1.4; color: #174d42; }
+p, li { line-height: 1.55; }
+.toolbar, .sheet {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+.toolbar, .sheet, .submission { display: grid; gap: .72rem; }
+.sheet-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: .4rem 1rem;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: .6rem;
+}
+.sheet-header h2 { font-size: 1.4rem; }
+.running, .brand { font-weight: 650; color: #41685e; font-size: .875rem; }
+.running { margin-bottom: .2rem; }
+.actions, nav { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; }
+nav a, button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.65rem;
+  padding: .45rem .75rem;
+  border: 1px solid var(--line);
+  border-radius: .55rem;
+  background: white;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 650;
+  text-decoration: none;
+  cursor: pointer;
+}
+button.primary { color: white; background: var(--accent); border-color: var(--accent); }
+:focus-visible { outline: 2px solid #147b65; outline-offset: 2px; }
+.identity, .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+.field, .response { display: grid; gap: .25rem; }
+.field > span:first-child, .response > span:first-child { font-size: .94rem; font-weight: 600; }
+input, textarea {
+  width: 100%;
+  min-width: 0;
+  color: inherit;
+  font: inherit;
+  padding: .3rem .5rem;
+  border: 1px solid #92aca7;
+  border-radius: .35rem;
+  background: #f8fcfb;
+}
+input { min-height: 2.25rem; }
+textarea { resize: vertical; }
+input.inline { width: 5.3rem; display: inline-block; }
+table { width: 100%; border-collapse: collapse; font-size: .94rem; table-layout: fixed; }
+th, td { border: 1px solid var(--line); padding: .32rem .42rem; overflow-wrap: anywhere; text-align: left; }
+tbody th { font-weight: 550; }
+thead { background: #e7f3ef; }
+table:has(th:nth-child(3):last-child) th:first-child { width: 42%; }
+table:has(th:nth-child(2):last-child) th:first-child { width: 18%; }
+ol { margin: 0; padding-left: 1.4rem; }
+li + li { margin-top: .22rem; }
+.prompt, .safety, #check-feedback {
+  padding: .52rem .75rem;
+  background: #e9f4ef;
+  border-inline-start: 3px solid var(--accent);
+  border-radius: .25rem;
+}
+.safety { background: #fcf5e6; border-color: #8d6d27; }
+.small, #storage-status { font-size: .875rem; color: #3f615b; }
+#storage-status:empty { display: none; }
+.equation { line-height: 1.65; min-width: 0; overflow-wrap: anywhere; }
+.fraction {
+  display: inline-grid;
+  text-align: center;
+  vertical-align: middle;
+  margin-inline: .14rem;
+}
+.fraction > span { padding-inline: .2rem; }
+.fraction > span:first-child { border-bottom: 1px solid currentColor; }
+.submission { border-top: 1px solid var(--line); padding-top: .6rem; }
+#check-feedback[data-ok="false"] { background: #fff2e6; border-color: #93502b; }
+@media (max-width: 510px) {
+  main { padding: .5rem; }
+  .toolbar, .sheet { padding: .78rem; }
+  .pair { grid-template-columns: 1fr; }
+  input.inline { width: 3.8rem; }
+  td, th { padding: .26rem; }
+}
+@page { size: A4 portrait; margin: 12mm 13mm; }
+@media print {
+  :root { background: white; font-size: 10.5pt; }
+  main { max-width: none; padding: 0; }
+  .screen-only, #storage-status, #check-feedback, input, textarea { display: none !important; }
+  .sheet {
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    gap: 2.2mm;
+    break-after: page;
+  }
+  .sheet:last-child { break-after: auto; }
+  .sheet-header { padding-bottom: 2.2mm; }
+  .sheet-header h2 { font-size: 15pt; }
+  h2 { font-size: 11.5pt; }
+  p, li { line-height: 1.4; }
+  table { font-size: 9.5pt; }
+  th, td { padding: 1.3mm 1.6mm; }
+  tr { break-inside: avoid; }
+  .prompt, .safety { padding: 1.5mm 2mm; }
+  .identity, .pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .submission { gap: 2mm; }
+  .print-value {
+    display: inline-block;
+    min-height: 5mm;
+    min-width: 13mm;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .response .print-value { display: block; min-height: 12mm; }
+  .field { gap: 0; }
+  .field .print-value { display: block; }
+  .equation .print-value { min-width: 17mm; vertical-align: middle; }
+}

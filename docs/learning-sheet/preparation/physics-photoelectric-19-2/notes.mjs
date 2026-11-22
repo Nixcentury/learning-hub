@@ -34,12 +34,13 @@ export function notebook(th, filled, lab) {
   const t = (thai, english) => th ? thai : english;
   const c = (thai, english) => p(t(thai, english));
   const m = String.raw;
+  const recorded = value => filled ? value : '_____';
   const tableReading = (f, intensity, voltage, metal = 'A') =>
     lab.measure({light:true,metal,frequency:f,intensity,voltage}).current.toFixed(2);
   const measureRows = [6,6,6.1,6.1].map((f,i)=>{
     const intensity = [50,80,80,50][i];
     const current = tableReading(f,intensity,1);
-    return [f.toFixed(2),intensity,current];
+    return [f.toFixed(2),intensity,recorded(current)];
   });
   const metalRows = [6.40, 7.10, 7.60].map(f => [f.toFixed(2),
     ...['A', 'B', 'C'].map(metal => tableReading(f, 50, 1, metal))]);
@@ -50,19 +51,19 @@ export function notebook(th, filled, lab) {
   const ex = (n, title, prompt, answer) => `<div class="block example" data-example-number="${n}"><h3>${t('ตัวอย่าง','Example')} ${n} · ${title}</h3>${p(prompt)}${filled?`<div class="note-answer">${answer}</div>`:'<div class="writing" style="--space:46mm"></div>'}</div>`;
   const pages = [
     [
-      'หลักฐานว่าอิเล็กตรอนหลุดจากผิวโลหะ','Evidence that electrons leave the metal',
-      c('การแทรกสอดของแสงทำให้เราเห็นริ้วสว่างและมืด คราวนี้ฉายแสงลงบนผิวโลหะ ถ้าเรามองไม่เห็นอิเล็กตรอน เราจะรู้ได้อย่างไรว่ามันหลุดออกมา?',
-        'Light interference produces bright and dark fringes. Now shine light onto a metal surface. If we cannot see individual electrons, how can we tell whether they leave the surface?') +
+      'Quick Start Note · จากแสงถึงค่าที่มิเตอร์อ่าน','Quick Start Note · From light to the meter reading',
+      c('เปิด '+link(th)+' แล้วทำตามภารกิจทีละขั้น เปลี่ยนค่าตามที่กำหนด ดูจุดอิเล็กตรอนในหลอด อ่านค่า I (µA) แล้วกด «บันทึกค่ามิเตอร์» นำค่าที่บันทึกมาใส่หน้านี้',
+        'Open the '+link(th)+' and follow the mission steps. Change the specified setting, watch the electron dots in the tube, read I (µA), and press “Record meter reading”. Transfer your readings to this page.') +
       figure(tube(th),t('วงจรของแล็บ · แสงตกกระทบขั้วปล่อย ขั้วรับอยู่ฝั่งตรงข้าม มิเตอร์วัดกระแสในวงจร','Lab circuit · light hits the emitter, the collector faces it, and the meter measures circuit current.')) +
       `<h3>${t('เปรียบเทียบก่อนและหลังเปิดแสง','Compare light off and on')}</h3>` +
       p(intensityScale(th)) +
-      c('ใช้โลหะ A และศักย์ขั้วรับ +1.00 V เมื่อปิดแสง มิเตอร์อ่านได้ 0.00 µA เมื่อฉายโฟตอนพลังงาน 3.00 eV ที่ความเข้ม 50% มิเตอร์อ่านได้ 2.00 µA',
-        'Use metal A and a collector voltage of +1.00 V. With the light off the meter reads 0.00 µA. With 3.00 eV photons at 50% intensity, it reads 2.00 µA.') +
+      c('ภารกิจ 1 · ใช้โลหะ A และศักย์ขั้วรับ +1.00 V ปิดแสง: '+recorded('0.00')+' µA เปิดแสงชุดสอน 3.00 eV ที่ความเข้ม 50%: '+recorded('2.00')+' µA',
+        'Mission 1 · Use metal A and a collector voltage of +1.00 V. Light off: '+recorded('0.00')+' µA. Teaching light at 3.00 eV and 50% intensity: '+recorded('2.00')+' µA.') +
       activity(th,t('ค่ากระแสก่อนและหลังเปิดแสงบอกอะไร?', 'What do the readings before and after switching on the light show?'),
         t('0.00 → 2.00 µA กระแสที่ตรวจพบแสดงว่ามีอิเล็กตรอนเคลื่อนจากผิวโลหะไปถึงขั้วรับ','0.00 → 2.00 µA. The measured current shows that electrons travelled from the metal to the collector.'),filled) +
       `<h3>${t('ผลของความถี่และความเข้ม','Effects of frequency and intensity')}</h3>` +
-      c('ตารางให้ค่ากระแสเมื่อเปิดแสง โดยคงโลหะ A และศักย์ขั้วรับ +1.00 V แถว 1–2 และ 3–4 ใช้เทียบความเข้ม แถว 2–3 ใช้เทียบความถี่',
-        'The table gives the current with the light on, metal A and the collector at +1.00 V. Compare intensity using rows 1–2 and 3–4, then compare frequency using rows 2–3.') +
+      c('ภารกิจ 2 · คงโลหะ A และศักย์ขั้วรับ +1.00 V เทียบแถว 1–2 และ 3–4 เพื่อดูผลของความเข้ม เทียบแถว 2–3 เพื่อดูผลของความถี่',
+        'Mission 2 · Keep metal A and the collector at +1.00 V. Compare rows 1–2 and 3–4 for the effect of intensity, then rows 2–3 for the effect of frequency.') +
       table([t('ความถี่','Frequency')+` (${fUnit})`,t('ความเข้ม (%)','Intensity (%)'),'I (µA)'],measureRows) +
       activity(th,t('กระแสเริ่มปรากฏระหว่างความถี่คู่ใด? การเพิ่มความเข้มให้ผลต่างกันอย่างไรในสองช่วง?', 'Which pair brackets the onset of current? How does raising intensity affect the two regimes?'),
         t('อยู่ระหว่าง 6.00 กับ 6.10 × 10¹⁴ Hz ที่ 6.00 เพิ่มความเข้มแล้วยังอ่านได้ศูนย์ ที่ 6.10 กระแสเพิ่มเมื่อเพิ่มความเข้ม คำถามต่อไปคือความถี่เปลี่ยนพลังงานที่แสงส่งให้อิเล็กตรอนอย่างไร',
@@ -109,8 +110,8 @@ export function notebook(th, filled, lab) {
     ],
     [
       'ความถี่ขีดเริ่มของโลหะและกราฟพลังงาน','Metal thresholds and the energy graph',
-      c('ตารางแสดงกระแสของโลหะสามชนิดเมื่อใช้ความเข้ม 50% และศักย์ขั้วรับ +1.00 V เท่ากัน',
-        'The table gives the currents for three metals at the same 50% intensity and +1.00 V collector voltage.') +
+      c('ภารกิจ 4 · เทียบผลที่ห้องบันทึกกับตารางตัวอย่างของโลหะสามชนิดที่ความเข้ม 50% และศักย์ขั้วรับ +1.00 V',
+        'Mission 4 · Compare your class readings with the model table for three metals at 50% intensity and +1.00 V collector voltage.') +
       table([t('ความถี่','Frequency')+` (${fUnit})`,'A (µA)','B (µA)','C (µA)'],metalRows) +
       activity(th,t('ที่ความถี่เดียวกัน เหตุใดการเปลี่ยนโลหะจึงทำให้บางครั้งกระแสเป็นศูนย์?', 'Why can changing the metal at the same frequency reduce the current to zero?'),
         t('ที่ 6.40 ตรวจพบกระแสใน A ที่ 7.10 ตรวจพบใน B เมื่อเทียบกับ C และที่ 7.60 ตรวจพบใน C โลหะที่มี W สูงกว่าต้องใช้ f₀ สูงกว่าตามสมการ (3)',
@@ -130,23 +131,23 @@ export function notebook(th, filled, lab) {
       box(4) +
       c('ใช้ e = 1.602 × 10⁻¹⁹ C เมื่อต้องตอบเป็น J ถ้าตอบเป็น eV ค่าตัวเลขของพลังงานจะเท่ากับค่าตัวเลขของศักย์หยุดยั้งใน V สำหรับอิเล็กตรอนหนึ่งตัว',
         'Use e = 1.602 × 10⁻¹⁹ C to answer in joules. For one electron, the numerical value of the energy in eV equals the numerical stopping-potential magnitude in volts.') +
-      activity(th,t('ถ้ายังเปิดแสงความถี่เดิมที่สูงกว่าขีดเริ่ม แล้วปรับจนมิเตอร์อ่านศูนย์ อิเล็กตรอนยังหลุดไหม?',
-        'If the light stays on above threshold, do electrons still leave the surface when you tune the voltage to a zero meter reading?'),
-        t('ยังหลุด เพราะพลังงานต่อโฟตอนยังสูงกว่า W เมื่อแรงดันต้านมากพอ อิเล็กตรอนไปไม่ถึงขั้วรับ กระแสที่วงจรจึงเป็นศูนย์',
-          'Yes. Photon energy still exceeds W. The retarding voltage prevents electrons from reaching the collector, so the circuit current falls to zero.'),filled)
+      activity(th,t('มิเตอร์อ่านศูนย์ทั้งที่ 6.00 × 10¹⁴ Hz ในภารกิจ 2 และเมื่อใช้แสงชุดสอนที่ V = −0.50 V ในภารกิจ 3 ภาพในหลอดต่างกันอย่างไร?',
+        'The meter reads zero at 6.00 × 10¹⁴ Hz in Mission 2 and under teaching light at V = −0.50 V in Mission 3. What is different in the tube?'),
+        t('ภารกิจ 2 แสงความถี่ต่ำจนไม่มีอิเล็กตรอนหลุด ภารกิจ 3 แสงยังทำให้อิเล็กตรอนหลุด แต่แรงดันต้านทำให้ไปไม่ถึงขั้วรับ',
+          'In Mission 2, the frequency is too low to emit electrons. In Mission 3, the light still causes emission, but the retarding voltage prevents electrons from reaching the collector.'),filled)
     ],
     [
       'อ่านศักย์หยุดยั้งจากกราฟกระแส','Read the stopping potential from the current graph',
-      c('ฉายโฟตอนพลังงาน 3.00 eV ลงบนโลหะ A ที่ความเข้ม 50% กราฟและตารางแสดงผลเมื่อเปลี่ยนศักย์ขั้วรับเทียบกับขั้วปล่อย',
-        'Light with photons of 3.00 eV illuminates metal A at 50% intensity. The graph and table show how the current changes with collector voltage relative to the emitter.') +
+      c('ภารกิจ 3 · ใช้แสงชุดสอน 3.00 eV กับโลหะ A ที่ความเข้ม 50% ดูจากผลที่ห้องบันทึกว่าแถวใดยังมีกระแสและแถวใดกระแสเพิ่งเป็นศูนย์ แล้วเทียบกับกราฟตัวอย่าง',
+        'Mission 3 · Use 3.00 eV teaching light on metal A at 50% intensity. Find the last row with current and the first zero-current row in your class data, then compare them with the model graph.') +
       figure(teachingIV(th,sweep),t('จุดคือค่าบันทึกจากแบบจำลองของแล็บ เส้นคือแนวโน้มของแบบจำลองที่ใช้ในชุดสอน','Dots show readings from the lab model. The line shows the teaching model’s trend.')) +
       table([t('ศักย์ขั้วรับเทียบขั้วปล่อย V (V)','Collector voltage relative to emitter V (V)'), 'I (µA)'],sweep.map(([v,i])=>[lab.signed(v),i.toFixed(2)])) +
       activity(th,t('จุดสุดท้ายที่ยังมีกระแสและจุดแรกที่อ่านได้ศูนย์บอกช่วงใด? แยกค่า V ที่มีเครื่องหมายออกจากขนาด Vₛ',
         'Which interval is marked by the last nonzero reading and the first zero? Distinguish signed V from the magnitude Vₛ.'),
         t('ที่ −0.45 V ยังอ่านได้ 0.20 µA ที่ −0.50 V อ่านได้ศูนย์ ข้อมูลสองจุดจึงให้ 0.45 &lt; Vₛ ≤ 0.50 V ค่าประมาณจากจุดแรกที่เป็นศูนย์คือ V = −0.50 V หรือ Vₛ ≈ 0.50 V ชุดสอนตั้งให้จุดหยุดจริงในแบบจำลองอยู่ตรงค่านี้',
           'At −0.45 V the current is 0.20 µA. At −0.50 V it is zero. The two samples bracket 0.45 &lt; Vₛ ≤ 0.50 V. The first zero gives V ≈ −0.50 V or Vₛ ≈ 0.50 V, which equals the exact model cutoff for this preset.'),filled) +
-      c('เมื่อกระแสเป็นศูนย์ ให้พิจารณาทั้งพลังงานของแสงและศักย์ขั้วรับ กระแสจะเกิดเมื่อมีอิเล็กตรอนหลุดและไปถึงขั้วรับ',
-        'A zero current calls for checking both the photon energy and collector voltage. Current requires electrons to leave the surface and reach the collector.')
+      c('ทำนายแล้วลอง · ในโหมด «สำรวจหลอดเอง» ใช้โลหะ A แสงชุดสอน ความเข้ม 50% และ V = −0.55 V ถ้าเพิ่มความถี่เป็น 8.00 × 10¹⁴ Hz จะเริ่มมีกระแสไหม? บันทึกค่าก่อนและหลังเพื่อเช็ก',
+        'Predict and test · In “Explore the tube”, use metal A, teaching light, 50% intensity and V = −0.55 V. Will current flow if you increase the frequency to 8.00 × 10¹⁴ Hz? Record both readings to check.')
     ],
     [
       'ตัวอย่าง 1–2 · คำนวณจากพลังงานโฟตอน','Examples 1–2 · Calculations from photon energy',

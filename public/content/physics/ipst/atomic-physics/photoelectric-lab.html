@@ -204,8 +204,8 @@
       </figure>
     </section>
     <section id="checkout" class="card" tabindex="-1" hidden>
-      <h2 data-th="Check-out · ตรวจความเข้าใจ" data-en="Check-out · Check understanding"></h2>
-      <p data-th="อ้างอิงผลที่บันทึกไว้สำหรับภารกิจนี้เมื่อเปิด Check-out" data-en="Use the observations saved for this mission when you opened Check-out."></p>
+      <h2 data-th="Check-out · อ่านผลที่ทดลอง" data-en="Check-out · Read your results"></h2>
+      <p data-th="อ่านค่าจากตารางด้านบน แล้วเทียบกับสิ่งที่เห็นในหลอด" data-en="Read the table above and compare it with what you see in the tube."></p>
       <form id="answer-form" novalidate>
         <div id="questions"></div>
         <button type="submit" id="check" class="primary" data-th="ตรวจคำตอบ" data-en="Check answers"></button>
@@ -227,10 +227,16 @@
     </div>
     <p id="report-name"></p>
     <p id="report-date"></p>
+    <p data-th="เก็บผลนี้ไว้ใช้ใน Classroom Note โดยเฉพาะคู่ที่กระแสเริ่มปรากฏเมื่อเพิ่มความถี่ และคู่แรงดันที่กระแสเพิ่งลดเป็นศูนย์" data-en="Keep these readings for the Classroom Note. Mark the frequency pair where current first appears and the voltage pair where it first falls to zero."></p>
     <div id="metrics"></div>
     <p id="reset-score-note" hidden></p>
     <div id="report-detail"></div>
     <div class="actions print-hide">
+      <a href="https://nixcentury.github.io/learning-hub/#physics/bank/b-6011652496e13a2c7b17fe1c/classroom-note"
+        data-hub-html data-html-src="19-2-photoelectric-classroom-note.html" data-content-id="physics-19-2-photoelectric-classroom-note"
+        data-subject-id="physics" data-chapter-id="bank" data-topic-id="b-6011652496e13a2c7b17fe1c"
+        data-title-th="Classroom Note 19.2" data-title-en="Classroom Note 19.2"
+        data-th="เปิด Classroom Note 19.2" data-en="Open Classroom Note 19.2">เปิด Classroom Note 19.2</a>
       <button type="button" id="print" class="primary" data-th="พิมพ์รายงาน A4" data-en="Print A4 report"></button>
       <button type="button" id="review" data-th="ทบทวนภารกิจที่ผ่าน" data-en="Review completed missions"></button>
       <button type="button" id="return" data-th="กลับไปที่หลอดทดลอง" data-en="Return to the tube"></button>
@@ -240,8 +246,8 @@
 </main>
 <script defer src="assets/photoelectric/model.js?v=metal-threshold-1"></script>
 <script defer src="assets/photoelectric/plots.js"></script>
-<script defer src="assets/photoelectric/missions.js?v=metal-threshold-1"></script>
+<script defer src="assets/photoelectric/missions.js?v=read-results-1"></script>
 <script defer src="assets/photoelectric/tube.js?v=glass-tube-1"></script>
-<script defer src="assets/photoelectric/lab.js?v=irradiance-reference-1"></script>
+<script defer src="assets/photoelectric/lab.js?v=read-results-1"></script>
 </body>
 </html>

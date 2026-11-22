@@ -948,9 +948,15 @@ export function createWorkspace({
       const opensExamPdfs = tool.context.toolKind === "html"
         && tool.context.contentId === "physics-ipst-wave-optics-10-2-exit-ticket-revision"
         && new URL(tool.page, location.href).pathname.endsWith("/content/physics/ipst/wave-optics/10-2-double-slit-exit-ticket-revision-v1-3.html");
-      element.querySelector("iframe").setAttribute("sandbox", opensExamPdfs
-        ? "allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-        : "allow-same-origin");
+      const opensLabForm = tool.context.toolKind === "html"
+        && tool.context.contentId === "chemistry-acid-base-lab-sheet"
+        && new URL(tool.page, location.href).pathname.endsWith("/content/chemistry/ipst/acid-base/10-7-10-8-acid-base-lab-sheet.html");
+      const sandbox = ["allow-same-origin"];
+      if (opensExamPdfs) sandbox.push("allow-popups", "allow-popups-to-escape-sandbox");
+      // The sheet's native link can open the registered Hub form even when
+      // WebKit does not dispatch the iframe click to the parent's listener.
+      if (opensLabForm) sandbox.push("allow-top-navigation-by-user-activation");
+      element.querySelector("iframe").setAttribute("sandbox", sandbox.join(" "));
     }
 
     const record = {

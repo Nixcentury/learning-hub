@@ -1,0 +1,93 @@
+body {
+  background: #f1f6f5;
+  color: #16332e;
+  font: 16px/1.55 Tahoma, "Noto Sans Thai", Arial, sans-serif;
+  margin: 0;
+}
+
+.lab-sheet {
+  box-sizing: border-box;
+  max-width: 850px;
+  margin: auto;
+  padding: 20px;
+}
+
+.lab-navigation { margin-bottom: 12px; }
+.record-link {
+  background: #e8f3ef;
+  border: 1px solid #b8d0c9;
+  border-radius: 8px;
+  color: #164d40;
+  display: inline-block;
+  font-weight: 700;
+  padding: 8px 12px;
+}
+
+.lab-page {
+  background: white;
+  border: 1px solid #c9ddd7;
+  border-radius: 12px;
+  box-sizing: border-box;
+  margin: 0 0 16px;
+  padding: 18px;
+}
+
+.lab-page h2 { border-bottom: 2px solid #39715f; font-size: 1.4em; margin: 0 0 .4em; }
+.lab-page h3 { font-size: 1.1em; margin: .65em 0 .2em; }
+.lab-page p { margin: .25em 0 .45em; }
+.lab-page ol { margin: .3em 0; padding-inline-start: 1.6em; }
+.lab-page li + li { margin-top: .25em; }
+.lab-page figure { margin: 0; }
+.lab-page img { display: block; max-width: 100%; height: auto; }
+.lab-page figcaption { color: #34564c; margin-top: .25em; }
+.lab-page .apparatus {
+  align-items: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1.2fr minmax(0, 1fr);
+}
+.titration-setup { max-width: 225px; }
+.phosphate-steps { max-width: 520px; }
+.student-line { display: flex; gap: 10%; font-size: .9em; }
+.student-line span:first-child { min-width: 52%; }
+.field-space { display: inline-block; width: 3.75em; }
+.working-space { display: block; min-block-size: var(--work-height); }
+.lab-space { display: block; min-block-size: 1.2em; }
+
+.lab-page table { border-collapse: collapse; width: 100%; }
+.lab-page th,
+.lab-page td { border: 1px solid #cadbd6; padding: .22em .42em; text-align: left; }
+.lab-page thead { background: #ecf5f2; }
+.lab-page .prompt,
+.lab-page .safety { background: #edf5f1; border-inline-start: 3px solid #74998d; padding: .25em .6em; }
+.lab-page .safety { background: #faf5e8; border-color: #aa8a4c; }
+.lab-page .small { color: #34564c; }
+.lab-page .equation { margin: .28em 0; }
+.lab-page .unit-chain { white-space: normal; }
+.lab-page [data-sheet-layout="block"] { margin-block: .16em .3em; }
+.lab-page .question { margin: .55em 0 0; }
+
+@media (max-width: 560px) {
+  .lab-sheet { padding: 8px; }
+  .lab-page { padding: 12px; }
+  .lab-page .apparatus { grid-template-columns: 1fr; }
+}
+
+html[data-hub-print-snapshot] body {
+  background: white;
+  font-size: 10pt;
+  line-height: 1.36;
+}
+html[data-hub-print-snapshot] .lab-sheet { max-width: none; padding: 0; }
+html[data-hub-print-snapshot] .lab-navigation { display: none; }
+html[data-hub-print-snapshot] .lab-page {
+  border: 0;
+  border-radius: 0;
+  margin: 0;
+  min-height: 145mm;
+  padding: 0;
+}
+html[data-hub-print-snapshot] .lab-page :is(h2, h3) { font-size: 11pt; }
+html[data-hub-print-snapshot] .student-line { font-size: 8pt; margin-bottom: 2mm; }
+html[data-hub-print-snapshot] .titration-setup { max-width: 42mm; }
+html[data-hub-print-snapshot] .phosphate-steps { max-width: 133mm; }

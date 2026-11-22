@@ -43,6 +43,15 @@ export const printPageCSS = `
   @media print { body.hub-print-document { zoom:1 !important; } }
 `;
 
+const pairedWorksheetCSS = `
+  .hub-print-document .hub-print-running { display:flex !important; justify-content:space-between; gap:4mm !important; min-height:0 !important; font-size:8pt !important; line-height:1.35 !important; }
+  .hub-print-document .hub-print-running > span:last-child { text-align:right !important; }
+  .hub-print-document .hub-print-page-header { border-bottom:1px solid #466279 !important; padding-bottom:2mm !important; }
+  .hub-print-document .hub-print-page-footer { border-top:.6px solid #96a8b5 !important; padding-top:2mm !important; line-height:1.4 !important; }
+  html[data-hub-print-profile="standard"] .hub-print-page { padding-block:11mm !important; row-gap:3mm !important; }
+  html[data-hub-print-profile="standard"] .hub-print-running { margin-inline:-3mm !important; }
+`;
+
 export class PrintLayoutError extends Error {
   constructor(code, node) {
     super(code);
@@ -87,10 +96,22 @@ export function tableRowGroups(rows) {
 export function paginatePrintDocument(doc, metadata = {}, language = 'th', { profile = 'standard' } = {}) {
   const deviceMargins = profile === 'device-margins';
   const labels = normalizePrintMetadata(metadata);
+  const worksheet = doc.documentElement.dataset.printPageStyle === 'paired-worksheet';
+  const en = language === 'en';
+  const worksheetStatus = doc.querySelector('[data-print-zone="learning"]')
+    ? (en ? 'Read and revise' : 'อ่านทบทวน')
+    : doc.documentElement.dataset.sheetPrintEdition === 'answers'
+      ? (en ? 'Answers' : 'เฉลย')
+      : (en ? 'Learn / practise' : 'เรียนรู้ / ลงมือทำ');
+  const worksheetTitle = [labels.subject.toUpperCase(), doc.documentElement.dataset.printSection, labels.topic].filter(Boolean).join(' · ');
+  const headerLabels = worksheet
+    ? [worksheetTitle, [labels.work, worksheetStatus].filter(Boolean).join(' · ')]
+    : [labels.subject, labels.chapter, labels.topic];
+  const footerLabels = worksheet ? ['Nix-century', '999 / 999'] : [labels.work, '999 / 999', 'Nix-century'];
   if (doc.body.querySelector('.hub-print-page')) throw new PrintLayoutError('already-paginated');
   const style = doc.createElement('style');
   style.dataset.hubPageStyle = '';
-  style.textContent = printPageCSS + (deviceMargins ? deviceMarginsCSS : '');
+  style.textContent = printPageCSS + (deviceMargins ? deviceMarginsCSS : '') + (worksheet ? pairedWorksheetCSS : '');
   doc.head.append(style);
   doc.documentElement.dataset.hubPrintProfile = deviceMargins ? 'device-margins' : 'standard';
   const source = doc.createElement('div');
@@ -111,8 +132,8 @@ export function paginatePrintDocument(doc, metadata = {}, language = 'th', { pro
     if (pages.length >= 150) throw new PrintLayoutError('too-many-pages');
     page = doc.createElement('div'); page.className = 'hub-print-page';
     body = doc.createElement('div'); body.className = 'hub-print-page-body';
-    const header = running('hub-print-page-header', [labels.subject, labels.chapter, labels.topic]);
-    const footer = running('hub-print-page-footer', [labels.work, '999 / 999', 'Nix-century']);
+    const header = running('hub-print-page-header', headerLabels);
+    const footer = running('hub-print-page-footer', footerLabels);
     footer.children[1].className = 'hub-print-page-number';
     page.append(header, body, footer); doc.body.append(page); pages.push(page);
     if (deviceMargins) {

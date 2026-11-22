@@ -159,7 +159,7 @@ const data = {
 const stem = '10-7-10-8-acid-base';
 function render(kind) {
   const isExit = kind === 'exit';
-  const contentRevision = isExit ? '2026-11-22-4' : revision;
+  const contentRevision = isExit ? '2026-11-22-5' : revision;
   const {name} = data[kind];
   const suffix = isExit ? 'exit-ticket-revision' : 'classroom-note';
   const hub = '../../../../#chemistry/bank/buffer-solutions/';
@@ -179,7 +179,7 @@ function render(kind) {
   }).join('\n');
   const html = `<!doctype html>
 <html lang="th" data-learning-html data-learning-sheet="1" data-sheet-answer-toolbar="window" data-print-blank-sizing="preset"
-  data-sheet-guide="guides/${stem}-${suffix}.guide.json" data-sheet-revision="${contentRevision}"
+  ${isExit ? 'data-print-page-style="paired-worksheet" data-print-section="10.7–10.8"\n  ' : ''}data-sheet-guide="guides/${stem}-${suffix}.guide.json" data-sheet-revision="${contentRevision}"
   data-print-subject-th="เคมี ม.5" data-print-subject-en="Grade 11 Chemistry" data-print-chapter-th="กรด–เบส" data-print-chapter-en="Acids and bases"
   data-print-topic-th="ไทเทรต ไฮโดรลิซิส และบัฟเฟอร์" data-print-topic-en="Titration, hydrolysis and buffers"
   data-print-work-th="${isExit?'Exit Ticket Revision':'Classroom Note'}" data-print-work-en="${isExit?'Exit Ticket Revision':'Classroom Note'}">

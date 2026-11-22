@@ -10,6 +10,7 @@ const copies = {
     'สำเนาข้อสอบออนไลน์','Online exam copy'],
 };
 const key69 = 'https://assets.mytcas.com/69/alevel/69_answers_61-89.pdf#page=5';
+const shortResponses = new Set(['2566-28', '2567-19', '2568-22', '2569-22']);
 
 export function examProblems({t, work, task, card, link}) {
   function exam(year, question, page, prompts, solutions, result, extra = '') {
@@ -20,7 +21,8 @@ export function examProblems({t, work, task, card, link}) {
       '<p class="source">'+link(source,t(th,en))+
       (page ? t(` · หน้า ${page}`,` · Page ${page}`) : '')+
       (year === 2569 ? ' · '+link(key69,t('เฉลยทางการ MyTCAS ชุด 1','Official MyTCAS key, Set 1')) : '')+'</p>'+extra+
-      task(`a${year}-${question}`,t(...prompts),Array.isArray(solutions) ? t(...solutions) : solutions,{height:26,result,printResult:false}),
+      task(`a${year}-${question}`,t(...prompts),Array.isArray(solutions) ? t(...solutions) : solutions,
+        {height:shortResponses.has(`${year}-${question}`) ? 16 : 26,result,printResult:false}),
       {keepTogether:true});
   }
   return [
@@ -114,11 +116,11 @@ export function examProblems({t, work, task, card, link}) {
       task('recall-1',t('หลัง ICF เหลืออะไรในกรณีบัฟเฟอร์ และเมื่อพอดีจะดูอะไรต่อ?',
         'What remains after ICF for a buffer, and what do you examine at equivalence?'),
         t('บัฟเฟอร์มีสมาชิกคู่กรด–เบสอ่อนทั้งสองชนิดในปริมาณที่ช่วยรับกรดและเบสได้ เมื่อพอดีให้ดูว่าไอออนของเกลือใดไฮโดรลิซิส',
-          'A buffer retains both members of a weak conjugate pair in amounts that can take up acid and base. At equivalence check which salt ion hydrolyses.'),{height:18}),
+          'A buffer retains both members of a weak conjugate pair in amounts that can take up acid and base. At equivalence check which salt ion hydrolyses.'),{height:14}),
       task('recall-2',t('หา V ครึ่งสมมูลจากกราฟอย่างไร และเลือกอินดิเคเตอร์จากตรงไหน?',
         'How do you find the half-equivalence volume, and which region guides indicator selection?'),
         t('อ่าน V ที่จุดสมมูลจากแกนนอนแล้วหารสอง สำหรับกรดอ่อนโมโนโพรติกกับเบสแก่ pH ตรงนั้นประมาณ pKₐ เลือกอินดิเคเตอร์ที่ช่วงเปลี่ยนสีอยู่ในส่วนชันรอบจุดสมมูล',
-          'Read the equivalence volume on the horizontal axis and halve it. For a weak monoprotic acid titrated by a strong base, pH there is approximately pKₐ. Choose an indicator with a transition in the steep region near equivalence.'),{height:18}),
+          'Read the equivalence volume on the horizontal axis and halve it. For a weak monoprotic acid titrated by a strong base, pH there is approximately pKₐ. Choose an indicator with a transition in the steep region near equivalence.'),{height:14}),
     ].join('')),
   ].join('\n').replaceAll('Kᵥ','K<sub>w</sub>');
 }

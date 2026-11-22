@@ -2,9 +2,7 @@ export function exitProblems({t, work, task, card, graph, table}) {
   const ask = (id, th, en, solTh, solEn, height, result) =>
     task(id, t(th,en), solEn === null ? solTh : t(solTh, solEn), { height, result });
   return [
-    card('exit-start',t('โจทย์ใหม่ · อ่านแล้วลองตอบ','New questions · Read and solve'), [
-      t('<p><strong>Word Bank</strong> จุดยุติ · จุดสมมูล · สารส่วนเกิน · ไฮโดรลิซิส · คู่กรด–เบส · ความจุบัฟเฟอร์</p><p><strong>Sentence Bank</strong> แถว F เหลือ ___ จึงใช้ ___ หา pH / ช่วงเปลี่ยนสีของ ___ อยู่ในช่วง ___ ของกราฟ</p>',
-        '<p><strong>Word Bank</strong> endpoint · equivalence point · excess reactant · hydrolysis · conjugate pair · buffer capacity</p><p><strong>Sentence Bank</strong> Row F contains ___, so I find the pH using ___ / The transition range of ___ falls in the ___ region of the curve.</p>'),
+    card('exit-start',t('โจทย์ฝึก 1–7','Practice questions 1–7'), [
       t('<p>ที่ 25 °C ใช้ K<sub>w</sub> = 1.0 × 10<sup>−14</sup>, K<sub>a</sub>(CH₃COOH) = 1.8 × 10<sup>−5</sup>, K<sub>a</sub>(HCOOH) = 1.8 × 10<sup>−4</sup>, K<sub>b</sub>(NH₃) = 1.8 × 10<sup>−5</sup> ถือว่าปริมาตรรวมบวกกันได้</p>',
         '<p>At 25 °C use K<sub>w</sub> = 1.0 × 10<sup>−14</sup>, K<sub>a</sub>(CH₃COOH) = 1.8 × 10<sup>−5</sup>, K<sub>a</sub>(HCOOH) = 1.8 × 10<sup>−4</sup> and K<sub>b</sub>(NH₃) = 1.8 × 10<sup>−5</sup>. Assume additive volumes.</p>'),
     ].join('')),
@@ -58,8 +56,8 @@ export function exitProblems({t, work, task, card, graph, table}) {
           String.raw`\frac{x}{0.0400}\times100\% &\approx0.012\%`,
           String.raw`\mathrm{pH} &= -\log(4.71\times10^{-6})\approx5.33`,
         ]), null,23,'5.33'),
-    ].join('')),
-    card('exit-buffers',t('ข้อ 4–5 · บัฟเฟอร์กรดและบัฟเฟอร์เบส','Questions 4–5 · Acidic and basic buffers'),[
+    ].join(''), {keepTogetherBlank:true}),
+    card('exit-buffers',t('ข้อ 4 · บัฟเฟอร์กรด','Question 4 · Acidic buffer'),[
       ask('et4','4. บัฟเฟอร์มี CH₃COOH และ CH₃COONa อย่างละ 2.00 mmol ใน 50.00 mL เติม HCl 0.100 mol/L 5.00 mL จงระบุว่าอะไรรับกรด และหา pH ก่อน–หลัง',
         '4. A 50.00 mL buffer contains 2.00 mmol each of CH₃COOH and CH₃COONa. Add 5.00 mL of 0.100 mol/L HCl. Identify what takes up the acid and calculate pH before and after addition.',
         work(t('ทำ ICF สำหรับกรดแก่ แล้วใช้สมดุลแอซีติกตาม (3) ก่อนและหลังเติม', 'Use ICF for the added strong acid, then apply the acetic acid equilibrium (3) before and after.'), [
@@ -74,8 +72,12 @@ export function exitProblems({t, work, task, card, graph, table}) {
           String.raw`(\mathrm{pH}_1,\mathrm{pH}_2) &= (-\log x_1,-\log x_2)\approx(4.74,4.52)`,
         ],
           t('แอซีเตตรับกรดที่เติม pH จึงลดลงเล็กน้อย', 'Acetate takes up the added acid, so pH falls slightly.')), null,31,'4.74 → 4.52'),
-      ask('et5','5ก. บัฟเฟอร์ 50.00 mL มี NH₃ 3.00 mmol และ NH₄Cl 2.00 mmol เติม NaOH 0.100 mol/L 5.00 mL จงระบุว่าอะไรรับ OH⁻ และหา pH ก่อน–หลัง',
-        '5a. A 50.00 mL buffer contains 3.00 mmol NH₃ and 2.00 mmol NH₄Cl. Add 5.00 mL of 0.100 mol/L NaOH. Identify what reacts with OH⁻ and find the pH before and after.',
+    ].join('')),
+    card('exit-basic-buffer',t('ข้อ 5 · บัฟเฟอร์เบสและขีดจำกัด','Question 5 · Basic buffer and its limit'),[
+      t('<p>เตรียมบัฟเฟอร์แบบเดียวกันสองขวด แต่ละขวดมีปริมาตร 50.00 mL ประกอบด้วย NH₃ 3.00 mmol และ NH₄Cl 2.00 mmol เติม NaOH 0.100 mol/L ในปริมาตรต่างกันตามข้อย่อย</p>',
+        '<p>Prepare two identical 50.00 mL buffer samples containing 3.00 mmol NH₃ and 2.00 mmol NH₄Cl each. Add different volumes of 0.100 mol/L NaOH as specified below.</p>'),
+      ask('et5','5ก. เติม NaOH 5.00 mL จงระบุว่าอะไรรับ OH⁻ และหา pH ของบัฟเฟอร์ก่อนและหลังเติม',
+        '5a. Add 5.00 mL of NaOH. Identify what reacts with OH⁻ and find the buffer pH before and after the addition.',
         work(t('ทำ ICF สำหรับเบสแก่ แล้วใช้สมดุลแอมโมเนียตาม (5) ก่อนและหลังเติม', 'Use ICF for the added strong base, then apply the ammonia equilibrium (5) before and after.'), [
           String.raw`&\mathrm{NH_4^++OH^-\longrightarrow NH_3+H_2O}`,
           String.raw`n(\mathrm{OH^-}) &= (5.00\,\mathrm{mL})(0.100\,\mathrm{mmol/mL})=0.500\,\mathrm{mmol}`,
@@ -89,8 +91,8 @@ export function exitProblems({t, work, task, card, graph, table}) {
           String.raw`\mathrm{pH}_2 &= 14.00+\log x_2\approx9.62`,
         ],
           t('NH₄⁺ ทำปฏิกิริยากับ OH⁻ ที่เติม pH จึงเพิ่มขึ้นเล็กน้อย', 'NH₄⁺ reacts with added OH⁻, so pH rises slightly.')), null,31,'9.43 → 9.62'),
-      ask('et5b','5ข. ถ้าเปลี่ยนเป็น NaOH 0.100 mol/L ปริมาตร 25.00 mL โดยเริ่มจากบัฟเฟอร์เดิม ให้บอกว่าบัฟเฟอร์เดิมยังอยู่หรือไม่ และหา pH',
-        '5b. Starting from the original buffer, instead add 25.00 mL of 0.100 mol/L NaOH. Does the original buffer persist? Calculate the pH.',
+      ask('et5b','5ข. เติม NaOH 25.00 mL ในอีกขวด จงบอกว่าคู่เดิมยังทำหน้าที่เป็นบัฟเฟอร์ได้หรือไม่ และหา pH หลังเติม',
+        '5b. Add 25.00 mL of NaOH to the other sample. Does the original pair still act as a buffer? Calculate the pH after the addition.',
         work(t('เทียบ mmol ของ OH⁻ ที่เติมกับ NH₄⁺ ที่มีอยู่เดิม', 'Compare the mmol of added OH⁻ with the initial NH₄⁺.'), [
           String.raw`n(\mathrm{OH^-}) &= (25.00\,\mathrm{mL})(0.100\,\mathrm{mmol/mL})=2.50\,\mathrm{mmol}`,
           String.raw`n_{\mathrm F}(\mathrm{OH^-}) &= (2.50-2.00)\,\mathrm{mmol}=0.50\,\mathrm{mmol}`,
@@ -98,10 +100,12 @@ export function exitProblems({t, work, task, card, graph, table}) {
           String.raw`\mathrm{pH} &=14.00+\log(6.67\times10^{-3})\approx11.82`,
         ],
           t('NH₄⁺ ถูกใช้หมดใน ICF ความสามารถของบัฟเฟอร์เดิมหมดลงและ OH⁻ ส่วนเกินคุม pH', 'NH₄⁺ is consumed in ICF. The original buffer capacity is exhausted, and excess OH⁻ controls the pH.')), null,22,'11.82'),
-    ].join('')),
+    ].join(''), {keepTogetherBlank:true}),
     card('exit-equilibrium',t('ข้อ 6 · สมดุลของเกลือจากกรดอ่อนกับเบสอ่อน','Question 6 · Equilibria of a salt from a weak acid and base'),[
-      ask('et6a','6ก. ผสม HCOOH และ NH₃ ที่ความเข้มข้น 0.100 mol/L อย่างละ 25.00 mL จงหาค่า K ของการถ่ายโอนโปรตอนและระบุเกลือ',
-        '6a. Mix 25.00 mL each of 0.100 mol/L HCOOH and NH₃. Find K for proton transfer and name the salt.',
+      t('<p>ผสม HCOOH 0.100 mol/L กับ NH₃ 0.100 mol/L อย่างละ 25.00 mL</p>',
+        '<p>Mix 25.00 mL each of 0.100 mol/L HCOOH and 0.100 mol/L NH₃.</p>'),
+      ask('et6a','6ก. จงหาค่า K ของการถ่ายโอนโปรตอนและระบุชื่อเกลือ',
+        '6a. Find K for proton transfer and name the salt.',
         work(t('เขียนสมการถ่ายโอนโปรตอน และแทนค่าตาม (6)', 'Write the proton-transfer equation and substitute into (6).'), [
           String.raw`&\mathrm{HCOOH+NH_3\rightleftharpoons HCOO^-+NH_4^+}`,
           String.raw`K &= \frac{K_a(\mathrm{HCOOH})K_b(\mathrm{NH_3})}{K_w} =\frac{(1.8\times10^{-4})(1.8\times10^{-5})}{1.0\times10^{-14}}`,
@@ -118,7 +122,7 @@ export function exitProblems({t, work, task, card, graph, table}) {
           String.raw`\mathrm{pH} &=-\log(3.16\times10^{-7})\approx6.50`,
         ],
           t('ฟอร์เมตเป็นเบสอ่อนกว่าแอซีเตต ผลทางกรดจาก NH₄⁺ จึงเด่นกว่า', 'Formate is a weaker base than acetate, so the acidic effect of NH₄⁺ dominates.')), null,29,'6.50'),
-    ].join('')),
+    ].join(''), {keepTogetherBlank:true}),
     card('exit-graph',t('ข้อ 7 · อ่านกราฟและเลือกอินดิเคเตอร์','Question 7 · Interpret a curve and select an indicator'),[
       t('<p>ไทเทรต CH₃COOH 0.100 mol/L 20.00 mL ด้วย NaOH 0.100 mol/L ใช้กราฟจากแบบจำลอง</p>',
         '<p>Titrate 20.00 mL of 0.100 mol/L CH₃COOH with 0.100 mol/L NaOH. Use the model curve.</p>'),
@@ -131,7 +135,7 @@ export function exitProblems({t, work, task, card, graph, table}) {
         '7b. Choose BTB (6.0–7.6) or phenolphthalein (8.2–10.0), using the steep part of the curve.',
         'เลือกฟีนอล์ฟทาลีน ช่วง 8.2–10.0 ครอบคลุมบริเวณกราฟชันรอบจุดสมมูลที่ pH ≈ 8.72 ส่วน BTB เริ่มเปลี่ยนในช่วง pH ต่ำกว่าจุดสมมูล',
         'Choose phenolphthalein. The 8.2–10.0 interval sits in the steep part near the equivalence pH of about 8.72. BTB starts to change below the equivalence pH.',15),
-    ].join('')),
+    ].join(''), {keepTogether:true}),
     card('ipst-practice',t('ฝึกก่อนทำท้ายบท สสวท. · โจทย์แต่ง','IPST end-of-chapter preparation · Original practice'),[
       t('<p>อิงทักษะท้ายบท 10 ข้อ 5–14 ของ สสวท. <a href="https://www.scimath.org/ebook-chemistry/item/10299-4">คู่มือครู เคมี ม.5 เล่ม 4</a> · ข้อ 1–4 ของหนังสือให้ทวนทฤษฎีกรด–เบสและการแตกตัวเพิ่ม</p>',
         '<p>Skills from IPST Chapter 10, end-of-chapter questions 5–14. <a href="https://www.scimath.org/ebook-chemistry/item/10299-4">IPST Grade 11 teacher guide, book 4</a>. Review acid–base theories and dissociation for book questions 1–4.</p>'),

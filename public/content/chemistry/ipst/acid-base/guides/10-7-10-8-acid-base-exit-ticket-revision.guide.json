@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "chemistry-ipst-acid-base-10-7-10-8-exit-ticket-revision",
-    "revision": "2026-11-22-3",
-    "sha256": "73fa1bb187665a06674dbf238976a5fa32e639630b1281a6d0bd076513846bf6"
+    "revision": "2026-11-22-4",
+    "sha256": "ecfcd38fcbf8094644faef7fc76282b78ff4dfdd83e623c54d3119cc17e3b6d7"
   },
   "title": {
     "th": "Exit Ticket Revision · ไทเทรตและบัฟเฟอร์",
@@ -56,6 +56,51 @@
         "answer": {
           "th": "ICF ใช้ mmol และ ICE ใช้ mol/L ในใบนี้",
           "en": "Use mmol for ICF and mol/L for ICE in this worksheet."
+        }
+      },
+      "after": {
+        "th": "เริ่มบทความเติมคำ A และ B",
+        "en": "Start cloze passages A and B."
+      }
+    },
+    {
+      "id": "cloze",
+      "title": {
+        "th": "เติมคำจากแล็บไทเทรตและบัฟเฟอร์",
+        "en": "Complete the titration and buffer passages"
+      },
+      "summary": {
+        "th": "เลือกคำและประโยคจากคลังของแต่ละบท\nใช้ความหมายและผลแล็บช่วยตัดตัวลวง",
+        "en": "Choose words and sentences from each passage’s banks.\nUse lab observations and chemical meaning to rule out distractors."
+      },
+      "story": {
+        "th": "อ่านจากสิ่งที่เห็นในแล็บไปถึงกราฟและการคำนวณ pH",
+        "en": "Read from the lab observations through to the curve and pH calculation."
+      },
+      "action": {
+        "th": "เติมบทความ A และ B ก่อนเปิดเฉลย",
+        "en": "Complete passages A and B before revealing their answers."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เติมคำจากแล็บไทเทรตและบัฟเฟอร์",
+            "en": "Complete the titration and buffer passages"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "cloze-a"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "จุดที่เห็นอินดิเคเตอร์เปลี่ยนสีเรียกว่าอะไร?",
+          "en": "What is the point at which you observe the indicator change colour?"
+        },
+        "answer": {
+          "th": "จุดยุติ",
+          "en": "The endpoint."
         }
       },
       "after": {

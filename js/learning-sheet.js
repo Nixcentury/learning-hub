@@ -34,13 +34,15 @@ export function attachLearningSheet(doc, options) {
   return task;
 }
 
-async function initialize(doc, { stylesheetUrl, language = 'th', isCurrent = () => true }) {
+async function initialize(doc, { stylesheetUrl, language = 'th', isCurrent = () => true,
+  mountToolbar = true, onAnswerStateChange = () => {} }) {
   const errors = validateLearningSheet(learningSheetTree(doc.documentElement));
   if (errors.length) throw new Error(errors.join('\n'));
   await loadStyles(doc, stylesheetUrl);
   if (!isCurrent()) return null;
   let currentLanguage = language === 'en' ? 'en' : 'th', disposed = false;
   const shown = new Set(), entries = [];
+  let allShown = false;
   const controls = new Map();
   // WebKit blocks parent-installed click handlers in scripts-disabled frames.
   // Native disclosures still activate by touch/keyboard; their DOM changes are
@@ -89,6 +91,7 @@ async function initialize(doc, { stylesheetUrl, language = 'th', isCurrent = () 
     entries.push({ slot, answer, placeholder, control, toggle, originalId, originalAria,
       placeholderAria: placeholder?.getAttribute('aria-hidden') ?? null });
   }
+  const total = new Set(entries.map(entry => entry.slot.dataset.sheetSlot)).size;
   function render() {
     if (disposed) return;
     // Do not interpret mirrored TH/EN state or command resets as user actions.
@@ -98,7 +101,6 @@ async function initialize(doc, { stylesheetUrl, language = 'th', isCurrent = () 
     showAll.toggle.textContent = text('เปิดทั้งหมด', 'Reveal all');
     hideAll.toggle.textContent = text('ปิดทั้งหมด', 'Hide all');
     showAll.control.open = false; hideAll.control.open = false;
-    const total = new Set(entries.map(entry => entry.slot.dataset.sheetSlot)).size;
     status.textContent = text(`เปิดแล้ว ${shown.size} / ${total} ช่อง`, `${shown.size} / ${total} answers revealed`);
     for (const { slot, answer, placeholder, control, toggle } of entries) {
       const open = shown.has(slot.dataset.sheetSlot);
@@ -112,12 +114,23 @@ async function initialize(doc, { stylesheetUrl, language = 'th', isCurrent = () 
       toggle.title = toggle.getAttribute('aria-label');
     }
     observe();
+    const nextAllShown = total > 0 && shown.size === total;
+    if (allShown !== nextAllShown) {
+      allShown = nextAllShown;
+      onAnswerStateChange();
+    }
   }
   render();
-  doc.body.prepend(toolbar);
+  if (mountToolbar) doc.body.prepend(toolbar);
   doc.documentElement.dataset.hubSheetReady = '';
   const controller = {
     setLanguage(value) { currentLanguage = value === 'en' ? 'en' : 'th'; render(); },
+    get allAnswersShown() { return allShown; },
+    toggleAllAnswers() {
+      if (disposed) return;
+      if (allShown) shown.clear(); else entries.forEach(entry => shown.add(entry.slot.dataset.sheetSlot));
+      render();
+    },
     dispose() {
       if (disposed) return;
       disposed = true;

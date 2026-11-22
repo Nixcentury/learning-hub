@@ -423,7 +423,9 @@ export function createWorkspace({
       record.printButton.querySelector('.window-print-label').textContent = label("พิมพ์ / PDF", "Print / PDF");
     }
     if (record.revisionAnswers && !record.revisionAnswers.hidden) {
-      const shown = record.frame.contentDocument?.body.classList.contains('answers-on');
+      const shown = record.sheetAnswersInWindow
+        ? record.sheet?.allAnswersShown
+        : record.frame.contentDocument?.body.classList.contains('answers-on');
       record.revisionAnswers.textContent = shown ? label('ปิดเฉลย', 'Hide answers') : label('เปิดเฉลย', 'Show answers');
       record.revisionAnswers.setAttribute('aria-pressed', String(Boolean(shown)));
     }
@@ -1035,6 +1037,10 @@ export function createWorkspace({
     record.languageTh.addEventListener("click", () => onLanguageChange("th"));
     record.languageEn.addEventListener("click", () => onLanguageChange("en"));
     record.revisionAnswers?.addEventListener('click', () => {
+      if (record.sheetAnswersInWindow) {
+        record.sheet?.toggleAllAnswers();
+        return;
+      }
       const doc = record.frame.contentDocument;
       if (!isExitTicketRevision(doc)) return;
       doc.body.classList.toggle('answers-on');
@@ -1079,19 +1085,28 @@ export function createWorkspace({
       if (record.tool.context.toolKind === "html") {
         const doc = record.frame.contentDocument;
         record.isLearningSheet = Boolean(doc?.documentElement.hasAttribute('data-learning-sheet'));
+        record.sheetAnswersInWindow = record.isLearningSheet && doc.documentElement.dataset.sheetAnswerToolbar === 'window';
         record.element.classList.toggle('is-learning-sheet', record.isLearningSheet);
         record.guide.setDocument(doc);
         record.printButton.disabled = !doc?.documentElement.hasAttribute('data-learning-html');
-        record.revisionAnswers.hidden = !isExitTicketRevision(doc);
+        record.revisionAnswers.hidden = record.sheetAnswersInWindow || !isExitTicketRevision(doc);
         updateRecordText(record);
         void attachLearningSheet(doc, {
           stylesheetUrl: new URL('shared/learning-sheet.css?v=sheet-touch-20261025', location.href).href,
           language: language(),
           isCurrent: () => record.frame.isConnected && record.frame.contentDocument === doc,
+          mountToolbar: !record.sheetAnswersInWindow,
+          onAnswerStateChange: () => {
+            if (record.sheetAnswersInWindow) updateRecordText(record);
+          },
         }).then(controller => {
           if (!record.frame.isConnected || record.frame.contentDocument !== doc) { controller?.dispose(); return; }
           record.sheet = controller;
           controller?.setLanguage(language());
+          if (controller && record.sheetAnswersInWindow) {
+            record.revisionAnswers.hidden = false;
+            updateRecordText(record);
+          }
         }).catch(error => {
           if (!record.frame.isConnected || record.frame.contentDocument !== doc) return;
           const notice = doc.createElement('p');

@@ -4,25 +4,30 @@ import { classroom } from './classroom.mjs';
 import { exitProblems } from './exit.mjs';
 import { examProblems } from './exams.mjs';
 
-const revision = '2026-11-22-1';
+const revision = '2026-11-22-2';
 const out = new URL('../../../../public/content/chemistry/ipst/acid-base/', import.meta.url);
 const escape = value => String(value).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const pair = (th, en) => ({th, en});
 const css = `
-  body { background:#eef4f2; color:#172c28; font:16px/1.55 Tahoma,"Noto Sans Thai",sans-serif; margin:0; }
-  main { max-width:880px; box-sizing:border-box; margin:auto; padding:16px; }
-  .lesson, .opening { background:#fff; border:1px solid #c9dbd7; border-radius:9px; margin:0 0 14px; padding:16px; }
-  h1,h2 { color:#163e34; line-height:1.3; margin:0 0 .5em; }
-  h1 { font-size:1.5rem; } h2 { font-size:1.25rem; }
+  body { background:#e9edf2; color:#172b3c; font:10pt/1.45 "Noto Sans Thai",Tahoma,Arial,sans-serif; margin:0; }
+  main { width:min(210mm, calc(100% - 20px)); box-sizing:border-box; margin:10px auto; padding:10mm 12mm 8mm; background:white; box-shadow:0 2px 8px #263b502b; }
+  .lesson, .opening { margin:0 0 4mm; }
+  .running-head { display:flex; flex-wrap:wrap; justify-content:space-between; gap:2mm 4mm; color:#445c6c; font-size:8pt; border-bottom:.4pt solid #8296a5; padding-bottom:2mm; margin-bottom:3mm; }
+  .identity { display:flex; gap:2mm; align-items:baseline; margin:1mm 0 3mm; font-size:8pt; }
+  .name-space, .class-space { display:inline-block; border-bottom:.4pt solid #8996a3; }
+  .name-space { width:min(96mm,52%); }
+  .class-space { width:min(23mm,18%); }
+  h1,h2 { color:#193f55; line-height:1.3; margin:0 0 .5em; }
+  h1,h2 { font-size:11pt; }
   p { margin:.35em 0 .55em; }
   .task { margin:.6em 0 .85em; }
   .prompt { font-weight:700; } .source { font-size:.9em; }
   .result-slot { font-size:.9em; }
   .result-print { display:none; }
-  .callout { border-inline-start:3px solid #568478; background:#eef6f2; padding:.35em .7em; }
+  .callout { border-inline-start:1.2pt solid #7895a9; background:#edf2f6; padding:.35em .7em; }
   .eq { display:flex; align-items:center; gap:.5em; justify-content:space-between; flex-wrap:wrap; }
   .eq-number { text-align:end; }
-  .formula-row { display:grid; grid-template-columns:minmax(0,1fr) max-content; gap:.55rem; align-items:center; }
+  .formula-row { display:grid; grid-template-columns:minmax(0,1fr) max-content; gap:.55rem; align-items:center; border:.65pt solid #758fa4; margin:2mm 0 3mm; padding:0 2mm; }
   [data-sheet-slot] { margin-block:.36em; }
   .lab-figures { display:grid; grid-template-columns:1fr 2fr; gap:12px; align-items:center; }
   figure { margin:8px 0; } figure img,figure svg { display:block; max-width:100%; height:auto; }
@@ -32,15 +37,15 @@ const css = `
   .graph text { font:15px Tahoma,Arial,sans-serif; fill:#172c28; }
   .graph .caption { font-size:17px; }
   table { border-collapse:collapse; width:100%; margin:.55em 0; }
-  td,th { border:1px solid #c3d7d0; text-align:left; padding:.28em .42em; overflow-wrap:anywhere; }
-  th { background:#edf5f1; }
+  td,th { border-bottom:.45pt solid #aebbc5; text-align:left; padding:.65mm 1.5mm; overflow-wrap:anywhere; }
+  th { background:#edf2f6; }
   td { height:1.25em; }
-  a { color:#115c52; }
-  @media(max-width:560px) { main {padding:8px} .lesson,.opening {padding:10px} .lab-figures {grid-template-columns:1fr} td,th {padding:.2em} }
+  a { color:#204f75; }
+  @media(max-width:560px) { main {padding:4mm; width:calc(100% - 8px); margin:4px auto} .lab-figures {grid-template-columns:1fr} td,th {padding:.2em} }
   html[data-hub-print-snapshot] body { background:white; font-size:10pt; line-height:1.4; }
-  html[data-hub-print-snapshot] main { max-width:none; margin:0; padding:0; }
+  html[data-hub-print-snapshot] main { width:auto; max-width:none; margin:0; padding:0; box-shadow:none; }
   html[data-hub-print-snapshot] .lesson, html[data-hub-print-snapshot] .opening { border:0; border-radius:0; margin:0 0 4mm; padding:0; }
-  html[data-hub-print-snapshot] h2 { font-size:13pt; border-block-end:1px solid #568478; padding-block-end:1mm; }
+  html[data-hub-print-snapshot] h2 { font-size:13pt; border-block-end:.4pt solid #8296a5; padding-block-end:1mm; }
   html[data-hub-print-snapshot] .graph svg { width:113mm; }
   html[data-hub-print-snapshot] .result-slot { display:none; }
   html[data-hub-print-snapshot][data-sheet-print-edition="answers"] .result-print,
@@ -128,16 +133,19 @@ function render(kind) {
   const body = ['th','en'].map(lang=>{
     const kit = toolkit(lang);
     const {t, link} = kit;
-    const practiceLink = isExit ? ` · <a href="#${lang}-practice">${t('ไปส่วนโจทย์','Jump to practice')}</a>` : '';
-    const heading = `<header class="opening"><h1>${name[lang]}</h1><nav class="no-print">${link(hub+'lab-guide',t('คู่มือแล็บ','Lab Guide'))} · ${link(hub+(isExit?'classroom-note':'exit-ticket-revision'),isExit?'Classroom Note':'Exit Ticket Revision')}${practiceLink}</nav></header>`;
+    const kindLabel = isExit ? 'Exit Ticket Revision' : 'Classroom Note';
+    const runningHead = `<div class="running-head"><span>CHEMISTRY · 10.7–10.8 · ${t('ไทเทรตและบัฟเฟอร์','Titration and buffers')}</span><span>${kindLabel} · ${t('ลงมือทำ','Practice')}</span></div>`;
+    const identity = `<p class="identity">${t('ชื่อ','Name')} <span class="name-space" aria-hidden="true"></span> ${t('ห้อง','Class')} <span class="class-space" aria-hidden="true"></span></p>`;
+    const notesLink = isExit ? ` · <a href="#${lang}-revision">${t('ไปสรุปทบทวน','Jump to Revision Notes')}</a>` : '';
+    const heading = `<header class="opening">${runningHead}<h1>${kindLabel} · 10.7–10.8</h1>${identity}<nav class="no-print">${link(hub+'lab-guide',t('คู่มือแล็บ','Lab Guide'))} · ${link(hub+(isExit?'classroom-note':'exit-ticket-revision'),isExit?'Classroom Note':'Exit Ticket Revision')}${notesLink}</nav></header>`;
     const sections = isExit
-      ? `<section data-print-zone="learning"><h2 class="opening">${t('สรุปทบทวน','Revision Notes')}</h2>${classroom(kit,true)}</section>
-<div id="${lang}-practice" data-print-zone="problem">${exitProblems(kit)}${examProblems(kit)}</div>`
-      : heading + classroom(kit,false);
-    return `<div data-content-lang="${lang}" lang="${lang}">${isExit ? heading : ''}${sections}</div>`;
+      ? `<div id="${lang}-practice" data-print-zone="problem">${exitProblems(kit)}${examProblems(kit)}</div>
+<section id="${lang}-revision" data-print-zone="learning"><h2>${t('สรุปทบทวน','Revision Notes')}</h2><p class="no-print"><a href="#${lang}-practice">${t('กลับไปส่วนโจทย์','Back to practice')}</a></p>${classroom(kit,true)}</section>`
+      : classroom(kit,false);
+    return `<div data-content-lang="${lang}" lang="${lang}">${heading}${sections}</div>`;
   }).join('\n');
   const html = `<!doctype html>
-<html lang="th" data-learning-html data-learning-sheet="1" data-print-blank-sizing="preset"
+<html lang="th" data-learning-html data-learning-sheet="1" data-sheet-answer-toolbar="window" data-print-blank-sizing="preset"
   data-sheet-guide="guides/${stem}-${suffix}.guide.json" data-sheet-revision="${revision}"
   data-print-subject-th="เคมี ม.5" data-print-subject-en="Grade 11 Chemistry" data-print-chapter-th="กรด–เบส" data-print-chapter-en="Acids and bases"
   data-print-topic-th="ไทเทรต ไฮโดรลิซิส และบัฟเฟอร์" data-print-topic-en="Titration, hydrolysis and buffers"

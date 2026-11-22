@@ -4,7 +4,37 @@ const base='content/physics/ipst/wave-optics/';
 const files={classroom:base+'10-2-double-slit-classroom-note-v1-3.html',exit:base+'10-2-double-slit-exit-ticket-revision-v1-3.html'};
 async function load(kind){const {document}=parseHTML(await readFile(new URL('../public/'+files[kind],import.meta.url),'utf8'));Object.defineProperty(document,'URL',{value:'https://example.test/learning-hub/'+files[kind]});Object.defineProperty(document,'defaultView',{value:undefined});return document;}
 const view=(doc,lang,edition,range)=>doc.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="${edition}"] [data-revision-range="${range}"]`);
-function notes(node){return [...node.querySelectorAll('.shared-note')].map(n=>{const c=n.cloneNode(true);c.querySelectorAll('.identity, [data-hub-html]').forEach(x=>x.remove());c.querySelectorAll('[data-title-th]').forEach(x=>x.removeAttribute('title'));c.querySelectorAll('img[src]').forEach(x=>x.setAttribute('src',x.getAttribute('src').replace(/^.*\/assets\//,'assets/')));return c.outerHTML;});}
+test('classroom formula recall is closed on screen and follows the chosen print edition', async()=>{
+ const photo='content/physics/ipst/atomic-physics/19-2-photoelectric-classroom-note.html';
+ for(const [filename,total] of [[files.classroom,15],[photo,8]]){
+  const {document:source}=parseHTML(await readFile(new URL('../public/'+filename,import.meta.url),'utf8'));
+  Object.defineProperty(source,'URL',{value:'https://example.test/learning-hub/'+filename});
+  for(const lang of ['th','en']){
+   applyContentLanguage(source,lang);
+   for(const edition of ['blank','answers']){
+    const controls=[...view(source,lang,edition,'all').querySelectorAll('details[data-formula-recall]')];
+    assert.equal(controls.length,total);
+    for(const [index,control] of controls.entries()){
+     assert.equal(control.hasAttribute('open'),false);
+     assert.equal(control.firstElementChild.localName,'summary');
+     assert.equal(control.firstElementChild.dataset.showFormula,lang==='th'?'เปิดดูสูตร':'Show formula');
+     assert.equal(control.lastElementChild.dataset.equation,String(index+1));
+    }
+    controls[0].setAttribute('open','');
+    const before=source.documentElement.outerHTML;
+    const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'Classroom Note'));
+    const filled=edition==='answers';
+    prepareExitTicketPrint(copy,{range:'all',answers:filled});
+    assert.equal(copy.querySelectorAll('details[data-formula-recall]').length,0);
+    assert.equal(copy.querySelectorAll('[data-equation]').length,filled?total:0);
+    assert.equal(copy.querySelectorAll('.formula-recall-space').length,filled?0:total);
+    assert.equal(source.documentElement.outerHTML,before);
+    controls[0].removeAttribute('open');
+   }
+  }
+ }
+});
+function notes(node){return [...node.querySelectorAll('.shared-note')].map(n=>{const c=n.cloneNode(true);c.querySelectorAll('.identity, [data-hub-html]').forEach(x=>x.remove());c.querySelectorAll('details[data-formula-recall]').forEach(x=>x.replaceWith(x.querySelector('[data-equation]')));c.querySelectorAll('[data-title-th]').forEach(x=>x.removeAttribute('title'));c.querySelectorAll('img[src]').forEach(x=>x.setAttribute('src',x.getAttribute('src').replace(/^.*\/assets\//,'assets/')));return c.outerHTML;});}
 test('double-slit: the complete canonical answer notes survive student printing in either language',async()=>{
  const classroom=await load('classroom'),exit=await load('exit');
  const model=Buffer.concat(await Promise.all(['notes.mjs','proofs.mjs','proof-figures.json','intro-v1.3.json','examples-v1.2.json','equation-starts.mjs','note-diagrams.mjs','lab-to-exit.mjs','lab-sample.mjs'].map(p=>readFile(new URL('../docs/learning-sheet/preparation/physics-double-slit-10-2/paired/'+p,import.meta.url)))));const sha=createHash('sha256').update(model).digest('hex');

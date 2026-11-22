@@ -1,5 +1,6 @@
 import {readFileSync as read,writeFileSync as write,mkdirSync,existsSync,readdirSync,unlinkSync} from 'node:fs';
 import {createHash} from 'node:crypto';import {createRequire} from 'node:module';import {resolve,dirname} from 'node:path';import {fileURLToPath} from 'node:url';import {parseHTML} from 'linkedom';import {pages,noteSourceFiles} from './notes.mjs';
+import {addFormulaRecall,formulaRecallCSS} from '../../numbered-formula-recall.mjs';
 import {sampleTrials} from './lab-sample.mjs';
 import {prepareExerciseWorking} from './equation-starts.mjs';
 const here=dirname(fileURLToPath(import.meta.url)),root=resolve(here,'../../../../..'),out=resolve(root,'public/content/physics/ipst/wave-optics');
@@ -49,6 +50,23 @@ const classroomSource={file:'Physics_10_2_Double_Slit_Classroom_Note_TH_EN_R03.h
 const modelHash=hash(Buffer.concat(noteSourceFiles.map(p=>read(here+'/'+p)))),rendered={};for(const lang of ['th','en'])rendered[lang]=pages.map(p=>({...p,content:render(`<section class="shared-note" data-note-key="${p.key}" data-note-kind="${p.kind}">${p.html[lang].match(/^<h1>[\s\S]*?<\/h1>/)?.[0]||''}<h2>${p.title[lang]}</h2>${p.html[lang].replace(/^<h1>[\s\S]*?<\/h1>/,'')}</section>`)}));
 const nameLine=lang=>`<p class="identity">${lang==='th'?'ชื่อ':'Name'} <span class="identity-name">........................................................................................................................</span> ${lang==='th'?'ห้อง':'Class'} <span class="identity-class">....................</span></p>`;
 function page(body,lang,edition,kind){return `<section class="page ${kind}"><header class="running-head"><span>PHYSICS · 10.2 · ${lang==='th'?'สลิตคู่':'Double slit'}</span><span>${kind==='review'?'Revision Notes':kind==='lesson'?'Classroom Note':'Exit Ticket'} · ${edition==='answers'?(lang==='th'?'เฉลย':'Answers'):(lang==='th'?'เรียนรู้ / ลงมือทำ':'Learn / practise')}</span></header><div class="page-body">${body}</div><footer class="page-foot"><span>Nix-century</span><span data-page-number></span></footer></section>`;}
+const formulaCues=[
+ ['ความต่างเฟสจากผลต่างทางเดิน','Phase difference from path difference'],
+ ['เงื่อนไขแถบสว่าง','Bright-fringe condition'],
+ ['เงื่อนไขแถบมืด','Dark-fringe condition'],
+ ['ผลต่างทางเดินจากมุม','Path difference from the angle'],
+ ['มุมจากตำแหน่งบนฉาก','Angle from screen position'],
+ ['ผลต่างทางเดินจากตำแหน่งบนฉาก','Path difference from screen position'],
+ ['ตำแหน่งแถบสว่างอันดับที่กำหนด','Position of a chosen bright fringe'],
+ ['ตำแหน่งแถบมืดอันดับที่กำหนด','Position of a chosen dark fringe'],
+ ['ระยะระหว่างแถบสว่างติดกัน','Spacing between adjacent bright fringes'],
+ ['อัตราส่วนระยะแถบเมื่อเปลี่ยนการตั้งค่า','Fringe-spacing ratio when the setup changes'],
+ ['อัตราเร็ว ความถี่ และความยาวคลื่น','Wave speed, frequency and wavelength'],
+ ['อัตราส่วนระยะแถบเมื่อเปลี่ยนความถี่','Fringe-spacing ratio when frequency changes'],
+ ['หาระยะแถบจากการวัดหลายช่วง','Fringe spacing from several intervals'],
+ ['ระยะห่างระหว่างสองตำแหน่งบนฉาก','Distance between two screen positions'],
+ ['ร้อยละความต่างจากค่าทฤษฎี','Percentage difference relative to theory'],
+];
 function notePages(lang,edition,filled,kind,range='all'){return rendered[lang].flatMap(p=>{const d=parseHTML('<html><body>'+p.content+'</body></html>').document;
  if(kind==='classroom'&&range==='quiz'){const examples=[...d.querySelectorAll('.example')];if(!examples.length)return [];const section=d.querySelector('.shared-note');section.innerHTML='<h2>'+p.title[lang]+'</h2>'+examples.map(e=>e.outerHTML).join('');}
  if(kind==='classroom'&&range==='review'&&p.kind==='examples')return [];
@@ -63,6 +81,7 @@ function notePages(lang,edition,filled,kind,range='all'){return rendered[lang].f
    });
  }
  if(!filled)for(const a of d.querySelectorAll('.note-answer')){const space=d.createElement('div');space.className='note-write';a.replaceWith(space);}
+ if(kind==='classroom')addFormulaRecall(d,lang,formulaCues);
  return [page(d.body.innerHTML,lang,edition,kind==='classroom'?'lesson':'review')];});}
 // Explicit page groups; measured in the real browser after every content change.
 const groups={blank:[['quiz-intro','cloze-A'],['cloze-B','problem-1'],['problem-2','problem-3'],['problem-4','problem-5'],['problem-6','problem-7'],['problem-8','problem-9']],answers:[['quiz-intro','cloze-A','cloze-B'],['problem-1'],['problem-2'],['problem-3'],['problem-4'],['problem-5'],['problem-6'],['problem-7'],['problem-8'],['problem-9']]};
@@ -90,9 +109,9 @@ const report={modelSha256:modelHash,sources:{classroom:classroomSource,exit:exer
 for(const kind of ['classroom','exit']){const ranges=['all','quiz','review'];let views='';
  for(const lang of ['th','en']){let editions='';for(const edition of ['blank','answers']){const notes=notePages(lang,edition,kind==='exit'||edition==='answers',kind);const quiz=kind==='exit'?quizPages(lang,edition,groups[edition]):[];const recall=kind==='exit'?quizPages(lang,edition,recallGroups[edition]):[];let rs='';for(const range of ranges){const selected=kind==='classroom'?notePages(lang,edition,edition==='answers',kind,range):range==='quiz'?[...quiz,...recall]:range==='review'?notes:[...quiz,...notes,...recall];const content=finish(selected,lang,kind);report.views.push({kind,lang,edition,range,pages:selected.length});rs+=`<div class="document-shell" data-revision-range="${range}">${content}</div>`;}editions+=`<div data-revision-edition="${edition}">${rs}</div>`;}views+=`<section class="language-view" data-content-lang="${lang}" lang="${lang}"${lang==='en'?' hidden':''}>${editions}</section>`;}
  const labels=kind==='classroom'?['Classroom Note','Classroom Note']:['Exit Ticket Revision','Exit Ticket Revision'];
- const attrs={'lang':'th','data-learning-html':'','data-exit-ticket-revision':'1','data-exit-ticket-editions':'1','data-exit-ticket-ranges':ranges.join(' '),'data-revision-topic':'10.2','data-content-revision':kind==='exit'?'1.3.4':'1.3.2','data-rules-version':'1.5','data-source-sha256':(kind==='classroom'?classroomSource:exercises.source).sha256,'data-shared-notes-sha256':modelHash,'data-revision-student-default':'1','data-revision-label-th':labels[0],'data-revision-label-en':labels[1],'data-revision-quiz-th':kind==='classroom'?'เฉพาะตัวอย่างพาทำ':'ควิซและ Recall','data-revision-quiz-en':kind==='classroom'?'Guided examples':'Quiz and Recall','data-revision-review-th':kind==='classroom'?'ทฤษฎีและการทดลอง':'Revision Notes ฉบับอ่านครบ','data-revision-review-en':kind==='classroom'?'Theory and experiment':'Complete Revision Notes','data-print-subject-th':'ฟิสิกส์','data-print-subject-en':'Physics','data-print-chapter-th':'แสงเชิงคลื่น','data-print-chapter-en':'Wave optics','data-print-topic-th':'10.2 สลิตคู่','data-print-topic-en':'10.2 Double slit'};
+ const attrs={'lang':'th','data-learning-html':'','data-exit-ticket-revision':'1','data-exit-ticket-editions':'1','data-exit-ticket-ranges':ranges.join(' '),'data-revision-topic':'10.2','data-content-revision':kind==='exit'?'1.3.4':'1.3.3','data-rules-version':'1.5','data-source-sha256':(kind==='classroom'?classroomSource:exercises.source).sha256,'data-shared-notes-sha256':modelHash,'data-revision-student-default':'1','data-revision-label-th':labels[0],'data-revision-label-en':labels[1],'data-revision-quiz-th':kind==='classroom'?'เฉพาะตัวอย่างพาทำ':'ควิซและ Recall','data-revision-quiz-en':kind==='classroom'?'Guided examples':'Quiz and Recall','data-revision-review-th':kind==='classroom'?'ทฤษฎีและการทดลอง':'Revision Notes ฉบับอ่านครบ','data-revision-review-en':kind==='classroom'?'Theory and experiment':'Complete Revision Notes','data-print-subject-th':'ฟิสิกส์','data-print-subject-en':'Physics','data-print-chapter-th':'แสงเชิงคลื่น','data-print-chapter-en':'Wave optics','data-print-topic-th':'10.2 สลิตคู่','data-print-topic-en':'10.2 Double slit'};
  const filename=kind==='classroom'?'10-2-double-slit-classroom-note-v1-3.html':'10-2-double-slit-exit-ticket-revision-v1-3.html';
- write(out+'/'+filename,`<!doctype html>\n<html ${Object.entries(attrs).map(([k,v])=>`${k}="${esc(v)}"`).join(' ')}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Physics 10.2 · ${labels[0]}</title><style>${css}${kind==='exit'?'\n.calculation-check{margin:.7mm 0 0;font-size:9.5pt;line-height:1.3;color:#254959}.calculation-check strong{margin-inline-end:.2em}.page.quiz .question:has(.calculation-check)>.task-grid{grid-auto-rows:auto}.page.quiz:has([data-calculation-check="problem-6-3"]) .task>.response-space{min-height:20mm}':''}</style></head><body><main>${views}</main></body></html>\n`);
+ write(out+'/'+filename,`<!doctype html>\n<html ${Object.entries(attrs).map(([k,v])=>`${k}="${esc(v)}"`).join(' ')}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Physics 10.2 · ${labels[0]}</title><style>${css}${kind==='exit'?'\n.calculation-check{margin:.7mm 0 0;font-size:9.5pt;line-height:1.3;color:#254959}.calculation-check strong{margin-inline-end:.2em}.page.quiz .question:has(.calculation-check)>.task-grid{grid-auto-rows:auto}.page.quiz:has([data-calculation-check="problem-6-3"]) .task>.response-space{min-height:20mm}':formulaRecallCSS}</style></head><body><main>${views}</main></body></html>\n`);
 }
 // Retain published assets for older handout versions and cached readers.
 for(const file of readdirSync(assetDir))if(!inventory.has(file))inventory.set(file,{file,sha256:hash(read(assetDir+'/'+file))});

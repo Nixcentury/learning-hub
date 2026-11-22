@@ -1,6 +1,8 @@
 // Generate the two static Hub documents from the same Classroom Note blocks.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { parseHTML } from 'linkedom';
+import { addFormulaRecall, formulaRecallCSS } from '../numbered-formula-recall.mjs';
 import { notebook, evidenceFiles } from './notes.mjs';
 import { exitPractice, recall } from './practice.mjs';
 import { pastExams } from './past-exams.mjs';
@@ -21,6 +23,23 @@ function page(body, th, filled, part, title, first, number, total) {
   const nameLine = `<p class="identity">${th?'ชื่อ':'Name'} <span class="name-space"></span> ${th?'ห้อง':'Class'} <span class="class-space"></span></p>`;
   return `<section class="page ${part==='Exit Ticket'?'quiz':'review'}"><header class="running-head"><span>PHYSICS · 19.2 · ${label}</span><span>${part} · ${part==='Revision Notes'?(th?'อ่านทบทวน':'Read and revise'):answerLabel}</span></header><div class="page-body">${first?`<h1>${title} · 19.2</h1>${nameLine}`:''}${body}</div><footer class="page-foot"><span>Learning Hub</span><span data-page-number>${th?'หน้า':'Page'} ${number} / ${total}</span></footer></section>\n`;
 }
+const formulaCues = [
+  ['พลังงานต่อโฟตอน','Energy per photon'],
+  ['พลังงานจลน์สูงสุดจากพลังงานโฟตอนและฟังก์ชันงาน','Maximum kinetic energy from photon energy and work function'],
+  ['ฟังก์ชันงานจากความถี่ขีดเริ่ม','Work function from threshold frequency'],
+  ['พลังงานจลน์สูงสุดจากศักย์หยุดยั้ง','Maximum kinetic energy from stopping potential'],
+  ['กราฟศักย์หยุดยั้งเทียบกับความถี่','Stopping potential versus frequency'],
+  ['พลังงานจลน์สูงสุดกับอัตราเร็วสูงสุด','Maximum kinetic energy and maximum speed'],
+  ['พลังงานแสงรวมจากความเข้ม พื้นที่ และเวลา','Total light energy from irradiance, area and time'],
+  ['จำนวนโฟตอนจากพลังงานรวม','Photon count from total energy'],
+];
+function classroomRecall(markup, lang) {
+  if (!markup.includes('data-equation=')) return markup;
+  const { document } = parseHTML('<html><body>' + markup + '</body></html>');
+  addFormulaRecall(document, lang, formulaCues);
+  return document.body.innerHTML;
+}
+
 function writeDocument(kind) {
   const classroom = kind === 'classroom';
   const title = classroom ? 'Classroom Note' : 'Exit Ticket Revision';
@@ -28,7 +47,7 @@ function writeDocument(kind) {
     const th = lang==='th';
     const editions = ['blank','answers'].map(edition=>{
       const filled = edition==='answers';
-      const notePage = text => [text, classroom ? 'Classroom Note' : 'Revision Notes'];
+      const notePage = text => [classroom ? classroomRecall(text, lang) : text, classroom ? 'Classroom Note' : 'Revision Notes'];
       const quizPage = text => [text,'Exit Ticket'];
       const notes = notebook(th, !classroom || filled, globalThis.Photoelectric).map(notePage);
       const practice = classroom ? [] : exitPractice(th,filled);
@@ -55,12 +74,12 @@ function writeDocument(kind) {
   const html = `<!doctype html>
 <html lang="th" data-learning-html data-exit-ticket-revision="1" data-exit-ticket-editions="1"
   data-exit-ticket-ranges="all quiz review" data-revision-student-default="1" data-revision-topic="19.2"
-  data-content-revision="${classroom?'1.5':'1.6'}" data-shared-notes-sha256="${notesDigest}"
+  data-content-revision="1.6" data-shared-notes-sha256="${notesDigest}"
   data-print-subject-th="ฟิสิกส์" data-print-subject-en="Physics"
   data-print-chapter-th="ฟิสิกส์อะตอม" data-print-chapter-en="Atomic physics"
   data-print-topic-th="19.2 ปรากฏการณ์โฟโตอิเล็กทริก" data-print-topic-en="19.2 Photoelectric effect" ${labels}>
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Physics 19.2 · ${title}</title><style>\n${css}</style></head>
+<title>Physics 19.2 · ${title}</title><style>\n${css}${classroom ? formulaRecallCSS : ''}</style></head>
 <body><main>${langSets}</main></body>
 </html>
 `;

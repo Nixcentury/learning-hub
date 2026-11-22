@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "chemistry-acid-base-lab-sheet",
-    "revision": "2026-11-22-1",
-    "sha256": "33e4fb50ac70b55031f4225dec734224d098542a266bd6de4ffa8d3ac25d8dea"
+    "revision": "2026-11-22-2",
+    "sha256": "de2247e33777656adcfa0496880db415cafefac8d145f1e537c1ba02d67acd59"
   },
   "title": {
     "th": "คู่มือแล็บกรด–เบส",
@@ -74,8 +74,8 @@
         "en": "Use the mean volume and HCl concentration to find mmol.\nApply the 1:1 ratio in ICF, then divide the NaOH amount in mmol by 10.00 mL."
       },
       "story": {
-        "th": "ให้ชี้แถว I ที่บอกว่ามี NaOH เท่าใดก่อนสะเทิน",
-        "en": "Point to the I row that gives the initial amount of NaOH."
+        "th": "ใช้เฉลยตัวอย่างตามค่าจากบิวเรตไปถึงแถว I ของ ICF แล้วแทนด้วยผลของกลุ่ม",
+        "en": "Follow the worked example from the burette to row I of ICF, then substitute your group’s values."
       },
       "action": {
         "th": "แสดงการตัด mL และตอบเป็น mol/L จากผลของกลุ่ม",
@@ -123,8 +123,8 @@
         "en": "Ask for a prediction before measuring, then trace the matching sequence for A and B in the image."
       },
       "action": {
-        "th": "ใช้ผลของกลุ่มคำนวณขนาดการเปลี่ยน pH แล้วเปรียบเทียบ",
-        "en": "Use your group’s data to calculate and compare the magnitude of the pH changes."
+        "th": "อ่านแถว 0.00 และ 0.50 mL ของแต่ละใบ หา |ΔpH| แล้วเขียนข้อสรุปพร้อมตัวเลขสองค่า",
+        "en": "Read the 0.00 and 0.50 mL rows for each beaker, find |ΔpH| and support your conclusion with both values."
       },
       "links": [
         {
@@ -159,8 +159,8 @@
         }
       },
       "after": {
-        "th": "เมื่อเปรียบเทียบผลแล้ว ดูว่าไอออนใดทำปฏิกิริยากับกรด",
-        "en": "After comparing the results, identify the ion that reacts with the acid."
+        "th": "เปิดเฉลยเพื่อดูตัวอย่างการอ้างผลวัด แล้วดูว่าไอออนใดทำปฏิกิริยากับกรด",
+        "en": "Reveal the worked example to see how to cite readings, then identify the ion that reacts with the acid."
       }
     },
     {
@@ -178,8 +178,8 @@
         "en": "Follow the HPO₄²⁻ value from row F into row I and notice how the units change."
       },
       "action": {
-        "th": "เติม ICF และแถว E ของ ICE ก่อนใช้ค่า Kₐ₂ ใน Classroom Note",
-        "en": "Complete ICF and row E of ICE before using Kₐ₂ in the Classroom Note."
+        "th": "เติม ICF และ ICE ตามหัวข้อ 1–2 จดความเข้มข้นของคู่ฟอสเฟตไว้ใช้ในข้อ 3",
+        "en": "Complete ICF and ICE in steps 1–2 and keep the concentrations of the phosphate pair for step 3."
       },
       "links": [
         {
@@ -204,14 +204,69 @@
         }
       },
       "after": {
+        "th": "ใช้แถว E หา pH ของ B แล้วนำกลับไปเทียบกับตารางผลวัด",
+        "en": "Use row E to find B’s pH, then go back to compare it with the measured readings."
+      }
+    },
+    {
+      "id": "compare-ph",
+      "title": {
+        "th": "เทียบ pH ที่คำนวณกับที่วัด",
+        "en": "Compare predicted and measured pH"
+      },
+      "summary": {
+        "th": "ใช้ Kₐ₂ กับแถว E ของ ICE เพื่อหา [H₃O⁺] และ pH ก่อน–หลังเติม HCl\nเปรียบเทียบ pH ทั้งสองช่วงและ ΔpH กับผลวัดของ B แล้วใช้แถว C และ F อธิบาย",
+        "en": "Use Kₐ₂ with row E of ICE to find [H₃O⁺] and pH before and after adding HCl.\nCompare both pH values and ΔpH with B’s readings, then explain them using ICF rows C and F."
+      },
+      "story": {
+        "th": "ให้ชี้ว่า HPO₄²⁻ รับกรดไปเท่าใดและเหลือเท่าใด แล้วโยงกับการลดลงของ pH",
+        "en": "Identify how much HPO₄²⁻ reacted with the added acid and how much remained, then connect this to the drop in pH."
+      },
+      "action": {
+        "th": "ทำข้อ 3 คำนวณค่า และข้อ 4 อ้างผลวัดของกลุ่มพร้อมอธิบายกลไกของบัฟเฟอร์",
+        "en": "Use step 3 to calculate the values and step 4 to cite your measurements and explain how the buffer works."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 3 · คำนวณ pH ของ B",
+            "en": "Step 3 · Calculate B’s pH"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "buffer-ph-model"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 4 · เทียบผลวัดและอธิบาย",
+            "en": "Step 4 · Compare and explain"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "buffer-model-comparison"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "HPO₄²⁻ รับ H⁺ ใน ICF แล้วเกิดไอออนใด?",
+          "en": "Which ion forms when HPO₄²⁻ takes up H⁺ in ICF?"
+        },
+        "answer": {
+          "th": "เกิด H₂PO₄⁻ ในอัตราส่วน 1:1",
+          "en": "H₂PO₄⁻ forms in a 1:1 ratio."
+        }
+      },
+      "after": {
         "th": "กลับไปที่ฟอร์มเพื่อกรอกผลและตรวจค่า NaOH ของกลุ่ม",
-        "en": "Return to the form to enter your results and check the group’s NaOH concentration."
+        "en": "Return to the form to enter your readings and check your group’s NaOH concentration."
       }
     }
   ],
   "finish": {
-    "th": "ใช้ข้อมูลจริงสรุปผลแล็บทั้งสองและตรวจความเข้มข้น NaOH",
-    "en": "Draw conclusions from your own data for both labs and check the NaOH concentration."
+    "th": "ใช้ผลจริงสรุปความเข้มข้น NaOH และใช้การเปลี่ยน pH ของ A กับ B เป็นหลักฐานอธิบายว่าบัฟเฟอร์ทำงานอย่างไร",
+    "en": "Use your data to report the NaOH concentration and use the pH changes of A and B as evidence when explaining how the buffer works."
   },
   "exitCheck": {
     "question": {

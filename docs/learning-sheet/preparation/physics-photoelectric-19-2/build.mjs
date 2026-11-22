@@ -74,7 +74,7 @@ function writeDocument(kind) {
   const html = `<!doctype html>
 <html lang="th" data-learning-html data-exit-ticket-revision="1" data-exit-ticket-editions="1"
   data-exit-ticket-ranges="all quiz review" data-revision-student-default="1" data-revision-topic="19.2"
-  data-content-revision="1.6" data-shared-notes-sha256="${notesDigest}"
+  data-content-revision="${classroom ? '1.7' : '1.6'}" data-shared-notes-sha256="${notesDigest}"
   data-print-subject-th="ฟิสิกส์" data-print-subject-en="Physics"
   data-print-chapter-th="ฟิสิกส์อะตอม" data-print-chapter-en="Atomic physics"
   data-print-topic-th="19.2 ปรากฏการณ์โฟโตอิเล็กทริก" data-print-topic-en="19.2 Photoelectric effect" ${labels}>

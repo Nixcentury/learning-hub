@@ -4,7 +4,7 @@ const base='content/physics/ipst/wave-optics/';
 const files={classroom:base+'10-2-double-slit-classroom-note-v1-3.html',exit:base+'10-2-double-slit-exit-ticket-revision-v1-3.html'};
 async function load(kind){const {document}=parseHTML(await readFile(new URL('../public/'+files[kind],import.meta.url),'utf8'));Object.defineProperty(document,'URL',{value:'https://example.test/learning-hub/'+files[kind]});Object.defineProperty(document,'defaultView',{value:undefined});return document;}
 const view=(doc,lang,edition,range)=>doc.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="${edition}"] [data-revision-range="${range}"]`);
-test('classroom formula recall is closed on screen and follows the chosen print edition', async()=>{
+test('classroom formula recall starts with numbered blanks and follows the chosen print edition', async()=>{
  const photo='content/physics/ipst/atomic-physics/19-2-photoelectric-classroom-note.html';
  for(const [filename,total] of [[files.classroom,15],[photo,8]]){
   const {document:source}=parseHTML(await readFile(new URL('../public/'+filename,import.meta.url),'utf8'));
@@ -17,7 +17,8 @@ test('classroom formula recall is closed on screen and follows the chosen print 
     for(const [index,control] of controls.entries()){
      assert.equal(control.hasAttribute('open'),false);
      assert.equal(control.firstElementChild.localName,'summary');
-     assert.equal(control.firstElementChild.dataset.showFormula,lang==='th'?'เปิดดูสูตร':'Show formula');
+     assert.equal(control.firstElementChild.textContent,`(${index+1})`);
+     assert.ok(control.firstElementChild.getAttribute('aria-label').startsWith(lang==='th'?'เปิดหรือปิดเฉลยสูตร':'Toggle formula answer'));
      assert.equal(control.lastElementChild.dataset.equation,String(index+1));
     }
     controls[0].setAttribute('open','');
@@ -27,7 +28,8 @@ test('classroom formula recall is closed on screen and follows the chosen print 
     prepareExitTicketPrint(copy,{range:'all',answers:filled});
     assert.equal(copy.querySelectorAll('details[data-formula-recall]').length,0);
     assert.equal(copy.querySelectorAll('[data-equation]').length,filled?total:0);
-    assert.equal(copy.querySelectorAll('.formula-recall-space').length,filled?0:total);
+    const spaces=[...copy.querySelectorAll('.formula-recall-space')];
+    assert.deepEqual(spaces.map(space=>space.textContent),filled?[]:Array.from({length:total},(_,index)=>`(${index+1})`));
     assert.equal(source.documentElement.outerHTML,before);
     controls[0].removeAttribute('open');
    }

@@ -6,7 +6,7 @@ import { exitCloze } from './cloze.mjs';
 import { exitProblems } from './exit.mjs';
 import { examProblems } from './exams.mjs';
 
-const revision = '2026-11-22-3';
+const revision = '2026-11-22-4';
 const out = new URL('../../../../public/content/chemistry/ipst/acid-base/', import.meta.url);
 const escape = value => String(value).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const pair = (th, en) => ({th, en});
@@ -167,7 +167,7 @@ function render(kind) {
     const kit = toolkit(lang);
     const {t, link} = kit;
     const kindLabel = isExit ? 'Exit Ticket Revision' : 'Classroom Note';
-    const runningHead = `<div class="running-head"><span>CHEMISTRY · 10.7–10.8 · ${t('ไทเทรตและบัฟเฟอร์','Titration and buffers')}</span><span>${kindLabel} · ${t('ลงมือทำ','Practice')}</span></div>`;
+    const runningHead = `<div class="running-head"${isExit ? '' : ' data-no-print'}><span>CHEMISTRY · 10.7–10.8 · ${t('ไทเทรตและบัฟเฟอร์','Titration and buffers')}</span><span>${kindLabel} · ${t('ลงมือทำ','Practice')}</span></div>`;
     const identity = `<p class="identity">${t('ชื่อ','Name')} <span class="name-space" aria-hidden="true"></span> ${t('ห้อง','Class')} <span class="class-space" aria-hidden="true"></span></p>`;
     const notesLink = isExit ? ` · <a href="#${lang}-revision">${t('ไปสรุปทบทวน','Jump to Revision Notes')}</a>` : '';
     const heading = `<header class="opening">${runningHead}<h1>${kindLabel} · 10.7–10.8</h1>${identity}<nav class="no-print">${link(hub+'lab-guide',t('คู่มือแล็บ','Lab Guide'))} · ${link(hub+(isExit?'classroom-note':'exit-ticket-revision'),isExit?'Classroom Note':'Exit Ticket Revision')}${notesLink}</nav></header>`;
@@ -179,7 +179,8 @@ function render(kind) {
   }).join('\n');
   const html = `<!doctype html>
 <html lang="th" data-learning-html data-learning-sheet="1" data-sheet-answer-toolbar="window" data-print-blank-sizing="preset"
-  ${isExit ? 'data-print-page-style="paired-worksheet" data-print-section="10.7–10.8"\n  ' : ''}data-sheet-guide="guides/${stem}-${suffix}.guide.json" data-sheet-revision="${contentRevision}"
+  data-print-page-style="paired-worksheet" data-print-section="10.7–10.8"
+  data-sheet-guide="guides/${stem}-${suffix}.guide.json" data-sheet-revision="${contentRevision}"
   data-print-subject-th="เคมี ม.5" data-print-subject-en="Grade 11 Chemistry" data-print-chapter-th="กรด–เบส" data-print-chapter-en="Acids and bases"
   data-print-topic-th="ไทเทรต ไฮโดรลิซิส และบัฟเฟอร์" data-print-topic-en="Titration, hydrolysis and buffers"
   data-print-work-th="${isExit?'Exit Ticket Revision':'Classroom Note'}" data-print-work-en="${isExit?'Exit Ticket Revision':'Classroom Note'}">

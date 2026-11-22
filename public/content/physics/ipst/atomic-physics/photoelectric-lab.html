@@ -203,6 +203,24 @@
         <figcaption data-th="จุดจากค่าที่บันทึก ภายใต้แสงและโลหะชุดเดียวกัน" data-en="Points from your recorded readings under the same light and metal settings."></figcaption>
       </figure>
     </section>
+    <section id="stopping-series" class="card" hidden>
+      <h2 data-th="กลับมาวัด · ศักย์หยุดยั้งที่ 3 ความถี่" data-en="Return to the lab · Stopping potential at three frequencies"></h2>
+      <p data-th="เลือกชุดหนึ่ง ซิมจะเปิดแสง ตั้งโลหะ A ความเข้ม 50% และเริ่มที่ 0 V ค่อย ๆ ลดแรงดันจนกระแสเป็นศูนย์ แล้วหาคู่แรงดันที่ห่างกัน 0.01 V โดยจุดหนึ่งยังมีกระแสและอีกจุดเพิ่งเป็นศูนย์ กดบันทึกทั้งสองจุด"
+        data-en="Choose a preset. The lab switches on the light and sets metal A, 50% intensity and 0 V. Lower the voltage until the current reaches zero. Find two readings 0.01 V apart, one with current and the other just reaching zero. Record both."></p>
+      <div class="actions" id="stopping-presets"></div>
+      <div class="scroll-table"><table>
+        <thead><tr>
+          <th scope="col">f (10¹⁴ Hz)</th>
+          <th scope="col" data-th="V สุดท้ายที่ I > 0 (V)" data-en="Last V with I > 0 (V)"></th>
+          <th scope="col" data-th="V แรกที่ I = 0 (V)" data-en="First V with I = 0 (V)"></th>
+          <th scope="col" data-th="ค่าประมาณ Vₛ (V)" data-en="Estimated Vₛ (V)"></th>
+        </tr></thead>
+        <tbody id="stopping-pairs"></tbody>
+      </table></div>
+      <p id="stopping-status" role="status"></p>
+      <p data-th="นำทั้งสามคู่ไปใส่ในตาราง Classroom Note แล้วพล็อตกราฟ Vₛ กับ f"
+        data-en="Transfer all three pairs to your Classroom Note and plot Vₛ against f."></p>
+    </section>
     <section id="checkout" class="card" tabindex="-1" hidden>
       <h2 data-th="Check-out · อ่านผลที่ทดลอง" data-en="Check-out · Read your results"></h2>
       <p data-th="อ่านค่าจากตารางด้านบน แล้วเทียบกับสิ่งที่เห็นในหลอด" data-en="Read the table above and compare it with what you see in the tube."></p>
@@ -244,10 +262,10 @@
   </section>
   <p id="save-status" class="muted print-hide" role="status"></p>
 </main>
-<script defer src="assets/photoelectric/model.js?v=metal-threshold-1"></script>
+<script defer src="assets/photoelectric/model.js?v=stopping-series-1"></script>
 <script defer src="assets/photoelectric/plots.js"></script>
 <script defer src="assets/photoelectric/missions.js?v=read-results-1"></script>
 <script defer src="assets/photoelectric/tube.js?v=glass-tube-1"></script>
-<script defer src="assets/photoelectric/lab.js?v=read-results-1"></script>
+<script defer src="assets/photoelectric/lab.js?v=stopping-series-1"></script>
 </body>
 </html>

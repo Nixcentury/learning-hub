@@ -6,6 +6,7 @@
   const hScaled = h * 1e14 / charge; // eV per unit of 10¹⁴ Hz
   const metals = Object.freeze({ A: 2.50, B: 2.80, C: 3.10 });
   const thresholdFrequency = metal => metals[metal] / hScaled;
+  const stoppingFrequencies = Object.freeze([6.50, 7.25, 8.00]);
   const teaching = Object.freeze({
     metal: 'A', energy: 3, frequency: 3 / hScaled, intensity: 50,
     collectVoltage: 1, lowFrequency: 6, highFrequency: 6.1,
@@ -33,5 +34,16 @@
   function signed(value, places = 2) {
     return (value > 0 ? '+' : value < 0 ? '−' : '') + Math.abs(value).toFixed(places);
   }
-  globalThis.Photoelectric = Object.freeze({ charge, h, hScaled, metals, thresholdFrequency, teaching, initial, measure, signed });
+  function stoppingBrackets(rows) {
+    return stoppingFrequencies.map(frequency => {
+      const readings = rows.filter(row => row.light && row.metal === teaching.metal &&
+        row.intensity === teaching.intensity && row.frequency === frequency && row.voltage <= 0);
+      const last = readings.filter(row => row.current > 0).sort((a, b) => a.voltage - b.voltage)[0];
+      const zero = readings.filter(row => row.current === 0).sort((a, b) => b.voltage - a.voltage)[0];
+      const complete = last && zero && Math.round((last.voltage - zero.voltage) * 100) === 1;
+      return { frequency, last, zero, stopping: complete ? -zero.voltage : null };
+    });
+  }
+  globalThis.Photoelectric = Object.freeze({ charge, h, hScaled, metals, thresholdFrequency, teaching, initial, measure, signed,
+    stoppingFrequencies, stoppingBrackets });
 })();

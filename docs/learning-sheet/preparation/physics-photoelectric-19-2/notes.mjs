@@ -1,4 +1,5 @@
-import { tube, thresholds, teachingIV } from './figures.mjs';
+import { readFileSync } from 'node:fs';
+import { tube, thresholds, teachingIV, stoppingGrid } from './figures.mjs';
 
 export const labUrl = 'https://nixcentury.github.io/learning-hub/#physics/bank/b-6011652496e13a2c7b17fe1c/photoelectric-lab';
 export const equations = [
@@ -6,6 +7,10 @@ export const equations = [
   String.raw`K_{\max}=hf-W`,
   String.raw`W=hf_0`,
   String.raw`K_{\max}=eV_s`,
+  String.raw`V_s=\frac{h}{e}f-\frac{W}{e}`,
+  String.raw`K_{\max}=\frac{1}{2}m_ev_{\max}^2`,
+  String.raw`E_{\mathrm{total}}=I_{\mathrm{light}}A\Delta t`,
+  String.raw`N=\frac{E_{\mathrm{total}}}{E_\gamma}`,
 ];
 export const math = tex => String.raw`\(${tex}\)`;
 export const heading = text => `<h2>${text}</h2>`;
@@ -17,6 +22,13 @@ export const intensityScale = th => th
   ? 'ความเข้มแสง (%) เทียบกับระดับสูงสุดที่ตั้งได้ในแบบจำลอง โดยระดับนั้นคือ 100% และ 50% คือครึ่งหนึ่งของระดับนั้น'
   : 'Light intensity (%) is relative to the highest setting in the model. The highest setting is 100%, and 50% is half that level.';
 const fUnit = '10¹⁴ Hz';
+export const evidenceFiles = ['th','en'].flatMap(lang =>
+  ['tube','results'].map(kind => `lab-${kind}-${lang}.jpg`));
+const evidenceImages = Object.fromEntries(evidenceFiles.map(file => [
+  file, 'data:image/jpeg;base64,' + readFileSync(new URL('assets/' + file, import.meta.url)).toString('base64'),
+]));
+const evidence = (kind, th, description, height) =>
+  `<img class="diagram" style="height:${height}mm" src="${evidenceImages[`lab-${kind}-${th?'th':'en'}.jpg`]}" alt="${description}">`;
 const box = n => `<div class="equation" data-equation="${n}"><span>${math(equations[n-1])}</span><span>(${n})</span></div>`;
 export function working(th, refs, lines, conclusion) {
   return `<div class="working"><p>${th?'ใช้สมการ':'Use equation'} ${refs.map(n=>`<span data-equation-ref="${n}">(${n})</span> ${math(equations[n-1])}`).join(' · ')}</p>${lines.map(tex=>p(math(tex))).join('')}${p(conclusion)}</div>`;
@@ -48,13 +60,22 @@ export function notebook(th, filled, lab) {
     [m`h=6.626\times10^{-34}\,\mathrm{J\,s}`,m`c=3.00\times10^8\,\mathrm{m/s}`,
       m`1\,\mathrm{eV}=1.602\times10^{-19}\,\mathrm J`,m`1\,\mathrm{nm}=10^{-9}\,\mathrm m`].map(math).join(' · '));
   const sweep = lab.teaching.sweep.map(v=>[v,Number(tableReading(lab.teaching.frequency,50,v))]);
+  const graphRows = lab.stoppingBrackets(lab.stoppingFrequencies.flatMap(frequency => {
+    const firstZero = -Math.ceil((lab.hScaled * frequency - lab.metals.A) * 100);
+    return [firstZero + 1, firstZero].map(tick => {
+      const setup = { light:true, metal:'A', frequency, intensity:50, voltage:tick / 100 };
+      return { ...setup, ...lab.measure(setup) };
+    });
+  }));
+  const graphPoints = graphRows.map(({ frequency, stopping }) => [frequency, stopping]);
   const ex = (n, title, prompt, answer) => `<div class="block example" data-example-number="${n}"><h3>${t('ตัวอย่าง','Example')} ${n} · ${title}</h3>${p(prompt)}${filled?`<div class="note-answer">${answer}</div>`:'<div class="writing" style="--space:46mm"></div>'}</div>`;
   const pages = [
     [
       'Quick Start Note · จากแสงถึงค่าที่มิเตอร์อ่าน','Quick Start Note · From light to the meter reading',
       c('เปิด '+link(th)+' แล้วทำตามภารกิจทีละขั้น เปลี่ยนค่าตามที่กำหนด ดูจุดอิเล็กตรอนในหลอด อ่านค่า I (µA) แล้วกด «บันทึกค่ามิเตอร์» นำค่าที่บันทึกมาใส่หน้านี้',
         'Open the '+link(th)+' and follow the mission steps. Change the specified setting, watch the electron dots in the tube, read I (µA), and press “Record meter reading”. Transfer your readings to this page.') +
-      figure(tube(th),t('วงจรของแล็บ · แสงตกกระทบขั้วปล่อย ขั้วรับอยู่ฝั่งตรงข้าม มิเตอร์วัดกระแสในวงจร','Lab circuit · light hits the emitter, the collector faces it, and the meter measures circuit current.')) +
+      figure(evidence('tube',th,t('ภาพหลอดสุญญากาศจากซิม','Vacuum tube captured from the simulation'),44),
+        t('ภาพจากแล็บ · แสงตกที่ขั้วปล่อยและอิเล็กตรอนเคลื่อนไปทางขั้วรับ','Lab capture. Light strikes the emitter and electrons travel toward the collector.')) +
       `<h3>${t('เปรียบเทียบก่อนและหลังเปิดแสง','Compare light off and on')}</h3>` +
       p(intensityScale(th)) +
       c('ภารกิจ 1 · ใช้โลหะ A และศักย์ขั้วรับ +1.00 V ปิดแสง: '+recorded('0.00')+' µA เปิดแสงชุดสอน 3.00 eV ที่ความเข้ม 50%: '+recorded('2.00')+' µA',
@@ -150,6 +171,23 @@ export function notebook(th, filled, lab) {
         'Predict and test · In “Explore the tube”, use metal A, teaching light, 50% intensity and V = −0.55 V. Will current flow if you increase the frequency to 8.00 × 10¹⁴ Hz? Record both readings to check.')
     ],
     [
+      'จากผลวัดสู่กราฟ อัตราเร็ว และจำนวนโฟตอน','From readings to a graph, speed and photon count',
+      c('ให้ Vₛ เป็นขนาดศักย์หยุดยั้งและ V เป็นศักย์ขั้วรับเทียบขั้วปล่อย เมื่อกวาดแรงดันไปทางลบ ใช้ Vₛ ≈ −V ที่จุดแรกที่อ่านกระแสเป็นศูนย์',
+        'Vₛ is the stopping-potential magnitude and V is the collector voltage relative to the emitter. When sweeping toward negative voltage, estimate Vₛ as −V at the first zero-current reading.') +
+      c('แทนพลังงานจลน์จากสมการ (2) ในสมการ (4) แล้วหารทั้งสมการด้วยขนาดประจุอิเล็กตรอน e','Substitute the kinetic energy from equation (2) into (4), then divide by the electron charge magnitude e.') +
+      p(math(m`eV_s=hf-W`)) + box(5) +
+      c('บนกราฟ Vₛ กับ f ความชันคือ h/e จุดตัดแกนนอนคือ f₀ และจุดตัดแกนตั้งจากแนวเส้นต่อคือ −W/e',
+        'On the Vₛ versus f graph, the slope is h/e, the horizontal intercept is f₀, and the extrapolated vertical intercept is −W/e.') +
+      c('ให้ mₑ เป็นมวลอิเล็กตรอนหน่วย kg และ vₘₐₓ เป็นอัตราเร็วสูงสุดหน่วย m/s ใช้นิยามพลังงานจลน์แบบไม่สัมพัทธภาพ โดยคิดพลังงานหน่วย J',
+        'Let mₑ be the electron mass in kg and vₘₐₓ the maximum speed in m/s. Use the nonrelativistic kinetic energy in joules.') + box(6) +
+      c('ให้ I ของแสงเป็นความเข้มแสงหน่วย W/m², A เป็นพื้นที่รับแสงหน่วย m² และ Δt เป็นช่วงเวลาหน่วย s สำหรับแสงตกตั้งฉาก ความเข้มคงที่คือพลังงานรวมต่อพื้นที่ต่อเวลา',
+        'Let I_light be irradiance in W/m², A the illuminated area in m², and Δt the time interval in seconds. For normally incident light with constant irradiance, intensity is total energy per area per time.') +
+      p(math(m`I_{\mathrm{light}}=\frac{E_{\mathrm{total}}}{A\Delta t}`)) + box(7) +
+      c('ถ้าโฟตอนทุกตัวมีพลังงาน Eγ เท่ากัน ให้ N เป็นจำนวนโฟตอนที่ตกกระทบ พลังงานรวมคือผลรวมของโฟตอนทั้ง N ตัว',
+        'If every photon carries the same energy Eγ, let N be the incident photon count. The total energy is the sum of the energies of all N photons.') +
+      p(math(m`E_{\mathrm{total}}=NE_\gamma`)) + box(8)
+    ],
+    [
       'ตัวอย่าง 1–2 · คำนวณจากพลังงานโฟตอน','Examples 1–2 · Calculations from photon energy',
       photonConstants +
       ex(1,t('พลังงานของโฟตอน','Photon energy'),
@@ -165,9 +203,9 @@ export function notebook(th, filled, lab) {
       'ตัวอย่าง 3–4 · ตรวจการหลุดและเทียบโลหะ','Examples 3–4 · Check emission and compare metals',
       photonConstants +
       ex(3,t('ความยาวคลื่นที่ยาวเกินขีดเริ่ม','A wavelength beyond threshold'),
-        t('ฉายแสงความยาวคลื่น 600 nm ลงบนโลหะ A ที่มีฟังก์ชันงาน 2.50 eV จงคำนวณพลังงานต่อโฟตอนแล้วตัดสินว่าอิเล็กตรอนหลุดหรือไม่',
-          'Shine 600 nm light on metal A, whose work function is 2.50 eV. Calculate the energy per photon and decide whether electrons are emitted.'),
-        working(th,[1],[m`E_\gamma=\frac{(6.626\times10^{-34})(3.00\times10^8)}{600\times10^{-9}}=3.31\times10^{-19}\,\mathrm J\approx2.07\,\mathrm{eV}`],t('2.07 eV ต่ำกว่า 2.50 eV จึงไม่มีโฟโตอิเล็กตรอนให้หาพลังงานจลน์','2.07 eV is below 2.50 eV, so no photoelectrons are available for a kinetic-energy calculation.'))) +
+        t('ฉายแสงความยาวคลื่น 600 nm ลงบนโลหะ A ที่มีฟังก์ชันงาน 2.50 eV จงตัดสินว่าอิเล็กตรอนหลุดหรือไม่ ถ้าไม่หลุด พลังงานต่อโฟตอนขาดอีกเท่าไรจึงถึงขีดเริ่ม?',
+          'Shine 600 nm light on metal A, whose work function is 2.50 eV. Decide whether electrons are emitted. If there is no emission, how much more energy per photon is needed to reach the threshold?'),
+        working(th,[1],[m`E_\gamma=\frac{(6.626\times10^{-34})(3.00\times10^8)}{600\times10^{-9}}=3.31\times10^{-19}\,\mathrm J\approx2.07\,\mathrm{eV}`,m`W-E_\gamma\approx2.50-2.07=0.43\,\mathrm{eV}`],t('ไม่มีการปล่อยอิเล็กตรอน ต้องเพิ่มพลังงานต่อโฟตอนประมาณ 0.43 eV จึงถึงขีดเริ่ม','There is no emission. Each photon needs about 0.43 eV more to reach the threshold.'))) +
       ex(4,t('ฉายแสงชุดเดียวกันลงบนโลหะสามชนิด','One light setting, three metals'),
         t('ฉายโฟตอนพลังงาน 3.00 eV ลงบนโลหะ A, B และ C ซึ่งมีฟังก์ชันงาน 2.50, 2.80 และ 3.10 eV ตามลำดับ โลหะใดปล่อยอิเล็กตรอน และอิเล็กตรอนจากแต่ละโลหะที่ปล่อยได้มีพลังงานจลน์สูงสุดกี่ eV?',
           'Shine 3.00 eV photons on metals A, B and C, whose work functions are 2.50, 2.80 and 3.10 eV, respectively. Which metals emit electrons, and what is the maximum kinetic energy in eV for each emitting metal?'),
@@ -185,6 +223,48 @@ export function notebook(th, filled, lab) {
           'With 3.00 eV photons, the teaching graph shows 0.20 µA at a collector voltage of −0.45 V, and a first zero reading of 0.00 µA at −0.50 V. Estimate the stopping-potential magnitude in V, then find the maximum kinetic energy and work function in eV.'),
         working(th,[4,2],[m`V\approx-0.50\,\mathrm V,\qquad V_s\approx0.50\,\mathrm V`,m`K_{\max}\approx(1.602\times10^{-19}\,\mathrm C)(0.50\,\mathrm V)=8.01\times10^{-20}\,\mathrm J=0.50\,\mathrm{eV}`,m`W=E_\gamma-K_{\max}\approx3.00-0.50=2.50\,\mathrm{eV}`],t('ข้อมูลที่วัดคร่อม 0.45 &lt; Vₛ ≤ 0.50 V การคำนวณใช้จุดศูนย์แรกเป็นค่าประมาณ',
           'The measurements bracket 0.45 &lt; Vₛ ≤ 0.50 V. The calculation uses the first zero as an estimate.')))
+    ],
+    [
+      'ตัวอย่าง 7 · จากผลวัดสู่กราฟศักย์หยุดยั้ง','Example 7 · From your readings to a stopping-potential graph',
+      c('กลับไปที่ซิม เลือก «สำรวจหลอดเอง» แล้วใช้ชุดวัด 3 ความถี่ของโลหะ A ที่ความเข้ม 50% จดค่าแรงดันสุดท้ายที่ยังมีกระแสและแรงดันแรกที่เป็นศูนย์ ซึ่งห่างกัน 0.01 V',
+        'Return to the lab, choose “Explore the tube”, and use the three frequency presets for metal A at 50% intensity. Record the last voltage with current and the first zero-current voltage, 0.01 V apart.') +
+      (filled ? figure(evidence('results',th,t('ตารางผลวัดจริงจากซิมทั้งสามความถี่','Actual simulation readings at all three frequencies'),29),
+        t('ภาพจากซิมหลังบันทึกครบทั้งสามความถี่','Simulation capture after recording all three pairs.')) : '') +
+      table(['f (10¹⁴ Hz)', t('V สุดท้ายที่ I > 0 (V)','Last V with I > 0 (V)'), t('V แรกที่ I = 0 (V)','First V with I = 0 (V)'), 'Vₛ (V)'],
+        graphRows.map(({ frequency, last, zero, stopping }) => [frequency.toFixed(2), recorded(lab.signed(last.voltage)), recorded(lab.signed(zero.voltage)), recorded(stopping.toFixed(2))])) +
+      c('ใช้สมการ (5) กับค่า Vₛ จากตาราง','Apply equation (5) to the Vₛ values in the table.') +
+      c('พล็อตจุดบนกราฟ หาแนวเส้นตรงจากค่าที่วัด แล้วต่อเส้นประเพื่ออ่านจุดตัดแกน ค่าที่วัดจริงอยู่เหนือขีดเริ่ม',
+        'Plot the measured points, draw a trend line and extend it with dashes to read the intercepts. The measured points are above threshold.') +
+      figure(stoppingGrid(th,{ classroom:true, filled, points:graphPoints, crossing:6.04, intercept:-2.497 }),
+        t('กราฟ Vₛ กับ f ใช้ขนาดศักย์หยุดยั้งเป็นบวก','Vₛ against f, using the positive stopping-potential magnitude.')) +
+      (filled ? working(th,[5],[
+        m`\frac{h}{e}\approx\frac{0.81-0.19}{(8.00-6.50)\times10^{14}}=4.13\times10^{-15}\,\mathrm{V\,s}`,
+        m`h\approx6.62\times10^{-34}\,\mathrm{J\,s},\quad f_0\approx6.04\times10^{14}\,\mathrm{Hz}`,
+        m`-\frac{W}{e}\approx-2.50\,\mathrm V\quad\Rightarrow\quad W\approx2.50\,\mathrm{eV}`,
+      ],t('ถ้าเปลี่ยนโลหะ ความชันยังเท่าเดิม แต่ตำแหน่งจุดตัดเปลี่ยนตาม W','Changing the metal keeps the slope the same and shifts the intercepts according to W.')) : '<div class="writing" style="--space:46mm"></div>')
+    ],
+    [
+      'ตัวอย่าง 8–9 · อัตราเร็วและจำนวนอนุภาค','Examples 8–9 · Speed and particle counts',
+      ex(8,t('จากศักย์หยุดยั้งสู่อัตราเร็ว','From stopping potential to speed'),
+        t('จากแล็บโลหะ A มีศักย์หยุดยั้งประมาณ 0.50 V จงหาอัตราเร็วสูงสุดของอิเล็กตรอน กำหนดมวลอิเล็กตรอน 9.11 × 10⁻³¹ kg',
+          'The lab gives a stopping potential of about 0.50 V for metal A. Find the maximum electron speed. The electron mass is 9.11 × 10⁻³¹ kg.'),
+        working(th,[4,6],[m`K_{\max}=eV_s=(1.602\times10^{-19}\,\mathrm C)(0.50\,\mathrm V)=8.01\times10^{-20}\,\mathrm J`,
+          m`v_{\max}=\sqrt{2K_{\max}/m_e}\approx4.19\times10^5\,\mathrm{m/s}`],t('ใช้พลังงานจลน์หน่วย J เพื่อหาอัตราเร็วใน m/s','Use kinetic energy in joules to obtain speed in m/s.'))) +
+      ex(9,t('จากความเข้มแสงสู่จำนวนโฟตอน','From light intensity to photon count'),
+        t('แสงความเข้ม 0.20 W/m² ตกตั้งฉากกับพื้นที่ 2.0 cm² เป็นเวลา 5.0 s โฟตอนแต่ละตัวมีพลังงาน 4.0 × 10⁻¹⁹ J จงหาจำนวนโฟตอนที่ตกกระทบ สมมติว่าทุกโฟตอนถูกดูดกลืนและทำให้อิเล็กตรอนหลุดหนึ่งตัว จะมีอิเล็กตรอนหลุดกี่ตัว?',
+          'Light of intensity 0.20 W/m² is incident normally on 2.0 cm² for 5.0 s. Each photon carries 4.0 × 10⁻¹⁹ J. Find the incident photon count. If every photon is absorbed and releases one electron, how many electrons are emitted?'),
+        working(th,[7,8],[m`E_{\mathrm{total}}=(0.20\,\mathrm{W/m^2})(2.0\times10^{-4}\,\mathrm{m^2})(5.0\,\mathrm s)=2.0\times10^{-4}\,\mathrm J`,
+          m`N=\frac{2.0\times10^{-4}\,\mathrm J}{4.0\times10^{-19}\,\mathrm J}=5.0\times10^{14}`],
+          t('ได้โฟตอนและอิเล็กตรอนจำนวนเท่ากันตามสมมติฐานที่กำหนด','The photon and electron counts are equal under the stated assumption.')))
+    ],
+    [
+      'ตัวอย่าง 10 · แสงเดียวกันกับโลหะสองชนิด','Example 10 · One light source, two metals',
+      ex(10,t('ใช้ขีดเริ่มของโลหะแรกหาฟังก์ชันงานของโลหะที่สอง','Use the first metal’s threshold to find the second metal’s work function'),
+        t('ใช้แสงที่ความถี่ขีดเริ่มของโลหะตัวอย่าง X ซึ่งมีฟังก์ชันงาน 3.60 eV ไปฉายลงบนโลหะ Y วัดศักย์หยุดยั้งได้ 0.90 V จงหาฟังก์ชันงานของ Y',
+          'Shine light at the threshold frequency of sample metal X, whose work function is 3.60 eV, onto metal Y. The measured stopping potential is 0.90 V. Find the work function of Y.'),
+        working(th,[3,4,2],[m`E_\gamma=hf_{0,X}=W_X=3.60\,\mathrm{eV}`,
+          m`K_{\max,Y}=eV_s=0.90\,\mathrm{eV}`,m`W_Y=E_\gamma-K_{\max,Y}=2.70\,\mathrm{eV}`],
+          t('ความถี่ของแสงชุดเดิมเท่าเดิมเมื่อเปลี่ยนโลหะ','The light frequency stays the same when the metal changes.')))
     ],
   ];
   const references = p(t('อ่านเสริม','Further reading')+' · '+link(th)+' · '+

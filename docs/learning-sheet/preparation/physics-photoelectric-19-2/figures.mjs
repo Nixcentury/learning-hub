@@ -74,3 +74,19 @@ export function practiceEnergy(th) {
     labels: [[6.2,1.22,'(6.00, 1.32)'],[8.2,2.55,'(8.00, 2.64)']],
   });
 }
+
+export function stoppingGrid(th, { classroom, filled, points, crossing, intercept }) {
+  const end = points.at(-1);
+  return plot(th ? 'กราฟศักย์หยุดยั้งกับความถี่' : 'Stopping potential versus frequency', {
+    xDomain: [0, classroom ? 9 : 8],
+    yDomain: [classroom ? -2.7 : -1.8, 1.4],
+    xs: classroom ? [0,1,2,3,4,5,6,7,8,9] : [0,1,2,3,4,5,6,7,8],
+    ys: classroom ? [-2.5,-2,-1.5,-1,-.5,0,.5,1] : [-1.5,-1,-.5,0,.5,1],
+    xlabel: 'f (10¹⁴ Hz)', ylabel: 'Vₛ (V)',
+    lines: [
+      {coords:[[0,0],[classroom ? 9 : 8,0]],color:'#71879b'},
+      ...(filled ? [{coords:[[0,intercept],[crossing,0]],dashed:true},{coords:[[crossing,0],end]}] : []),
+    ],
+    points: filled ? points : [],
+  });
+}

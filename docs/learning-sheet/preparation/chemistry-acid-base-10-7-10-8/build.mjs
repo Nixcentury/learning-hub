@@ -2,6 +2,7 @@ import { writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { alignedMath } from '../aligned-math.mjs';
 import { classroom } from './classroom.mjs';
+import { exitCloze } from './cloze.mjs';
 import { exitProblems } from './exit.mjs';
 import { examProblems } from './exams.mjs';
 
@@ -56,6 +57,33 @@ const css = `
     display:block; font-size:.88em; margin:.2em 0;
   }
 `;
+const clozeCSS = `
+  .cloze-banks { display:grid; grid-template-columns: minmax(0,2fr) minmax(0,3fr); gap:3mm; border-block:.4pt solid #8296a5; padding:1.4mm 0; margin:1mm 0 2.5mm; }
+  .cloze-bank h3 { margin:0 0 .35em; color:#193f55; font-size:11pt; }
+  .cloze-bank dl, .cloze-bank dd { margin:0; }
+  .cloze-words dl { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.3em .8em; }
+  .cloze-bank dl > div { display:grid; grid-template-columns:max-content minmax(0,1fr); gap:.35em; }
+  .cloze-bank dt { color:#445c6c; font-weight:700; }
+  .cloze-sentences dl > div + div { margin-top:.35em; }
+  .cloze-gap { display:inline-flex; vertical-align:baseline; align-items:baseline; gap:.4em; color:#445c6c; }
+  .cloze-gap > span { display:inline-block; width:30mm; border-bottom:.45pt solid #8296a5; }
+  .cloze-gap-wide { display:flex; min-height:7mm; align-items:end; }
+  .cloze-gap-wide > span { flex:1; }
+  .cloze-blank { display:none; }
+  html[data-hub-sheet-ready] .cloze-reveal:has([data-hub-sheet-open="false"]) .cloze-blank,
+  html[data-sheet-print-edition="blank"] .cloze-blank { display:block; }
+  .cloze-reveal [data-hub-sheet-open="false"] > [data-sheet-answer],
+  html[data-sheet-print-edition="blank"] .cloze-reveal > [data-sheet-slot] { display:none; }
+  @media(max-width:560px) { .cloze-banks { grid-template-columns:minmax(0,1fr); } }
+  html[data-hub-print-snapshot] .cloze-banks { grid-template-columns:minmax(0,2fr) minmax(0,3fr); padding:1mm 0; margin:1mm 0 1.5mm; }
+  html[data-hub-print-snapshot] .cloze-banks h3,
+  html[data-hub-print-snapshot] .opening h1,
+  html[data-hub-print-snapshot] [data-print-zone="problem"] h2 { font-size:11pt; }
+  html[data-hub-print-snapshot] .opening .running-head { display:none; }
+  html[data-hub-print-snapshot] [data-guide-anchor^="cloze-"] { margin-bottom:2.5mm; }
+  html[data-hub-print-snapshot] .cloze-reveal p { margin:.25em 0 .4em; }
+  html[data-hub-print-snapshot] [data-print-zone="problem"] .task { margin:.4em 0 .6em; }
+`;
 
 function pH(volume, sample, constant, weakBase) {
   const total = sample + volume;
@@ -78,8 +106,8 @@ function pH(volume, sample, constant, weakBase) {
 
 function toolkit(lang) {
   const t = (th, en) => lang === 'th' ? th : en;
-  const card = (key, title, content, { keepTogether = false } = {}) =>
-    `<section class="lesson" data-guide-anchor="${key}"${keepTogether ? ' data-print-keep' : ''}><h2>${title}</h2>${content}</section>`;
+  const card = (key, title, content, { keepTogether = false, keepTogetherBlank = false } = {}) =>
+    `<section class="lesson" data-guide-anchor="${key}"${keepTogether ? ' data-print-keep' : ''}${keepTogetherBlank ? ' data-print-keep-blank' : ''}><h2>${title}</h2>${content}</section>`;
   const slot = (id, label, content, height, revisionNote = false, placeholder = '') => revisionNote
     ? `<div class="fully-worked">${content}</div>`
     : `<div data-sheet-slot="${id}" data-sheet-size="small" data-sheet-layout="block" data-sheet-label-th="${escape(label?.th ?? 'เปิดวิธีทำ')}" data-sheet-label-en="${escape(label?.en ?? 'Reveal worked solution')}" style="--sheet-print-height:${height}mm"><div data-sheet-answer>${content}</div>${placeholder ? '<div data-sheet-placeholder>'+placeholder+'</div>' : ''}</div>`;
@@ -131,6 +159,7 @@ const data = {
 const stem = '10-7-10-8-acid-base';
 function render(kind) {
   const isExit = kind === 'exit';
+  const contentRevision = isExit ? '2026-11-22-4' : revision;
   const {name} = data[kind];
   const suffix = isExit ? 'exit-ticket-revision' : 'classroom-note';
   const hub = '../../../../#chemistry/bank/buffer-solutions/';
@@ -143,24 +172,24 @@ function render(kind) {
     const notesLink = isExit ? ` · <a href="#${lang}-revision">${t('ไปสรุปทบทวน','Jump to Revision Notes')}</a>` : '';
     const heading = `<header class="opening">${runningHead}<h1>${kindLabel} · 10.7–10.8</h1>${identity}<nav class="no-print">${link(hub+'lab-guide',t('คู่มือแล็บ','Lab Guide'))} · ${link(hub+(isExit?'classroom-note':'exit-ticket-revision'),isExit?'Classroom Note':'Exit Ticket Revision')}${notesLink}</nav></header>`;
     const sections = isExit
-      ? `<div id="${lang}-practice" data-print-zone="problem">${exitProblems(kit)}${examProblems(kit)}</div>
+      ? `<div id="${lang}-practice" data-print-zone="problem">${exitCloze(kit)}${exitProblems(kit)}${examProblems(kit)}</div>
 <section id="${lang}-revision" data-print-zone="learning"><h2>${t('สรุปทบทวน','Revision Notes')}</h2><p class="no-print"><a href="#${lang}-practice">${t('กลับไปส่วนโจทย์','Back to practice')}</a></p>${classroom(kit,true)}</section>`
       : classroom(kit,false);
     return `<div data-content-lang="${lang}" lang="${lang}">${heading}${sections}</div>`;
   }).join('\n');
   const html = `<!doctype html>
 <html lang="th" data-learning-html data-learning-sheet="1" data-sheet-answer-toolbar="window" data-print-blank-sizing="preset"
-  data-sheet-guide="guides/${stem}-${suffix}.guide.json" data-sheet-revision="${revision}"
+  data-sheet-guide="guides/${stem}-${suffix}.guide.json" data-sheet-revision="${contentRevision}"
   data-print-subject-th="เคมี ม.5" data-print-subject-en="Grade 11 Chemistry" data-print-chapter-th="กรด–เบส" data-print-chapter-en="Acids and bases"
   data-print-topic-th="ไทเทรต ไฮโดรลิซิส และบัฟเฟอร์" data-print-topic-en="Titration, hydrolysis and buffers"
   data-print-work-th="${isExit?'Exit Ticket Revision':'Classroom Note'}" data-print-work-en="${isExit?'Exit Ticket Revision':'Classroom Note'}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${name.th} | ${name.en}</title><link rel="stylesheet" href="../../../../shared/learning-sheet.css"><style>${css}</style></head>
+<title>${name.th} | ${name.en}</title><link rel="stylesheet" href="../../../../shared/learning-sheet.css"><style>${css}${isExit ? clozeCSS : ''}</style></head>
 <body><main>${body}</main></body>
 </html>
 `;
   writeFileSync(new URL(stem+'-'+suffix+'.html',out),html);
-  writeFileSync(new URL('guides/'+stem+'-'+suffix+'.guide.json',out), JSON.stringify(makeGuide(kind,html),null,2)+'\n');
+  writeFileSync(new URL('guides/'+stem+'-'+suffix+'.guide.json',out), JSON.stringify(makeGuide(kind,html,contentRevision),null,2)+'\n');
 }
 
 function step(id,key,th,en,summary,story,action,question,answer,after) {
@@ -212,6 +241,13 @@ const exitSteps = [
     pair('ทวนเฉพาะส่วนที่ยังติด','Review the steps you are unsure about.'),
     pair('ต้องใช้หน่วยใดใน ICF และ ICE?','Which units are used for ICF and ICE?'),
     pair('ICF ใช้ mmol และ ICE ใช้ mol/L ในใบนี้','Use mmol for ICF and mol/L for ICE in this worksheet.'),
+    pair('เริ่มบทความเติมคำ A และ B','Start cloze passages A and B.')),
+  step('cloze','cloze-a','เติมคำจากแล็บไทเทรตและบัฟเฟอร์','Complete the titration and buffer passages',
+    pair('เลือกคำและประโยคจากคลังของแต่ละบท\nใช้ความหมายและผลแล็บช่วยตัดตัวลวง','Choose words and sentences from each passage’s banks.\nUse lab observations and chemical meaning to rule out distractors.'),
+    pair('อ่านจากสิ่งที่เห็นในแล็บไปถึงกราฟและการคำนวณ pH','Read from the lab observations through to the curve and pH calculation.'),
+    pair('เติมบทความ A และ B ก่อนเปิดเฉลย','Complete passages A and B before revealing their answers.'),
+    pair('จุดที่เห็นอินดิเคเตอร์เปลี่ยนสีเรียกว่าอะไร?','What is the point at which you observe the indicator change colour?'),
+    pair('จุดยุติ','The endpoint.'),
     pair('ลองทำข้อ 1–7','Attempt questions 1–7.')),
   step('practice','exit-start','ลงมือทำโจทย์ใหม่','Solve the new problems',
     pair('เลือกวิธีจากแถว F\nใช้ Check Answer หลังลองทำ','Choose from row F.\nUse Check Answer after attempting each problem.'),
@@ -229,11 +265,11 @@ const exitSteps = [
     pair('ทวน Knowledge Recall ท้ายใบ','Finish with Knowledge Recall.')),
 ];
 
-function makeGuide(kind, html) {
+function makeGuide(kind, html, contentRevision) {
   const exit = kind === 'exit';
   return {
     schemaVersion:1,
-    source:{contentId:data[kind].contentId,revision,sha256:createHash('sha256').update(html).digest('hex')},
+    source:{contentId:data[kind].contentId,revision:contentRevision,sha256:createHash('sha256').update(html).digest('hex')},
     title:data[kind].name,
     prerequisites:pair('ทวน mol/L, pH และคู่กรด–เบส','Review mol/L, pH and conjugate acid–base pairs.'),
     goal:pair('ใช้ผลแล็บและสารที่เหลือเลือกรูปแบบการคำนวณ pH','Use lab data and remaining species to choose a pH calculation.'),

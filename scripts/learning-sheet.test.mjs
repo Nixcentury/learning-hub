@@ -28,6 +28,12 @@ test('bilingual slots share semantic IDs but not HTML IDs', () => {
   assert.match(check(bilingual(slot('one'), slot('two'))).join(), /same slot ID/);
   assert.match(check(bilingual(slot('one', 'id="collision"'), slot('one', 'id="collision"'))).join(), /duplicate HTML/);
 });
+test('window answer toolbar is an explicit root-level choice', () => {
+  const inWindow = sheet(slot()).replace('<html ', '<html data-sheet-answer-toolbar="window" ');
+  assert.deepEqual(check(inWindow), []);
+  assert.match(check(inWindow.replace('"window"', '"unknown"')).join(), /must be window/);
+  assert.match(check(sheet(`<div data-sheet-answer-toolbar="window">${slot()}</div>`)).join(), /belongs only on html/);
+});
 test('keeps authoring readable and rejects unsupported interaction, groups and SVG slots', () => {
   for (const body of [slot('one', '', '<input>'), slot('one', '', '<a href="#">link</a>'), slot('one', 'data-sheet-group="g"'), `<svg>${slot()}</svg>`, slot().replace('data-sheet-answer', 'data-sheet-answer hidden')]) {
     assert.ok(check(sheet(body)).length, body);

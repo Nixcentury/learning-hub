@@ -12,7 +12,7 @@ export function classroom({ t, eq, slot, task, card, table, labImage, graph }, r
       table(headers,rows), 9, revision, table(headers,blank));
   };
   return [
-    card('lab-results', t('จากแล็บจริงสู่คำอธิบาย', 'From lab measurements to explanations'), [
+    card('lab-results', t('Quick Start Note · จากแล็บจริงสู่คำอธิบาย', 'Quick Start Note · From lab measurements to explanations'), [
       t('<p>เปิดบันทึกของกลุ่ม แล็บ 1 ใช้บิวเรตเพื่อหาความเข้มข้น แล็บ 2 ใช้เครื่องวัด pH เพื่อเปรียบเทียบการต้านการเปลี่ยนแปลง pH</p>',
         '<p>Open your group record. In Lab 1 the burette readings help you find concentration. In Lab 2 the pH readings help you compare resistance to pH change.</p>'),
       '<div class="lab-figures">'+labImage('titration-setup', t('HCl ในบิวเรตและ NaOH ในขวดรูปกรวย', 'HCl in the burette and NaOH in the conical flask'))+

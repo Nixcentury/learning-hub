@@ -63,7 +63,7 @@ function buildPrintFilename({ subjectId = '', subject = '', chapter = '', work =
   const code = subjectCodes[subjectKey] || subjectCodes[subjectAliases[labelKey] || labelKey] || 'HUB';
   const suffixes = { worksheet: ['โจทย์','Questions'], answer: ['เฉลย','Answers'], summary: ['สรุป','Summary'],
     blank: ['ฉบับว่าง','Blank'], answers: ['เฉลย','Answers'], evidence: ['หลักฐานวิธีทำ','Reasoning'], 'topic-review': ['ทบทวน','Review'] };
-  const section = zone === 'learning' ? 'Learning' : zone === 'problem' ? 'Problem' : '';
+  const section = zone === 'learning' ? 'Learning' : zone === 'problem' ? 'Problem' : zone === 'recall' ? 'Knowledge Recall' : '';
   const suffix = [section, suffixes[mode]?.[language === 'en' ? 1 : 0]].filter(Boolean).join('-');
   const cleanChapter = filenamePart(chapter), cleanWork = filenamePart(work);
   const parts = [cleanChapter, cleanWork].filter((value, index, all) => value && all.indexOf(value) === index);

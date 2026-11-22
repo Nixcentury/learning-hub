@@ -31,7 +31,7 @@ export function openExitTicketPrint({ frame, title, language, opener, context,
   }
   const rangeChoices = exitTicketRanges(source).length > 2 ? [
     ['all',text('ทั้งชุด','Full set')], ['quiz',labels.quiz],
-    ['recall',text('เฉพาะ Recall','Recall only')], ['review',labels.review],
+    ['review',labels.review], ['recall',text('เฉพาะ Knowledge Recall','Knowledge Recall only')],
     ['bank',labels.bank],
   ].filter(([value]) => exitTicketRanges(source).includes(value)) : [
     ['all',text(`ทั้งชุด (${allCount} หน้า)`,`Full set (${allCount} pages)`)],
@@ -68,7 +68,7 @@ export function openExitTicketPrint({ frame, title, language, opener, context,
       const count = prepareExitTicketPrint(doc, { range:range.value, answers:edition.value === 'answers' });
       const labels = readPrintMetadata(source, language);
       filename = buildPrintFilename({ ...labels, subjectId:context.subjectId, language,
-        work:labels.work || title, mode:edition.value, zone:range.value === 'quiz' ? 'problem' : '' });
+        work:labels.work || title, mode:edition.value, zone:range.value === 'quiz' ? 'problem' : range.value === 'recall' ? 'recall' : '' });
       doc.title = filename;
       const loaded = new Promise((resolve, reject) => {
         onLoad = () => {

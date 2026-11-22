@@ -112,7 +112,11 @@ export function examProblems({t, work, task, card, link}) {
           String.raw`C(\mathrm{Ba(OH)_2}) &= \frac{2.00\,\mathrm{mmol}}{5.00\,\mathrm{mL}}=0.400\,\mathrm{mol/L}`,
         ],
           t('ตัวเลือก 3 น้ำกลั่นที่เติมเปลี่ยนปริมาตร แต่จำนวนโมลในตัวอย่างคงเดิม', 'Choice 3. Adding distilled water changes the volume while the amount in the aliquot stays the same.')),'3 · 0.400 mol/L'),
-    card('recall',t('Knowledge Recall · ลองตอบจากความจำ','Knowledge Recall · Retrieve from memory'),[
+  ].join('\n').replaceAll('Kᵥ','K<sub>w</sub>');
+}
+
+export function knowledgeRecall({t, task, card}) {
+  return card('recall',t('Knowledge Recall · ลองตอบจากความจำ','Knowledge Recall · Retrieve from memory'),[
       task('recall-1',t('หลัง ICF เหลืออะไรในกรณีบัฟเฟอร์ และเมื่อพอดีจะดูอะไรต่อ?',
         'What remains after ICF for a buffer, and what do you examine at equivalence?'),
         t('บัฟเฟอร์มีสมาชิกคู่กรด–เบสอ่อนทั้งสองชนิดในปริมาณที่ช่วยรับกรดและเบสได้ เมื่อพอดีให้ดูว่าไอออนของเกลือใดไฮโดรลิซิส',
@@ -121,6 +125,5 @@ export function examProblems({t, work, task, card, link}) {
         'How do you find the half-equivalence volume, and which region guides indicator selection?'),
         t('อ่าน V ที่จุดสมมูลจากแกนนอนแล้วหารสอง สำหรับกรดอ่อนโมโนโพรติกกับเบสแก่ pH ตรงนั้นประมาณ pKₐ เลือกอินดิเคเตอร์ที่ช่วงเปลี่ยนสีอยู่ในส่วนชันรอบจุดสมมูล',
           'Read the equivalence volume on the horizontal axis and halve it. For a weak monoprotic acid titrated by a strong base, pH there is approximately pKₐ. Choose an indicator with a transition in the steep region near equivalence.'),{height:14}),
-    ].join('')),
-  ].join('\n').replaceAll('Kᵥ','K<sub>w</sub>');
+  ].join(''));
 }

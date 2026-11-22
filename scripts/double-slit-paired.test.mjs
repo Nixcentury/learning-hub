@@ -49,18 +49,19 @@ test('double-slit: the complete canonical answer notes survive student printing 
   const canonical=notes(view(classroom,lang,'answers','all'));assert.equal(canonical.length,13);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.proof-diagram').length,2);assert.equal(view(classroom,lang,'answers','all').querySelectorAll('.example .method-note').length,12);
   const blankClassroom=view(classroom,lang,'blank','all');assert.equal(blankClassroom.querySelectorAll('.note-answer').length,0);assert.equal(blankClassroom.querySelectorAll('.example').length,12);
   for(const edition of ['blank','answers'])for(const range of ['all','review'])assert.deepEqual(notes(view(exit,lang,edition,range)),canonical);
-  for(const kind of ['classroom','exit'])for(const answers of [false,true])for(const range of ['all','quiz','review']){
+  for(const kind of ['classroom','exit'])for(const answers of [false,true])for(const range of kind==='exit'?['all','quiz','review','recall']:['all','quiz','review']){
    const source=kind==='classroom'?classroom:exit;applyContentLanguage(source,lang);const before=source.documentElement.outerHTML;
    const {document:copy}=parseHTML(buildHtmlPrintSnapshot(source,'10.2 paired handout'));const count=prepareExitTicketPrint(copy,{range,answers});
-   assert.equal(count,kind==='classroom'?(range==='quiz'?6:range==='review'?7:13):range==='all'?(answers?28:23):range==='quiz'?(answers?15:10):13);
+   assert.equal(count,kind==='classroom'?(range==='quiz'?6:range==='review'?7:13):range==='all'?(answers?28:23):range==='quiz'?(answers?12:8):range==='recall'?(answers?3:2):13);
    assert.equal(copy.querySelectorAll('[data-content-lang]').length,1);assert.equal(copy.querySelectorAll('[data-revision-edition]').length,1);assert.equal(copy.querySelectorAll('.identity').length,1);assert.equal(exitTicketPages(copy).length,count);
    assert.equal(source.documentElement.outerHTML,before,'printing must not change the live lesson');
    if(kind==='exit'){
-    assert.equal(copy.querySelectorAll('[data-unit-key^="problem-"]').length,range==='review'?0:9);
-    assert.equal(copy.querySelectorAll('[data-recall-key]').length,range==='review'?0:14);
+    const hasPractice=range==='all'||range==='quiz',hasNotes=range==='all'||range==='review';
+    assert.equal(copy.querySelectorAll('[data-unit-key^="problem-"]').length,hasPractice?9:0);
+    assert.equal(copy.querySelectorAll('[data-recall-key]').length,range==='all'||range==='recall'?14:0);
     const exams=[...copy.querySelectorAll('[data-unit-key^="a-level-"]')];
-    assert.deepEqual(exams.map(exam=>exam.dataset.unitKey),range==='review'?[]:['a-level-2566-11','a-level-2568-9']);
-    if(range!=='review'){
+    assert.deepEqual(exams.map(exam=>exam.dataset.unitKey),hasPractice?['a-level-2566-11','a-level-2568-9']:[]);
+    if(hasPractice){
      const practice7=copy.querySelector('[data-unit-key="problem-7"]');
      assert.equal(practice7.querySelectorAll('.experiment-data tr').length,3);
      assert.match(practice7.querySelector('.exam-source').textContent,/133–134, 153/);
@@ -87,7 +88,7 @@ test('double-slit: the complete canonical answer notes survive student printing 
      }
     }
     const practice=copy.querySelector('[data-unit-key="practice-ipst-10-2-2c"]');
-    assert.equal(Boolean(practice),range!=='review');
+    assert.equal(Boolean(practice),hasPractice);
     if(practice){
      assert.equal(Boolean(practice.querySelector('.teacher-key')),answers);
      assert.match(practice.textContent,lang==='th'?/ความเข้ม/:/light intensity/);
@@ -105,7 +106,12 @@ test('double-slit: the complete canonical answer notes survive student printing 
      assert.equal(exams[0].querySelector('.teacher-key strong')?.textContent,answers?(lang==='th'?'ตัวเลือก 5 (ข. และ ค.)':'Choice 5 (statements B and C)'):undefined);
      assert.equal(exams[1].querySelector('.teacher-key strong')?.textContent,answers?(lang==='th'?'ตัวเลือก 1':'Choice 1.'):undefined);
     }
-    if(range!=='quiz'){assert.deepEqual(notes(copy),canonical);assert.equal(copy.querySelectorAll('.shared-note .teacher-key,.shared-note .answer-inline').length,0);assert.equal(copy.querySelectorAll('.shared-note .example').length,12);}
+    if(hasNotes){assert.deepEqual(notes(copy),canonical);assert.equal(copy.querySelectorAll('.shared-note .teacher-key,.shared-note .answer-inline').length,0);assert.equal(copy.querySelectorAll('.shared-note .example').length,12);}
+    if(range==='all'){
+      const pages=[...copy.querySelectorAll('.page')];
+      assert.ok(pages.findLastIndex(page=>page.querySelector('[data-unit-key^="problem-"]')) < pages.findIndex(page=>page.querySelector('.shared-note')));
+      assert.ok(pages.findLastIndex(page=>page.querySelector('.shared-note')) < pages.findIndex(page=>page.querySelector('[data-recall-key]')));
+    }
    }
    if(!answers)assert.equal(copy.querySelectorAll('.teacher-key,.answer-inline').length,0);
    assert.equal(copy.querySelectorAll('script,iframe,form,button,template').length,0);

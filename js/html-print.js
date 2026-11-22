@@ -55,14 +55,13 @@ function sheetPrintZones(root) {
   if (!root?.hasAttribute('data-learning-sheet')) return [];
   const content = root.querySelector('[data-content-lang]:not([hidden])') || root.querySelector('body');
   const zones = [...(content?.querySelectorAll('[data-print-zone]') || [])];
-  if (zones.length !== 2 || zones[0].parentElement !== zones[1].parentElement
-    || zones.some(zone => !zone.firstElementChild)
-    || !zones.some(zone => zone.dataset.printZone === 'learning')
-    || !zones.some(zone => zone.dataset.printZone === 'problem')) return [];
+  const kinds = zones.map(zone => zone.dataset.printZone);
+  if (!['learning,problem', 'problem,learning', 'problem,learning,recall'].includes(kinds.join(','))
+    || zones.some(zone => !zone.firstElementChild || zone.parentElement !== zones[0].parentElement)) return [];
   return zones;
 }
 
-export function buildHtmlPrintSnapshot(source, title, zone = 'learning') {
+export function buildHtmlPrintSnapshot(source, title, zone) {
   if (!source?.documentElement.hasAttribute('data-learning-html')) throw Error('Not a reading document');
   const clone = source.documentElement.cloneNode(true);
   // Copy responsive image selections before pruning hidden languages and zones.
@@ -86,7 +85,11 @@ export function buildHtmlPrintSnapshot(source, title, zone = 'learning') {
   // Print only the chosen language; do not paginate the hidden translation.
   clone.querySelectorAll('[data-content-lang][hidden]').forEach(node => node.remove());
   const zones = sheetPrintZones(clone);
-  if (zones.length) {
+  if (zones.length === 3) {
+    const selected = zone === 'learning' || zone === 'problem' || zone === 'recall' ? zone : 'all';
+    zones.filter(node => selected !== 'all' && node.dataset.printZone !== selected).forEach(node => node.remove());
+    clone.dataset.printSelection = selected;
+  } else if (zones.length) {
     const selected = zone === 'problem' ? 'problem' : 'learning';
     zones.find(node => node.dataset.printZone !== selected).remove();
   }
@@ -185,13 +188,18 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
   const filenameHint = document.createElement('p'); filenameHint.dataset.printFilename = '';
   dialog.querySelector('.html-print-help').after(filenameHint);
   const isSheet = frame.contentDocument?.documentElement.hasAttribute('data-learning-sheet');
-  const hasZones = sheetPrintZones(frame.contentDocument?.documentElement).length > 0;
-  const zoneOptions = [
+  const zones = sheetPrintZones(frame.contentDocument?.documentElement);
+  const zoneOptions = zones.length === 3 ? [
+    ['all', 'ทั้งชุด · บทความและโจทย์ → Classroom Note ฉบับเฉลย → Knowledge Recall', 'Full set · Reading and questions → Classroom Note with answers → Knowledge Recall'],
+    ['problem', '1. บทความและโจทย์', '1. Reading and questions'],
+    ['learning', '2. Classroom Note ฉบับเฉลย', '2. Classroom Note with answers'],
+    ['recall', '3. Knowledge Recall', '3. Knowledge Recall'],
+  ] : [
     ['learning', 'Learning — ส่วนเล่าเรื่อง', 'Learning — lesson notes'],
     ['problem', 'Problem — โจทย์และแบบฝึกหัด', 'Problem — questions and practice'],
   ];
   let editionSelect = null, zoneSelect = null;
-  if (hasZones) {
+  if (zones.length) {
     const field = document.createElement('label'); field.className = 'html-print-edition';
     field.textContent = label('ส่วนที่จะพิมพ์', 'Section to print');
     zoneSelect = document.createElement('select'); zoneSelect.dataset.sheetPrintZoneSelect = ''; zoneSelect.disabled = true;
@@ -205,7 +213,10 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
     const field = document.createElement('label'); field.className = 'html-print-edition';
     field.textContent = label('ฉบับที่ต้องการพิมพ์', 'Print edition');
     editionSelect = document.createElement('select'); editionSelect.dataset.sheetPrintEdition = ''; editionSelect.disabled = true;
-    for (const [value, th, english] of [['blank', 'ฉบับว่าง — สำหรับจด', 'Blank — for notes'], ['answers', 'ฉบับเฉลย — เนื้อหาครบ', 'Answers — complete content']]) {
+    const blankOption = zones.length === 3
+      ? ['blank', 'ฉบับผู้เรียน — ซ่อนเฉลยโจทย์และ Recall', 'Student — hide answers for practice and Recall']
+      : ['blank', 'ฉบับว่าง — สำหรับจด', 'Blank — for notes'];
+    for (const [value, th, english] of [blankOption, ['answers', 'ฉบับเฉลย — เนื้อหาครบ', 'Answers — complete content']]) {
       const option = document.createElement('option'); option.value = value; option.textContent = label(th, english); editionSelect.append(option);
     }
     field.append(editionSelect); dialog.querySelector('.html-print-metadata').before(field);
@@ -319,7 +330,7 @@ export function openHtmlPrint({ frame, title, language = 'th', opener, context =
       preview.style.visibility = 'visible';
       dialog.dataset.printState = 'ready'; printButton.disabled = false;
       const editionName = isSheet ? (editionSelect.value === 'blank' ? label('ฉบับว่าง · ', 'Blank · ') : label('ฉบับเฉลย · ', 'Answers · ')) : '';
-      const sectionName = zone ? (zone === 'problem' ? 'Problem · ' : 'Learning · ') : '';
+      const sectionName = zoneSelect ? zoneSelect.selectedOptions[0].textContent + ' · ' : '';
       status.textContent = sectionName + editionName + label(`พร้อมพิมพ์ ${result.pages} หน้า`, `${result.pages} pages ready to print`);
     } catch (error) { if (alive() && token === revision) printError(error); }
     finally {

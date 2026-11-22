@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "chemistry-acid-base-lab-sheet",
+    "revision": "2026-11-22-1",
+    "sha256": "33e4fb50ac70b55031f4225dec734224d098542a266bd6de4ffa8d3ac25d8dea"
+  },
+  "title": {
+    "th": "คู่มือแล็บกรด–เบส",
+    "en": "Acid–Base Lab Guide"
+  },
+  "prerequisites": {
+    "th": "ทวนการอ่านก้นเมนิสคัส หน่วย mol/L และความหมายของ pH",
+    "en": "Review reading the bottom of the meniscus, mol/L and the meaning of pH."
+  },
+  "goal": {
+    "th": "หาความเข้มข้น NaOH จากการไทเทรตและอธิบายความต่างของ pH เมื่อเติมกรดเท่ากัน",
+    "en": "Find the NaOH concentration by titration and explain how equal acid additions affect the pH of two solutions."
+  },
+  "steps": [
+    {
+      "id": "titration",
+      "title": {
+        "th": "อ่านบิวเรตและหาจุดยุติ",
+        "en": "Read the burette and find the endpoint"
+      },
+      "summary": {
+        "th": "ใช้ NaOH 10.00 mL ต่อรอบและเติม HCl จากบิวเรต\nใช้ BTB สีเขียวคงตัวเป็นสัญญาณ พร้อมจด pH ที่วัดได้",
+        "en": "Use 10.00 mL of NaOH per trial and add HCl from the burette.\nWatch for a persistent green BTB colour and record the measured pH."
+      },
+      "story": {
+        "th": "ชี้ตำแหน่ง HCl และขวดตัวอย่างในรูป แล้วคุยว่าต้องอ่านบิวเรตกี่ครั้ง",
+        "en": "Identify the HCl and the sample flask in the figure, then discuss how many burette readings are needed."
+      },
+      "action": {
+        "th": "ทำสองรอบและบันทึกข้อมูลของกลุ่ม",
+        "en": "Run two trials and record your group’s results."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "วิธีทำแล็บ 1",
+            "en": "Lab 1 procedure"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "titration-procedure"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ใช้ค่าไหนหาปริมาตร HCl ที่จ่าย?",
+          "en": "Which readings give the volume of HCl delivered?"
+        },
+        "answer": {
+          "th": "ค่าที่อ่านสุดท้ายลบค่าเริ่มต้น",
+          "en": "Subtract the initial reading from the final reading."
+        }
+      },
+      "after": {
+        "th": "เมื่อได้สองรอบที่ครูยืนยันแล้ว คำนวณความเข้มข้นต่อ",
+        "en": "Once the teacher accepts both trials, calculate the concentration."
+      }
+    },
+    {
+      "id": "concentration",
+      "title": {
+        "th": "ตัดหน่วยแล้วคำนวณความเข้มข้น",
+        "en": "Cancel units and calculate concentration"
+      },
+      "summary": {
+        "th": "ใช้ปริมาตรเฉลี่ยและความเข้มข้น HCl หา mmol\nใช้ ICF อัตราส่วน 1:1 แล้วหาร mmol NaOH ด้วย 10.00 mL",
+        "en": "Use the mean volume and HCl concentration to find mmol.\nApply the 1:1 ratio in ICF, then divide the NaOH amount in mmol by 10.00 mL."
+      },
+      "story": {
+        "th": "ให้ชี้แถว I ที่บอกว่ามี NaOH เท่าใดก่อนสะเทิน",
+        "en": "Point to the I row that gives the initial amount of NaOH."
+      },
+      "action": {
+        "th": "แสดงการตัด mL และตอบเป็น mol/L จากผลของกลุ่ม",
+        "en": "Show where mL cancels and report your group’s result in mol/L."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ขั้นคำนวณความเข้มข้น",
+            "en": "Concentration calculation"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "titration-calculation"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "mmol/mL เท่ากับหน่วยอะไร?",
+          "en": "Which unit is equivalent to mmol/mL?"
+        },
+        "answer": {
+          "th": "mol/L เพราะทั้งเศษและส่วนต่างกันด้วยตัวคูณเดียวกัน",
+          "en": "mol/L, because both the numerator and denominator change by the same factor."
+        }
+      },
+      "after": {
+        "th": "เก็บคำตอบไว้ตรวจด้วยฟอร์มหลังจบการเรียน",
+        "en": "Keep the result to check with the form at the end of the lesson."
+      }
+    },
+    {
+      "id": "buffer",
+      "title": {
+        "th": "วัด pH ของสองบีกเกอร์",
+        "en": "Measure pH in both beakers"
+      },
+      "summary": {
+        "th": "A มี NaCl กับน้ำกลั่น ส่วน B มีฟอสเฟตบัฟเฟอร์\nเติม HCl เท่ากันและวัด pH ที่ 0.00, 0.25 และ 0.50 mL สะสม",
+        "en": "A contains NaCl with distilled water and B contains phosphate buffer.\nAdd equal HCl amounts and measure pH at cumulative volumes of 0.00, 0.25 and 0.50 mL."
+      },
+      "story": {
+        "th": "ให้ทำนายก่อนวัด จากนั้นชี้ลำดับเดียวกันของ A และ B ในรูป",
+        "en": "Ask for a prediction before measuring, then trace the matching sequence for A and B in the image."
+      },
+      "action": {
+        "th": "ใช้ผลของกลุ่มคำนวณขนาดการเปลี่ยน pH แล้วเปรียบเทียบ",
+        "en": "Use your group’s data to calculate and compare the magnitude of the pH changes."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "วิธีทำแล็บ 2",
+            "en": "Lab 2 procedure"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "buffer-procedure"
+          }
+        },
+        {
+          "label": {
+            "th": "คำถามเปรียบเทียบ pH",
+            "en": "Compare the pH changes"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "buffer-evidence"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "หาขนาดการเปลี่ยน pH ของ A จากค่าใด?",
+          "en": "Which readings give the magnitude of the pH change in A?"
+        },
+        "answer": {
+          "th": "ใช้ค่าสุดท้ายที่ 0.50 mL ลบค่าเริ่มต้นที่ 0.00 mL แล้วหาค่าสัมบูรณ์",
+          "en": "Subtract the initial reading at 0.00 mL from the final one at 0.50 mL, then take the absolute value."
+        }
+      },
+      "after": {
+        "th": "เมื่อเปรียบเทียบผลแล้ว ดูว่าไอออนใดทำปฏิกิริยากับกรด",
+        "en": "After comparing the results, identify the ion that reacts with the acid."
+      }
+    },
+    {
+      "id": "equilibrium",
+      "title": {
+        "th": "จาก ICF ไป ICE",
+        "en": "From ICF to ICE"
+      },
+      "summary": {
+        "th": "ใช้ ICF หน่วย mmol หาปริมาณคู่ฟอสเฟตที่เหลือหลังเติมกรด\nหารด้วย 20.50 mL แล้วใช้ความเข้มข้นเป็นแถว I ของ ICE",
+        "en": "Use ICF in mmol to find the amounts of the phosphate pair after adding acid.\nDivide by 20.50 mL and put the concentrations in row I of the ICE table."
+      },
+      "story": {
+        "th": "ให้ตามตัวเลขของ HPO₄²⁻ จากแถว F ไปยังแถว I และสังเกตว่าหน่วยเปลี่ยน",
+        "en": "Follow the HPO₄²⁻ value from row F into row I and notice how the units change."
+      },
+      "action": {
+        "th": "เติม ICF และแถว E ของ ICE ก่อนใช้ค่า Kₐ₂ ใน Classroom Note",
+        "en": "Complete ICF and row E of ICE before using Kₐ₂ in the Classroom Note."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "จากผลทดลองสู่สมดุล",
+            "en": "From observations to equilibrium"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "buffer-calculation"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ต้องใช้ปริมาตรใดหลังเติมกรดครบ 0.50 mL?",
+          "en": "What volume is used after adding a total of 0.50 mL of acid?"
+        },
+        "answer": {
+          "th": "20.50 mL เพราะรวมสารเริ่มต้น 20.00 mL กับกรดที่เติม",
+          "en": "20.50 mL, the initial 20.00 mL plus the acid added."
+        }
+      },
+      "after": {
+        "th": "กลับไปที่ฟอร์มเพื่อกรอกผลและตรวจค่า NaOH ของกลุ่ม",
+        "en": "Return to the form to enter your results and check the group’s NaOH concentration."
+      }
+    }
+  ],
+  "finish": {
+    "th": "ใช้ข้อมูลจริงสรุปผลแล็บทั้งสองและตรวจความเข้มข้น NaOH",
+    "en": "Draw conclusions from your own data for both labs and check the NaOH concentration."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "แถว F ของ ICF เชื่อมกับแถว I ของ ICE อย่างไร?",
+      "en": "How does ICF row F connect to ICE row I?"
+    },
+    "answer": {
+      "th": "นำ mmol หลังสะเทินไปหารด้วยปริมาตรรวมเพื่อได้ mol/L เริ่มต้นสำหรับสมดุล",
+      "en": "Divide the mmol after neutralization by the total volume to obtain the initial mol/L for the equilibrium."
+    }
+  }
+}

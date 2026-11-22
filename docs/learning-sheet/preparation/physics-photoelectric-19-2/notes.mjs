@@ -7,6 +7,10 @@ export const equations = [
   String.raw`K_{\max}=hf-W`,
   String.raw`W=hf_0`,
   String.raw`K_{\max}=eV_s`,
+  String.raw`V_s=\frac{h}{e}f-\frac{W}{e}`,
+  String.raw`K_{\max}=\frac{1}{2}m_ev_{\max}^2`,
+  String.raw`E_{\mathrm{total}}=I_{\mathrm{light}}A\Delta t`,
+  String.raw`N=\frac{E_{\mathrm{total}}}{E_\gamma}`,
 ];
 export const math = tex => String.raw`\(${tex}\)`;
 export const heading = text => `<h2>${text}</h2>`;
@@ -167,6 +171,23 @@ export function notebook(th, filled, lab) {
         'Predict and test · In “Explore the tube”, use metal A, teaching light, 50% intensity and V = −0.55 V. Will current flow if you increase the frequency to 8.00 × 10¹⁴ Hz? Record both readings to check.')
     ],
     [
+      'จากผลวัดสู่กราฟ อัตราเร็ว และจำนวนโฟตอน','From readings to a graph, speed and photon count',
+      c('ให้ Vₛ เป็นขนาดศักย์หยุดยั้งและ V เป็นศักย์ขั้วรับเทียบขั้วปล่อย เมื่อกวาดแรงดันไปทางลบ ใช้ Vₛ ≈ −V ที่จุดแรกที่อ่านกระแสเป็นศูนย์',
+        'Vₛ is the stopping-potential magnitude and V is the collector voltage relative to the emitter. When sweeping toward negative voltage, estimate Vₛ as −V at the first zero-current reading.') +
+      c('แทนพลังงานจลน์จากสมการ (2) ในสมการ (4) แล้วหารทั้งสมการด้วยขนาดประจุอิเล็กตรอน e','Substitute the kinetic energy from equation (2) into (4), then divide by the electron charge magnitude e.') +
+      p(math(m`eV_s=hf-W`)) + box(5) +
+      c('บนกราฟ Vₛ กับ f ความชันคือ h/e จุดตัดแกนนอนคือ f₀ และจุดตัดแกนตั้งจากแนวเส้นต่อคือ −W/e',
+        'On the Vₛ versus f graph, the slope is h/e, the horizontal intercept is f₀, and the extrapolated vertical intercept is −W/e.') +
+      c('ให้ mₑ เป็นมวลอิเล็กตรอนหน่วย kg และ vₘₐₓ เป็นอัตราเร็วสูงสุดหน่วย m/s ใช้นิยามพลังงานจลน์แบบไม่สัมพัทธภาพ โดยคิดพลังงานหน่วย J',
+        'Let mₑ be the electron mass in kg and vₘₐₓ the maximum speed in m/s. Use the nonrelativistic kinetic energy in joules.') + box(6) +
+      c('ให้ I ของแสงเป็นความเข้มแสงหน่วย W/m², A เป็นพื้นที่รับแสงหน่วย m² และ Δt เป็นช่วงเวลาหน่วย s สำหรับแสงตกตั้งฉาก ความเข้มคงที่คือพลังงานรวมต่อพื้นที่ต่อเวลา',
+        'Let I_light be irradiance in W/m², A the illuminated area in m², and Δt the time interval in seconds. For normally incident light with constant irradiance, intensity is total energy per area per time.') +
+      p(math(m`I_{\mathrm{light}}=\frac{E_{\mathrm{total}}}{A\Delta t}`)) + box(7) +
+      c('ถ้าโฟตอนทุกตัวมีพลังงาน Eγ เท่ากัน ให้ N เป็นจำนวนโฟตอนที่ตกกระทบ พลังงานรวมคือผลรวมของโฟตอนทั้ง N ตัว',
+        'If every photon carries the same energy Eγ, let N be the incident photon count. The total energy is the sum of the energies of all N photons.') +
+      p(math(m`E_{\mathrm{total}}=NE_\gamma`)) + box(8)
+    ],
+    [
       'ตัวอย่าง 1–2 · คำนวณจากพลังงานโฟตอน','Examples 1–2 · Calculations from photon energy',
       photonConstants +
       ex(1,t('พลังงานของโฟตอน','Photon energy'),
@@ -211,12 +232,12 @@ export function notebook(th, filled, lab) {
         t('ภาพจากซิมหลังบันทึกครบทั้งสามความถี่','Simulation capture after recording all three pairs.')) : '') +
       table(['f (10¹⁴ Hz)', t('V สุดท้ายที่ I > 0 (V)','Last V with I > 0 (V)'), t('V แรกที่ I = 0 (V)','First V with I = 0 (V)'), 'Vₛ (V)'],
         graphRows.map(({ frequency, last, zero, stopping }) => [frequency.toFixed(2), recorded(lab.signed(last.voltage)), recorded(lab.signed(zero.voltage)), recorded(stopping.toFixed(2))])) +
-      p(math(m`V_s\approx-V_{I=0},\qquad V_s=\frac{h}{e}f-\frac{W}{e}`)) +
+      c('ใช้สมการ (5) กับค่า Vₛ จากตาราง','Apply equation (5) to the Vₛ values in the table.') +
       c('พล็อตจุดบนกราฟ หาแนวเส้นตรงจากค่าที่วัด แล้วต่อเส้นประเพื่ออ่านจุดตัดแกน ค่าที่วัดจริงอยู่เหนือขีดเริ่ม',
         'Plot the measured points, draw a trend line and extend it with dashes to read the intercepts. The measured points are above threshold.') +
       figure(stoppingGrid(th,{ classroom:true, filled, points:graphPoints, crossing:6.04, intercept:-2.497 }),
         t('กราฟ Vₛ กับ f ใช้ขนาดศักย์หยุดยั้งเป็นบวก','Vₛ against f, using the positive stopping-potential magnitude.')) +
-      (filled ? working(th,[2,4],[
+      (filled ? working(th,[5],[
         m`\frac{h}{e}\approx\frac{0.81-0.19}{(8.00-6.50)\times10^{14}}=4.13\times10^{-15}\,\mathrm{V\,s}`,
         m`h\approx6.62\times10^{-34}\,\mathrm{J\,s},\quad f_0\approx6.04\times10^{14}\,\mathrm{Hz}`,
         m`-\frac{W}{e}\approx-2.50\,\mathrm V\quad\Rightarrow\quad W\approx2.50\,\mathrm{eV}`,
@@ -227,13 +248,13 @@ export function notebook(th, filled, lab) {
       ex(8,t('จากศักย์หยุดยั้งสู่อัตราเร็ว','From stopping potential to speed'),
         t('จากแล็บโลหะ A มีศักย์หยุดยั้งประมาณ 0.50 V จงหาอัตราเร็วสูงสุดของอิเล็กตรอน กำหนดมวลอิเล็กตรอน 9.11 × 10⁻³¹ kg',
           'The lab gives a stopping potential of about 0.50 V for metal A. Find the maximum electron speed. The electron mass is 9.11 × 10⁻³¹ kg.'),
-        working(th,[4],[m`K_{\max}=eV_s=8.01\times10^{-20}\,\mathrm J`,
+        working(th,[4,6],[m`K_{\max}=eV_s=(1.602\times10^{-19}\,\mathrm C)(0.50\,\mathrm V)=8.01\times10^{-20}\,\mathrm J`,
           m`v_{\max}=\sqrt{2K_{\max}/m_e}\approx4.19\times10^5\,\mathrm{m/s}`],t('ใช้พลังงานจลน์หน่วย J เพื่อหาอัตราเร็วใน m/s','Use kinetic energy in joules to obtain speed in m/s.'))) +
       ex(9,t('จากความเข้มแสงสู่จำนวนโฟตอน','From light intensity to photon count'),
         t('แสงความเข้ม 0.20 W/m² ตกตั้งฉากกับพื้นที่ 2.0 cm² เป็นเวลา 5.0 s โฟตอนแต่ละตัวมีพลังงาน 4.0 × 10⁻¹⁹ J จงหาจำนวนโฟตอนที่ตกกระทบ สมมติว่าทุกโฟตอนถูกดูดกลืนและทำให้อิเล็กตรอนหลุดหนึ่งตัว จะมีอิเล็กตรอนหลุดกี่ตัว?',
           'Light of intensity 0.20 W/m² is incident normally on 2.0 cm² for 5.0 s. Each photon carries 4.0 × 10⁻¹⁹ J. Find the incident photon count. If every photon is absorbed and releases one electron, how many electrons are emitted?'),
-        working(th,[1],[m`E_{\mathrm{total}}=(0.20)(2.0\times10^{-4})(5.0)=2.0\times10^{-4}\,\mathrm J`,
-          m`N=\frac{E_{\mathrm{total}}}{E_\gamma}=5.0\times10^{14}`],
+        working(th,[7,8],[m`E_{\mathrm{total}}=(0.20\,\mathrm{W/m^2})(2.0\times10^{-4}\,\mathrm{m^2})(5.0\,\mathrm s)=2.0\times10^{-4}\,\mathrm J`,
+          m`N=\frac{2.0\times10^{-4}\,\mathrm J}{4.0\times10^{-19}\,\mathrm J}=5.0\times10^{14}`],
           t('ได้โฟตอนและอิเล็กตรอนจำนวนเท่ากันตามสมมติฐานที่กำหนด','The photon and electron counts are equal under the stated assumption.')))
     ],
     [

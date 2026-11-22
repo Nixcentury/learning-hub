@@ -121,18 +121,18 @@ export function exitPractice(th, answers) {
     figure(stoppingGrid(th,{ filled:answers, points, crossing:3.70, intercept:-1.515 }),
       t('พล็อตข้อมูลแล้วต่อเส้นแนวโน้มด้วยเส้นประไปถึงแกนตั้ง','Plot the data and extend the trend line to the vertical axis using a dashed line.')),[
       [t('จงใช้ความชันหาค่าคงที่ของพลังค์','Use the slope to find the Planck constant.'),
-        working(th,[2,4],[m`\frac{h}{e}=\frac{1.15-0.33}{(6.50-4.50)\times10^{14}}=4.10\times10^{-15}\,\mathrm{V\,s}`,
+        working(th,[5],[m`\frac{h}{e}=\frac{1.15-0.33}{(6.50-4.50)\times10^{14}}=4.10\times10^{-15}\,\mathrm{V\,s}`,
           m`h=(1.602\times10^{-19})(4.10\times10^{-15})=6.57\times10^{-34}\,\mathrm{J\,s}`],
           t('แปลงสเกลแกนความถี่ก่อนคำนวณ','Convert the frequency axis scale before calculating.'))],
       [t('อ่านความถี่ขีดเริ่มและใช้จุดตัดแกนตั้งหาฟังก์ชันงานใน eV','Read the threshold frequency and use the vertical intercept to find the work function in eV.'),
-        working(th,[2,4],[m`f_0\approx3.70\times10^{14}\,\mathrm{Hz}`,m`-W/e\approx-1.52\,\mathrm V\quad\Rightarrow\quad W\approx1.52\,\mathrm{eV}`],
+        working(th,[5],[m`f_0\approx3.70\times10^{14}\,\mathrm{Hz}`,m`-W/e\approx-1.52\,\mathrm V\quad\Rightarrow\quad W\approx1.52\,\mathrm{eV}`],
           t('จุดตัดแกนตั้งมาจากแนวเส้นต่อ','Read the vertical intercept from the extrapolated line.'))],
     ]);
   const q10 = problem(10,t('ความเข้มแสงและจำนวนอนุภาค','Light intensity and particle counts'),
     p(t('ฉายแสงตั้งฉาก ความเข้ม 0.30 W/m² ลงบนพื้นที่ 4.0 cm² เป็นเวลา 2.0 s โฟตอนแต่ละตัวมีพลังงาน 6.0 × 10⁻¹⁹ J สมมติว่าทุกโฟตอนถูกดูดกลืนและทำให้อิเล็กตรอนหลุดหนึ่งตัว',
       'Light of intensity 0.30 W/m² is incident normally on 4.0 cm² for 2.0 s. Each photon carries 6.0 × 10⁻¹⁹ J. Assume every photon is absorbed and releases one electron.')),[
       [t('จงหาพลังงานแสงรวมที่ตกกระทบและจำนวนอิเล็กตรอนที่หลุด','Find the total incident light energy and the number of electrons emitted.'),
-        working(th,[1],[m`E_{\mathrm{total}}=(0.30)(4.0\times10^{-4})(2.0)=2.4\times10^{-4}\,\mathrm J`,
+        working(th,[7,8],[m`E_{\mathrm{total}}=(0.30\,\mathrm{W/m^2})(4.0\times10^{-4}\,\mathrm{m^2})(2.0\,\mathrm s)=2.4\times10^{-4}\,\mathrm J`,
           m`N=(2.4\times10^{-4})/(6.0\times10^{-19})=4.0\times10^{14}`],
           t('ใช้พื้นที่ในหน่วยตารางเมตร','Use the area in square metres.'))],
     ]);

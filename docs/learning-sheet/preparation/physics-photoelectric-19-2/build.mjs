@@ -8,6 +8,7 @@ import '../../../../public/content/physics/ipst/atomic-physics/assets/photoelect
 
 const css = readFileSync(new URL('paired.css', import.meta.url), 'utf8');
 const output = new URL('../../../../public/content/physics/ipst/atomic-physics/', import.meta.url);
+const classroomTheoryPages = 7;
 const noteHash = createHash('sha256')
   .update(readFileSync(new URL('notes.mjs', import.meta.url)))
   .update(readFileSync(new URL('figures.mjs', import.meta.url)));
@@ -36,8 +37,8 @@ function writeDocument(kind) {
       const knowledgeRecall = classroom ? [] : [quizPage(recall(th,filled))];
       const groups = {
         all:[...quiz,...notes,...knowledgeRecall],
-        quiz:classroom ? notes.slice(6) : [...quiz,...knowledgeRecall],
-        review:classroom ? notes.slice(0,6) : notes,
+        quiz:classroom ? notes.slice(classroomTheoryPages) : [...quiz,...knowledgeRecall],
+        review:classroom ? notes.slice(0,classroomTheoryPages) : notes,
       };
       return `<div data-revision-edition="${edition}">`+Object.entries(groups).map(([range,items])=>
         `<div class="document-shell" data-revision-range="${range}">${items.map(([body,part],i)=>page(body,th,filled,part,range==='review'&&!classroom?'Revision Notes':title,i===0,i+1,items.length)).join('')}</div>`).join('')+'</div>';
@@ -54,7 +55,7 @@ function writeDocument(kind) {
   const html = `<!doctype html>
 <html lang="th" data-learning-html data-exit-ticket-revision="1" data-exit-ticket-editions="1"
   data-exit-ticket-ranges="all quiz review" data-revision-student-default="1" data-revision-topic="19.2"
-  data-content-revision="${classroom?'1.4':'1.5'}" data-shared-notes-sha256="${notesDigest}"
+  data-content-revision="${classroom?'1.5':'1.6'}" data-shared-notes-sha256="${notesDigest}"
   data-print-subject-th="ฟิสิกส์" data-print-subject-en="Physics"
   data-print-chapter-th="ฟิสิกส์อะตอม" data-print-chapter-en="Atomic physics"
   data-print-topic-th="19.2 ปรากฏการณ์โฟโตอิเล็กทริก" data-print-topic-en="19.2 Photoelectric effect" ${labels}>

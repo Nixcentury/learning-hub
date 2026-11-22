@@ -1,5 +1,5 @@
 import { figure, heading, intensityScale, math, p, table, working } from './notes.mjs';
-import { practiceIV, practiceEnergy } from './figures.mjs';
+import { practiceIV, stoppingGrid } from './figures.mjs';
 
 const m = String.raw;
 const blanks = '<div class="writing" style="--space:23mm"></div>';
@@ -113,20 +113,38 @@ export function exitPractice(th, answers) {
       [t('จงหาพลังงานจลน์สูงสุดและฟังก์ชันงานใน eV','Find maximum kinetic energy and work function in eV.'),
        working(th,[4,2],[m`K_{\max}\approx e(0.70\,\mathrm V)=0.70\,\mathrm{eV}`,m`W=E_\gamma-K_{\max}\approx3.50-0.70=2.80\,\mathrm{eV}`],t('คำนวณจากขนาด Vₛ ที่เป็นบวก','Use the positive magnitude Vₛ.'))],
     ]);
-  const q6 = problem(6,t('อ่านกราฟพลังงานจลน์สูงสุดกับความถี่','Interpret a maximum-kinetic-energy graph'),
-    p(t('โจทย์แต่งแนว A-Level จุดที่ระบุบนกราฟมีพิกัดในหน่วยตามแกน เส้นประเป็นส่วนต่อของเส้นตรง',
-      'A-Level-style practice. The labelled point coordinates use the scaled axis units. The dashed line is an extrapolation.')) +
-    figure(practiceEnergy(th),t('กราฟพลังงานจลน์สูงสุดกับความถี่ชุดฝึก','Practice graph of maximum kinetic energy versus frequency.'))+
-    p(t('เมื่อฉายแสงความถี่ 6.00 × 10¹⁴ Hz วัดพลังงานจลน์สูงสุดได้ 1.32 × 10⁻¹⁹ J เมื่อเพิ่มความถี่เป็น 8.00 × 10¹⁴ Hz วัดได้ 2.64 × 10⁻¹⁹ J',
-      'At a light frequency of 6.00 × 10¹⁴ Hz, the maximum kinetic energy is 1.32 × 10⁻¹⁹ J. At 8.00 × 10¹⁴ Hz, it is 2.64 × 10⁻¹⁹ J.')),[
-      [t('จงหาค่าคงที่ของพลังค์จากความชัน','Find the Planck constant from the slope.'),
-       working(th,[2],[m`h=\frac{\Delta K_{\max}}{\Delta f}=\frac{(2.64-1.32)\times10^{-19}}{(8.00-6.00)\times10^{14}}=6.60\times10^{-34}\,\mathrm{J\,s}`],t('ตัวคูณกำลังสิบมาจากหน่วยบนแกนทั้งสอง','The powers of ten come from the axis scales.'))],
-      [t('จงอ่านจุดตัดแกนนอน แล้วหาฟังก์ชันงานของโลหะในหน่วย J','Read the horizontal intercept and find the work function in joules.'),
-       working(th,[3],[m`f_0=4.00\times10^{14}\,\mathrm{Hz}`,m`W=(6.60\times10^{-34})(4.00\times10^{14})=2.64\times10^{-19}\,\mathrm J`],t('จุดตัดแกนตั้งของเส้นต่อเท่ากับ −W','The extrapolated vertical intercept is −W.'))],
+  const points = [[4.50,.33],[5.50,.74],[6.50,1.15]];
+  const q6 = problem(6,t('สร้างกราฟศักย์หยุดยั้งจากตาราง','Plot a stopping-potential graph from data'),
+    p(t('ฉายแสงต่างความถี่ลงบนโลหะตัวอย่างชนิดเดียว ได้ค่าศักย์หยุดยั้งในตาราง ใช้ขนาดประจุอิเล็กตรอน 1.602 × 10⁻¹⁹ C',
+      'Shine light at different frequencies on the same sample metal to obtain the stopping potentials shown. Use an electron charge magnitude of 1.602 × 10⁻¹⁹ C.')) +
+    table(['f (10¹⁴ Hz)','Vₛ (V)'],points.map(pair=>pair.map(value=>value.toFixed(2)))) +
+    figure(stoppingGrid(th,{ filled:answers, points, crossing:3.70, intercept:-1.515 }),
+      t('พล็อตข้อมูลแล้วต่อเส้นแนวโน้มด้วยเส้นประไปถึงแกนตั้ง','Plot the data and extend the trend line to the vertical axis using a dashed line.')),[
+      [t('จงใช้ความชันหาค่าคงที่ของพลังค์','Use the slope to find the Planck constant.'),
+        working(th,[2,4],[m`\frac{h}{e}=\frac{1.15-0.33}{(6.50-4.50)\times10^{14}}=4.10\times10^{-15}\,\mathrm{V\,s}`,
+          m`h=(1.602\times10^{-19})(4.10\times10^{-15})=6.57\times10^{-34}\,\mathrm{J\,s}`],
+          t('แปลงสเกลแกนความถี่ก่อนคำนวณ','Convert the frequency axis scale before calculating.'))],
+      [t('อ่านความถี่ขีดเริ่มและใช้จุดตัดแกนตั้งหาฟังก์ชันงานใน eV','Read the threshold frequency and use the vertical intercept to find the work function in eV.'),
+        working(th,[2,4],[m`f_0\approx3.70\times10^{14}\,\mathrm{Hz}`,m`-W/e\approx-1.52\,\mathrm V\quad\Rightarrow\quad W\approx1.52\,\mathrm{eV}`],
+          t('จุดตัดแกนตั้งมาจากแนวเส้นต่อ','Read the vertical intercept from the extrapolated line.'))],
     ]);
-
+  const q10 = problem(10,t('ความเข้มแสงและจำนวนอนุภาค','Light intensity and particle counts'),
+    p(t('ฉายแสงตั้งฉาก ความเข้ม 0.30 W/m² ลงบนพื้นที่ 4.0 cm² เป็นเวลา 2.0 s โฟตอนแต่ละตัวมีพลังงาน 6.0 × 10⁻¹⁹ J สมมติว่าทุกโฟตอนถูกดูดกลืนและทำให้อิเล็กตรอนหลุดหนึ่งตัว',
+      'Light of intensity 0.30 W/m² is incident normally on 4.0 cm² for 2.0 s. Each photon carries 6.0 × 10⁻¹⁹ J. Assume every photon is absorbed and releases one electron.')),[
+      [t('จงหาพลังงานแสงรวมที่ตกกระทบและจำนวนอิเล็กตรอนที่หลุด','Find the total incident light energy and the number of electrons emitted.'),
+        working(th,[1],[m`E_{\mathrm{total}}=(0.30)(4.0\times10^{-4})(2.0)=2.4\times10^{-4}\,\mathrm J`,
+          m`N=(2.4\times10^{-4})/(6.0\times10^{-19})=4.0\times10^{14}`],
+          t('ใช้พื้นที่ในหน่วยตารางเมตร','Use the area in square metres.'))],
+    ]);
+  const q11 = problem(11,t('แสงเดียวกันกับโลหะสองชนิด','One light source, two metals'),
+    p(t('แสงที่ความถี่ขีดเริ่มของโลหะ X ซึ่งมีฟังก์ชันงาน 4.00 eV เมื่อนำไปฉายลงบนโลหะ Y พบว่ามีศักย์หยุดยั้ง 1.60 V',
+      'Light at the threshold frequency of metal X, whose work function is 4.00 eV, gives a stopping potential of 1.60 V when it shines on metal Y.')),[
+      [t('จงหาพลังงานต่อโฟตอนและฟังก์ชันงานของโลหะ Y','Find the photon energy and the work function of metal Y.'),
+        working(th,[3,4,2],[m`E_\gamma=W_X=4.00\,\mathrm{eV}`,m`K_{\max,Y}=eV_s=1.60\,\mathrm{eV}`,m`W_Y=4.00-1.60=2.40\,\mathrm{eV}`],
+          t('แสงชุดเดิมให้พลังงานต่อโฟตอนเท่าเดิมเมื่อเปลี่ยนโลหะ','The same light delivers the same energy per photon to either metal.'))],
+    ]);
   const problems = [q1,q2,q3,q4,q5,q6];
-  return [articleA,articleB,...(answers?problems:[q1+q2,q3+q4,q5+q6])];
+  return [articleA,articleB,...(answers?problems:[q1+q2,q3+q4,q5,q6]),q10+q11];
 }
 
 export function recall(th, answers) {

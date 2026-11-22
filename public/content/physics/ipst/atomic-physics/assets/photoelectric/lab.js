@@ -2,7 +2,7 @@
   'use strict';
   const activity = 'physics-photoelectric-lab';
   const maxIrradiance = 1; // Reference at the metal surface in W/m².
-  const { initial, teaching, measure, signed, metals, thresholdFrequency } = Photoelectric;
+  const { initial, teaching, measure, signed, metals, thresholdFrequency, stoppingFrequencies, stoppingBrackets } = Photoelectric;
   const { pair, missions, targets, requirements, snapshot, grade } = PhotoelectricMissions;
   const totalQuestions = missions.reduce((total, mission) => total + mission.questions.length, 0);
   const $ = id => document.getElementById(id);
@@ -338,6 +338,20 @@
     $('graph').hidden = graphRows.length === 0;
     if (graphRows.length) PhotoelectricPlots.current($('iv'), graphRows,
       { title: t('กราฟกระแสกับความต่างศักย์จากข้อมูลที่บันทึก', 'Current against potential difference from recorded data') });
+    $('stopping-series').hidden = !state.explore || stoppingDemo;
+    if (state.explore && !stoppingDemo) {
+      const brackets = stoppingBrackets(state.benchRows);
+      $('stopping-pairs').replaceChildren(...brackets.map(({ frequency, last, zero, stopping }) => {
+        const row = document.createElement('tr');
+        const cells = [frequency.toFixed(2), last ? signed(last.voltage) : '—', zero ? signed(zero.voltage) : '—',
+          stopping === null ? '—' : stopping.toFixed(2)];
+        cells.forEach(value => { row.insertCell().textContent = value; });
+        return row;
+      }));
+      const complete = brackets.filter(reading => reading.stopping !== null).length;
+      setText('stopping-status', t(`บันทึกคู่แรงดันที่ห่างกัน 0.01 V ครบ ${complete}/3 ความถี่`,
+        `Recorded pairs 0.01 V apart at ${complete}/3 frequencies`));
+    }
   }
   let questionKey = '';
   const answersUnchanged = work => JSON.stringify(work.latestAnswers) === JSON.stringify(work.answers);
@@ -499,6 +513,19 @@
     state.report = false; state.explore = !state.explore; recordNotice = null; render(); changed();
     jump(state.explore ? 'tube-title' : 'mission-title');
   };
+  for (const frequency of stoppingFrequencies) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = `${frequency.toFixed(2)} × 10¹⁴ Hz`;
+    button.onclick = () => {
+      state.setup = { ...state.setup, light: true, metal: teaching.metal, frequency,
+        intensity: teaching.intensity, voltage: 0 };
+      pendingInputs.clear();
+      recordNotice = inputNotice = null;
+      render(); changed(); jump('voltage-control');
+    };
+    $('stopping-presets').append(button);
+  }
   $('mission-select').onchange = event => selectMission(Number(event.target.value));
   $('reset-mission').onclick = resetMission;
   $('guide-collapse').onclick = () => { state.guide = state.guide === 'open' ? 'collapsed' : 'open'; renderNavigation(); changed(); };

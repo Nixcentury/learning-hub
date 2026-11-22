@@ -31,7 +31,7 @@ function page(body, th, filled, part, title, first, number, total) {
   const label = th ? 'ปรากฏการณ์โฟโตอิเล็กทริก' : 'Photoelectric Effect';
   const answerLabel = filled ? (th ? 'เฉลย' : 'Answers') : (th ? 'เรียนรู้ / ลงมือทำ' : 'Learn / practise');
   const nameLine = `<p class="identity">${th?'ชื่อ':'Name'} <span class="name-space"></span> ${th?'ห้อง':'Class'} <span class="class-space"></span></p>`;
-  return `<section class="page ${part==='Exit Ticket'?'quiz':'review'}"><header class="running-head"><span>PHYSICS · 19.2 · ${label}</span><span>${part} · ${part==='Revision Notes'?(th?'อ่านทบทวน':'Read and revise'):answerLabel}</span></header><div class="page-body">${first?`<h1>${title} · 19.2</h1>${nameLine}`:''}${body}</div><footer class="page-foot"><span>Nix-century</span><span data-page-number>${th?'หน้า':'Page'} ${number} / ${total}</span></footer></section>\n`;
+  return `<section class="page ${part==='Exit Ticket'||part==='Knowledge Recall'?'quiz':'review'}"><header class="running-head"><span>PHYSICS · 19.2 · ${label}</span><span>${part} · ${part==='Revision Notes'?(th?'อ่านทบทวน':'Read and revise'):answerLabel}</span></header><div class="page-body">${first?`<h1>${title} · 19.2</h1>${nameLine}`:''}${body}</div><footer class="page-foot"><span>Nix-century</span><span data-page-number>${th?'หน้า':'Page'} ${number} / ${total}</span></footer></section>\n`;
 }
 const formulaCues = [
   ['พลังงานต่อโฟตอน','Energy per photon'],
@@ -63,14 +63,15 @@ function writeDocument(kind) {
       const practice = classroom ? [] : exitPractice(th,filled);
       // Keep previously published problem numbers and present the past exams as 7–9.
       const quiz = classroom ? [] : [...practice.slice(0,-1), ...pastExams(th,filled), practice.at(-1)].map(quizPage);
-      const knowledgeRecall = classroom ? [] : [quizPage(recall(th,filled))];
+      const knowledgeRecall = classroom ? [] : [[recall(th,filled),'Knowledge Recall']];
       const groups = {
         all:[...quiz,...notes,...knowledgeRecall],
-        quiz:classroom ? notes.slice(classroomTheoryPages) : [...quiz,...knowledgeRecall],
+        quiz:classroom ? notes.slice(classroomTheoryPages) : quiz,
         review:classroom ? notes.slice(0,classroomTheoryPages) : notes,
+        ...(!classroom ? {recall:knowledgeRecall} : {}),
       };
       return `<div data-revision-edition="${edition}">`+Object.entries(groups).map(([range,items])=>
-        `<div class="document-shell" data-revision-range="${range}">${items.map(([body,part],i)=>page(body,th,filled,part,range==='review'&&!classroom?'Revision Notes':title,i===0,i+1,items.length)).join('')}</div>`).join('')+'</div>';
+        `<div class="document-shell" data-revision-range="${range}">${items.map(([body,part],i)=>page(body,th,filled,part,range==='recall'?'Knowledge Recall':range==='review'&&!classroom?'Revision Notes':title,i===0,i+1,items.length)).join('')}</div>`).join('')+'</div>';
     }).join('');
     return `<section class="language-view" data-content-lang="${lang}" lang="${lang}"${th?'':' hidden'}>${editions}</section>`;
   }).join('');
@@ -79,12 +80,12 @@ function writeDocument(kind) {
     `data-revision-label-th="${title}" data-revision-label-en="${title}"`,
     classroom
       ? 'data-revision-quiz-th="เฉพาะตัวอย่างพาทำ" data-revision-quiz-en="Guided examples" data-revision-review-th="ทฤษฎีและการทดลอง" data-revision-review-en="Theory and experiment"'
-      : 'data-revision-quiz-th="โจทย์ฝึกและ Recall" data-revision-quiz-en="Practice and Recall" data-revision-review-th="Revision Notes ฉบับอ่านครบ" data-revision-review-en="Complete Revision Notes"',
+      : 'data-revision-quiz-th="บทความและโจทย์" data-revision-quiz-en="Reading and questions" data-revision-review-th="Classroom Note ฉบับเฉลย" data-revision-review-en="Classroom Note with answers"',
   ].join(' ');
   const html = `<!doctype html>
 <html lang="th" data-learning-html data-exit-ticket-revision="1" data-exit-ticket-editions="1"
-  data-exit-ticket-ranges="all quiz review" data-revision-student-default="1" data-revision-topic="19.2"
-  data-content-revision="${classroom ? '1.9' : '1.8'}" data-shared-notes-sha256="${notesDigest}"
+  data-exit-ticket-ranges="all quiz review${classroom ? '' : ' recall'}" data-revision-student-default="1" data-revision-topic="19.2"
+  data-content-revision="1.9" data-shared-notes-sha256="${notesDigest}"
   data-print-subject-th="ฟิสิกส์" data-print-subject-en="Physics"
   data-print-chapter-th="ฟิสิกส์อะตอม" data-print-chapter-en="Atomic physics"
   data-print-topic-th="19.2 ปรากฏการณ์โฟโตอิเล็กทริก" data-print-topic-en="19.2 Photoelectric effect" ${labels}>

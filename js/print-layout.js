@@ -98,7 +98,9 @@ export function paginatePrintDocument(doc, metadata = {}, language = 'th', { pro
   const labels = normalizePrintMetadata(metadata);
   const worksheet = doc.documentElement.dataset.printPageStyle === 'paired-worksheet';
   const en = language === 'en';
-  const worksheetStatus = doc.querySelector('[data-print-zone="learning"]')
+  const printSelection = doc.documentElement.dataset.printSelection;
+  const worksheetStatus = printSelection === 'recall' ? 'Knowledge Recall'
+    : (printSelection === 'learning' || (!printSelection && doc.querySelector('[data-print-zone="learning"]')))
     ? (en ? 'Read and revise' : 'อ่านทบทวน')
     : doc.documentElement.dataset.sheetPrintEdition === 'answers'
       ? (en ? 'Answers' : 'เฉลย')
@@ -257,6 +259,7 @@ export function paginatePrintDocument(doc, metadata = {}, language = 'th', { pro
     if (!significant(node)) return;
     if (node.nodeType !== 1) { const p = doc.createElement('p'); p.textContent = node.textContent; placeAtomic(p, path); return; }
     if (doc.defaultView.getComputedStyle(node).display === 'none') return;
+    if (printSelection === 'all' && items && node.matches('[data-print-zone="learning"], [data-print-zone="recall"]')) nextPage();
     if (node.matches('table')) { placeTable(node, path); return; }
     if (node.matches('[data-print-keep], svg, img, figure, [data-hub-math], mjx-container')) { placeAtomic(node, path); return; }
     const children = [...node.childNodes].filter(significant);

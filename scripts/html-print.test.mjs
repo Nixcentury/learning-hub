@@ -104,6 +104,38 @@ test('ordinary and incomplete learning sheets keep their existing print content'
   }
 });
 
+test('buffer revision prints the full three-part set by default and supports every part separately', async () => {
+  const {readFile} = await import('node:fs/promises');
+  const path = 'content/chemistry/ipst/acid-base/10-7-10-8-acid-base-exit-ticket-revision.html';
+  const {document} = parseHTML(await readFile(new URL('../public/'+path, import.meta.url), 'utf8'));
+  Object.defineProperty(document, 'URL', {value:'https://example.test/learning-hub/'+path});
+  Object.defineProperty(document, 'defaultView', {value:undefined});
+  const order = ['problem','learning','recall'];
+  for (const language of ['th','en']) {
+    for (const view of document.querySelectorAll('[data-content-lang]')) {
+      view.toggleAttribute('hidden', view.dataset.contentLang !== language);
+    }
+    for (const part of [undefined,...order]) {
+      const {document:print} = parseHTML(buildHtmlPrintSnapshot(document,'Exit Ticket Revision',part));
+      const zones = [...print.querySelectorAll('[data-print-zone]')];
+      assert.deepEqual(zones.map(node=>node.dataset.printZone),part?[part]:order);
+      assert.equal(print.documentElement.dataset.printSelection,part??'all');
+      const notes = print.querySelector('[data-print-zone="learning"]');
+      if (notes) {
+        assert.ok(notes.querySelector('.fully-worked .worked-equations'));
+        assert.equal(notes.querySelectorAll('[data-sheet-slot]').length,0);
+      }
+      const problems = print.querySelector('[data-print-zone="problem"]');
+      if (problems) {
+        assert.ok(problems.querySelector('[data-guide-anchor="cloze-a"]'));
+        assert.equal(problems.querySelector('[data-guide-anchor="recall"]'),null);
+      }
+      const recall = print.querySelector('[data-print-zone="recall"]');
+      if (recall) assert.equal(recall.querySelectorAll('[data-sheet-slot]').length,2);
+    }
+  }
+});
+
 
 test('default print names use course codes, Thai chapter/work labels and separate paper editions', () => {
   const labels = { subjectId: 'physics', chapter: 'สมดุลกล', work: 'ใบงานที่ 1', extension: 'pdf' };

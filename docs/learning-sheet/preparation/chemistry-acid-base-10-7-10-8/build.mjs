@@ -4,7 +4,7 @@ import { alignedMath } from '../aligned-math.mjs';
 import { classroom } from './classroom.mjs';
 import { exitCloze } from './cloze.mjs';
 import { exitProblems } from './exit.mjs';
-import { examProblems } from './exams.mjs';
+import { examProblems, knowledgeRecall } from './exams.mjs';
 
 const revision = '2026-11-22-4';
 const out = new URL('../../../../public/content/chemistry/ipst/acid-base/', import.meta.url);
@@ -159,7 +159,7 @@ const data = {
 const stem = '10-7-10-8-acid-base';
 function render(kind) {
   const isExit = kind === 'exit';
-  const contentRevision = isExit ? '2026-11-22-5' : revision;
+  const contentRevision = isExit ? '2026-11-22-6' : revision;
   const {name} = data[kind];
   const suffix = isExit ? 'exit-ticket-revision' : 'classroom-note';
   const hub = '../../../../#chemistry/bank/buffer-solutions/';
@@ -169,11 +169,12 @@ function render(kind) {
     const kindLabel = isExit ? 'Exit Ticket Revision' : 'Classroom Note';
     const runningHead = `<div class="running-head"${isExit ? '' : ' data-no-print'}><span>CHEMISTRY · 10.7–10.8 · ${t('ไทเทรตและบัฟเฟอร์','Titration and buffers')}</span><span>${kindLabel} · ${t('ลงมือทำ','Practice')}</span></div>`;
     const identity = `<p class="identity">${t('ชื่อ','Name')} <span class="name-space" aria-hidden="true"></span> ${t('ห้อง','Class')} <span class="class-space" aria-hidden="true"></span></p>`;
-    const notesLink = isExit ? ` · <a href="#${lang}-revision">${t('ไปสรุปทบทวน','Jump to Revision Notes')}</a>` : '';
+    const notesLink = isExit ? ` · <a href="#${lang}-revision">${t('ไปสรุปทบทวน','Jump to Revision Notes')}</a> · <a href="#${lang}-recall">Knowledge Recall</a>` : '';
     const heading = `<header class="opening">${runningHead}<h1>${kindLabel} · 10.7–10.8</h1>${identity}<nav class="no-print">${link(hub+'lab-guide',t('คู่มือแล็บ','Lab Guide'))} · ${link(hub+(isExit?'classroom-note':'exit-ticket-revision'),isExit?'Classroom Note':'Exit Ticket Revision')}${notesLink}</nav></header>`;
     const sections = isExit
       ? `<div id="${lang}-practice" data-print-zone="problem">${exitCloze(kit)}${exitProblems(kit)}${examProblems(kit)}</div>
-<section id="${lang}-revision" data-print-zone="learning"><h2>${t('สรุปทบทวน','Revision Notes')}</h2><p class="no-print"><a href="#${lang}-practice">${t('กลับไปส่วนโจทย์','Back to practice')}</a></p>${classroom(kit,true)}</section>`
+<section id="${lang}-revision" data-print-zone="learning"><h2>${t('Revision Notes · Classroom Note ฉบับเฉลย','Revision Notes · Classroom Note with answers')}</h2><p class="no-print"><a href="#${lang}-practice">${t('กลับไปส่วนโจทย์','Back to practice')}</a></p>${classroom(kit,true)}</section>
+<div id="${lang}-recall" data-print-zone="recall">${knowledgeRecall(kit)}</div>`
       : classroom(kit,false);
     return `<div data-content-lang="${lang}" lang="${lang}">${heading}${sections}</div>`;
   }).join('\n');

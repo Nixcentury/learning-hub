@@ -59,6 +59,17 @@ export function prepareExitTicketPrint(doc, { range = 'all', answers = false } =
   doc.body.classList.toggle('answers-on', Boolean(answers));
   if (answers) doc.querySelectorAll('.calc-workarea,.scratch').forEach(node => node.remove());
   else doc.querySelectorAll('.solution-text,.answer-key,.teacher-only,.teacher-work,.teacherkey,.answer-inline,.teacher-key').forEach(node => node.remove());
+  for (const details of doc.querySelectorAll('details[data-formula-recall]')) {
+    const equation = details.querySelector(':scope > [data-equation]');
+    if (answers && equation) {
+      details.replaceWith(equation);
+    } else {
+      const space = doc.createElement('div');
+      space.className = 'formula-recall-space';
+      space.textContent = details.querySelector('summary')?.textContent ?? '';
+      details.replaceWith(space);
+    }
+  }
   const pages = exitTicketPages(doc);
   pages.forEach((page, index) => {
     const number = page.querySelector('[data-page-number], .footer span:last-child');

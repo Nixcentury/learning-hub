@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { alignedMath } from '../aligned-math.mjs';
 import { tube, thresholds, teachingIV, stoppingGrid } from './figures.mjs';
 
 export const labUrl = 'https://nixcentury.github.io/learning-hub/#physics/bank/b-6011652496e13a2c7b17fe1c/photoelectric-lab';
@@ -31,7 +32,9 @@ const evidence = (kind, th, description, height) =>
   `<img class="diagram" style="height:${height}mm" src="${evidenceImages[`lab-${kind}-${th?'th':'en'}.jpg`]}" alt="${description}">`;
 const box = n => `<div class="equation" data-equation="${n}"><span>${math(equations[n-1])}</span><span>(${n})</span></div>`;
 export function working(th, refs, lines, conclusion) {
-  return `<div class="working"><p>${th?'ใช้สมการ':'Use equation'} ${refs.map(n=>`<span data-equation-ref="${n}">(${n})</span> ${math(equations[n-1])}`).join(' · ')}</p>${lines.map(tex=>p(math(tex))).join('')}${p(conclusion)}</div>`;
+  const citations = refs.map(n=>`<span data-equation-ref="${n}">(${n})</span>`).join(', ');
+  const rows = lines.map(tex=>tex.includes('&') ? tex : tex.replace(/=|\\approx|\\leq|\\lt/, '&$&'));
+  return `<div class="working"><p>${th?'ใช้สมการ':'Use equation'} ${citations}</p>${alignedMath(rows)}${p(conclusion)}</div>`;
 }
 
 function link(th) {
@@ -193,11 +196,11 @@ export function notebook(th, filled, lab) {
       ex(1,t('พลังงานของโฟตอน','Photon energy'),
         t('แสงในสุญญากาศมีความยาวคลื่น 413.3 nm จงคำนวณพลังงานของโฟตอนหนึ่งตัวในหน่วยจูลและอิเล็กตรอนโวลต์',
           'Light in vacuum has a wavelength of 413.3 nm. Calculate the energy of one photon in joules and electronvolts.'),
-        working(th,[1],[m`\lambda=413.3\times10^{-9}\,\mathrm m`,m`E_\gamma=\frac{(6.626\times10^{-34})(3.00\times10^8)}{413.3\times10^{-9}}=4.81\times10^{-19}\,\mathrm J`,m`E_\gamma=\frac{4.81\times10^{-19}}{1.602\times10^{-19}}\,\mathrm{eV}\approx3.00\,\mathrm{eV}`],t('โฟตอนหนึ่งตัวมีพลังงานประมาณ 3.00 eV','Each photon carries about 3.00 eV.'))) +
+        working(th,[1],[m`\lambda=413.3\times10^{-9}\,\mathrm m`,m`E_\gamma=\frac{hc}{\lambda}=\frac{(6.626\times10^{-34})(3.00\times10^8)}{413.3\times10^{-9}}=4.81\times10^{-19}\,\mathrm J`,m`E_\gamma=\frac{4.81\times10^{-19}\,\mathrm J}{1.602\times10^{-19}\,\mathrm{J/eV}}\approx3.00\,\mathrm{eV}`],t('โฟตอนหนึ่งตัวมีพลังงานประมาณ 3.00 eV','Each photon carries about 3.00 eV.'))) +
       ex(2,t('หาฟังก์ชันงานจากความถี่ขีดเริ่ม','Work function from threshold frequency'),
         t('โลหะ A มีความถี่ขีดเริ่มประมาณ 6.04 × 10¹⁴ Hz จงคำนวณฟังก์ชันงานใน eV และพลังงานจลน์สูงสุดเมื่อฉายโฟตอน 3.00 eV',
           'Metal A has a threshold frequency of about 6.04 × 10¹⁴ Hz. Find the work function in eV and the maximum kinetic energy under 3.00 eV photons.'),
-        working(th,[3,2],[m`W=(6.626\times10^{-34})(6.04\times10^{14})=4.00\times10^{-19}\,\mathrm J\approx2.50\,\mathrm{eV}`,m`K_{\max}=3.00-2.50=0.50\,\mathrm{eV}`],t('โฟตอนมีพลังงานมากกว่า W จึงเกิดการหลุด','Photon energy exceeds W, so emission occurs.')))
+        working(th,[3,2],[m`W=hf_0=(6.626\times10^{-34})(6.04\times10^{14})=4.00\times10^{-19}\,\mathrm J\approx2.50\,\mathrm{eV}`,m`K_{\max}=E_\gamma-W=(3.00-2.50)\,\mathrm{eV}=0.50\,\mathrm{eV}`],t('โฟตอนมีพลังงานมากกว่า W จึงเกิดการหลุด','Photon energy exceeds W, so emission occurs.')))
     ],
     [
       'ตัวอย่าง 3–4 · ตรวจการหลุดและเทียบโลหะ','Examples 3–4 · Check emission and compare metals',
@@ -205,11 +208,11 @@ export function notebook(th, filled, lab) {
       ex(3,t('ความยาวคลื่นที่ยาวเกินขีดเริ่ม','A wavelength beyond threshold'),
         t('ฉายแสงความยาวคลื่น 600 nm ลงบนโลหะ A ที่มีฟังก์ชันงาน 2.50 eV จงตัดสินว่าอิเล็กตรอนหลุดหรือไม่ ถ้าไม่หลุด พลังงานต่อโฟตอนขาดอีกเท่าไรจึงถึงขีดเริ่ม?',
           'Shine 600 nm light on metal A, whose work function is 2.50 eV. Decide whether electrons are emitted. If there is no emission, how much more energy per photon is needed to reach the threshold?'),
-        working(th,[1],[m`E_\gamma=\frac{(6.626\times10^{-34})(3.00\times10^8)}{600\times10^{-9}}=3.31\times10^{-19}\,\mathrm J\approx2.07\,\mathrm{eV}`,m`W-E_\gamma\approx2.50-2.07=0.43\,\mathrm{eV}`],t('ไม่มีการปล่อยอิเล็กตรอน ต้องเพิ่มพลังงานต่อโฟตอนประมาณ 0.43 eV จึงถึงขีดเริ่ม','There is no emission. Each photon needs about 0.43 eV more to reach the threshold.'))) +
+        working(th,[1],[m`E_\gamma=\frac{hc}{\lambda}=\frac{(6.626\times10^{-34})(3.00\times10^8)}{600\times10^{-9}}=3.31\times10^{-19}\,\mathrm J\approx2.07\,\mathrm{eV}`,m`W-E_\gamma\approx2.50-2.07=0.43\,\mathrm{eV}`],t('ไม่มีการปล่อยอิเล็กตรอน ต้องเพิ่มพลังงานต่อโฟตอนประมาณ 0.43 eV จึงถึงขีดเริ่ม','There is no emission. Each photon needs about 0.43 eV more to reach the threshold.'))) +
       ex(4,t('ฉายแสงชุดเดียวกันลงบนโลหะสามชนิด','One light setting, three metals'),
         t('ฉายโฟตอนพลังงาน 3.00 eV ลงบนโลหะ A, B และ C ซึ่งมีฟังก์ชันงาน 2.50, 2.80 และ 3.10 eV ตามลำดับ โลหะใดปล่อยอิเล็กตรอน และอิเล็กตรอนจากแต่ละโลหะที่ปล่อยได้มีพลังงานจลน์สูงสุดกี่ eV?',
           'Shine 3.00 eV photons on metals A, B and C, whose work functions are 2.50, 2.80 and 3.10 eV, respectively. Which metals emit electrons, and what is the maximum kinetic energy in eV for each emitting metal?'),
-        working(th,[2],[m`K_{\max,\mathrm A}=3.00-2.50=0.50\,\mathrm{eV}`,m`K_{\max,\mathrm B}=3.00-2.80=0.20\,\mathrm{eV}`],t('A และ B ปล่อยโฟโตอิเล็กตรอน ส่วน C มี W สูงกว่า 3.00 eV จึงไม่เกิดการหลุด',
+        working(th,[2],[m`K_{\max,\mathrm A}=E_\gamma-W_{\mathrm A}=(3.00-2.50)\,\mathrm{eV}=0.50\,\mathrm{eV}`,m`K_{\max,\mathrm B}=E_\gamma-W_{\mathrm B}=(3.00-2.80)\,\mathrm{eV}=0.20\,\mathrm{eV}`],t('A และ B ปล่อยโฟโตอิเล็กตรอน ส่วน C มี W สูงกว่า 3.00 eV จึงไม่เกิดการหลุด',
           'A and B emit. Metal C has W greater than 3.00 eV, so it does not emit.')))
     ],
     [
@@ -221,7 +224,7 @@ export function notebook(th, filled, lab) {
       ex(6,t('อ่านกราฟชุดสอนแล้วย้อนหาฟังก์ชันงาน','Use the teaching I–V graph to find the work function'),
         t('ใช้โฟตอนพลังงาน 3.00 eV กราฟกระแสของชุดสอนอ่านได้ 0.20 µA ที่ศักย์ขั้วรับ −0.45 V และเริ่มอ่านได้ 0.00 µA ที่ −0.50 V จงประมาณขนาดศักย์หยุดยั้งใน V แล้วหาพลังงานจลน์สูงสุดและฟังก์ชันงานใน eV',
           'With 3.00 eV photons, the teaching graph shows 0.20 µA at a collector voltage of −0.45 V, and a first zero reading of 0.00 µA at −0.50 V. Estimate the stopping-potential magnitude in V, then find the maximum kinetic energy and work function in eV.'),
-        working(th,[4,2],[m`V\approx-0.50\,\mathrm V,\qquad V_s\approx0.50\,\mathrm V`,m`K_{\max}\approx(1.602\times10^{-19}\,\mathrm C)(0.50\,\mathrm V)=8.01\times10^{-20}\,\mathrm J=0.50\,\mathrm{eV}`,m`W=E_\gamma-K_{\max}\approx3.00-0.50=2.50\,\mathrm{eV}`],t('ข้อมูลที่วัดคร่อม 0.45 &lt; Vₛ ≤ 0.50 V การคำนวณใช้จุดศูนย์แรกเป็นค่าประมาณ',
+        working(th,[4,2],[m`V\approx-0.50\,\mathrm V,\qquad V_s\approx0.50\,\mathrm V`,m`K_{\max}=eV_s\approx(1.602\times10^{-19}\,\mathrm C)(0.50\,\mathrm V)=8.01\times10^{-20}\,\mathrm J=0.50\,\mathrm{eV}`,m`W=E_\gamma-K_{\max}\approx3.00-0.50=2.50\,\mathrm{eV}`],t('ข้อมูลที่วัดคร่อม 0.45 &lt; Vₛ ≤ 0.50 V การคำนวณใช้จุดศูนย์แรกเป็นค่าประมาณ',
           'The measurements bracket 0.45 &lt; Vₛ ≤ 0.50 V. The calculation uses the first zero as an estimate.')))
     ],
     [
@@ -239,7 +242,8 @@ export function notebook(th, filled, lab) {
         t('กราฟ Vₛ กับ f ใช้ขนาดศักย์หยุดยั้งเป็นบวก','Vₛ against f, using the positive stopping-potential magnitude.')) +
       (filled ? working(th,[5],[
         m`\frac{h}{e}\approx\frac{0.81-0.19}{(8.00-6.50)\times10^{14}}=4.13\times10^{-15}\,\mathrm{V\,s}`,
-        m`h\approx6.62\times10^{-34}\,\mathrm{J\,s},\quad f_0\approx6.04\times10^{14}\,\mathrm{Hz}`,
+        m`h=e\frac{h}{e}\approx(1.602\times10^{-19}\,\mathrm C)(4.13\times10^{-15}\,\mathrm{V\,s})\approx6.62\times10^{-34}\,\mathrm{J\,s}`,
+        m`f_0\approx6.04\times10^{14}\,\mathrm{Hz}`,
         m`-\frac{W}{e}\approx-2.50\,\mathrm V\quad\Rightarrow\quad W\approx2.50\,\mathrm{eV}`,
       ],t('ถ้าเปลี่ยนโลหะ ความชันยังเท่าเดิม แต่ตำแหน่งจุดตัดเปลี่ยนตาม W','Changing the metal keeps the slope the same and shifts the intercepts according to W.')) : '<div class="writing" style="--space:46mm"></div>')
     ],
@@ -249,12 +253,12 @@ export function notebook(th, filled, lab) {
         t('จากแล็บโลหะ A มีศักย์หยุดยั้งประมาณ 0.50 V จงหาอัตราเร็วสูงสุดของอิเล็กตรอน กำหนดมวลอิเล็กตรอน 9.11 × 10⁻³¹ kg',
           'The lab gives a stopping potential of about 0.50 V for metal A. Find the maximum electron speed. The electron mass is 9.11 × 10⁻³¹ kg.'),
         working(th,[4,6],[m`K_{\max}=eV_s=(1.602\times10^{-19}\,\mathrm C)(0.50\,\mathrm V)=8.01\times10^{-20}\,\mathrm J`,
-          m`v_{\max}=\sqrt{2K_{\max}/m_e}\approx4.19\times10^5\,\mathrm{m/s}`],t('ใช้พลังงานจลน์หน่วย J เพื่อหาอัตราเร็วใน m/s','Use kinetic energy in joules to obtain speed in m/s.'))) +
+          m`v_{\max}=\sqrt{\frac{2K_{\max}}{m_e}}\approx\sqrt{\frac{2(8.01\times10^{-20}\,\mathrm J)}{9.11\times10^{-31}\,\mathrm{kg}}}\approx4.19\times10^5\,\mathrm{m/s}`],t('ใช้พลังงานจลน์หน่วย J เพื่อหาอัตราเร็วใน m/s','Use kinetic energy in joules to obtain speed in m/s.'))) +
       ex(9,t('จากความเข้มแสงสู่จำนวนโฟตอน','From light intensity to photon count'),
         t('แสงความเข้ม 0.20 W/m² ตกตั้งฉากกับพื้นที่ 2.0 cm² เป็นเวลา 5.0 s โฟตอนแต่ละตัวมีพลังงาน 4.0 × 10⁻¹⁹ J จงหาจำนวนโฟตอนที่ตกกระทบ สมมติว่าทุกโฟตอนถูกดูดกลืนและทำให้อิเล็กตรอนหลุดหนึ่งตัว จะมีอิเล็กตรอนหลุดกี่ตัว?',
           'Light of intensity 0.20 W/m² is incident normally on 2.0 cm² for 5.0 s. Each photon carries 4.0 × 10⁻¹⁹ J. Find the incident photon count. If every photon is absorbed and releases one electron, how many electrons are emitted?'),
-        working(th,[7,8],[m`E_{\mathrm{total}}=(0.20\,\mathrm{W/m^2})(2.0\times10^{-4}\,\mathrm{m^2})(5.0\,\mathrm s)=2.0\times10^{-4}\,\mathrm J`,
-          m`N=\frac{2.0\times10^{-4}\,\mathrm J}{4.0\times10^{-19}\,\mathrm J}=5.0\times10^{14}`],
+        working(th,[7,8],[m`E_{\mathrm{total}}=I_{\mathrm{light}} A\Delta t=(0.20\,\mathrm{W/m^2})(2.0\times10^{-4}\,\mathrm{m^2})(5.0\,\mathrm s)=2.0\times10^{-4}\,\mathrm J`,
+          m`N=\frac{E_{\mathrm{total}}}{E_\gamma}=\frac{2.0\times10^{-4}\,\mathrm J}{4.0\times10^{-19}\,\mathrm J}=5.0\times10^{14}`],
           t('ได้โฟตอนและอิเล็กตรอนจำนวนเท่ากันตามสมมติฐานที่กำหนด','The photon and electron counts are equal under the stated assumption.')))
     ],
     [
@@ -263,7 +267,7 @@ export function notebook(th, filled, lab) {
         t('ใช้แสงที่ความถี่ขีดเริ่มของโลหะตัวอย่าง X ซึ่งมีฟังก์ชันงาน 3.60 eV ไปฉายลงบนโลหะ Y วัดศักย์หยุดยั้งได้ 0.90 V จงหาฟังก์ชันงานของ Y',
           'Shine light at the threshold frequency of sample metal X, whose work function is 3.60 eV, onto metal Y. The measured stopping potential is 0.90 V. Find the work function of Y.'),
         working(th,[3,4,2],[m`E_\gamma=hf_{0,X}=W_X=3.60\,\mathrm{eV}`,
-          m`K_{\max,Y}=eV_s=0.90\,\mathrm{eV}`,m`W_Y=E_\gamma-K_{\max,Y}=2.70\,\mathrm{eV}`],
+          m`K_{\max,Y}=eV_s=0.90\,\mathrm{eV}`,m`W_Y=E_\gamma-K_{\max,Y}=(3.60-0.90)\,\mathrm{eV}=2.70\,\mathrm{eV}`],
           t('ความถี่ของแสงชุดเดิมเท่าเดิมเมื่อเปลี่ยนโลหะ','The light frequency stays the same when the metal changes.')))
     ],
   ];

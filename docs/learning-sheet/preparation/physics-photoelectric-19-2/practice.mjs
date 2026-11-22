@@ -61,7 +61,7 @@ export function exitPractice(th, answers) {
     p(t('ลำแสงเดินทางในสุญญากาศและมีความยาวคลื่น 500 nm ใช้ค่าคงที่และค่าการแปลงหน่วยต่อไปนี้',
       'A beam of light travels through a vacuum and has a wavelength of 500 nm. Use the following constants and conversion factor.')+' '+[speed,planck,conversion].join(' · ')),[
       [t('จงหาพลังงานต่อโฟตอนในหน่วย J','Find the photon energy in joules.'),
-        working(th,[1],[m`\lambda=500\times10^{-9}\,\mathrm m`,m`E_\gamma=\frac{(6.626\times10^{-34})(3.00\times10^8)}{500\times10^{-9}}=3.98\times10^{-19}\,\mathrm J`],t('พลังงานต่อโฟตอนประมาณ 3.98 × 10⁻¹⁹ J','The photon energy is about 3.98 × 10⁻¹⁹ J.'))],
+        working(th,[1],[m`\lambda=500\times10^{-9}\,\mathrm m`,m`E_\gamma=\frac{hc}{\lambda}=\frac{(6.626\times10^{-34})(3.00\times10^8)}{500\times10^{-9}}=3.98\times10^{-19}\,\mathrm J`],t('พลังงานต่อโฟตอนประมาณ 3.98 × 10⁻¹⁹ J','The photon energy is about 3.98 × 10⁻¹⁹ J.'))],
       [t('จงแปลงพลังงานเป็น eV','Convert the energy to electronvolts.'),
         working(th,[1],[m`E_\gamma=\frac{3.9756\times10^{-19}\,\mathrm J}{1.602\times10^{-19}\,\mathrm{J/eV}}=2.48\,\mathrm{eV}`],t('ใช้ค่าก่อนปัดจากข้อ ก.','Use the unrounded value from part a.'))],
     ]);
@@ -69,9 +69,9 @@ export function exitPractice(th, answers) {
     p(t('โลหะ B ในแล็บมีฟังก์ชันงาน 2.80 eV นักเรียนฉายแสงลงบนโลหะครั้งแรกที่ความถี่ 6.50 × 10¹⁴ Hz แล้วทดลองซ้ำที่ 7.80 × 10¹⁴ Hz ใช้ค่าคงที่ของพลังค์',
       'Metal B in the lab has a work function of 2.80 eV. A student illuminates it at 6.50 × 10¹⁴ Hz, then repeats at 7.80 × 10¹⁴ Hz. Use the Planck constant')+' '+planck+'.'),[
       [t('ตัดสินว่าแต่ละครั้งอิเล็กตรอนหลุดได้หรือไม่ พร้อมแสดงหลักฐานจากพลังงาน','Decide whether each beam produces emission and support the decision using energy.'),
-        working(th,[1],[m`E_{\gamma,1}=(4.136\times10^{-15})(6.50\times10^{14})=2.69\,\mathrm{eV}`,m`E_{\gamma,2}=(4.136\times10^{-15})(7.80\times10^{14})=3.23\,\mathrm{eV}`],t('ครั้งแรกต่ำกว่า 2.80 eV จึงไม่หลุด ครั้งที่สองสูงกว่า 2.80 eV จึงหลุดได้','The first beam is below 2.80 eV, so it produces no emission. The second beam is above 2.80 eV, so emission occurs.'))],
+        working(th,[1],[m`E_{\gamma,1}=hf_1=(4.136\times10^{-15})(6.50\times10^{14})=2.69\,\mathrm{eV}`,m`E_{\gamma,2}=hf_2=(4.136\times10^{-15})(7.80\times10^{14})=3.23\,\mathrm{eV}`],t('ครั้งแรกต่ำกว่า 2.80 eV จึงไม่หลุด ครั้งที่สองสูงกว่า 2.80 eV จึงหลุดได้','The first beam is below 2.80 eV, so it produces no emission. The second beam is above 2.80 eV, so emission occurs.'))],
       [t('คำนวณพลังงานจลน์สูงสุดในกรณีที่หลุด','Find maximum kinetic energy for the emitting case.'),
-        working(th,[2],[m`K_{\max}=3.22608-2.80\approx0.43\,\mathrm{eV}`],t('ใช้พลังงานต่อโฟตอนของแสงความถี่สูง','Use the photon energy of the higher-frequency beam.'))],
+        working(th,[2],[m`K_{\max}=E_\gamma-W=(3.22608-2.80)\,\mathrm{eV}\approx0.43\,\mathrm{eV}`],t('ใช้พลังงานต่อโฟตอนของแสงความถี่สูง','Use the photon energy of the higher-frequency beam.'))],
     ]);
   const q3 = problem(3,t('ความถี่กับความเข้มให้ผลอย่างไร','Effects of frequency and intensity'),
     p(t('นักเรียนตั้งขั้วรับที่ +1.00 V ใช้โลหะ A เดิมและเปิดแสงทุกครั้ง ได้ผลจำลองดังตาราง',
@@ -99,7 +99,7 @@ export function exitPractice(th, answers) {
       ].map(([prefix,answer])=>[prefix+' '+t('อิเล็กตรอนหลุดจากผิวหรือไม่ เพราะอะไร?','Are electrons emitted? Explain the zero reading.'),p(answer)]),
       [t('กรณี C อิเล็กตรอนหลุดจากผิวหรือไม่? ถ้าคงแสงเดิมแล้วปรับศักย์ขั้วรับจาก −0.60 V เป็น +1.00 V จะวัดกระแสได้ไหม เพราะอะไร?',
         'In case C, are electrons emitted? If the light is kept fixed and the collector voltage is changed from −0.60 V to +1.00 V, will the meter detect current? Explain.'),
-        working(th,[2],[m`K_{\max}=3.00\,\mathrm{eV}-2.50\,\mathrm{eV}=0.50\,\mathrm{eV}`],
+        working(th,[2],[m`K_{\max}=E_\gamma-W=(3.00-2.50)\,\mathrm{eV}=0.50\,\mathrm{eV}`,m`e|V|=e(0.60\,\mathrm V)=0.60\,\mathrm{eV}\gt K_{\max}`],
           t('โฟตอนทำให้อิเล็กตรอนหลุดได้ แรงดันต้านที่ −0.60 V ต้องการพลังงาน 0.60 eV จึงยังวัดกระแสไม่ได้ เมื่อเปลี่ยนเป็น +1.00 V ขั้วรับดึงอิเล็กตรอนที่หลุดให้เคลื่อนถึงขั้วรับ จึงวัดกระแสได้',
             'Photons cause emission. The −0.60 V setting requires 0.60 eV to reach the collector, so the current is initially zero. At +1.00 V the collector attracts the emitted electrons, and a current is measured.'))],
     ]);
@@ -122,7 +122,7 @@ export function exitPractice(th, answers) {
       t('พล็อตข้อมูลแล้วต่อเส้นแนวโน้มด้วยเส้นประไปถึงแกนตั้ง','Plot the data and extend the trend line to the vertical axis using a dashed line.')),[
       [t('จงใช้ความชันหาค่าคงที่ของพลังค์','Use the slope to find the Planck constant.'),
         working(th,[5],[m`\frac{h}{e}=\frac{1.15-0.33}{(6.50-4.50)\times10^{14}}=4.10\times10^{-15}\,\mathrm{V\,s}`,
-          m`h=(1.602\times10^{-19})(4.10\times10^{-15})=6.57\times10^{-34}\,\mathrm{J\,s}`],
+          m`h=e\frac{h}{e}=(1.602\times10^{-19}\,\mathrm C)(4.10\times10^{-15}\,\mathrm{V\,s})\approx6.57\times10^{-34}\,\mathrm{J\,s}`],
           t('แปลงสเกลแกนความถี่ก่อนคำนวณ','Convert the frequency axis scale before calculating.'))],
       [t('อ่านความถี่ขีดเริ่มและใช้จุดตัดแกนตั้งหาฟังก์ชันงานใน eV','Read the threshold frequency and use the vertical intercept to find the work function in eV.'),
         working(th,[5],[m`f_0\approx3.70\times10^{14}\,\mathrm{Hz}`,m`-W/e\approx-1.52\,\mathrm V\quad\Rightarrow\quad W\approx1.52\,\mathrm{eV}`],
@@ -132,15 +132,15 @@ export function exitPractice(th, answers) {
     p(t('ฉายแสงตั้งฉาก ความเข้ม 0.30 W/m² ลงบนพื้นที่ 4.0 cm² เป็นเวลา 2.0 s โฟตอนแต่ละตัวมีพลังงาน 6.0 × 10⁻¹⁹ J สมมติว่าทุกโฟตอนถูกดูดกลืนและทำให้อิเล็กตรอนหลุดหนึ่งตัว',
       'Light of intensity 0.30 W/m² is incident normally on 4.0 cm² for 2.0 s. Each photon carries 6.0 × 10⁻¹⁹ J. Assume every photon is absorbed and releases one electron.')),[
       [t('จงหาพลังงานแสงรวมที่ตกกระทบและจำนวนอิเล็กตรอนที่หลุด','Find the total incident light energy and the number of electrons emitted.'),
-        working(th,[7,8],[m`E_{\mathrm{total}}=(0.30\,\mathrm{W/m^2})(4.0\times10^{-4}\,\mathrm{m^2})(2.0\,\mathrm s)=2.4\times10^{-4}\,\mathrm J`,
-          m`N=(2.4\times10^{-4})/(6.0\times10^{-19})=4.0\times10^{14}`],
+        working(th,[7,8],[m`E_{\mathrm{total}}=I_{\mathrm{light}}A\Delta t=(0.30\,\mathrm{W/m^2})(4.0\times10^{-4}\,\mathrm{m^2})(2.0\,\mathrm s)=2.4\times10^{-4}\,\mathrm J`,
+          m`N=\frac{E_{\mathrm{total}}}{E_\gamma}=\frac{2.4\times10^{-4}\,\mathrm J}{6.0\times10^{-19}\,\mathrm J}=4.0\times10^{14}`],
           t('ใช้พื้นที่ในหน่วยตารางเมตร','Use the area in square metres.'))],
     ]);
   const q11 = problem(11,t('แสงเดียวกันกับโลหะสองชนิด','One light source, two metals'),
     p(t('แสงที่ความถี่ขีดเริ่มของโลหะ X ซึ่งมีฟังก์ชันงาน 4.00 eV เมื่อนำไปฉายลงบนโลหะ Y พบว่ามีศักย์หยุดยั้ง 1.60 V',
       'Light at the threshold frequency of metal X, whose work function is 4.00 eV, gives a stopping potential of 1.60 V when it shines on metal Y.')),[
       [t('จงหาพลังงานต่อโฟตอนและฟังก์ชันงานของโลหะ Y','Find the photon energy and the work function of metal Y.'),
-        working(th,[3,4,2],[m`E_\gamma=W_X=4.00\,\mathrm{eV}`,m`K_{\max,Y}=eV_s=1.60\,\mathrm{eV}`,m`W_Y=4.00-1.60=2.40\,\mathrm{eV}`],
+        working(th,[3,4,2],[m`E_\gamma=W_X=4.00\,\mathrm{eV}`,m`K_{\max,Y}=eV_s=1.60\,\mathrm{eV}`,m`W_Y=E_\gamma-K_{\max,Y}=(4.00-1.60)\,\mathrm{eV}=2.40\,\mathrm{eV}`],
           t('แสงชุดเดิมให้พลังงานต่อโฟตอนเท่าเดิมเมื่อเปลี่ยนโลหะ','The same light delivers the same energy per photon to either metal.'))],
     ]);
   const problems = [q1,q2,q3,q4,q5,q6];

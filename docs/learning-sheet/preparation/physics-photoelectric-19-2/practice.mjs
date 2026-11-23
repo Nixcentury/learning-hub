@@ -149,18 +149,21 @@ export function exitPractice(th, answers) {
 
 export function recall(th, answers) {
   const t = (thai, english) => th ? thai : english;
+  const stoppingPotential = math('V_s');
+  const maximumEnergy = math(String.raw`K_{\max}=eV_s`);
   const prompts = [
-    t(['มิเตอร์วัดอะไร และกระแสที่ตรวจพบบอกอะไรเกี่ยวกับอิเล็กตรอน?','กระแสในวงจร อิเล็กตรอนจากโลหะไปถึงขั้วรับ'],
-      ['What does the meter measure, and what does a nonzero reading tell you about electrons?','It measures circuit current. Electrons emitted from the metal have reached the collector.']),
-    t(['เขียนเงื่อนไขต่ำกว่า พอดี และสูงกว่าความถี่ขีดเริ่ม แล้วบอกผลของการเพิ่มความเข้มเมื่อคงความถี่','ต่ำกว่าไม่หลุด ที่ขีดเริ่ม Kₘₐₓ = 0 ในอุดมคติ สูงกว่าได้ Kₘₐₓ เป็นบวก เมื่อ f คงที่ การเพิ่มความเข้มเพิ่มจำนวนโฟตอนต่อวินาที และเพิ่มกระแสเมื่ออยู่เหนือขีดเริ่มในเงื่อนไขเก็บอิเล็กตรอนเดิม'],
-      ['State the below, at and above threshold cases. What does increasing intensity do at fixed frequency?','Below threshold there is no emission. At threshold Kₘₐₓ = 0 in the ideal limit. Above threshold Kₘₐₓ is positive. At fixed f, higher intensity raises photon rate and, above threshold with the same collecting setup, raises current.']),
-    t(['เมื่อกระแสเป็นศูนย์ ให้ตรวจการตั้งค่าใดบ้างก่อนสรุปว่าอิเล็กตรอนหลุดหรือไม่?','ตรวจว่าเปิดแสงไหม ความถี่สูงพอหรือไม่ และแรงดันต้านขัดขวางการถึงขั้วรับไหม'],
-      ['Which settings should you check before deciding whether electrons were emitted when current is zero?','Check whether the light is on, whether f is above threshold, and whether retarding voltage stops electrons from reaching the collector.']),
-    t(['เมื่อกระแสลดลงถึงศูนย์ ค่าศักย์ขั้วรับที่อ่านจากกราฟมีเครื่องหมายอะไร และจะใช้ขนาดศักย์หยุดยั้งหาพลังงานจลน์สูงสุดอย่างไร?','ที่จุดหยุดยั้ง V = −Vₛ และ Kₘₐₓ = eVₛ'],
-      ['When the current drops to zero, what sign does the collector voltage have? How can you use the stopping-potential magnitude to find the maximum kinetic energy?','At cutoff, V = −Vₛ and Kₘₐₓ = eVₛ.']),
-    t(['เมื่อเขียนกราฟพลังงานจลน์สูงสุดเทียบกับความถี่ของแสง ความชันและจุดตัดแกนทั้งสองบอกอะไร?','ความชันคือ h เมื่อใช้หน่วยสอดคล้องกัน จุดตัดแกนนอนคือ f₀ จุดตัดแกนตั้งจากเส้นต่อคือ −W'],
-      ['On a graph of maximum kinetic energy against light frequency, what do the slope and the two intercepts represent?','The slope is h in consistent units. The horizontal intercept is f₀, and the extrapolated vertical intercept is −W.']),
+    t(['ปรากฏการณ์โฟโตอิเล็กทริกคืออะไร?', 'การที่อิเล็กตรอนหลุดออกจากผิวโลหะเมื่อแสงที่มีความถี่สูงพอส่องลงบนผิวโลหะ'],
+      ['What is the photoelectric effect?', 'Electrons are emitted from a metal surface when light of sufficiently high frequency shines on it.']),
+    t(['ความถี่ขีดเริ่มคืออะไร?', 'ความถี่ต่ำสุดของแสงที่ทำให้อิเล็กตรอนหลุดออกจากผิวโลหะชนิดนั้นได้'],
+      ['What is the threshold frequency?', 'The minimum frequency of light needed to eject electrons from the surface of that metal.']),
+    t(['ฟังก์ชันงานของโลหะคืออะไร?', 'พลังงานต่ำสุดที่ต้องใช้เพื่อให้อิเล็กตรอนหนึ่งตัวหลุดออกจากผิวโลหะ'],
+      ['What is the work function of a metal?', 'The minimum energy needed to eject one electron from a metal surface.']),
+    t(['ศักย์หยุดยั้งคืออะไร?', 'ขนาดของความต่างศักย์ย้อนกลับที่พอดีทำให้แม้แต่โฟโตอิเล็กตรอนที่มีพลังงานจลน์สูงสุดก็ไปไม่ถึงขั้วรับ'],
+      ['What is the stopping potential?', 'The magnitude of the reverse potential difference just sufficient to prevent even the most energetic photoelectrons from reaching the collector.']),
+    t(['ในการทดลอง เราหาพลังงานจลน์สูงสุดของโฟโตอิเล็กตรอนได้อย่างไร?', `เริ่มจากสภาวะที่วัดกระแสโฟโตอิเล็กทริกได้ เพิ่มขนาดความต่างศักย์ย้อนกลับจนกระแสลดลงถึงศูนย์ อ่านขนาดศักย์หยุดยั้ง ${stoppingPotential} แล้วคำนวณ ${maximumEnergy} โดย e คือขนาดประจุของอิเล็กตรอน`],
+      ['How do we determine the maximum kinetic energy of the photoelectrons in the experiment?', `Start with a measurable photocurrent. Increase the magnitude of the reverse potential difference until the current drops to zero. Read the stopping potential magnitude ${stoppingPotential}, then calculate ${maximumEnergy}, where e is the magnitude of the electron charge.`]),
   ];
-  return heading('Knowledge Recall')+p(t('พับหรือปิดส่วน Notes แล้วตอบจากความจำ','Cover or close the Notes and answer from memory.'))+
+  return heading('Knowledge Recall')+p(t('พับหรือปิดส่วน Notes แล้วตอบแต่ละข้อสั้น ๆ ด้วยคำพูดของตนเอง เขียนสมการประกอบได้',
+    'Fold or close the Notes section and answer each question briefly in your own words. You may include an equation.'))+
     prompts.map(([q,a],i)=>`<section class="block">${p((i+1)+'. '+q)}${answers?`<div class="teacher-key">${p(a)}</div>`:'<div class="writing" style="--space:24mm"></div>'}</section>`).join('');
 }

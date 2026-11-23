@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "chemistry-ipst-acid-base-10-7-10-8-exit-ticket-revision",
-    "revision": "2026-11-22-6",
-    "sha256": "9baad9804fb9b5ffefb6580565f18bc6321fdd80a2ff53598b641df222f55d52"
+    "revision": "2026-11-23-1",
+    "sha256": "0ffc1bb101daede5a0ce2b1a0b1d80c3a043378fad60c0a0e6cbcc38d31cc1ed"
   },
   "title": {
     "th": "Exit Ticket Revision · ไทเทรตและบัฟเฟอร์",
@@ -44,7 +44,7 @@
           },
           "target": {
             "kind": "anchor",
-            "key": "lab-results"
+            "key": "before-titration"
           }
         }
       ],
@@ -160,8 +160,8 @@
         "en": "Attempt past exam questions"
       },
       "summary": {
-        "th": "เปิดฉบับอ้างอิงก่อนตอบ\nตรวจตัวเลือก ตัวเลข และกราฟจากแหล่งที่ลิงก์ไว้",
-        "en": "Open the cited paper before answering.\nCheck its choices, numbers and figures there."
+        "th": "อ่านโจทย์ ตัวเลือก ตาราง และกราฟในใบนี้\nดูปีและเลขข้อที่หัวข้อแต่ละข้อ",
+        "en": "Read the question, choices, tables and figures on this sheet.\nThe year and question number are shown above each item."
       },
       "story": {
         "th": "จับคู่ข้อสอบกับตัวอย่างที่ใช้หลักเดียวกัน",
@@ -196,6 +196,51 @@
       "after": {
         "th": "ทวน Knowledge Recall ท้ายใบ",
         "en": "Finish with Knowledge Recall."
+      }
+    },
+    {
+      "id": "recall",
+      "title": {
+        "th": "ตรวจความรู้ท้ายใบ",
+        "en": "Check your knowledge"
+      },
+      "summary": {
+        "th": "ตอบคำนิยามจากความจำ\nใช้กราฟระบุจุดสมมูลและจุดครึ่งสมมูล",
+        "en": "Retrieve the definitions from memory.\nLocate equivalence and half-equivalence on the curve."
+      },
+      "story": {
+        "th": "ทวนคำที่จดไว้ก่อนแล็บและก่อนตัวอย่าง",
+        "en": "Recall the terms introduced before the labs and the examples."
+      },
+      "action": {
+        "th": "ตอบให้ครบแล้วเปิดเฉลยทีละข้อ",
+        "en": "Answer the questions, then reveal each answer."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ตรวจความรู้ท้ายใบ",
+            "en": "Check your knowledge"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "recall"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "จุดครึ่งสมมูลอยู่ที่ปริมาตรเท่าใดเทียบกับจุดสมมูล?",
+          "en": "How does the half-equivalence volume compare with the equivalence volume?"
+        },
+        "answer": {
+          "th": "ครึ่งหนึ่งของปริมาตรที่จุดสมมูล",
+          "en": "Half the equivalence volume."
+        }
+      },
+      "after": {
+        "th": "กลับไปทวนเฉพาะข้อที่ยังตอบไม่ได้",
+        "en": "Review the ideas behind the questions you could not answer."
       }
     }
   ],

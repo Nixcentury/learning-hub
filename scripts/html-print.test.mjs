@@ -129,9 +129,22 @@ test('buffer revision prints the full three-part set by default and supports eve
       if (problems) {
         assert.ok(problems.querySelector('[data-guide-anchor="cloze-a"]'));
         assert.equal(problems.querySelector('[data-guide-anchor="recall"]'),null);
+        const exams = problems.querySelectorAll('.exam-question');
+        assert.equal(exams.length,9);
+        for (const exam of exams) {
+          assert.equal(exam.querySelectorAll('.exam-choices > li').length || exam.querySelectorAll('table tbody tr').length,5);
+        }
+        assert.match(problems.querySelector('[data-guide-anchor="exam-2567-19"] .exam-question img').getAttribute('src'), /2567-q19-titration-curves\.png$/);
+        assert.equal(problems.querySelectorAll('[data-guide-anchor="exam-2568-23"] .exam-question tbody tr').length,3);
+        assert.equal(problems.querySelectorAll('[data-guide-anchor="exam-2569-22"] .exam-question tbody tr').length,2);
       }
       const recall = print.querySelector('[data-print-zone="recall"]');
-      if (recall) assert.equal(recall.querySelectorAll('[data-sheet-slot]').length,2);
+      if (recall) {
+        assert.equal(recall.querySelectorAll('[data-sheet-slot]').length,10);
+        assert.equal(recall.querySelectorAll('figure.graph').length,2);
+        assert.equal(recall.querySelectorAll('figure.graph circle').length,2);
+        assert.equal(recall.querySelectorAll('figure.graph:not([data-sheet-answer] figure)').length,1);
+      }
     }
   }
 });

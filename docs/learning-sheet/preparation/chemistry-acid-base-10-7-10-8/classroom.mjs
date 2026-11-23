@@ -1,3 +1,5 @@
+import { buffer, endpoint, equivalence, hydrolysis, titration } from './concepts.mjs';
+
 export function classroom({ t, eq, work, slot, task, card, table, labImage, graph }, revision) {
   const formula = (id, tex) =>
     '<div class="formula-row">'+slot('formula-'+id,{th:'เปิดสูตร '+id,en:'Reveal equation '+id},eq(tex),9,revision)+
@@ -11,7 +13,30 @@ export function classroom({ t, eq, work, slot, task, card, table, labImage, grap
     return slot(id, {th:'เปิดตาราง '+unit,en:'Reveal '+unit+' table'},
       table(headers,rows), 9, revision, table(headers,blank));
   };
+  const note = (key, title, content) =>
+    '<section class="concept-note" data-print-keep><h3>'+t(...title)+'</h3>'+
+    slot('note-'+key, {th:'เปิดสรุป '+title[0],en:'Reveal note for '+title[1]}, content, 14, revision,
+      '<span class="note-lines" aria-hidden="true"></span>')+'</section>';
+  const definition = (key, title, copy) => note(key, title, '<p>'+t(...copy)+'</p>');
   return [
+    card('before-titration', t('ก่อนแล็บไทเทรต','Before the titration lab'), [
+      note('neutralisation', ['ปฏิกิริยาสะเทิน','Neutralisation'],
+        '<p>'+t('ในแล็บนี้ กรดไฮโดรคลอริกทำปฏิกิริยากับโซเดียมไฮดรอกไซด์ ได้เกลือโซเดียมคลอไรด์และน้ำ',
+          'In this lab, hydrochloric acid reacts with sodium hydroxide to form sodium chloride and water.')+'</p>'+
+        eq(String.raw`\mathrm{HCl(aq)+NaOH(aq)\longrightarrow NaCl(aq)+H_2O(l)}`)),
+      note('ph-poh', ['การคำนวณ pH และ pOH','Calculating pH and pOH'],
+        eq(String.raw`\mathrm{pH}=-\log_{10}[\mathrm{H_3O^+}],\quad\mathrm{pOH}=-\log_{10}[\mathrm{OH^-}]`)+
+        eq(String.raw`\mathrm{pH}+\mathrm{pOH}=14.00\quad(25\,^\circ\mathrm C)`)),
+      note('titration', ['การไทเทรต','Titration'],
+        '<p>'+t(...titration)+'</p><p>'+t('ในแล็บนี้ ใช้ HCl ที่ทราบความเข้มข้นหาความเข้มข้นของ NaOH',
+          'In this lab, HCl of known concentration is used to determine the concentration of NaOH.')+'</p>'),
+      definition('endpoint', ['จุดยุติ','Endpoint'], endpoint),
+      definition('equivalence', ['จุดสมมูล','Equivalence point'], equivalence),
+    ].join('')),
+    card('before-buffer', t('ก่อนแล็บบัฟเฟอร์','Before the buffer lab'),
+      note('buffer', ['สารละลายบัฟเฟอร์','Buffer solution'],
+        '<p>'+t(...buffer)+'</p><p>'+t('คู่บัฟเฟอร์ฟอสเฟตในแล็บนี้คือ H₂PO₄⁻ และ HPO₄²⁻',
+          'The phosphate buffer pair in this lab is H₂PO₄⁻ and HPO₄²⁻.')+'</p>')),
     card('lab-results', t('Quick Start Note · จากแล็บจริงสู่คำอธิบาย', 'Quick Start Note · From lab measurements to explanations'), [
       t('<p>เปิดบันทึกของกลุ่ม แล็บ 1 ใช้บิวเรตเพื่อหาความเข้มข้น แล็บ 2 ใช้เครื่องวัด pH เพื่อเปรียบเทียบการต้านการเปลี่ยนแปลง pH</p>',
         '<p>Open your group record. In Lab 1 the burette readings help you find concentration. In Lab 2 the pH readings help you compare resistance to pH change.</p>'),
@@ -76,6 +101,10 @@ export function classroom({ t, eq, work, slot, task, card, table, labImage, grap
         ]), null,22,'29.2%'),
     ].join('')),
     card('example-2', t('ตัวอย่าง 2 · กรดแก่กับเบสแก่', 'Example 2 · Strong acid and strong base'), [
+      definition('strong-strong-ph', ['การคำนวณ pH ของกรดแก่กับเบสแก่','Calculating pH for a strong acid and a strong base'], [
+        'ใช้ ICF หาจำนวนโมลกรดแก่หรือเบสแก่ที่เหลือ แล้วหารด้วยปริมาตรรวมเพื่อหาความเข้มข้นของ H₃O⁺ หรือ OH⁻ ตามลำดับ สำหรับ HCl กับ NaOH ที่จุดสมมูล pH = 7.00 ที่ 25 °C',
+        'Use ICF to find the amount of excess strong acid or strong base, then divide by the total volume to find the concentration of H₃O⁺ or OH⁻, respectively. For HCl and NaOH at equivalence, pH = 7.00 at 25 °C.',
+      ]),
       t('<p>แบ่ง HCl 0.100 mol/L ขวดละ 25.00 mL เติม NaOH 0.100 mol/L ปริมาตร 20.00, 25.00 และ 30.00 mL ตามลำดับ ที่ 25 °C ให้ใช้ K<sub>w</sub> = 1.0 × 10<sup>−14</sup> และถือว่าปริมาตรบวกกันได้ตลอดใบ</p>',
         '<p>Split 0.100 mol/L HCl into 25.00 mL portions. Add 20.00, 25.00 and 30.00 mL of 0.100 mol/L NaOH, respectively. Throughout the worksheet assume additive volumes and use K<sub>w</sub> = 1.0 × 10<sup>−14</sup> at 25 °C.</p>'),
       formula(2,String.raw`\mathrm{pH}=-\log[\mathrm{H_3O^+}],\quad \mathrm{pOH}=-\log[\mathrm{OH^-}],\quad \mathrm{pH}+\mathrm{pOH}=14.00`),
@@ -98,6 +127,10 @@ export function classroom({ t, eq, work, slot, task, card, table, labImage, grap
       ].map(([id,v,answer,ph])=>ask('cn2'+id,`เติม NaOH ${v} mL จงระบุสารที่เหลือ เกลือ และ pH`,`For ${v} mL of NaOH, identify the excess species, salt and pH.`,answer,null,20,ph)),
     ].join('')),
     card('example-3', t('ตัวอย่าง 3 · กรดอ่อนกับเบสแก่', 'Example 3 · Weak acid and strong base'), [
+      definition('icf-ice', ['ICF และ ICE','ICF and ICE'], [
+        'ใช้ ICF หาปริมาณสารหลังปฏิกิริยาในหน่วย mmol แล้วใช้ความเข้มข้นในหน่วย mol/L ตั้ง ICE เมื่อจำเป็นต้องคำนวณสมดุล',
+        'Use ICF to find amounts in mmol after the reaction. When an equilibrium calculation is needed, use concentrations in mol/L to set up ICE.',
+      ]),
       t('<p>ใช้ CH₃COOH 0.100 mol/L ขวดละ 25.00 mL และเติม NaOH 0.100 mol/L ขวดละ 10.00, 25.00 และ 30.00 mL ให้ K<sub>a</sub>(CH₃COOH) = 1.8 × 10<sup>−5</sup></p>',
         '<p>Place 25.00 mL of 0.100 mol/L CH₃COOH in each flask. Add 10.00, 25.00 and 30.00 mL of 0.100 mol/L NaOH. Use K<sub>a</sub>(CH₃COOH) = 1.8 × 10<sup>−5</sup>.</p>'),
       eq(String.raw`\mathrm{CH_3COOH+OH^-\longrightarrow CH_3COO^-+H_2O}`),
@@ -119,6 +152,7 @@ export function classroom({ t, eq, work, slot, task, card, table, labImage, grap
           String.raw`\mathrm{pH} &= -\log(2.70\times10^{-5})\approx4.57`,
         ],
           t('แถว F เหลือ CH₃COOH และมี CH₃COO⁻ จากโซเดียมแอซีเตต จึงเป็นบัฟเฟอร์กรด', 'Row F contains CH₃COOH and CH₃COO⁻ from sodium acetate, so it is an acidic buffer.')), null,32,'4.57'),
+      definition('hydrolysis', ['ไฮโดรลิซิสของเกลือ','Salt hydrolysis'], hydrolysis),
       formula(4,String.raw`K_a(\mathrm{HA})K_b(\mathrm{A^-})=K_w`),
       ask('cn3b','ข. ขวด 25.00 mL ได้เกลืออะไร ไอออนใดไฮโดรลิซิส และ pH เท่าใด?',
         'b. What salt is formed in the 25.00 mL flask, which ion hydrolyses, and what is the pH?',
@@ -142,6 +176,10 @@ export function classroom({ t, eq, work, slot, task, card, table, labImage, grap
           t('OH⁻ ส่วนเกินกำหนด pH และกดไฮโดรลิซิสของแอซีเตต', 'Excess OH⁻ controls the pH and suppresses acetate hydrolysis.')), null,20,'11.96'),
     ].join('')),
     card('example-4', t('ตัวอย่าง 4 · เบสอ่อนกับกรดแก่', 'Example 4 · Weak base and strong acid'), [
+      definition('weak-base-ph', ['การคำนวณ pH ของเบสอ่อนกับกรดแก่','Calculating pH for a weak base and a strong acid'], [
+        'ถ้าเบสอ่อนเหลือพร้อมกรดคู่เบส จะเป็นบัฟเฟอร์ ที่จุดสมมูลให้พิจารณาไฮโดรลิซิสของกรดคู่เบส ถ้ามีกรดแก่เหลือให้ใช้กรดส่วนเกินหา pH',
+        'If the weak base and its conjugate acid are both present after partial neutralisation, they form a buffer. At equivalence, consider hydrolysis of the conjugate acid. If strong acid is in excess, use the excess acid to calculate pH.',
+      ]),
       t('<p>ใช้ NH₃ 0.100 mol/L ขวดละ 25.00 mL เติม HCl 0.100 mol/L ขวดละ 10.00, 25.00 และ 30.00 mL ให้ K<sub>b</sub>(NH₃) = 1.8 × 10<sup>−5</sup></p>',
         '<p>Use 25.00 mL portions of 0.100 mol/L NH₃. Add 10.00, 25.00 and 30.00 mL of 0.100 mol/L HCl. Use K<sub>b</sub>(NH₃) = 1.8 × 10<sup>−5</sup>.</p>'),
       eq(String.raw`\mathrm{NH_3+H_3O^+\longrightarrow NH_4^++H_2O}`),
@@ -179,6 +217,10 @@ export function classroom({ t, eq, work, slot, task, card, table, labImage, grap
           t('กรดส่วนเกินกำหนด pH และกดไฮโดรลิซิสของ NH₄⁺', 'Excess acid controls the pH and suppresses NH₄⁺ hydrolysis.')), null,19,'2.04'),
     ].join('')),
     card('example-5', t('ตัวอย่าง 5 · กรดอ่อนกับเบสอ่อน', 'Example 5 · Weak acid and weak base'), [
+      definition('weak-weak-ph', ['ไฮโดรลิซิสของไอออนทั้งสองชนิด','Hydrolysis of both ions'], [
+        'สำหรับแอมโมเนียมแอซีเตต NH₄⁺ ทำปฏิกิริยากับน้ำให้ H₃O⁺ ส่วน CH₃COO⁻ ทำปฏิกิริยากับน้ำให้ OH⁻ จึงต้องพิจารณาสมดุลของไอออนทั้งสองชนิด',
+        'In ammonium acetate, NH₄⁺ reacts with water to produce H₃O⁺ and CH₃COO⁻ reacts with water to produce OH⁻. Both ion equilibria must therefore be considered.',
+      ]),
       t('<p>ผสม CH₃COOH 0.100 mol/L กับ NH₃ 0.100 mol/L อย่างละ 25.00 mL ให้ใช้ค่าคงที่เดิม</p>',
         '<p>Mix 25.00 mL each of 0.100 mol/L CH₃COOH and 0.100 mol/L NH₃. Use the same equilibrium constants.</p>'),
       ask('cn5a','ก. จงเขียนสมการไอออน ตั้งนิพจน์ K และอธิบายว่าผลิตภัณฑ์คืออะไร',
@@ -245,6 +287,10 @@ export function classroom({ t, eq, work, slot, task, card, table, labImage, grap
         'In the first ICF step HPO₄²⁻ is just consumed and more H₂PO₄⁻ is formed. The original pair loses much of its capacity to take up added acid. To find the new pH, consider the equilibria of H₂PO₄⁻, which can act as either an acid or a base.',18),
     ].join('')),
     card('example-7', t('ตัวอย่าง 7 · อ่านกราฟไทเทรต', 'Example 7 · Interpret titration curves'), [
+      definition('half-equivalence', ['จุดครึ่งสมมูล','Half-equivalence point'], [
+        'ปริมาตรสารไทเทรตที่เติม ณ จุดครึ่งสมมูลเท่ากับครึ่งหนึ่งของปริมาตรที่จุดสมมูล',
+        'At half-equivalence, the volume of titrant added is half the equivalence volume.',
+      ]),
       t('<p>กราฟตัวอย่างของ CH₃COOH 0.100 mol/L 25.00 mL กับ NaOH 0.100 mol/L ตารางแสดงค่าจากแบบจำลอง ปริมาตรบนแกนนอนคือปริมาตร NaOH ที่เติม</p>',
         '<p>Example curve for 25.00 mL of 0.100 mol/L CH₃COOH titrated with 0.100 mol/L NaOH. The table gives model values. The horizontal axis shows the volume of NaOH added.</p>'),
       graph('acid25'),
@@ -254,6 +300,10 @@ export function classroom({ t, eq, work, slot, task, card, table, labImage, grap
         'a. Read the volume and pH at equivalence and half-equivalence. Explain using the conjugate pair.',
         'จุดสมมูล 25.00 mL, pH ≈ 8.72 และจุดครึ่งสมมูล 12.50 mL, pH ≈ 4.74 กรดอ่อนโมโนโพรติกถูกใช้ไปครึ่งหนึ่ง ทำให้ CH₃COOH และ CH₃COO⁻ มีความเข้มข้นใกล้กัน ใน (3) จึงได้ [H₃O⁺] ≈ Kₐ และ pH ≈ pKₐ',
         'Equivalence: 25.00 mL, pH ≈ 8.72; half-equivalence: 12.50 mL, pH ≈ 4.74. Half the monoprotic weak acid has reacted, leaving nearly equal CH₃COOH and CH₃COO⁻ concentrations. From (3), [H₃O⁺] ≈ Kₐ and pH ≈ pKₐ.',20),
+      definition('indicator-range', ['ช่วงเปลี่ยนสีของอินดิเคเตอร์','Indicator transition range'], [
+        'เลือกอินดิเคเตอร์ที่ช่วงเปลี่ยนสีอยู่ในบริเวณที่ pH เปลี่ยนเร็วใกล้จุดสมมูล',
+        'Choose an indicator whose transition range lies in the steep part of the pH curve near equivalence.',
+      ]),
       ask('cn7b','ข. ให้ BTB เปลี่ยนจากเหลืองเป็นน้ำเงินช่วง 6.0–7.6 และฟีนอล์ฟทาลีนเปลี่ยนจากไม่มีสีเป็นชมพูช่วง 8.2–10.0 ที่ pH 5.0 BTB มีสีอะไร และเลือกตัวใดจับจุดยุติในกราฟนี้?',
         'b. BTB changes from yellow to blue over 6.0–7.6, and phenolphthalein from colourless to pink over 8.2–10.0. What colour is BTB at pH 5.0, and which indicator best detects the endpoint on this graph?',
         'BTB เป็นสีเหลืองที่ pH 5.0 เพราะต่ำกว่าช่วงเปลี่ยนสี เลือกฟีนอล์ฟทาลีน เพราะช่วง 8.2–10.0 อยู่ในช่วงกราฟชันรอบจุดสมมูลของกรดอ่อนนี้',

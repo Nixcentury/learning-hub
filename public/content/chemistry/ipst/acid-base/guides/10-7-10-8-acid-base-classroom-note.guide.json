@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": {
     "contentId": "chemistry-ipst-acid-base-10-7-10-8-classroom-note",
-    "revision": "2026-11-22-4",
-    "sha256": "cb9dd4324ad75fc06cedb0a561d0c2a920b120fa9c4b41f29059493ba0846e2c"
+    "revision": "2026-11-23-1",
+    "sha256": "32566e997dc92814cb7ba4199a21843c498946e836bca62cf07aee4e571a1ab7"
   },
   "title": {
     "th": "Classroom Note · ไทเทรตและบัฟเฟอร์",
@@ -18,6 +18,51 @@
     "en": "Use lab data and remaining species to choose a pH calculation."
   },
   "steps": [
+    {
+      "id": "before-labs",
+      "title": {
+        "th": "เตรียมก่อนลงแล็บ",
+        "en": "Prepare for the labs"
+      },
+      "summary": {
+        "th": "จดสมการสะเทินและสูตร pH/pOH\nแยกจุดยุติกับจุดสมมูลก่อนทำไทเทรต",
+        "en": "Write the neutralisation equation and the pH and pOH equations.\nDistinguish the endpoint from equivalence before titrating."
+      },
+      "story": {
+        "th": "ใช้สีของอินดิเคเตอร์เชื่อมกับสิ่งที่สังเกตในขวด",
+        "en": "Relate the indicator colour to what students observe in the flask."
+      },
+      "action": {
+        "th": "จดนิยามบัฟเฟอร์และคู่ฟอสเฟตก่อนทำแล็บที่สอง",
+        "en": "Write the definition of a buffer and the phosphate pair before the second lab."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "เตรียมก่อนลงแล็บ",
+            "en": "Prepare for the labs"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "before-titration"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "ใช้ไทเทรตหาอะไรในแล็บนี้?",
+          "en": "What do we determine by titration in this lab?"
+        },
+        "answer": {
+          "th": "ความเข้มข้นของ NaOH",
+          "en": "The concentration of NaOH."
+        }
+      },
+      "after": {
+        "th": "ลงแล็บและจดค่าที่วัด",
+        "en": "Run the labs and record the readings."
+      }
+    },
     {
       "id": "lab",
       "title": {

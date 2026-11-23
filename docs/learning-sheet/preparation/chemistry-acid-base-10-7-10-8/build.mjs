@@ -6,7 +6,7 @@ import { exitCloze } from './cloze.mjs';
 import { exitProblems } from './exit.mjs';
 import { examProblems, knowledgeRecall } from './exams.mjs';
 
-const revision = '2026-11-22-4';
+const revision = '2026-11-23-1';
 const out = new URL('../../../../public/content/chemistry/ipst/acid-base/', import.meta.url);
 const escape = value => String(value).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const pair = (th, en) => ({th, en});
@@ -33,6 +33,16 @@ const css = `
   .worked-equations [data-hub-math="display"] { text-align:left; margin:0; padding:.15em 0; }
   .formula-row { display:grid; grid-template-columns:minmax(0,1fr) max-content; gap:.55rem; align-items:center; border:.65pt solid #758fa4; margin:2mm 0 3mm; padding:0 2mm; }
   [data-sheet-slot] { margin-block:.36em; }
+  .concept-note { margin:.7em 0 1em; }
+  .concept-note h3 { color:#193f55; font-size:11pt; margin:0 0 .35em; }
+  html[data-learning-sheet="1"][data-hub-sheet-ready] .concept-note [data-sheet-slot] {
+    grid-template-columns:minmax(0,1fr); grid-template-areas:"answer";
+  }
+  .concept-note [data-hub-sheet-control] { display:none; }
+  .note-lines { display:block; height:12mm; border-bottom:.45pt solid #aebbc5; position:relative; }
+  .note-lines::before { content:""; position:absolute; inset:50% 0 auto; border-top:.45pt solid #aebbc5; }
+  [data-hub-sheet-open="true"] .note-lines,
+  html[data-sheet-print-edition="answers"] .note-lines { display:none; }
   .lab-figures { display:grid; grid-template-columns:1fr 2fr; gap:12px; align-items:center; }
   figure { margin:8px 0; } figure img,figure svg { display:block; max-width:100%; height:auto; }
   .lab-figures img { max-height:145px; object-fit:contain; }
@@ -58,6 +68,12 @@ const css = `
   }
 `;
 const clozeCSS = `
+  .exam-question ol { margin:.35em 0 .65em; padding-inline-start:1.7em; }
+  .exam-question li + li { margin-top:.18em; }
+  .exam-question .exam-statements { list-style:none; padding-inline-start:0; }
+  .exam-graph img { width:min(100%,400px); height:auto; margin-inline:auto; }
+  .exam-graph figcaption { text-align:center; }
+  html[data-hub-print-snapshot] .exam-graph img { width:86mm; }
   .cloze-banks { display:grid; grid-template-columns: minmax(0,2fr) minmax(0,3fr); gap:3mm; border-block:.4pt solid #8296a5; padding:1.4mm 0; margin:1mm 0 2.5mm; }
   .cloze-bank h3 { margin:0 0 .35em; color:#193f55; font-size:11pt; }
   .cloze-bank dl, .cloze-bank dd { margin:0; }
@@ -123,7 +139,7 @@ function toolkit(lang) {
   const labImage = (name, caption) => `<figure><img src="assets/lab-guide/${name}.png" alt="${escape(caption)}"><figcaption>${caption}</figcaption></figure>`;
   const table = (headers, rows) => `<table><thead><tr>${headers.map(h=>`<th scope="col">${h}</th>`).join('')}</tr></thead><tbody>${rows.map(([name,...values])=>`<tr><th scope="row">${name}</th>${values.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
   const link = (url, title) => `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${title}</a>`;
-  const graph = type => {
+  const graph = (type, { markRecallPoints = false } = {}) => {
     const weakBase = type === 'base';
     const comparison = type === 'comparison';
     const sample = type === 'acid20' ? 20 : (comparison ? 10 : 25);
@@ -142,10 +158,20 @@ function toolkit(lang) {
     const label = t(`ปริมาตร ${weakBase?'HCl':'NaOH'} ที่เติม (mL)`, `Added ${weakBase?'HCl':'NaOH'} (mL)`);
     const grids = Array.from({length:8},(_,i)=>`<path d="M59 ${y(i*2)}H533" stroke="#cfdfd9"/><text x="50" y="${y(i*2)+5}" text-anchor="end">${i*2}</text>`).join('');
     const ticks = Array.from({length:max/5+1},(_,i)=>`<text y="263" x="${x(i*5)}" text-anchor="middle">${i*5}</text>`).join('');
-    return `<figure class="graph"><svg viewBox="0 0 558 300" role="img" aria-label="${escape(caption)}">
+    const points = markRecallPoints ? [
+      [sample / 2, t('ครึ่งสมมูล','Half-equivalence'), -9, 'end', 20],
+      [sample, t('จุดสมมูล','Equivalence'), 10, 'start', -9],
+    ].map(([v, title, dx, anchor, dy]) => {
+      const px = x(v), py = y(pH(v, sample, constant, weakBase));
+      return `<path d="M${px} ${py}V242" fill="none" stroke="#364e67" stroke-dasharray="4 4"/>
+        <circle cx="${px}" cy="${py}" r="5" fill="#193f55" stroke="white" stroke-width="1.5"/>
+        <text x="${px+dx}" y="${py+dy}" text-anchor="${anchor}">${title} · ${format(v)} mL</text>`;
+    }).join('') : '';
+    const graphLabel = markRecallPoints ? t('กราฟไทเทรตแสดงจุดสมมูลและจุดครึ่งสมมูล','Titration curve with equivalence and half-equivalence marked') : caption;
+    return `<figure class="graph"><svg viewBox="0 0 558 300" role="img" aria-label="${escape(graphLabel)}">
       <text x="21" y="25" class="caption">pH</text>${grids}${ticks}
       <path d="M59 35V242H533" fill="none" stroke="#203c36"/>
-      ${line(constant,'#00665a')}${comparison ? line(1.8e-4,'#864508','7 5') : ''}
+      ${line(constant,'#00665a')}${comparison ? line(1.8e-4,'#864508','7 5') : ''}${points}
       <text x="296" y="288" class="caption" text-anchor="middle">${label}</text>
       </svg><figcaption>${caption}</figcaption></figure>`;
   };
@@ -159,7 +185,7 @@ const data = {
 const stem = '10-7-10-8-acid-base';
 function render(kind) {
   const isExit = kind === 'exit';
-  const contentRevision = isExit ? '2026-11-22-6' : revision;
+  const contentRevision = revision;
   const {name} = data[kind];
   const suffix = isExit ? 'exit-ticket-revision' : 'classroom-note';
   const hub = '../../../../#chemistry/bank/buffer-solutions/';
@@ -200,6 +226,13 @@ function step(id,key,th,en,summary,story,action,question,answer,after) {
     check:{question,answer},after};
 }
 const classSteps = [
+  step('before-labs','before-titration','เตรียมก่อนลงแล็บ','Prepare for the labs',
+    pair('จดสมการสะเทินและสูตร pH/pOH\nแยกจุดยุติกับจุดสมมูลก่อนทำไทเทรต','Write the neutralisation equation and the pH and pOH equations.\nDistinguish the endpoint from equivalence before titrating.'),
+    pair('ใช้สีของอินดิเคเตอร์เชื่อมกับสิ่งที่สังเกตในขวด','Relate the indicator colour to what students observe in the flask.'),
+    pair('จดนิยามบัฟเฟอร์และคู่ฟอสเฟตก่อนทำแล็บที่สอง','Write the definition of a buffer and the phosphate pair before the second lab.'),
+    pair('ใช้ไทเทรตหาอะไรในแล็บนี้?','What do we determine by titration in this lab?'),
+    pair('ความเข้มข้นของ NaOH','The concentration of NaOH.'),
+    pair('ลงแล็บและจดค่าที่วัด','Run the labs and record the readings.')),
   step('lab','lab-results','เก็บค่าจากแล็บจริง','Use your lab data',
     pair('ไทเทรตจดบิวเรตเริ่มและสุดท้าย\nบัฟเฟอร์จด pH ที่ 0.00, 0.25 และ 0.50 mL','Record initial and final burette readings.\nRecord buffer readings at 0.00, 0.25 and 0.50 mL.'),
     pair('ชี้สารในบิวเรตและขวดจากรูป','Use the image to locate the burette and flask solutions.'),
@@ -237,7 +270,7 @@ const classSteps = [
     pair('พร้อมลอง Exit Ticket Revision','Continue to Exit Ticket Revision.')),
 ];
 const exitSteps = [
-  step('review','lab-results','ทวนจาก Classroom Note','Review the Classroom Note',
+  step('review','before-titration','ทวนจาก Classroom Note','Review the Classroom Note',
     pair('อ่านเฉลย Classroom Note ฉบับเต็ม\nทวน ICF, ICE และการเลือกวิธีจากสารที่เหลือ','Read the complete Classroom Note solutions.\nReview ICF, ICE and method selection.'),
     pair('ใช้เลขสมการเดิมตามกลับไปที่ตัวอย่าง','Use the original equation numbering to revisit examples.'),
     pair('ทวนเฉพาะส่วนที่ยังติด','Review the steps you are unsure about.'),
@@ -259,12 +292,19 @@ const exitSteps = [
     pair('เริ่มที่สารเหลือในแถว F','Start with the species remaining in row F.'),
     pair('ต่อด้วยโจทย์แนวท้ายบท สสวท.','Move to IPST-style practice.')),
   step('exam','exam-start','ลองข้อสอบย้อนหลัง','Attempt past exam questions',
-    pair('เปิดฉบับอ้างอิงก่อนตอบ\nตรวจตัวเลือก ตัวเลข และกราฟจากแหล่งที่ลิงก์ไว้','Open the cited paper before answering.\nCheck its choices, numbers and figures there.'),
+    pair('อ่านโจทย์ ตัวเลือก ตาราง และกราฟในใบนี้\nดูปีและเลขข้อที่หัวข้อแต่ละข้อ','Read the question, choices, tables and figures on this sheet.\nThe year and question number are shown above each item.'),
     pair('จับคู่ข้อสอบกับตัวอย่างที่ใช้หลักเดียวกัน','Match each exam question to an example using the same principle.'),
     pair('ลองตอบแล้วเปิดวิธีทำทีละข้อ','Attempt the question, then reveal its solution.'),
     pair('ถ้าอัตราส่วนไม่ใช่ 1:1 ให้ดูจากไหน?','Where do you find the ratio if it is not 1:1?'),
     pair('ใช้สัมประสิทธิ์ในสมการดุล','Use coefficients from the balanced equation.'),
     pair('ทวน Knowledge Recall ท้ายใบ','Finish with Knowledge Recall.')),
+  step('recall','recall','ตรวจความรู้ท้ายใบ','Check your knowledge',
+    pair('ตอบคำนิยามจากความจำ\nใช้กราฟระบุจุดสมมูลและจุดครึ่งสมมูล','Retrieve the definitions from memory.\nLocate equivalence and half-equivalence on the curve.'),
+    pair('ทวนคำที่จดไว้ก่อนแล็บและก่อนตัวอย่าง','Recall the terms introduced before the labs and the examples.'),
+    pair('ตอบให้ครบแล้วเปิดเฉลยทีละข้อ','Answer the questions, then reveal each answer.'),
+    pair('จุดครึ่งสมมูลอยู่ที่ปริมาตรเท่าใดเทียบกับจุดสมมูล?','How does the half-equivalence volume compare with the equivalence volume?'),
+    pair('ครึ่งหนึ่งของปริมาตรที่จุดสมมูล','Half the equivalence volume.'),
+    pair('กลับไปทวนเฉพาะข้อที่ยังตอบไม่ได้','Review the ideas behind the questions you could not answer.')),
 ];
 
 function makeGuide(kind, html, contentRevision) {

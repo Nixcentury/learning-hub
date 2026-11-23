@@ -160,7 +160,7 @@ function toolkit(lang) {
     const ticks = Array.from({length:max/5+1},(_,i)=>`<text y="263" x="${x(i*5)}" text-anchor="middle">${i*5}</text>`).join('');
     const points = markRecallPoints ? [
       [sample / 2, t('ครึ่งสมมูล','Half-equivalence'), -9, 'end', 20],
-      [sample, t('จุดสมมูล','Equivalence'), 10, 'start', -9],
+      [sample, t('จุดสมมูล','Equivalence'), -10, 'end', -9],
     ].map(([v, title, dx, anchor, dy]) => {
       const px = x(v), py = y(pH(v, sample, constant, weakBase));
       return `<path d="M${px} ${py}V242" fill="none" stroke="#364e67" stroke-dasharray="4 4"/>
@@ -185,7 +185,7 @@ const data = {
 const stem = '10-7-10-8-acid-base';
 function render(kind) {
   const isExit = kind === 'exit';
-  const contentRevision = revision;
+  const contentRevision = isExit ? '2026-11-23-2' : revision;
   const {name} = data[kind];
   const suffix = isExit ? 'exit-ticket-revision' : 'classroom-note';
   const hub = '../../../../#chemistry/bank/buffer-solutions/';

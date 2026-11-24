@@ -15,7 +15,7 @@ export function numberedEquations(notes) {
 
 const classroomExampleRefs = {
   'single-examples': [[16,5,17],[17,16,5]],
-  'single-graph-example': [[17]],
+  'single-width-example': [[16,17]],
   'grating-laser': [[18,19,5,20],[14,5,18,19]],
   'grating-spectrum': [[18,20,19,5,14],[19]],
 };
@@ -71,7 +71,7 @@ export function compactRevision(notes) {
   const sections = notes.filter(item => !item.key.startsWith('formula-summary-'));
   const joins = new Map([
     ['single-proof', 'single-higher'],
-    ['single-examples', 'single-graph-example'],
+    ['single-examples', 'single-width-example'],
     ['grating-laser', 'grating-spectrum'],
   ]);
   const moved = new Set(joins.values());

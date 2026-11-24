@@ -1,9 +1,35 @@
 import {sampleTrials} from '../physics-double-slit-10-2/paired/lab-sample.mjs';
-import {eq, diagram} from './lessons.mjs';
+import {eq, diagram, screenSine, screenSineExact} from './lessons.mjs';
 
 const raw = String.raw;
 const math = tex => raw`\(${tex}\)`;
 const derivation = tex => `<div class="derivation-line">${math(tex)}</div>`;
+
+function replaceTangent(section, source, replacement) {
+  const old = [...section.querySelectorAll('[data-tex]')].find(node => node.dataset.tex === source);
+  if (!old) throw Error('Missing borrowed screen-geometry expression: ' + source);
+  old.outerHTML = math(replacement);
+}
+
+export function reviseScreenSineExercise(section, lang, filled) {
+  if (section.dataset.unitKey !== 'problem-8') return;
+  // The legacy prompt and solutions each have their own copy of the subquestion.
+  const second = section.querySelector('[data-part-key="problem-8-2"] .calculation-check');
+  if (second) second.innerHTML = second.innerHTML.replace('L tan θ', lang === 'th' ? 'สามเหลี่ยมจริง' : 'exact geometry');
+  if (!filled) return;
+  const solution = section.querySelector('[data-solution-key="problem-8-2"]');
+  const prompt = solution.firstElementChild;
+  const partLabel = prompt.querySelector('b').outerHTML;
+  prompt.innerHTML = partLabel + (lang === 'th'
+    ? ' ใช้สามเหลี่ยมจริงในสมการ (5) หาระยะจากแถบกลาง แล้วเทียบกับค่าประมาณมุมเล็ก'
+    : ' Use the exact triangle in (5) to find the distance from the central fringe. Compare it with the small-angle result.');
+  replaceTangent(solution, raw`\displaystyle \tan\theta=\frac{x}{L}`, screenSineExact);
+  replaceTangent(solution, raw`x=L\tan\theta=0.500\frac{0.150}{\sqrt{1-0.150^2}}\,\mathrm m`,
+    raw`x=\frac{L\sin\theta}{\sqrt{1-\sin^2\theta}}=\frac{(0.500\,\mathrm m)(0.150)}{\sqrt{1-0.150^2}}`);
+  solution.lastElementChild.innerHTML = lang === 'th'
+    ? 'ค่าประมาณมุมเล็กต่ำกว่าค่าจากสามเหลี่ยมจริงประมาณ 0.9 mm หรือ 1.1%'
+    : 'The small-angle value is about 0.9 mm (1.1%) below the result from the exact triangle.';
+}
 
 export function reviseDoubleSlit(section, key, lang, filled) {
   const t = (th, en) => lang === 'th' ? th : en;
@@ -37,6 +63,23 @@ export function reviseDoubleSlit(section, key, lang, filled) {
     heading.nextElementSibling.nextElementSibling.innerHTML = t(
       raw`บนคลื่นไซน์ ยอดติดกันห่างกัน \(\lambda\) เฟสสะสมต่างกัน \(2\pi\) เรเดียน จึงมีเฟสตรงกัน เมื่อแสงเดินทางต่างกัน \(\Delta r\) ให้หาความต่างเฟสจากสัดส่วนนี้`,
       raw`Successive crests are separated by \(\lambda\), an accumulated phase difference of \(2\pi\) radians. They are in phase. Apply this proportion to the optical path difference \(\Delta r\).`);
+  }
+  if (key === 'geometry-proof') {
+    const old = section.querySelector('[data-equation="5"]');
+    const box = old.closest('details') ?? old;
+    const intro = box.previousElementSibling;
+    const next = box.nextElementSibling;
+    const tangentStep = next.nextElementSibling;
+    const substitution = tangentStep.nextElementSibling;
+    intro.innerHTML = t(
+      raw`สมการ (4) ใช้เมื่อ \(L\gg d\) ในสามเหลี่ยมฉาก \(OCP\) ด้านตรงข้ามมุมคือ \(x\) และด้านเอียงยาว \(\sqrt{x^2+L^2}\)`,
+      raw`Equation (4) assumes \(L\gg d\). In the screen triangle, the opposite side is \(x\) and the hypotenuse is \(\sqrt{x^2+L^2}\).`);
+    old.querySelector('.equation-box').textContent = math(screenSine);
+    next.innerHTML = t(
+      raw`ใกล้แนวกลาง \(L\gg |x|\) ด้านเอียงจึงยาวประมาณ \(L\) แทน \(\sin\theta\approx x/L\) จากสมการ (5) ใน (4)`,
+      raw`Near the centre \(L\gg |x|\), so the hypotenuse is approximately \(L\). Substitute \(\sin\theta\approx x/L\) from (5) into (4).`);
+    tangentStep.remove();
+    substitution.remove();
   }
   if (key === 'spacing-proof') {
     section.querySelector('.proof-diagram')?.remove();
@@ -93,6 +136,25 @@ export function reviseDoubleSlit(section, key, lang, filled) {
     if (eq14) eq14.outerHTML = eq(14, raw`D=|x_2-x_1|`, filled);
   }
   if (key.startsWith('examples-')) {
+    const example12 = section.querySelector('[data-example-number="12"]');
+    if (example12) {
+      const figure = example12.querySelector('figure');
+      figure.querySelector('img').setAttribute('src', 'assets/10-2-10-4/screen-displacement.svg');
+      figure.querySelector('figcaption').textContent = t(
+        'สามเหลี่ยมฉากสำหรับหาระยะจากกลางฉาก ใช้สมการ (5)',
+        'Read the screen displacement from the right triangle using (5).');
+    }
+    const worked = example12?.querySelector('.note-answer');
+    if (worked) {
+      replaceTangent(worked, raw`\displaystyle \tan\theta=\frac{x}{L}`, screenSineExact);
+      replaceTangent(worked, raw`|x|=L\tan\theta\approx0.0759\,\mathrm m=75.9\,\mathrm{mm}`,
+        raw`|x|=\frac{(0.50\,\mathrm m)(0.150)}{\sqrt{1-0.150^2}}\approx75.9\,\mathrm{mm}`);
+      const method = worked.querySelector('.method-note');
+      method.previousElementSibling.innerHTML = t(
+        raw`เมื่อใช้ค่าประมาณมุมเล็กได้ \(75.0\,\mathrm{mm}\) ส่วน \(75.9\,\mathrm{mm}\) มาจากการจัดรูปสมการ (5) แบบตรง`,
+        raw`The small-angle result is \(75.0\,\mathrm{mm}\). Rearrange the exact form of (5) to obtain \(75.9\,\mathrm{mm}\).`);
+      method.remove();
+    }
     for (const n of [5, 11]) {
       const example = section.querySelector(`[data-example-number="${n}"]`);
       if (!example) continue;

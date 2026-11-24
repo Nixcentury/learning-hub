@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 252" role="img"><title>Central width and first minimum geometry</title>
+<rect width="620" height="252" fill="#fff"/>
+<g stroke="#426981" stroke-width="3" fill="none">
+<path d="M55 132H515" stroke-dasharray="8 5"/>
+<path d="M55 132L515 45M55 132L515 219M515 25V233"/>
+<path d="M55 237H515M55 232v11M515 232v11M564 45v174M558 45h12M558 219h12M544 45v87M538 132h12"/>
+<path d="M149 132A94 94 0 0 0 147 114"/>
+</g>
+<g fill="#23495f" font-family="Arial,sans-serif" font-size="24">
+<text x="114" y="110">θ₁</text><text x="275" y="228">L</text><text x="550" y="86">x₁</text><text x="573" y="142">W₀</text>
+<circle cx="55" cy="132" r="5"/><circle cx="515" cy="45" r="5"/><circle cx="515" cy="132" r="5"/><circle cx="515" cy="219" r="5"/>
+</g></svg>

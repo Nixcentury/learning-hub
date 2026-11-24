@@ -38,6 +38,8 @@ export function openExitTicketPrint({ frame, title, language, opener, context,
     ['quiz',`${labels.quiz} (${quizCount} ${text('หน้า','pages')})`],
   ];
   const range = select('data-revision-print-range', text('ช่วงที่พิมพ์', 'Print range'), rangeChoices);
+  const defaultRange = source.documentElement.getAttribute('data-revision-print-default');
+  if (rangeChoices.some(([value]) => value === defaultRange)) range.value = defaultRange;
   const edition = select('data-revision-print-edition',text('ฉบับที่พิมพ์','Print edition'),[
     ['blank',labels.bank ? text('ฉบับผู้เรียน','Student edition') : text('ฉบับผู้เรียน — ไม่แสดงเฉลย','Student — answers hidden')],
     ['answers',text('ฉบับเฉลย','Teacher answers')],

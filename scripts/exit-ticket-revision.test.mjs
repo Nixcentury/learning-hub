@@ -808,3 +808,43 @@ test('10.3 v2.2: exported vector equations and reused fonts render times and can
   assert.ok(used.size>fixture.mathAssets.length,'New Classroom Note equations are present');
   for(const font of fixture.fonts)assert.equal(hash(await readFile(new URL('../'+font.path,import.meta.url))),font.sha256);
 });
+
+test('wave optics 10.2–10.4 keeps equation recall in the compact student handout', async () => {
+  const load = async suffix => parseHTML(await readFile(new URL(
+    '../public/content/physics/ipst/wave-optics/10-2-10-4-wave-optics-' + suffix + '.html',
+    import.meta.url), 'utf8')).document;
+  const note = await load('classroom-note');
+  const revision = await load('exit-ticket-revision');
+  assert.equal(revision.documentElement.dataset.revisionPrintDefault, 'quiz');
+  const view = (doc, lang, edition, range) =>
+    doc.querySelector(`[data-content-lang="${lang}"] [data-revision-edition="${edition}"] [data-revision-range="${range}"]`);
+  for (const lang of ['th','en']) {
+    const workedNote = view(note, lang, 'answers', 'all');
+    const equationNumbers = new Set([...workedNote.querySelectorAll('[data-equation],[data-combined-equation]')]
+      .map(box => box.dataset.equation ?? box.dataset.combinedEquation));
+    assert.equal(equationNumbers.size, 20);
+    assert.equal(workedNote.querySelectorAll('[data-example-number]').length, 12);
+    const order = [...workedNote.querySelectorAll('.shared-note')].map(section => section.dataset.noteKind);
+    assert.ok(order.slice(order.indexOf('examples')).every(kind => kind === 'examples'));
+
+    applyContentLanguage(revision, lang);
+    const printRange = (range, answers) => {
+      revision.body.classList.toggle('answers-on', answers);
+      const pages = exitTicketPages(revision, range);
+      return parseHTML('<main>' + pages.map(page => page.outerHTML).join('') + '</main>').document;
+    };
+    const student = printRange('quiz', false);
+    const worked = printRange('quiz', true);
+    const reviews = printRange('review', true);
+    assert.equal(student.querySelectorAll('.page').length, 16);
+    assert.ok(student.querySelector('[data-unit-key="alevel-2569-27"] img[src$="tcas69-q27.jpg"]'));
+    assert.ok(worked.querySelector('[data-unit-key="problem-9-cont"] [data-solution-key="problem-9-3"]'));
+    assert.ok(!reviews.querySelector('[data-note-key^="formula-summary-"]'));
+    assert.ok([...worked.querySelectorAll('[data-equation-ref]')]
+      .every(ref => equationNumbers.has(ref.dataset.equationRef)));
+    const recall = student.querySelectorAll('[data-unit-key^="write-equations-"] .chapter-equation');
+    assert.equal(recall.length, 20);
+    assert.ok([...recall].every(box => box.firstElementChild.textContent.trim() === ''));
+    assert.equal(worked.querySelectorAll('[data-unit-key^="write-equations-"] .chapter-equation.filled').length, 20);
+  }
+});

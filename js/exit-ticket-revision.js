@@ -33,7 +33,13 @@ export function exitTicketPages(doc, range = 'all') {
   if (views.length !== 1) throw Error('Choose exactly one revision language');
   if (doc.documentElement.getAttribute('data-exit-ticket-editions') === '1') {
     const edition = doc.body.classList.contains('answers-on') ? 'answers' : 'blank';
-    return [...views[0].querySelectorAll(`[data-revision-edition="${edition}"] [data-revision-range="${range}"] .page`)];
+    const root = views[0].querySelector(`[data-revision-edition="${edition}"]`);
+    if (!root) return [];
+    const shared = doc.documentElement.getAttribute('data-revision-shared-ranges')?.split(/\s+/) ?? [];
+    if (range !== 'all' && shared.includes(range)) {
+      return [...root.querySelectorAll(`[data-revision-range="all"] .page[data-revision-zone~="${range}"]`)];
+    }
+    return [...root.querySelectorAll(`[data-revision-range="${range}"] .page`)];
   }
   return [...views[0].querySelectorAll('.page')].filter(page => range !== 'quiz' || !page.classList.contains('review'));
 }

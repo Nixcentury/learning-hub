@@ -836,9 +836,33 @@ test('wave optics 10.2–10.4 keeps equation recall in the compact student hando
     const student = printRange('quiz', false);
     const worked = printRange('quiz', true);
     const reviews = printRange('review', true);
-    assert.equal(student.querySelectorAll('.page').length, 16);
+    const extra = printRange('bank', false);
+    const extraWorked = printRange('bank', true);
+    assert.equal(student.querySelectorAll('.page').length, 12);
+    const keys = (root, selector) => [...root.querySelectorAll(selector)].map(section => section.dataset.unitKey);
+    assert.deepEqual(keys(student, '[data-unit-key^="problem-"],[data-unit-key="single-width"],[data-unit-key="spectrum"]'),
+      ['problem-2','problem-3','problem-4','problem-9','problem-7','single-width','spectrum']);
+    assert.deepEqual(keys(student, '[data-unit-key^="a-level-"],[data-unit-key^="alevel-"],[data-unit-key^="common-"]'),
+      ['a-level-2566-11','a-level-2568-9','common-2564-11','alevel-2567-11','alevel-2568-8','alevel-2569-27']);
     assert.ok(student.querySelector('[data-unit-key="alevel-2569-27"] img[src$="tcas69-q27.jpg"]'));
-    assert.ok(worked.querySelector('[data-unit-key="problem-9-cont"] [data-solution-key="problem-9-3"]'));
+    for (const [key, main, supplement] of [['problem-2',[2,3],[1]],['problem-7',[2,3],[1]],['problem-9',[1],[2,3]]]) {
+      const answers = (root, section) => [...root.querySelectorAll(`[data-unit-key="${section}"] [data-solution-key]`)]
+        .map(solution => solution.dataset.solutionKey);
+      assert.deepEqual(answers(worked, key), main.map(n => key+'-'+n));
+      assert.deepEqual(answers(extraWorked, key+'-extra'), supplement.map(n => key+'-'+n));
+    }
+    assert.ok(extra.querySelector('[data-unit-key="problem-5"]'));
+    assert.ok(extra.querySelector('[data-unit-key="common-2565-13-archive"]'));
+    assert.ok(!student.querySelector('[data-unit-key="problem-5"]'));
+    for (const [root, selector, count, prefix] of [
+      [student, '[data-unit-key^="problem-"],[data-unit-key="single-width"],[data-unit-key="spectrum"]', 7, lang === 'th' ? 'ข้อ' : 'Problem'],
+      [student, '[data-unit-key^="a-level-"],[data-unit-key^="alevel-"],[data-unit-key^="common-"]', 6, lang === 'th' ? 'ข้อสอบจริง' : 'Past question'],
+      [extra, '[data-unit-key]', 15, lang === 'th' ? 'ข้อเสริม' : 'Supplementary question'],
+    ]) {
+      const headings = [...root.querySelectorAll(selector)].map(section => section.querySelector('h2').textContent);
+      assert.deepEqual(headings.map(text => text.split(' · ')[0]),
+        Array.from({length:count}, (_, i) => prefix + ' ' + (i+1)));
+    }
     assert.ok(!reviews.querySelector('[data-note-key^="formula-summary-"]'));
     assert.ok([...worked.querySelectorAll('[data-equation-ref]')]
       .every(ref => equationNumbers.has(ref.dataset.equationRef)));

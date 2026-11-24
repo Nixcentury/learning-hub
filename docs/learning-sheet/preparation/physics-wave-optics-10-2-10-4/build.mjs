@@ -119,7 +119,8 @@ function page(item, i, count, lang, filled, label, classroom) {
   const l = lang === 'en' ? 1 : 0;
   const state = filled ? ['เฉลย','Answers'][l] : ['ลงมือทำ','Practise'][l];
   const stamp = i === 0 ? `<div class="chapter-identity"><h1>${label} · ${topic[l]}</h1><p>${['ชื่อ','Name'][l]} <span></span>${['ห้อง','Class'][l]} <span></span></p></div>` : '';
-  return `<section class="page ${item.group}${classroom ? '' : ' exit-page'}" ${classroom ? '' : `data-revision-zone="${item.group === 'recall' ? 'quiz recall' : item.group}" `}data-page="${i+1}"><header class="running-head"><span>${topic[l]}</span><span>${label} · ${state}</span></header><div class="page-body">${stamp}${item.body}</div><footer class="page-foot"><span>Kru Nix Century</span><span data-page-number>${['หน้า','Page'][l]} ${i+1} / ${count}</span></footer></section>`;
+  const pageLabel = item.group === 'bank' ? ['ฝึกเพิ่มเติมท้ายบท','Supplementary practice'][l] : label;
+  return `<section class="page ${item.group}${classroom ? '' : ' exit-page'}" ${classroom ? '' : `data-revision-zone="${item.group === 'recall' ? 'quiz recall' : item.group}" `}data-page="${i+1}"><header class="running-head"><span>${topic[l]}</span><span>${pageLabel} · ${state}</span></header><div class="page-body">${stamp}${item.body}</div><footer class="page-foot"><span>Kru Nix Century</span><span data-page-number>${['หน้า','Page'][l]} ${i+1} / ${count}</span></footer></section>`;
 }
 
 function document(kind) {
@@ -127,12 +128,16 @@ function document(kind) {
   const label = classroom ? notesTitle : exitTitle;
   const tags = {
     lang:'th','data-learning-html':'','data-exit-ticket-revision':'1','data-exit-ticket-editions':'1',
-    'data-exit-ticket-ranges': classroom?'all quiz review':'all quiz review recall',
-    'data-revision-topic':'10.2–10.4','data-content-revision':'1.1','data-shared-notes-sha256':revisionHash,
-    ...(classroom?{}:{'data-revision-print-default':'quiz','data-revision-shared-ranges':'quiz review'}),
+    'data-exit-ticket-ranges': classroom?'all quiz review':'all quiz review recall bank',
+    'data-revision-topic':'10.2–10.4','data-content-revision':classroom?'1.1':'1.2','data-shared-notes-sha256':revisionHash,
+    ...(classroom?{}:{'data-revision-print-default':'quiz','data-revision-shared-ranges':'quiz review bank'}),
     'data-revision-student-default':'1','data-revision-label-th':label,'data-revision-label-en':label,
     'data-revision-quiz-th':classroom?'เฉพาะตัวอย่างพาทำ':'ชุดนักเรียน · บทความ โจทย์ และ Knowledge Recall',
     'data-revision-quiz-en':classroom?'Guided examples':'Student handout · Reading, questions and Knowledge Recall',
+    ...(classroom?{}:{
+      'data-revision-bank-th':'เฉพาะฝึกเพิ่มเติมท้ายบท',
+      'data-revision-bank-en':'Supplementary practice only',
+    }),
     'data-revision-review-th':classroom?'ทฤษฎีและการทดลอง':'Revision Notes ฉบับเฉลย',
     'data-revision-review-en':classroom?'Theory and experiment':'Worked Revision Notes',
     'data-print-subject-th':'ฟิสิกส์','data-print-subject-en':'Physics',
@@ -155,13 +160,13 @@ function document(kind) {
       } else {
         const old = oldPractice(lang, filled);
         const {reading, practice} = practicePages(lang, filled);
-        const quiz = compactQuiz({
+        const {quiz, bank} = compactQuiz({
           old, reading, practice, exams: examPages(lang, filled),
           lang, filled, equations, authoredPage,
         });
         const recall = compactRecall(lang, filled, equations, authoredPage);
         const review = compactRevision(notes);
-        ranges = wrap([...quiz, ...review, ...recall], 'all', lang, filled) +
+        ranges = wrap([...quiz, ...recall, ...bank, ...review], 'all', lang, filled) +
           wrap(recall, 'recall', lang, filled, 'Knowledge Recall');
       }
       return `<div data-revision-edition="${filled?'answers':'blank'}">${ranges}</div>`;

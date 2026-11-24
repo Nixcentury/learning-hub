@@ -57,12 +57,14 @@ function page(items, group) {
 
 function pack(items, combinations, group) {
   const byKey = new Map(items.map(item => [item.key, item]));
-  return combinations.map(keys => page(keys.map(key => {
+  const pages = combinations.map(keys => page(keys.map(key => {
     const item = byKey.get(key);
     if (!item) throw Error('Missing worksheet section ' + key);
     byKey.delete(key);
     return item;
-  }), group)).concat([...byKey.values()].map(item => page([item], group)));
+  }), group));
+  if (byKey.size) throw Error('Unplaced worksheet sections: ' + [...byKey.keys()].join(', '));
+  return pages;
 }
 
 export function compactRevision(notes) {
@@ -77,6 +79,52 @@ export function compactRevision(notes) {
     const joined = sections.find(note => note.key === joins.get(item.key));
     return page(joined ? [item, joined] : [item], 'review');
   });
+}
+
+const selectedParts = {
+  'problem-2': [1,2],
+  'problem-7': [1,2],
+  'problem-9': [0],
+};
+const corePractice = ['problem-2','problem-3','problem-4','problem-9','problem-7','single-width','spectrum'];
+// Progress from the double-slit experiment to diffraction and then gratings.
+const coreExams = ['a-level-2566-11','a-level-2568-9','common-2564-11','alevel-2567-11','alevel-2568-8','alevel-2569-27'];
+const supplementPages = [
+  ['problem-1','problem-2-extra'],
+  ['five-fringes','problem-5'],
+  ['problem-6','problem-7-extra'],
+  ['practice-ipst-10-2-2c','problem-8'],
+  ['problem-9-extra'],
+  ['single-data','match-minima'],
+  ['grating-scale','grating-count'],
+  ['common-2556-14','common-2565-13-archive'],
+];
+
+function extractParts(item, lang, supplement) {
+  const {document} = parseHTML(item.body);
+  const section = document.documentElement;
+  const keep = selectedParts[item.key];
+  const letters = lang === 'th' ? ['ก.','ข.','ค.'] : ['A.','B.','C.'];
+  for (const selector of ['.task-grid > .task','[data-solution-key]']) {
+    let position = 0;
+    for (const [index, task] of [...section.querySelectorAll(selector)].entries()) {
+      if (keep.includes(index) === supplement) {
+        task.remove();
+        continue;
+      }
+      task.querySelector('p > b').textContent = letters[position++];
+    }
+  }
+  if (supplement) section.dataset.unitKey += '-extra';
+  return {key:section.dataset.unitKey, body:section.outerHTML};
+}
+
+function labelQuestion(item, index, prefix) {
+  const {document} = parseHTML(item.body);
+  const heading = document.querySelector('h2');
+  heading.textContent = prefix + (index+1) + ' · ' +
+    heading.textContent.replace(/^(?:ข้อ|Problem) \d+ · /, '');
+  return {...item, body:document.documentElement.outerHTML};
 }
 
 export function compactQuiz({old, reading, practice, exams, lang, filled, equations, authoredPage}) {
@@ -95,46 +143,42 @@ export function compactQuiz({old, reading, practice, exams, lang, filled, equati
     solution.insertAdjacentHTML('afterbegin', start(refs,equations,lang));
     return {...item, body:document.documentElement.outerHTML};
   });
-  const laidOut = filled ? prepared.flatMap(item => {
-    if (item.key !== 'problem-9') return [item];
-    return [true,false].map(first => {
-      const {document} = parseHTML(item.body);
-      const section = document.documentElement;
-      section.querySelector('.task-grid').remove();
-      const parts = [...section.querySelectorAll('[data-solution-key]')];
-      for (const [i, part] of parts.entries()) if ((i === 0) !== first) part.remove();
-      if (!first) {
-        section.dataset.unitKey = 'problem-9-cont';
-        section.querySelector('h2').textContent += lang === 'th' ? ' (ต่อ)' : ' (continued)';
-        section.querySelector('.exam-source')?.remove();
-      }
-      return {key:section.dataset.unitKey, body:section.outerHTML};
-    });
-  }) : prepared;
-  return pack(laidOut, [
-    ['quiz-intro','cloze-A'],
-    ['cloze-B','single-cloze'],
-    ['grating-cloze','problem-1'],
-    ...(!filled ? [
-      ['problem-2','problem-3'],
-      ['problem-4','problem-5'],
-      ['problem-6','problem-7'],
-      ['problem-8','problem-9','practice-ipst-10-2-2c'],
-      ['five-fringes','single-data','single-width'],
-      ['match-minima','grating-scale','grating-count','spectrum'],
-    ] : [
-      ['problem-2'],['problem-3'],['problem-4'],['problem-5'],['problem-6'],['problem-7'],
-      ['problem-8','problem-9'],
-      ['problem-9-cont','practice-ipst-10-2-2c'],
-      ['five-fringes','single-data'],
-      ['single-width','match-minima','grating-scale'],['grating-count','spectrum'],
-    ]),
-    ['a-level-2566-11'],
-    ['a-level-2568-9','common-2564-11'],
-    ['alevel-2568-8','alevel-2569-27'],
-    ['common-2556-14','alevel-2567-11'],
-    ['common-2565-13-archive'],
-  ], 'quiz');
+  const coreKeys = [...corePractice,...coreExams];
+  const readingKeys = ['quiz-intro','cloze-A','cloze-B','single-cloze','grating-cloze'];
+  const core = prepared.filter(item => [...readingKeys,...coreKeys].includes(item.key)).map(item => {
+    const extracted = selectedParts[item.key] ? extractParts(item,lang,false) : item;
+    const index = corePractice.indexOf(item.key);
+    if (index >= 0) return labelQuestion(extracted,index,lang === 'th' ? 'ข้อ ' : 'Problem ');
+    const examIndex = coreExams.indexOf(item.key);
+    return examIndex < 0 ? extracted : labelQuestion(extracted,examIndex,lang === 'th' ? 'ข้อสอบจริง ' : 'Past question ');
+  });
+  const supplementOrder = supplementPages.flat();
+  const supplement = prepared.flatMap(item => {
+    if ([...readingKeys,...coreKeys].includes(item.key) && !selectedParts[item.key]) return [];
+    const extracted = selectedParts[item.key] ? extractParts(item,lang,true) : item;
+    return [labelQuestion(extracted,supplementOrder.indexOf(extracted.key),lang === 'th' ? 'ข้อเสริม ' : 'Supplementary question ')];
+  });
+  return {
+    quiz: pack(core, [
+      ['quiz-intro','cloze-A','cloze-B'],
+      ['single-cloze','grating-cloze'],
+      ...(!filled ? [['problem-2','problem-3']] : [['problem-2'],['problem-3']]),
+      ['problem-4'],
+      ...(!filled ? [
+        ['problem-9','problem-7'],
+      ] : [
+        ['problem-9'],['problem-7'],
+      ]),
+      ['single-width','spectrum'],
+      ['a-level-2566-11'],
+      ['a-level-2568-9','common-2564-11'],
+      ['alevel-2567-11','alevel-2568-8'],
+      ['alevel-2569-27'],
+    ], 'quiz'),
+    bank: pack(supplement, filled
+      ? [...supplementPages.slice(0,-1),...supplementPages.at(-1).map(key => [key])]
+      : supplementPages, 'bank'),
+  };
 }
 
 export function compactRecall(lang, filled, equations, authoredPage) {

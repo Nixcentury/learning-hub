@@ -1,0 +1,29 @@
+/* The existing paired-sheet CSS controls the language, edition and A4 page. */
+.chapter-identity { margin: 0 0 4mm; }
+.chapter-identity > p { display: flex; align-items: end; gap: 3mm; }
+.chapter-identity > p > span { height: 6mm; flex: 1; }
+.chapter-identity > p > span:last-child { flex: 0 0 25mm; }
+.chapter-bank { display: grid; grid-template-columns: .8fr 1.2fr; gap: 4mm; margin: 4mm 0; }
+.chapter-bank > div, .chapter-note { border: 1px solid #b4c6d2; border-radius: 2mm; padding: 3mm; }
+.chapter-bank ul { margin: 1mm 0; padding-inline-start: 4mm; }
+.chapter-note { margin: 3mm 0; break-inside: avoid; }
+.chapter-write { min-height: 20mm; }
+.chapter-work { min-height: 29mm; }
+.chapter-options { margin: 3mm 0; padding-inline-start: 7mm; }
+.chapter-options li { margin: 1mm 0; }
+.chapter-solution { border-inline-start: 2px solid #7199ab; padding: 2mm 3mm; margin: 3mm 0; color: #163e54; }
+.chapter-solution p:last-child { margin-bottom: 0; }
+.chapter-task { margin: 3mm 0; break-inside: avoid; }
+.chapter-equation { display: flex; align-items: center; justify-content: space-between; min-height: 12mm; border: 1px solid #7d99aa; margin: 1mm 0 4mm; padding: 1mm 3mm; break-inside: avoid; }
+.chapter-equation.filled { background: #edf6fa; }
+.note-figure.source-figure img { max-height: 64mm; object-fit: contain; }
+.note-figure.tall-source img { max-height: 124mm; }
+.note-figure.exam-source-figure img { max-height: 66mm; }
+[data-note-key="grating-observe"] .source-figure img { max-height: 53mm; }
+[data-note-key="single-observe"] .source-figure img { max-height: 71mm; }
+[data-note-key="grating-proof"] .source-figure img { max-height: 55mm; }
+.chapter-unit .calculation-check { color: #254959; font-weight: 500; }
+@media print {
+  .chapter-solution { color: #111; }
+  .chapter-equation.filled { background: white; }
+}

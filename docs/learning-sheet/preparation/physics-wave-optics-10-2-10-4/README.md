@@ -4,9 +4,10 @@ Regenerate both published HTML documents from the repository root with
 `node docs/learning-sheet/preparation/physics-wave-optics-10-2-10-4/build.mjs`.
 The generator reuses the 10.2 theory and worked examples, then places all
 10.2–10.4 theory before examples. Both documents share their numbered
-equations. The Exit Ticket keeps the practice, checks and past questions,
-with its student print range combining questions and Knowledge Recall.
-Worked Revision Notes can be printed separately. Both links
+equations. The default student print range combines reading, seven core
+practice questions, six past questions and Knowledge Recall. Additional
+practice and past questions stay available with answers in a separate print
+range, as do the worked Revision Notes. Both links
 are on the grating bank page. The print ranges, solution editions and MathJax
 use the existing Hub document reader.
 

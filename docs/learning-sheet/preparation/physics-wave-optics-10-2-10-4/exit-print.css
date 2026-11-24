@@ -1,19 +1,17 @@
-.exit-page.quiz .page-body:has(.response-space) { display: block; }
-.exit-page.quiz .page-body > .unit,
-.exit-page.quiz .page-body > .chapter-unit { margin: 0 0 3mm; }
-.exit-page.quiz .page-body > .question:has(.response-space) { display: block; }
-.exit-page.quiz .task > .response-space { min-height: 16mm; }
-.exit-page.quiz .task > .response-space.calculation { min-height: 25mm; }
-.exit-page.quiz .task > .response-space.long { min-height: 28mm; }
-.exit-page.quiz .chapter-unit { border: .5px solid #a3b4c0; padding: 2.5mm; }
-.exit-page.quiz .chapter-unit .chapter-work { min-height: 22mm; }
-.exit-page.quiz .chapter-bank { margin: 2mm 0; }
-.exit-page.quiz .chapter-bank > div { padding: 1.5mm 2mm; }
-.exit-page.quiz .chapter-options:not(:has(li:nth-child(6))) { columns: 2; }
-.exit-page.quiz .chapter-options li { break-inside: avoid; }
-.exit-page.quiz .exam-source { color: #526c7e; font-size: 8pt; }
-.exit-page.quiz .exam-source-figure img { max-height: 51mm; }
-.exit-page.quiz .chapter-solution { margin: 1.5mm 0 0; padding: 1.5mm 2mm; }
+.exit-page:is(.quiz,.bank) .page-body > .unit,
+.exit-page:is(.quiz,.bank) .page-body > .chapter-unit { margin: 0 0 3mm; }
+.exit-page:is(.quiz,.bank) .task > .response-space { min-height: 13mm; }
+.exit-page:is(.quiz,.bank) .task > .response-space.calculation { min-height: 21mm; }
+.exit-page:is(.quiz,.bank) .task > .response-space.long { min-height: 24mm; }
+.exit-page:is(.quiz,.bank) .chapter-unit { border: .5px solid #a3b4c0; padding: 2.5mm; }
+.exit-page:is(.quiz,.bank) .chapter-unit .chapter-work { min-height: 19mm; }
+.exit-page:is(.quiz,.bank) .chapter-bank { margin: 2mm 0; }
+.exit-page:is(.quiz,.bank) .chapter-bank > div { padding: 1.5mm 2mm; }
+.exit-page:is(.quiz,.bank) .chapter-options:not(:has(li:nth-child(6))) { columns: 2; }
+.exit-page:is(.quiz,.bank) .chapter-options li { break-inside: avoid; }
+.exit-page:is(.quiz,.bank) .exam-source { color: #526c7e; font-size: 8pt; }
+.exit-page:is(.quiz,.bank) .exam-source-figure img { max-height: 51mm; }
+.exit-page:is(.quiz,.bank) .chapter-solution { margin: 1.5mm 0 0; padding: 1.5mm 2mm; }
 .exit-page.recall .chapter-task { margin: 1.5mm 0; }
 .exit-page.recall .chapter-write { min-height: 13mm; }
 .exit-page.recall .chapter-equation { min-height: 11mm; margin-bottom: 1.7mm; }
@@ -27,3 +25,71 @@
 .exit-page.recall .summary-grid { row-gap: .6mm; }
 .exit-page.recall .summary-grid .chapter-equation { min-height: 10.5mm; margin-bottom: 1mm; }
 .answers-on .exit-page.recall .summary-grid .chapter-equation { min-height: 9mm; padding-block: .6mm; }
+
+/* Let the writing areas share the remaining A4 height after the prompts. */
+body:not(.answers-on) .exit-page:is(.quiz,.bank,.recall) .page-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3mm;
+}
+body:not(.answers-on) .exit-page:is(.quiz,.bank,.recall) .page-body > * {
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+body:not(.answers-on) .exit-page:is(.quiz,.bank) .page-body > [data-unit-key]:has(.task-grid,.chapter-work,.recall-space),
+body:not(.answers-on) .exit-page.recall .page-body > [data-unit-key]:has(.chapter-write) {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+body:not(.answers-on) .exit-page:is(.quiz,.bank) .task-grid {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+body:not(.answers-on) .exit-page:is(.quiz,.bank) .task-grid > .task {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  border-left: 0;
+  padding-inline-start: 0;
+}
+body:not(.answers-on) .exit-page:is(.quiz,.bank) :is(.response-space,.chapter-work,.recall-space),
+body:not(.answers-on) .exit-page.recall :is(.recall-reasoning-grid,.chapter-write) {
+  flex: 1 0 auto;
+}
+body:not(.answers-on) .exit-page.recall .chapter-task {
+  display: flex;
+  flex-direction: column;
+}
+body:not(.answers-on) .exit-page.recall [data-unit-key="combined-recall-2"] .recall-reasoning-grid {
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1fr;
+}
+@media print {
+  .exit-page:is(.quiz,.bank) .task-grid > .task + .task { margin-top: 1mm; }
+}
+
+body:not(.answers-on) .exit-page.quiz .page-body:has(> [data-unit-key="quiz-intro"]) { gap: 2mm; }
+body:not(.answers-on) .exit-page.quiz .page-body:has(> [data-unit-key="quiz-intro"]) .chapter-identity { margin-bottom: 0; }
+body:not(.answers-on) .exit-page.quiz .page-body:has(> [data-unit-key="quiz-intro"]) .sentence-blank { min-height: 10mm; }
+
+/* The English reading options wrap onto more lines on the opening page. */
+body:not(.answers-on) .exit-page.quiz .page-body:lang(en):has(> [data-unit-key="quiz-intro"]) .cloze-article .bank {
+  padding-block: 1mm;
+  margin-block: .75mm;
+}
+body:not(.answers-on) .exit-page.quiz .page-body:lang(en):has(> [data-unit-key="quiz-intro"]) .cloze-article .passage {
+  line-height: 1.35;
+  margin-block: 1mm;
+}
+body:not(.answers-on) .exit-page.quiz .page-body:lang(en):has(> [data-unit-key="quiz-intro"]) .cloze-article .word-blank {
+  width: 29mm;
+}
+body:not(.answers-on) .exit-page.quiz .page-body:lang(en):has(> [data-unit-key="quiz-intro"]) {
+  gap: 1mm;
+}
+body:not(.answers-on) .exit-page.quiz .page-body:lang(en):has(> [data-unit-key="quiz-intro"]) .callout {
+  padding-block: 1mm;
+  margin-block: 1mm;
+}

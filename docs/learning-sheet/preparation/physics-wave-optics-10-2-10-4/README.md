@@ -2,9 +2,11 @@
 
 Regenerate both published HTML documents from the repository root with
 `node docs/learning-sheet/preparation/physics-wave-optics-10-2-10-4/build.mjs`.
-The generator keeps selected theory and worked examples plus the practice,
-check answers and two past questions from the published 10.2 pair. It uses the
-same source for the new Classroom Note and worked Revision Notes. Both links
+The generator reuses the 10.2 theory and worked examples, then places all
+10.2–10.4 theory before examples. Both documents share their numbered
+equations. The Exit Ticket keeps the practice, checks and past questions,
+with its student print range combining questions and Knowledge Recall.
+Worked Revision Notes can be printed separately. Both links
 are on the grating bank page. The print ranges, solution editions and MathJax
 use the existing Hub document reader.
 
@@ -24,8 +26,8 @@ these pages and retain the original patterns, ray labels and axes.
 | IPST 10.12, grating geometry | 139 | 152 |
 | IPST 10.13, red and white light patterns | 142 | 155 |
 
-The 2569 Q27 figure preserves the original markings and watermark from
-[TCAS Physics set 1 PDF page 25](https://assets.mytcas.com/69/answer/tcas69-phy-a-level.pdf#page=25).
+The figure for 2569 Q27 uses the teacher-supplied crop of the
+[TCAS Physics set 1 diagram, PDF page 25](https://assets.mytcas.com/69/answer/tcas69-phy-a-level.pdf#page=25).
 The 2565 Q13 figure is from the [Mathbynutty edition, page 14](https://upload.syntax-online.com/handout_TGAT/Physics2565.pdf#page=14).
 The latter crop masks adjacent question text outside the diagram. That
 edition labels the grating question Q13, while Q13 in the supplied 2565

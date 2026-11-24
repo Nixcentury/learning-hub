@@ -1,0 +1,29 @@
+.exit-page.quiz .page-body:has(.response-space) { display: block; }
+.exit-page.quiz .page-body > .unit,
+.exit-page.quiz .page-body > .chapter-unit { margin: 0 0 3mm; }
+.exit-page.quiz .page-body > .question:has(.response-space) { display: block; }
+.exit-page.quiz .task > .response-space { min-height: 16mm; }
+.exit-page.quiz .task > .response-space.calculation { min-height: 25mm; }
+.exit-page.quiz .task > .response-space.long { min-height: 28mm; }
+.exit-page.quiz .chapter-unit { border: .5px solid #a3b4c0; padding: 2.5mm; }
+.exit-page.quiz .chapter-unit .chapter-work { min-height: 22mm; }
+.exit-page.quiz .chapter-bank { margin: 2mm 0; }
+.exit-page.quiz .chapter-bank > div { padding: 1.5mm 2mm; }
+.exit-page.quiz .chapter-options:not(:has(li:nth-child(6))) { columns: 2; }
+.exit-page.quiz .chapter-options li { break-inside: avoid; }
+.exit-page.quiz .exam-source { color: #526c7e; font-size: 8pt; }
+.exit-page.quiz .exam-source-figure img { max-height: 51mm; }
+.exit-page.quiz .chapter-solution { margin: 1.5mm 0 0; padding: 1.5mm 2mm; }
+.exit-page.recall .chapter-task { margin: 1.5mm 0; }
+.exit-page.recall .chapter-write { min-height: 13mm; }
+.exit-page.recall .chapter-equation { min-height: 11mm; margin-bottom: 1.7mm; }
+.exit-page.recall .chapter-unit + .chapter-unit { margin-top: 3mm; }
+.exit-page.review .shared-note + .shared-note { margin-top: 4mm; }
+.exit-page.review [data-note-key="single-proof"] .source-figure img { max-height: 57mm; }
+.exit-page.review [data-note-key="single-higher"] .note-figure img { max-height: 29mm; }
+.exit-page.review [data-note-key^="double-examples-"] .example + .example { margin-top: 2mm; }
+.recall-reasoning-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3mm; }
+.recall-reasoning-grid .chapter-task { border: .5px solid #b8c7d1; padding: 1.5mm 2mm; }
+.exit-page.recall .summary-grid { row-gap: .6mm; }
+.exit-page.recall .summary-grid .chapter-equation { min-height: 10.5mm; margin-bottom: 1mm; }
+.answers-on .exit-page.recall .summary-grid .chapter-equation { min-height: 9mm; padding-block: .6mm; }

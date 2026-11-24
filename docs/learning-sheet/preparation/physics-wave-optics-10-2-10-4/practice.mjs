@@ -1,5 +1,5 @@
 const raw = String.raw;
-import {figure, formulaGroups, eq} from './lessons.mjs';
+import {figure} from './lessons.mjs';
 
 const problems = [
   {
@@ -15,7 +15,7 @@ const problems = [
     prompt: ['ดูภาพ สสวท. จากการทดลองใช้ช่องกว้าง 50, 100 และ 200 µm ประกอบคำตอบ เมื่อใช้เลเซอร์และระยะฉากเดิม รุ่นช่อง 100 µm ให้แถบสว่างกลางกว้าง 10.0 mm รุ่นช่อง 50 µm ควรกว้างประมาณเท่าไรในกรณีมุมเล็ก? บอกหลักฐานจากภาพและสมการที่ใช้', 'Use the IPST photograph of the 50, 100 and 200 µm slits. With the same laser and screen distance, the 100 µm slit gives a 10.0 mm central width. Predict the width for the 50 µm slit in the small-angle regime. Refer to both the image and an equation.'],
     figure: ['ipst-10-7-patterns', 'สสวท. รูป 10.7 ลายเลี้ยวเบนของสลิตเดี่ยว', 'IPST Figure 10.7. Single-slit diffraction patterns.'],
     answer: ['ประมาณ 20.0 mm', 'about 20.0 mm'],
-    working: [raw`ในภาพรุ่นช่อง 50 µm มีแถบกลางแผ่กว้างกว่ารุ่น 100 µm จาก (17) ที่ \(\lambda,L\) คงที่ จะได้ \(W_{50}/W_{100}\approx100/50=2\) จึงได้ \(W_{50}\approx20.0\ \mathrm{mm}\) ค่าตัวเลขมาจากข้อมูลในโจทย์ ส่วนภาพใช้ตรวจแนวโน้ม`, raw`The 50 µm pattern has a wider centre in the image. By (17) at fixed \(\lambda,L\), \(W_{50}/W_{100}\approx100/50=2\), so \(W_{50}\approx20.0\ \mathrm{mm}\). The numerical width comes from the given measurement; the image supports the trend.`],
+    working: [raw`ในภาพรุ่นช่อง 50 µm มีแถบกลางแผ่กว้างกว่ารุ่น 100 µm จาก (17) ที่ \(\lambda,L\) คงที่ จะได้ \(W_{0,50}/W_{0,100}\approx100/50=2\) จึงได้ \(W_{0,50}\approx20.0\ \mathrm{mm}\) ค่าตัวเลขมาจากข้อมูลในโจทย์ ส่วนภาพใช้ตรวจแนวโน้ม`, raw`The 50 µm pattern has a wider centre in the image. By (17) at fixed \(\lambda,L\), \(W_{0,50}/W_{0,100}\approx100/50=2\), so \(W_{0,50}\approx20.0\ \mathrm{mm}\). The numerical width comes from the given measurement; the image supports the trend.`],
   },
   {
     id: 'single-width',
@@ -76,7 +76,7 @@ const recall = [
     [
       ['เปลี่ยนระยะสลิต ขณะที่ตัวแปรอื่นคงเดิม ระยะห่างแถบเปลี่ยนอย่างไร?', 'How does fringe spacing change when slit separation changes and other variables stay fixed?', raw`ระยะแถบลดลงเมื่อ \(d\) เพิ่มขึ้น ตาม (9) ภายใต้เงื่อนไขมุมเล็ก`, raw`Spacing decreases as \(d\) increases by (9), for small angles.`],
       ['สว่าง 5 แถบติดกันคร่อมกี่ช่วง? เขียนว่าแต่ละปลายของช่วงที่วัดคือจุดใด', 'How many intervals lie between five consecutive bright fringes? Describe both ends of the span.', 'สี่ช่วง จากกึ่งกลางแถบแรกถึงกึ่งกลางแถบที่ห้า', 'Four intervals, from the first bright centre to the fifth.'],
-      ['ความกว้างแถบสว่างอันดับ 1 วัดจากจุดใดถึงจุดใด?', 'Which points bound the width of the first bright fringe?', 'วัดจากมืดด้านหนึ่งถึงมืดอีกด้านที่ขนาบแถบสว่างอันดับ 1', 'Measure between the adjacent minima bounding the first bright fringe.'],
+      ['ความกว้างแถบสว่างกลาง W₀ วัดจากจุดใดถึงจุดใด?', 'Which points bound the central bright width W₀?', 'มืดแรกด้านซ้ายถึงมืดแรกด้านขวา', 'Measure between the first minimum on the left and the first minimum on the right.'],
     ]],
   ['สลิตเดี่ยวและเกรตติง · อธิบายและเลือกเงื่อนไข', 'Single slit and grating · Explain and choose conditions',
     [
@@ -102,10 +102,6 @@ export function practicePages(lang, filled) {
 
 export function recallPages(lang, filled) {
   const l = lang === 'th' ? 0 : 1;
-  return [
-    ...recall.map((r,i) => [`combined-recall-${i+1}`, r[l],
-      r[2].map((q,n) => `<section class="chapter-task"><p><b>${n+1}.</b> ${q[l]}</p>${filled ? `<p class="chapter-solution">${q[l+2]}</p>` : '<div class="chapter-write"></div>'}</section>`).join('')]),
-    ...formulaGroups.map((g,i) => [`combined-formula-recall-${i+1}`, l ? 'Write the equations and recall their conditions' : 'เขียนสมการและทบทวนเงื่อนไข',
-      g.map(([n,th,en,tex]) => `<p>${l?en:th}</p>${eq(n,tex,filled)}`).join('')]),
-  ];
+  return recall.map((r,i) => [`combined-recall-${i+1}`, r[l],
+      r[2].map((q,n) => `<section class="chapter-task"><p><b>${n+1}.</b> ${q[l]}</p>${filled ? `<p class="chapter-solution">${q[l+2]}</p>` : '<div class="chapter-write"></div>'}</section>`).join('')]);
 }

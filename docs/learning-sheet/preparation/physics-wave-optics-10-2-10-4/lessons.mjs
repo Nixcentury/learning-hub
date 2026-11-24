@@ -9,13 +9,16 @@ export function diagram(file, caption, className = '') {
   return `<figure class="note-figure teaching-diagram ${className}"><img src="${assetRoot}${file}.svg" alt="${caption}"><figcaption>${caption}</figcaption></figure>`;
 }
 
+export const screenSineExact = raw`\sin\theta=\frac{x}{\sqrt{x^2+L^2}}`;
+export const screenSine = raw`${screenSineExact}\underset{L\gg |x|}{\approx}\frac{x}{L}`;
+
 export const formulaGroups = [
   [
     [1, 'ความต่างเฟสจากผลต่างทางเดิน', 'Phase from path difference', raw`\Delta\phi=\frac{2\pi}{\lambda}\Delta r`],
     [2, 'ตำแหน่งสว่างของสลิตคู่ที่เริ่มเฟสตรงกัน', 'Bright condition for initially in-phase slits', raw`\Delta r=m\lambda,\quad m=0,1,2,\ldots`],
     [3, 'ตำแหน่งมืดของสลิตคู่ นับมืดแรกเป็นอันดับ 1', 'Dark condition, numbering the first dark fringe 1', raw`\Delta r=(m-\tfrac12)\lambda,\quad m=1,2,\ldots`],
     [4, 'ผลต่างทางเดินเมื่อฉากไกลเทียบกับระยะช่อง', 'Path difference for far-field geometry', raw`\Delta r\approx d\sin\theta`],
-    [5, 'มุมและพิกัดบนฉาก', 'Angle and screen coordinate', raw`\tan\theta=\frac{x}{L}`],
+    [5, 'ไซน์ของมุมจากพิกัดบนฉากและค่าประมาณเมื่อมุมเล็ก', 'Sine from the screen coordinate and its small-angle form', screenSine],
     [6, 'ผลต่างทางเดินใกล้แนวกลางของสลิตคู่', 'Double-slit path difference near the axis', raw`\Delta r\approx dx/L`],
     [7, 'ตำแหน่งแถบสว่างของสลิตคู่เมื่อมุมเล็ก', 'Double-slit bright position for small angles', raw`x_{\mathrm B,m}\approx m\lambda L/d`],
     [8, 'ตำแหน่งแถบมืดของสลิตคู่เมื่อมุมเล็ก', 'Double-slit dark position for small angles', raw`x_{\mathrm D,m}\approx(m-\tfrac12)\lambda L/d`],
@@ -29,7 +32,7 @@ export const formulaGroups = [
   ],
   [
     [16, 'เงื่อนไขแถบมืดของสลิตเดี่ยว', 'Single-slit dark-fringe condition', raw`a\sin\theta_m=m\lambda,\quad m=1,2,\ldots`],
-    [17, 'ความกว้างแถบสว่างกลางบนฉากและความกว้างเชิงมุม', 'Central width on a screen and angular width', raw`W_0=2L\tan\theta_1\approx\frac{2\lambda L}{a},\quad \Omega=2\theta_1`],
+    [17, 'ความกว้างแถบสว่างกลางบนฉากและความกว้างเชิงมุม', 'Central width on a screen and angular width', raw`W_0=2x_1\approx\frac{2\lambda L}{a},\quad \Omega=2\theta_1`],
     [18, 'ระยะระหว่างช่องจากจำนวนช่องต่อหน่วยความยาว', 'Slit separation from line density', raw`d=\frac{1}{N}`],
     [19, 'เงื่อนไขแถบสว่างหลักของเกรตติง', 'Grating principal bright orders', raw`d\sin\theta_m=m\lambda,\quad m=0,1,2,\ldots`],
     [20, 'แถบด้านข้างบนฉากด้านหน้า', 'Off-axis orders on a forward screen', raw`0<\Delta r=d\sin\theta_m=m\lambda<d`],
@@ -77,35 +80,43 @@ export function lessonPages(lang, filled) {
       p(raw`สำหรับมืดที่ \(m\) ใช้ \(2m\) ส่วน ระยะคู่เป็น \(a/(2m)\) แล้วให้ผลต่างทางเดิน \(\lambda/2\) เหมือนเดิม`,
         raw`For dark order \(m\), use \(2m\) equal parts. Each pair is \(a/(2m)\) apart and its path difference is \(\lambda/2\).`) +
       formula(16) +
-      h('ใช้เส้นมืดเป็นขอบของแถบสว่างข้าง', 'Use the minima to bound each side maximum') +
-      raw`<table class="tbl minima-table"><tbody><tr><th>${t('ตำแหน่งด้านเดียว', 'Position on one side')}</th><td>${t('มืดที่ 1', 'Minimum 1')}</td><td>${t('สว่างข้างที่ 1', 'Side maximum 1')}</td><td>${t('มืดที่ 2', 'Minimum 2')}</td><td>${t('สว่างข้างที่ 2', 'Side maximum 2')}</td><td>${t('มืดที่ 3', 'Minimum 3')}</td></tr>
-      <tr><th>\(a\sin\theta\)</th><td>\(\lambda\)</td><td>${t('ระหว่าง', 'Between')}</td><td>\(2\lambda\)</td><td>${t('ระหว่าง', 'Between')}</td><td>\(3\lambda\)</td></tr></tbody></table>` +
-      p('เวลาอ่านกราฟความเข้ม จุดมืดคือจุดที่เส้นแตะศูนย์ ส่วนยอดสว่างข้างอยู่ภายในช่วงระหว่างจุดมืด', 'On an intensity plot, a dark fringe touches zero and a side maximum lies between two minima.')],
+      '<div class="chapter-note single-fringe-summary">' +
+      h('สรุปบัพ–ปฏิบัพของสลิตเดี่ยว', 'Single-slit minima and maxima') +
+      p(raw`<strong>บัพ (แถบมืด)</strong> ใช้สมการ (16) โดยเริ่มนับ \(m=1\) จากแถบมืดแรกด้านใดด้านหนึ่ง`,
+        raw`<strong>Minima (dark fringes)</strong> Use (16), counting the first dark fringe on either side as \(m=1\).`) +
+      p(raw`<strong>ปฏิบัพกลาง (แถบสว่างกลาง)</strong> อยู่ที่ \(\theta=0\) เพราะคลื่นจากทุกจุดในช่องมาถึงพร้อมเฟส`,
+        raw`<strong>Central maximum</strong> At \(\theta=0\) the waves from across the slit arrive in phase.`) +
+      p(raw`<strong>ปฏิบัพข้างอันดับ \(m\)</strong> อยู่ระหว่างบัพที่ \(m\) กับ \(m+1\) และประมาณตำแหน่งยอดได้จาก \(a\sin|\theta|\approx(m+\tfrac12)\lambda\), \(m=1,2,\ldots\) เช่น ยอดถัดจากแถบกลางอยู่ระหว่างบัพที่ 1 กับ 2`,
+        raw`<strong>Side maximum \(m\)</strong> Lies between minima \(m\) and \(m+1\). Estimate its peak position from \(a\sin|\theta|\approx(m+\tfrac12)\lambda\) for \(m=1,2,\ldots\). The first side peak lies between minima 1 and 2.`) +
+      '</div>'],
 
-    ['single-width', 'theory', t('อ่านกราฟและหาความกว้างแถบสว่างกลาง', 'Reading intensity and finding central width'),
-      '<div class="width-layout">' +
-      photo('ipst-10-10-intensity', 'สสวท. รูป 10.10 ความเข้มสัมพัทธ์ตามมุม สำหรับ a = λ, 5λ และ 10λ', 'IPST Figure 10.10. Relative intensity versus angle for a = λ, 5λ and 10λ.', 'tall-source') +
-      '<div>' + diagram('single-central-width', t(
-        'รูปฉาก · มืดแรกสองฝั่งห่างจากกลางข้างละ x₁',
-        'Screen geometry · The first minima are x₁ from the centre on both sides.')) +
-      p(raw`อ่านมืดแรกจากศูนย์ของกราฟซ้ายและขวา สำหรับ \(a=5\lambda\) อ่านได้ราว \(\pm12^\circ\) และเมื่อ \(a=10\lambda\) ได้ราว \(\pm6^\circ\) แกนนอนใช้หน่วยองศา ดังนั้นความกว้างเชิงมุมระหว่างมืดถึงมืดคือประมาณ 24° และ 12° ตามลำดับ ลูกศรที่ระดับความเข้ม 0.5 ในรูปเป็นการวัดที่ครึ่งความเข้มสูงสุด`, raw`Read the first zeros on the left and right. For \(a=5\lambda\) they are about \(\pm12^\circ\), and for \(a=10\lambda\) about \(\pm6^\circ\). The horizontal axis is in degrees, giving dark-to-dark widths of about 24° and 12°, respectively. The arrow at intensity 0.5 marks the width at half the maximum intensity.`) +
-      p(raw`บนฉาก มืดแรกอยู่ที่ \(x=\pm L\tan\theta_1\) จึงวัด \(W_0\) จากมืดแรกซ้ายถึงมืดแรกขวา เมื่อมุมเล็ก \(\frac{ax_1}{L}\approx\lambda\) สำหรับมืดแรก จึงได้ \(x_1\approx\frac{\lambda L}{a}\) แล้วคูณสอง`, raw`On a screen the first minima are at \(x=\pm L\tan\theta_1\). The central width \(W_0\) spans both first minima. For small angles, \(\frac{ax_1}{L}\approx\lambda\) at the first minimum. Thus \(x_1\approx\frac{\lambda L}{a}\); double it for the width.`) +
-      formula(17) + '</div></div>'],
+    ['single-width', 'theory', t('ความกว้างแถบสว่างกลางบนฉาก', 'Central bright width on the screen'),
+      diagram('single-central-width', t('มืดแรกสองฝั่งห่างจากกลางข้างละ x₁', 'The first minima are a distance x₁ from the centre on both sides.'),
+        'single-width-geometry') +
+      p(raw`ใช้สมการ (16) ที่มืดแรก \(a\sin\theta_1=\lambda\) เมื่อ \(L\gg x_1\) ใช้สมการ (5) ได้ \(\sin\theta_1\approx x_1/L\) จึงได้ \(x_1\approx\lambda L/a\)`,
+        raw`At the first minimum, (16) gives \(a\sin\theta_1=\lambda\). When \(L\gg x_1\), (5) gives \(\sin\theta_1\approx x_1/L\), so \(x_1\approx\lambda L/a\).`) +
+      p(raw`ความกว้างบนฉาก \(W_0\) วัดจากมืดแรกซ้ายถึงมืดแรกขวา จึงเท่ากับสองเท่าของ \(x_1\) ความกว้างเชิงมุม \(\Omega\) เท่ากับสองเท่าของ \(\theta_1\)`,
+        raw`The screen width \(W_0\) spans the first minima on both sides, so it is twice \(x_1\). The angular width \(\Omega\) is twice \(\theta_1\).`) +
+      formula(17) +
+      note('ถ้าลดความกว้างช่องลงครึ่งหนึ่ง โดยใช้แสงและฉากเดิม แถบสว่างกลางกว้างขึ้นกี่เท่า?',
+        'If the slit width is halved at the same wavelength and screen distance, how does the central width change?',
+        'กว้างขึ้นเป็นสองเท่าในกรณีมุมเล็ก เพราะความกว้างแถบกลางแปรผกผันกับความกว้างช่อง',
+        'It doubles in the small-angle regime because the central width is inversely proportional to the slit width.')],
 
     ['single-examples', 'examples', t('ตัวอย่าง 10.3 · อ่านตำแหน่งมืดและคำนวณย้อนกลับ', 'Worked examples 10.3 · Read a minimum and work backwards'),
       example(t('หาแถบมืดแรกและความกว้าง', 'First minimum and central width'),
         t('เลเซอร์ 600 nm ผ่านสลิตกว้าง 150 µm ฉากอยู่ห่าง 2.00 m จงหามุมมืดแรก ระยะจากกลางถึงมืดแรกหนึ่งด้าน และความกว้างแถบสว่างกลาง', 'A 600 nm laser passes through a 150 µm slit. The screen is 2.00 m away. Find the first dark angle, its distance from the centre and the central bright width.'),
-        p(raw`ใช้สมการ (16) ที่ \(m=1\) ได้ \(\sin\theta_1=(600\times10^{-9}\ \mathrm m)/(150\times10^{-6}\ \mathrm m)=0.00400\) จึงได้ \(\theta_1\approx0.229^\circ\) จากสมการ (5) \(x_1=2.00\tan\theta_1\approx8.00\ \mathrm{mm}\) แล้วใช้ (17) ได้ \(W_0\approx16.0\ \mathrm{mm}\)`, raw`Use (16) with \(m=1\): \(\sin\theta_1=(600\times10^{-9}\ \mathrm m)/(150\times10^{-6}\ \mathrm m)=0.00400\). Thus \(\theta_1\approx0.229^\circ\). From (5), \(x_1=2.00\tan\theta_1\approx8.00\ \mathrm{mm}\). Equation (17) gives \(W_0\approx16.0\ \mathrm{mm}\).`)) +
+        p(raw`ใช้สมการ (16) ที่ \(m=1\) ได้ \(\sin\theta_1=(600\times10^{-9}\ \mathrm m)/(150\times10^{-6}\ \mathrm m)=0.00400\) จึงได้ \(\theta_1\approx0.229^\circ\) จากสมการ (5) \(x_1\approx L\sin\theta_1=(2.00\ \mathrm m)(0.00400)=8.00\ \mathrm{mm}\) แล้วใช้ (17) ได้ \(W_0\approx16.0\ \mathrm{mm}\)`, raw`Use (16) with \(m=1\): \(\sin\theta_1=(600\times10^{-9}\ \mathrm m)/(150\times10^{-6}\ \mathrm m)=0.00400\). Thus \(\theta_1\approx0.229^\circ\). From (5), \(x_1\approx L\sin\theta_1=(2.00\ \mathrm m)(0.00400)=8.00\ \mathrm{mm}\). Equation (17) gives \(W_0\approx16.0\ \mathrm{mm}\).`)) +
       example(t('โจทย์ให้ระยะจากมืดซ้ายถึงมืดขวา', 'Working back from two minima'),
         t('ในอีกชุดทดลอง เลเซอร์ 500 nm ให้มืดแรกซ้ายและขวาห่างกัน 12.0 mm บนฉากที่ห่าง 1.50 m ช่องกว้างเท่าไร?', 'In another setup a 500 nm laser gives first minima 12.0 mm apart on a screen 1.50 m away. Find the slit width.'),
         p(raw`จาก (17) ระยะข้างเดียว \(x_1=6.00\ \mathrm{mm}\) และ \(x_1/L=0.00400\) จึงใช้มุมเล็กกับ (16) และ (5) ได้ \(a\approx\lambda L/x_1=125\ \mathrm{\mu m}\)`, raw`From (17), the one-sided distance is \(x_1=6.00\ \mathrm{mm}\) and \(x_1/L=0.00400\). Use the small-angle form of (16) and (5) to find \(a\approx\lambda L/x_1=125\ \mathrm{\mu m}\).`))],
 
-    ['single-graph-example', 'examples', t('ตัวอย่าง 10.3 · อ่านกราฟก่อนคำนวณ', 'Worked example 10.3 · Read the graph first'),
-      photo('ipst-10-10c-intensity', 'สสวท. รูป 10.10 กราฟล่าง', 'IPST Figure 10.10, bottom plot.', 'exercise-graph') +
-      example(t('ระบุขอบจากจุดมืดแรก', 'Identify the first minima'),
-        t('กราฟล่างมี a = 10λ ถ้าฉากอยู่ห่างสลิต 0.80 m ให้อ่านมุมมืดแรกทั้งสองด้าน ประมาณความกว้างเชิงมุมและความกว้างแถบกลางบนฉาก', 'The bottom graph has a = 10λ. The screen is 0.80 m away. Read both first-minimum angles, then estimate the angular and screen widths.'),
-        p(raw`ใช้สมการ (17) \(\Omega=2\theta_1\) และ \(W_0=2L\tan\theta_1\) อ่านจากกราฟได้ \(\theta_1\approx6^\circ\) จึงได้ \(\Omega\approx12^\circ\) และ \(W_0\approx2(0.80\,\mathrm m)\tan6^\circ\approx0.17\,\mathrm m\)`,
-          raw`Use equation (17), \(\Omega=2\theta_1\) and \(W_0=2L\tan\theta_1\). The graph gives \(\theta_1\approx6^\circ\), so \(\Omega\approx12^\circ\) and \(W_0\approx2(0.80\,\mathrm m)\tan6^\circ\approx0.17\,\mathrm m\).`))],
+    ['single-width-example', 'examples', t('ตัวอย่าง 10.3 · แยกความกว้างบนฉากกับความกว้างเชิงมุม', 'Worked example 10.3 · Compare screen width and angular width'),
+      example(t('อ่านข้อมูลแล้วหาแถบสว่างกลาง', 'Find the width of the central bright fringe'),
+        t('เลเซอร์ 500 nm ผ่านสลิตกว้าง 5.00 µm ฉากอยู่ห่าง 0.80 m จงหาความกว้างเชิงมุมและความกว้างแถบสว่างกลางบนฉากโดยประมาณ',
+          'A 500 nm laser passes through a 5.00 µm slit. The screen is 0.80 m away. Estimate the angular width and the screen width of the central bright fringe.'),
+        p(raw`จาก (16) ได้ \(\sin\theta_1=\lambda/a=0.100\) และ \(\theta_1\approx5.74^\circ\) จึงได้ \(\Omega=2\theta_1\approx11.5^\circ\) จาก (17) เมื่อมุมเล็ก ความกว้างบนฉากประมาณ \(W_0\approx2(0.100)(0.80\ \mathrm m)=0.16\ \mathrm m\)`,
+          raw`Equation (16) gives \(\sin\theta_1=\lambda/a=0.100\), so \(\theta_1\approx5.74^\circ\). From (17), \(\Omega=2\theta_1\approx11.5^\circ\). Using the small-angle form gives \(W_0\approx2(0.100)(0.80\ \mathrm m)=0.16\ \mathrm m\).`))],
 
     ['grating-observe', 'theory', t('10.4 · จากสองช่องสู่เกรตติง', '10.4 · From two slits to a diffraction grating'),
       diagram('multi-slit-intensity', t('เปรียบเทียบ 2, 5 และ 100 ช่อง โดยให้ความสูงยอดกลางเท่ากับ 1 ทุกกราฟ', 'Compare 2, 5 and 100 slits with each central peak normalized to 1.'), 'multi-slit') +
@@ -126,10 +137,10 @@ export function lessonPages(lang, filled) {
     ['grating-laser', 'examples', t('ตัวอย่าง 10.4 · จากจำนวนช่องไปถึงตำแหน่งบนฉาก', 'Worked examples 10.4 · From line density to screen position'),
       example(t('เลเซอร์ 600 nm ผ่านเกรตติง 500 ช่อง/mm', '600 nm laser through a 500 lines/mm grating'),
         t('ฉากอยู่ห่าง 1.00 m จงหามุมและตำแหน่งแถบสว่างอันดับ 1 แล้วตรวจว่าอันดับ 4 เกิดบนฉากด้านหน้าได้หรือไม่', 'A screen is 1.00 m away. Find the angle and position of the first order, then decide if order 4 can reach a forward screen.'),
-        p(raw`จาก (18) ได้ \(d=2.00\ \mathrm{\mu m}\) ใช้ (19) ได้ \(\sin\theta_1=0.300\) จึงได้ \(\theta_1=17.46^\circ\) และจาก (5) ได้ \(x_1=1.00\tan(17.46^\circ)\approx31.4\ \mathrm{cm}\) ส่วนอันดับ 4 ต้องการ \(4\lambda/d=1.20\) ขัดกับ (20) ดังนั้นอันดับสูงสุดคือ 3 และแถบรวมเป็น 7 ถ้าฉากกว้างพอ`, raw`Equation (18) gives \(d=2.00\ \mathrm{\mu m}\). From (19), \(\sin\theta_1=0.300\), so \(\theta_1=17.46^\circ\). From (5), \(x_1=1.00\tan(17.46^\circ)\approx31.4\ \mathrm{cm}\). Order 4 requires \(4\lambda/d=1.20\), which fails (20). The highest order is 3, giving seven fringes on a sufficiently wide screen.`)) +
+        p(raw`จาก (18) ได้ \(d=2.00\ \mathrm{\mu m}\) ใช้ (19) ได้ \(\sin\theta_1=0.300\) จึงได้ \(\theta_1=17.46^\circ\) และจาก (5) ได้ \(x_1=\frac{(1.00\ \mathrm m)(0.300)}{\sqrt{1-0.300^2}}\approx31.4\ \mathrm{cm}\) ส่วนอันดับ 4 ต้องการ \(4\lambda/d=1.20\) ขัดกับ (20) ดังนั้นอันดับสูงสุดคือ 3 และแถบรวมเป็น 7 ถ้าฉากกว้างพอ`, raw`Equation (18) gives \(d=2.00\ \mathrm{\mu m}\). From (19), \(\sin\theta_1=0.300\), so \(\theta_1=17.46^\circ\). From (5), \(x_1=\frac{(1.00\ \mathrm m)(0.300)}{\sqrt{1-0.300^2}}\approx31.4\ \mathrm{cm}\). Order 4 requires \(4\lambda/d=1.20\), which fails (20). The highest order is 3, giving seven fringes on a sufficiently wide screen.`)) +
       example(t('อ่านไม้เมตรโดยใช้พิกัดกลาง', 'Read a scale using the centre coordinate'),
         t('แนวกลางอ่านได้ 50.0 cm และสว่างอันดับ 1 อ่านได้ 70.0 cm ฉากห่าง 1.00 m ใช้เกรตติง 300 ช่อง/mm จงหา λ', 'The central fringe reads 50.0 cm and first order reads 70.0 cm. The screen is 1.00 m away and the grating has 300 lines/mm. Find λ.'),
-        p(raw`ใช้ (14) ได้ \(x_1=20.0\ \mathrm{cm}\) ใช้ (5) หามุมจาก \(\tan\theta_1=0.200\) และได้ \(\sin\theta_1\approx0.1961\) จาก (18) และ (19) ได้ \(\lambda=d\sin\theta_1\approx654\ \mathrm{nm}\)`, raw`Equation (14) gives \(x_1=20.0\ \mathrm{cm}\). Equation (5) gives \(\tan\theta_1=0.200\), hence \(\sin\theta_1\approx0.1961\). From (18) and (19), \(\lambda=d\sin\theta_1\approx654\ \mathrm{nm}\).`))],
+        p(raw`ใช้ (14) ได้ \(x_1=20.0\ \mathrm{cm}\) ใช้ (5) ได้ \(\sin\theta_1=0.200/\sqrt{0.200^2+1.00^2}\approx0.1961\) จาก (18) และ (19) ได้ \(\lambda=d\sin\theta_1\approx654\ \mathrm{nm}\)`, raw`Equation (14) gives \(x_1=20.0\ \mathrm{cm}\). Equation (5) gives \(\sin\theta_1=0.200/\sqrt{0.200^2+1.00^2}\approx0.1961\). From (18) and (19), \(\lambda=d\sin\theta_1\approx654\ \mathrm{nm}\).`))],
 
     ['grating-spectrum', 'examples', t('ตัวอย่าง 10.4 · สเปกตรัมครบช่วงและเส้นที่ซ้อนกัน', 'Worked examples 10.4 · Complete spectra and overlapping lines'),
       example(t('แสงขาวช่วง 400–700 nm', 'White light, 400–700 nm'),

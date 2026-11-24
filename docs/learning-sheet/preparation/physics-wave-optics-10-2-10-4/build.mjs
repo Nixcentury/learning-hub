@@ -4,7 +4,7 @@ import {parseHTML} from 'linkedom';
 import {lessonPages} from './lessons.mjs';
 import {practicePages} from './practice.mjs';
 import {alignClassroomSolutions, numberedEquations, compactRevision, compactQuiz, compactRecall} from './exit-layout.mjs';
-import {reviseDoubleSlit} from './lesson-details.mjs';
+import {reviseDoubleSlit, reviseScreenSineExercise} from './lesson-details.mjs';
 import {examPages} from './exams.mjs';
 import {formulaRecallCSS} from '../numbered-formula-recall.mjs';
 
@@ -71,8 +71,11 @@ function cleanIdentity(copy) {
 
 function oldPractice(lang, filled) {
   const root = view('exit-ticket-revision', lang, filled ? 'answers' : 'blank', 'quiz');
-  const sections = [...root.querySelectorAll('.page-body > [data-unit-key]')].map(section =>
-    ({key: section.dataset.unitKey, body: cleanIdentity(section.cloneNode(true))}));
+  const sections = [...root.querySelectorAll('.page-body > [data-unit-key]')].map(section => {
+    const copy = section.cloneNode(true);
+    reviseScreenSineExercise(copy, lang, filled);
+    return {key: section.dataset.unitKey, body: cleanIdentity(copy)};
+  });
   return {
     practice: sections.filter(item => !oldExamKeys.includes(item.key)),
     exam: sections.filter(item => oldExamKeys.includes(item.key)),
@@ -105,7 +108,7 @@ function lessonSet(lang, filled) {
 function classroomPages(notes) {
   const joins = new Map([
     ['formula-summary-1', 'formula-summary-2'],
-    ['single-examples', 'single-graph-example'],
+    ['single-examples', 'single-width-example'],
     ['grating-laser', 'grating-spectrum'],
   ]);
   const moved = new Set(joins.values());
@@ -129,7 +132,7 @@ function document(kind) {
   const tags = {
     lang:'th','data-learning-html':'','data-exit-ticket-revision':'1','data-exit-ticket-editions':'1',
     'data-exit-ticket-ranges': classroom?'all quiz review':'all quiz review recall bank',
-    'data-revision-topic':'10.2–10.4','data-content-revision':classroom?'1.1':'1.2','data-shared-notes-sha256':revisionHash,
+    'data-revision-topic':'10.2–10.4','data-content-revision':classroom?'1.2':'1.3','data-shared-notes-sha256':revisionHash,
     ...(classroom?{}:{'data-revision-print-default':'quiz','data-revision-shared-ranges':'quiz review bank'}),
     'data-revision-student-default':'1','data-revision-label-th':label,'data-revision-label-en':label,
     'data-revision-quiz-th':classroom?'เฉพาะตัวอย่างพาทำ':'ชุดนักเรียน · บทความ โจทย์ และ Knowledge Recall',

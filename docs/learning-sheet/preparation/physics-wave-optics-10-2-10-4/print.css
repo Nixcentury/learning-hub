@@ -36,19 +36,33 @@
 .teaching-diagram.intervals img { max-height: 24mm; }
 .teaching-diagram.multi-slit img { max-height: 68mm; }
 .minima-pair .note-figure img { width: 100%; max-height: 34mm; }
-.minima-table td { text-align: center; }
-.note-figure.exercise-graph img { max-height: 61mm; }
-.note-figure.tall-source img { max-height: 133mm; }
-.shared-note.shared-note[data-note-key^="double-examples-"] .example .note-write { height: auto; min-height: 28mm; }
-.shared-note.shared-note[data-note-key^="double-examples-"] .example .note-write.calc { min-height: 36mm; }
 .shared-note + .shared-note { margin-top: 3mm; }
-.page.lesson [data-note-key^="double-examples-"] .note-write { min-height: 27mm; height: auto; }
-.page.lesson .page-body > [data-note-key^="double-examples-"] { height: auto; flex: none; }
-.page.lesson [data-note-key^="double-examples-"] > .example:has(.note-write) { flex: none; }
-.width-layout { display: grid; grid-template-columns: 69mm minmax(0, 1fr); gap: 5mm; align-items: start; }
-.width-layout .tall-source img { max-height: 154mm; }
-.width-layout .teaching-diagram img { width: 100%; max-height: 49mm; }
 .page .shared-note[data-note-kind="examples"] .example { padding-block: 1.4mm; margin-block: 1.5mm; }
 .page .shared-note[data-note-kind="examples"] .note-answer { padding-top: .6mm; margin-top: .6mm; }
 .page .shared-note[data-note-kind="examples"] .math-line { margin-block: .5mm; }
 .page .shared-note[data-note-key^="grating-"] .wave-solution-start { margin-block: .6mm 1mm; }
+
+
+.single-width-geometry img { width: 75%; max-height: 61mm; }
+.single-fringe-summary { padding: 2mm; }
+.single-fringe-summary > :last-child { margin-bottom: 0; }
+
+/* Share remaining page height between the classroom examples and their writing areas. */
+body:not(.answers-on) .page.lesson .page-body:has(> [data-note-kind="examples"] :is(.note-write,.chapter-work)) {
+  display: flex;
+  flex-direction: column;
+}
+body:not(.answers-on) .page.lesson .page-body:has(> [data-note-kind="examples"]) > .chapter-identity {
+  flex-shrink: 0;
+}
+body:not(.answers-on) .page.lesson .page-body > .shared-note[data-note-kind="examples"],
+body:not(.answers-on) .page.lesson .shared-note[data-note-kind="examples"] > .example {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+body:not(.answers-on) .page.lesson .shared-note[data-note-kind="examples"] :is(.note-write,.chapter-work) {
+  flex: 1 0 auto;
+  height: auto;
+  min-height: 25mm;
+}

@@ -22,7 +22,7 @@ const problems = [
     title: ['สลิตเดี่ยว · แยกระยะบนฉากกับมุม', 'Single slit · Separate screen width and angular width'],
     prompt: ['เลเซอร์ 500 nm ผ่านช่องกว้าง 125 µm ฉากห่าง 1.00 m จงหามุมมืดอันดับ 1 ความกว้างเชิงมุม และระยะระหว่างมืดอันดับ 1 สองด้านบนฉาก', 'A 500 nm laser passes through a 125 µm slit and the screen is 1.00 m away. Find the first dark angle, central angular width and separation of the two first minima on the screen.'],
     answer: ['0.229° · 0.458° · 8.00 mm'],
-    working: [raw`จาก (16) \(\sin\theta_1=(500\times10^{-9})/(125\times10^{-6})=0.00400\) จึงได้ \(\theta_1=0.229^\circ\) จาก (17) ความกว้างเชิงมุม \(2\theta_1=0.458^\circ\) และความกว้างบนฉาก \(2(1.00\ \mathrm m)\tan\theta_1\approx8.00\ \mathrm{mm}\)`, raw`Equation (16) gives \(\sin\theta_1=(500\times10^{-9})/(125\times10^{-6})=0.00400\), so \(\theta_1=0.229^\circ\). By (17), the angular width is \(2\theta_1=0.458^\circ\) and the screen width is \(2(1.00\ \mathrm m)\tan\theta_1\approx8.00\ \mathrm{mm}\).`],
+    working: [raw`จาก (16) \(\sin\theta_1=(500\times10^{-9})/(125\times10^{-6})=0.00400\) จึงได้ \(\theta_1=0.229^\circ\) จาก (17) ความกว้างเชิงมุม \(2\theta_1=0.458^\circ\) และความกว้างบนฉาก \(W_0\approx2(1.00\ \mathrm m)(0.00400)=8.00\ \mathrm{mm}\)`, raw`Equation (16) gives \(\sin\theta_1=(500\times10^{-9})/(125\times10^{-6})=0.00400\), so \(\theta_1=0.229^\circ\). By (17), the angular width is \(2\theta_1=0.458^\circ\) and the screen width is \(W_0\approx2(1.00\ \mathrm m)(0.00400)=8.00\ \mathrm{mm}\).`],
   },
   {
     id: 'match-minima',
@@ -36,7 +36,7 @@ const problems = [
     title: ['เกรตติง · อ่านตำแหน่งสองด้านแล้วหาความยาวคลื่น', 'Grating · Read two positions to find the wavelength'],
     prompt: ['ฉากห่าง 1.20 m เกรตติงมี 400 ช่อง/mm อ่านแถบสว่างอันดับ 1 สองด้านได้ 23.0 และ 83.0 cm บนไม้เมตร หาแนวกลาง ระยะข้างเดียว และความยาวคลื่น โดยใช้ตรีโกณมิติ', 'A screen 1.20 m away is used with a 400 lines/mm grating. First-order maxima on opposite sides are at 23.0 and 83.0 cm on a ruler. Find the centre, the one-sided distance and the wavelength using trigonometry.'],
     answer: ['53.0 cm · 30.0 cm · 606 nm'],
-    working: [raw`จากสมมาตร พิกัดกลางคือ \((23.0+83.0)/2=53.0\ \mathrm{cm}\) ระยะข้างเดียวคือ \(30.0\ \mathrm{cm}\) จาก (5) \(\tan\theta=0.300/1.20=0.250\) และ \(\sin\theta=0.2425\) ใช้ (18) ได้ \(d=2.50\ \mathrm{\mu m}\) ใช้ (19) ที่ \(m=1\) จึงได้ \(\lambda=d\sin\theta\approx606\ \mathrm{nm}\)`, raw`By symmetry the centre is \((23.0+83.0)/2=53.0\ \mathrm{cm}\), and the one-sided distance is \(30.0\ \mathrm{cm}\). By (5), \(\tan\theta=0.300/1.20=0.250\), so \(\sin\theta=0.2425\). By (18), \(d=2.50\ \mathrm{\mu m}\). Equation (19) with \(m=1\) gives \(\lambda=d\sin\theta\approx606\ \mathrm{nm}\).`],
+    working: [raw`จากสมมาตร พิกัดกลางคือ \((23.0+83.0)/2=53.0\ \mathrm{cm}\) ระยะข้างเดียวคือ \(30.0\ \mathrm{cm}\) จาก (5) \(\sin\theta=0.300/\sqrt{0.300^2+1.20^2}\approx0.2425\) ใช้ (18) ได้ \(d=2.50\ \mathrm{\mu m}\) ใช้ (19) ที่ \(m=1\) จึงได้ \(\lambda=d\sin\theta\approx606\ \mathrm{nm}\)`, raw`By symmetry the centre is \((23.0+83.0)/2=53.0\ \mathrm{cm}\), and the one-sided distance is \(30.0\ \mathrm{cm}\). By (5), \(\sin\theta=0.300/\sqrt{0.300^2+1.20^2}\approx0.2425\). By (18), \(d=2.50\ \mathrm{\mu m}\). Equation (19) with \(m=1\) gives \(\lambda=d\sin\theta\approx606\ \mathrm{nm}\).`],
   },
   {
     id: 'grating-count',
@@ -82,7 +82,7 @@ const recall = [
     [
       ['ทำไมสลิตเดี่ยวจึงให้มืดแรก? เมื่อช่องแคบลง แถบสว่างกลางเปลี่ยนอย่างไร?', 'Why does a single slit give a first minimum? What happens to its central fringe when the slit narrows?', 'ที่มืดแรก จุดคู่จากสองครึ่งช่องมีผลต่างทางเดินครึ่งความยาวคลื่นจึงหักล้างกัน เมื่อช่องแคบลง แถบกลางกว้างขึ้นเมื่อคงความยาวคลื่นและระยะฉาก', 'At the first minimum, pairs across the two halves differ in path by half a wavelength and cancel. Narrowing the slit broadens the centre at fixed wavelength and screen distance.'],
       ['แสงขาวผ่านเกรตติง แนวกลางมีสีอะไร? ควรตรวจจากสีใดก่อนถ้าต้องการเห็นครบช่วง?', 'What colour is the centre for white light through a grating? Which wavelength should be checked first to see if the entire range is visible?', 'แนวกลางสีขาวเพราะทุกสีซ้อนกัน ตรวจจากความยาวคลื่นมากที่สุด เพราะที่อันดับเดียวกันเบนไกลที่สุด', 'The centre is white because all wavelengths overlap. Check the longest wavelength because it diffracts the farthest at a fixed order.'],
-      ['สมการ (16) และ (19) ใช้หาตำแหน่งชนิดใด? เมื่อไรจึงแทน sin θ ด้วย tan θ ได้?', 'What types of position do (16) and (19) locate? When can sin θ be approximated by tan θ?', 'สมการ (16) ให้แถบมืดของสลิตเดี่ยว และ (19) ให้แถบสว่างหลักของเกรตติง ใช้การประมาณได้เมื่อมุมเล็ก', 'Equation (16) locates single-slit minima; (19) locates principal grating maxima. The approximation requires a small angle.'],
+      ['สมการ (16) และ (19) ใช้หาตำแหน่งชนิดใด? เมื่อไรจึงใช้ sin θ ≈ x/L ได้?', 'What types of position do (16) and (19) locate? When can sin θ be approximated by x/L?', 'สมการ (16) ให้แถบมืดของสลิตเดี่ยว และ (19) ให้แถบสว่างหลักของเกรตติง ใช้การประมาณได้เมื่อมุมเล็ก', 'Equation (16) locates single-slit minima; (19) locates principal grating maxima. The approximation requires a small angle.'],
     ]],
 ];
 

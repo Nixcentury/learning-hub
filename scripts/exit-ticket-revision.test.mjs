@@ -823,6 +823,18 @@ test('wave optics 10.2–10.4 keeps equation recall in the compact student hando
     const equationNumbers = new Set([...workedNote.querySelectorAll('[data-equation],[data-combined-equation]')]
       .map(box => box.dataset.equation ?? box.dataset.combinedEquation));
     assert.equal(equationNumbers.size, 20);
+    const sine = workedNote.querySelector('[data-note-key="geometry-proof"] [data-equation="5"] .equation-box').textContent;
+    assert.ok(sine.includes(String.raw`\sin\theta=\frac{x}{\sqrt{x^2+L^2}}`));
+    assert.ok(sine.includes(String.raw`\underset{L\gg |x|}{\approx}\frac{x}{L}`));
+    const fringes = workedNote.querySelector('[data-note-key="single-higher"]');
+    assert.ok(fringes.querySelector('.single-fringe-summary').textContent.includes(String.raw`(m+\tfrac12)\lambda`));
+    assert.ok(fringes.querySelector('[data-combined-equation="16"]'));
+    const width = workedNote.querySelector('[data-note-key="single-width"]');
+    assert.deepEqual([...width.querySelectorAll('img')].map(img => img.getAttribute('src')),
+      ['assets/10-2-10-4/single-central-width.svg']);
+    assert.ok(width.querySelector('[data-combined-equation="17"]').textContent.includes('W_0=2x_1'));
+    assert.ok(!workedNote.querySelector('img[src*="ipst-10-10"]'));
+
     assert.equal(workedNote.querySelectorAll('[data-example-number]').length, 12);
     const order = [...workedNote.querySelectorAll('.shared-note')].map(section => section.dataset.noteKind);
     assert.ok(order.slice(order.indexOf('examples')).every(kind => kind === 'examples'));
@@ -870,5 +882,10 @@ test('wave optics 10.2–10.4 keeps equation recall in the compact student hando
     assert.equal(recall.length, 20);
     assert.ok([...recall].every(box => box.firstElementChild.textContent.trim() === ''));
     assert.equal(worked.querySelectorAll('[data-unit-key^="write-equations-"] .chapter-equation.filled').length, 20);
+    assert.equal(worked.querySelector('[data-unit-key^="write-equations-"] [data-combined-equation="5"] div').textContent, sine);
+    for (const sheet of [workedNote, worked, extraWorked]) {
+      assert.ok([...sheet.querySelectorAll('[data-tex], p, figcaption')].every(el =>
+        !/\\tan\\theta|\btan\s*θ/.test(el.dataset.tex ?? el.textContent)));
+    }
   }
 });

@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "contentId": "chemistry-ipst-solutions-5-1-basic-calculations",
+    "revision": "2026-11-25-1",
+    "sha256": "3c40d5d5b4fbb48fc7c1252260fc59eab2b86c7914023deacb752da59b8d0326"
+  },
+  "title": {
+    "th": "ความเข้มข้นของสารละลาย · ฝึกคำนวณใบที่ 3",
+    "en": "Concentration of Solutions · Calculation Practice 3"
+  },
+  "prerequisites": {
+    "th": "แปลงกรัมเป็นโมลและตัดหน่วย mL, L, g, kg ได้",
+    "en": "Convert grams to moles and cancel mL, L, g and kg."
+  },
+  "goal": {
+    "th": "เลือกตัวหารตามหน่วยความเข้มข้น และเลือกฐานคำนวณเมื่อแปลงข้ามหน่วย",
+    "en": "Choose the denominator for each concentration unit and select a basis when converting between units."
+  },
+  "steps": [
+    {
+      "id": "percent-and-trace",
+      "title": {
+        "th": "อ่านร้อยละและหน่วยปริมาณน้อย",
+        "en": "Read percentages and trace concentrations"
+      },
+      "summary": {
+        "th": "ร้อยละใช้สารละลาย 100 g หรือ 100 mL เป็นฐานตามหน่วยที่ระบุ\nppm โดยมวลใช้ mg/kg ส่วน ppb โดยมวลใช้ µg/kg ของสารละลาย",
+        "en": "Use 100 g or 100 mL of solution as the basis for a percentage, depending on its unit.\nMass-based ppm uses mg/kg and ppb uses µg/kg of solution."
+      },
+      "story": {
+        "th": "ให้เทียบข้อ 1 กับข้อ 2 ว่าแต่ละข้อให้มวลหรือปริมาตรของสารละลาย",
+        "en": "Compare Questions 1 and 2. Identify which gives solution mass and which gives solution volume."
+      },
+      "action": {
+        "th": "ทำข้อ 1, 2 และ 6 โดยระบุฐานและหน่วยของตัวหารก่อนแทนค่า",
+        "en": "Work through Questions 1, 2 and 6. State the basis and its unit before substituting."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "สรุปสูตร",
+            "en": "Formula summary"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 1",
+            "en": "Question 1"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "mass-percent"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 2",
+            "en": "Question 2"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "mass-volume-percent"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 6",
+            "en": "Question 6"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "mass-from-ppb"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "สารละลาย 3.00% m/v บอกอะไรต่อสารละลาย 100 mL",
+          "en": "What does 3.00% m/v tell you about 100 mL of solution?"
+        },
+        "answer": {
+          "th": "มีตัวละลาย 3.00 g",
+          "en": "It contains 3.00 g of solute."
+        }
+      },
+      "after": {
+        "th": "ลองข้อ 13 เพื่อแปลง % m/v เป็น mol/L",
+        "en": "Try Question 13 to convert % m/v to mol/L."
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ข้อ 3",
+            "en": "Question 3"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "volume-percent"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 5",
+            "en": "Question 5"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "ppm-by-mass"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mole-based-units",
+      "title": {
+        "th": "เลือกตัวหารของหน่วยที่ใช้โมล",
+        "en": "Choose denominators for mole-based units"
+      },
+      "summary": {
+        "th": "โมลาริตีหารด้วย L ของสารละลาย ส่วนโมแลลิตีหารด้วย kg ของตัวทำละลาย\nเศษส่วนโมลหารด้วยโมลรวมขององค์ประกอบทั้งหมด",
+        "en": "Molarity divides by litres of solution. Molality divides by kilograms of solvent.\nMole fraction divides by the total amount in moles of all components."
+      },
+      "story": {
+        "th": "ชวนเทียบว่าในข้อ 7, 10 และ 12 โจทย์ให้ข้อมูลตัวหารคนละแบบอย่างไร",
+        "en": "Compare the different quantities that serve as denominators in Questions 7, 10 and 12."
+      },
+      "action": {
+        "th": "ทำข้อ 7, 10 และ 12 แล้วลองเขียนลำดับ mmol กับ mL ของข้อ 8",
+        "en": "Work through Questions 7, 10 and 12. Then write the mmol and mL conversion in Question 8."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 7",
+            "en": "Question 7"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "molarity-from-mass"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 10",
+            "en": "Question 10"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "molality-from-masses"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 12",
+            "en": "Question 12"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "mole-fractions"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 8",
+            "en": "Question 8"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "millimoles-from-millimolar"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "สารละลาย 0.50 mol/kg หมายถึงตัวละลาย 0.50 mol ต่อมวลอะไร 1 kg",
+          "en": "A 0.50 mol/kg solution contains 0.50 mol of solute per kg of what?"
+        },
+        "answer": {
+          "th": "มวลตัวทำละลาย",
+          "en": "The mass of solvent."
+        }
+      },
+      "after": {
+        "th": "ลองข้อ 14 แล้วเทียบจำนวนโมลของเกลือกับจำนวนโมลของ Na⁺",
+        "en": "Try Question 14 and compare moles of salt with moles of Na⁺."
+      },
+      "review": [
+        {
+          "label": {
+            "th": "สรุปสูตร",
+            "en": "Formula summary"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 11",
+            "en": "Question 11"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "solvent-mass-from-molality"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 14",
+            "en": "Question 14"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "sodium-ion-molarity"
+          }
+        }
+      ]
+    },
+    {
+      "id": "density-and-conversions",
+      "title": {
+        "th": "เลือกฐานก่อนใช้ความหนาแน่น",
+        "en": "Choose a basis before using density"
+      },
+      "summary": {
+        "th": "ความหนาแน่นเชื่อมมวลรวมของสารละลายกับปริมาตรของสารละลาย\nถ้าเริ่มจากโมแลลิตี ใช้ตัวทำละลาย 1 kg แล้วบวกมวลตัวละลายก่อนหาปริมาตร",
+        "en": "Density connects total solution mass and solution volume.\nStarting from molality, use 1 kg of solvent and add the solute mass before finding the volume."
+      },
+      "story": {
+        "th": "เทียบข้อ 17 กับข้อ 18 ว่าความหนาแน่นใช้แปลงปริมาตรเป็นมวลหรือมวลเป็นปริมาตร",
+        "en": "Compare Questions 17 and 18 to see when density converts volume to mass and when it does the reverse."
+      },
+      "action": {
+        "th": "ทำข้อ 15, 17 และ 18 โดยเขียนฐาน และแยกมวลสารละลายกับมวลตัวทำละลาย",
+        "en": "Work through Questions 15, 17 and 18. State the basis and distinguish solution mass from solvent mass."
+      },
+      "links": [
+        {
+          "label": {
+            "th": "ข้อ 15",
+            "en": "Question 15"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "mass-percent-and-density-to-molarity"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 17",
+            "en": "Question 17"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "milligrams-per-litre-to-ppm"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 18",
+            "en": "Question 18"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "molality-and-density-to-molarity"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 19",
+            "en": "Question 19"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "mass-percent-to-molality"
+          }
+        },
+        {
+          "label": {
+            "th": "ข้อ 20",
+            "en": "Question 20"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "mass-percent-to-mole-fraction"
+          }
+        }
+      ],
+      "check": {
+        "question": {
+          "th": "เพราะอะไร mg/L กับ ppm โดยมวลในข้อ 17 จึงมีตัวเลขต่างกัน",
+          "en": "Why do mg/L and mass-based ppm have different numerical values in Question 17?"
+        },
+        "answer": {
+          "th": "สารละลาย 1 L มีมวล 1.25 kg จึงต้องหารด้วย 1.25 เพื่อแปลงเป็น mg/kg",
+          "en": "One litre of solution has a mass of 1.25 kg, so divide by 1.25 to obtain mg/kg."
+        }
+      },
+      "after": {
+        "th": "ใช้ฐานสารละลาย 100 g ทำข้อ 19–20 แล้วตรวจว่าตัวหารควรเป็นมวลน้ำหรือโมลรวม",
+        "en": "Use a 100 g solution basis for Questions 19–20. Check whether the denominator is water mass or total moles."
+      },
+      "review": [
+        {
+          "label": {
+            "th": "ข้อ 16",
+            "en": "Question 16"
+          },
+          "target": {
+            "kind": "slot",
+            "key": "molarity-and-density-to-mass-percent"
+          }
+        },
+        {
+          "label": {
+            "th": "สรุปสูตร",
+            "en": "Formula summary"
+          },
+          "target": {
+            "kind": "anchor",
+            "key": "formula-box"
+          }
+        }
+      ]
+    }
+  ],
+  "finish": {
+    "th": "อ่านหน่วยคำตอบก่อนเลือกตัวหาร แล้วตรวจว่าใช้มวลหรือปริมาตรของสารส่วนใด",
+    "en": "Read the requested units first. Then check whose mass or volume belongs in the denominator."
+  },
+  "exitCheck": {
+    "question": {
+      "th": "ถ้าโจทย์ให้ 12% m/m และถาม mol/L ต้องทราบข้อมูลอะไรเพิ่ม",
+      "en": "For a 12% m/m solution, what extra data are needed to find mol/L?"
+    },
+    "answer": {
+      "th": "มวลต่อโมลของตัวละลายและความหนาแน่นของสารละลาย",
+      "en": "The solute molar mass and the solution density."
+    }
+  }
+}

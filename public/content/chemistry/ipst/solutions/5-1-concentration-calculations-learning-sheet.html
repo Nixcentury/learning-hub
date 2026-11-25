@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="th" data-learning-html data-learning-sheet="1" data-sheet-guide="guides/5-1-concentration-calculations.guide.json" data-sheet-revision="2026-11-25-1" data-print-blank-sizing="preset" data-print-subject-th="เคมี" data-print-subject-en="Chemistry" data-print-chapter-th="สารละลาย" data-print-chapter-en="Solutions" data-print-topic-th="ความเข้มข้นของสารละลาย" data-print-topic-en="Concentration of Solutions" data-print-work-th="ฝึกคำนวณใบที่ 3" data-print-work-en="Calculation Practice 3">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ความเข้มข้นของสารละลาย · ฝึกคำนวณใบที่ 3 / Concentration of Solutions · Calculation Practice 3</title>
+<link rel="stylesheet" href="../../../../shared/learning-sheet.css">
+<link rel="stylesheet" href="../../../../shared/calculation-print.css">
+<style>
+    * { box-sizing:border-box; }
+    body { margin:0; background:#fff; color:#23323b; font:17px/1.65 Tahoma,"Noto Sans Thai",sans-serif; }
+    .calc-sheet { max-width:900px; margin:auto; padding:22px 26px 40px; }
+    .calc-sheet h1 { font-size:24px; line-height:1.45; margin:0 0 8px; }
+    .calc-sheet h2 { font-size:18px; line-height:1.5; margin:0 0 8px; }
+    .calc-sheet h3 { font-size:17px; margin:0 0 5px; }
+    .calc-sheet p { margin:6px 0; overflow-wrap:anywhere; }
+    .calc-formulas { border:1px solid #59615d; padding:12px 14px; margin:15px 0 20px; }
+    .calc-formulas table { border-collapse:collapse; table-layout:fixed; width:100%; }
+    .calc-formulas th,.calc-formulas td { text-align:left; vertical-align:top; padding:7px 6px; border-bottom:1px solid #cbd0cc; overflow-wrap:anywhere; }
+    .calc-formulas thead th:nth-child(1) { width:27%; }
+    .calc-formulas thead th:nth-child(2) { width:35%; }
+    .calc-formulas tbody tr:last-child :is(th,td) { border-bottom:0; }
+    .calc-constants { font-size:14px; }
+    .calc-problem { margin:0 0 17px; }
+    .calc-problem [data-sheet-slot] { --sheet-width:100%; --sheet-print-height:28mm; }
+    .calc-solution p { margin:5px 0; }
+    @media(max-width:600px) {
+      .calc-sheet { padding:18px 12px 30px; }
+      .calc-sheet h1 { font-size:21px; }
+      .calc-formulas { padding:10px 8px; }
+      html:not([data-hub-print-snapshot]) .calc-formulas table,
+      html:not([data-hub-print-snapshot]) .calc-formulas tbody,
+      html:not([data-hub-print-snapshot]) .calc-formulas tr,
+      html:not([data-hub-print-snapshot]) .calc-formulas :is(td,th[scope="row"]) { display:block; width:100%; }
+      html:not([data-hub-print-snapshot]) .calc-formulas thead { display:none; }
+      html:not([data-hub-print-snapshot]) .calc-formulas :is(td,th[scope="row"]) { padding:4px; border:0; }
+      html:not([data-hub-print-snapshot]) .calc-formulas tr { border-bottom:1px solid #cbd0cc; padding:7px 0; }
+      html:not([data-hub-print-snapshot]) .calc-formulas tr:last-child { border-bottom:0; }
+    }
+    html[data-hub-print-snapshot] .calc-sheet { max-width:none; margin:0; padding:0; }
+    html[data-hub-print-snapshot] .calc-sheet h1 { font-size:11pt; }
+    html[data-hub-print-snapshot] .calc-sheet h2,
+    html[data-hub-print-snapshot] .calc-sheet h3 { font-size:11pt; }
+    html[data-hub-print-snapshot] .calc-formulas { margin:9px 0 13px; padding:8px 10px; }
+    html[data-hub-print-snapshot] .calc-formulas th,
+    html[data-hub-print-snapshot] .calc-formulas td { font-size:10pt; padding:5px; }
+    @media print {
+      .calc-sheet { max-width:none; margin:0; padding:0; font-size:10pt; }
+      .calc-sheet h1,.calc-sheet h2,.calc-sheet h3 { font-size:11pt; }
+    }
+
+    .calc-math { margin:8px 0; max-width:100%; }
+    .calc-math mjx-container[display="true"] { text-align:left !important; margin:.45em 0 !important; }
+
+.print-check-answer{display:none}
+.calc-student-info{font-size:13px;white-space:normal}
+html[data-hub-print-snapshot] .calc-sheet .print-check-answer{display:block;font-size:10pt;line-height:1.45;margin:4px 0 6px;break-inside:avoid}
+html[data-hub-print-snapshot] .calc-sheet .calc-student-info{font-size:8pt;line-height:1.5;margin:6px 0 10px}
+html[data-hub-print-snapshot] .calc-sheet .calc-constants{font-size:10pt}
+@media print{.calc-sheet .print-check-answer{display:block;font-size:10pt;line-height:1.45;margin:4px 0 6px}.calc-sheet .calc-student-info{font-size:8pt}.calc-sheet .calc-constants{font-size:10pt}}
+
+
+    html[data-hub-print-snapshot] .calc-sheet .calc-formulas :is(td,th,.calc-constants) {font-size:10pt;}
+
+    .calc-formulas tbody th { font-weight:600; }
+    .calc-data { border-collapse:collapse; width:auto; margin:8px 0; }
+    .calc-data :is(th,td) { border:1px solid #cbd0cc; padding:4px 10px; text-align:center; }
+    .calc-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2px 14px;
+      list-style-position:inside; padding:0; margin:5px 0 10px; }
+    .calc-options li { padding:0 4px; }
+    html[data-hub-print-snapshot] :is(.calc-options,.calc-data) { font-size:10pt; line-height:1.4; }
+    html[data-hub-print-snapshot] .calc-data :is(th,td) { padding:2px 10px; }
+
+    .calc-steps { padding-inline-start:1.45em; margin:7px 0; }
+    .calc-steps li { break-inside:avoid; }
+    .calc-steps mjx-container[display="true"] > svg { max-width:100%; height:auto; }
+    .calc-reference { font-size:.85em; }
+    html[data-hub-print-snapshot] .calc-reference { font-size:9pt; }
+</style>
+</head>
+<body>
+<main class="calc-sheet" data-content-lang="th" lang="th">
+<header><h1>ความเข้มข้นของสารละลาย · ฝึกคำนวณใบที่ 3</h1><p class="calc-student-info">ชื่อ ................................................................................ ชั้น ....................</p></header>
+<section class="calc-formulas" data-guide-anchor="formula-box" data-print-keep>
+<h2>สรุปสูตรและวิธีเลือกตัวหาร</h2>
+<table><thead><tr><th scope="col">หัวข้อ</th><th scope="col">ความสัมพันธ์</th><th scope="col">ตัวหารและหน่วย</th></tr></thead><tbody>
+<tr><th scope="row">ร้อยละ m/m</th><td>\(\frac{m_\mathrm{solute}\,(\mathrm g)}{m_\mathrm{soln}\,(\mathrm g)}\times100\)</td><td>กรัมของตัวละลายต่อสารละลาย 100 g</td></tr>
+<tr><th scope="row">ร้อยละ m/v</th><td>\(\frac{m_\mathrm{solute}\,(\mathrm g)}{V_\mathrm{soln}\,(\mathrm{mL})}\times100\)</td><td>กรัมของตัวละลายต่อสารละลาย 100 mL</td></tr>
+<tr><th scope="row">ร้อยละ v/v</th><td>\(\frac{V_\mathrm{solute}\,(\mathrm{mL})}{V_\mathrm{soln}\,(\mathrm{mL})}\times100\)</td><td>มิลลิลิตรของตัวละลายต่อสารละลาย 100 mL</td></tr>
+<tr><th scope="row">ppm และ ppb โดยมวล</th><td>\(\mathrm{ppm}:\ \mathrm{mg/kg}\quad\mathrm{ppb}:\ \mathrm{\mu g/kg}\)</td><td>ตัวหารทั้งสองกรณีคือ kg ของสารละลาย</td></tr>
+<tr><th scope="row">โมลาริตี</th><td>\(c=\frac{n_\mathrm{solute}}{V_\mathrm{soln}\,(\mathrm L)}\)</td><td>mol/L ของสารละลาย โดย 1 mol/L = 1 mmol/mL</td></tr>
+<tr><th scope="row">โมแลลิตี</th><td>\(b=\frac{n_\mathrm{solute}}{m_\mathrm{solv}\,(\mathrm{kg})}\)</td><td>mol/kg ของตัวทำละลาย</td></tr>
+<tr><th scope="row">เศษส่วนโมล</th><td>\(x_i=\frac{n_i}{n_\mathrm{total}}\)</td><td>mol รวมขององค์ประกอบทั้งหมด เศษส่วนโมลไม่มีหน่วย</td></tr>
+</tbody></table>
+<p class="calc-constants">soln คือสารละลาย · solv คือตัวทำละลาย · M คือมวลต่อโมล · มวลสารละลาย = มวลตัวละลาย + มวลตัวทำละลาย</p>
+<p class="calc-constants">\(n=m/M\) · \(\rho=m_\mathrm{soln}/V_\mathrm{soln}\) · เลือกฐานตามข้อมูล เช่น สารละลาย 100 g หรือ 1 L และตัวทำละลาย 1 kg เมื่อเริ่มจากโมแลลิตี</p>
+</section>
+<section data-guide-anchor="fundamentals">
+<div data-print-keep>
+<header><h2>พื้นฐาน · ข้อ 1–12</h2></header>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 1</h3>
+<p>ละลายกลูโคส 18.0 g ในน้ำ 102.0 g จงหาร้อยละโดยมวลของกลูโคส</p>
+<p class="print-check-answer" data-print-check-answer="1"><strong>คำตอบตรวจตนเอง</strong> 15.0% m/m</p>
+<div data-sheet-slot="mass-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ร้อยละมวลต่อมวล" data-sheet-label-en="Mass by mass" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ใช้มวลของสารละลายทั้งหมดเป็นตัวหาร จึงต้องรวมมวลกลูโคสกับมวลน้ำก่อน</p>
+<ol class="calc-steps">
+<li><strong>หามวลสารละลาย</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{soln}=18.0+102.0=120.0\,\mathrm g\end{gathered}\]</div></li>
+<li><strong>หารและคูณ 100</strong><div class="calc-math">\[\begin{gathered}\frac{18.0\,\mathrm g}{120.0\,\mathrm g}\times100=15.0\%\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 15.0% m/m</p>
+</div></div></div></div>
+</div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 2</h3>
+<p>สารละลายกลูโคส 320.0 mL มีกลูโคส 9.60 g จงหาความเข้มข้นเป็น % m/v</p>
+<p class="print-check-answer" data-print-check-answer="2"><strong>คำตอบตรวจตนเอง</strong> 3.00% m/v</p>
+<div data-sheet-slot="mass-volume-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ร้อยละมวลต่อปริมาตร" data-sheet-label-en="Mass by volume" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>หน่วยนี้บอกกรัมตัวละลายต่อสารละลาย 100 mL</p>
+<ol class="calc-steps">
+<li><strong>เทียบให้ได้สารละลาย 100 mL</strong><div class="calc-math">\[\begin{gathered}\frac{9.60\,\mathrm g}{320.0\,\mathrm{mL}}\times100\,\mathrm{mL}=3.00\,\mathrm g\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 3.00% m/v</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 3</h3>
+<p>ใช้เอทานอล 35.0 mL แล้วปรับปริมาตรสารละลายเป็น 250.0 mL จงหาความเข้มข้นเป็น % v/v</p>
+<p class="print-check-answer" data-print-check-answer="3"><strong>คำตอบตรวจตนเอง</strong> 14.0% v/v</p>
+<div data-sheet-slot="volume-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ร้อยละปริมาตรต่อปริมาตร" data-sheet-label-en="Volume by volume" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ใช้ปริมาตรเอทานอลที่ตวงและปริมาตรสุดท้ายของสารละลาย โดยโจทย์ให้ปริมาตรสุดท้ายมาแล้ว</p>
+<ol class="calc-steps">
+<li><strong>เทียบต่อสารละลาย 100 mL</strong><div class="calc-math">\[\begin{gathered}\frac{35.0\,\mathrm{mL}}{250.0\,\mathrm{mL}}\times100\,\mathrm{mL}=14.0\,\mathrm{mL}\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 14.0% v/v</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 4</h3>
+<p>สารละลายซูโครส 6.40% m/m มวล 375 g มีซูโครสกี่กรัม</p>
+<p class="print-check-answer" data-print-check-answer="4"><strong>คำตอบตรวจตนเอง</strong> 24.0 g</p>
+<div data-sheet-slot="mass-from-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หามวลจากร้อยละ" data-sheet-label-en="Mass from mass percent" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ทุก 100 g ของสารละลายมีซูโครส 6.40 g เขียนแฟกเตอร์ให้กรัมของสารละลายตัดกัน</p>
+<ol class="calc-steps">
+<li><strong>แปลงมวลสารละลายเป็นมวลซูโครส</strong><div class="calc-math">\[\begin{gathered}375\,\mathrm{g_{soln}}\times\frac{6.40\,\mathrm{g_{sucrose}}}{100\,\mathrm{g_{soln}}}=24.0\,\mathrm{g_{sucrose}}\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 24.0 g</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 5</h3>
+<p>ตัวอย่างน้ำมวล 1.80 kg มีไนเตรต 5.40 mg จงหาความเข้มข้นเป็น ppm โดยมวล</p>
+<p class="print-check-answer" data-print-check-answer="5"><strong>คำตอบตรวจตนเอง</strong> 3.00 ppm</p>
+<div data-sheet-slot="ppm-by-mass" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ส่วนในล้านส่วนโดยมวล" data-sheet-label-en="Parts per million by mass" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ppm โดยมวลมีค่าเป็นตัวเลขเท่ากับ mg ตัวละลายต่อ kg สารละลาย</p>
+<ol class="calc-steps">
+<li><strong>หาร mg ของไนเตรตด้วย kg ของตัวอย่าง</strong><div class="calc-math">\[\begin{gathered}\frac{5.40\,\mathrm{mg}}{1.80\,\mathrm{kg}}=3.00\,\mathrm{mg/kg}\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 3.00 ppm</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 6</h3>
+<p>ตัวอย่างน้ำมวล 0.400 kg มีทองแดง 7.50 ppb โดยมวล จงหามวลทองแดงเป็น µg</p>
+<p class="print-check-answer" data-print-check-answer="6"><strong>คำตอบตรวจตนเอง</strong> 3.00 µg</p>
+<div data-sheet-slot="mass-from-ppb" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หามวลจาก ppb" data-sheet-label-en="Mass from parts per billion" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>7.50 ppb โดยมวล คือทองแดง 7.50 µg ต่อสารละลาย 1 kg คูณด้วยมวลของตัวอย่างให้ kg ตัดกัน</p>
+<ol class="calc-steps">
+<li><strong>แปลงมวลตัวอย่างเป็นมวลทองแดง</strong><div class="calc-math">\[\begin{gathered}0.400\,\mathrm{kg}\times\frac{7.50\,\mathrm{\mu g}}{1\,\mathrm{kg}}=3.00\,\mathrm{\mu g}\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 3.00 µg</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 7</h3>
+<p>สารละลาย 500.0 mL มี KCl 14.9 g จงหาโมลาริตี กำหนดมวลต่อโมลของ KCl เท่ากับ 74.5 g/mol</p>
+<p class="print-check-answer" data-print-check-answer="7"><strong>คำตอบตรวจตนเอง</strong> 0.400 mol/L</p>
+<div data-sheet-slot="molarity-from-mass" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หาโมลาริตีจากมวล" data-sheet-label-en="Molarity from mass" style="--sheet-print-height:35mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>แปลงกรัมของ KCl เป็นโมล แล้วหารด้วยปริมาตรของสารละลายในหน่วยลิตร</p>
+<ol class="calc-steps">
+<li><strong>หาจำนวนโมลของ KCl</strong><div class="calc-math">\[\begin{gathered}14.9\,\mathrm g\times\frac{1\,\mathrm{mol}}{74.5\,\mathrm g}=0.200\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>แปลง mL เป็น L แล้วคำนวณโมลาริตี</strong><div class="calc-math">\[\begin{gathered}V=500.0\,\mathrm{mL}\times\frac{1\,\mathrm L}{1000\,\mathrm{mL}}=0.5000\,\mathrm L\\[2pt]c=\frac{0.200\,\mathrm{mol}}{0.5000\,\mathrm L}=0.400\,\mathrm{mol/L}\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 0.400 mol/L</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 8</h3>
+<p>สารละลาย KNO₃ 18.0 mM ปริมาตร 75.0 mL มี KNO₃ กี่ mmol</p>
+<p class="print-check-answer" data-print-check-answer="8"><strong>คำตอบตรวจตนเอง</strong> 1.35 mmol</p>
+<div data-sheet-slot="millimoles-from-millimolar" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="แปลง mM และ mL เป็น mmol" data-sheet-label-en="Millimoles from mM and mL" style="--sheet-print-height:32mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>mM หมายถึง mmol/L ให้แปลง L ในตัวหารเป็น mL ก่อนคูณด้วยปริมาตร</p>
+<ol class="calc-steps">
+<li><strong>แปลงหน่วยความเข้มข้น</strong><div class="calc-math">\[\begin{gathered}18.0\,\mathrm{mM}=\frac{18.0\,\mathrm{mmol}}{1000\,\mathrm{mL}}=0.0180\,\mathrm{mmol/mL}\end{gathered}\]</div></li>
+<li><strong>คูณปริมาตร</strong><div class="calc-math">\[\begin{gathered}n=0.0180\,\mathrm{mmol/mL}\times75.0\,\mathrm{mL}=1.35\,\mathrm{mmol}\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 1.35 mmol</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 9</h3>
+<p>สารละลายกลูโคส 0.125 mol/L ปริมาตร 160.0 mL มีกลูโคสกี่กรัม กำหนดมวลต่อโมล 180.0 g/mol</p>
+<p class="print-check-answer" data-print-check-answer="9"><strong>คำตอบตรวจตนเอง</strong> 3.60 g</p>
+<div data-sheet-slot="mass-from-molarity" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หามวลจากโมลาริตี" data-sheet-label-en="Solute mass from molarity" style="--sheet-print-height:34mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>หาจำนวนโมลจากความเข้มข้นและปริมาตรในหน่วยลิตร แล้วใช้มวลต่อโมลแปลงเป็นกรัม</p>
+<ol class="calc-steps">
+<li><strong>หาโมลของกลูโคส</strong><div class="calc-math">\[\begin{gathered}n=0.125\,\mathrm{mol/L}\times0.1600\,\mathrm L=0.0200\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>แปลงโมลเป็นกรัม</strong><div class="calc-math">\[\begin{gathered}m=0.0200\,\mathrm{mol}\times\frac{180.0\,\mathrm g}{1\,\mathrm{mol}}=3.60\,\mathrm g\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 3.60 g</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 10</h3>
+<p>ละลายกลีเซอรอล 13.8 g ในน้ำ 300.0 g จงหาโมแลลิตี กำหนดมวลต่อโมลของกลีเซอรอล 92.0 g/mol</p>
+<p class="print-check-answer" data-print-check-answer="10"><strong>คำตอบตรวจตนเอง</strong> 0.500 mol/kg</p>
+<div data-sheet-slot="molality-from-masses" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หาโมแลลิตีจากมวล" data-sheet-label-en="Molality from masses" style="--sheet-print-height:35mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>โมแลลิตีใช้ kg ของน้ำหรือตัวทำละลายเพียงอย่างเดียว</p>
+<ol class="calc-steps">
+<li><strong>หาโมลกลีเซอรอลและแปลงมวลน้ำเป็น kg</strong><div class="calc-math">\[\begin{gathered}n=\frac{13.8\,\mathrm g}{92.0\,\mathrm{g/mol}}=0.150\,\mathrm{mol}\\[2pt]m_\mathrm{water}=300.0\,\mathrm g\times\frac{1\,\mathrm{kg}}{1000\,\mathrm g}=0.3000\,\mathrm{kg}\end{gathered}\]</div></li>
+<li><strong>คำนวณโมแลลิตี</strong><div class="calc-math">\[\begin{gathered}b=\frac{0.150\,\mathrm{mol}}{0.3000\,\mathrm{kg}}=0.500\,\mathrm{mol/kg}\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 0.500 mol/kg</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 11</h3>
+<p>สารละลาย 0.800 mol/kg มีตัวละลาย 0.200 mol จงหามวลตัวทำละลายเป็นกรัม</p>
+<p class="print-check-answer" data-print-check-answer="11"><strong>คำตอบตรวจตนเอง</strong> 2.50 × 10² g</p>
+<div data-sheet-slot="solvent-mass-from-molality" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หามวลตัวทำละลายจากโมแลลิตี" data-sheet-label-en="Solvent mass from molality" style="--sheet-print-height:33mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>จัดรูปจาก b = n/m ให้เหลือมวลตัวทำละลาย แล้วแปลง kg เป็น g</p>
+<ol class="calc-steps">
+<li><strong>หามวลตัวทำละลาย</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{solv}=\frac{n}{b}=\frac{0.200\,\mathrm{mol}}{0.800\,\mathrm{mol/kg}}=0.250\,\mathrm{kg}\end{gathered}\]</div></li>
+<li><strong>เปลี่ยน kg เป็น g</strong><div class="calc-math">\[\begin{gathered}0.250\,\mathrm{kg}\times\frac{1000\,\mathrm g}{1\,\mathrm{kg}}=2.50\times10^2\,\mathrm g\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 2.50 × 10² g</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 12</h3>
+<p>สารละลายมีเอทานอล 0.300 mol และน้ำ 0.900 mol จงหาเศษส่วนโมลของทั้งสองชนิด</p>
+<p class="print-check-answer" data-print-check-answer="12"><strong>คำตอบตรวจตนเอง</strong> เอทานอล 0.250 และน้ำ 0.750</p>
+<div data-sheet-slot="mole-fractions" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หาเศษส่วนโมลของสารทั้งสองชนิด" data-sheet-label-en="Mole fractions of both components" style="--sheet-print-height:35mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ตัวหารของทั้งสองค่าเท่ากัน คือจำนวนโมลรวมของเอทานอลกับน้ำ เศษส่วนโมลไม่มีหน่วย</p>
+<ol class="calc-steps">
+<li><strong>หาโมลรวม</strong><div class="calc-math">\[\begin{gathered}n_\mathrm{total}=0.300+0.900=1.200\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>หาเศษส่วนโมลและตรวจผลรวม</strong><div class="calc-math">\[\begin{gathered}x_\mathrm{ethanol}=\frac{0.300}{1.200}=0.250,\quad x_\mathrm{water}=\frac{0.900}{1.200}=0.750\\[2pt]x_\mathrm{ethanol}+x_\mathrm{water}=1.000\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> เอทานอล 0.250 และน้ำ 0.750</p>
+</div></div></div></div>
+</section>
+<section data-guide-anchor="multiple-choice">
+<div data-print-keep>
+<header><h2>แนว A-Level · ข้อ 13–18</h2><p>เลือกคำตอบที่ถูกต้องเพียงข้อเดียว</p></header>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 13</h3>
+<p>สารละลาย NaCl 5.85% m/v มีโมลาริตีเท่าใด กำหนดมวลต่อโมลของ NaCl 58.5 g/mol</p>
+<ol class="calc-options"><li>0.100 mol/L</li><li>0.342 mol/L</li><li>1.00 mol/L</li><li>5.85 mol/L</li><li>10.0 mol/L</li></ol>
+<p class="print-check-answer" data-print-check-answer="13"><strong>คำตอบตรวจตนเอง</strong> ตัวเลือก 3 · 1.00 mol/L</p>
+<div data-sheet-slot="mass-volume-to-molarity" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="แปลงร้อยละมวลต่อปริมาตรเป็นโมลาริตี" data-sheet-label-en="Mass/volume percent to molarity" style="--sheet-print-height:33mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ใช้ฐานสารละลาย 100 mL ซึ่งมี NaCl 5.85 g จากนั้นแปลงทั้งหน่วยมวลและปริมาตร</p>
+<ol class="calc-steps">
+<li><strong>แปลงมวลเป็นโมล</strong><div class="calc-math">\[\begin{gathered}n=\frac{5.85\,\mathrm g}{58.5\,\mathrm{g/mol}}=0.100\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>หารด้วยปริมาตร 0.100 L</strong><div class="calc-math">\[\begin{gathered}c=\frac{0.100\,\mathrm{mol}}{0.100\,\mathrm L}=1.00\,\mathrm{mol/L}\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> ตัวเลือก 3 · 1.00 mol/L</p>
+</div></div></div></div>
+</div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 14</h3>
+<p>เมื่อละลายเกลือแต่ละชนิดตามข้อมูลด้านล่าง ตัวเลือกใดให้ความเข้มข้นของ Na⁺ สูงที่สุด</p>
+<table class="calc-data"><thead><tr><th scope="col">ตัวเลือก</th><th scope="col">เกลือ</th><th scope="col">ปริมาณเกลือ (mol)</th><th scope="col">ปริมาตรน้ำ (mL)</th></tr></thead><tbody>
+<tr><td>1</td><td>NaF</td><td>0.03</td><td>50</td></tr>
+<tr><td>2</td><td>NaCl</td><td>0.03</td><td>100</td></tr>
+<tr><td>3</td><td>Na₂CO₃</td><td>0.01</td><td>50</td></tr>
+<tr><td>4</td><td>Na₂SO₃</td><td>0.05</td><td>250</td></tr>
+<tr><td>5</td><td>Na₃PO₄</td><td>0.02</td><td>200</td></tr>
+</tbody></table>
+<p class="calc-reference">ที่มา A-Level เคมี 2567 ข้อ 8</p>
+<p class="print-check-answer" data-print-check-answer="14"><strong>คำตอบตรวจตนเอง</strong> ตัวเลือก 1 · NaF ให้ 0.60 mol/L</p>
+<div data-sheet-slot="sodium-ion-molarity" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="เปรียบเทียบโมลาริตีของโซเดียมไอออน" data-sheet-label-en="Compare sodium-ion molarities" style="--sheet-print-height:53mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>นับ Na⁺ ต่อหน่วยสูตรก่อน เช่น Na₂CO₃ หนึ่งโมลให้ Na⁺ สองโมลเมื่อแตกตัวสมบูรณ์ ใช้ปริมาตรน้ำที่ให้มาเป็นค่าประมาณของปริมาตรสารละลายในการเทียบตัวเลือก</p>
+<ol class="calc-steps">
+<li><strong>ตั้งสูตรจากโมลของ Na⁺</strong><div class="calc-math">\[\begin{gathered}\left[\mathrm{Na^+}\right]=\frac{n_\mathrm{salt}\times \nu_\mathrm{Na^+}}{V_\mathrm{soln}}\\[2pt]\left[\mathrm{Na^+}\right]_{\mathrm{NaF}}=\frac{0.03\,\mathrm{mol}\times1}{0.050\,\mathrm L}=0.60\,\mathrm{mol/L}\end{gathered}\]</div></li>
+<li><strong>เทียบทุกตัวเลือก</strong>
+<table class="calc-data"><thead><tr><th scope="col">เกลือ</th><th scope="col">Na⁺ ต่อหน่วยสูตร</th><th scope="col">Na⁺ (mol)</th><th scope="col">[Na⁺] (mol/L)</th></tr></thead><tbody>
+<tr><td>NaF</td><td>1</td><td>0.030</td><td>0.60</td></tr>
+<tr><td>NaCl</td><td>1</td><td>0.030</td><td>0.30</td></tr>
+<tr><td>Na₂CO₃</td><td>2</td><td>0.020</td><td>0.40</td></tr>
+<tr><td>Na₂SO₃</td><td>2</td><td>0.100</td><td>0.40</td></tr>
+<tr><td>Na₃PO₄</td><td>3</td><td>0.060</td><td>0.30</td></tr>
+</tbody></table>
+</li>
+</ol>
+<p>Na₂SO₃ ให้ Na⁺ มากที่สุดเป็นโมล แต่ตัวเลือกนี้มีปริมาตรมากกว่าด้วย เมื่อเทียบเป็น mol/L ค่าสูงสุดจึงเป็นของ NaF</p>
+<p><strong>คำตอบ</strong> ตัวเลือก 1 · NaF ให้ 0.60 mol/L</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 15</h3>
+<p>สารละลายกลูโคส 20.0% m/m มีความหนาแน่น 1.08 g/mL จงหาโมลาริตี กำหนดมวลต่อโมล 180.0 g/mol</p>
+<ol class="calc-options"><li>0.120 mol/L</li><li>0.216 mol/L</li><li>1.11 mol/L</li><li>1.20 mol/L</li><li>1.39 mol/L</li></ol>
+<p class="print-check-answer" data-print-check-answer="15"><strong>คำตอบตรวจตนเอง</strong> ตัวเลือก 4 · 1.20 mol/L</p>
+<div data-sheet-slot="mass-percent-and-density-to-molarity" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ใช้ความหนาแน่นแปลงร้อยละโดยมวลเป็นโมลาริตี" data-sheet-label-en="Use density to convert mass percent to molarity" style="--sheet-print-height:42mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>เลือกสารละลาย 1 L เป็นฐาน ให้ใช้ความหนาแน่นหามวลรวมก่อนแยกส่วนที่เป็นกลูโคส</p>
+<ol class="calc-steps">
+<li><strong>หามวลสารละลาย 1 L</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{soln}=1000\,\mathrm{mL}\times1.08\,\mathrm{g/mL}=1080\,\mathrm g\end{gathered}\]</div></li>
+<li><strong>ใช้ร้อยละหามวลและโมลของกลูโคส</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{glucose}=0.200\times1080\,\mathrm g=216\,\mathrm g\\[2pt]n_\mathrm{glucose}=\frac{216\,\mathrm g}{180.0\,\mathrm{g/mol}}=1.20\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>คำนวณโมลาริตี</strong><div class="calc-math">\[\begin{gathered}c=\frac{1.20\,\mathrm{mol}}{1\,\mathrm L}=1.20\,\mathrm{mol/L}\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> ตัวเลือก 4 · 1.20 mol/L</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 16</h3>
+<p>สารละลายยูเรีย 0.750 mol/L มีความหนาแน่น 1.02 g/mL จงหา % m/m กำหนดมวลต่อโมล 60.0 g/mol</p>
+<ol class="calc-options"><li>3.75 % m/m</li><li>4.41 % m/m</li><li>4.50 % m/m</li><li>4.59 % m/m</li><li>4.62 % m/m</li></ol>
+<p class="print-check-answer" data-print-check-answer="16"><strong>คำตอบตรวจตนเอง</strong> ตัวเลือก 2 · 4.41% m/m</p>
+<div data-sheet-slot="molarity-and-density-to-mass-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="แปลงโมลาริตีกลับเป็นร้อยละโดยมวล" data-sheet-label-en="Convert molarity back to mass percent" style="--sheet-print-height:42mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ในสารละลาย 1 L หาโมลยูเรียจากโมลาริตี และหามวลรวมจากความหนาแน่น</p>
+<ol class="calc-steps">
+<li><strong>หามวลยูเรียและมวลสารละลาย</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{urea}=0.750\,\mathrm{mol}\times\frac{60.0\,\mathrm g}{1\,\mathrm{mol}}=45.0\,\mathrm g\\[2pt]m_\mathrm{soln}=1000\,\mathrm{mL}\times1.02\,\mathrm{g/mL}=1020\,\mathrm g\end{gathered}\]</div></li>
+<li><strong>คำนวณร้อยละโดยมวล</strong><div class="calc-math">\[\begin{gathered}\frac{45.0\,\mathrm g}{1020\,\mathrm g}\times100\approx4.41\%\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> ตัวเลือก 2 · 4.41% m/m</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 17</h3>
+<p>สารละลายมีสาร X 37.5 mg/L และมีความหนาแน่น 1.25 g/mL จงหาความเข้มข้นเป็น ppm โดยมวล</p>
+<ol class="calc-options"><li>24.0 ppm</li><li>30.0 ppm</li><li>37.5 ppm</li><li>46.9 ppm</li><li>300 ppm</li></ol>
+<p class="print-check-answer" data-print-check-answer="17"><strong>คำตอบตรวจตนเอง</strong> ตัวเลือก 2 · 30.0 ppm</p>
+<div data-sheet-slot="milligrams-per-litre-to-ppm" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ใช้ความหนาแน่นแปลง mg/L เป็น ppm" data-sheet-label-en="Use density to convert mg/L to ppm" style="--sheet-print-height:39mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>เริ่มจากสารละลาย 1 L มี X 37.5 mg ใช้ความหนาแน่นหาว่าสารละลายปริมาตรนี้มีกี่ kg</p>
+<ol class="calc-steps">
+<li><strong>แปลงสารละลาย 1 L เป็น kg</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{soln}=1000\,\mathrm{mL}\times1.25\,\mathrm{g/mL}=1.25\,\mathrm{kg}\end{gathered}\]</div></li>
+<li><strong>หารเพื่อหา mg/kg</strong><div class="calc-math">\[\begin{gathered}\frac{37.5\,\mathrm{mg}}{1.25\,\mathrm{kg}}=30.0\,\mathrm{mg/kg}\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> ตัวเลือก 2 · 30.0 ppm</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 18</h3>
+<p>สารละลายกลูโคส 1.50 mol/kg มีความหนาแน่น 1.08 g/mL จงหาโมลาริตี กำหนดมวลต่อโมล 180.0 g/mol</p>
+<ol class="calc-options"><li>1.08 mol/L</li><li>1.18 mol/L</li><li>1.28 mol/L</li><li>1.50 mol/L</li><li>1.62 mol/L</li></ol>
+<p class="print-check-answer" data-print-check-answer="18"><strong>คำตอบตรวจตนเอง</strong> ตัวเลือก 3 · 1.28 mol/L</p>
+<div data-sheet-slot="molality-and-density-to-molarity" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="แปลงโมแลลิตีเป็นโมลาริตี" data-sheet-label-en="Convert molality to molarity" style="--sheet-print-height:49mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>เริ่มจากตัวทำละลาย 1 kg แล้วบวกมวลกลูโคสเพื่อให้ได้มวลสารละลาย ความหนาแน่นที่ให้มาเป็นของสารละลายทั้งหมด</p>
+<ol class="calc-steps">
+<li><strong>หาโมลและมวลกลูโคส</strong><div class="calc-math">\[\begin{gathered}n=1.50\,\mathrm{mol/kg}\times1\,\mathrm{kg}=1.50\,\mathrm{mol}\\[2pt]m_\mathrm{glucose}=1.50\,\mathrm{mol}\times180.0\,\mathrm{g/mol}=270\,\mathrm g\end{gathered}\]</div></li>
+<li><strong>รวมมวลแล้วหาปริมาตรสารละลาย</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{soln}=1000+270=1270\,\mathrm g\\[2pt]V_\mathrm{soln}=\frac{1270\,\mathrm g}{1.08\,\mathrm{g/mL}}\times\frac{1\,\mathrm L}{1000\,\mathrm{mL}}\approx1.176\,\mathrm L\end{gathered}\]</div></li>
+<li><strong>คำนวณโมลาริตี</strong><div class="calc-math">\[\begin{gathered}c=\frac{1.50\,\mathrm{mol}}{V_\mathrm{soln}}\approx1.28\,\mathrm{mol/L}\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> ตัวเลือก 3 · 1.28 mol/L</p>
+</div></div></div></div>
+</section>
+<section data-guide-anchor="numeric-response">
+<div data-print-keep>
+<header><h2>แนว A-Level · ข้อ 19–20</h2><p>ตอบเป็นตัวเลข 3 เลขนัยสำคัญ โดยใช้หน่วยตามโจทย์กำหนด</p></header>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 19</h3>
+<p>สารละลายซูโครสในน้ำ 15.0% m/m มีโมแลลิตีกี่ mol/kg กำหนดมวลต่อโมลของซูโครส 342 g/mol</p>
+<p class="print-check-answer" data-print-check-answer="19"><strong>คำตอบตรวจตนเอง</strong> 0.516 mol/kg</p>
+<div data-sheet-slot="mass-percent-to-molality" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="แปลงร้อยละโดยมวลเป็นโมแลลิตี" data-sheet-label-en="Convert mass percent to molality" style="--sheet-print-height:45mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ใช้ฐานสารละลาย 100 g มีซูโครส 15.0 g ที่เหลือเป็นน้ำ ให้ใช้กิโลกรัมของน้ำในตัวหาร</p>
+<ol class="calc-steps">
+<li><strong>หามวลน้ำและโมลซูโครส</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{water}=100-15.0=85.0\,\mathrm g=0.0850\,\mathrm{kg}\\[2pt]n_\mathrm{sucrose}=\frac{15.0\,\mathrm g}{342\,\mathrm{g/mol}}\approx0.04386\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>คำนวณโมแลลิตี</strong><div class="calc-math">\[\begin{gathered}b=\frac{n_\mathrm{sucrose}}{0.0850\,\mathrm{kg}}\approx0.516\,\mathrm{mol/kg}\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 0.516 mol/kg</p>
+</div></div></div></div>
+</div>
+<div class="calc-problem" data-print-keep>
+<h3>ข้อ 20</h3>
+<p>สารละลายมีเอทานอล 23.0% m/m และส่วนที่เหลือเป็นน้ำ จงหาเศษส่วนโมลของเอทานอล กำหนดมวลต่อโมลของเอทานอลและน้ำเท่ากับ 46.0 และ 18.0 g/mol ตามลำดับ</p>
+<p class="print-check-answer" data-print-check-answer="20"><strong>คำตอบตรวจตนเอง</strong> 0.105</p>
+<div data-sheet-slot="mass-percent-to-mole-fraction" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="แปลงร้อยละโดยมวลเป็นเศษส่วนโมล" data-sheet-label-en="Convert mass percent to mole fraction" style="--sheet-print-height:46mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>ใช้ฐานสารละลาย 100 g แล้วแปลงมวลของทั้งเอทานอลและน้ำเป็นโมลก่อนหาเศษส่วน</p>
+<ol class="calc-steps">
+<li><strong>หาจำนวนโมลของเอทานอลและน้ำ</strong><div class="calc-math">\[\begin{gathered}n_\mathrm{ethanol}=\frac{23.0\,\mathrm g}{46.0\,\mathrm{g/mol}}=0.500\,\mathrm{mol}\\[2pt]n_\mathrm{water}=\frac{77.0\,\mathrm g}{18.0\,\mathrm{g/mol}}\approx4.278\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>หารด้วยโมลรวม</strong><div class="calc-math">\[\begin{gathered}x_\mathrm{ethanol}=\frac{0.500}{0.500+(77.0/18.0)}\approx0.105\end{gathered}\]</div></li>
+</ol>
+<p><strong>คำตอบ</strong> 0.105</p>
+</div></div></div></div>
+</section>
+</main>
+<main class="calc-sheet" data-content-lang="en" lang="en">
+<header><h1>Concentration of Solutions · Calculation Practice 3</h1><p class="calc-student-info">Name ................................................................................ Class ....................</p></header>
+<section class="calc-formulas" data-guide-anchor="formula-box" data-print-keep>
+<h2>Formulas and denominators</h2>
+<table><thead><tr><th scope="col">Concentration unit</th><th scope="col">Relationship</th><th scope="col">Denominator and units</th></tr></thead><tbody>
+<tr><th scope="row">% m/m</th><td>\(\frac{m_\mathrm{solute}\,(\mathrm g)}{m_\mathrm{soln}\,(\mathrm g)}\times100\)</td><td>Grams of solute per 100 g of solution</td></tr>
+<tr><th scope="row">% m/v</th><td>\(\frac{m_\mathrm{solute}\,(\mathrm g)}{V_\mathrm{soln}\,(\mathrm{mL})}\times100\)</td><td>Grams of solute per 100 mL of solution</td></tr>
+<tr><th scope="row">% v/v</th><td>\(\frac{V_\mathrm{solute}\,(\mathrm{mL})}{V_\mathrm{soln}\,(\mathrm{mL})}\times100\)</td><td>Millilitres of solute per 100 mL of solution</td></tr>
+<tr><th scope="row">ppm and ppb by mass</th><td>\(\mathrm{ppm}:\ \mathrm{mg/kg}\quad\mathrm{ppb}:\ \mathrm{\mu g/kg}\)</td><td>Both denominators use kg of solution</td></tr>
+<tr><th scope="row">Molarity</th><td>\(c=\frac{n_\mathrm{solute}}{V_\mathrm{soln}\,(\mathrm L)}\)</td><td>mol/L of solution. 1 mol/L = 1 mmol/mL</td></tr>
+<tr><th scope="row">Molality</th><td>\(b=\frac{n_\mathrm{solute}}{m_\mathrm{solv}\,(\mathrm{kg})}\)</td><td>mol/kg of solvent</td></tr>
+<tr><th scope="row">Mole fraction</th><td>\(x_i=\frac{n_i}{n_\mathrm{total}}\)</td><td>Total moles of all components. A mole fraction has no units.</td></tr>
+</tbody></table>
+<p class="calc-constants">soln means solution. solv means solvent, and M is molar mass. Solution mass equals solute mass plus solvent mass.</p>
+<p class="calc-constants">\(n=m/M\) · \(\rho=m_\mathrm{soln}/V_\mathrm{soln}\) · Choose a basis to match the data, such as 100 g or 1 L of solution, or 1 kg of solvent when starting from molality.</p>
+</section>
+<section data-guide-anchor="fundamentals">
+<div data-print-keep>
+<header><h2>Fundamentals · Questions 1–12</h2></header>
+<div class="calc-problem" data-print-keep>
+<h3>Question 1</h3>
+<p>Dissolve 18.0 g of glucose in 102.0 g of water. Find the mass percent of glucose.</p>
+<p class="print-check-answer" data-print-check-answer="1"><strong>Self-check answer</strong> 15.0% m/m</p>
+<div data-sheet-slot="mass-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ร้อยละมวลต่อมวล" data-sheet-label-en="Mass by mass" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>The denominator is the mass of the entire solution. Add the masses of glucose and water first.</p>
+<ol class="calc-steps">
+<li><strong>Find the solution mass</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{soln}=18.0+102.0=120.0\,\mathrm g\end{gathered}\]</div></li>
+<li><strong>Divide and multiply by 100</strong><div class="calc-math">\[\begin{gathered}\frac{18.0\,\mathrm g}{120.0\,\mathrm g}\times100=15.0\%\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 15.0% m/m</p>
+</div></div></div></div>
+</div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 2</h3>
+<p>A 320.0 mL glucose solution contains 9.60 g of glucose. Find its concentration in % m/v.</p>
+<p class="print-check-answer" data-print-check-answer="2"><strong>Self-check answer</strong> 3.00% m/v</p>
+<div data-sheet-slot="mass-volume-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ร้อยละมวลต่อปริมาตร" data-sheet-label-en="Mass by volume" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>This unit gives grams of solute per 100 mL of solution.</p>
+<ol class="calc-steps">
+<li><strong>Scale to 100 mL of solution</strong><div class="calc-math">\[\begin{gathered}\frac{9.60\,\mathrm g}{320.0\,\mathrm{mL}}\times100\,\mathrm{mL}=3.00\,\mathrm g\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 3.00% m/v</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 3</h3>
+<p>Use 35.0 mL of ethanol and bring the final solution volume to 250.0 mL. Find the concentration in % v/v.</p>
+<p class="print-check-answer" data-print-check-answer="3"><strong>Self-check answer</strong> 14.0% v/v</p>
+<div data-sheet-slot="volume-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ร้อยละปริมาตรต่อปริมาตร" data-sheet-label-en="Volume by volume" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Use the measured ethanol volume and the given final solution volume.</p>
+<ol class="calc-steps">
+<li><strong>Scale to 100 mL of solution</strong><div class="calc-math">\[\begin{gathered}\frac{35.0\,\mathrm{mL}}{250.0\,\mathrm{mL}}\times100\,\mathrm{mL}=14.0\,\mathrm{mL}\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 14.0% v/v</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 4</h3>
+<p>How many grams of sucrose are present in 375 g of a 6.40% m/m sucrose solution?</p>
+<p class="print-check-answer" data-print-check-answer="4"><strong>Self-check answer</strong> 24.0 g</p>
+<div data-sheet-slot="mass-from-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หามวลจากร้อยละ" data-sheet-label-en="Mass from mass percent" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Every 100 g of solution contains 6.40 g of sucrose. Arrange the factor so grams of solution cancel.</p>
+<ol class="calc-steps">
+<li><strong>Convert solution mass to sucrose mass</strong><div class="calc-math">\[\begin{gathered}375\,\mathrm{g_{soln}}\times\frac{6.40\,\mathrm{g_{sucrose}}}{100\,\mathrm{g_{soln}}}=24.0\,\mathrm{g_{sucrose}}\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 24.0 g</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 5</h3>
+<p>A water sample with total mass 1.80 kg contains 5.40 mg of nitrate. Find its concentration in ppm by mass.</p>
+<p class="print-check-answer" data-print-check-answer="5"><strong>Self-check answer</strong> 3.00 ppm</p>
+<div data-sheet-slot="ppm-by-mass" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ส่วนในล้านส่วนโดยมวล" data-sheet-label-en="Parts per million by mass" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>For ppm by mass, the numerical value is the same as mg of solute per kg of solution.</p>
+<ol class="calc-steps">
+<li><strong>Divide nitrate in mg by sample mass in kg</strong><div class="calc-math">\[\begin{gathered}\frac{5.40\,\mathrm{mg}}{1.80\,\mathrm{kg}}=3.00\,\mathrm{mg/kg}\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 3.00 ppm</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 6</h3>
+<p>A water sample of mass 0.400 kg contains copper at 7.50 ppb by mass. Find the mass of copper in µg.</p>
+<p class="print-check-answer" data-print-check-answer="6"><strong>Self-check answer</strong> 3.00 µg</p>
+<div data-sheet-slot="mass-from-ppb" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หามวลจาก ppb" data-sheet-label-en="Mass from parts per billion" style="--sheet-print-height:29mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>A mass concentration of 7.50 ppb means 7.50 µg of copper per kg of solution. Multiply by the sample mass so kg cancels.</p>
+<ol class="calc-steps">
+<li><strong>Convert sample mass to copper mass</strong><div class="calc-math">\[\begin{gathered}0.400\,\mathrm{kg}\times\frac{7.50\,\mathrm{\mu g}}{1\,\mathrm{kg}}=3.00\,\mathrm{\mu g}\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 3.00 µg</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 7</h3>
+<p>A 500.0 mL solution contains 14.9 g of KCl. Find its molarity. The molar mass of KCl is 74.5 g/mol.</p>
+<p class="print-check-answer" data-print-check-answer="7"><strong>Self-check answer</strong> 0.400 mol/L</p>
+<div data-sheet-slot="molarity-from-mass" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หาโมลาริตีจากมวล" data-sheet-label-en="Molarity from mass" style="--sheet-print-height:35mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Convert grams of KCl to moles, then divide by the solution volume in litres.</p>
+<ol class="calc-steps">
+<li><strong>Find the amount of KCl</strong><div class="calc-math">\[\begin{gathered}14.9\,\mathrm g\times\frac{1\,\mathrm{mol}}{74.5\,\mathrm g}=0.200\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>Convert mL to L and find molarity</strong><div class="calc-math">\[\begin{gathered}V=500.0\,\mathrm{mL}\times\frac{1\,\mathrm L}{1000\,\mathrm{mL}}=0.5000\,\mathrm L\\[2pt]c=\frac{0.200\,\mathrm{mol}}{0.5000\,\mathrm L}=0.400\,\mathrm{mol/L}\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 0.400 mol/L</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 8</h3>
+<p>How many mmol of KNO₃ are present in 75.0 mL of an 18.0 mM KNO₃ solution?</p>
+<p class="print-check-answer" data-print-check-answer="8"><strong>Self-check answer</strong> 1.35 mmol</p>
+<div data-sheet-slot="millimoles-from-millimolar" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="แปลง mM และ mL เป็น mmol" data-sheet-label-en="Millimoles from mM and mL" style="--sheet-print-height:32mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>mM means mmol/L. Express the denominator in mL before multiplying by the volume.</p>
+<ol class="calc-steps">
+<li><strong>Convert the concentration units</strong><div class="calc-math">\[\begin{gathered}18.0\,\mathrm{mM}=\frac{18.0\,\mathrm{mmol}}{1000\,\mathrm{mL}}=0.0180\,\mathrm{mmol/mL}\end{gathered}\]</div></li>
+<li><strong>Multiply by the volume</strong><div class="calc-math">\[\begin{gathered}n=0.0180\,\mathrm{mmol/mL}\times75.0\,\mathrm{mL}=1.35\,\mathrm{mmol}\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 1.35 mmol</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 9</h3>
+<p>How many grams of glucose are in 160.0 mL of a 0.125 mol/L solution? The molar mass of glucose is 180.0 g/mol.</p>
+<p class="print-check-answer" data-print-check-answer="9"><strong>Self-check answer</strong> 3.60 g</p>
+<div data-sheet-slot="mass-from-molarity" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หามวลจากโมลาริตี" data-sheet-label-en="Solute mass from molarity" style="--sheet-print-height:34mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Use the concentration and the volume in litres to find the amount in moles. Use molar mass to convert it to grams.</p>
+<ol class="calc-steps">
+<li><strong>Find the amount of glucose</strong><div class="calc-math">\[\begin{gathered}n=0.125\,\mathrm{mol/L}\times0.1600\,\mathrm L=0.0200\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>Convert moles to grams</strong><div class="calc-math">\[\begin{gathered}m=0.0200\,\mathrm{mol}\times\frac{180.0\,\mathrm g}{1\,\mathrm{mol}}=3.60\,\mathrm g\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 3.60 g</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 10</h3>
+<p>Dissolve 13.8 g of glycerol in 300.0 g of water. Find the molality. The molar mass of glycerol is 92.0 g/mol.</p>
+<p class="print-check-answer" data-print-check-answer="10"><strong>Self-check answer</strong> 0.500 mol/kg</p>
+<div data-sheet-slot="molality-from-masses" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หาโมแลลิตีจากมวล" data-sheet-label-en="Molality from masses" style="--sheet-print-height:35mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Molality uses kilograms of the solvent, which is water here.</p>
+<ol class="calc-steps">
+<li><strong>Find glycerol in moles and water in kg</strong><div class="calc-math">\[\begin{gathered}n=\frac{13.8\,\mathrm g}{92.0\,\mathrm{g/mol}}=0.150\,\mathrm{mol}\\[2pt]m_\mathrm{water}=300.0\,\mathrm g\times\frac{1\,\mathrm{kg}}{1000\,\mathrm g}=0.3000\,\mathrm{kg}\end{gathered}\]</div></li>
+<li><strong>Find the molality</strong><div class="calc-math">\[\begin{gathered}b=\frac{0.150\,\mathrm{mol}}{0.3000\,\mathrm{kg}}=0.500\,\mathrm{mol/kg}\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 0.500 mol/kg</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 11</h3>
+<p>A 0.800 mol/kg solution contains 0.200 mol of solute. Find the mass of the solvent in grams.</p>
+<p class="print-check-answer" data-print-check-answer="11"><strong>Self-check answer</strong> 2.50 × 10² g</p>
+<div data-sheet-slot="solvent-mass-from-molality" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หามวลตัวทำละลายจากโมแลลิตี" data-sheet-label-en="Solvent mass from molality" style="--sheet-print-height:33mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Rearrange b = n/m for the solvent mass, then convert kg to g.</p>
+<ol class="calc-steps">
+<li><strong>Find the solvent mass</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{solv}=\frac{n}{b}=\frac{0.200\,\mathrm{mol}}{0.800\,\mathrm{mol/kg}}=0.250\,\mathrm{kg}\end{gathered}\]</div></li>
+<li><strong>Convert kg to g</strong><div class="calc-math">\[\begin{gathered}0.250\,\mathrm{kg}\times\frac{1000\,\mathrm g}{1\,\mathrm{kg}}=2.50\times10^2\,\mathrm g\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 2.50 × 10² g</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 12</h3>
+<p>A solution contains 0.300 mol of ethanol and 0.900 mol of water. Find the mole fraction of each component.</p>
+<p class="print-check-answer" data-print-check-answer="12"><strong>Self-check answer</strong> Ethanol 0.250 and water 0.750</p>
+<div data-sheet-slot="mole-fractions" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="หาเศษส่วนโมลของสารทั้งสองชนิด" data-sheet-label-en="Mole fractions of both components" style="--sheet-print-height:35mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Both fractions have the same denominator, the total amount of ethanol and water. Mole fractions are dimensionless.</p>
+<ol class="calc-steps">
+<li><strong>Find the total amount</strong><div class="calc-math">\[\begin{gathered}n_\mathrm{total}=0.300+0.900=1.200\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>Find the fractions and check their sum</strong><div class="calc-math">\[\begin{gathered}x_\mathrm{ethanol}=\frac{0.300}{1.200}=0.250,\quad x_\mathrm{water}=\frac{0.900}{1.200}=0.750\\[2pt]x_\mathrm{ethanol}+x_\mathrm{water}=1.000\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> Ethanol 0.250 and water 0.750</p>
+</div></div></div></div>
+</section>
+<section data-guide-anchor="multiple-choice">
+<div data-print-keep>
+<header><h2>A-Level style · Questions 13–18</h2><p>Choose one correct option.</p></header>
+<div class="calc-problem" data-print-keep>
+<h3>Question 13</h3>
+<p>What is the molarity of a 5.85% m/v NaCl solution? The molar mass of NaCl is 58.5 g/mol.</p>
+<ol class="calc-options"><li>0.100 mol/L</li><li>0.342 mol/L</li><li>1.00 mol/L</li><li>5.85 mol/L</li><li>10.0 mol/L</li></ol>
+<p class="print-check-answer" data-print-check-answer="13"><strong>Self-check answer</strong> Option 3 · 1.00 mol/L</p>
+<div data-sheet-slot="mass-volume-to-molarity" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="แปลงร้อยละมวลต่อปริมาตรเป็นโมลาริตี" data-sheet-label-en="Mass/volume percent to molarity" style="--sheet-print-height:33mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Use a 100 mL basis, which contains 5.85 g of NaCl. Convert both mass and volume.</p>
+<ol class="calc-steps">
+<li><strong>Convert mass to moles</strong><div class="calc-math">\[\begin{gathered}n=\frac{5.85\,\mathrm g}{58.5\,\mathrm{g/mol}}=0.100\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>Divide by a volume of 0.100 L</strong><div class="calc-math">\[\begin{gathered}c=\frac{0.100\,\mathrm{mol}}{0.100\,\mathrm L}=1.00\,\mathrm{mol/L}\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> Option 3 · 1.00 mol/L</p>
+</div></div></div></div>
+</div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 14</h3>
+<p>When each salt is dissolved as shown below, which option gives the highest Na⁺ concentration?</p>
+<table class="calc-data"><thead><tr><th scope="col">Option</th><th scope="col">Salt</th><th scope="col">Salt amount (mol)</th><th scope="col">Water volume (mL)</th></tr></thead><tbody>
+<tr><td>1</td><td>NaF</td><td>0.03</td><td>50</td></tr>
+<tr><td>2</td><td>NaCl</td><td>0.03</td><td>100</td></tr>
+<tr><td>3</td><td>Na₂CO₃</td><td>0.01</td><td>50</td></tr>
+<tr><td>4</td><td>Na₂SO₃</td><td>0.05</td><td>250</td></tr>
+<tr><td>5</td><td>Na₃PO₄</td><td>0.02</td><td>200</td></tr>
+</tbody></table>
+<p class="calc-reference">Source: 2024 A-Level Chemistry, Question 8</p>
+<p class="print-check-answer" data-print-check-answer="14"><strong>Self-check answer</strong> Option 1 · NaF gives 0.60 mol/L</p>
+<div data-sheet-slot="sodium-ion-molarity" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="เปรียบเทียบโมลาริตีของโซเดียมไอออน" data-sheet-label-en="Compare sodium-ion molarities" style="--sheet-print-height:53mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>First count Na⁺ ions per formula unit. For example, one mole of Na₂CO₃ gives two moles of Na⁺ on complete dissociation. Use the stated water volumes as approximations to the solution volumes when comparing the options.</p>
+<ol class="calc-steps">
+<li><strong>Use the amount of Na⁺ in moles</strong><div class="calc-math">\[\begin{gathered}\left[\mathrm{Na^+}\right]=\frac{n_\mathrm{salt}\times \nu_\mathrm{Na^+}}{V_\mathrm{soln}}\\[2pt]\left[\mathrm{Na^+}\right]_{\mathrm{NaF}}=\frac{0.03\,\mathrm{mol}\times1}{0.050\,\mathrm L}=0.60\,\mathrm{mol/L}\end{gathered}\]</div></li>
+<li><strong>Compare all five options</strong>
+<table class="calc-data"><thead><tr><th scope="col">Salt</th><th scope="col">Na⁺ per formula unit</th><th scope="col">Na⁺ (mol)</th><th scope="col">[Na⁺] (mol/L)</th></tr></thead><tbody>
+<tr><td>NaF</td><td>1</td><td>0.030</td><td>0.60</td></tr>
+<tr><td>NaCl</td><td>1</td><td>0.030</td><td>0.30</td></tr>
+<tr><td>Na₂CO₃</td><td>2</td><td>0.020</td><td>0.40</td></tr>
+<tr><td>Na₂SO₃</td><td>2</td><td>0.100</td><td>0.40</td></tr>
+<tr><td>Na₃PO₄</td><td>3</td><td>0.060</td><td>0.30</td></tr>
+</tbody></table>
+</li>
+</ol>
+<p>Na₂SO₃ gives the largest number of moles of Na⁺, but it also uses more water. When expressed in mol/L, NaF gives the highest concentration.</p>
+<p><strong>Answer</strong> Option 1 · NaF gives 0.60 mol/L</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 15</h3>
+<p>A 20.0% m/m glucose solution has a density of 1.08 g/mL. Find its molarity. The molar mass of glucose is 180.0 g/mol.</p>
+<ol class="calc-options"><li>0.120 mol/L</li><li>0.216 mol/L</li><li>1.11 mol/L</li><li>1.20 mol/L</li><li>1.39 mol/L</li></ol>
+<p class="print-check-answer" data-print-check-answer="15"><strong>Self-check answer</strong> Option 4 · 1.20 mol/L</p>
+<div data-sheet-slot="mass-percent-and-density-to-molarity" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ใช้ความหนาแน่นแปลงร้อยละโดยมวลเป็นโมลาริตี" data-sheet-label-en="Use density to convert mass percent to molarity" style="--sheet-print-height:42mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Choose 1 L of solution as the basis. Use density to find the total mass before calculating the glucose mass.</p>
+<ol class="calc-steps">
+<li><strong>Find the mass of 1 L of solution</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{soln}=1000\,\mathrm{mL}\times1.08\,\mathrm{g/mL}=1080\,\mathrm g\end{gathered}\]</div></li>
+<li><strong>Use the percentage to find glucose mass and amount</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{glucose}=0.200\times1080\,\mathrm g=216\,\mathrm g\\[2pt]n_\mathrm{glucose}=\frac{216\,\mathrm g}{180.0\,\mathrm{g/mol}}=1.20\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>Find the molarity</strong><div class="calc-math">\[\begin{gathered}c=\frac{1.20\,\mathrm{mol}}{1\,\mathrm L}=1.20\,\mathrm{mol/L}\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> Option 4 · 1.20 mol/L</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 16</h3>
+<p>A 0.750 mol/L urea solution has a density of 1.02 g/mL. Find its % m/m. The molar mass of urea is 60.0 g/mol.</p>
+<ol class="calc-options"><li>3.75 % m/m</li><li>4.41 % m/m</li><li>4.50 % m/m</li><li>4.59 % m/m</li><li>4.62 % m/m</li></ol>
+<p class="print-check-answer" data-print-check-answer="16"><strong>Self-check answer</strong> Option 2 · 4.41% m/m</p>
+<div data-sheet-slot="molarity-and-density-to-mass-percent" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="แปลงโมลาริตีกลับเป็นร้อยละโดยมวล" data-sheet-label-en="Convert molarity back to mass percent" style="--sheet-print-height:42mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>For 1 L of solution, use molarity to find moles of urea and density to find total mass.</p>
+<ol class="calc-steps">
+<li><strong>Find the masses of urea and solution</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{urea}=0.750\,\mathrm{mol}\times\frac{60.0\,\mathrm g}{1\,\mathrm{mol}}=45.0\,\mathrm g\\[2pt]m_\mathrm{soln}=1000\,\mathrm{mL}\times1.02\,\mathrm{g/mL}=1020\,\mathrm g\end{gathered}\]</div></li>
+<li><strong>Calculate mass percent</strong><div class="calc-math">\[\begin{gathered}\frac{45.0\,\mathrm g}{1020\,\mathrm g}\times100\approx4.41\%\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> Option 2 · 4.41% m/m</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 17</h3>
+<p>A solution contains 37.5 mg/L of X and has a density of 1.25 g/mL. Find its concentration in ppm by mass.</p>
+<ol class="calc-options"><li>24.0 ppm</li><li>30.0 ppm</li><li>37.5 ppm</li><li>46.9 ppm</li><li>300 ppm</li></ol>
+<p class="print-check-answer" data-print-check-answer="17"><strong>Self-check answer</strong> Option 2 · 30.0 ppm</p>
+<div data-sheet-slot="milligrams-per-litre-to-ppm" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="ใช้ความหนาแน่นแปลง mg/L เป็น ppm" data-sheet-label-en="Use density to convert mg/L to ppm" style="--sheet-print-height:39mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Start with 1 L of solution containing 37.5 mg of X. Use density to find the mass of that volume in kg.</p>
+<ol class="calc-steps">
+<li><strong>Convert 1 L of solution to kg</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{soln}=1000\,\mathrm{mL}\times1.25\,\mathrm{g/mL}=1.25\,\mathrm{kg}\end{gathered}\]</div></li>
+<li><strong>Divide to obtain mg/kg</strong><div class="calc-math">\[\begin{gathered}\frac{37.5\,\mathrm{mg}}{1.25\,\mathrm{kg}}=30.0\,\mathrm{mg/kg}\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> Option 2 · 30.0 ppm</p>
+</div></div></div></div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 18</h3>
+<p>A 1.50 mol/kg glucose solution has a density of 1.08 g/mL. Find its molarity. The molar mass of glucose is 180.0 g/mol.</p>
+<ol class="calc-options"><li>1.08 mol/L</li><li>1.18 mol/L</li><li>1.28 mol/L</li><li>1.50 mol/L</li><li>1.62 mol/L</li></ol>
+<p class="print-check-answer" data-print-check-answer="18"><strong>Self-check answer</strong> Option 3 · 1.28 mol/L</p>
+<div data-sheet-slot="molality-and-density-to-molarity" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="แปลงโมแลลิตีเป็นโมลาริตี" data-sheet-label-en="Convert molality to molarity" style="--sheet-print-height:49mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Start with 1 kg of solvent. Add the glucose mass to obtain the solution mass. The given density is for the whole solution.</p>
+<ol class="calc-steps">
+<li><strong>Find the amount and mass of glucose</strong><div class="calc-math">\[\begin{gathered}n=1.50\,\mathrm{mol/kg}\times1\,\mathrm{kg}=1.50\,\mathrm{mol}\\[2pt]m_\mathrm{glucose}=1.50\,\mathrm{mol}\times180.0\,\mathrm{g/mol}=270\,\mathrm g\end{gathered}\]</div></li>
+<li><strong>Add the masses and find solution volume</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{soln}=1000+270=1270\,\mathrm g\\[2pt]V_\mathrm{soln}=\frac{1270\,\mathrm g}{1.08\,\mathrm{g/mL}}\times\frac{1\,\mathrm L}{1000\,\mathrm{mL}}\approx1.176\,\mathrm L\end{gathered}\]</div></li>
+<li><strong>Find the molarity</strong><div class="calc-math">\[\begin{gathered}c=\frac{1.50\,\mathrm{mol}}{V_\mathrm{soln}}\approx1.28\,\mathrm{mol/L}\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> Option 3 · 1.28 mol/L</p>
+</div></div></div></div>
+</section>
+<section data-guide-anchor="numeric-response">
+<div data-print-keep>
+<header><h2>A-Level style · Questions 19–20</h2><p>Give each answer to three significant figures in the units specified.</p></header>
+<div class="calc-problem" data-print-keep>
+<h3>Question 19</h3>
+<p>What is the molality of a 15.0% m/m aqueous sucrose solution, in mol/kg? The molar mass of sucrose is 342 g/mol.</p>
+<p class="print-check-answer" data-print-check-answer="19"><strong>Self-check answer</strong> 0.516 mol/kg</p>
+<div data-sheet-slot="mass-percent-to-molality" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="แปลงร้อยละโดยมวลเป็นโมแลลิตี" data-sheet-label-en="Convert mass percent to molality" style="--sheet-print-height:45mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>On a 100 g solution basis, 15.0 g is sucrose and the rest is water. The denominator uses kilograms of water.</p>
+<ol class="calc-steps">
+<li><strong>Find the water mass and sucrose amount</strong><div class="calc-math">\[\begin{gathered}m_\mathrm{water}=100-15.0=85.0\,\mathrm g=0.0850\,\mathrm{kg}\\[2pt]n_\mathrm{sucrose}=\frac{15.0\,\mathrm g}{342\,\mathrm{g/mol}}\approx0.04386\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>Find the molality</strong><div class="calc-math">\[\begin{gathered}b=\frac{n_\mathrm{sucrose}}{0.0850\,\mathrm{kg}}\approx0.516\,\mathrm{mol/kg}\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 0.516 mol/kg</p>
+</div></div></div></div>
+</div>
+<div class="calc-problem" data-print-keep>
+<h3>Question 20</h3>
+<p>An aqueous solution is 23.0% ethanol by mass, with the remainder being water. Find the mole fraction of ethanol. The molar masses of ethanol and water are 46.0 and 18.0 g/mol, respectively.</p>
+<p class="print-check-answer" data-print-check-answer="20"><strong>Self-check answer</strong> 0.105</p>
+<div data-sheet-slot="mass-percent-to-mole-fraction" data-sheet-size="large" data-sheet-layout="block" data-sheet-label-th="แปลงร้อยละโดยมวลเป็นเศษส่วนโมล" data-sheet-label-en="Convert mass percent to mole fraction" style="--sheet-print-height:46mm">
+<div data-sheet-answer><div class="calc-solution">
+<p>Choose a 100 g solution basis and convert both ethanol and water masses to moles before finding the fraction.</p>
+<ol class="calc-steps">
+<li><strong>Find the amounts of ethanol and water</strong><div class="calc-math">\[\begin{gathered}n_\mathrm{ethanol}=\frac{23.0\,\mathrm g}{46.0\,\mathrm{g/mol}}=0.500\,\mathrm{mol}\\[2pt]n_\mathrm{water}=\frac{77.0\,\mathrm g}{18.0\,\mathrm{g/mol}}\approx4.278\,\mathrm{mol}\end{gathered}\]</div></li>
+<li><strong>Divide by the total amount</strong><div class="calc-math">\[\begin{gathered}x_\mathrm{ethanol}=\frac{0.500}{0.500+(77.0/18.0)}\approx0.105\end{gathered}\]</div></li>
+</ol>
+<p><strong>Answer</strong> 0.105</p>
+</div></div></div></div>
+</section>
+</main>
+</body></html>

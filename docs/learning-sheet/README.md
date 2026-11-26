@@ -19,7 +19,7 @@
 
 หากครูสั่ง “วางแผนก่อน” ให้ส่งแผนเนื้อหาก่อนลงมือ หากครูสั่ง “ลุย” หรืออนุมัติการทำแล้ว ให้ดำเนินงานตามขอบเขตจนเสร็จ ไม่เพิ่มการขออนุมัติซ้ำทุกช่วง งานยาวแบ่งทำเป็นช่วงได้และต่อในไฟล์เดิมตามที่ตกลง
 
-สำหรับงานคู่ **Classroom Note + Exit Ticket Revision** ให้เริ่มที่ [คู่มือจากต้นแบบ Buffer Solutions 10.7–10.8](PAIRED-NOTES-AUTHORING-TH.md) สำหรับโครงบทความ คลังคำ โจทย์ใหม่ A-Level Revision Notes Knowledge Recall และการพิมพ์แยกโซน
+สำหรับงานคู่ **Classroom Note + Exit Ticket Revision** ให้เริ่มที่ [คู่มือจากต้นแบบ Buffer Solutions 10.7–10.8](PAIRED-NOTES-AUTHORING-TH.md) หรือ [English authoring guide](PAIRED-NOTES-AUTHORING-EN.md) สำหรับโครงบทความ คลังคำ โจทย์ใหม่ A-Level Revision Notes Knowledge Recall และการพิมพ์แยกโซน
 
 สำหรับงาน **ตรวจความเข้าใจ / Check Your Understanding** ให้อ่าน [กติกาเฉพาะรูปแบบ](CHECK-UNDERSTANDING-AUTHORING.md) เพิ่มเติม งานแรกที่อนุมัติคือเคมี 2.4
 
